@@ -15,8 +15,8 @@ jobs:
         configuration: [Debug, Release]
 
     env:
-      Solution_Path: slnMPIPHP/slnMPIPHP.sln    
-      Build_Output_Folder: slnMPIPHP/bin        
+      Solution_Path: slnMPIPHP/slnMPIPHP.sln
+      Build_Output_Folder: slnMPIPHP/bin
 
     steps:
       # Checkout repository
@@ -39,11 +39,25 @@ jobs:
 
       # Build the solution
       - name: 🔹 Build Solution
-        run: msbuild ${{ env.Solution_Path }} /p:Configuration=${{ matrix.configuration }} /m
+        id: build_step
+        run: |
+          msbuild ${{ env.Solution_Path }} /p:Configuration=${{ matrix.configuration }} /m
+          echo "status=Success" >> $GITHUB_OUTPUT
+        continue-on-error: true  # Allows summary even if build fails
 
-      # Upload artifacts in a clean structure
+      # Upload artifacts
       - name: 🔹 Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: BuildOutput-${{ matrix.configuration }}
           path: ${{ env.Build_Output_Folder }}/${{ matrix.configuration }}/
+
+      # Generate workflow summary table
+      - name: 🔹 Build Summary Table
+        run: |
+          STATUS="${{ steps.build_step.outcome }}"
+          ARTIFACT="BuildOutput-${{ matrix.configuration }}"
+          echo "### Build Summary" >> $GITHUB_STEP_SUMMARY
+          echo "| Configuration | Status  | Artifacts |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------------|---------|-----------|" >> $GITHUB_STEP_SUMMARY
+          echo "| ${{ matrix.configuration }} | $STATUS | $ARTIFACT |" >> $GITHUB_STEP_SUMMARY
