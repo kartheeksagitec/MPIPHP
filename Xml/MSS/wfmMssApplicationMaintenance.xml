@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMssApplicationMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvMPIPHPMSS" sfwResource="790 " sfwType="Maintenance" sfwTitle="Mss Application Maintenance" version="3.5" sfwEntity="entMssHome">
+  <initialload>
+    <callmethods sfwMethodName="FindPersonProcess" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeader" sfwCollapsible="False">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn CssClass="NaviHeadtxt15Size">
+                <sfwLiteral ID="ltrLiteral" Text="Status Of Your Application" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Application Details" sfwCollapsible="False">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn Visible="False">
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmMssApplicationActivitiesMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintprocessinstanceid=ProcessInstanceId;aintprocessid=objProcess.ProcessId" Text="Open" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvProcessInstance" sfwSelection="One" sfwEntityField="lstProcessInstance" sfwGridEntity="entProcessInstance">
+                  <Columns>
+                    <TemplateField HeaderText="Name" SortExpression="objProcess.Name" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="objProcess.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcess.ProcessId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Instance ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ProcessInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstProcessInstance" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

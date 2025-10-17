@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="corPAYEE-0035" sfwActive="True" sfwDescription="Lump Sum Distribution Election-Non-spouse" sfwStatus="Review" sfwRemoteObject="busBenefitCalculationRetirement" sfwType="Correspondence" sfwTemplate="PAYEE-0035.docx" version="4.0" sfwEntity="entBenefitCalculationRetirement">
+  <sfwFieldBookMarks>
+    <sfwFieldBookMark ID="PlanId" />
+    <sfwFieldBookMark ID="strSurvivorFullName" sfwDataType="String" sfwEntityField="IstrSurvivorFullName" />
+    <sfwFieldBookMark ID="strParticipantFullName" sfwDataType="String" sfwEntityField="objBenefitApplication.objPerson.IstrFullName" />
+    <sfwFieldBookMark ID="PartLumpSumBenAmt" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecParticipantLumpSumBenefitAmount" />
+    <sfwFieldBookMark ID="LumpSumYear" sfwDataType="Int" sfwEntityField="IintLumpSumYearByAge" />
+    <sfwFieldBookMark ID="PartMPIID" sfwDataType="String" sfwEntityField="IstrParticipantMPIID" />
+  </sfwFieldBookMarks>
+  <sfwQueryBookMarks>
+    <sfwQueryBookMark ID="Plan" sfwDataType="String" sfwValueSeparator="NL" />
+  </sfwQueryBookMarks>
+  <sfwQueryForm>
+    <sfwTable>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel ID="capPlan" Text="Plan" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwDropDownList ID="Plan" sfwQueryID="Plan" sfwLoadType="Items">
+            <ListItem />
+            <ListItem Text="IAP" Value="1" />
+            <ListItem Text="MPIPP/Local" Value="2" />
+            <ListItem Text="EE/UVHP" Value="3" />
+            <ListItem Text="Local-161 Special Account " Value="4" />
+            <ListItem Text="Local -52 Special Account" Value="5" />
+          </sfwDropDownList>
+        </sfwColumn>
+      </sfwRow>
+    </sfwTable>
+  </sfwQueryForm>
+  <sfwAssociatedForms>
+    <sfwAssociatedForm ID="wfmBenefitCalculationPostRetirementDeathMaintenance" sfwEntityField="objBenefitCalculationRetirement" />
+    <sfwAssociatedForm ID="wfmBenefitCalculationPreRetirementDeathMaintenance" sfwEntityField="objBenefitCalculationRetirement" />
+  </sfwAssociatedForms>
+  <sfwTableBookMarks />
+  <sfwChildTemplateBookmarks />
+</form>

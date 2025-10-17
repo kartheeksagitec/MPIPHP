@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmFilesMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvAdmin" sfwResource="401 " sfwType="Maintenance" sfwTitle="Files Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Batch Overview=Batch Overview.htm;Create File Type=Create File Type.htm;Update File Type=Update File Type.htm;Delete File Type=Delete File Type.htm" sfwEntity="entFile">
+  <initialload>
+    <callmethods sfwMethodName="FindFile" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintFileId=FileId" Text="Save" OnClientClick="SaveNoChangesMessage(e);" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="File Information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFileID" Text="File ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblFileId" sfwEntityField="FileId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatus" Text="Status :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlFileStatusValue" sfwLoadType="CodeGroup" sfwLoadSource="26" sfwEntityField="FileStatusValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDescription" Text="Description :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwTextBox ID="txbDescription" sfwEntityField="Description" />
+                <RequiredFieldValidator ControlToValidate="txbDescription" ErrorMessage="Description is required" ID="rfvDescription" Text="*" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFileType" Text="File Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwRadioButtonList ID="idInboundOutboundFlag" RepeatDirection="Horizontal" sfwDefaultValue="I" sfwLoadType="Items" sfwEntityField="InboundOutboundFlag">
+                  <ListItem Text="Inbound" Value="I" />
+                  <ListItem Text="Outbound" Value="O" />
+                </sfwRadioButtonList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capInboxMask" Text="Inbox Mask :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtInboundMask" sfwDefaultValue="*.*" sfwEntityField="InboundMask" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMailboxSubdirectory" Text="Mailbox Subdirectory :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMailboxPathCode" sfwDefaultValue="Inbx" sfwEntityField="MailboxPathCode" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStagingSubdirectory" Text="Staging Subdirectory :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStagingPathCode" sfwDefaultValue="Stag" sfwEntityField="StagingPathCode" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capProcessSubdirectory" Text="Process Subdirectory :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtProcessPathCode" sfwDefaultValue="Proc" sfwEntityField="ProcessPathCode" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capErrorSubdirectory" Text="Error Subdirectory :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtErrorPathCode" sfwDefaultValue="Err" sfwEntityField="ErrorPathCode" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDelimitedBy" Text="Delimited By :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDelimitedBy" sfwEntityField="DelimitedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capLayoutFile" Text="Layout File :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtXmlLayoutFile" sfwDefaultValue="fle" sfwEntityField="XmlLayoutFile" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capTransCodePos" Text="Transaction Code Position :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbTransactionCodePos" sfwEntityField="TransactionCodePos" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capTransCodeLength" Text="Transaction Code Length :" Width="200px" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTransactionCodeLength" sfwEntityField="TransactionCodeLength" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capTransactionCodVal" Text="Transaction Code Value :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTransactionCodeValue" Rows="4" TextMode="MultiLine" Width="250px" sfwEntityField="TransactionCodeValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capOtherParameters" Text=" Other Parameters :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOtherParameters" sfwEntityField="OtherParameters" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capEmailNotification" Text=" Email Notification :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwTextBox ID="txtEmailNotification" TextMode="MultiLine" Width="500px" sfwEntityField="EmailNotification" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capGroupProcessFlag" Text="Nightly Batch Run : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkGroupProcessFlag" sfwEntityField="GroupProcessFlag" sfwDefaultValue="N" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Transaction Codes">
+          <sfwTable CellSpacing="5" CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmFilesLayoutMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintFileId=FileId;astrTransactionCode=IstrTransactionCode" sfwRelatedControl="grvFileLayout" Text="Open" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="grvFileLayout" sfwEntityField="lstRecordLayout" sfwGridEntity="entutlRecordLayout">
+                  <Columns>
+                    <TemplateField HeaderText="File ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IintFileId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Transaction Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="IstrTransactionCode" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstRecordLayout" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

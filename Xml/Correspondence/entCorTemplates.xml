@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entCorTemplates" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCorrespondence" sfwType="BusinessRule" sfwMainCDO="icdoCorTemplates" sfwObjectID="busCorTemplates" sfwTableName="sgs_cor_templates" sfwView="False" sfwDataObjectID="doCorTemplates">
+  <rules>
+    <rule ID="RULE CHECK IF TEMPLATE NAME IS NULL" sfwMessageId="600" sfwExpression="(string.IsNullOrEmpty(this.icdoCorTemplates.template_name))" sfwObjectBased="True" />
+    <rule ID="RULE CHECK IF TEMPLATE DESC IS NULL" sfwMessageId="602" sfwExpression="(string.IsNullOrEmpty(this.icdoCorTemplates.template_desc))" sfwObjectBased="True" />
+    <rule ID="RULE CHECK IF GROUP IS NULL" sfwMessageId="601" sfwExpression="(string.IsNullOrEmpty(this.icdoCorTemplates.template_group_value))" sfwObjectBased="True" />
+    <rule ID="RULE CHECK IF BOTH ONLINE AND BATCH IS CHECKED" sfwMessageId="603" sfwExpression="(this.icdoCorTemplates.online_flag == &quot;Y&quot;) &amp;&amp; &#xA;(this.icdoCorTemplates.batch_flag == &quot;Y&quot;)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK IF BOTH ONLINE AND BATCH IS NOT CHECKED" sfwMessageId="603" sfwExpression="!(this.icdoCorTemplates.online_flag == &quot;Y&quot;) &amp;&amp; &#xA;!(this.icdoCorTemplates.batch_flag == &quot;Y&quot;)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK TEMPLATE NAME EXISTS NEW MODE" sfwMessageId="605" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entCorTemplates.NEW_DUPLICATE_TEMPLATE_NAME&quot;, this.icdoCorTemplates.template_name) &gt;= 1)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK TEMPLATE NAME EXISTS UPDATE MODE" sfwMessageId="605" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entCorTemplates.UPDATE_DUPLICATE_TEMPLATE_NAME&quot;, this.icdoCorTemplates.template_name, this.icdoCorTemplates.template_id) &gt;= 1)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK ONLINE IS CHECKED AND ASSOC FORM IS NULL" sfwMessageId="606" sfwExpression="(this.icdoCorTemplates.online_flag == &quot;Y&quot;) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.icdoCorTemplates.associated_forms))" sfwObjectBased="True" />
+    <rule ID="VALIDATE DELETE" sfwMessageId="607" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entCorTemplates.DeleteQueryForTemplate&quot;, this.icdoCorTemplates.template_id) &gt; 0)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="RULE CHECK IF TEMPLATE NAME IS NULL" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE CHECK IF TEMPLATE DESC IS NULL" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE CHECK IF GROUP IS NULL" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE CHECK IF BOTH ONLINE AND BATCH IS CHECKED" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE CHECK IF BOTH ONLINE AND BATCH IS NOT CHECKED" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE CHECK TEMPLATE NAME EXISTS NEW MODE" sfwMode="New" sfwStatus="Active" />
+    <item ID="RULE CHECK TEMPLATE NAME EXISTS UPDATE MODE" sfwMode="Update" sfwStatus="Active" />
+    <item ID="RULE CHECK ONLINE IS CHECKED AND ASSOC FORM IS NULL" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete>
+    <item ID="VALIDATE DELETE" sfwMode="All" sfwStatus="Active" />
+  </validatedelete>
+  <updateablecdo />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select *&#xD;&#xA; from sgs_cor_templates&#xD;&#xA;order by template_name">
+      <parameters />
+    </query>
+    <query ID="NEW_DUPLICATE_TEMPLATE_NAME" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgs_cor_templates where template_name = @template_name">
+      <parameters>
+        <parameter ID="@template_name" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="UPDATE_DUPLICATE_TEMPLATE_NAME" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgs_cor_templates &#xD;&#xA;where &#xD;&#xA;    template_id != @template_id&#xD;&#xA;and template_name = @template_name">
+      <parameters>
+        <parameter ID="@template_name" sfwDataType="string" />
+        <parameter ID="@template_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="Templates" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_cor_templates&#xD;&#xA; where associated_forms like @form_name&#xD;&#xA;  and active_flag = 'Y'&#xD;&#xA;order by template_desc&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@form_name" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="ImageDocList" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select concat(dcfnacode,concat(' ',dcdoc_dsc)) as doc_description, rtrim(dcdoc_cat) as dcdoc_cat&#xD;&#xA;  from kprprdobj.kpr0200&#xD;&#xA;order by 1&#xD;&#xA;&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="DeleteQueryForTemplate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select count(*) from sgs_cor_tracking trac&#xD;&#xA;where trac.template_id = @template_id">
+      <parameters>
+        <parameter ID="@template_id" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="template_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="TemplateId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="template_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="TemplateName" sfwIsSequence="False" sfwCaption="Template Name" />
+    <attribute sfwValue="template_desc" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="TemplateDesc" sfwIsSequence="False" sfwCaption="Template Desc" />
+    <attribute sfwType="Description" ID="TemplateGroupDescription" sfwCaption="Template Group" sfwValue="template_group_description" />
+    <attribute sfwValue="template_group_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="TemplateGroupId" sfwCodeID="19" sfwIsSequence="False" sfwCaption="Template Group" />
+    <attribute sfwValue="template_group_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="TemplateGroupValue" sfwIsSequence="False" sfwCaption="Template Group" />
+    <attribute sfwValue="active_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ActiveFlag" sfwIsSequence="False" sfwCaption="Active Flag" sfwDefaultValue="N" />
+    <attribute sfwType="Description" ID="DestinationDescription" sfwCaption="Destination" sfwValue="destination_description" />
+    <attribute sfwValue="destination_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DestinationId" sfwCodeID="0" sfwIsSequence="False" sfwCaption="Destination" />
+    <attribute sfwValue="destination_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="DestinationValue" sfwIsSequence="False" sfwCaption="Destination" />
+    <attribute sfwValue="associated_forms" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1000" sfwIsNull="True" ID="AssociatedForms" sfwIsSequence="False" sfwCaption="Associated Forms" />
+    <attribute sfwType="Description" ID="FilterObjectDescription" sfwCaption="Filter Object" sfwValue="filter_object_description" />
+    <attribute sfwValue="filter_object_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="FilterObjectId" sfwCodeID="0" sfwIsSequence="False" sfwCaption="Filter Object" />
+    <attribute sfwValue="filter_object_field" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="FilterObjectField" sfwIsSequence="False" sfwCaption="Filter Object Field" />
+    <attribute sfwValue="filter_object_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="FilterObjectValue" sfwIsSequence="False" sfwCaption="Filter Object" />
+    <attribute sfwType="Description" ID="ContactRoleDescription" sfwCaption="Contact Role" sfwValue="contact_role_description" />
+    <attribute sfwValue="contact_role_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ContactRoleId" sfwCodeID="6011" sfwIsSequence="False" sfwCaption="Contact Role" />
+    <attribute sfwValue="contact_role_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ContactRoleValue" sfwIsSequence="False" sfwCaption="Contact Role" />
+    <attribute sfwValue="batch_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="BatchFlag" sfwIsSequence="False" sfwCaption="Batch Flag" sfwDefaultValue="N" />
+    <attribute sfwValue="online_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="OnlineFlag" sfwIsSequence="False" sfwCaption="Online Flag" sfwDefaultValue="N" />
+    <attribute sfwValue="auto_print_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="AutoPrintFlag" sfwIsSequence="False" sfwCaption="Auto Print Flag" />
+    <attribute sfwType="Description" ID="PrinterNameDescription" sfwCaption="Printer Name" sfwValue="printer_name_description" />
+    <attribute sfwValue="printer_name_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PrinterNameId" sfwCodeID="44" sfwIsSequence="False" sfwCaption="Printer Name" />
+    <attribute sfwValue="printer_name_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="PrinterNameValue" sfwIsSequence="False" sfwCaption="Printer Name" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwType="Description" ID="ImageDocCategoryDescription" sfwCaption="Image Doc Category" sfwValue="image_doc_category_description" />
+    <attribute sfwValue="image_doc_category_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ImageDocCategoryId" sfwCodeID="0" sfwIsSequence="False" sfwCaption="Image Doc Category" />
+    <attribute sfwValue="image_doc_category_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ImageDocCategoryValue" sfwIsSequence="False" sfwCaption="Image Doc Category" />
+    <attribute sfwType="Description" ID="FilenetDocumentTypeDescription" sfwCaption="Filenet Document Type" sfwValue="filenet_document_type_description" />
+    <attribute sfwValue="filenet_document_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="FilenetDocumentTypeId" sfwCodeID="0" sfwIsSequence="False" sfwCaption="Filenet Document Type" />
+    <attribute sfwValue="filenet_document_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="FilenetDocumentTypeValue" sfwIsSequence="False" sfwCaption="Filenet Document Type" />
+    <attribute sfwValue="doc_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="DocType" sfwIsSequence="False" sfwCaption="Doc Type" />
+    <attribute sfwType="Description" ID="TemplateTypeDescription" sfwCaption="Template Type" sfwValue="template_type_description" />
+    <attribute sfwValue="template_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TemplateTypeId" sfwCodeID="7095" sfwCaption="Template Type" />
+    <attribute sfwValue="template_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="TemplateTypeValue" sfwCaption="Template Type" />
+    <attribute sfwValue="track_details_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="TrackDetailsFlag" sfwCaption="Track Details Flag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrActiveFlag" sfwValue="icdoCorTemplates.istrActiveFlag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBatchFlag" sfwValue="icdoCorTemplates.istrBatchFlag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrOnlineFlag" sfwValue="icdoCorTemplates.istrOnlineFlag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="FormattedAssociatedForms" sfwValue="icdoCorTemplates.formatted_associated_forms" />
+  </attributes>
+</entity>

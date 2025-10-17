@@ -1,0 +1,129 @@
+﻿<form ID="wfmServerManagementMaintenance" sfwActive="True" sfwStatus="Review" sfwResource="20007019" sfwType="Maintenance" sfwTitle="Server Management Maintenance" version="3.5" sfwFormObject="busServers" sfwDefaultButtonID="btnSave" sfwFormObjectType="FormObject" sfwEntity="entServers">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindServers" />
+    <callmethods sfwMode="Update" sfwMethodName="FindServers" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar" ValidateRequestMode="Disabled">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" sfwNavigationParameter="aintPrimaryKey=ServerId" Visible="False" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" Visible="False" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" Visible="False" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" Visible="False" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel2" sfwCaption="Servers">
+          <sfwTable ID="tblNewPage2" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwTextBox ID="txtServerId" Visible="False" sfwEntityField="ServerId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capServerName1" Text="Server Name : " AssociatedControlID="txtServerName1" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtServerName1" sfwEntityField="ServerName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnExecuteRefreshData" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Add Server" sfwObjectMethod="AddServers" />
+                <sfwButton ID="btnExecutePassSelectedRows" sfwMethodName="btnExecuteBusinessMethodSelectRows_Click" Text="Delete" sfwObjectMethod="DeleteServersAndEngines" sfwRefreshFromObject="True" OnClientClick="return confirm('This action will delete the Server record. Press &quot;OK&quot; to continue or &quot;Cancel&quot; to   return to the Server Management Maintenance screen.')" sfwRelatedControl="grvBusServers1" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn>
+                <sfwButton ID="btnRefreshData" sfwMethodName="btnCancel_Click" Text="Refresh Data" Visible="False" />
+                <sfwButton ID="btnExecutePassSelectedRows1" sfwMethodName="btnExecuteBusinessMethodSelectRows_Click" Text="Load Engines" sfwRelatedControl="grvBusServers1" sfwObjectMethod="SelectServer" sfwRefreshFromObject="True" Visible="False" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="4">
+                <sfwGridView ID="grvBusServers1" AllowPaging="True" AllowSorting="True" sfwSelection="One" sfwEntityField="lstServers" sfwGridEntity="entServers">
+                  <Columns>
+                    <TemplateField HeaderText="Server ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnExecutePassSelectedRows1" sfwEntityField="ServerId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Server Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ServerName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel3" sfwCaption="Engines" sfwVisibleRule="Visible Rule - Show Engines">
+          <sfwTable ID="tblNewPage3" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIstrEngineValue" Text="Engine Type : " AssociatedControlID="ddlIstrEngineValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlIstrEngineValue" sfwOperator="=" DataTextField="description" DataValueField="code_value" sfwDefaultValue="DFLT" sfwDefaultType="TextValue" sfwAddEmptyItem="False" sfwLoadType="CodeGroup" sfwLoadSource="3010" sfwEntityField="IstrEngineValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnExecuteRefreshData1" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Add Engine" sfwObjectMethod="AddEngines" sfwNavigationParameter="astrEngineValue=IstrEngineValue" sfwRefreshFromObject="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="3">
+                <sfwGridView ID="grvBusServerConfiguration" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="objSelectedServer.lstServerConfiguration" sfwGridEntity="entServerConfiguration">
+                  <Columns>
+                    <TemplateField HeaderText="Server Configuration ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExecuteRefreshData1" Visible="False" sfwEntityField="ServerConfigurationId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Server ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ServerId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Engine Type" SortExpression="EngineValue" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EngineDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstServers" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objSelectedServer.lstServerConfiguration" sfwNewAutoLoad="True" sfwUpdateAutoLoad="True" />
+  </loaddetails>
+  <centerleft />
+</form>

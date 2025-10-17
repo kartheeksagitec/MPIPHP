@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmRecipientRolloverOrganisationMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="205 " sfwType="Maintenance" sfwTitle="Recipient Rollover Organisation Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmRecipientRolloverOrganisationLookup" sfwEntity="entPayeeAccountRolloverDetail">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewPayeeAccountRolloverDetail" />
+    <callmethods sfwMode="Update" sfwMethodName="FindPayeeAccountRolloverDetail" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintPayeeAccountRolloverDetailId=PayeeAccountRolloverDetailId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" sfwResource="335" Text="Correspondence" />
+                <sfwButton ID="btnReturn" sfwMethodName="btnReturn_Click" sfwResource="307" Text="Return" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Recipient Rollover Organization Details">
+          <sfwTable ID="tblRecipientRolloverOrganizationDetails">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblPayeeAccountRolloverDetailId" ID="capPayeeAccountRolloverDetailId" Text="Payee Account Rollover Detail ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblPayeeAccountRolloverDetailId" sfwEntityField="PayeeAccountRolloverDetailId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblPayeeAccountId" ID="capPayeeAccountId" Text="Payee Account ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblPayeeAccountId" sfwEntityField="PayeeAccountId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtRolloverOrgId" ID="capIstrOrgMPID" Text="Recipient Rollover Org ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRolloverOrgId" sfwAutoColumns="mpi_org_id,Mpi Org ID,like,String;org_name,Org Name,like,String" sfwAutoFillMapping="txtRolloverOrgId=mpi_org_id;txtIstrOrgName=org_name;txtContactName=co;txtAddrLine1=addr_line_1;txtAddrLine2=addr_line_2;ddlCountryValue=country_value;ddlStateValue=state_value;txtCity=city;txtZipCode=zip_code;txtZip4Code=zip_4_code;txtRolloverOrgId1=org_id" sfwAutoMinLength="1" sfwAutoQuery="entPayeeAccountRolloverDetail.GetRolloverMPIDOrgDetails" sfwEntityField="IstrOrgMPID" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtIstrOrgName" ID="capIstrOrgName" Text="Recipient Rollover Org Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox Enabled="False" ID="txtIstrOrgName" sfwEntityField="IstrOrgName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlStatusValue" ID="capStatusValue" Text="Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" sfwLoadType="CodeGroup" sfwLoadSource="7028" sfwEntityField="StatusValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlRolloverTypeValue" ID="capRolloverTypeValue" Text="Rollover Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlRolloverTypeValue" sfwLoadType="CodeGroup" sfwLoadSource="7041" sfwEntityField="RolloverTypeValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlRolloverOptionValue" ID="capRolloverOptionValue" Text="Rollover Option : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlRolloverOptionValue" sfwLoadType="CodeGroup" sfwLoadSource="7007" sfwEntityField="RolloverOptionValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtAccountNumber" ID="capAccountNumber" Text="Account Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAccountNumber" sfwEntityField="AccountNumber" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtAmountOfTaxable" ID="capAmountOfTaxable" Text="Rollover Amount : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAmountOfTaxable" sfwEntityField="Amount" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPercentOfTaxable" ID="capPercentOfTaxable" Text="Percent Of Taxable : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPercentOfTaxable" sfwEntityField="PercentOfTaxable" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkSendToParticipant" ID="capSendToParticipant" Text="Send To Participant : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox AutoPostBack="True" ID="chkSendToParticipant" sfwEntityField="SendToParticipant" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkParticipantPickup" ID="capParticipantPickup" Text="Participant Pickup : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkParticipantPickup" sfwEntityField="ParticipantPickup" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel5" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtContactName" ID="capContactName" Text="Contact Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtContactName" sfwEntityField="ContactName" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtAddrLine1" ID="capAddrLine1" Text="Addr Line 1 : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAddrLine1" sfwEntityField="AddrLine1" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtAddrLine2" ID="capAddrLine2" Text="Addr Line 2 : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAddrLine2" sfwEntityField="AddrLine2" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCountryValue" Text="Country : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlCountryValue" sfwLoadType="CodeGroup" sfwLoadSource="151" sfwEntityField="CountryValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStateValue" Text="State : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStateValue" sfwLoadType="CodeGroup" sfwLoadSource="150" sfwEntityField="StateValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtCity" ID="capCity" Text="City : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCity" sfwEntityField="City" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtZipCode" ID="capZipCode" Text="Zip Code : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtZipCode" sfwEntityField="ZipCode" />
+                <sfwTextBox ID="txtZip4Code" sfwEntityField="Zip4Code" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtRolloverOrgId1" SkinID="textBoxDisplayStyleNone" sfwEntityField="RolloverOrgId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPersonId" SkinID="textBoxDisplayStyleNone" sfwEntityField="objPayeeAccount.PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPayeeAccount" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

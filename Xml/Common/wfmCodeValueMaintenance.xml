@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmCodeValueMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207 " sfwType="Maintenance" sfwTitle="Code Value Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entCodeValue">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewCodeValue" />
+    <callmethods sfwMode="Update" sfwMethodName="FindCodeValue" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnNoChangesSave_Click" sfwNavigationParameter="aintCodeValueId=CodeSerialId" Text="Save" />
+                <sfwButton ID="btnSaveNew" sfwMethodName="btnSaveNew_Click" sfwMode="New" sfwNavigationParameter="code_serial_id=CodeSerialId" Text="SaveNew" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Code Value Information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblcode_id" Text="Code ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="txtcode_id" sfwTwoWayBinding="True" sfwEntityField="CodeId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblcode_value" Text="Code Group :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCodeDescription" Width="200px" sfwEntityField="objCode.Description" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCode" Text="Code :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtcodevalue" sfwEntityField="CodeValue" />
+                <RequiredFieldValidator ControlToValidate="txtcodevalue" ErrorMessage="Code Value is required" ID="rfvCodeValue" Text="*" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDescription" Text="Description :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDescription" Width="300px" sfwEntityField="description" />
+                <RequiredFieldValidator ControlToValidate="txtDescription" ErrorMessage="Description is required" ID="rfvDescription" Text="*" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="captionTd" Text=" : ">
+                <sfwLabel ID="lbldata1" sfwEntityField="objCode.Data1CaptionDisplay" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtdata1" Width="250px" sfwEntityField="Data1" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCodeSerialId" Visible="False" sfwEntityField="CodeSerialId" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="captionTd">
+                <sfwLabel ID="lbldata2" sfwEntityField="objCode.Data2CaptionDisplay" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtdata2" Width="250px" sfwEntityField="Data2" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="captionTd">
+                <sfwLabel ID="lbldata3" sfwEntityField="objCode.Data3CaptionDisplay" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtdata3" Width="250px" sfwEntityField="Data3" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblcomments" Text="Comments :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwTextBox ID="txtcomments" TextMode="MultiLine" Width="500px" sfwEntityField="Comments" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblcode_value_order" Text="Sort Order :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtcode_value_order" sfwEntityField="CodeValueOrder" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objCode" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

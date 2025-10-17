@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmExportToExcel" sfwActive="True" sfwStatus="Valid" sfwType="Other" sfwTitle="Export To Excel" version="3.5" asp="ASPControl" swc="SagitecWebControls">
+  <initialload />
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlExportToExcel" sfwCaption="Export To Excel" Width="400px">
+          <sfwTable ID="tblExportToExcel">
+            <sfwRow>
+              <sfwColumn ID="tbcExport1">
+                <sfwLabel CssClass="none" ID="lblCaption" Text="Select the columns to be exported from the following list:" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ID="tbcExport2">
+                <sfwCheckBoxList ID="cblExportToExcel" RepeatColumns="3" RepeatDirection="Horizontal" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ID="tbcExport3">
+                <sfwGridView CssClass="HideClientSide" ID="grvExcel">
+                  <Columns />
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSelectAll" OnClientClick="return SelectAllExportColumns('cblExportToExcel')" Text="Select All" />
+                <sfwButton ID="btnClearAll" OnClientClick="return ClearAllExportColumns('cblExportToExcel')" Text="Clear All" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ID="tbcExport4">
+                <sfwImageButton ID="btnExportToExcel" ImageUrl="~/Image/gExport.gif" OnClientClick="return CheckExportColumns('cblExportToExcel')" sfwMethodName="btnExportToExcel_Click" sfwRelatedControl="grvExcel" sfwTriggerPostBack="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

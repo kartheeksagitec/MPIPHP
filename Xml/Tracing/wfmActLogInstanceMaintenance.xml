@@ -1,0 +1,300 @@
+﻿<form ID="wfmActLogInstanceMaintenance" sfwType="Maintenance" sfwEntity="entActLogInst" sfwTitle="Trace user details" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmActivityLogInstanceLookup">
+  <initialload>
+    <query />
+    <callmethods sfwMethodName="FindActLogInst" sfwMode="Update" />
+    <callmethods sfwMethodName="FindActLogInst" sfwMode="New" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="ActivityLogInstance Details" sfwCaption="User Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capAppName" Text="Application : " AssociatedControlID="lblAppName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblAppName" sfwEntityField="objActLogApp.AppName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActorName" Text="User Name : " AssociatedControlID="lblActorName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActorName" sfwEntityField="ActorName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Transaction Count :" sfwIsCaption="True" ID="lblLabel1" AssociatedControlID="lblActionCount" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActionCount" sfwEntityField="ActionCount" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActLogUid" Text="Session ID : " AssociatedControlID="lblActLogUid" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActLogUid" sfwEntityField="ActLogUid" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActLogInitialUid" Text="Old Session ID : " AssociatedControlID="lblActLogInitialUid" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActLogInitialUid" sfwEntityField="ActLogInitialUid" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Os Name :" sfwIsCaption="True" ID="capLabel1" AssociatedControlID="lblOsName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblOsName" sfwEntityField="OsName" sfwTwoWayBinding="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel Text="Ip Address :" sfwIsCaption="True" ID="lblLabel" AssociatedControlID="lblIpAddress" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIpAddress" sfwEntityField="IpAddress" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capMacAddress" Text="Mac Address : " AssociatedControlID="lblMacAddress" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblMacAddress" sfwEntityField="MacAddress" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Browser Name :" sfwIsCaption="True" ID="capLabel" AssociatedControlID="lblBrowserName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBrowserName" sfwEntityField="BrowserName" sfwTwoWayBinding="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStartTime" Text="Start Time : " AssociatedControlID="lblStartTime" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStartDate" sfwEntityField="StartTime" sfwDataFormat="{0:d}" />
+                <sfwLiteral ID="ltrLiteral" />
+                <sfwLabel ID="lblStartTime" sfwEntityField="StartTime" sfwDataFormat="{0:D HH:mm:sss.fff}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capEndTime" Text="End Time : " AssociatedControlID="lblEndTime" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEndTime" sfwEntityField="EndTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="ID :" sfwIsCaption="True" ID="lblLabel2" AssociatedControlID="lblActLogInstId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActLogInstId" sfwEntityField="ActLogInstId" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlInstanceDetails" sfwCaption="Session Details" CssClass="fullWidth">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctInstanceDetails">
+                  <Tabs>
+                    <sfwTabSheet ID="tshInstanceAction" HeaderText="Transaction">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpen" sfwRelatedControl="grvLstActLogInstActn" sfwActiveForm="wfmActLogInstanceActionMaintenance" sfwNavigationParameter="aintPrimaryKey=ActLogInstActnId" Visible="False" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvLstActLogInstActn" sfwEntityField="lstActLogInstActn" AllowSorting="True" AllowPaging="True" AllowEditing="True" sfwTwoWayBinding="True">
+                              <Columns>
+                                <TemplateField HeaderText="Transaction">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActionName" sfwLinkable="True" sfwRelatedControl="btnOpen" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Navigation From">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActionSource" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Navigation To">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActionTarget" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Message">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActionResult" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TimeInMs" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StartTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EndTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Transaction Id">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TransactionId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActLogInstActnId" sfwRelatedControl="btnOpen" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshThresholdQuery" HeaderText="Threshold Query">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvLstActLogThresholdQuery" sfwEntityField="lstActLogThresholdQuery">
+                              <Columns>
+                                <TemplateField HeaderText="Query">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Query" sfwDisplayLength="100" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Time In Ms">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TimeInMs" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Result">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Result" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StartTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EndTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Query Id">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="QueryId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActLogThresholdQueryId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshThresholdAction" HeaderText="Threshold App. Server Call">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvLstActLogThresholdActn" sfwEntityField="lstActLogThresholdActn">
+                              <Columns>
+                                <TemplateField HeaderText="Action">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActionName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TimeInMs" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Navigation From">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActionSource" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Navigation To">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActionTarget" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Message">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActionResult" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StartTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EndTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Transaction Id">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TransactionId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActLogThresholdActnId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Client Details">
+                      <sfwTable ID="tblTable">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwJSONData ID="jsdClientData" sfwEntityField="ExtraDetails" sfwMaxDisplayLength="200px" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails>
+    <entityfield ID="objActLogApp" sfwNewAutoLoad="False" sfwUpdateAutoLoad="True" />
+    <entityfield ID="lstActLogInstActn" sfwNewAutoLoad="False" sfwUpdateAutoLoad="True" />
+    <entityfield ID="lstActLogThresholdQuery" sfwNewAutoLoad="False" sfwUpdateAutoLoad="True" />
+    <entityfield ID="lstActLogThresholdActn" sfwNewAutoLoad="False" sfwUpdateAutoLoad="True" />
+  </loaddetails>
+</form>

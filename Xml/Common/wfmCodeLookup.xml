@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmCodeLookup" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207 " sfwType="Lookup" sfwTitle="Code LookUp" sfwMaxCount="100" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Create Code=Create Code.htm;Update Code=Update Code.htm;Delete Code=Delete Code.htm" sfwEntity="entCode" sfwGridCollection="busCodeLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoCode" sfwQueryRef="entCode.Lookup" sfwMethodName="LoadCodes" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblcode_id" Text="Code ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtcode_id" sfwDataField="code_id" sfwQueryID="cdoCode" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lbldescription" Text="Description :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtdescription" sfwDataField="description" sfwQueryID="cdoCode" Width="300px" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Result">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmCodeMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="code_id=txtcode_id" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmCodeMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintCodeId=CodeId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" sfwSecurityLevel="4" Text="Delete" ToolTip="Delete selected record(s)" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" PageSize="20" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Code ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="CodeId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Data1 Caption">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Data1Caption" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Data2 Caption">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Data2Caption" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Data3 Caption">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Data3Caption" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

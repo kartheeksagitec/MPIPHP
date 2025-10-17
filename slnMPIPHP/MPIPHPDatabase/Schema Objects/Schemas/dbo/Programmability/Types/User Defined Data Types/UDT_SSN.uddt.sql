@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_SSN]
+    FROM VARCHAR (256) NULL;
+

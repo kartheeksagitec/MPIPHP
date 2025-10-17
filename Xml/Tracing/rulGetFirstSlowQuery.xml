@@ -1,0 +1,21 @@
+﻿<neorule sfwNodeID="915858dc-4615-4bf8-b019-26bda2dc124b" ID="rulGetFirstSlowQuery" sfwEntity="entJobServiceMonitoring" sfwRuleType="LogicalRule" sfwStatus="Active" sfwStatic="False" sfwTrace="True" sfwCacheResult="False" sfwPrivate="False">
+  <logicalrule sfwNodeID="97183409-0f59-413b-a6f4-7aef11bd6216">
+    <query sfwNodeID="d72e88b2-85b8-4f35-a053-35504106e0aa" sfwQueryID="GetFirstSlowQuery" Text="Get Query text">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" sfwExpression="FromDate" />
+        <parameter ID="@end_time" sfwDataType="DateTime" sfwExpression="ToDate" />
+        <parameter ID="@job_schedule_detail_id" sfwDataType="int" sfwExpression="JobScheduleDetailID" />
+        <parameter ID="@query_hash" sfwDataType="string" sfwExpression="QueryHash" />
+      </parameters>
+    </query>
+    <foreach sfwNodeID="0e6eb373-8a81-4f92-b59a-3491c47c12df" sfwItemName="item" sfwObjectID="GetFirstSlowQuery">
+      <actions sfwNodeID="1d58f11a-d766-4bca-9727-117b3b78b3f5">
+        <action sfwNodeID="97b85f0f-5d9f-4f65-a5da-8fc763f06a23" sfwExpression="FirstQuery = item.GetValue&lt;string&gt;(&quot;query&quot;)" />
+      </actions>
+      <break sfwNodeID="51de9358-79c8-4377-ae4c-4a650ae53bf9" Text="Break" />
+    </foreach>
+    <variables />
+  </logicalrule>
+  <ExtraFields />
+  <parameters />
+</neorule>

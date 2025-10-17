@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[Report] (
+    [ParentRpt]           [dbo].[UDT_INT]      NULL,
+    [ReportId]            INT                  IDENTITY (1, 1) NOT NULL,
+    [Period]              [dbo].[UDT_INT]      NOT NULL,
+    [ReportTypeCode]      [dbo].[UDT_DATA]     NOT NULL,
+    [AccountNo]           [dbo].[UDT_DATA]     NOT NULL,
+    [EmpAccountNo]        [dbo].[UDT_DATA]     NOT NULL,
+    [BatchId]             [dbo].[UDT_INT]      NOT NULL,
+    [FromDate]            [dbo].[UDT_DATETIME] NOT NULL,
+    [BatchSeq]            [dbo].[UDT_INT]      NOT NULL,
+    [ToDate]              [dbo].[UDT_DATETIME] NOT NULL,
+    [RateGroup]           [dbo].[UDT_INT]      NULL,
+    [Status]              [dbo].[UDT_INT]      NULL,
+    [Weeks]               [dbo].[UDT_INT]      NULL,
+    [StatusDate]          [dbo].[UDT_DATETIME] NOT NULL,
+    [AuditDate]           [dbo].[UDT_DATETIME] NOT NULL,
+    [AuditUser]           [dbo].[UDT_DATA40]   NOT NULL,
+    [RecDate]             [dbo].[UDT_DATETIME] NOT NULL,
+    [ProcessDate]         [dbo].[UDT_DATETIME] NULL,
+    [ProductionTitleId]   [dbo].[UDT_INT]      NULL,
+    [PensionYear]         [dbo].[UDT_INT]      NULL,
+    [PensionProcessDate]  [dbo].[UDT_DATETIME] NULL,
+    [ProductionTitleName] [dbo].[UDT_DATA100]  NULL
+);
+

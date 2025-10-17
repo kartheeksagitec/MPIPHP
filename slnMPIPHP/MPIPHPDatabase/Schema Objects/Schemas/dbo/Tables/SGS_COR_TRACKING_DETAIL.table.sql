@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[SGS_COR_TRACKING_DETAIL] (
+    [TRACKING_DETAIL_ID] [dbo].[UDT_IDENTITY] IDENTITY (1, 1) NOT NULL,
+    [TRACKING_ID]        [dbo].[UDT_ID]       NOT NULL,
+    [BOOKMARK_NAME]      [dbo].[UDT_DATA]     NULL,
+    [BOOKMARK_VALUE]     [dbo].[UDT_DATA]     NULL
+);
+

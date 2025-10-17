@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPersonAccountOverlimitContribution" sfwTableName="sgt_person_account_overlimit_contribution" sfwView="False" sfwDataObjectID="doPersonAccountOverlimitContribution">
+  <queries>
+    <query ID="rptOverLimit" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT  PER.MPI_PERSON_ID,ISNULL(PER.FIRST_NAME,'')+' '+ISNULL(PER.LAST_NAME,'') AS PARTICIPANT_NAME, EMP.EmployerId AS EMPLOYER_ID,&#xD;&#xA;   EMP.EmployerName AS EMPLOYER_NAME,OVRLIMIT.COMPUTATION_YEAR,OVRLIMIT.TOTAL_CONTRIBUTION_AMOUNT,LIMIT.CONTRIBUTION_LIMIT,OVRLIMIT.EXCESS_CONTRIBUTION_AMOUNT&#xD;&#xA;FROM  SGT_PERSON_ACCOUNT_OVERLIMIT_CONTRIBUTION OVRLIMIT WITH(NOLOCK)&#xD;&#xA;INNER JOIN SGT_PERSON_ACCOUNT PERACCT WITH(NOLOCK)&#xD;&#xA; ON  OVRLIMIT.PERSON_ACCOUNT_ID = PERACCT.PERSON_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PERSON PER WITH(NOLOCK)&#xD;&#xA; ON  PERACCT.PERSON_ID = PER.PERSON_ID&#xD;&#xA;INNER JOIN  SGT_IAP_CONTRIBUTION_LIMIT LIMIT WITH(NOLOCK)&#xD;&#xA; ON  LIMIT.PLAN_YEAR = OVRLIMIT.COMPUTATION_YEAR&#xD;&#xA;INNER JOIN PILLARS.dbo.Employer EMP WITH(NOLOCK)&#xD;&#xA; ON  OVRLIMIT.EMP_ACCOUNT_NO = EMP.EmployerId&#xD;&#xA;WHERE  PROCESSED_DATE IS NULL&#xD;&#xA;ORDER BY MPI_PERSON_ID">
+      <parameters />
+    </query>
+    <query ID="UpdateProcessDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGT_PERSON_ACCOUNT_OVERLIMIT_CONTRIBUTION&#xD;&#xA;SET PROCESSED_DATE = GETDATE()&#xD;&#xA;WHERE PROCESSED_DATE IS NULL">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="person_account_overlimit_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonAccountOverlimitId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="computation_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ComputationYear" sfwIsSequence="False" sfwCaption="Computation Year" />
+    <attribute sfwValue="person_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonAccountId" sfwIsSequence="False" sfwCaption="Person Account Id" />
+    <attribute sfwValue="emp_account_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="EmpAccountNo" sfwIsSequence="False" sfwCaption="Emp Account No" />
+    <attribute sfwValue="total_contribution_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="TotalContributionAmount" sfwIsSequence="False" sfwCaption="Total Contribution Amount" />
+    <attribute sfwValue="excess_contribution_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="ExcessContributionAmount" sfwIsSequence="False" sfwCaption="Excess Contribution Amount" />
+    <attribute sfwValue="processed_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ProcessedDate" sfwIsSequence="False" sfwCaption="Processed Date" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

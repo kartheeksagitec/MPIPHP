@@ -1,0 +1,77 @@
+﻿<entity asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="entBpmProcessEventXr" sfwMainCDO="icdoBpmProcessEventXr" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmProcessEventXr" sfwTableName="sgw_bpm_process_event_xr" sfwView="False">
+  <reference />
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror>
+    <item ID="Rule - Is Event Description Selected" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Is Action Value Blank" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Is Duplicate Event" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <rulelist />
+  <conditionlist />
+  <compoundconditionlist />
+  <queries>
+    <query ID="LookupQuery" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT PEXR.*, SP.DESCRIPTION,EVE.BPM_EVENT_ID, EVE.EVENT_DESC FROM SGW_BPM_PROCESS_EVENT_XR PEXR WITH(NOLOCK) &#xA;INNER JOIN SGW_BPM_PROCESS SP WITH(NOLOCK) ON PEXR.PROCESS_ID = SP.PROCESS_ID&#xA;INNER JOIN SGW_BPM_EVENT EVE WITH(NOLOCK) ON PEXR.EVENT_ID = EVE.BPM_EVENT_ID" sfwPostgre="SELECT PEXR.*, SP.DESCRIPTION,EVE.BPM_EVENT_ID, EVE.EVENT_DESC FROM SGW_BPM_PROCESS_EVENT_XR PEXR &#xD;&#xA;INNER JOIN SGW_BPM_PROCESS SP  ON PEXR.PROCESS_ID = SP.PROCESS_ID&#xD;&#xA;INNER JOIN SGW_BPM_EVENT EVE  ON PEXR.EVENT_ID = EVE.BPM_EVENT_ID">
+      <parameters />
+    </query>
+    <query ID="FindDuplicateCount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_process_event_xr &#xD;&#xA;WHERE&#xD;&#xA;&#x9; process_id =  @process_ID and&#xD;&#xA;event_id = @event_id AND&#xD;&#xA;&#x9; action_value = @action_value" sfwPostgre="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_process_event_xr &#xD;&#xA;WHERE&#xD;&#xA;&#x9; process_id =  @process_ID and&#xD;&#xA;event_id = @event_id AND&#xD;&#xA;&#x9; action_value = @action_value">
+      <parameters>
+        <parameter ID="@action_value" sfwDataType="string" />
+        <parameter ID="@process_ID" sfwDataType="int" />
+        <parameter ID="@event_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckIfWithActivityIdExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; TOP 1 * &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_EVENT_XR WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; EVENT_ID = @EVENT_ID AND&#xA;&#x9; ACTION_VALUE = @ACTION_VALUE AND&#xA;&#x9; BPM_PROCESS_EVENT_XR_ID &lt;&gt; @BPM_PROCESS_EVENT_XR_ID AND&#xA;&#x9; (ACTIVITY_ID = @ACTIVITY_ID or ACTIVITY_ID is null or @ACTIVITY_ID = 0)" sfwOracle="SELECT *&#xD;&#xA;FROM SGW_BPM_PROCESS_EVENT_XR&#xD;&#xA;WHERE PROCESS_ID             = @PROCESS_ID&#xD;&#xA;AND EVENT_ID                 = @EVENT_ID&#xD;&#xA;AND ACTION_VALUE             = @ACTION_VALUE&#xD;&#xA;AND BPM_PROCESS_EVENT_XR_ID &lt;&gt; @BPM_PROCESS_EVENT_XR_ID&#xD;&#xA;AND ( ACTIVITY_ID            = @ACTIVITY_ID&#xD;&#xA;OR ACTIVITY_ID              IS NULL&#xD;&#xA;OR @ACTIVITY_ID             = 0 )&#xD;&#xA;AND ROWNUM                  &lt;= 1" sfwPostgre="SELECT&#xD;&#xA;&#x9;  * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_EVENT_XR &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; EVENT_ID = @EVENT_ID AND&#xD;&#xA;&#x9; ACTION_VALUE = @ACTION_VALUE AND&#xD;&#xA;&#x9; BPM_PROCESS_EVENT_XR_ID &lt;&gt; @BPM_PROCESS_EVENT_XR_ID AND&#xD;&#xA;&#x9; (ACTIVITY_ID = @ACTIVITY_ID or ACTIVITY_ID is null or @ACTIVITY_ID = 0) LIMIT 1">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@EVENT_ID" sfwDataType="int" />
+        <parameter ID="@ACTION_VALUE" sfwDataType="string" />
+        <parameter ID="@BPM_PROCESS_EVENT_XR_ID" sfwDataType="int" />
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute ID="BpmProcessEventXrId" sfwType="Column" sfwValue="bpm_process_event_xr_id" sfwIsNull="False" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" />
+    <attribute ID="EventId" sfwType="Column" sfwValue="event_id" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="ProcessId" sfwType="Column" sfwValue="process_id" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="ActionDescription" sfwType="Description" sfwValue="action_description" />
+    <attribute ID="ActionId" sfwType="Column" sfwValue="action_id" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwCodeID="2005" />
+    <attribute ID="ActionValue" sfwType="Column" sfwValue="action_value" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" />
+    <attribute ID="CreatedBy" sfwType="Column" sfwValue="created_by" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" />
+    <attribute ID="CreatedDate" sfwType="Column" sfwValue="created_date" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" />
+    <attribute ID="ModifiedBy" sfwType="Column" sfwValue="modified_by" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" />
+    <attribute ID="ModifiedDate" sfwType="Column" sfwValue="modified_date" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" />
+    <attribute ID="UpdateSeq" sfwType="Column" sfwValue="update_seq" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="EventReasonId" sfwType="Column" sfwValue="event_reason_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="ActivityId" sfwType="Column" sfwValue="activity_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="objBpmEvent" sfwType="Object" sfwEntity="entBpmEvent" sfwValue="ibusBpmEvent" />
+    <attribute ID="objBpmProcess" sfwType="Object" sfwEntity="entBpmProcess" sfwValue="ibusBpmProcess" />
+  </attributes>
+  <objectmethods>
+    <method ID="GetProcessActivities" sfwReturnType="Collection" sfwObjectID="cdoBpmActivity" sfwEntity="entSolBpmActivity" />
+    <method ID="LoadBpmEvent" sfwReturnType="Void" />
+    <method ID="LoadBpmProcess" sfwReturnType="Void" />
+  </objectmethods>
+  <constraint />
+  <rules>
+    <rule ID="Rule - Is Event Description Selected" sfwRuleType="Validation" sfwExpression="((this.icdoBpmProcessEventXr.event_id) &lt;= 0)" sfwMessageId="20007006" sfwObjectBased="True" />
+    <rule ID="Rule - Is Action Value Blank" sfwRuleType="Validation" sfwExpression="(string.IsNullOrEmpty(this.icdoBpmProcessEventXr.action_value))" sfwMessageId="20007007" sfwObjectBased="True" />
+    <rule ID="Rule - Is Duplicate Event" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="RFunc.ExecuteQuery&lt;int&gt;(&quot;entBpmProcessEventXr.FindDuplicateCount&quot;, ActionValue, ProcessId,EventId) &gt;0" sfwMessageId="20007030" />
+    <rule ID="Rule - CheckIfWithActivityIdExists" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="CheckIfWithActivityIdExists() == true" sfwMessageId="20007034" />
+  </rules>
+  <methods>
+    <method ID="FindBpmProcessEventXR" sfwMethodType="Load" sfwMode="Update" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item ID="LoadBpmEvent" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmProcess" sfwDataType="Void" sfwItemType="Method" />
+    </method>
+  </methods>
+  <lifecycle />
+  <ExtraFields />
+</entity>

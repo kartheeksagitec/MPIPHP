@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_IMAGE]
+    FROM IMAGE NULL;
+

@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfpQDROApplicationLookup" sfwActive="True" sfwStatus="Valid" sfwType="Lookup" sfwTitle="QDRO Application Lookup" version="3.5" sfwEntity="entPrototype">
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="*Benefit Account Owner Participant ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox" Text="2" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="*Alternate Payee PIN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox1" Text="3" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="Received Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox2" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" Text="Received Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox3" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel5" Text="DRO Model : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList1" sfwLoadType="Items">
+                  <ListItem Text="Standard Active Formula" Value="1" Selected="True" />
+                  <ListItem Text="Standard Retiree Formula" Value="2" />
+                  <ListItem Text="Standard Post Death QDRO" Value="3" />
+                  <ListItem Text="Other" Value="4" />
+                  <ListItem Text="Other Court Order" Value="5" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel7" Text="Plan : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList2" sfwLoadType="Items">
+                  <ListItem Text="All" Value="1" Selected="True" />
+                  <ListItem Text="Pension" Value="2" />
+                  <ListItem Text="IAP" Value="3" />
+                  <ListItem Text="IAP Special Account" Value="4" />
+                  <ListItem Text="Local 52" Value="5" />
+                  <ListItem Text="Local 161" Value="6" />
+                  <ListItem Text="Local 600" Value="7" />
+                  <ListItem Text="Local 666" Value="8" />
+                  <ListItem Text="Local 700" Value="9" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="DRO Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList" sfwLoadType="Items">
+                  <ListItem Text="All" Value="1" Selected="True" />
+                  <ListItem Text="Received" Value="2" />
+                  <ListItem Text="Approved" Value="3" />
+                  <ListItem Text="Qualified" Value="4" />
+                  <ListItem Text="Cancelled" Value="5" />
+                  <ListItem Text="Denied" Value="6" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel6" Text="Case Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox4" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnPrototypeSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfpQDROApplicationMaintenance" sfwMethodName="btnNew_Click" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfpQDROApplicationMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="form_name=#wfpQDROApplicationLookup;grid_view=#dgrResult;row_index=#Index" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwObjectID="busPrototypeLookup.iclbPrototype" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="DRO Application ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="Property0" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property2" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property3" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property4" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="DRO Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property5" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Case Number">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property6" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property7" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Data>
+                    <DataRow>
+                      <DataColumn Value="1001" sfwEntityField="Property0" />
+                      <DataColumn Value="2" sfwEntityField="Property1" />
+                      <DataColumn Value="John Doe" sfwEntityField="Property2" />
+                      <DataColumn Value="3" sfwEntityField="Property3" />
+                      <DataColumn Value="Jane Doe" sfwEntityField="Property4" />
+                      <DataColumn Value="Received" sfwEntityField="Property5" />
+                      <DataColumn Value="DC201230" sfwEntityField="Property6" />
+                      <DataColumn Value="07/01/2011" sfwEntityField="Property7" />
+                    </DataRow>
+                  </Data>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

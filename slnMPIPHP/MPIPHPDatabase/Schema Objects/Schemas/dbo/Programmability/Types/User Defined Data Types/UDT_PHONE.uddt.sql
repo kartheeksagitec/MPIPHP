@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_PHONE]
+    FROM VARCHAR (50) NULL;
+

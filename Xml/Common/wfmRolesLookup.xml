@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmRolesLookup" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207 " sfwType="Lookup" sfwTitle="Roles Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Assign Roles=Assign Roles.htm;Create New Roles=Create New Roles.htm;Delete Role=Delete Role.htm;Modify Roles=Modify Roles.htm;Create New User=Create New User.htm;Modify User=Modify User.htm;Delete User=Delete User.htm;Security Overview=Security Overview.htm" sfwEntity="entRoles" sfwGridCollection="busRolesLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoRoles" sfwQueryRef="entRoles.Lookup" sfwMethodName="LoadRoles" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblrole_description" Text="Role Description :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtrole_description" sfwDataField="role_description" sfwQueryID="cdoRoles" Width="250px" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblrole_id" Text="Role ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtrole_id" sfwDataField="role_id" sfwQueryID="cdoRoles" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearchCriteriaRequired_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Result">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmRolesMaintenance" sfwMethodName="btnNew_Click" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmRolesMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintRoleId=RoleId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwNavigationParameter="RoleId" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Role ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="RoleId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Role Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="RoleDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Update Seq" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UpdateSeq" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

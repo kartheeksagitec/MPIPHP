@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmUserActivityLogMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvUserActivity" sfwResource="207 " sfwType="Maintenance" sfwTitle="Session Details" version="3.5" sfwEntity="entUserActivityLog">
+  <initialload>
+    <callmethods sfwMethodName="FindUserActivityLog" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlSessionDetails" sfwCaption="Session Details">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblUserId" ID="capUserId" Text="User ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblUserId" sfwEntityField="LoggedUserId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblActivityCount" ID="capActivityCount" Text="Total Activities : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActivityCount" sfwEntityField="ActivityCount" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIpAddress" ID="capIpAddress" Text="IP Address : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIpAddress" sfwEntityField="IpAddress" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblMacAddress" ID="capMacAddress" Text="Mac Address : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblMacAddress" sfwEntityField="MacAddress" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblLoginTime" ID="capLoginTime" Text="Login Time : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLoginTime" sfwDataFormat="{0:d}" sfwEntityField="LoginTime" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblLogoffTime" ID="capLogoffTime" Text="Logoff Time : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLogoffTime" sfwDataFormat="{0:d}" sfwEntityField="LogoffTime" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblSessionId" ID="capSessionId" Text="Session ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblSessionId" sfwEntityField="SessionId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwButton ID="btnExportExcelUserActivityLogDetail" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvUserActivityLogDetail" Text="Export Session Details" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlActivityDetails" sfwCaption="Activity Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwPanel ID="pnlSessionSearch" sfwCaption="Filter Criteria" sfwCollapsible="False">
+                  <sfwTable CssClass="Table" ID="tblNewPage2">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtActionLocation" sfwDataField="action_location_disp" sfwOperator="like" sfwWatermark="Navigation From" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtTargetForm" sfwDataField="target_form_disp" sfwOperator="like" sfwWatermark="Navigation To" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtStartTime" sfwDataField="Convert(Time,start_time)" sfwDataFormat="{0:HH:mm:ss}" sfwOperator="&gt;=" sfwWatermark="Start Time &gt;=" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtEndTime" sfwDataField="Convert(Time,end_time)" sfwDataFormat="{0:HH:mm:ss}" sfwOperator="&lt;=" sfwWatermark="EndTime &lt;=" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtResponse" sfwDataField="response" sfwOperator="like" sfwWatermark="Message" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtTextBox" sfwDataField="DATEDIFF(millisecond, start_time, END_TIME)" sfwDataType="Numeric" sfwOperator="&gt;=" sfwWatermark="Time Taken(ms) &gt;=" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtActionName" sfwDataField="action_name_disp" sfwOperator="like" sfwWatermark="Action Name" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwButton ID="btnGridSearchClick" sfwMethodName="btnGridSearch_Click" sfwNavigationParameter="txtActionLocation;txtTargetForm;txtActionName;txtStartTime;txtEndTime;txtTextBox;txtResponse" sfwRelatedControl="grvUserActivityLogDetail" Text="Apply Filter" />
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwLaunchInNewWindow="True" sfwLaunchWindowHeight="200" sfwLaunchWindowWidth="300" sfwMethodName="btnOpen_Click" sfwRelatedControl="grvUserActivityLogDetail" Text="Open" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvUserActivityLogDetail" PageSize="15" sfwBaseQuery="entUserActivityLogDetail.GetSessionDetails" sfwEntityField="lstUserActivityLogDetail" sfwGridEntity="entUserActivityLogDetail">
+                  <Columns>
+                    <TemplateField HeaderText="Navigation From">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActionLocationDisp" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Navigation To">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TargetFormDisp" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Action" SortExpression="ActionName" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwBalloonTooltip="icdoUserActivityLogDetail.action_name" sfwEntityField="ActionNameDisp" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User Activity Log Detail ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UserActivityLogDetailId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User Activity Log ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UserActivityLogId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Message" SortExpression="Response" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwBalloonTooltip="icdoUserActivityLogDetail.response" sfwEntityField="IstrShortMessage" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Start Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:D HH:mm:ss.fff}" sfwEntityField="StartTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="End Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:D HH:mm:ss.fff}" sfwEntityField="EndTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Time (ms)" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IintTimeTakenInMS" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Param Count" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwDataField="icdoUserActivityLogDetail.param_count" sfwMethodName="btnMasterDetailHeader_Click" sfwObjectMethod="LoadUserActivityLogParameterss" Text="Params" Width="50px" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Audit Count" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AuditCount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Query Count" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="QueryCount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmUserActivityLogDetailsMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintUserActivityLogDetailId=UserActivityLogDetailId;aintAuditLogCount=AuditCount" Text="Details" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Parameters>
+                    <parameter ID="@USER_ACTIVITY_LOG_ID" sfwDataType="int" sfwEntityField="UserActivityLogId" />
+                  </Parameters>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlParameters" sfwCaption="Parameter Details">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AutoGenerateColumns="False" ID="grvUserActivityLogParameters" sfwParentGrid="grvUserActivityLogDetail" sfwEntityField="lstUserActivityLogParameters" sfwGridEntity="entUserActivityLogParameters">
+                  <Columns>
+                    <TemplateField HeaderText="Parameter Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ParameterName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Parameter Value">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ParameterValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User Activity Log Detail ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UserActivityLogDetailId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User Activity Log Parameter ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UserActivityLogParameterId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstUserActivityLogDetail" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstUserActivityLogParameters" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

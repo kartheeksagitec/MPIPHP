@@ -1,0 +1,200 @@
+﻿<form ID="wfmActDatabaseTransactionMaintenance" sfwType="Maintenance" sfwEntity="entActLogInstQuery" sfwTitle="Database Transaction Details" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmActDatabaseTransactionLookup">
+  <initialload>
+    <callmethods sfwMode="Update" sfwMethodName="FindActLogInstQuery" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="ActDatabaseTransaction Details" sfwCaption="Query Execution Details">
+          <sfwTable ID="tblMain" CssClass="Table" Width="100%">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capQueryId" Text="Query Id : " AssociatedControlID="lblQueryId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblQueryId" sfwEntityField="QueryId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capTimeInMs1" Text="Response Time (ms) : " AssociatedControlID="lblTimeInMs1" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn Width="60%">
+                <sfwLabel ID="lblTimeInMs1" sfwEntityField="TimeInMs" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStartTime1" Text="Start Time : " AssociatedControlID="lblStartTime1" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStartTime1" sfwEntityField="StartTime" sfwDataFormat="{0:MM/dd/yyyy hh:mm:ss:fff tt}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capEndTime1" Text="End Time : " AssociatedControlID="lblEndTime1" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEndTime1" sfwEntityField="EndTime" sfwDataFormat="{0:MM/dd/yyyy hh:mm:ss:fff tt}" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capResult" Text="Result : " AssociatedControlID="lblResult" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblResult" sfwEntityField="Result" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capTransactionId" Text="Transaction ID : " AssociatedControlID="lblTransactionId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblTransactionId" sfwEntityField="objActLogInstActnStep.objActLogInstActn.TransactionId" />
+                <sfwLabel ID="lblActLogInstQueryId" sfwEntityField="ActLogInstQueryId" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capQuery" Text="Query : " AssociatedControlID="txtQuery" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwTextBox ID="txtQuery" sfwEntityField="Query" Rows="8" TextMode="MultiLine" ReadOnly="True" Width="80%" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="nowrap">
+                <sfwLiteral ID="ltrCaptionParameter" Text="Parameter Details" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwJSONData ID="jsdQueryParams" sfwEntityField="ParameterDetails" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAppServerDetails" sfwCollapsible="False">
+          <sfwTable ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capAPPSERVERNAME" Text="APP Server Name : " AssociatedControlID="lblAPPSERVERNAME" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblAPPSERVERNAME" sfwEntityField="objActLogInstActnStep.APPSERVER_NAME" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capErrorMessage" Text="Error Message : " AssociatedControlID="lblErrorMessage" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblErrorMessage" sfwEntityField="objActLogInstActnStep.ErrorMessage" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStepName" Text="Step Name : " AssociatedControlID="lblStepName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStepName" sfwEntityField="objActLogInstActnStep.StepName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capTimeInMs" Text="Time In Ms : " AssociatedControlID="lblTimeInMs" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblTimeInMs" sfwEntityField="objActLogInstActnStep.TimeInMs" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLinkButton ID="btnActLogInstActnStepId" sfwMethodName="btnOpen_Click" Text="Open" Visible="False" sfwEntityField="objActLogInstActnStep.ActLogInstActnStepId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlSessionDetails" sfwCollapsible="False">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLinkButton ID="btnActLogInstActnId" sfwMethodName="btnOpen_Click" Text="Transaction Details" sfwActiveForm="wfmActLogInstanceActionMaintenance" sfwNavigationParameter="aintPrimaryKey=objActLogInstActnStep.objActLogInstActn.ActLogInstActnId;transaction_id=objActLogInstActnStep.objActLogInstActn.TransactionId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLinkButton sfwMethodName="btnOpen_Click" Text="Session Details" ID="btnOpen" sfwActiveForm="wfmActLogInstanceMaintenance" sfwNavigationParameter="aintPrimaryKey=objActLogInstActnStep.objActLogInstActn.objActLogInst.ActLogInstId" />
+                <sfwLabel ID="lblLogInstanceActionID" Visible="False" sfwEntityField="objActLogInstActnStep.objActLogInstActn.ActLogInstActnId" />
+                <sfwTextBox ID="txtActLogInstId" sfwEntityField="objActLogInstActnStep.objActLogInstActn.objActLogInst.ActLogInstId" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActionName" Text="Transaction Name : " AssociatedControlID="lblActionName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActionName" sfwEntityField="objActLogInstActnStep.objActLogInstActn.ActionName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capTimeInMs2" Text="Response Time (ms) : " AssociatedControlID="lblTimeInMs2" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblTimeInMs2" sfwEntityField="objActLogInstActnStep.objActLogInstActn.TimeInMs" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActionSource" Text="Source : " AssociatedControlID="lblActionSource" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActionSource" sfwEntityField="objActLogInstActnStep.objActLogInstActn.ActionSource" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActionTarget" Text="Target : " AssociatedControlID="lblActionTarget" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActionTarget" sfwEntityField="objActLogInstActnStep.objActLogInstActn.ActionTarget" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStartTime" Text="Start Time : " AssociatedControlID="lblStartTime" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStartTime" sfwEntityField="objActLogInstActnStep.objActLogInstActn.StartTime" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capEndTime" Text="End Time : " AssociatedControlID="lblEndTime" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEndTime" sfwEntityField="objActLogInstActnStep.objActLogInstActn.EndTime" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActLogUid" Text="Session ID : " AssociatedControlID="lblActLogUid" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActLogUid" sfwEntityField="objActLogInstActnStep.objActLogInstActn.objActLogInst.ActLogUid" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActionResult" Text="Result : " AssociatedControlID="lblActionResult" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActionResult" sfwEntityField="objActLogInstActnStep.objActLogInstActn.ActionResult" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails>
+    <entityfield ID="objActLogInstActnStep.objActLogInstActn" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objActLogInstActnStep" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objActLogInstActnStep.objActLogInstActn.objActLogInst" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

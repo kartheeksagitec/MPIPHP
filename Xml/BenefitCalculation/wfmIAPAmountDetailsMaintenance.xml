@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmIAPAmountDetailsMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCalculation" sfwResource="206 " sfwType="Maintenance" sfwTitle="IAPAmount Details Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmIAPAmountDetailsLookup" sfwEntity="entBenefitCalculationDetail">
+  <initialload>
+    <callmethods sfwMethodName="LoadIAPBenefitAmountDetails" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" sfwResource="335" Text="Correspondence" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="IAP Amount Details">
+          <sfwTable ID="tblIAPAmountDetails">
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="5">
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrIAPAmountDetails" sfwSortExpression="IdecPrevYearEndingBalance,IdecQuaterlyAllocation,IdecRate,IdecTotal,IintQuaterly" sfwEntityField="lstIAPAmountDetails" sfwGridEntity="entIAPAmountDetails" SortExpressionUpdated="true">
+                  <Columns>
+                    <TemplateField HeaderText="Prev. Year Ending Balance" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IdecPrevYearEndingBalance" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Quaterly" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IintQuaterly" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Rate" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecRate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Quaterly Allocation" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IdecQuaterlyAllocation" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IdecTotal" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstIAPAmountDetails" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

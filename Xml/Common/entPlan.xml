@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPlan" sfwMainCDO="icdoPlan" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busPlan" sfwTableName="sgt_plan" sfwView="False" sfwDataObjectID="doPlan">
+  <queries>
+    <query ID="GetSpecificPlansLookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select P.PLAN_ID,P.PLAN_NAME&#xD;&#xA;FROM SGT_PLAN AS P WITH(NOLOCK)&#xD;&#xA;INNER JOIN SGT_DRO_MODEL_PLAN_XR WITH(NOLOCK)&#xD;&#xA;ON SGT_DRO_MODEL_PLAN_XR.DRO_MODEL_VALUE=@dro_model_value and P.PLAN_ID=SGT_DRO_MODEL_PLAN_XR.PLAN_ID">
+      <parameters>
+        <parameter ID="@dro_model_value" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetPlanRelatedtoDroandPersonAcc" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT P.PLAN_ID,P.PLAN_NAME&#xD;&#xA;FROM SGT_PLAN AS P WITH(NOLOCK)&#xD;&#xA;INNER JOIN SGT_DRO_MODEL_PLAN_XR XR WITH(NOLOCK) ON P.PLAN_ID=XR.PLAN_ID&#xD;&#xA;INNER JOIN SGT_PERSON_ACCOUNT PACC WITH(NOLOCK) ON PACC.PLAN_ID=P.PLAN_ID&#xD;&#xA;WHERE PACC.PERSON_ID=@PERSON_ID  AND XR.DRO_MODEL_VALUE=@DRO_MODEL_VALUE&#xD;&#xA;and P.PLAN_CODE &lt;&gt; 'LIFE'">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@DRO_MODEL_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetPlanById" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT P.PLAN_NAME,P.PLAN_CODE FROM SGT_PLAN P WITH(NOLOCK) WHERE PLAN_ID=@PLAN_ID">
+      <parameters>
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPlanCount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select COUNT(PLAN_ID) as PlanCount from SGT_PERSON_ACCOUNT WITH(NOLOCK) where PERSON_ID=@person_id">
+      <parameters>
+        <parameter ID="@person_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_PLAN WITH(NOLOCK) where  PLAN_CODE &lt;&gt; 'LIFE'">
+      <parameters />
+    </query>
+    <query ID="GetPlansForPension" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select P.PLAN_ID,P.PLAN_NAME&#xD;&#xA;FROM SGT_PLAN AS P WITH(NOLOCK)&#xD;&#xA;INNER JOIN SGT_PLAN_BENEFIT_XR WITH(NOLOCK)&#xD;&#xA;ON P.PLAN_ID=SGT_PLAN_BENEFIT_XR.PLAN_ID">
+      <parameters />
+    </query>
+    <query ID="GetPlanIdbyCode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT P.PLAN_ID FROM SGT_PLAN P WITH(NOLOCK) WHERE PLAN_CODE = @PLAN_CODE">
+      <parameters>
+        <parameter ID="@PLAN_CODE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetPlanCodebyId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT P.PLAN_CODE FROM SGT_PLAN P WITH(NOLOCK) WHERE PLAN_ID=@PLAN_ID">
+      <parameters>
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPlanDetailsForOverview" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select&#xD;&#xA;Distinct spa.*,&#xD;&#xA;CASE WHEN SP.PLAN_ID = 1 OR SP.PLAN_ID = 2 THEN 'n/a' ELSE CONVERT(VARCHAR(10),CAST(ROUND(SPAE.PENSION_CREDITS,2)AS NUMERIC(11,2)))  END AS istrPensionCredit,&#xD;&#xA;sp.PLAN_NAME as istrplan,sp.PLAN_CODE as istrPlanCode&#xD;&#xA;from SGT_PERSON_ACCOUNT spa&#xD;&#xA;join sgt_plan sp on sp.PLAN_ID = spa.PLAN_ID&#xD;&#xA;LEFT OUTER JOIN SGT_PERSON_ACCOUNT_ELIGIBILITY SPAE ON SPAE.PERSON_ACCOUNT_ID = SPA.PERSON_ACCOUNT_ID&#xD;&#xA;where &#xD;&#xA;spa.PERSON_ID = @PERSON_ID &#xD;&#xA;and sp.PLAN_CODE &lt;&gt; 'LIFE'">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPlanID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select sp.PLAN_ID from SGT_PLAN SP inner join SGT_PLAN_BENEFIT_XR SPBX on SP.PLAN_ID=SPBX.PLAN_ID &#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT SPA ON SPBX.PLAN_BENEFIT_ID=SPA.PLAN_BENEFIT_ID WHERE SPA.PLAN_BENEFIT_ID=@PLAN_BENEFIT_ID ">
+      <parameters>
+        <parameter ID="@PLAN_BENEFIT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="plan_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PlanId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="plan_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="PlanCode" sfwIsSequence="False" sfwCaption="Plan Code" />
+    <attribute sfwValue="plan_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="PlanName" sfwIsSequence="False" sfwCaption="Plan Name" />
+    <attribute sfwType="Description" ID="BenefitTypeDescription" sfwCaption="Benefit Type" sfwValue="benefit_type_description" />
+    <attribute sfwValue="benefit_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BenefitTypeId" sfwCodeID="6001" sfwIsSequence="False" sfwCaption="Benefit Type" />
+    <attribute sfwValue="benefit_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="BenefitTypeValue" sfwIsSequence="False" sfwCaption="Benefit Type" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="benefit_provision_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BenefitProvisionId" sfwIsSequence="False" sfwCaption="Benefit Provision Id" />
+    <attribute sfwValue="merger_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="MergerDate" sfwIsSequence="False" sfwCaption="Merger Date" />
+  </attributes>
+</entity>

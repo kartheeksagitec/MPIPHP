@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entFileDtl" sfwObjectID="busFileDtl" sfwTableName="sgs_file_dtl" sfwView="False" sfwMainCDO="icdoFileDtl" sfwDataObjectID="doFileDtl">
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select a.*, b.processed_date, c.file_id, b.cycle_no, b.mailbox_file_name&#xD;&#xA;  from sgs_file_dtl a,&#xD;&#xA;       sgs_file_hdr b,&#xD;&#xA;       sgs_file c&#xD;&#xA; where a.file_hdr_id = b.file_hdr_id&#xD;&#xA;   and b.file_id = c.file_id&#xD;&#xA; order by &#xD;&#xA;       file_dtl_id&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="StatusSummary" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select status_id, status_value, count(*) as status_count&#xD;&#xA;  from sgs_file_dtl&#xD;&#xA; where file_hdr_id = @file_hdr_id&#xD;&#xA;group by&#xD;&#xA;       status_id, status_value&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@file_hdr_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select a.*, xml_layout_file,delimited_by&#xD;&#xA;  from sgs_file_dtl a,&#xD;&#xA;       sgs_file_hdr b,&#xD;&#xA;       sgs_file c&#xD;&#xA; where file_dtl_id   = @file_dtl_id&#xD;&#xA;   and a.file_hdr_id = b.file_hdr_id &#xD;&#xA;   and b.file_id     = c.file_id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@file_dtl_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="ProcessRecords" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select *&#xD;&#xA;  from sgs_file_dtl&#xD;&#xA; where file_hdr_id   = @file_hdr_id&#xD;&#xA;   and status_value in ('UNPC', 'REVW')&#xD;&#xA; order by header_group_value, file_dtl_id">
+      <parameters>
+        <parameter ID="@file_hdr_id" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="file_dtl_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="FileDtlId" sfwSequenceName="seq_file_dtl_id" sfwIsSequence="True" sfwCaption="ID" sfwRequired="False" />
+    <attribute sfwValue="file_hdr_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="FileHdrId" sfwIsSequence="False" sfwCaption="File Hdr Id" sfwRequired="False" />
+    <attribute sfwValue="transaction_code_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="TransactionCodeValue" sfwIsSequence="False" sfwCaption="Transaction Code Value" sfwRequired="False" />
+    <attribute sfwValue="header_group_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="HeaderGroupValue" sfwIsSequence="False" sfwCaption="Header Group Value" sfwRequired="False" />
+    <attribute sfwValue="line_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="LineNo" sfwIsSequence="False" sfwCaption="Line No" sfwRequired="False" />
+    <attribute sfwValue="record_data" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="RecordData" sfwIsSequence="False" sfwCaption="Record Data" sfwRequired="False" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="29" sfwIsSequence="False" sfwCaption="Status" sfwRequired="False" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" sfwRequired="False" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" sfwRequired="False" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" sfwRequired="False" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" sfwRequired="False" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" sfwRequired="False" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" sfwRequired="False" />
+    <attribute ID="objFileHdr" sfwType="Object" sfwEntity="entFileHdr" sfwValue="ibusFileHdr" />
+    <attribute ID="lstFileDtlError" sfwType="Collection" sfwValue="iclbFileDtlError" sfwEntity="entFileDtlError" sfwPrivate="False" />
+  </attributes>
+</entity>

@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMSSAnnualBenefitSummaryMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvMPIPHPMSS" sfwResource="790" sfwType="Maintenance" sfwTitle="Annual Benefit Summary Maintenance" version="3.5" sfwEntity="entMssAnnualBenefitSummary">
+  <initialload>
+    <callmethods sfwMethodName="FindMssAnnualBenefitSummary" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeading" sfwCollapsible="False">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn CssClass="NaviHeadtxt15Size">
+                <sfwLiteral ID="ltrLiteral" Text="Annual Benefit Summary" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Annual Benefit Summary">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn ColumnSpan="2">
+                <sfwButton ID="btnExportToExcel1" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvAclbPersonWorkHistoryMPI" Text="Export To Excel" />
+                <sfwButton ID="btnRecalculateEEInterest" sfwActiveForm="wfmRecalculateEEInterestMaintenance" sfwMethodName="btnOpen_Click" sfwResource="103" Text="Recalculate EE Interest" sfwNavigationParameter="aintPersonId=PersonId" />
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvAclbPersonWorkHistoryMPI" sfwObjectID="lobjbusAnnualBenefitSummaryOverview.lbusBenefitApplication.aclbPersonWorkHistory_MPI" ShowFooter="True" FooterStyle.HorizontalAlign="Right" sfwEntityField="objLbusBenefitApplication.lstAclbPersonWorkHistoryMPI">
+                  <Columns>
+                    <TemplateField HeaderText="Year" SortExpression="year" sfwVisibleRule="Visible-Rule-ShowTotalSummaryInfo.">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabelYearA" sfwDataField="year" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel Font.Bold="True" Text="Total" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Year" SortExpression="year" sfwVisibleRule="Visible-Rule-ShowRetireeDisclaimerMSS">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabelYearR" sfwDataField="year" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Credited Hours" SortExpression="qualified_hours" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowTotalSummaryInfo.">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabelCHoursA" sfwDataField="qualified_hours" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="ldecTotalCreditedHours" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Credited Hours" SortExpression="qualified_hours" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowRetireeDisclaimerMSS">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabelCHoursR" sfwDataField="qualified_hours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Withdrawn Hours" SortExpression="idecWithdrawalHours" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowTotalSummaryInfo.">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabelWHourA" sfwDataField="idecWithdrawalHours" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="sum(idecWithdrawalHours)" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Withdrawn Hours" SortExpression="idecWithdrawalHours" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowRetireeDisclaimerMSS">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabelWHourR" sfwDataField="idecWithdrawalHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Qualified Years" SortExpression="qualified_years_count" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowTotalSummaryInfo.">
+                      <ItemTemplate>
+                        <sfwLabel ID="lbLQYA" sfwDataField="qualified_years_count" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="lintTotalqualifiedYearsCount" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Qualified Years" SortExpression="qualified_years_count" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowRetireeDisclaimerMSS">
+                      <ItemTemplate>
+                        <sfwLabel ID="lbLQYR" sfwDataField="qualified_years_count" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Vested Years" SortExpression="vested_years_count" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowTotalSummaryInfo.">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblVestedYearsA" sfwDataField="vested_years_count" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="lintTotalvestedYearsCount" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Vested Years" SortExpression="vested_years_count" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowRetireeDisclaimerMSS">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblVestedYearsR" sfwDataField="vested_years_count" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Break In Service Years" SortExpression="bis_years_count" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowTotalSummaryInfo.">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblBISA" sfwDataField="bis_years_count" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="lintBISYearCount" sfwDefaultValue="0" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Break In Service Years" SortExpression="bis_years_count" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowRetireeDisclaimerMSS">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblBISR" sfwDataField="bis_years_count" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retiree Health Hours" SortExpression="idecTotalHealthHours" ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowTotalSummaryInfo.">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblRetireeHealthHrsA" sfwDataField="idecTotalHealthHours" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="sum(idecTotalHealthHours)" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retiree Health Hours" SortExpression="idecTotalHealthHours" ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowRetireeDisclaimerMSS">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblRetireeHealthHrsR" sfwDataField="idecTotalHealthHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retiree Health Years" SortExpression="iintHealthCount" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowTotalSummaryInfo.">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblRetireeHealthYrsA" sfwDataField="iintHealthCount" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="lintTotalHealthYearsCount" sfwDefaultValue="0" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retiree Health Years" SortExpression="iintHealthCount" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowRetireeDisclaimerMSS">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblRetireeHealthYrsR" sfwDataField="iintHealthCount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Accrued Benefit" ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowTotalSummaryInfo.">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblAccruedBenA" sfwDataField="idecBenefitAmount" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="ldecTotalQualifiedAccuruedBenefit" sfwDataFormat="{0:C}" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Accrued Benefit" ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" sfwVisibleRule="Visible-Rule-ShowRetireeDisclaimerMSS">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblAccruedBenR" sfwDataField="idecBenefitAmount" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Comments" SortExpression="comments" ItemStyle.HorizontalAlign="Left" FooterStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="comments" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlActiveIncreaseMessage" sfwCaption="Active Increase" sfwVisibleRule="Visible-Rule-ActiveIncreaseMessageMSS-Temporary">
+          <sfwTable ID="tblNewPage2" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn CssClass="AlignLeftForMss" ColumnSpan="2">
+                <sfwLabel ID="lblActiveIncrease" sfwWrap="True" Text="&lt;i&gt;The Accrued Benefit estimate provided now includes the 10% pension increase approved by the MPI Board of Directors. Per terms of the Trust Agreement, Credited Hours from the most recent break in service (if any) through the 2016 Computation Year are subject to the new rate. Credited Hours in 2017 reflect the previous rate (before the increase).&lt;/i&gt;" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage1" sfwCaption="Disclaimer">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn CssClass="AlignLeftForMss" ColumnSpan="4">
+                <sfwLabel ID="lblLabel" Text="&lt;i&gt;Our records indicate that you are not vested. Unless you become vested, you will not be entitled to any benefits under Motion Picture Industry Pension Plan (the “Pension Plan”) (except a Refund of Unclaimed Vacation &amp; Holiday Pay (“UV&amp;HP”), if applicable).&lt;/i&gt;" sfwVisibleRule="Visible-Rule-IsPersonVested" sfwIsCaption="True" />
+                <sfwLabel ID="lblLabel1" sfwWrap="True" Text="&lt;i&gt;See your MPI Summary Plan Description for additional information about the plans. Benefits are subject to final verification, review and adjustment.If applicable, these amounts may be subject to change in accordance with any divorce or Qualified Domestic Relations Order (&quot;QDRO&quot;), which may or may not be on file. In the event of any inconsistency between any communications and the provisions of the plans, the actual provisions of the plans shall govern.&lt;/i&gt;" sfwIsCaption="True" />
+                <sfwLabel ID="lblRetireeMessage" sfwWrap="True" Text="&lt;i&gt;The Accrued Benefit in the above summary may not be an accurate reflection of your current payment due to adjustments posted since your retirement.&lt;/i&gt;" sfwVisibleRule="Visible-Rule-ShowRetireeDisclaimerMSS" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

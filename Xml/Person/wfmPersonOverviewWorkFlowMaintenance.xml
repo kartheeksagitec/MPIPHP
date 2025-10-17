@@ -1,0 +1,147 @@
+﻿<form ID="wfmPersonOverviewWorkFlowMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="206" sfwType="Maintenance" sfwTitle="Person Overview BPM Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entPersonOverviewWorkFlows">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindPersonOverviewWorkFlow" />
+    <callmethods sfwMode="Update" sfwMethodName="FindPersonOverviewWorkFlow" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" sfwResource="335" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Person Information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblMPID" Text="MPID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMPID1" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=PersonId" sfwEntityField="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblName" Text="Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblName1" sfwEntityField="IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblSSN" Text="Last 4 Digits of SSN :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblSSN1" sfwEntityField="IstrLast4DigitsofSSN" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDOB" Text="Date of Birth :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDOB1" sfwEntityField="IdtDateofBirth" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox ID="txtPersonId" Visible="False" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="BPM details">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AutoGenerateColumns="False" ID="grvPersonWorkflows" sfwSortExpression="StartTime desc,objBpmActivityInstance.objBpmProcessInstance.objBpmProcess.Name desc,EndTime desc,objBpmActivityInstance.objBpmActivity.Name desc" sfwEntityField="lstPersonBPMflows" sfwGridEntity="entBpmActivityInstanceHistory" AllowSorting="True">
+                  <Columns>
+                    <TemplateField HeaderText="BPM Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmActivityInstance.objBpmProcessInstance.objBpmProcess.Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmActivityInstance.objBpmActivity.Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Start Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoActivityInstance.start_date" sfwEntityField="StartTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="End Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoActivityInstance.end_date" sfwEntityField="EndTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActionUserId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Parameters />
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstPersonBPMflows" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

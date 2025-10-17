@@ -1,0 +1,768 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmJobScheduleMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvAdmin" sfwResource="401" sfwType="Maintenance" sfwTitle="Batch Schedule Maintenance" version="3.5" sfwEntity="entJobSchedule">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewJobSchedule" />
+    <callmethods sfwMode="Update" sfwMethodName="FindJobSchedule" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="Aintjobscheduleid=JobScheduleId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Previous" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnSubmitForApproval" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_SubmitForApproval_Click" sfwResource="2024" sfwVisibleRule="IsStatusValid" Text="SubmitForApproval" />
+                <sfwButton ID="btnApprove" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_Approve_Click" sfwResource="2024" sfwVisibleRule="IsStatusSubmitForApproval" Text="Approve" />
+                <sfwButton ID="btnRunImmediate" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_RunImmediate_Click" sfwVisibleRule="VisibilityOfRunImmediateButton" Text="Run Immediately" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Batch Schedule Details">
+          <sfwTable ID="tblBatchScheduleDetails">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capScheduleName" Text="Schedule Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtScheduleName" sfwEntityField="ScheduleName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActive" Text="Active : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkActive" sfwDefaultValue="N" sfwEntityField="ActiveFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblPriorityLabel" Text="Priority:" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPriorityValue" sfwLoadType="CodeGroup" sfwLoadSource="6019" sfwEntityField="PriorityValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkIsAnnualStatementGeneratedFlag" ID="capIsAnnualStatementGeneratedFlag" sfwVisibleRule="ShowSuppressHardErrorCheckBox" Text="Supress Hard Error :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkIsAnnualStatementGeneratedFlag" sfwVisibleRule="ShowSuppressHardErrorCheckBox" sfwEntityField="IsAnnualStatementGeneratedFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblFrequencyTypeDescription" ID="capFrequencyTypeDescription1" Text="Frequency Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblFrequencyTypeDescription" sfwEntityField="FrequencyTypeDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatusDescription" Text="Schedule Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusDescription" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capJobScheduleId" Text="Job Schedule ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblJobScheduleId" sfwEntityField="JobScheduleId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkCancellableJobFlag" ID="capCancellableJobFlag" Text="Cancellable Job : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox Enabled="False" ID="chkCancellableJobFlag" sfwDefaultValue="N" Visible="False" sfwEntityField="CancellableJobFlag" />
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Top">
+                <sfwLabel ID="lblCancelProcedureLabel" Text="Cancel Procedure Notes:" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3" VerticalAlign="Top">
+                <sfwTextBox ID="txtCacelTextBox" Rows="3" TextMode="MultiLine" Visible="False" Width="300px" sfwEntityField="CancelProcedureNotes" />
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Top">
+                <sfwLabel ID="lblRestartProcedureLabel" Text="Restart Procedure Notes:" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Top">
+                <sfwTextBox ID="txtRestartProcedureTextBox" Rows="3" TextMode="MultiLine" Visible="False" Width="300px" sfwEntityField="RestartProcedureNotes" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn VerticalAlign="Top">
+                <sfwLabel ID="lblEmailNotificationLabel" Text="Email Group for Status Notification:" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Top" ColumnSpan="3">
+                <sfwTextBox ID="txtTextBox" Rows="3" TextMode="MultiLine" Width="300px" sfwEntityField="BatchStatusEmailRecipientGroups" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn VerticalAlign="Top">
+                <sfwLabel ID="lblStatusNotificationEmailLabel" Text="Email Group for Error Notification:" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Top" ColumnSpan="3">
+                <sfwTextBox ID="txtStatusNotificationTextBox" Rows="3" TextMode="MultiLine" Width="300px" sfwEntityField="BatchErrorEmailRecipientGroups" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlDailyFrequencyOnly" sfwCaption="Daily Frequency" sfwVisibleRule="IsFrequencyTypeDaily">
+          <sfwTable CssClass="Table" ID="tblDailyFrequencyOnly">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFrequencyInterval" Text="Recurs every day(s) : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlFrequencyInterval" sfwLoadType="Items" sfwEntityField="UIFreqIntervalForDailyFrequency" sfwDefaultValue="1">
+                  <ListItem Text="1" Value="1" Selected="True" />
+                  <ListItem Text="2" Value="2" />
+                  <ListItem Text="3" Value="3" />
+                  <ListItem Text="4" Value="4" />
+                  <ListItem Text="5" Value="5" />
+                  <ListItem Text="6" Value="6" />
+                  <ListItem Text="7" Value="7" />
+                  <ListItem Text="8" Value="8" />
+                  <ListItem Text="9" Value="9" />
+                  <ListItem Text="10" Value="10" />
+                  <ListItem Text="11" Value="11" />
+                  <ListItem Text="12" Value="12" />
+                  <ListItem Text="13" Value="13" />
+                  <ListItem Text="14" Value="14" />
+                  <ListItem Text="15" Value="15" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlWeeklyFrequency" sfwCaption="Weekly Frequency" sfwVisibleRule="IsFrequencyTypeWeekly">
+          <sfwTable CssClass="Table" ID="tblWeeklyFrequency">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFreqRecuranceFactor" Text="Recurs every : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlFreqRecuranceFactor" sfwLoadType="Items" sfwEntityField="UIFreqRecFactorWeekly" sfwDefaultValue="1">
+                  <ListItem Text="1" Value="1" Selected="True" />
+                  <ListItem Text="2" Value="2" />
+                  <ListItem Text="3" Value="3" />
+                  <ListItem Text="4" Value="4" />
+                  <ListItem Text="5" Value="5" />
+                  <ListItem Text="6" Value="6" />
+                  <ListItem Text="7" Value="7" />
+                  <ListItem Text="8" Value="8" />
+                  <ListItem Text="9" Value="9" />
+                  <ListItem Text="10" Value="10" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLiteral ID="lblWeeksOn" Text="week(s) on" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwCheckBox ID="chkMonday" sfwDefaultValue="0" sfwValueChecked="2" sfwValueUnChecked="0" sfwEntityField="Monday" />
+                <sfwLabel ID="lblMonday" Text="Monday" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkWednesday" sfwDefaultValue="0" sfwValueChecked="8" sfwValueUnChecked="0" sfwEntityField="Wednesday" />
+                <sfwLabel ID="lblWednesday" Text="Wednesday" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkFriday" sfwDefaultValue="0" sfwValueChecked="32" sfwValueUnChecked="0" sfwEntityField="Friday" />
+                <sfwLabel ID="lblFriday" Text="Friday" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkSaturday" sfwDefaultValue="0" sfwValueChecked="64" sfwValueUnChecked="0" sfwEntityField="Saturday" />
+                <sfwLabel ID="lblSaturday" Text="Saturday" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwCheckBox ID="chkTuesday" sfwDefaultValue="0" sfwValueChecked="4" sfwValueUnChecked="0" sfwEntityField="Tuesday" />
+                <sfwLabel ID="lblTuesday" Text="Tuesday" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkThursday" sfwDefaultValue="0" sfwValueChecked="16" sfwValueUnChecked="0" sfwEntityField="Thursday" />
+                <sfwLabel ID="lblThursday" Text="Thursday" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwCheckBox ID="chkSunday" sfwDefaultValue="0" sfwValueChecked="1" sfwValueUnChecked="0" sfwEntityField="Sunday" />
+                <sfwLabel ID="lblSunday" Text="Sunday" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMonthlyFrequency" sfwCaption="Monthly Frequency" sfwVisibleRule="IsFrequencyTypeMonthly">
+          <sfwTable CssClass="Table" ID="tblMonthlyFrequency">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFrequencyInterval1" Text="Day : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlFrequencyInterval1" sfwDefaultValue="1" sfwLoadType="Items" sfwEntityField="UIFreqIntervalForMonthlyFrequency">
+                  <ListItem Text="1" Value="1" Selected="True" />
+                  <ListItem Text="2" Value="2" />
+                  <ListItem Text="3" Value="3" />
+                  <ListItem Text="4" Value="4" />
+                  <ListItem Text="5" Value="5" />
+                  <ListItem Text="6" Value="6" />
+                  <ListItem Text="7" Value="7" />
+                  <ListItem Text="8" Value="8" />
+                  <ListItem Text="9" Value="9" />
+                  <ListItem Text="10" Value="10" />
+                  <ListItem Text="11" Value="11" />
+                  <ListItem Text="12" Value="12" />
+                  <ListItem Text="13" Value="13" />
+                  <ListItem Text="14" Value="14" />
+                  <ListItem Text="15" Value="15" />
+                  <ListItem Text="16" Value="16" />
+                  <ListItem Text="17" Value="17" />
+                  <ListItem Text="18" Value="18" />
+                  <ListItem Text="19" Value="19" />
+                  <ListItem Text="20" Value="20" />
+                  <ListItem Text="21" Value="21" />
+                  <ListItem Text="22" Value="22" />
+                  <ListItem Text="23" Value="23" />
+                  <ListItem Text="24" Value="24" />
+                  <ListItem Text="25" Value="25" />
+                  <ListItem Text="26" Value="26" />
+                  <ListItem Text="27" Value="27" />
+                  <ListItem Text="28" Value="28" />
+                  <ListItem Text="29" Value="29" />
+                  <ListItem Text="30" Value="30" />
+                  <ListItem Text="31" Value="31" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLiteral ID="lblOfEvery" Text="of every" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlFreqRecuranceFactor11" sfwDefaultValue="1" sfwLoadType="Items" sfwEntityField="UIFreqRecFactorMonthly">
+                  <ListItem Text="1" Value="1" Selected="True" />
+                  <ListItem Text="2" Value="2" />
+                  <ListItem Text="3" Value="3" />
+                  <ListItem Text="4" Value="4" />
+                  <ListItem Text="5" Value="5" />
+                  <ListItem Text="6" Value="6" />
+                  <ListItem Text="7" Value="7" />
+                  <ListItem Text="8" Value="8" />
+                  <ListItem Text="9" Value="9" />
+                  <ListItem Text="10" Value="10" />
+                  <ListItem Text="11" Value="11" />
+                  <ListItem Text="12" Value="12" />
+                  <ListItem Text="13" Value="13" />
+                  <ListItem Text="14" Value="14" />
+                  <ListItem Text="15" Value="15" />
+                  <ListItem Text="16" Value="16" />
+                  <ListItem Text="17" Value="17" />
+                  <ListItem Text="18" Value="18" />
+                  <ListItem Text="19" Value="19" />
+                  <ListItem Text="20" Value="20" />
+                  <ListItem Text="21" Value="21" />
+                  <ListItem Text="22" Value="22" />
+                  <ListItem Text="23" Value="23" />
+                  <ListItem Text="24" Value="24" />
+                  <ListItem Text="25" Value="25" />
+                  <ListItem Text="26" Value="26" />
+                  <ListItem Text="27" Value="27" />
+                  <ListItem Text="28" Value="28" />
+                  <ListItem Text="29" Value="29" />
+                  <ListItem Text="30" Value="30" />
+                  <ListItem Text="31" Value="31" />
+                  <ListItem Text="32" Value="32" />
+                  <ListItem Text="33" Value="33" />
+                  <ListItem Text="34" Value="34" />
+                  <ListItem Text="35" Value="35" />
+                  <ListItem Text="36" Value="36" />
+                  <ListItem Text="37" Value="37" />
+                  <ListItem Text="38" Value="38" />
+                  <ListItem Text="39" Value="39" />
+                  <ListItem Text="40" Value="40" />
+                  <ListItem Text="41" Value="41" />
+                  <ListItem Text="42" Value="42" />
+                  <ListItem Text="43" Value="43" />
+                  <ListItem Text="44" Value="44" />
+                  <ListItem Text="45" Value="45" />
+                  <ListItem Text="46" Value="46" />
+                  <ListItem Text="47" Value="47" />
+                  <ListItem Text="48" Value="48" />
+                  <ListItem Text="49" Value="49" />
+                  <ListItem Text="50" Value="50" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLiteral ID="lblMonths" Text="month(s)" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMonthlyRelativeFrequency" sfwCaption="Monthly Relative" sfwVisibleRule="IsFrequencyTypeMonthlyRelative">
+          <sfwTable CssClass="Table" ID="tblMonthlyRelativeFrequency">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFreqRelativeInterval" Text="The  : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlFreqRelativeInterval" sfwDefaultValue="1" sfwLoadType="Items" sfwEntityField="FreqRelativeInterval">
+                  <ListItem Text="First" Value="1" Selected="True" />
+                  <ListItem Text="Second" Value="2" />
+                  <ListItem Text="Third" Value="4" />
+                  <ListItem Text="Fourth" Value="8" />
+                  <ListItem Text="Tenth" Value="16" />
+                  <ListItem Text="Last" Value="32" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlFrequencyInterval2" sfwLoadType="Items" sfwEntityField="UIFreqIntervalForMonthlyRelativeFrequency" sfwDefaultValue="1">
+                  <ListItem Text="Sunday" Value="1" Selected="True" />
+                  <ListItem Text="Monday" Value="2" />
+                  <ListItem Text="Tuesday" Value="3" />
+                  <ListItem Text="Wednesday" Value="4" />
+                  <ListItem Text="Thursday" Value="5" />
+                  <ListItem Text="Friday" Value="6" />
+                  <ListItem Text="Saturday" Value="7" />
+                  <ListItem Text="Day" Value="8" />
+                  <ListItem Text="Weekday" Value="9" />
+                  <ListItem Text="Weekend Day" Value="10" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLiteral ID="lblMonthlyRelativeOfEvery" Text="of every" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlFreqRecuranceFactor2423" sfwLoadType="Items" sfwEntityField="UIFreqRecFactorMonthlyRelative" sfwDefaultValue="1">
+                  <ListItem Text="1" Value="1" Selected="True" />
+                  <ListItem Text="2" Value="2" />
+                  <ListItem Text="3" Value="3" />
+                  <ListItem Text="4" Value="4" />
+                  <ListItem Text="5" Value="5" />
+                  <ListItem Text="6" Value="6" />
+                  <ListItem Text="7" Value="7" />
+                  <ListItem Text="8" Value="8" />
+                  <ListItem Text="9" Value="9" />
+                  <ListItem Text="10" Value="10" />
+                  <ListItem Text="11" Value="11" />
+                  <ListItem Text="12" Value="12" />
+                  <ListItem Text="13" Value="13" />
+                  <ListItem Text="14" Value="14" />
+                  <ListItem Text="15" Value="15" />
+                  <ListItem Text="16" Value="16" />
+                  <ListItem Text="17" Value="17" />
+                  <ListItem Text="18" Value="18" />
+                  <ListItem Text="19" Value="19" />
+                  <ListItem Text="20" Value="20" />
+                  <ListItem Text="21" Value="21" />
+                  <ListItem Text="22" Value="22" />
+                  <ListItem Text="23" Value="23" />
+                  <ListItem Text="24" Value="24" />
+                  <ListItem Text="25" Value="25" />
+                  <ListItem Text="26" Value="26" />
+                  <ListItem Text="27" Value="27" />
+                  <ListItem Text="28" Value="28" />
+                  <ListItem Text="29" Value="29" />
+                  <ListItem Text="30" Value="30" />
+                  <ListItem Text="31" Value="31" />
+                  <ListItem Text="32" Value="32" />
+                  <ListItem Text="33" Value="33" />
+                  <ListItem Text="34" Value="34" />
+                  <ListItem Text="35" Value="35" />
+                  <ListItem Text="36" Value="36" />
+                  <ListItem Text="37" Value="37" />
+                  <ListItem Text="38" Value="38" />
+                  <ListItem Text="39" Value="39" />
+                  <ListItem Text="40" Value="40" />
+                  <ListItem Text="41" Value="41" />
+                  <ListItem Text="42" Value="42" />
+                  <ListItem Text="43" Value="43" />
+                  <ListItem Text="44" Value="44" />
+                  <ListItem Text="45" Value="45" />
+                  <ListItem Text="46" Value="46" />
+                  <ListItem Text="47" Value="47" />
+                  <ListItem Text="48" Value="48" />
+                  <ListItem Text="49" Value="49" />
+                  <ListItem Text="50" Value="50" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLiteral ID="lblmonthlyrelativemonths" Text="month(s)" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlDailyFrequency" sfwCaption="Execution Time" sfwVisibleRule="IsFrequencyTypeNotImmediate">
+          <sfwTable CssClass="Table" ID="tblDailyFrequency">
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn HorizontalAlign="Left" />
+              <sfwColumn CssClass="fontWeightBold">
+                <sfwCheckBox ID="chkExecuteOnOrgHolidayFlag" sfwDefaultValue="N" sfwEntityField="ExecuteOnOrgHolidayFlag" />
+                <sfwLabel ID="lblExecuteOnHolidateLabel" Text="Execute On Holiday" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="fontWeightBold">
+                <sfwRadioButton GroupName="lstrSubdayFrequency" ID="rdbLstrSubdayFrequency" sfwValue="ONCE" Text="Occurs Once" sfwEntityField="LstrSubdayFrequency" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStartTimeForOnceUI" sfwDataFormat="{0:D HH:mm:ss}" sfwEntityField="StartTimeForOnceUI" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="fontWeightBold">
+                <sfwRadioButton GroupName="lstrSubdayFrequency" ID="rdbLstrSubdayFrequency1" sfwValue="EVERY" Text="Occurs Every" sfwEntityField="LstrSubdayFrequency" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFreqSubdayInterval" sfwEntityField="FreqSubdayInterval" />
+                <sfwDropDownList ID="ddlFreqSubdayType" sfwLoadType="Items" sfwEntityField="FreqSubDayTypeOnScreen" sfwDefaultValue="4" CssClass="marg-left-5">
+                  <ListItem Text="Minutes" Value="4" Selected="True" />
+                  <ListItem Text="Hours" Value="8" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStartTime1" Text="Starting at : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStartTimeForEveryUI" sfwDataFormat="{0:D HH:mm:ss}" sfwEntityField="StartTimeForEveryUI" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="capEndTime" Text="Ending at : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEndTimeForUI" sfwDataFormat="{0:D HH:mm:ss}" sfwEntityField="EndTimeForUI" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlDurationPage" sfwCaption="Start and End Dates" sfwVisibleRule="IsFrequencyTypeNotImmediate">
+          <sfwTable CssClass="Table" ID="tblDurationPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStartDate" Text="Start Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStartDate" sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+              </sfwColumn>
+              <sfwColumn CssClass="fontWeightBold">
+                <sfwRadioButton GroupName="lstrEndDatePresent" ID="rdbLstrEndDatePresent" sfwValue="ENDDATEPOPULATED" Text="End Date" sfwEntityField="LstrEndDatePresent" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEndDate" sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn CssClass="fontWeightBold">
+                <sfwRadioButton GroupName="lstrEndDatePresent" ID="rdbLstrEndDatePresent1" sfwValue="ENDDATENOTPOPULATED" Text="No End Date" sfwEntityField="LstrEndDatePresent" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlScheduleDetailsTab" sfwCaption="Batch Schedule Details" CssClass="fullWidth">
+          <sfwTable ID="tblScheduleDetailsTab">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctScheduleDetailsTab">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Batch Processes" ID="tshScheduleDetails">
+                      <sfwTable ID="tblScheduleDetails">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNewJobScheduleDetail" sfwActiveForm="wfmJobScheduleDetailMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintJobScheduleId=lblJobScheduleId" Text="New" sfwToolBarGrid="grvJobScheduleDetail" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnNew_Click.png" />
+                            <sfwButton ID="btnOpenJobScheduleDetail" sfwActiveForm="wfmJobScheduleDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="Aintjobscheduledetailid=JobScheduleDetailId" sfwRelatedControl="grvJobScheduleDetail" Text="Open" />
+                            <sfwButton ID="btnDeleteJobScheduleDetails" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvJobScheduleDetail" Text="Delete" />
+                            <sfwButton ID="btnMoveJobScheduleUp" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwNavigationParameter="aintJobScheduleDetailId=JobScheduleDetailId" sfwObjectMethod="btnMoveJobScheduleUp" sfwRelatedControl="grvJobScheduleDetail" sfwSelection="One" Text="Move Up" OnClientClick="IsSelectedRecord" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnUp_Click.png" sfwToolBarGrid="grvJobScheduleDetail" />
+                            <sfwButton ID="btnMoveJobScheduleDown" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwNavigationParameter="aintJobScheduleDetailId=JobScheduleDetailId" sfwObjectMethod="btnMoveJobScheduleDown" sfwRelatedControl="grvJobScheduleDetail" sfwSelection="One" Text="Move Down" OnClientClick="IsSelectedRecord" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnDown_Click.png" sfwToolBarGrid="grvJobScheduleDetail" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvJobScheduleDetail" sfwEntityField="lstJobScheduleDetail" sfwGridEntity="entJobScheduleDetail">
+                              <Columns>
+                                <TemplateField HeaderText="Batch Process ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="JobScheduleDetailId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Order Number" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="OrderNumber" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Step Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenJobScheduleDetail" sfwEntityField="objBatchSchedule.StepName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Dependent Step Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objDependentBatchSchedule.StepName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Operator">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="OperatorDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Return Value" ItemStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DependentStepReturnValue" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Batch Process Errors" ID="tshScheduleError" Visible="False">
+                      <sfwTable ID="tblScheduleError">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvError" sfwEntityField="InternalErrors" sfwGridEntity="entError">
+                              <Columns>
+                                <TemplateField HeaderText="Message ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="MessageId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Display Message">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DisplayMessage" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Severity">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SeverityDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Batch Schedule Instance History" ID="tshJobHistory">
+                      <sfwTable ID="tblJobHistory">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnOpenJobHeader" sfwActiveForm="wfmJobHeaderMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="Aintjobheaderid=JobHeaderId" sfwRelatedControl="grvJobHeader" Text="Open" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvJobHeader" sfwSelection="Many" sfwEntityField="lstJobHeader" sfwGridEntity="entJobHeader">
+                              <Columns>
+                                <TemplateField HeaderText="Batch Schedule Instance Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenJobHeader" sfwEntityField="JobName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Queued Date Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:G}" sfwEntityField="CreatedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Processing Start Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:G}" sfwEntityField="StartTime" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Processing End Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:G}" sfwEntityField="EndTime" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Batch Schedule Instance ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="JobHeaderId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlBatchScheduleParameters" sfwCaption="Batch Schedule Parameters">
+          <sfwTable ID="tblNewPage" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnButton" sfwActiveForm="wfmJobScheduleDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="Aintjobscheduledetailid=icdoJobScheduleParams.job_schedule_detail_id" sfwRelatedControl="grvGridView" Text="Open" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="grvGridView" AllowPaging="True" AllowSorting="True" sfwEntityField="lstJobScheduleParametersChildGrid" sfwGridEntity="entJobScheduleParams">
+                  <Columns>
+                    <TemplateField Visible="False" HeaderText="Job Schedule Params ID">
+                      <ItemTemplate>
+                        <sfwLabel Visible="False" sfwEntityField="JobScheduleParamsId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Parameter Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnButton" sfwEntityField="ParamName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Parameter Current Value">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ParamValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Job Schedule Detail ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel Visible="False" sfwEntityField="JobScheduleDetailId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstJobScheduleDetail" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="InternalErrors" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstJobHeader" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstJobScheduleParameters" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

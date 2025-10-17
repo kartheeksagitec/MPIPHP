@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPersonBridgeHours" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPersonBridgeHours" sfwObjectID="busPersonBridgeHours" sfwTableName="sgt_person_bridge_hours" sfwView="False" sfwDataObjectID="doPersonBridgeHours">
+  <rules />
+  <delete>
+    <property ID="lstPersonBridgeHoursDetails" sfwMethodName="LoadPersonBridgeHoursDetails" />
+  </delete>
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetPersonBridgeHours" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_PERSON_BRIDGE_HOURS WITH(NOLOCK) WHERE PERSON_ID=@PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="person_bridge_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonBridgeId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonId" sfwIsSequence="False" sfwCaption="Person Id" />
+    <attribute sfwType="Description" ID="BridgeTypeDescription" sfwCaption="Bridge Type" sfwValue="bridge_type_description" />
+    <attribute sfwValue="bridge_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BridgeTypeId" sfwCodeID="6038" sfwIsSequence="False" sfwCaption="Bridge Type" />
+    <attribute sfwValue="bridge_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="BridgeTypeValue" sfwIsSequence="False" sfwCaption="Bridge Type" />
+    <attribute sfwValue="hours_reported" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="18,1" sfwIsNull="True" ID="HoursReported" sfwIsSequence="False" sfwCaption="Hours Reported" />
+    <attribute sfwValue="bridge_start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="BridgeStartDate" sfwIsSequence="False" sfwCaption="Bridge Start Date" />
+    <attribute sfwValue="bridge_end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="BridgeEndDate" sfwIsSequence="False" sfwCaption="Bridge End Date" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwType="Collection" sfwEntity="entPersonBridgeHoursDetail" ID="lstPersonBridgeHoursDetails" sfwValue="iclbPersonBridgeHoursDetails" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadPersonBridgeHoursDetails" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

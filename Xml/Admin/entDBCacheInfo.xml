@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entDBCacheInfo" sfwTableName="cdoDBCacheInfo">
+  <queries>
+    <query ID="sgs_code" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_code &#xD;&#xA; order by code_id">
+      <parameters />
+    </query>
+    <query ID="sgs_code_value" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA; from sgs_code_value &#xD;&#xA;union&#xD;&#xA;select code_serial_id, code_id + 10000, description code_value, code_value description, data1, data2, data3, comments, start_date, end_date, code_value_order, legacy_code_id,&#xD;&#xA;created_by, created_date, modified_by, modified_date, update_seq&#xD;&#xA;from sgs_code_value&#xD;&#xA;where code_id in (1167,611)&#xD;&#xA;order by code_id, code_value_order, description">
+      <parameters />
+    </query>
+    <query ID="sgs_messages" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_messages &#xD;&#xA; order by message_id&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="sgs_user" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_user &#xD;&#xA; order by user_serial_id">
+      <parameters />
+    </query>
+    <query ID="sgs_resources" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_resources &#xD;&#xA; order by resource_id">
+      <parameters />
+    </query>
+    <query ID="sgs_file_paths" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select file_id,group_process_flag, &#xD;&#xD;&#xA;       (select (path_value) as directory_name from sgs_system_paths where path_code = mailbox_path_code) as mailbox_directory,&#xD;&#xD;&#xA;       (select (path_value) as directory_name from sgs_system_paths where path_code = staging_path_code) as staging_directory,&#xD;&#xD;&#xA;       (select (path_value) as directory_name from sgs_system_paths where path_code = process_path_code) as process_directory,&#xD;&#xD;&#xA;       (select (path_value) as directory_name from sgs_system_paths where path_code = error_path_code) as error_directory,&#xD;&#xA;       base_directory&#xD;&#xD;&#xA;  from sgs_system_management,&#xD;&#xD;&#xA;       sgs_file">
+      <parameters />
+    </query>
+    <query ID="sgs_system_paths" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select path_code, base_directory, path_value&#xD;&#xA;  from sgs_system_management, &#xD;&#xA;       sgs_system_paths">
+      <parameters />
+    </query>
+    <query ID="sgs_system_management" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select a.*, b.description  &#xD;&#xA;  from sgs_system_management a,&#xD;&#xA;       sgs_code_value b&#xD;&#xA;where a.region_id = b.code_id&#xD;&#xA;    and a.region_value = b.code_value&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="sgt_iap_contribution_limit" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_IAP_CONTRIBUTION_LIMIT WITH(NOLOCK)">
+      <parameters />
+    </query>
+    <query ID="sgt_payment_item_type" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_PAYMENT_ITEM_TYPE">
+      <parameters />
+    </query>
+    <query ID="sgt_fed_state_tax_rate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_FED_STATE_TAX_RATE">
+      <parameters />
+    </query>
+    <query ID="SGT_FED_STATE_DEDUCTION" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_FED_STATE_DEDUCTION">
+      <parameters />
+    </query>
+    <query ID="SGT_RETRO_ITEM_TYPE" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_RETRO_ITEM_TYPE&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="sgt_payment_step_ref" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_payment_step_ref WITH(NOLOCK)">
+      <parameters />
+    </query>
+    <query ID="sgs_fwk_messages" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgs_fwk_messages WITH(NOLOCK)">
+      <parameters />
+    </query>
+    <query ID="sgt_plan" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_plan">
+      <parameters />
+    </query>
+  </queries>
+  <attributes />
+</entity>

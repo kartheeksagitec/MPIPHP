@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entFileHdr" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoFileHdr" sfwObjectID="busFileHdr" sfwTableName="sgs_file_hdr" sfwView="False" sfwDataObjectID="doFileHdr">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_file_hdr &#xD;&#xA; order by file_hdr_id desc&#xD;&#xA;&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="CountByFileId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*)&#xD;&#xA;  from sgs_file_hdr&#xD;&#xA; where file_id = @file_id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@file_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="MaxIDforFileID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select max(file_hdr_id) from sgs_file_hdr&#xD;&#xA;where file_id = @file_id&#xD;&#xA;&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@file_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountByFileIdReferenceIdDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*)&#xD;&#xA;  from sgs_file_hdr&#xD;&#xA; where file_id = @file_id&#xD;&#xA;and reference_id = @reference_id&#xD;&#xA;and created_date &gt;= @created_date&#xD;&#xA;and status_value != 'IGNR'">
+      <parameters>
+        <parameter ID="@file_id" sfwDataType="int" />
+        <parameter ID="@reference_id" sfwDataType="int" />
+        <parameter ID="@created_date" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="SetIGNRStatusForFileIdRefeIfandDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="update sgs_file_hdr&#xD;&#xA;set status_value = 'IGNR'&#xD;&#xA; where file_id = @file_id&#xD;&#xA;and reference_id = @reference_id&#xD;&#xA;and created_date &gt;= @created_date&#xD;&#xA;and status_value != 'IGNR'">
+      <parameters>
+        <parameter ID="@file_id" sfwDataType="int" />
+        <parameter ID="@reference_id" sfwDataType="int" />
+        <parameter ID="@created_date" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="file_hdr_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="FileHdrId" sfwSequenceName="seq_file_hdr_id" sfwIsSequence="True" sfwCaption="ID" />
+    <attribute sfwValue="mailbox_file_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="200" sfwIsNull="True" ID="MailboxFileName" sfwIsSequence="False" sfwCaption="Mailbox File Name" />
+    <attribute sfwValue="processed_file_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="200" sfwIsNull="True" ID="ProcessedFileName" sfwIsSequence="False" sfwCaption="Processed File Name" />
+    <attribute sfwValue="processed_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ProcessedDate" sfwIsSequence="False" sfwCaption="Processed Date" />
+    <attribute sfwValue="file_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="FileId" sfwIsSequence="False" sfwCaption="File Id" />
+    <attribute sfwValue="reference_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ReferenceId" sfwIsSequence="False" sfwCaption="Reference Id" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="27" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="no_of_rows" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="NoOfRows" sfwIsSequence="False" sfwCaption="No Of Rows" />
+    <attribute sfwValue="cycle_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CycleNo" sfwIsSequence="False" sfwCaption="Cycle No" />
+    <attribute sfwValue="comments" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="Comments" sfwIsSequence="False" sfwCaption="Comments" />
+    <attribute sfwValue="error_message" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="ErrorMessage" sfwIsSequence="False" sfwCaption="Error Message" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute ID="objFile" sfwType="Object" sfwEntity="entFile" sfwValue="ibusFile" />
+    <attribute sfwType="Collection" sfwEntity="entStatusSummary" ID="lstStatusSummary" sfwValue="iclbStatusSummary" />
+    <attribute sfwValue="processed_line_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ProcessedLineNo" sfwCaption="Processed Line No" />
+  </attributes>
+</entity>

@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entDisabilityApplication" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwErrorTable="sgt_benefit_application_error" sfwParentKey="benefit_application_id" sfwParentKeyValue="icdoBenefitApplication.benefit_application_id" sfwMainCDO="icdoBenefitApplication" sfwStatusColumn="status_value" sfwObjectID="busDisabilityApplication" sfwParentEntity="entBenefitApplication">
+  <rules>
+    <rule ID="Rule_ApplicationRcvDtNull" sfwMessageId="5026" sfwExpression="!(this.icdoBenefitApplication.terminally_ill_flag == &quot;Y&quot;) &amp;&amp; &#xA;(this.IsApplicationReceivedDateNull() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-AppRcvdDateLessThanDisOnsetDate" sfwMessageId="5046" sfwExpression="!(this.icdoBenefitApplication.terminally_ill_flag == &quot;Y&quot;) &amp;&amp; &#xA;(this.icdoBenefitApplication.disability_onset_date != DateTime.MinValue) &amp;&amp; &#xA;(this.icdoBenefitApplication.application_received_date &lt; this.icdoBenefitApplication.disability_onset_date)" sfwObjectBased="True" />
+    <rule ID="Rule-CheckDOB" sfwMessageId="5032" sfwExpression="(RFunc.GetValue&lt;DateTime&gt;(this, &quot;ibusPerson.icdoPerson.idtDateofBirth&quot;) == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="Rule-CheckRetrDtLessThanEntlmntDt" sfwMessageId="5038" sfwExpression="(this.icdoBenefitApplication.retirement_date &lt;= this.icdoBenefitApplication.entitlement_date) &amp;&amp; &#xA;!(this.icdoBenefitApplication.terminally_ill_flag == &quot;Y&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule-CheckRtrmntDt6MnthGreaterThanDisOnstDt" sfwMessageId="5037" sfwExpression="!(this.icdoBenefitApplication.disability_onset_date == DateTime.MinValue) &amp;&amp; &#xA;!(this.icdoBenefitApplication.terminally_ill_flag == &quot;Y&quot;) &amp;&amp; &#xA;(this.CheckRtrmntDt6MnthGreaterThanDisOnstDt() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-DisabilityOnsetDateNull" sfwMessageId="5052" sfwExpression="(this.icdoBenefitApplication.disability_onset_date == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="Rule-EntitlementDateGreaterThanRetirementDate" sfwMessageId="6183" sfwExpression="(this.icdoBenefitApplication.retirement_date &lt; this.icdoBenefitApplication.entitlement_date) &amp;&amp; &#xA;(this.icdoBenefitApplication.terminally_ill_flag == &quot;Y&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule-IsEntitlementDate-Null" sfwMessageId="5121" sfwExpression="(this.icdoBenefitApplication.entitlement_date == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="Rule-IsEntitlmntDtFiveMonthsFromOnstDt" sfwMessageId="5039" sfwExpression="!(this.icdoBenefitApplication.disability_onset_date == DateTime.MinValue) &amp;&amp; &#xA;!(this.icdoBenefitApplication.entitlement_date == DateTime.MinValue) &amp;&amp; &#xA;!(this.icdoBenefitApplication.terminally_ill_flag == &quot;Y&quot;) &amp;&amp; &#xA;(this.CheckEntitlementDate() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-IsPersonApproved" sfwMessageId="5017" sfwExpression="(this.ValidateRecord() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-IsSSAappdtGreaterThanAppRcvdDt" sfwMessageId="5130" sfwExpression="!(this.icdoBenefitApplication.terminally_ill_flag == &quot;Y&quot;) &amp;&amp; &#xA;(this.icdoBenefitApplication.ssa_application_date &gt;= this.icdoBenefitApplication.application_received_date)" sfwObjectBased="True" />
+    <rule ID="Rule-IsSSAappdtLessThanDisOnstDt" sfwMessageId="5131" sfwExpression="(this.icdoBenefitApplication.ssa_application_date &lt; this.icdoBenefitApplication.disability_onset_date) &amp;&amp; &#xA;!(this.icdoBenefitApplication.terminally_ill_flag == &quot;Y&quot;) &amp;&amp; &#xA;!(this.icdoBenefitApplication.ssa_application_date == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="Rule-IsSSAApplicationDate-Null" sfwMessageId="5122" sfwExpression="(this.icdoBenefitApplication.terminally_ill_flag == &quot;Y&quot;) &amp;&amp; &#xA;(this.icdoBenefitApplication.ssa_application_date == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="Rule-RetirementDayBeFirst" sfwMessageId="5088" sfwExpression="(this.icdoBenefitApplication.retirement_date.Day != 1)" sfwObjectBased="True" />
+    <rule ID="Rule-IsPendingProcessQDROApplicationWorkflow" sfwMessageId="5492" sfwExpression="(this.iblnIsPendingProcessQDROApplicationWorkflow == True)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-ChangeBenefitOptionButton" sfwRuleType="Validation" sfwExpression="&#xD;&#xA;(this.CheckIfManager() == true)" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="lstDisabilityBenefitHistory" sfwMethodName="LoadDisabilityBenefitHistory" />
+    <property ID="lstBenefitApplicationStatusHistory" sfwMethodName="LoadBenefitApplicationStatusHistorys" />
+    <property ID="lstBenefitApplicationDetail" sfwMethodName="LoadBenefitApplicationDetails" />
+  </delete>
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-DisplayApprovedButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-DisplayCancelledButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-DisplayIncompleteButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-DisplayPendingButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-DisplaySaveButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-IsApplicationStatusApproved" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-IsApplicationStatusNotApproved" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-IsMarried" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-IsJoinderOnFile" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-VestedNormally_IAP" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-VestedNormally_MPI" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-PlanLocal161" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-PlanLocal52" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-PlanLocal600" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-PlanLocal666" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-PlanLocal700" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-DisplayCalculateEstimateButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-DisplayCalFinalBenefitButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-ChangeBenefitOptionButton" sfwStatus="Active" sfwMode="All" />
+  </initialload>
+  <softerror>
+    <item ID="Rule-IsPendingProcessQDROApplicationWorkflow" sfwMode="All" sfwStatus="Active" />
+  </softerror>
+  <harderror>
+    <item ID="Rule-ApplicationReceivedDateLessThanDOB" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-ApplicationReceiveDateGreaterThanTodaysDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-RetirementDayBeFirst" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-CheckDOB" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-IsEntitlementDate-Null" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-CheckRetrDtLessThanEntlmntDt" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-CheckRtrmntDt6MnthGreaterThanDisOnstDt" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-IsEntitlmntDtFiveMonthsFromOnstDt" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-EntitlementDateGreaterThanRetirementDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-DisabilityOnsetDateNull" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="BenefitApplicationId" sfwValue="icdoBenefitApplication.benefit_application_id" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute sfwDataType="string" sfwType="Property" ID="BenefitTypeValue" sfwValue="icdoBenefitApplication.benefit_type_value" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitApplicationDetail" ID="lstBenefitApplicationDetail" sfwValue="iclbBenefitApplicationDetail" />
+    <attribute sfwDataType="string" sfwType="Property" ID="BenefitTypeDescription" sfwValue="icdoBenefitApplication.benefit_type_description" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecAge" sfwValue="idecAge" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJoinderOnFile" sfwValue="icdoBenefitApplication.istrJoinderOnFile" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ApplicationStatusDescription" sfwValue="icdoBenefitApplication.application_status_description" />
+    <attribute sfwDataType="string" sfwType="Property" ID="TerminallyIllFlag" sfwValue="icdoBenefitApplication.terminally_ill_flag" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DisabilityConversionDate" sfwValue="icdoBenefitApplication.disability_conversion_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DisabilityOnsetDate" sfwValue="icdoBenefitApplication.disability_onset_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ApplicationReceivedDate" sfwValue="icdoBenefitApplication.application_received_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="RetirementDate" sfwValue="icdoBenefitApplication.retirement_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="SsaApplicationDate" sfwValue="icdoBenefitApplication.ssa_application_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="EntitlementDate" sfwValue="icdoBenefitApplication.entitlement_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="AwardedOnDate" sfwValue="icdoBenefitApplication.awarded_on_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CancellationReasonValue" sfwValue="icdoBenefitApplication.cancellation_reason_value" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ReasonDescription" sfwValue="icdoBenefitApplication.reason_description" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitApplicationStatusHistory" ID="lstBenefitApplicationStatusHistory" sfwValue="iclbBenefitApplicationStatusHistory" />
+    <attribute sfwType="Collection" sfwEntity="entDisabilityBenefitHistory" ID="lstDisabilityBenefitHistory" sfwValue="iclbDisabilityBenefitHistory" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrNewNotes" sfwValue="istrNewNotes" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoBenefitApplication.created_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoBenefitApplication.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoBenefitApplication.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoBenefitApplication.modified_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRetirementDt" sfwValue="istrRetirementDt" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintVestedYears" sfwValue="iintVestedYears" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecVestedHours" sfwValue="idecVestedHours" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrCurrentDate" sfwValue="istrCurrentDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrDueDate" sfwValue="istrDueDate" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDayOneOfNextMonth" sfwValue="idtDayOneOfNextMonth" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrDayOneOfNextMonth" sfwValue="istrDayOneOfNextMonth" />
+    <attribute ID="objAlternatePayee" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusAlternatePayee" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsUSA" sfwValue="istrIsUSA" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsParticipant" sfwValue="istrIsParticipant" />
+    <attribute sfwDataType="int" sfwType="Property" ID="AintIsParticipant" sfwValue="aintIsParticipant" />
+    <attribute sfwDataType="boolean" sfwType="Property" ID="IblnSetDateFlag" sfwValue="iblnSetDateFlag" />
+    <attribute sfwType="Object" sfwEntity="entRetirementApplication" sfwValue="ibusRetirementApplication" ID="objRetirementApplication" />
+  </attributes>
+  <objectmethods>
+    <method ID="btn_Pending" sfwReturnType="Void" />
+    <method ID="btn_Approved" sfwReturnType="ArrayList" />
+    <method ID="btn_Denied" sfwReturnType="Void" />
+    <method ID="btn_Cancelled" sfwReturnType="ArrayList" />
+    <method ID="btn_Incomplete" sfwReturnType="ArrayList" />
+    <method ID="btn_CalculateBenefitClick" sfwReturnType="ArrayList" />
+    <method ID="GetPlanValues" sfwReturnType="Collection" sfwObjectID="cdoPlan" sfwEntity="entPlan" />
+    <method ID="GetSubPlan" sfwReturnType="Collection" sfwObjectID="cdoPlan" sfwEntity="entPlan">
+      <parameters>
+        <parameter ID="aintPlan_Id" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="GetBenefitOptionsforPlan" sfwReturnType="Collection" sfwObjectID="cdoPlanBenefitXr" sfwEntity="entPlanBenefitXr">
+      <parameters>
+        <parameter ID="aintPlan_Id" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="GetBenefitOptionsforSubPlan" sfwReturnType="Collection" sfwObjectID="cdoPlanBenefitXr" sfwEntity="entPlanBenefitXr">
+      <parameters>
+        <parameter ID="astrSubPlan" sfwDataType="String" />
+      </parameters>
+    </method>
+    <method ID="GetBeneficariesOfParticipant" sfwReturnType="Collection" sfwObjectID="cdoPerson" sfwEntity="entIAPAllocationDetailPersonOverview">
+      <parameters>
+        <parameter ID="aintPlan_Id" sfwDataType="int" />
+        <parameter ID="istrMPI_ID" sfwDataType="String" />
+      </parameters>
+    </method>
+    <method ID="AddNotes" sfwReturnType="ArrayList" />
+    <method ID="LoadDisabilityBenefitHistory" sfwReturnType="Void" />
+    <method ID="LoadBenefitApplicationStatusHistorys" sfwReturnType="Void" />
+    <method ID="LoadBenefitApplicationDetails" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

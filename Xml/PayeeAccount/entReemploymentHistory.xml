@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entReemploymentHistory" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoReemploymentHistory" sfwObjectID="busReemploymentHistory" sfwTableName="sgt_reemployment_history" sfwView="False" sfwDataObjectID="doReemploymentHistory">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetReemploymentHistory" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT PA.*, CVOPTION.DESCRIPTION as BENEFIT_OPTION, CVRELATION.DESCRIPTION AS ACCOUNT_RELATIONSHIP,PER.MPI_PERSON_ID,     &#xD;&#xA;  CASE WHEN PER.MPI_PERSON_ID IS NOT NULL then ISNULL(LAST_NAME,'')+' '+ISNULL(FIRST_NAME,'') END AS PAYEE_NAME,&#xD;&#xA;  CVBENEFITTYPE.DESCRIPTION AS BENEFIT_TYPE, CVRETIREMENTTYPE.DESCRIPTION AS RETIREMENT_TYPE, SBA.RETIREMENT_DATE&#xD;&#xA;  , CVFUNDTYPE.DESCRIPTION AS FUND_TYPE, 0.0 as IAP_HOURS&#xD;&#xA;&#xD;&#xA;FROM SGT_PAYEE_ACCOUNT PA (NOLOCK) &#xD;&#xA;&#xD;&#xA;      INNER JOIN SGT_PAYEE_ACCOUNT_STATUS PAS(NOLOCK) ON PAS.PAYEE_ACCOUNT_ID = PA.PAYEE_ACCOUNT_ID &#xD;&#xA;      LEFT OUTER JOIN SGT_PLAN_BENEFIT_XR PBXR WITH(NOLOCK) ON PBXR.PLAN_BENEFIT_ID=PA.PLAN_BENEFIT_ID &#xD;&#xA;      LEFT OUTER JOIN SGT_PLAN SPLN WITH(NOLOCK) ON SPLN.PLAN_ID = PBXR.PLAN_ID &#xD;&#xA;      LEFT OUTER JOIN SGT_PERSON PER(NOLOCK) ON PA.PERSON_ID = PER.PERSON_ID&#xD;&#xA;   LEFT OUTER JOIN SGT_BENEFIT_APPLICATION_DETAIL SBAD(NOLOCK) ON SBAD.BENEFIT_APPLICATION_DETAIL_ID = PA.BENEFIT_APPLICATION_DETAIL_ID&#xD;&#xA;   LEFT OUTER JOIN SGT_BENEFIT_APPLICATION SBA(NOLOCK) ON SBA.BENEFIT_APPLICATION_ID = SBAD.BENEFIT_APPLICATION_ID      &#xD;&#xA;      LEFT OUTER JOIN SGT_BENEFIT_CALCULATION_DETAIL SBCD WITH(NOLOCK) ON SBCD.BENEFIT_CALCULATION_DETAIL_ID = PA.BENEFIT_CALCULATION_DETAIL_ID&#xD;&#xA;      LEFT OUTER JOIN SGT_BENEFIT_CALCULATION_HEADER SBCH ON SBCH.BENEFIT_CALCULATION_HEADER_ID = SBCD.BENEFIT_CALCULATION_HEADER_ID&#xD;&#xA;      LEFT OUTER JOIN SGT_QDRO_CALCULATION_DETAIL SQCD WITH(NOLOCK) ON SQCD.QDRO_CALCULATION_DETAIL_ID = PA.DRO_CALCULATION_DETAIL_ID&#xD;&#xA;      LEFT OUTER JOIN SGT_QDRO_CALCULATION_HEADER SQCH ON SQCH.QDRO_CALCULATION_HEADER_ID = SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;   INNER JOIN SGS_CODE_VALUE CVOPTION (nolock) ON PBXR.BENEFIT_OPTION_ID = CVOPTION.CODE_ID AND PBXR.BENEFIT_OPTION_VALUE = CVOPTION.CODE_VALUE&#xD;&#xA;   INNER JOIN SGS_CODE_VALUE CVRELATION (nolock) ON PA.ACCOUNT_RELATION_ID= CVRELATION.CODE_ID AND PA.ACCOUNT_RELATION_VALUE = CVRELATION.CODE_VALUE&#xD;&#xA;   INNER JOIN SGS_CODE_VALUE CVBENEFITTYPE (nolock) ON PA.BENEFIT_ACCOUNT_TYPE_ID= CVBENEFITTYPE.CODE_ID AND PA.BENEFIT_ACCOUNT_TYPE_VALUE = CVBENEFITTYPE.CODE_VALUE&#xD;&#xA;   INNER JOIN SGS_CODE_VALUE CVRETIREMENTTYPE (nolock) ON PA.RETIREMENT_TYPE_ID= CVRETIREMENTTYPE.CODE_ID AND PA.RETIREMENT_TYPE_VALUE = CVRETIREMENTTYPE.CODE_VALUE&#xD;&#xA;   LEFT OUTER JOIN SGT_PAYEE_BENEFIT_ACCOUNT SPBA WITH(NOLOCK) ON SPBA.PAYEE_BENEFIT_ACCOUNT_ID = PA.PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;   LEFT OUTER JOIN SGS_CODE_VALUE CVFUNDTYPE (nolock) ON SPBA.FUNDS_TYPE_ID= CVFUNDTYPE.CODE_ID AND SPBA.FUNDS_TYPE_VALUE = CVFUNDTYPE.CODE_VALUE&#xD;&#xA;      LEFT OUTER JOIN &#xD;&#xA;                        (&#xD;&#xA;                              SELECT DISTINCT A.PAYEE_ACCOUNT_ID FROM SGT_PAYMENT_HISTORY_HEADER  A WITH(NOLOCK)&#xD;&#xA;                              LEFT OUTER JOIN SGT_PAYMENT_SCHEDULE B WITH(NOLOCK) ON A.PAYMENT_SCHEDULE_ID = B.PAYMENT_SCHEDULE_ID&#xD;&#xA;                              WHERE A.PAYMENT_SCHEDULE_ID = B.PAYMENT_SCHEDULE_ID&#xD;&#xA;                        )    PREVPHH ON PREVPHH.PAYEE_ACCOUNT_ID = PA.PAYEE_ACCOUNT_ID&#xD;&#xA;     WHERE &#xD;&#xA;     PA.PAYEE_ACCOUNT_ID  = &#xD;&#xA;            @PAYEE_ACCOUNT_ID">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="reemployment_history_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ReemploymentHistoryId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="payee_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PayeeAccountId" sfwIsSequence="False" sfwCaption="Payee Account Id" />
+    <attribute sfwValue="reemployed_flag_from_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ReemployedFlagFromDate" sfwIsSequence="False" sfwCaption="Reemployed Flag From Date" />
+    <attribute sfwValue="reemployed_flag_to_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ReemployedFlagToDate" sfwIsSequence="False" sfwCaption="Reemployed Flag To Date" />
+    <attribute sfwValue="resume_benefit_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ResumeBenefitDate" sfwIsSequence="False" sfwCaption="Resume Benefit Date" />
+    <attribute sfwValue="support_deduction_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="SupportDeductionAmount" sfwIsSequence="False" sfwCaption="Support Deduction Amount" />
+    <attribute sfwValue="reemployment_reason_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ReemploymentReasonValue" sfwIsSequence="False" sfwCaption="Reemployment Reason" />
+    <attribute sfwType="Description" ID="ReemploymentReasonDescription" sfwCaption="Reemployment Reason" sfwValue="reemployment_reason_description" />
+    <attribute sfwValue="reemployment_reason_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ReemploymentReasonId" sfwCodeID="7008" sfwIsSequence="False" sfwCaption="Reemployment Reason" />
+    <attribute sfwValue="support_deduction_item_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="10" sfwIsNull="True" ID="SupportDeductionItemCode" sfwIsSequence="False" sfwCaption="Support Deduction Item Code" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

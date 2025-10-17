@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMssBenefitEstimateMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvMPIPHPMSS" sfwResource="790 " sfwType="Maintenance" sfwTitle="Mss Benefit Estimate Maintenance" version="3.5" sfwEntity="entMssHome">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindMSSHome" />
+    <callmethods sfwMode="Update" sfwMethodName="FindMSSHome" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNHeader" sfwCollapsible="False">
+          <sfwTable CssClass="Table" ID="tblnew">
+            <sfwRow>
+              <sfwColumn CssClass="NaviHeadtxt15Size">
+                <sfwLiteral ID="ltrlMessage" Text="Your Benefit Estimate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCollapsible="False">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="&lt;br/&gt;&lt;br/&gt;" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel5" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="lblLabel" Text="&lt;b&gt;What would you like to do? &lt;/b&gt;" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList" sfwClientVisibility="controllist:btnNew,btnView#ESTM:btnNew;VIEW:btnView;" sfwLoadType="Items" sfwEntityField="IstrBenefitEstimateOptions">
+                  <ListItem Selected="True" />
+                  <ListItem Text="View your Benefit Estimates." Value="VIEW" />
+                  <ListItem Text="Create a new Benefit Estimate using the Estimate Calculator." Value="ESTM" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="lblLabel2" Text="&lt;b&gt;Please select a Benefit Type :&lt;/b&gt;" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList DataTextField="description" DataValueField="code_value" ID="ddlCascadingDropDownList" sfwParameters="aintPersonID=lblPersonId" sfwLoadType="Method" sfwLoadSource="GetBenefitEstimateTypeOptions" sfwEntityField="IstrBenefitEstimateType" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="2" />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="RTMT=wfmMssRetirementEstimateWizard;DRO=wfmMssDroEstimateWizard" sfwCopyActivitySessionVariables="True" sfwMethodName="btnNew_Click" sfwNavigationParameter="istrBenefitEstimateType=ddlCascadingDropDownList;ibusPerson.icdoPerson.date_of_birth=lblDateOfBirth" Text="GO" sfwRelatedControl="ddlCascadingDropDownList" />
+                <sfwButton ID="btnView" sfwMethodName="btnGo_Click" Text="GO" />
+                <sfwLabel ID="lblPersonId" Visible="False" sfwEntityField="objPerson.PersonId" />
+                <sfwLabel CssClass="textBoxDisplayStyleNone" ID="lblDateOfBirth" sfwDataFormat="{0:d}" sfwEntityField="objPerson.DateOfBirth" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="3" CssClass="AlignLeftForMss">
+                <sfwLinkButton ID="btnEstimateForm" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="RBC.pdf" Text="Pension Benefit Estimate Form " />
+                <sfwLabel ID="lblEstimateForm" Text=" To request for an official estimate from MPI, Please fill in this form. The estimate will provide monthly MPI Pension Plan dollar amounts available to you at retirement over a range of ages and options, as well as provide you with your MPI Individual Account Plan balance as of the end of the previous year." sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="3" CssClass="AlignLeftForMss">
+                <sfwLabel CssClass="RedColor" ID="lblLabel3" Text="&lt;b&gt;Our records indicate that we do not have a Date of Birth on file. You must submit legal evidence of your birth date, such as a copy of your birth certificate, passport, DD-214 military discharge form, baptismal records, residency card or Certificate of U.S. Naturalization issued by U.S. Citizenship and Immigration Services.&lt;/b&gt;" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPerson" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

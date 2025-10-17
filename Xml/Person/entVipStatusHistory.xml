@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entVipStatusHistory" sfwMainCDO="icdoVipStatusHistory" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busVipStatusHistory" sfwTableName="sgt_vip_status_history" sfwView="False" sfwDataObjectID="doVipStatusHistory">
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_vip_status_history ">
+      <parameters />
+    </query>
+    <query ID="SelectOldValueModifiedBy" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select MODIFIED_BY,MODIFIED_DATE from [SGT_VIP_STATUS_HISTORY]&#xD;&#xA;where [PERSON_ID]=@PERSON_ID&#xD;&#xA;order by [MODIFIED_DATE] desc">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetDataForVIPStatusHistory" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA;SELECT  SVSH.PERSON_ID,SVSH.VIP_FLAG_OLD_VALUE,SVSH.VIP_FLAG_OLD_VALUE_MODIFIED_DATE,&#xD;&#xA;SVSH.VIP_FLAG_OLD_VALUE_MODIFIED_BY,&#xD;&#xA;SVSH.VIP_FLAG_NEW_VALUE,SVSH.MODIFIED_BY,&#xD;&#xA;SVSH.MODIFIED_DATE,SPB.FIRST_NAME,SPB.LAST_NAME,SPB.MIDDLE_NAME,SPB.MPI_PERSON_ID,&#xD;&#xA;SVSH.[MESSAGE]&#xD;&#xA; FROM [SGT_VIP_STATUS_HISTORY] SVSH &#xD;&#xA; INNER JOIN  SGT_PERSON_BASE SPB&#xD;&#xA;ON SVSH.[PERSON_ID]=SPB.PERSON_ID &#xD;&#xA;where( SVSH.MODIFIED_DATE &gt;= @firstDayOfMonth and SVSH.MODIFIED_DATE&lt;= @lastDayOfMonth) ">
+      <parameters>
+        <parameter ID="@firstDayOfMonth" sfwDataType="string" />
+        <parameter ID="@lastDayOfMonth" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="SelectVIPManagerList" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA;select sur.USER_SERIAL_ID,su.EMAIL_ADDRESS from SGS_USER_ROLES sur&#xD;&#xA;inner join SGS_USER su on sur.USER_SERIAL_ID=su.USER_SERIAL_ID&#xD;&#xA; where ROLE_ID=@RoleID">
+      <parameters>
+        <parameter ID="@RoleID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetVIPFromOpus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" select  PERSON_ID,MPI_PERSON_ID,SSN,FIRST_NAME,MIDDLE_NAME,LAST_NAME,GENDER_VALUE,DATE_OF_BIRTH,&#xD;&#xA; DATE_OF_DEATH,HOME_PHONE_NO,CELL_PHONE_NO,FAX_NO,EMAIL_ADDRESS_1,MODIFIED_BY,VIP_FLAG &#xD;&#xA; from SGT_PERSON where VIP_FLAG='Y'">
+      <parameters />
+    </query>
+    <query ID="GetSSNFromId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" select SSN from sgt_person where PERSON_ID=@PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPersonFromVipStatusHistory" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" select count(*) from SGT_VIP_STATUS_HISTORY where PERSON_ID=@PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="vip_status_history_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="VipStatusHistoryId" sfwCaption="ID" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonId" sfwCaption="Person Id" />
+    <attribute sfwValue="vip_flag_old_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="VipFlagOldValue" sfwCaption="Vip Flag Old Value" />
+    <attribute sfwValue="vip_flag_old_value_modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="VipFlagOldValueModifiedDate" sfwCaption="Vip Flag Old Value Modified Date" />
+    <attribute sfwValue="vip_flag_old_value_modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="VipFlagOldValueModifiedBy" sfwCaption="Vip Flag Old Value Modified By" />
+    <attribute sfwValue="vip_flag_new_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="VipFlagNewValue" sfwCaption="Vip Flag New Value" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="message" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="200" sfwIsNull="True" ID="Message" sfwCaption="Message" />
+  </attributes>
+</entity>

@@ -1,0 +1,274 @@
+﻿<form ID="wfmBpmCaseInstanceMaintenance" sfwType="Maintenance" sfwTitle="BPM Case Instance Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBpmCaseInstanceLookup" sfwFormObjectType="RemoteObject" sfwEntity="entSolBpmCaseInstance">
+  <initialload>
+    <callmethods sfwMethodName="FindBpmCaseInstance" />
+    <query />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" sfwVisibleRule="Visible Rule - Is Case Instance In Progress" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnExecuteRefreshFromObject" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Continue Restricted Case Instance" sfwObjectMethod="ContinueRestrictedCaseInstance" sfwRefreshFromObject="True" sfwVisibleRule="Visible Rule - Show Continue Case Instance Button" />
+                <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Terminate" ID="btnTerminate" sfwObjectMethod="AbortCaseInstance" sfwExecuteMethodType="ObjectMethod" sfwVisibleRule="Visible Rule - Is Case Instance In Progress" OnClientClick="return confirm('Are you sure you want to Terminate? Changes cannot be Rollback.')" />
+                <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Resume" ID="btnExecuteRefreshFromObject1" sfwObjectMethod="SolResumeActivityInstance" sfwExecuteMethodType="ObjectMethod" sfwVisibleRule="Visible Rule - Is Resume Button Visible" sfwExecuteAfterSuccess="btnRefreshData" />
+                <sfwButton ID="btnRefreshData" sfwMethodName="btnCancel_Click" Text="Refresh Data" OnClientClick="HideResumeButtonOnCaseInstance" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="BpmCaseInstance Details" sfwCaption="Case Instance">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCaseInstanceId" Text="Case Instance ID : " AssociatedControlID="lblCaseInstanceId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCaseInstanceId" sfwEntityField="CaseInstanceId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatusValue" Text="Status : " AssociatedControlID="lblStatusValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusValue" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capRequestId" Text="Request ID : " AssociatedControlID="lblRequestId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblRequestId" sfwEntityField="RequestId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIstrFullName" Text="Person Name /" AssociatedControlID="lblIstrFullName" sfwIsCaption="True" />
+                <sfwLabel ID="capOrgName" Text="Organization Name : " AssociatedControlID="lblOrgName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="objPerson.IstrFullName" />
+                <sfwLabel ID="lblOrgName" sfwEntityField="objOrganization.OrgName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCaseId" Text="Case ID : " AssociatedControlID="btnCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnCaseId" sfwMethodName="btnOpen_Click" sfwActiveForm="wfmBPMCaseMaintenance" sfwNavigationParameter="aintCaseId=CaseId" sfwEntityField="CaseId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capName" Text="Case Name : " AssociatedControlID="lblName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnCaseName" sfwMethodName="btnMap_Click" Text="Case Name" sfwNavigationParameter="aint_case_id=CaseInstanceId" sfwObjectID="busBpmCase" sfwEntityField="objBpmCase.Name" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPriorityCodeValue" Text="Priority : " AssociatedControlID="ddlPriorityCodeValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPriorityCodeValue" sfwAddEmptyItem="False" sfwVisibleRule="Visible Rule - Is Case Instance In Progress" sfwLoadType="CodeGroup" sfwLoadSource="3008" sfwEntityField="PriorityCodeValue" />
+                <sfwLabel ID="lblPriorityCodeDescription" sfwVisibleRule="Visible Rule - Is Case Instance Status Not In Progess" sfwEntityField="PriorityCodeDescription" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCaseInstanceDetails" sfwCaption="Details">
+          <sfwTable ID="tblNewPage" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshNewPage1" HeaderText="Process Instance">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="btnOpenProcessInstance" sfwMethodName="btnOpen_Click" sfwRelatedControl="grvBusBpmProcessInstance" Text="Open" sfwActiveForm="wfmBPMProcessInstanceMaintenance" sfwNavigationParameter="aintPrimaryKey=ProcessInstanceId" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusBpmProcessInstance" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwSortExpression="ProcessInstanceId desc" sfwEntityField="lstBpmProcessInstance" sfwGridEntity="entBpmProcessInstance" SortExpressionUpdated="true">
+                              <Columns>
+                                <TemplateField HeaderText="Process Instance ID" ItemStyle.HorizontalAlign="Left">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenProcessInstance" sfwEntityField="ProcessInstanceId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="process_id" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ProcessId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Process">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objBpmProcess.Name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:G}" sfwEntityField="EndDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Case Instance Parameters">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvGridView" AllowPaging="True" AllowSorting="True" sfwEntityField="lstBpmCaseInstanceParameter" sfwGridEntity="entBpmCaseInstanceParameter">
+                              <Columns>
+                                <TemplateField HeaderText="Parameter ID" ItemStyle.HorizontalAlign="Left">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CaseInstanceParameterId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Parameter Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ParameterName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Parameter">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ParameterValue" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshCaseInstanceExecutionPath" HeaderText="Case Instance Execution Path">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn Visible="False" />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn VerticalAlign="Top">
+                            <sfwGridView ID="grvBusBpmCaseInstanceExecutionPath" AllowPaging="True" AllowSorting="True" sfwSortExpression="ExecutionPathId asc" sfwEntityField="lstBpmCaseInstanceExecutionPath" sfwGridEntity="entBpmCaseInstanceExecutionPath" SortExpressionUpdated="true">
+                              <Columns>
+                                <TemplateField HeaderText="Name" SortExpression="Name">
+                                  <ItemTemplate>
+                                    <sfwLinkButton sfwDataField="icdoBpmCaseInstanceExecutionPath.name" sfwMethodName="btnMasterDetailHeader_Click" sfwObjectMethod="LoadSnapshot" ID="btnShowParameterSnapShot" Visible="False" />
+                                    <sfwLabel sfwEntityField="Name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Element Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ElementTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField Visible="False" HeaderText="Execution Path ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ExecutionPathId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn Visible="False">
+                            <sfwGridView ID="grvBusBpmCaseInstanceExecutionPathParameterValueSnapshot" AllowSorting="True" sfwSortExpression="IstrParameterName asc" sfwParentGrid="grvBusBpmCaseInstanceExecutionPath" sfwEntityField="lstExecutionPathParametersSnapShot" sfwGridEntity="entBpmCaseInstanceExecutionPathParameterValueSnapshot" SortExpressionUpdated="true" Visible="False">
+                              <Columns>
+                                <TemplateField HeaderText="Parameter" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel Visible="False" sfwEntityField="IstrParameterName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Data Type" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrParameterDataType" Visible="False" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Value" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrParameterValue" Visible="False" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwDataFormat="{0:G}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwDataFormat="{0:G}" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="objPerson" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objOrganization" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objBpmCase" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmProcessInstance" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmCaseInstanceParameter" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmCaseInstanceExecutionPath" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstExecutionPathParametersSnapShot" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

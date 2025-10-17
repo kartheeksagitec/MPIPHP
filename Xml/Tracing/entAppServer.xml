@@ -1,0 +1,43 @@
+﻿<entity ID="entAppServer" sfwView="False" sfwActive="True" sfwStatus="Review" sfwObjectID="busAppServer" sfwType="EntityRule" CreateWithClass="True">
+  <attributes>
+    <attribute ID="ServerName" sfwDataType="string" sfwValue="ServerName" sfwType="Property" />
+    <attribute ID="AverageResponseTime" sfwDataType="int" sfwValue="AverageResponseTime" sfwType="Property" />
+    <attribute ID="ErrorCount" sfwDataType="int" sfwValue="ErrorCount" sfwType="Property" />
+    <attribute ID="FirstRequest" sfwDataType="datetime" sfwValue="FirstRequest" sfwType="Property" />
+    <attribute ID="Throughput" sfwDataType="double" sfwValue="Throughput" sfwType="Property" />
+    <attribute ID="SlowCount" sfwDataType="int" sfwValue="SlowCount" sfwType="Property" />
+    <attribute ID="RequestCount" sfwDataType="int" sfwValue="RequestCount" sfwType="Property" />
+    <attribute ID="LastRequest" sfwDataType="datetime" sfwValue="LastRequest" sfwType="Property" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="GetSummaryByAppServer" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT appserver_name ServerName,&#xA;             count(*) RequestCount,&#xA;             sum(time_in_ms) / count(*) AverageResponseTime,&#xA;             max(start_time) LastRequest,&#xA;             min(start_time) FirstRequest,&#xA;             sum(case when error_message is null then 0 else 1 end) ErrorCount,&#xA;             sum(case when time_in_ms &gt; appserver_limit then 1 else 0 end) SlowCount,&#xA;              round(cast(count(*) as float) / case when DateDiff(MINUTE, min(start_time), max(start_time)) = 0 then 1 else DateDiff(MINUTE, min(start_time), max(start_time)) end, 2) Throughput&#xA;FROM&#xA;&#x9;    sgs_act_log_inst_actn_step,&#xA;&#x9;    sgs_act_log &#xA;WHERE&#xA;&#x9;    appserver_name is not null   AND&#xA;&#x9;    start_time between @start_time AND  @end_time     &#xA;GROUP BY appserver_name     &#xA;ORDER BY 4 desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+      <mappedcolumns>
+        <column ID="servername" sfwEntityField="ServerName" />
+        <column ID="requestcount" sfwEntityField="RequestCount" />
+        <column ID="averageresponsetime" sfwEntityField="AverageResponseTime" />
+        <column ID="lastrequest" sfwEntityField="LastRequest" />
+        <column ID="firstrequest" sfwEntityField="FirstRequest" />
+        <column ID="errorcount" sfwEntityField="ErrorCount" />
+        <column ID="slowcount" sfwEntityField="SlowCount" />
+        <column ID="throughput" sfwEntityField="Throughput" />
+      </mappedcolumns>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+</entity>

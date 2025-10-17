@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entTableSchema" sfwTableName="SqlServer">
+  <queries>
+    <query ID="GetTableList" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select name &#xD;&#xA;  from dbo.sysobjects&#xD;&#xA;where ((name like @table_type) or (name like 'sg%'))&#xD;&#xA;  and xtype = 'U'&#xD;&#xA;ORDER BY 1 &#xD;&#xA;">
+      <parameters>
+        <parameter ID="@table_type" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetColumnDetail" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select ordinal_position, column_name, character_maximum_length , numeric_precision, numeric_scale,&#xD;&#xA;  case when data_type = 'varchar' then 'string' &#xD;&#xA;       when data_type = 'char' then'string' &#xD;&#xA;       when data_type = 'smalldatetime' then'DateTime' &#xD;&#xA;       when data_type = 'datetime' then'DateTime' &#xD;&#xA;       when data_type = 'money' then'Decimal' &#xD;&#xA;       when data_type = 'numeric' then'Decimal' &#xD;&#xA;       when data_type = 'smallmoney' then'Decimal' &#xD;&#xA;       when data_type = 'float' then'Double' &#xD;&#xA;       when data_type = 'uniqueidentifier' then 'Guid'&#xD;&#xA;       when data_type = 'bigint' then 'long'&#xD;&#xA;  else data_type &#xD;&#xA;   end as type_of_field, &#xD;&#xA;  case when is_nullable = 'NO' then 'N' &#xD;&#xA;  else 'Y' &#xD;&#xA;   end as is_nullable, &#xD;&#xA;       isnull((select ordinal_position from information_schema.key_column_usage &#xD;&#xA;                where table_name = a.table_name and column_name = a.column_name and constraint_name = &#xD;&#xA;                     (select constraint_name from information_schema.table_constraints&#xD;&#xA;                       where table_name = a.table_name and constraint_type = 'primary key')), 0) as key_no&#xD;&#xA;  from information_schema.columns a&#xD;&#xA; where table_name = @table_name&#xD;&#xA;   and column_name not in ('created_by', 'created_date', 'modified_by', 'modified_date', 'update_seq')&#xD;&#xA; order by ordinal_position">
+      <parameters>
+        <parameter ID="@table_name" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetColumnDetailCDO" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select ordinal_position, column_name,data_type,Character_maximum_length Length,&#xD;&#xA;       character_maximum_length , numeric_precision, numeric_scale,&#xD;&#xA;       &#xD;&#xA;case when data_type = 'varchar' then 'string' &#xD;&#xA;       when data_type = 'char' then'string' &#xD;&#xA;       when data_type = 'smalldatetime' then'DateTime' &#xD;&#xA;       when data_type = 'datetime' then'DateTime' &#xD;&#xA;       when data_type = 'money' then'Decimal' &#xD;&#xA;       when data_type = 'numeric' then'Decimal' &#xD;&#xA;       when data_type = 'smallmoney' then'Decimal' &#xD;&#xA;       when data_type = 'float' then'Decimal' &#xD;&#xA;       when data_type = 'uniqueidentifier' then 'Guid'&#xD;&#xA;       when data_type = 'bigint' then 'long'&#xD;&#xA;  else data_type &#xD;&#xA;   end as type_of_field,&#xD;&#xA;&#xD;&#xA;  ColumnProperty(object_id(table_name), column_name, 'IsIdentity') as Is_identity,  &#xD;&#xA;  case when is_nullable = 'NO' then 'N' &#xD;&#xA;  else 'Y' &#xD;&#xA;  end as is_nullable, &#xD;&#xA;         isnull((select ordinal_position from information_schema.key_column_usage &#xD;&#xA;                   where table_name = a.table_name and column_name = a.column_name and constraint_name = &#xD;&#xA;                             (select constraint_name from information_schema.table_constraints&#xD;&#xA;                              where table_name = a.table_name and constraint_type = 'primary key')), 0) as key_no&#xD;&#xA;  from information_schema.columns a&#xD;&#xA;where table_name = @table_name&#xD;&#xA; order by ordinal_position&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@table_name" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetPrimaryKeyDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select kcu.column_name as column_name, c.data_type as data_type&#xD;&#xA;from information_schema.key_column_usage as kcu, information_schema.columns as c&#xD;&#xA;where kcu.table_name = c.table_name&#xD;&#xA;and kcu.column_name = c.column_name&#xD;&#xA;and kcu.table_name = @table_name&#xD;&#xA;and constraint_name = (&#xD;&#xA;  select constraint_name from information_schema.table_constraints&#xD;&#xA;  where table_name = @table_name&#xD;&#xA;  and constraint_type = 'primary key')&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@table_name" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetChildrenTables" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select table_name from information_schema.columns&#xD;&#xA;where table_name &lt;&gt; @table_name&#xD;&#xA;and column_name = @column_name&#xD;&#xA;order by table_name&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@table_name" sfwDataType="string" />
+        <parameter ID="@column_name" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetTableType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TYPE FROM dbo.SYSOBJECTS WHERE name = @table_name">
+      <parameters>
+        <parameter ID="@table_name" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetParentTables" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT&#xD;&#xA;     table_name,&#xD;&#xA;    column_name  &#xD;&#xA;FROM&#xD;&#xA;     information_schema.columns &#xD;&#xA;WHERE&#xD;&#xA;     table_name &lt;&gt; @table_name AND&#xD;&#xA;     column_name  in  (SELECT&#xD;&#xA;     column_name &#xD;&#xA;FROM&#xD;&#xA;     information_schema.columns  &#xD;&#xA;WHERE&#xD;&#xA;      table_name = @table_name AND&#xD;&#xA;     DOMAIN_NAME &lt;&gt; 'udt_identity')  AND&#xD;&#xA;     DOMAIN_NAME = 'udt_identity'  &#xD;&#xA;ORDER     BY  table_name">
+      <parameters>
+        <parameter ID="@table_name" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes />
+</entity>

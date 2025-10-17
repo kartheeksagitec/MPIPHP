@@ -1,0 +1,71 @@
+﻿<entity ID="entBpmProcessBAM" Text="Process BAM" sfwObjectID="busBpmProcessBAM" sfwObjectType="NeoSpin.BusinessObjects.busBpmProcessBAM, NeoSpinBusinessObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" sfwView="False">
+  <queries>
+    <query ID="ProcessLoadSummary" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;BP.NAME,&#xA;&#x9;BA.NAME,&#xA;&#x9;BP.CASE_ID,&#xA;&#x9;BP.PROCESS_ID,&#xA;&#x9;BA.ACTIVITY_ID,&#xA;&#x9;count(*) &#x9;AS Assigned,&#xA;&#x9;sum (case when BAI.STATUS_VALUE = 'UNPC' then 1 else 0 end) &#x9;AS Workpool &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE BAI WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE BPI WITH(NOLOCK)&#xA;&#x9; ON BAI.PROCESS_INSTANCE_ID = BPI.PROCESS_INSTANCE_ID &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_PROCESS BP WITH(NOLOCK)&#xA;&#x9; ON BPI.PROCESS_ID = BP.PROCESS_ID &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY BA WITH(NOLOCK)&#xA;&#x9; ON BAI.ACTIVITY_ID = BA.ACTIVITY_ID AND&#xA;&#x9; BA.ACTIVITY_TYPE_VALUE = 'USTK' LEFT &#xA;&#x9; JOIN (SELECT DISTINCT ACTIVITY_INSTANCE_ID FROM SGW_BPM_ACTIVITY_INSTANCE_USERS WITH(NOLOCK)) &#x9;AS BAIU&#xA;&#x9; ON BAI.ACTIVITY_INSTANCE_ID = BAIU.ACTIVITY_INSTANCE_ID &#xA;WHERE&#xA;&#x9; BAI.STATUS_VALUE = 'INPC' OR BAI.STATUS_VALUE = 'UNPC' &#xA;GROUP&#x9; BY  BP.NAME,&#xA;&#x9;BA.NAME,&#xA;&#x9;BP.CASE_ID,&#xA;&#x9;BP.PROCESS_ID,&#xA;&#x9;BA.ACTIVITY_ID;">
+      <parameters />
+    </query>
+    <query ID="ProcessTrendByDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; BP.NAME,&#xA;&#x9;sum(case when BPI.STATUS_VALUE = 'PROC' then 1 else 0 end) &#x9;AS Completed,&#xA;&#x9;sum(case when BPI.STATUS_VALUE IN ('INPC' ,'UNPC') then 1 else 0 end) &#x9;AS Inprocess &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE &#x9;AS BPI WITH(NOLOCK)  INNER  &#xA;&#x9; JOIN SGW_BPM_PROCESS &#x9;AS BP WITH(NOLOCK) &#xA;&#x9; ON BPI.PROCESS_ID = BP.PROCESS_ID  &#xA;WHERE&#xA;&#x9; BPI.CREATED_DATE between @RequestedDateFrom AND&#xA;&#x9; @RequestedDateTo &#xA;GROUP&#x9; BY   BP.NAME" sfwPostgre="SELECT&#xD;&#xA;&#x9; BP.NAME,&#xD;&#xA;&#x9;sum(case when BPI.STATUS_VALUE = 'PROC' then 1 else 0 end) &#x9;AS Completed,&#xD;&#xA;&#x9;sum(case when BPI.STATUS_VALUE IN ('INPC' ,'UNPC') then 1 else 0 end) &#x9;AS Inprocess &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE &#x9;AS BPI   INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS &#x9;AS BP &#xD;&#xA;&#x9; ON BPI.PROCESS_ID = BP.PROCESS_ID  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; BPI.CREATED_DATE between @RequestedDateFrom AND&#xD;&#xA;&#x9; @RequestedDateTo &#xD;&#xA;GROUP&#x9; BY   BP.NAME">
+      <parameters>
+        <parameter ID="@RequestedDateFrom" sfwDataType="DateTime" />
+        <parameter ID="@RequestedDateTo" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="ProcessTrendByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; BP.NAME,&#xA;&#x9;sum(case when BPI.STATUS_VALUE = 'PROC' then 1 else 0 end) &#x9;AS Completed,&#xA;&#x9;sum(case when BPI.STATUS_VALUE IN ('INPC' ,'UNPC') then 1 else 0 end) &#x9;AS Inprocess &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE &#x9;AS BPI WITH(NOLOCK)  INNER  &#xA;&#x9; JOIN SGW_BPM_PROCESS &#x9;AS BP WITH(NOLOCK) &#xA;&#x9; ON BPI.PROCESS_ID = BP.PROCESS_ID  &#xA;WHERE&#xA;&#x9; BP.PROCESS_ID = @PROCESS_ID AND BPI.CREATED_DATE between @RequestedDateFrom AND @RequestedDateTo&#xA;GROUP&#x9; BY   BP.NAME" sfwPostgre="SELECT&#xD;&#xA;&#x9; BP.NAME,&#xD;&#xA;&#x9;sum(case when BPI.STATUS_VALUE = 'PROC' then 1 else 0 end) &#x9;AS Completed,&#xD;&#xA;&#x9;sum(case when BPI.STATUS_VALUE IN ('INPC' ,'UNPC') then 1 else 0 end) &#x9;AS Inprocess &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE &#x9;AS BPI INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS &#x9;AS BP  &#xD;&#xA;&#x9; ON BPI.PROCESS_ID = BP.PROCESS_ID  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; BP.PROCESS_ID = @PROCESS_ID AND BPI.CREATED_DATE between @RequestedDateFrom AND @RequestedDateTo&#xD;&#xA;GROUP&#x9; BY   BP.NAME">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@RequestedDateFrom" sfwDataType="DateTime" />
+        <parameter ID="@RequestedDateTo" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="ProcessPerformamceSummary" sfwQueryType="SelectQuery" sfwDataType="EntityTable">
+      <parameters />
+    </query>
+    <query ID="BAMProcessLoadAnalysis" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SBP.PROCESS_ID, SBP.DESCRIPTION + '(Ver.' + CONVERT(VARCHAR, SBC.VERSION) + ')' AS PROCESS_NAME,&#xD;&#xA;&#x9;SUM(CASE WHEN SBPI.STATUS_VALUE IN ('INPC' ,'UNPC') then 1 else 0 end) &#x9;AS IN_PROGRESS ,&#xD;&#xA;&#x9;&#x9;SUM(CASE WHEN SBPI.STATUS_VALUE IN ('PROC') then 1 else 0 end) &#x9;AS PROCESSED ,&#xD;&#xA;&#x9;SUM(CASE WHEN SBPI.STATUS_VALUE IN ('TERM' ,'FAIL') then 1 else 0 end) &#x9;AS TERM_FAIL ,&#xD;&#xA;&#x9;SUM(CASE WHEN SBPI.STATUS_VALUE = 'RETR' then 1 else 0 end) &#x9;AS RESTRICTED ,&#xD;&#xA;&#x9;SUM (CASE WHEN SBPI.DUE_DATE &gt; GETDATE() THEN &#xD;&#xA;&#x9;&#x9;CASE WHEN GETDATE() &lt; DATEADD(MI,DATEDIFF(MI, SBPI.CREATED_DATE, SBPI.DUE_DATE) * 0.75, SBPI.CREATED_DATE) THEN 1 ELSE 0 END ELSE 0 END) AS ONTIME,&#xD;&#xA;&#x9;SUM (CASE WHEN SBPI.DUE_DATE &gt; GETDATE() then case when GETDATE() &gt; &#xD;&#xA;&#x9;&#x9;DATEADD(MI,datediff(MI, SBPI.CREATED_DATE, SBPI.DUE_DATE) * 0.75, SBPI.CREATED_DATE) THEN 1 ELSE 0 END ELSE 0 END) &#x9;AS ATRISK,&#xD;&#xA;&#x9;SUM (CASE WHEN SBPI.DUE_DATE &lt; GETDATE() THEN 1 ELSE 0 END ) &#x9;AS OVERDUE  &#xD;&#xA;FROM &#xD;&#xA;&#x9;SGW_BPM_PROCESS_INSTANCE SBPI WITH(NOLOCK) &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS SBP WITH(NOLOCK)&#xD;&#xA;&#x9; ON SBPI.PROCESS_ID = SBP.PROCESS_ID &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE SBC WITH(NOLOCK)&#xD;&#xA;&#x9; ON SBP.CASE_ID = SBC.CASE_ID&#xD;&#xA;WHERE&#xD;&#xA;&#x9; SBPI.STATUS_VALUE = 'INPC' AND SBP.PROCESS_ID = @PROCESS_ID&#xD;&#xA;&#x9; AND SBPI.CREATED_DATE BETWEEN @DATE_FROM AND @DATE_TO GROUP BY SBP.DESCRIPTION,SBC.VERSION,SBP.PROCESS_ID" sfwPostgre="SELECT&#xD;&#xA;sbp.process_id,&#xD;&#xA;sbp.description || '(Ver.' || CAST (sbc.version AS VARCHAR(30)) || ')' AS process_name,&#xD;&#xA;SUM(CASE WHEN sbpi.status_value IN ('INPC',&#xD;&#xA;'UNPC') THEN 1 ELSE 0 END) AS in_progress,&#xD;&#xA;SUM(CASE WHEN sbpi.status_value IN ('PROC') THEN 1 ELSE 0 END) AS processed,&#xD;&#xA;SUM(CASE WHEN sbpi.status_value IN ('TERM',&#xD;&#xA;'FAIL') THEN 1 ELSE 0 END) AS term_fail,&#xD;&#xA;SUM(CASE WHEN sbpi.status_value = 'RETR' THEN 1 ELSE 0 END) AS restricted,&#xD;&#xA;SUM(CASE WHEN sbpi.due_date &gt; clock_timestamp()::TIMESTAMP WITHOUT TIME ZONE THEN CASE WHEN clock_timestamp()::TIMESTAMP WITHOUT TIME ZONE &lt; sbpi.created_date + (aws_sqlserver_ext.datediff('minute',&#xD;&#xA;sbpi.created_date::TIMESTAMP,&#xD;&#xA;sbpi.due_date::TIMESTAMP) * 0.75::NUMERIC || ' MINUTE')::INTERVAL THEN 1 ELSE 0 END ELSE 0 END) AS&#xD;&#xA;ONtime,&#xD;&#xA;SUM(CASE WHEN sbpi.due_date &gt; clock_timestamp()::TIMESTAMP WITHOUT TIME ZONE THEN CASE WHEN clock_timestamp()::TIMESTAMP WITHOUT TIME ZONE &gt; sbpi.created_date + (aws_sqlserver_ext.datediff('minute',&#xD;&#xA;sbpi.created_date::TIMESTAMP,&#xD;&#xA;sbpi.due_date::TIMESTAMP) * 0.75::NUMERIC || ' MINUTE')::INTERVAL THEN 1 ELSE 0 END ELSE 0 END) AS atrisk,&#xD;&#xA;SUM(CASE WHEN sbpi.due_date &lt; clock_timestamp()::TIMESTAMP WITHOUT TIME ZONE THEN 1 ELSE 0 END) AS overdue&#xD;&#xA;FROM&#xD;&#xA;dbo.sgw_bpm_process_instance AS sbpi&#xD;&#xA;INNER&#xD;&#xA;JOIN dbo.sgw_bpm_process AS sbp&#xD;&#xA;ON sbpi.process_id = sbp.process_id&#xD;&#xA;INNER&#xD;&#xA;JOIN dbo.sgw_bpm_case AS sbc&#xD;&#xA;ON sbp.case_id = sbc.case_id&#xD;&#xA;WHERE&#xD;&#xA;sbpi.status_value = 'INPC' AND&#xD;&#xA;sbp.process_id = @PROCESS_ID AND&#xD;&#xA;sbpi.created_date BETWEEN @DATE_FROM AND&#xD;&#xA;@DATE_TO&#xD;&#xA;GROUP BY sbp.description,&#xD;&#xA;sbc.version,&#xD;&#xA;sbp.process_id">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@DATE_FROM" sfwDataType="DateTime" />
+        <parameter ID="@DATE_TO" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="ProcessLoadAnalysis" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9;PROCESS_NAME,&#xD;&#xA;&#x9;DATEDIFF(day,START_DATE,END_DATE) &#x9;AS ELAPSED_DAYS,&#xD;&#xA;&#x9;DATEDIFF(minute,START_DATE,END_DATE) &#x9;AS ELAPSED_TIME_IN_MINUTES,&#xD;&#xA;&#x9;PROCESS_INSTANCE_ID&#xD;&#xA;FROM&#xD;&#xA;&#x9; (SELECT&#xD;&#xA;&#x9;BP.DESCRIPTION + '(Ver.' + CONVERT(VARCHAR,BC.VERSION) + ')' AS PROCESS_NAME ,&#xD;&#xA;&#x9;BPI.CREATED_DATE &#x9;AS START_DATE,&#xD;&#xA;&#x9;CASE WHEN BPI.END_DATE IS NULL THEN GETDATE() ELSE BPI.END_DATE END &#x9;AS END_DATE,&#xD;&#xA;&#x9;BPI.PROCESS_INSTANCE_ID&#x9;&#xD;&#xA;FROM&#xD;&#xA;&#x9;SGW_BPM_PROCESS_INSTANCE BPI WITH(NOLOCK) &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS BP WITH(NOLOCK)&#xD;&#xA;&#x9; ON BPI.PROCESS_ID = BP.PROCESS_ID &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE BC WITH(NOLOCK)&#xD;&#xA;&#x9; ON BP.CASE_ID = BC.CASE_ID&#xD;&#xA;WHERE&#xD;&#xA;&#x9; BPI.STATUS_VALUE = 'INPC' AND BP.PROCESS_ID = @PROCESS_ID AND BPI.CREATED_DATE BETWEEN @DATE_FROM AND @DATE_TO) &#x9;AS DATA" sfwPostgre="SELECT&#xD;&#xA;process_name,&#xD;&#xA;aws_sqlserver_ext.datediff('day',&#xD;&#xA;start_date::TIMESTAMP,&#xD;&#xA;end_date::TIMESTAMP) AS elapsed_days,&#xD;&#xA;aws_sqlserver_ext.datediff('minute',&#xD;&#xA;start_date::TIMESTAMP,&#xD;&#xA;end_date::TIMESTAMP) AS elapsed_time_in_minutes,&#xD;&#xA;process_instance_id&#xD;&#xA;FROM&#xD;&#xA;(SELECT&#xD;&#xA;bp.description || '(Ver.' || CAST (bc.version AS VARCHAR(30)) || ')' AS process_name,&#xD;&#xA;bpi.created_date AS start_date,&#xD;&#xA;CASE WHEN bpi.end_date IS NULL THEN clock_timestamp()::TIMESTAMP WITHOUT TIME ZONE ELSE bpi.end_date END AS end_date,&#xD;&#xA;bpi.process_instance_id&#xD;&#xA;FROM&#xD;&#xA;dbo.sgw_bpm_process_instance AS bpi&#xD;&#xA;INNER&#xD;&#xA;JOIN dbo.sgw_bpm_process AS bp&#xD;&#xA;ON bpi.process_id = bp.process_id&#xD;&#xA;INNER&#xD;&#xA;JOIN dbo.sgw_bpm_case AS bc&#xD;&#xA;ON bp.case_id = bc.case_id&#xD;&#xA;WHERE&#xD;&#xA;bpi.status_value = 'INPC' AND&#xD;&#xA;bp.process_id = @PROCESS_ID AND&#xD;&#xA;bpi.created_date BETWEEN @DATE_FROM AND&#xD;&#xA;@DATE_TO)AS data">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@DATE_FROM" sfwDataType="DateTime" />
+        <parameter ID="@DATE_TO" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+  </queries>
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint>
+    <item sfwObjectBased="True" sfwFieldName="IdtDateFrom" sfwDataType="datetime" sfwDisplayName="Date From is greater than Date To" sfwOperator="LessThanEqual" sfwRelatedField="IdtDateTo" />
+  </constraint>
+  <rules />
+  <ExtraFields />
+  <methods>
+    <method sfwMethodType="Load" ID="Group1" sfwMode="All">
+      <item ID="GetBPMProcessBAM" sfwItemType="Method" sfwDataType="ArrayList" sfwParameter="aintProcessId" />
+      <parameter ID="aintProcessId" sfwDataType="Int32" />
+    </method>
+  </methods>
+  <lifecycle />
+  <attributes>
+    <attribute ID="ProcessInstanceId" sfwType="Column" sfwValue="process_instance_id" sfwIsNull="False" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" />
+    <attribute sfwDataType="int32" sfwType="Property" ID="IintProcessId" sfwValue="iintProcessId" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateFrom" sfwValue="idtDateFrom" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateTo" sfwValue="idtDateTo" />
+    <attribute sfwType="Collection" sfwEntity="entBpmBAMProcessTrend" ID="lstBpmBAMProcessTrendByProcessId" sfwValue="iclbBpmBAMProcessTrendByProcessId" />
+  </attributes>
+  <objectmethods>
+    <method ID="GetBPMProcessBAM" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintProcessId" sfwDataType="Int32" />
+      </parameters>
+    </method>
+  </objectmethods>
+</entity>

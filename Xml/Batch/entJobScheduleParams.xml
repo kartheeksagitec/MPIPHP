@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entJobScheduleParams" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoJobScheduleParams" sfwObjectID="busJobScheduleParams" sfwTableName="sgs_job_schedule_params" sfwView="False" sfwDataObjectID="doJobScheduleParams">
+  <rules>
+    <rule ID="ReadOnlyRule - IAPYearEndAllocationBatch" sfwRuleType="Validation" sfwExpression="this.icdoJobScheduleParams.param_name == &quot;MiscAdjustmentsFrmAccounting&quot; || this.icdoJobScheduleParams.param_name == &quot;OverlimitInvIncome/LossFactor&quot;&#xD;&#xA;|| this.icdoJobScheduleParams.param_name == &quot;OverlimitInterest&quot;" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="ReadOnlyRule - IAPYearEndAllocationBatch" sfwStatus="Active" sfwMode="All" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <updateablecdo />
+  <commonproperties />
+  <groupslist />
+  <constraint />
+  <queries>
+    <query ID="GetParametersForDetailId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select JP.* from SGS_Job_Schedule_Params JP (nolock)&#xD;&#xA; Join SGS_Job_Schedule_Detail JD (nolock)&#xD;&#xA;  on (JD.Job_Schedule_Detail_Id = JP.Job_Schedule_Detail_Id)&#xD;&#xA;Where&#xD;&#xA; JP.Job_Schedule_Detail_Id = @Job_Schedule_Detail_Id">
+      <parameters>
+        <parameter ID="@Job_Schedule_Detail_Id" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="job_schedule_params_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="JobScheduleParamsId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="job_schedule_detail_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="JobScheduleDetailId" sfwIsSequence="False" sfwCaption="Job Schedule Detail Id" />
+    <attribute sfwValue="param_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ParamName" sfwIsSequence="False" sfwCaption="Param Name" />
+    <attribute sfwValue="param_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="False" ID="ParamValue" sfwIsSequence="False" sfwCaption="Param Value" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

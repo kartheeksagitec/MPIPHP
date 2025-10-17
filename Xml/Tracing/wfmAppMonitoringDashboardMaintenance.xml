@@ -1,0 +1,244 @@
+﻿<form ID="wfmAppMonitoringDashboardMaintenance" sfwType="Maintenance" sfwEntity="entAppMonitoring" sfwTitle="Application Monitoring" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmAppMonitoringDashboardLookup" sfwResource="207">
+  <initialload>
+    <callmethods sfwMode="Update" sfwMethodName="LoadDashboard" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel1" sfwCaption="Performance details between">
+          <sfwTable ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlLastMinutes" sfwEntityField="LastMinutes" AutoPostBack="True" sfwRelatedControl="btnGetDetailsByServer">
+                  <ListItem Value="0" />
+                  <ListItem Text="Last 15 minutes" Value="15" />
+                  <ListItem Text="Last 30 minutes" Value="30" />
+                  <ListItem Text="Last 45 minutes" Value="45" />
+                  <ListItem Text="Last one hours" Value="60" />
+                  <ListItem Text="Last two hours" Value="120" />
+                  <ListItem Text="Last four hours" Value="240" />
+                  <ListItem Text="Last eight hours" Value="480" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlLastDays" sfwEntityField="LastDays" AutoPostBack="True" sfwRelatedControl="btnGetDetailsByServer">
+                  <ListItem Value="0" />
+                  <ListItem Text="Current day" Value="1" />
+                  <ListItem Text="Last two days" Value="2" />
+                  <ListItem Text="Last three days" Value="3" />
+                  <ListItem Text="Last four days" Value="4" />
+                  <ListItem Text="Last five days" Value="5" />
+                  <ListItem Text="Last ten days" Value="10" />
+                  <ListItem Text="Last twenty days" Value="20" />
+                  <ListItem Text="Last thirty days" Value="30" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capFromDate" Text="From : " AssociatedControlID="txtFromDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFromDate" sfwEntityField="FromDate" sfwDataFormat="{0:G}" Width="180px !important" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="To :" sfwIsCaption="True" ID="capLabel" AssociatedControlID="txtIdtToDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIdtToDate" sfwEntityField="ToDate" sfwDataFormat="{0:G}" Width="180px !important" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Go" ID="btnGetDetailsByServer" sfwObjectMethod="GetDashboardDetails" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlSummaryInformation" sfwCollapsible="False">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshServerSummary" HeaderText="Server Performance">
+                      <sfwTable ID="tblMain" CssClass="Table" Width="100%">
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="3" Width="100%">
+                            <sfwGridView ID="grvAppServerSummary" AllowPaging="True" AllowSorting="True">
+                              <Columns>
+                                <TemplateField HeaderText="Server Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ServerName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="RequestCount" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Response Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AverageResponseTime" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls / min">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Throughput" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Error Count">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ErrorCount" ForeColor="Red" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Last Communicated">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="LastRequest" sfwDataFormat="{0: ddd dd MMM yyyy HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Slow Count">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SlowCount" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters />
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn CssClass="None" Width="33%">
+                            <sfwLabel ID="lblChart1Caption" Text="Average Response Time" Font.Bold="True" CssClass="chartLabel" />
+                            <sfwLabel ID="lblChartResponseTime" />
+                          </sfwColumn>
+                          <sfwColumn CssClass="None" Width="33%">
+                            <sfwLabel ID="lblLabel" Text="Calls per minute" Font.Bold="True" CssClass="chartLabel" />
+                            <sfwLabel ID="lblChartRequestCount" Width="50%" />
+                          </sfwColumn>
+                          <sfwColumn Width="34%">
+                            <sfwLabel ID="lblChart3Caption" Text="Error count" Font.Bold="True" CssClass="chartLabel" />
+                            <sfwLabel ID="lblChartErrorTime" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshBusinessTransaciton" HeaderText="Business Transaction">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnOpenLookup" sfwMethodName="btnOpenLookup_Click" Text="Transaction Details" Visible="False" sfwRelatedControl="grvBusinessTransaction" sfwActiveForm="wfmActBusinessTransactionLookup" sfwNavigationParameter="start_time=FromDate;a.start_time=ToDate;transaction_name=ActionName" />
+                            <sfwButton ID="btnSlowTransaction" sfwMethodName="btnOpenLookup_Click" Text="Slow Details" Visible="False" sfwRelatedControl="grvBusinessTransaction" sfwActiveForm="wfmActBusinessTransactionLookup" sfwNavigationParameter="start_time=FromDate;a.start_time=ToDate;transaction_name=ActionName;slow_flag=#Y" />
+                            <sfwButton ID="btnErrorTransaction" sfwMethodName="btnOpenLookup_Click" Text="Error Details" Visible="False" sfwRelatedControl="grvBusinessTransaction" sfwActiveForm="wfmActBusinessTransactionLookup" sfwNavigationParameter="start_time=FromDate;a.start_time=ToDate;transaction_name=ActionName;error_flag=#Y" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusinessTransaction" AllowPaging="True" AllowSorting="True">
+                              <Columns>
+                                <TemplateField HeaderText="Response Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ResponseTime" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActionName" sfwLinkable="True" sfwRelatedControl="btnOpenLookup" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Max Response Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="MaxResponseTime" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Calls" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls / min">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CallsPerMin" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Error Count">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ErrorCount" ForeColor="Red" sfwLinkable="True" sfwRelatedControl="btnErrorTransaction" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Slow Count">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SlowCount" sfwLinkable="True" sfwRelatedControl="btnSlowTransaction" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters />
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshDatabaseTransaction" HeaderText="Database Transaction">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnOpenQuery" sfwMethodName="btnOpenLookup_Click" Text="Open Query" Visible="False" sfwActiveForm="wfmActDatabaseTransactionLookup" sfwNavigationParameter="start_time=FromDate;a.start_time=ToDate;query_hash=QueryHash" sfwRelatedControl="grvDatabaseTransaction" />
+                            <sfwButton ID="btnSlowQuery" sfwMethodName="btnOpenLookup_Click" Text="Open Slow" Visible="False" sfwActiveForm="wfmActDatabaseTransactionLookup" sfwNavigationParameter="start_time=FromDate;a.start_time=ToDate;query_hash=QueryHash;slow_flag=#Y" sfwRelatedControl="grvDatabaseTransaction" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvDatabaseTransaction" AllowPaging="True" AllowSorting="True">
+                              <Columns>
+                                <TemplateField HeaderText="Call">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Query" sfwLinkable="True" sfwRelatedControl="btnOpenQuery" sfwDisplayLength="100" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Avg. time per call (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ResponseTime" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Number of Calls">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Calls" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Max Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="MaxTime" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Slow Count">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SlowCount" sfwLinkable="True" sfwRelatedControl="btnSlowQuery" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Query Hash" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="QueryHash" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters />
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn />
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails />
+</form>

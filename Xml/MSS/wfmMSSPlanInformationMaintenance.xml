@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMSSPlanInformationMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvMPIPHPMSS" sfwResource="790 " sfwType="Maintenance" sfwTitle="MSSPlan Information Maintenance" version="3.5" sfwEntity="entMSSPlan">
+  <initialload>
+    <callmethods sfwMethodName="FindPersonAccount" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeading" sfwCollapsible="False">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn CssClass="NaviHeadtxt15Size">
+                <sfwLiteral ID="ltrLiteral" Text="Plan Details" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar" sfwCaption="Back">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwImageButton ID="btnBack" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlPlanDetails" sfwCaption="Plan Details">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIstrPlanDesc" Text="Plan Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrPlanDesc" sfwEntityField="IstrPlanDesc" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn HorizontalAlign="Left">
+                <sfwLabel AssociatedControlID="lblStatusDescription" ID="capStatusDescription" Text="Plan Participation Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusDescription" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn HorizontalAlign="Left">
+                <sfwLabel AssociatedControlID="lblStartDate" ID="capStartDate" Text="Plan Entry Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStartDate" sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn HorizontalAlign="Left">
+                <sfwLabel AssociatedControlID="lblIdtReemployedAsOfDate" ID="capIdtReemployedAsOfDate" sfwVisibleRule="VisibleRule-ReemployedPart" Text="Reemployed As Of Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtReemployedAsOfDate" sfwDataFormat="{0:d}" sfwVisibleRule="VisibleRule-ReemployedPart" sfwEntityField="IdtReemployedAsOfDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="2">
+                <sfwButton ID="btnPensionIAPVerific" sfwMethodName="CreateCorrespondence" sfwNavigationParameter="MSSPER-0015" sfwObjectID="busPerson" sfwVisibleRule="VisibleRule-IsNonRetiree" Text="Pension &amp; IAP Verification Form" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnIncVerific" sfwMethodName="CreateCorrespondence" sfwNavigationParameter="MSSPAY-0027" sfwObjectID="busPerson" sfwVisibleRule="VisibleRule-IsRetireeUnderMPI" Text="Pension Income Verification Form" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLinkButton ID="btnPatyrollMonths" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="PayrollWeeks.pdf" Text="Payroll Months :- " />
+                <sfwLabel CssClass="RemoveWhiteSpace" ID="lblPayrollMonth" Text="Payroll Months, instead of calendar months, are used to calculate eligibility and pension benefits. A Payroll Month begins the Sunday before the last Thursday of a calendar month. It ends on the Saturday before the last Thursday of the subsequent calendar" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlBeneficiaries" sfwCaption="Beneficiaries">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvBeneficiaryPlans" sfwEntityField="lstBeneficiaryPlans" sfwGridEntity="entPersonAccountBeneficiary">
+                  <Columns>
+                    <TemplateField HeaderText="Plan Name">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel" sfwEntityField="IstrPlan" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrBenFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Relationship">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel1" sfwEntityField="IstrRelationShipValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BeneficiaryTypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Percentage" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DistPercent" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Of Birth" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IstrDOB" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Start Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="End Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person Account Beneficiary ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonAccountBeneficiaryId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="AlignLeft">
+                <sfwLinkButton ID="btnLinkButton" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="PensionBeneficiary.pdf" Text="Pension Beneficiary Form" />
+                <sfwLabel ID="lblLabel2" Text=" Please fill in this Pension Beneficiary Form to designate the beneficiary(ies) of your Pension benefits. This is for pre-retirement death benefits only." sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMPI" sfwCaption="Forms" sfwVisibleRule="VisibleRule-IsRetireeUnderMPI">
+          <sfwTable CssClass="Table" ID="tblMPIPlan">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLinkButton ID="btnDirectDepositM" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="DIRECT_deposit.pdf" Text="Direct Deposit Form " />
+                <sfwLabel CssClass="RemoveWhiteSpace" ID="lblLabel3Mpi" Text="Complete this form to have your monthly pension benefits deposited directly into your checking or savings account." sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLinkButton ID="btnFedTaxMp" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="w4p_federal_withholding.pdf" Text="Federal Tax Withholding Form (W-4P) " />
+                <sfwLabel CssClass="RemoveWhiteSpace" ID="lblFedTaxMp" Text="Complete this Form W-4P if you would like to change the federal tax withholding from your monthly pension benefit." sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLinkButton ID="btnStateTaxMp" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="de4p_state_withholding.pdf" Text="State Tax Withholding Form (DE-4P)  " />
+                <sfwLabel CssClass="RemoveWhiteSpace" ID="lblStateTaxMp" Text="Complete this Form DE 4P if you would like to change the state tax withholding from your monthly pension benefit (for California residents only)." sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLinkButton ID="btnReemploymentMp" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="Re-employment_Notification_Form.pdf" Text="Retiree Re-employment Form " />
+                <sfwLabel CssClass="RemoveWhiteSpace" ID="lblReemploymentMp" Text="Please fill in this form notify MPI in writing within one week prior to your employment start date if you intend to work 40 or more Credited Hours in a Payroll Month." sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlIAP" sfwCaption="Forms" sfwVisibleRule="VisibleRule-IsRetireeUnderIAP">
+          <sfwTable CssClass="Table" ID="tblIAPPlan">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLinkButton ID="btnDirectDepositIap" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="DIRECT_deposit.pdf" sfwVisibleRule="VisibleRule-IAPBalanceExists" Text="Direct Deposit Form " />
+                <sfwLabel CssClass="RemoveWhiteSpace" ID="lblLabel3Iap" sfwVisibleRule="VisibleRule-IAPBalanceExists" Text="Complete this form to have your monthly pension benefits deposited directly into your checking or savings account." sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLinkButton ID="btnReemploymentIap" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="Re-employment_Notification_Form.pdf" Text="Retiree Re-employment Form " />
+                <sfwLabel CssClass="RemoveWhiteSpace" ID="lblReemploymentIap" sfwVisibleRule="VisibleRule-IsRetireeUnderIAP" Text="Please fill in this form notify MPI in writing within one week prior to your employment start date if you intend to work 40 or more Credited Hours in a Payroll Month." sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlReemployment" sfwCollapsible="False" sfwVisibleRule="VisibleRule-IsRetiree">
+          <sfwTable CssClass="Table" ID="tblNewPage3">
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstBeneficiaryPlans" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

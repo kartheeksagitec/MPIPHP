@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entJobScheduleDetail" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwErrorTable="sgs_job_schedule_detail_error" sfwParentKey="job_schedule_detail_id" sfwParentKeyValue="icdoJobScheduleDetail.job_schedule_detail_id" sfwMainCDO="icdoJobScheduleDetail" sfwStatusColumn="status_value" sfwObjectID="busJobScheduleDetail" sfwTableName="sgs_job_schedule_detail" sfwView="False" sfwDataObjectID="doJobScheduleDetail">
+  <rules>
+    <rule ID="IfDependentStepPopulatedThenOperatorAndReturnValueMustBePopulated" sfwMessageId="5004" sfwExpression="(this.icdoJobScheduleDetail.dependent_step_no &gt; 0) &amp;&amp; &#xA;(RFunc.EvaluateRule(&quot;IsOperatorOrDependentStepReturnValueNotPopulated&quot;, this))" sfwObjectBased="True" />
+    <rule ID="IsDependentStepsInOrderForExecution" sfwMessageId="5005" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entJobScheduleDetail.GetOrderNumberForJobScheduleDetailId&quot;, this.icdoJobScheduleDetail.job_schedule_detail_id) &lt;= RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entJobScheduleDetail.GetOrderNumberForJobScheduleIdAndDependentStepNumber&quot;, this.icdoJobScheduleDetail.job_schedule_id, this.icdoJobScheduleDetail.dependent_step_no))" sfwObjectBased="True" />
+    <rule ID="IsFirstStepInOrder" sfwExpression="!(this.icdoJobScheduleDetail.order_number == 1)" sfwObjectBased="True" />
+    <rule ID="IsOperatorOrDependentStepReturnValueNotPopulated" sfwExpression="((!RFunc.IsNumeric(this.icdoJobScheduleDetail.dependent_step_return_value)) || &#xA;(string.IsNullOrEmpty(this.icdoJobScheduleDetail.dependent_step_return_value))) || &#xA;(string.IsNullOrEmpty(this.icdoJobScheduleDetail.operator_value))" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="lstJobScheduleParameters" sfwMethodName="LoadJobParameters" />
+    <property ID="SoftErrors" sfwMethodName="LoadErrors" />
+  </delete>
+  <checklist />
+  <initialload>
+    <item ID="IsFirstStepInOrder" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror>
+    <item ID="IsDependentStepsInOrderForExecution" sfwMode="All" sfwStatus="Active" />
+    <item ID="IfDependentStepPopulatedThenOperatorAndReturnValueMustBePopulated" sfwMode="All" sfwStatus="Active" />
+  </softerror>
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="CountOfDetailRecordInReviewStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select Count(1)&#xD;&#xA;From&#xD;&#xA;SGS_Job_Schedule_Detail (nolock) &#xD;&#xA;Where&#xD;&#xA; Job_Schedule_Id = @Job_Schedule_Id&#xD;&#xA; and Status_Value = 'REVW'&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@Job_Schedule_Id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountOfRecordsForHeaderId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select Count(1)&#xD;&#xA;From&#xD;&#xA;SGS_Job_Schedule_Detail (nolock) &#xD;&#xA;Where&#xD;&#xA; Job_Schedule_Id = @Job_Schedule_Id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@Job_Schedule_Id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountOfStepsThatAreDuplicate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select step_no From&#xD;&#xA;SGS_Job_Schedule_Detail (nolock) &#xD;&#xA;Where Job_Schedule_Id = @Job_Schedule_Id&#xD;&#xA;Group By Step_No&#xD;&#xA;Having Count(Step_No) &gt; 1 &#xD;&#xA;">
+      <parameters>
+        <parameter ID="@Job_Schedule_Id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetNextOrderNumber" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select IsNull(Max(Order_Number),0)+1 from SGS_Job_Schedule_detail (nolock)&#xD;&#xA;Where Job_Schedule_Id = @Job_Schedule_Id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@Job_Schedule_Id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetStepsForJobScheduleId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select JSD.Step_No, BS.Step_Name from SGS_Job_Schedule_Detail JSD (nolock)&#xD;&#xA;Join SGS_Batch_Schedule BS (nolock)&#xD;&#xA; on (JSD.Step_No = BS.Step_No)&#xD;&#xA;Where&#xD;&#xA; JSD.Job_Schedule_Id = @Job_Schedule_Id&#xD;&#xA; and BS.Step_No &lt;&gt; @Step_No">
+      <parameters>
+        <parameter ID="@Job_Schedule_Id" sfwDataType="int" />
+        <parameter ID="@Step_No" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOrderNumberForJobScheduleDetailId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select Order_Number from SGS_Job_Schedule_Detail (nolock)&#xD;&#xA;Where Job_Schedule_Detail_Id = @Job_Schedule_Detail_Id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@Job_Schedule_Detail_Id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOrderNumberForJobScheduleIdAndDependentStepNumber" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select Order_Number from SGS_Job_Schedule_Detail (nolock)&#xD;&#xA;Where Job_Schedule_Id = @Job_Schedule_Id and Step_No = @Dependent_Step_No&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@Job_Schedule_Id" sfwDataType="int" />
+        <parameter ID="@Dependent_Step_No" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="job_schedule_detail_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="JobScheduleDetailId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="job_schedule_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="JobScheduleId" sfwIsSequence="False" sfwCaption="Job Schedule Id" />
+    <attribute sfwValue="step_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StepNo" sfwIsSequence="False" sfwCaption="Step No" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="6018" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="order_number" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="OrderNumber" sfwIsSequence="False" sfwCaption="Order Number" />
+    <attribute sfwValue="dependent_step_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="DependentStepNo" sfwIsSequence="False" sfwCaption="Dependent Step No" />
+    <attribute sfwValue="dependent_step_return_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="10" sfwIsNull="True" ID="DependentStepReturnValue" sfwIsSequence="False" sfwCaption="Dependent Step Return Value" />
+    <attribute sfwType="Description" ID="OperatorDescription" sfwCaption="Operator" sfwValue="operator_description" />
+    <attribute sfwValue="operator_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="OperatorId" sfwCodeID="6021" sfwIsSequence="False" sfwCaption="Operator" />
+    <attribute sfwValue="operator_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="OperatorValue" sfwIsSequence="False" sfwCaption="Operator" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute ID="objJobSchedule" sfwType="Object" sfwEntity="entJobSchedule" sfwValue="ibusJobSchedule" />
+    <attribute ID="objBatchSchedule" sfwType="Object" sfwEntity="entBatchSchedule" sfwValue="ibusBatchSchedule" />
+    <attribute sfwType="Collection" sfwEntity="entJobScheduleParams" ID="lstJobScheduleParameters" sfwValue="iclbJobScheduleParameters" />
+    <attribute sfwType="Collection" sfwEntity="entJobScheduleParams" ID="lstNonEditableJobScheduleParameters" sfwValue="iclbNonEditableJobScheduleParameters" />
+    <attribute ID="objDependentBatchSchedule" sfwType="Object" sfwEntity="entBatchSchedule" sfwValue="ibusDependentBatchSchedule" />
+    <attribute sfwType="Property" ID="SoftErrors" sfwValue="ibusSoftErrors" />
+    <attribute sfwValue="step_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StepCode" sfwCaption="Step Code" />
+    <attribute sfwValue="step_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="256" sfwIsNull="True" ID="StepName" sfwCaption="Step Name" />
+  </attributes>
+  <objectmethods>
+    <method ID="GetStepsForJobScheduleId" sfwReturnType="Collection" sfwObjectID="cdoBatchSchedule" sfwEntity="entBatchSchedule" />
+    <method ID="LoadJobParameters" sfwReturnType="Void" />
+    <method ID="LoadErrors" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

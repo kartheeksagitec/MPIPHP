@@ -1,0 +1,511 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmUsersMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207" sfwType="Maintenance" sfwTitle="Users Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Assign Roles=Assign Roles.htm;Create New Roles=Create New Roles.htm;Delete Role=Delete Role.htm;Modify Roles=Modify Roles.htm;Create New User=Create New User.htm;Modify User=Modify User.htm;Delete User=Delete User.htm;Security Overview=Security Overview.htm" sfwEntity="entUser">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewUser" />
+    <callmethods sfwMode="Update" sfwMethodName="FindUser" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintUserSerialId=UserSerialId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="User Information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="cap1" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capUserID" Text="User ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtUserId" sfwMode="New" sfwEntityField="UserId" />
+                <sfwLabel ID="lblUserId" sfwMode="Update" sfwEntityField="UserId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capEmailAddress" Text="Email Address : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEmailAddress" sfwEntityField="EmailAddress" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel SkinID="ReqInformation" Text="*" ID="lblLabel" sfwIsCaption="True" />
+                <sfwLabel ID="capFirstName" Text="First Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtfirst_name" sfwMode="New" sfwEntityField="FirstName" />
+                <sfwLabel ID="lblFirstName" sfwMode="Update" sfwEntityField="FirstName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capMiddleInitial" Text="Middle Initial :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMiddle_name" sfwMode="New" sfwEntityField="MiddleInitial" />
+                <sfwLabel ID="lblMiddleName" sfwMode="Update" sfwEntityField="MiddleInitial" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel SkinID="ReqInformation" Text="*" ID="lblLabel1" sfwIsCaption="True" />
+                <sfwLabel ID="capLastName" Text="Last Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txLast_name" sfwMode="New" sfwEntityField="LastName" />
+                <sfwLabel ID="lblLastName" sfwMode="Update" sfwEntityField="LastName" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel SkinID="ReqInformation" Text="*" ID="lblLabel2" sfwIsCaption="True" />
+                <sfwLabel ID="capBeginDate" Text="Begin Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtbegin_date" sfwDataFormat="{0:d}" sfwEntityField="BeginDate" />
+                <CompareValidator ControlToValidate="txtbegin_date" ErrorMessage="Invalid Begin Date" ID="id" Operator="DataTypeCheck" SetFocusOnError="True" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capEndDate" Text="End Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtend_date" sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                <CompareValidator ControlToValidate="txtend_date" ErrorMessage="Invalid End Date" ID="id1" Operator="DataTypeCheck" SetFocusOnError="True" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capLogActivity" Text="Log Activity :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwRadioButtonList ID="idLogActivityFlag" RepeatDirection="Horizontal" sfwDefaultValue="N" sfwLoadType="Items" sfwEntityField="LogActivityFlag">
+                  <ListItem Text="No" Value="N" />
+                  <ListItem Text="Yes" Value="Y" />
+                </sfwRadioButtonList>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel SkinID="ReqInformation" Text="*" ID="lblLabel3" sfwIsCaption="True" />
+                <sfwLabel ID="capUserType" Text="User Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="txtuser_type_value" sfwLoadType="CodeGroup" sfwLoadSource="9" sfwEntityField="UserTypeValue" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblUserSerialId" Visible="False" sfwEntityField="UserSerialId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDivision" Text="Division :" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlDivisionValue" Visible="False" sfwLoadType="CodeGroup" sfwLoadSource="53" sfwEntityField="DivisionValue" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel SkinID="ReqInformation" Text="*" ID="lblLabel4" sfwIsCaption="True" />
+                <sfwLabel ID="capUserStatus" Text="User Status :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="txtuser_status_value" sfwLoadType="CodeGroup" sfwLoadSource="10" sfwEntityField="UserStatusValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlInitialPage" ID="capInitialPage" Text="Initial Page : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlInitialPage" sfwEntityField="InitialPage" sfwDefaultValue="Person Lookup">
+                  <ListItem Text="Person Lookup" Value="wfmPersonLookup" Selected="True" />
+                  <ListItem Text="DRO Application Lookup" Value="wfmQDROApplicationLookup" />
+                  <ListItem Text="Benefit Application Lookup" Value="wfmBenefitApplicationLookup" />
+                  <ListItem Text="Death Notification Lookup" Value="wfmDeathNotificationLookup" />
+                  <ListItem Text="SSN Merge Lookup" Value="wfmSSNMergeLookup" />
+                  <ListItem Text="SSN Merge History Lookup" Value="wfmSSNMergeHistoryLookup" />
+                  <ListItem Text="Organization Lookup" Value="wfmOrganizationLookup" />
+                  <ListItem Text="Benefit Calculation Lookup" Value="wfmBenefitCalculationLookup" />
+                  <ListItem Text="IAP Allocation Factor Lookup" Value="wfmIAPAllocationFactorLookup" />
+                  <ListItem Text="QDRO Calculation Lookup" Value="wfmDROCalculationLookup" />
+                  <ListItem Text="Payee Account Lookup" Value="wfmPayeeAccountLookup" />
+                  <ListItem Text="Payment Schedule Lookup" Value="wfmPaymentScheduleLookup" />
+                  <ListItem Text="Payment History Lookup" Value="wfmPaymentHistoryHeaderLookup" />
+                  <ListItem Text="Retiree Increase Contracts Lookup" Value="wfmRetireeIncreaseContractsLookup" />
+                  <ListItem Text="Excess Refund Lookup" Value="wfmExcessRefundLookup" />
+                  <ListItem Text="Payment Check Book" Value="wfmPaymentCheckBookLookup" />
+                  <ListItem Text="Codes" Value="wfmCodeLookup" />
+                  <ListItem Text="Messages" Value="wfmMessageLookup" />
+                  <ListItem Text="Batch Schedule" Value="wfmJobScheduleLookup" />
+                  <ListItem Text="Batch Schedule Instance" Value="wfmJobHeaderLookup" />
+                  <ListItem Text="Process Log" Value="wfmProcessLogLookup" />
+                  <ListItem Text="System Management" Value="wfmSystemManagementMaintenance" />
+                  <ListItem Text="System Paths" Value="wfmSystemPathLookup" />
+                  <ListItem Text="File Types" Value="wfmFilesLookup" />
+                  <ListItem Text="Upload File" Value="wfmUploadFileMaintenance" />
+                  <ListItem Text="Processed Files" Value="wfmFileHdrLookup" />
+                  <ListItem Text="Processed Files Details" Value="wfmFileDtlLookup" />
+                  <ListItem Text="Template" Value="wfmCorTemplatesLookup" />
+                  <ListItem Text="Tracking" Value="wfmCorTrackingLookup" />
+                  <ListItem Text="Users" Value="wfmUsersLookup" />
+                  <ListItem Text="Resources" Value="wfmResourcesLookup" />
+                  <ListItem Text="Roles/Security" Value="wfmRolesLookup" />
+                  <ListItem Text="Access Trace" Value="wfmUserActivityLogLookup" />
+                  <ListItem Text="WorkPool" Value="wfmMyBasketMaintenance" />
+                  <ListItem Text="Online Initiation" Value="wfmProcessInitiationMaintenance" />
+                  <ListItem Text="Reassign Work" Value="wfmReassignWorkMaintenance" />
+                  <ListItem Text="Process Configuration" Value="wfmProcessLookup" />
+                  <ListItem Text="Document" Value="wfmDocumentLookup" />
+                  <ListItem Text="Document Process Reference" Value="wfmDocumentProcessCrossRefLookup" />
+                  <ListItem Text="Reports" Value="wfmReportClient" />
+                  <ListItem Text="Year End Process Request Lookup" Value="wfmYearEndProcessRequestLookup" />
+                  <ListItem Text="PIRLookup" Value="wfmPirLookup" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capAccessTypeValue" Text="Access Type : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlAccessTypeValue" Visible="False" sfwLoadType="CodeGroup" sfwLoadSource="6012" sfwEntityField="AccessTypeValue" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel SkinID="ReqInformation" Text="*" ID="lblLabel5" sfwIsCaption="True" />
+                <sfwLabel ID="capActivityLogLevelValue" Text="Activity Log Level : " AssociatedControlID="ddlActivityLogLevelValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlActivityLogLevelValue" DataTextField="description" DataValueField="code_value" sfwClientVisibility="controllist:chkLogDeleteQueryFlag,capLogDeleteQueryFlag,chkLogInsertQueryFlag,capLogInsertQueryFlag,chkLogSelectQueryFlag,capLogSelectQueryFlag,chkLogUpdateQueryFlag,capLogUpdateQueryFlag#1:;3:chkLogDeleteQueryFlag,capLogDeleteQueryFlag,chkLogInsertQueryFlag,capLogInsertQueryFlag,chkLogSelectQueryFlag,capLogSelectQueryFlag,chkLogUpdateQueryFlag,capLogUpdateQueryFlag;" sfwLoadType="CodeGroup" sfwLoadSource="45" sfwEntityField="ActivityLogLevelValue" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capLogDeleteQueryFlag" Text="Log Delete Query Flag : " AssociatedControlID="chkLogDeleteQueryFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkLogDeleteQueryFlag" sfwEntityField="LogDeleteQueryFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capLogInsertQueryFlag" Text="Log Insert Query Flag : " AssociatedControlID="chkLogInsertQueryFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkLogInsertQueryFlag" sfwEntityField="LogInsertQueryFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capLogSelectQueryFlag" Text="Log Select Query Flag : " AssociatedControlID="chkLogSelectQueryFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkLogSelectQueryFlag" sfwEntityField="LogSelectQueryFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capLogUpdateQueryFlag" Text="Log Update Query Flag : " AssociatedControlID="chkLogUpdateQueryFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkLogUpdateQueryFlag" sfwEntityField="LogUpdateQueryFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn HorizontalAlign="Center" />
+              <sfwColumn HorizontalAlign="Center" />
+              <sfwColumn>
+                <sfwLabel ID="capPersonId" Text="PERSON ID : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPersonId" Visible="False" sfwEntityField="PersonId" />
+                <sfwImageButton Enabled="False" ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtPersonId" sfwRetrievalParameters="txt_person_id=txtPersonId" Visible="False" sfwSelectedIndex="PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlDetails" sfwCaption="Other Details" CssClass="fullWidth">
+          <sfwTable ID="tblDetails">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctDetails">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Roles" ID="tshUerRoles">
+                      <sfwTable ID="tblUerRoles">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlAddRole" sfwCaption="Add Role">
+                              <sfwTable CssClass="Table" ID="tblNewPage">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwButton ID="btnOpen" sfwActiveForm="wfmUserRoleMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintUserSerialId=UserSerialId;aintRoleId=RoleId" sfwRelatedControl="dgrResult" Text="Open" />
+                                    <sfwDropDownList DataTextField="role_description" DataValueField="role_id" ID="ddlIstrUserRoleId" sfwLoadType="Query" sfwLoadSource="entUserRoles.PopulateAllRoles" sfwEntityField="IstrUserRoleId" />
+                                    <sfwButton ID="btnAddRole" sfwMethodName="btnExecuteBusinessMethod_Click" sfwNavigationParameter="astrUserRoleId=IstrUserRoleId" sfwObjectMethod="AddRole" Text="Add Role" CssClass="marg-left-10" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many" sfwEntityField="lstUserRoles" sfwGridEntity="entUserRoles">
+                              <Columns>
+                                <TemplateField HeaderText="Role">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="RoleDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="User Serial Id" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="UserSerialId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Role Id" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="RoleId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EffectiveStartDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EffectiveEndDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Security" ID="tshUserSecurity">
+                      <sfwTable ID="tblUserSecurity">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnDeleteCustomSecurity" sfwMethodName="btnExecuteBusinessMethod_Click" sfwObjectMethod="DeleteCustomSecurity" Text="Revoke Custom Security" Visible="False" />
+                            <sfwButton ID="btnOpenResource" sfwActiveForm="wfmResourcesMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintResourceId=ResourceId" sfwRelatedControl="grvSecurity" Text="Open" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvSecurity" sfwSelection="Many" sfwTwoWayBinding="True" AllowEditing="True" sfwEntityField="lstSecurity" sfwGridEntity="entSecurity">
+                              <Columns>
+                                <TemplateField HeaderText="Resource ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ResourceId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Resource">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objResources.ResourceDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Resource Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objResources.ResourceTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Roles">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrSecurityRoles" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Security Level">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SecurityDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Custom Security" SortExpression="lstCustomSecurity.CustomSecurityLevelValue" SortExpressionUpdated="true">
+                                  <ItemTemplate>
+                                    <sfwDropDownList sfwLoadType="CodeGroup" sfwLoadSource="11" sfwEntityField="objCustomSecurity.CustomSecurityLevelValue" ID="ddlCustomSecurity_grvSecurity" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField>
+                                  <ItemTemplate>
+                                    <sfwLabel SkinID="ReqInformation" sfwEntityField="IstrSecurityLevel" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Update Seq" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="lstCustomSecurity.UpdateSeq" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Custom Access Hours" ID="tshCustomAccess" Visible="False">
+                      <sfwTable ID="tblNewPage1">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvCustomAccessPolicy" sfwTwoWayBinding="True" AllowEditing="True" sfwEntityField="lstCustomAccessPolicy" sfwGridEntity="entCustomAccessPolicy">
+                              <Columns>
+                                <TemplateField HeaderText="Weekday" SortExpression="WeekdayDescription" SortExpressionUpdated="true">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="WeekdayValue" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="From Time" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwDropDownList sfwEntityField="FromTime" ID="ddlFromTime_grvCustomAccessPolicy">
+                                      <ListItem Text="1.00" Value="1.00" Selected="True" />
+                                      <ListItem Text="2.00" Value="2.00" />
+                                      <ListItem Text="3.00" Value="3.00" />
+                                      <ListItem Text="4.00" Value="4.00" />
+                                      <ListItem Text="5.00" Value="5.00" />
+                                      <ListItem Text="6.00" Value="6.00" />
+                                      <ListItem Text="7.00" Value="7.00" />
+                                      <ListItem Text="8.00" Value="8.00" />
+                                      <ListItem Text="9.00" Value="9.00" />
+                                      <ListItem Text="10.00" Value="10.00" />
+                                      <ListItem Text="11.00" Value="11.00" />
+                                      <ListItem Text="12.00" Value="12.00" />
+                                      <ListItem Text="13.00" Value="13.00" />
+                                      <ListItem Text="14.00" Value="14.00" />
+                                      <ListItem Text="15.00" Value="15.00" />
+                                      <ListItem Text="16.00" Value="16.00" />
+                                      <ListItem Text="17.00" Value="17.00" />
+                                      <ListItem Text="18.00" Value="18.00" />
+                                      <ListItem Text="19.00" Value="19.00" />
+                                      <ListItem Text="20.00" Value="20.00" />
+                                      <ListItem Text="21.00" Value="21.00" />
+                                      <ListItem Text="22.00" Value="22.00" />
+                                      <ListItem Text="23.00" Value="23.00" />
+                                      <ListItem Text="24.00" Value="24.00" />
+                                    </sfwDropDownList>
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="To Time" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwDropDownList sfwEntityField="ToTime" ID="ddlToTime_grvCustomAccessPolicy">
+                                      <ListItem Text="1.00" Value="1.00" Selected="True" />
+                                      <ListItem Text="2.00" Value="2.00" />
+                                      <ListItem Text="3.00" Value="3.00" />
+                                      <ListItem Text="4.00" Value="4.00" />
+                                      <ListItem Text="5.00" Value="5.00" />
+                                      <ListItem Text="6.00" Value="6.00" />
+                                      <ListItem Text="7.00" Value="7.00" />
+                                      <ListItem Text="8.00" Value="8.00" />
+                                      <ListItem Text="9.00" Value="9.00" />
+                                      <ListItem Text="10.00" Value="10.00" />
+                                      <ListItem Text="11.00" Value="11.00" />
+                                      <ListItem Text="12.00" Value="12.00" />
+                                      <ListItem Text="13.00" Value="13.00" />
+                                      <ListItem Text="14.00" Value="14.00" />
+                                      <ListItem Text="15.00" Value="15.00" />
+                                      <ListItem Text="16.00" Value="16.00" />
+                                      <ListItem Text="17.00" Value="17.00" />
+                                      <ListItem Text="18.00" Value="18.00" />
+                                      <ListItem Text="19.00" Value="19.00" />
+                                      <ListItem Text="20.00" Value="20.00" />
+                                      <ListItem Text="21.00" Value="21.00" />
+                                      <ListItem Text="22.00" Value="22.00" />
+                                      <ListItem Text="23.00" Value="23.00" />
+                                      <ListItem Text="24.00" Value="24.00" />
+                                    </sfwDropDownList>
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Custom Access Policy ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CustomAccessPolicyId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstUserRoles" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstSecurity" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstCustomAccessPolicy" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

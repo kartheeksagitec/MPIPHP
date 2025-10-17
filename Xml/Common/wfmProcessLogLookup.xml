@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmProcessLogLookup" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207" sfwType="Lookup" sfwTitle="Process Log Lookup" sfwMaxCount="1000" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Batch Overview=Batch Overview.htm;Lookup a Process Log=Lookup a Process Log.htm" sfwEntity="entProcessLog" sfwGridCollection="busProcessLogLookup.icolProcessLog">
+  <initialload>
+    <query ID="cdoProcessLog" sfwQueryRef="entProcessLog.LookUp" sfwMethodName="LoadProcessLog" sfwReturnType="MPIPHP.BusinessObjects.busProcessLogLookup" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capProcessLogIdFrom" Text="Process Log ID From : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtProcessLogIdFrom" sfwDataField="process_log_id" sfwDataType="Numeric" sfwOperator="between" sfwQueryID="cdoProcessLog" sfwRelatedControl="txtProcessLogIdTo" />
+                <CompareValidator ControlToValidate="txtProcessLogIdFrom" ErrorMessage="Process Log ID From must be an Integer value." ID="valProcessLogIdFrom" Operator="DataTypeCheck" Text="*" Type="Integer" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capProcessLogIdTo" Text="Process Log ID To : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtProcessLogIdTo" sfwDataField="process_log_id" sfwDataType="Numeric" sfwOperator="between" sfwQueryID="cdoProcessLog" />
+                <CompareValidator ControlToValidate="txtProcessLogIdTo" ErrorMessage="Process Log ID To must be an Integer value." ID="valProcessLogIdTo" Operator="DataTypeCheck" Text="*" Type="Integer" />
+                <CompareValidator ControlToCompare="txtProcessLogIdFrom" ControlToValidate="txtProcessLogIdTo" ErrorMessage="Process Log ID To cannot be less than Process Log ID From." ID="valProcessLogIdRange" Operator="GreaterThanEqual" Text="*" Type="Integer" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capProcessName" Text="Process Name :" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbProcessName" sfwDataField="process_name" sfwQueryID="cdoProcessLog" Width="350px" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capMessageType" Text="Message Type :" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="txbMessageType" sfwCodeGroup="28" sfwDataField="message_type_value" sfwQueryID="cdoProcessLog" Width="250px" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCycleNumber" Text="Cycle Number :" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbCycleNo" sfwDataField="cycle_no" sfwDataType="Numeric" sfwQueryID="cdoProcessLog" Width="350px" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capUserId" Text="User ID :" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedBy" sfwDataField="created_by" sfwQueryID="cdoProcessLog" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedDateFrom" Text="Log Date From : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedDateFrom" sfwDataField="created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoProcessLog" sfwRelatedControl="txtCreatedDateTo" />
+                <CompareValidator ControlToValidate="txtCreatedDateFrom" ErrorMessage="Created Date From must be in mm/dd/yyyy format." ID="cmv" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedDateTo" Text="Log Date To : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedDateTo" sfwDataField="created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoProcessLog" />
+                <CompareValidator ControlToValidate="txtCreatedDateTo" ErrorMessage="Created Date To must be in mm/dd/yyyy format." ID="cmv1" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtCreatedDateFrom" ControlToValidate="txtCreatedDateTo" ErrorMessage="Created Date To cannot be less than Created Date From." ID="cmv2" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMessage" Text="Message :" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbMessage" sfwDataField="message" sfwQueryID="cdoProcessLog" Width="350px" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedTimeFrom" Text="Time From : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedTimeFrom" sfwDataField="convert(varchar(10), created_date, 108) " sfwDataFormat="{0:HH:mm:ss}" sfwOperator="between" sfwQueryID="cdoProcessLog" sfwRelatedControl="txtCreatedTimeTo" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedTimeTo" Text="Time To : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedTimeTo" sfwDataField="convert(varchar(10), created_date, 108) " sfwDataFormat="{0:HH:mm:ss}" sfwOperator="between" sfwQueryID="cdoProcessLog" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Result">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" PageSize="200" sfwObjectID="busProcessLogLookup.icolProcessLog">
+                  <Columns>
+                    <TemplateField HeaderText="User ID" SortExpression="created_by">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="created_by" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="DateTime" SortExpression="created_date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="created_date" sfwDataFormat="{0:G}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Name" SortExpression="process_name">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="process_name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Message Type" SortExpression="message_type_description">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="message_type_description" sfwWrap="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Message" SortExpression="message">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="message" sfwWrap="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="ID" SortExpression="process_log_id">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="process_log_id" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Cycle No" SortExpression="cycle_no">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="cycle_no" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

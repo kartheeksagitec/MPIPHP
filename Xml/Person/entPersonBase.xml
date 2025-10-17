@@ -1,0 +1,99 @@
+﻿<entity ID="entPersonBase" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPersonBase" sfwObjectID="busPersonBase" sfwTableName="sgt_person_base" sfwView="False" sfwDataObjectID="doPersonBase">
+  <rules>
+    <rule ID="ShowAddNewBeneficiaryButton" sfwExpression="(this.icdoPersonBase.is_person_deleted_flag == &quot;Y&quot;)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_PERSON_BASE WHERE IS_PERSON_DELETED_FLAG='Y'">
+      <parameters />
+    </query>
+    <query ID="GetPersonMPID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select (FIRST_NAME + ' ' + LAST_NAME)as fullname, * from SGT_PERSON_BASE WITH(NOLOCK) &#xD;&#xA; where MPI_PERSON_ID = @MPI_PERSON_ID ">
+      <parameters>
+        <parameter ID="@MPI_PERSON_ID" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="mpi_person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="False" ID="MpiPersonId" sfwIsSequence="False" sfwCaption="Mpi Person Id" />
+    <attribute sfwValue="first_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="FirstName" sfwIsSequence="False" sfwCaption="First Name" />
+    <attribute sfwValue="middle_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="MiddleName" sfwIsSequence="False" sfwCaption="Middle Name" />
+    <attribute sfwValue="last_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="LastName" sfwIsSequence="False" sfwCaption="Last Name" />
+    <attribute sfwType="Description" ID="NamePrefixDescription" sfwCaption="Name Prefix" sfwValue="name_prefix_description" />
+    <attribute sfwValue="name_prefix_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="NamePrefixId" sfwCodeID="6025" sfwIsSequence="False" sfwCaption="Name Prefix" />
+    <attribute sfwValue="name_prefix_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="NamePrefixValue" sfwIsSequence="False" sfwCaption="Name Prefix" />
+    <attribute sfwValue="date_of_birth" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="DateOfBirth" sfwIsSequence="False" sfwCaption="Date Of Birth" />
+    <attribute sfwValue="date_of_death" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="DateOfDeath" sfwIsSequence="False" sfwCaption="Date Of Death" />
+    <attribute sfwValue="ssn" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="256" sfwIsNull="True" ID="Ssn" sfwIsSequence="False" sfwCaption="Ssn" />
+    <attribute sfwValue="ethnicity" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="Ethnicity" sfwIsSequence="False" sfwCaption="Ethnicity" />
+    <attribute sfwType="Description" ID="GenderDescription" sfwCaption="Gender" sfwValue="gender_description" />
+    <attribute sfwValue="gender_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="GenderId" sfwCodeID="6014" sfwIsSequence="False" sfwCaption="Gender" />
+    <attribute sfwValue="gender_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="GenderValue" sfwIsSequence="False" sfwCaption="Gender" />
+    <attribute sfwType="Description" ID="MaritalStatusDescription" sfwCaption="Marital Status" sfwValue="marital_status_description" />
+    <attribute sfwValue="marital_status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="MaritalStatusId" sfwCodeID="6015" sfwIsSequence="False" sfwCaption="Marital Status" />
+    <attribute sfwValue="marital_status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="MaritalStatusValue" sfwIsSequence="False" sfwCaption="Marital Status" />
+    <attribute sfwValue="home_phone_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="HomePhoneNo" sfwIsSequence="False" sfwCaption="Home Phone No" />
+    <attribute sfwValue="work_phone_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="WorkPhoneNo" sfwIsSequence="False" sfwCaption="Work Phone No" />
+    <attribute sfwValue="cell_phone_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="CellPhoneNo" sfwIsSequence="False" sfwCaption="Cell Phone No" />
+    <attribute sfwValue="extension" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="Extension" sfwIsSequence="False" sfwCaption="Extension" />
+    <attribute sfwValue="fax_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="FaxNo" sfwIsSequence="False" sfwCaption="Fax No" />
+    <attribute sfwValue="pager" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="Pager" sfwIsSequence="False" sfwCaption="Pager" />
+    <attribute sfwValue="email_address_1" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="70" sfwIsNull="True" ID="EmailAddress1" sfwIsSequence="False" sfwCaption="Email Address 1" />
+    <attribute sfwValue="email_address_2" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="70" sfwIsNull="True" ID="EmailAddress2" sfwIsSequence="False" sfwCaption="Email Address 2" />
+    <attribute sfwType="Description" ID="CommunicationPreferenceDescription" sfwCaption="Communication Preference" sfwValue="communication_preference_description" />
+    <attribute sfwValue="communication_preference_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CommunicationPreferenceId" sfwCodeID="6027" sfwIsSequence="False" sfwCaption="Communication Preference" />
+    <attribute sfwValue="communication_preference_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="CommunicationPreferenceValue" sfwIsSequence="False" sfwCaption="Communication Preference" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="10" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="vip_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="VipFlag" sfwIsSequence="False" sfwCaption="Vip Flag" />
+    <attribute sfwValue="name_suffix" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="10" sfwIsNull="True" ID="NameSuffix" sfwIsSequence="False" sfwCaption="Name Suffix" />
+    <attribute sfwValue="recalculate_vesting_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="RecalculateVestingFlag" sfwIsSequence="False" sfwCaption="Recalculate Vesting Flag" />
+    <attribute sfwValue="health_eligible_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="HealthEligibleFlag" sfwIsSequence="False" sfwCaption="Health Eligible Flag" />
+    <attribute sfwValue="pension_eligible_notification_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="PensionEligibleNotificationFlag" sfwIsSequence="False" sfwCaption="Pension Eligible Notification Flag" />
+    <attribute sfwValue="is_person_deleted_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsPersonDeletedFlag" sfwIsSequence="False" sfwCaption="Is Person Deleted Flag" />
+    <attribute sfwValue="suspension_of_benefits_notification_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="SuspensionOfBenefitsNotificationFlag" sfwIsSequence="False" sfwCaption="Suspension Of Benefits Notification Flag" />
+    <attribute sfwValue="new_participant_letter_send_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="NewParticipantLetterSendFlag" sfwIsSequence="False" sfwCaption="New Participant Letter Send Flag" />
+    <attribute sfwValue="retirement_health_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="RetirementHealthDate" sfwCaption="Retirement Health Date" />
+    <attribute sfwValue="md_age_opt_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="MdAgeOptId" sfwCaption="Md Age Opt Id" />
+    <attribute sfwValue="document_upload_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="documentuploadflag" sfwIsSequence="False" sfwCaption="document upload flag" />
+    <attribute sfwValue="adverse_interest_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="AdverseInterestFlag" sfwIsSequence="False" sfwCaption="Adverse Interest Flag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLast4DigitsofSSN" sfwValue="icdoPersonBase.istrLast4DigitsofSSN" />
+    <attribute sfwDataType="string" sfwType="Property" ID="UnionCode" sfwValue="icdoPersonBase.UnionCode" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateofBirth" sfwValue="icdoPersonBase.idtDateofBirth" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecAge" sfwValue="idecAge" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSSNNonEncrypted" sfwValue="icdoPersonBase.istrSSNNonEncrypted" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IblnParticipant" sfwValue="iblnParticipant" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IblnBeneficiary" sfwValue="iblnBeneficiary" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IblnDependent" sfwValue="iblnDependent" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IblnAlternatePayee" sfwValue="iblnAlternatePayee" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRetiree" sfwValue="istrRetiree" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAddress" ID="lstPersonAddress" sfwValue="iclbPersonAddress" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountBeneficiary" ID="lstPersonAccountBeneficiary" sfwValue="iclbPersonAccountBeneficiary" />
+    <attribute sfwType="Collection" sfwEntity="entPersonDependent" ID="lstPersonDependent" sfwValue="iclbPersonDependent" />
+    <attribute sfwType="Collection" sfwEntity="entPersonContact" ID="lstPersonContact" sfwValue="iclbPersonContact" />
+    <attribute sfwType="Collection" sfwEntity="entNotes" ID="lstNotes" sfwValue="iclbNotes" />
+    <attribute sfwType="Collection" sfwEntity="entPersonBridgeHours" ID="lstPersonBridgeHours" sfwValue="iclbPersonBridgeHours" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccount" ID="lstPersonAccount" sfwValue="iclbPersonAccount" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountRetirementContribution" ID="lstPersonAccountRetirementContribution" sfwValue="iclbPersonAccountRetirementContribution" />
+    <attribute sfwType="Collection" sfwEntity="entPersonSuspendibleMonth" ID="lstPersonSuspendibleMonth" sfwValue="iclbPersonSuspendibleMonth" />
+  </attributes>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+</entity>

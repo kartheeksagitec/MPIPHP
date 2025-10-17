@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmFileDtlLookup" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="401 " sfwType="Lookup" sfwTitle="File Detail Lookup" sfwMaxCount="200" version="3.5" sfwHelpFile="Batch Overview=Batch Overview.htm;Lookup Processed Records=Lookup Processed Records.htm" sfwEntity="entFileDtl" sfwGridCollection="busFileDtlLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoFileDtl" sfwQueryRef="entFileDtl.Lookup" sfwMethodName="LoadFileDtls" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFileType" Text="File Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="file_id" ID="ddlCFileId" sfwDataField="c.file_id" sfwQueryID="cdoFileDtl" sfwLoadType="Query" sfwLoadSource="entFile.Lookup" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCycleNumber" Text="Cycle Number :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCycleNo" sfwDataField="cycle_no" sfwQueryID="cdoFileDtl" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capOriginalFileName" Text="Original File Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbDescription" sfwDataField="mailbox_file_name" sfwQueryID="cdoFileDtl" Width="250px" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatus" Text="Status :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlAStatusValue" sfwDataField="a.status_value" sfwQueryID="cdoFileDtl" sfwLoadType="CodeGroup" sfwLoadSource="29" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capLineNumber" Text="Line Number :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtLineNo" sfwDataField="line_no" sfwQueryID="cdoFileDtl" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capData" Text="Data : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRecordData" sfwDataField="record_data" sfwQueryID="cdoFileDtl" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFileHeaderID" Text="File Header ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAFileHdrId" sfwDataField="a.file_hdr_id" sfwQueryID="cdoFileDtl" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Result">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmFileDtlMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintFileDtlId=FileDtlId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Line No">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="LineNo" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Record Data">
+                      <ItemTemplate>
+                        <sfwLabel sfwWrap="True" sfwEntityField="RecordData" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FileDtlId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Transaction Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TransactionCodeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

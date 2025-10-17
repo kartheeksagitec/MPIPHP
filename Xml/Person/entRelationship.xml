@@ -1,0 +1,211 @@
+﻿<entity ID="entRelationship" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoRelationship" sfwObjectID="busRelationship" sfwTableName="sgt_relationship" sfwView="False" sfwDataObjectID="doRelationship">
+  <rules>
+    <rule ID="RULE_CHECK_PARTICIPANT_IS_UNMARRIED" sfwMessageId="1149" sfwExpression="(this.icdoRelationship.relationship_value == &quot;SPOU&quot;) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusPerson.icdoPerson.marital_status_value&quot;) != &quot;M&quot;)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_RELATIONSHIP_IS_BLANK" sfwMessageId="1111" sfwExpression="(string.IsNullOrEmpty(this.icdoRelationship.relationship_value))" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="RULE_CHECK_RELATIONSHIP_IS_BLANK" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_PARTICIPANT_IS_UNMARRIED" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="LoadSoftErrors" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select sm.DISPLAY_MESSAGE,sm.SEVERITY_ID,sm.SEVERITY_VALUE, spabe.* from SGT_PERSON_ACCOUNT_BENEFICIARY_ERROR spabe WITH(NOLOCK) join SGT_PERSON_ACCOUNT_BENEFICIARY spab WITH(NOLOCK) on&#xD;&#xA;spabe.PERSON_ACCOUNT_BENEFICIARY_ID = spab.PERSON_ACCOUNT_BENEFICIARY_ID join&#xD;&#xA;SGT_RELATIONSHIP spb WITH(NOLOCK) on&#xD;&#xA;spab.PERSON_RELATIONSHIP_ID = spb.PERSON_RELATIONSHIP_ID&#xD;&#xA;join SGS_MESSAGES sm WITH(NOLOCK) on sm.MESSAGE_ID = spabe.MESSAGE_ID&#xD;&#xA;where spb.PERSON_RELATIONSHIP_ID = @PERSON_RELATIONSHIP_ID&#xD;&#xA;and spab.STATUS_VALUE &lt;&gt; 'INAC'">
+      <parameters>
+        <parameter ID="@PERSON_RELATIONSHIP_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckDuplicateBeneficiary" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select COUNT(*) from SGT_RELATIONSHIP WITH(NOLOCK) where PERSON_ID = @PERSON_ID and &#xD;&#xA;((BENEFICIARY_PERSON_ID = @BENEFICIARY_PERSON_ID And BENEFICIARY_PERSON_ID &lt;&gt; 0) OR&#xD;&#xA;(BENEFICIARY_ORG_ID = @BENEFICIARY_ORG_ID And BENEFICIARY_ORG_ID &lt;&gt; 0))">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFICIARY_PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFICIARY_ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckDuplicateOrgBeneficiary" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select COUNT(*) from SGT_RELATIONSHIP WITH(NOLOCK) where PERSON_ID = @PERSON_ID and BENEFICIARY_ORG_ID = @BENEFICIARY_ORG_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" />
+        <parameter ID="@BENEFICIARY_ORG_ID" />
+      </parameters>
+    </query>
+    <query ID="GetAddressFromPersonId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select COUNT(*) from SGT_RELATIONSHIP WITH(NOLOCK) where PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAllPersonBeneficaryRelations" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select * from SGT_RELATIONSHIP WITH(NOLOCK) where BENEFICIARY_PERSON_ID = @BENEFICIARY_PERSON_ID">
+      <parameters>
+        <parameter ID="@BENEFICIARY_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckDuplicateDependent" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select COUNT(*) from SGT_RELATIONSHIP WITH(NOLOCK) where PERSON_ID=@PERSON_ID and DEPENDENT_PERSON_ID=@DEPENDENT_PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@DEPENDENT_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckDependentExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_RELATIONSHIP WITH(NOLOCK) where PERSON_ID = @PERSON_ID and &#xD;&#xA;DEPENDENT_PERSON_ID = @DEPENDENT_PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@DEPENDENT_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckBeneficiaryExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_RELATIONSHIP WITH(NOLOCK) where PERSON_ID = @PERSON_ID and &#xD;&#xA;BENEFICIARY_PERSON_ID = @BENEFICIARY_PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFICIARY_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefeciaryDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF((Select COUNT(*) from SGT_RELATIONSHIP WITH(NOLOCK) where SGT_RELATIONSHIP.PERSON_ID = @PERSON_ID and SGT_RELATIONSHIP.BENEFICIARY_PERSON_ID = (select PERSON_ID from SGT_PERSON WITH(NOLOCK) where MPI_PERSON_ID = @MPI_PERSON_ID))&gt;0)&#xD;&#xA; (&#xD;&#xA; select (SGT_PERSON.FIRST_NAME + ' ' + SGT_PERSON.LAST_NAME)as fullname ,SGT_PERSON.PERSON_ID,RELATIONSHIP_VALUE from SGT_PERSON WITH(NOLOCK) &#xD;&#xA; left join SGT_RELATIONSHIP WITH(NOLOCK)  on SGT_PERSON.PERSON_ID = SGT_RELATIONSHIP.BENEFICIARY_PERSON_ID&#xD;&#xA; where SGT_RELATIONSHIP.BENEFICIARY_PERSON_ID =(select PERSON_ID from SGT_PERSON WITH(NOLOCK) where MPI_PERSON_ID =@MPI_PERSON_ID) and SGT_RELATIONSHIP.PERSON_ID = @PERSON_ID&#xD;&#xA; )&#xD;&#xA; else&#xD;&#xA; (&#xD;&#xA;  select (SGT_PERSON.FIRST_NAME + ' ' + SGT_PERSON.LAST_NAME)as fullname ,PERSON_ID,'' 'RELATIONSHIP_VALUE' from SGT_PERSON WITH(NOLOCK) where MPI_PERSON_ID = @MPI_PERSON_ID&#xD;&#xA; )">
+      <parameters>
+        <parameter ID="@MPI_PERSON_ID" sfwDataType="string" />
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetDependentDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF((Select COUNT(*) from SGT_RELATIONSHIP WITH(NOLOCK) where SGT_RELATIONSHIP.PERSON_ID = @PERSON_ID and SGT_RELATIONSHIP.DEPENDENT_PERSON_ID = (select PERSON_ID from SGT_PERSON WITH(NOLOCK) where MPI_PERSON_ID = @MPI_PERSON_ID))&gt;0)&#xD;&#xA; (&#xD;&#xA; select (SGT_PERSON.FIRST_NAME + ' ' + SGT_PERSON.LAST_NAME)as fullname ,SGT_PERSON.PERSON_ID,RELATIONSHIP_VALUE from SGT_RELATIONSHIP WITH(NOLOCK) &#xD;&#xA; Right join SGT_PERSON WITH(NOLOCK)  on SGT_PERSON.PERSON_ID = SGT_RELATIONSHIP.DEPENDENT_PERSON_ID&#xD;&#xA; where SGT_RELATIONSHIP.DEPENDENT_PERSON_ID = (select PERSON_ID from SGT_PERSON WITH(NOLOCK) where MPI_PERSON_ID =@MPI_PERSON_ID) and SGT_RELATIONSHIP.PERSON_ID = @PERSON_ID&#xD;&#xA; )&#xD;&#xA; else&#xD;&#xA; (&#xD;&#xA;  select (SGT_PERSON.FIRST_NAME + ' ' + SGT_PERSON.LAST_NAME)as fullname ,PERSON_ID ,'' 'RELATIONSHIP_VALUE' from SGT_PERSON WITH(NOLOCK) where MPI_PERSON_ID = @MPI_PERSON_ID&#xD;&#xA; )">
+      <parameters>
+        <parameter ID="@MPI_PERSON_ID" sfwDataType="string" />
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetDependentDOB" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DATE_OF_BIRTH FROM SGT_PERSON WITH(NOLOCK) where PERSON_ID=@PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetDependentMaritalStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT MARITAL_STATUS_VALUE FROM SGT_PERSON WITH(NOLOCK) WHERE PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetRelationshipValues" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGS_CODE_VALUE WITH(NOLOCK) where CODE_ID = 6000 and DATA1 = @DATA1">
+      <parameters>
+        <parameter ID="@DATA1" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetSpouseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;  FIRST_NAME + ' ' + LAST_NAME  AS SPOUSEFULLNAME ,&#xA; SP.DATE_OF_BIRTH SPOUSEDOB,&#xA; SCV.DESCRIPTION  AS SPOUSENAMEPREFIX,&#xA; SP.Gender_Value AS SpouseGender&#xA;FROM&#xA;  SGT_PERSON SP WITH(NOLOCK) &#xA;  join SGT_RELATIONSHIP SR WITH(NOLOCK)&#xA;  ON sp.Person_ID = sr.BENEFICIARY_PERSON_ID &#xA;  LEFT OUTER JOIN  sgs_code_value SCV WITH(NOLOCK)&#xA;  ON SCV.CODE_ID = SP.NAME_PREFIX_ID AND&#xA;  SCV.CODE_VALUE = SP.NAME_PREFIX_VALUE &#xA;WHERE&#xA;  SR.RELATIONSHIP_VALUE = 'SPOU' AND&#xA;  SR.PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetDateOfMarriage" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select DATE_OF_MARRIAGE from sgt_relationship where PERSON_ID = @PERSON_ID and BENEFICIARY_PERSON_ID = @BENEFICIARY_PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFICIARY_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetLatestDateofMarriageIfQualifiedSpouseExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT top(1) BENEFICIARY_PERSON_ID FROM SGT_RELATIONSHIP R WHERE PERSON_ID = @PERSON_ID &#xD;&#xA;AND RELATIONSHIP_VALUE='SPOU' &#xD;&#xA;AND DATEADD(YY,1,R.DATE_OF_MARRIAGE) &lt; GETDATE() &#xD;&#xA;ORDER BY R.DATE_OF_MARRIAGE DESC">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetSpousalDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select FIRST_NAME , LAST_NAME ,MIDDLE_NAME,NAME_PREFIX_VALUE,SSN&#xD;&#xA;from SGT_PERSON SP join SGT_RELATIONSHIP SR &#xD;&#xA;on sp.Person_ID = sr.BENEFICIARY_PERSON_ID &#xD;&#xA;where SR.RELATIONSHIP_VALUE = 'SPOU'&#xD;&#xA;and SR.PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetQualifiedSpouseDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select top(1) sp.*,BENEFICIARY_PERSON_ID from sgt_person sp join sgt_relationship R&#xD;&#xA;on sp.person_id = R.BENEFICIARY_PERSON_ID&#xD;&#xA;WHERE R.PERSON_ID = @PERSON_ID &#xD;&#xA;AND RELATIONSHIP_VALUE='SPOU' &#xD;&#xA;ORDER BY R.DATE_OF_MARRIAGE DESC">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckIfQualifiedSpouseExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT top(1) BENEFICIARY_PERSON_ID FROM SGT_RELATIONSHIP R WHERE PERSON_ID = @PERSON_ID &#xD;&#xA;and (BENEFICIARY_PERSON_ID = @BENEFICIARY_PERSON_ID)&#xD;&#xA;AND RELATIONSHIP_VALUE='SPOU' &#xD;&#xA;AND DATEADD(YY,1,R.DATE_OF_MARRIAGE) &lt; @DATE_OF_DEATH  &#xD;&#xA;ORDER BY R.DATE_OF_MARRIAGE DESC">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFICIARY_PERSON_ID" sfwDataType="int" />
+        <parameter ID="@DATE_OF_DEATH" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetSurvivorsPartDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select PERSON_ID,FIRST_NAME ,LAST_NAME  from SGT_PERSON WITH(NOLOCK) where PERSON_ID in &#xD;&#xA;(select PERSON_ID  from SGT_RELATIONSHIP WITH(NOLOCK) where BENEFICIARY_PERSON_ID = @BENEFICIARY_PERSON_ID) &#xD;&#xA;and DATE_OF_DEATH is not NULL&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@BENEFICIARY_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAlternatePayeePartDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select PERSON_ID,FIRST_NAME , LAST_NAME  from SGT_PERSON WITH(NOLOCK) where PERSON_ID in &#xD;&#xA;(select PERSON_ID  from SGT_DRO_APPLICATION WITH(NOLOCK) where ALTERNATE_PAYEE_ID = @ALTERNATE_PAYEE_ID and DRO_STATUS_VALUE &lt;&gt; 'CNLD')&#xD;&#xA;&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@ALTERNATE_PAYEE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckIfPlanAddedForBeneficiary" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT *&#xA;FROM SGT_PERSON_ACCOUNT WITH(NOLOCK) &#xA;WHERE&#xA;BENEFECIARY_PERSON_ID = @BENEFECIARY_PERSON_ID and BENEFECIARY_OF_PERSON_ID = @BENEFECIARY_OF_PERSON_ID ">
+      <parameters>
+        <parameter ID="@BENEFECIARY_PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFECIARY_OF_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetSurvivorRelationship" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select  SR.RELATIONSHIP_ID,sr.RELATIONSHIP_VALUE from SGT_RELATIONSHIP SR&#xD;&#xA;join SGT_BENEFIT_APPLICATION_DETAIL SBAD on SR.BENEFICIARY_PERSON_ID=sbad.JOINT_ANNUITANT_ID&#xD;&#xA;join SGT_PAYEE_ACCOUNT SPA on Sr.PERSON_ID=SPA.PERSON_ID&#xD;&#xA;where SPA.PERSON_ID=@PERSON_ID&#xD;&#xA;and sbad.JOINT_ANNUITANT_ID= @Beneficiary_person_id">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@Beneficiary_person_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetSurvivorPercentage" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select DIST_PERCENT from SGT_PERSON_ACCOUNT_BENEFICIARY SPAB&#xD;&#xA;join SGT_RELATIONSHIP SR on SPAB.PERSON_RELATIONSHIP_ID=SR.PERSON_RELATIONSHIP_ID&#xD;&#xA;where SR.PERSON_ID=@PERSON_ID&#xD;&#xA;and SR.BENEFICIARY_PERSON_ID=@BENEFICIARY_PERSON_ID and PERSON_ACCOUNT_ID=@PERSON_ACCOUNT_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFICIARY_PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PERSON_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetRelationType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select RELATIONSHIP_VALUE from SGT_RELATIONSHIP where PERSON_ID=@PERSON_ID and BENEFICIARY_PERSON_ID= @BENEFICIARY_PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFICIARY_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOrgRelationType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT RELATIONSHIP_VALUE FROM SGT_RELATIONSHIP WHERE PERSON_ID=@PERSON_ID AND BENEFICIARY_ORG_ID=@BENEFICIARY_ORG_ID&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFICIARY_ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBeneficiaryID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_RELATIONSHIP&#xD;&#xA;where BENEFICIARY_PERSON_ID=@DEPENDENT_PERSON_ID &#xD;&#xA;or DEPENDENT_PERSON_ID = @DEPENDENT_PERSON_ID &#xD;&#xA;or BENEFICIARY_OF =  @DEPENDENT_PERSON_ID ">
+      <parameters>
+        <parameter ID="@DEPENDENT_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetListOfBeneficiariesAndDependents" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select SPAB.*,SR.*, SPA.PLAN_ID from SGT_RELATIONSHIP SR &#xD;&#xA;left outer JOIN SGT_PERSON_ACCOUNT_BENEFICIARY SPAB ON SR.PERSON_RELATIONSHIP_ID = SPAB.PERSON_RELATIONSHIP_ID &#xD;&#xA;left outer JOIN SGT_PERSON_ACCOUNT SPA ON SPA.PERSON_ACCOUNT_ID = SPAB.PERSON_ACCOUNT_ID&#xD;&#xA;where SR.PERSON_ID = @PERSON_ID&#xD;&#xA;and (BENEFICIARY_PERSON_ID &lt;&gt; 0 or DEPENDENT_PERSON_ID &lt;&gt; 0)">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetJointAnnuitantID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select DATE_OF_DEATH from SGT_PERSON where person_id=&#xD;&#xA;(select TOP(1)SR.BENEFICIARY_PERSON_ID from SGT_RELATIONSHIP SR&#xD;&#xA;where SR.PERSON_ID=@PERSON_ID and SR.RELATIONSHIP_VALUE='SPOU' AND SR.BENEFICIARY_PERSON_ID IS NOT NULL)&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="person_relationship_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonRelationshipId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonId" sfwIsSequence="False" sfwCaption="Person Id" />
+    <attribute sfwValue="beneficiary_person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BeneficiaryPersonId" sfwIsSequence="False" sfwCaption="Beneficiary Person Id" />
+    <attribute sfwValue="beneficiary_org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BeneficiaryOrgId" sfwIsSequence="False" sfwCaption="Beneficiary Org Id" />
+    <attribute sfwValue="dependent_person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="DependentPersonId" sfwIsSequence="False" sfwCaption="Dependent Person Id" />
+    <attribute sfwType="Description" ID="RelationshipDescription" sfwCaption="Relationship" sfwValue="relationship_description" />
+    <attribute sfwValue="relationship_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RelationshipId" sfwCodeID="6000" sfwIsSequence="False" sfwCaption="Relationship" />
+    <attribute sfwValue="relationship_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="RelationshipValue" sfwIsSequence="False" sfwCaption="Relationship" />
+    <attribute sfwValue="effective_start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveStartDate" sfwIsSequence="False" sfwCaption="Effective Start Date" />
+    <attribute sfwValue="effective_end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveEndDate" sfwIsSequence="False" sfwCaption="Effective End Date" />
+    <attribute sfwValue="addr_same_as_participant_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="AddrSameAsParticipantFlag" sfwIsSequence="False" sfwCaption="Addr Same As Participant Flag" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="date_of_marriage" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="DateOfMarriage" sfwIsSequence="False" sfwCaption="Date Of Marriage" />
+    <attribute sfwType="Description" ID="BeneficiaryFromDescription" sfwCaption="Beneficiary From" sfwValue="beneficiary_from_description" />
+    <attribute sfwValue="beneficiary_from_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BeneficiaryFromId" sfwCodeID="1509" sfwIsSequence="False" sfwCaption="Beneficiary From" />
+    <attribute sfwValue="beneficiary_from_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="BeneficiaryFromValue" sfwIsSequence="False" sfwCaption="Beneficiary From" />
+    <attribute sfwValue="beneficiary_of" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BeneficiaryOf" sfwIsSequence="False" sfwCaption="Beneficiary Of" />
+  </attributes>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields />
+</entity>

@@ -1,0 +1,314 @@
+﻿<form ID="wfmAnnualBenefitSummaryOverviewMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="206" sfwType="Maintenance" sfwTitle="Annual Benefit Summary Overview " version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entAnnualBenefitSummaryOverview">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindAnnualBenefitSummaryOverview" />
+    <callmethods sfwMode="Update" sfwMethodName="FindAnnualBenefitSummaryOverview" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" Visible="False" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Person Information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMpiPersonId" Text="MPI Person ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMpiPersonId" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=PersonId" sfwEntityField="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Last 4 Digits of SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrLast4DigitsofSSN" sfwEntityField="IstrLast4DigitsofSSN" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblDateOfBirth" ID="capDateOfBirth" Text="Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateOfBirth" sfwDataFormat="{0:d}" sfwEntityField="IdtDateofBirth" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox ID="txtPersonId" Visible="False" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Annual Benefit Summary">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn ColumnSpan="4" CssClass="tblPersWorkHistMPI">
+                <sfwButton ID="btnExportToExcel1" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvAclbPersonWorkHistoryMPI" Text="Export To Excel" />
+                <sfwButton ID="btnRecalculateEEInterest" sfwActiveForm="wfmRecalculateEEInterestMaintenance" sfwMethodName="btnOpen_Click" sfwResource="103" Text="Recalculate EE Interest" sfwNavigationParameter="aintPersonId=PersonId" />
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvAclbPersonWorkHistoryMPI" PageSize="500" sfwObjectID="busAnnualBenefitSummaryOverview.lbusBenefitApplication.aclbPersonWorkHistory_MPI" SkinID="WrapGrid" ShowFooter="True" FooterStyle.HorizontalAlign="Right" sfwEntityField="objLbusBenefitApplication.lstAclbPersonWorkHistoryMPI">
+                  <Columns>
+                    <TemplateField HeaderText="Year" SortExpression="year">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="year" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel Font.Bold="True" Text="Total" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Credited Hours" SortExpression="qualified_hours" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="qualified_hours" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="ldecTotalCreditedHours" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Withdrawn Hours" SortExpression="idecWithdrawalHours" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel6" sfwDataField="idecWithdrawalHours" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="sum(idecWithdrawalHours)" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Qualified Years" SortExpression="qualified_years_count" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="qualified_years_count" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="lintTotalqualifiedYearsCount" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Vested Years" SortExpression="vested_years_count" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="vested_years_count" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="lintTotalvestedYearsCount" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Break In Service Years" SortExpression="bis_years_count" Visible="False" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="bis_years_count" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="lintBISYearCount" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Non Qualified Year Count" SortExpression="iintNonQualifiedYears" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iintNonQualifiedYears" ID="lintNonQualifiedYears" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="lintNonQualifiedYears" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retiree Health Hours" SortExpression="idecTotalHealthHours" ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="idecTotalHealthHours" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="sum(idecTotalHealthHours)" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retiree Health Years" SortExpression="iintHealthCount" ItemStyle.HorizontalAlign="Center" FooterStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iintHealthCount" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="lintTotalHealthYearsCount" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Cont." ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel2" sfwDataField="idecEEContribution" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="ldecTotalEEContribution" sfwDataFormat="{0:C}" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Interest" ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel3" sfwDataField="idecEEInterest" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="ldecTotalEEInterestContribution" sfwDataFormat="{0:C}" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="UVHP Cont." ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel4" sfwDataField="idecUVHPContribution" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="ldecTotalUVHPContribution" sfwDataFormat="{0:C}" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="UVHP Interest" ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel5" sfwDataField="idecUVHPInterest" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="ldecTotalUVHPInterestContribution" sfwDataFormat="{0:C}" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Accrued Benefit-MPI" ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel" sfwDataField="idecBenefitAmount" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="ldecTotalQualifiedAccuruedBenefit" sfwDataFormat="{0:C}" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Cumulative Accrued Benefit-MPI" SortExpression="idecCummBalance" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="idecCummBalance" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Accrued Benefit-Local" ItemStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel8" sfwDataField="idecBenefitAmountLocal" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwDataField="ldecTotalQualifiedAccruedBenefitLocal" sfwDataFormat="{0:C}" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Comments" SortExpression="comments" ItemStyle.HorizontalAlign="Left" FooterStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="comments" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+                <sfwLabel ID="lblTotal_Amount1" Text="Total" Font.Bold="True" sfwIsCaption="True" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel41" sfwEntityField="LdecTotalCreditedHours" Font.Bold="True" sfwIsCaption="True" CssClass="NetTotal" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel51" sfwEntityField="LdecWithdrawalHoursSum" Font.Bold="True" sfwIsCaption="True" CssClass="MonTotal" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel61" sfwEntityField="LintTotalqualifiedYearsCount" Font.Bold="True" sfwIsCaption="True" CssClass="Fortnightly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel71" sfwEntityField="LintTotalvestedYearsCount" Font.Bold="True" sfwIsCaption="True" CssClass="Weekly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel91" sfwEntityField="LintNonQualifiedYears" Font.Bold="True" sfwIsCaption="True" CssClass="Weekly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel101" sfwEntityField="LdecTotalHealthHoursSum" Font.Bold="True" sfwIsCaption="True" CssClass="Weekly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel111" sfwEntityField="LintTotalHealthYearsCount" Font.Bold="True" sfwIsCaption="True" CssClass="Weekly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel121" sfwEntityField="LdecTotalEEContribution" sfwDataFormat="{0:C}" Font.Bold="True" sfwIsCaption="True" CssClass="Weekly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel131" sfwEntityField="LdecTotalEEInterestContribution" sfwDataFormat="{0:C}" Font.Bold="True" sfwIsCaption="True" CssClass="Weekly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel141" sfwEntityField="LdecTotalUVHPContribution" sfwDataFormat="{0:C}" Font.Bold="True" sfwIsCaption="True" CssClass="Weekly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel151" sfwEntityField="LdecTotalUVHPInterestContribution" sfwDataFormat="{0:C}" Font.Bold="True" sfwIsCaption="True" CssClass="Weekly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel161" sfwEntityField="LdecTotalQualifiedAccuruedBenefit" sfwDataFormat="{0:C}" Font.Bold="True" sfwIsCaption="True" CssClass="Weekly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+                <sfwLabel ID="lblLabel181" sfwEntityField="LdecTotalQualifiedAccruedBenefitLocal" sfwDataFormat="{0:C}" Font.Bold="True" sfwIsCaption="True" CssClass="Weekly" sfwVisibleRule="Visible-Rule-ShowFooter" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn Visible="False">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvAclbAnnualBenfitSummayOverviewTotal" sfwObjectID="busAnnualBenefitSummaryOverview.aclbAnnualBenfitSummayOverviewTotal">
+                  <Columns>
+                    <TemplateField HeaderText="Credited Hours" SortExpression="idecTotalPensionHours" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="idecTotalPensionHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="IAP Hours" SortExpression="idecTotalIAPHours" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="idecTotalIAPHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Qualified Years" SortExpression="qualified_years_count" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="qualified_years_count" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Vested Hours" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblTotalVestedHours" sfwDataField="idecTotalPensionHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Vested Years" SortExpression="vested_years_count" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="vested_years_count" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Health Hours" SortExpression="idecTotalHealthHours" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="idecTotalHealthHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Health Years" SortExpression="iintHealthCount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iintHealthCount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Accrued Benefit" SortExpression="idecTotalAccruedBenefit" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Right" FooterStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="idecTotalAccruedBenefit" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local Benefit Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLocalAccruedBenefit" sfwDataField="idecLocalAccruedBenefit" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objLbusBenefitApplication.lstAclbPersonWorkHistoryMPI" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

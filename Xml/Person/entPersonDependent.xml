@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPersonDependent" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoRelationship" sfwObjectID="busPersonDependent" sfwParentEntity="entRelationship">
+  <rules>
+    <rule ID="RULE_CHECK_DEPENDENT_ALREADY_EXISTS" sfwMessageId="1133" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entRelationship.CheckDuplicateDependent&quot;, this.ibusPerson.icdoPerson.person_id, this.icdoRelationship.dependent_person_id) == 1)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_DEPENDENT_DOB" sfwMessageId="1143" sfwExpression="(this.CheckDependentDOB() == True) &amp;&amp; &#xA;(this.icdoRelationship.relationship_value == &quot;CHLD&quot;)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_DEPENDENT_ID_IS_BLANK" sfwMessageId="1134" sfwExpression="(string.IsNullOrEmpty(this.istrMpiPersonID))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_DEPENDENT_IS_UNMARRIED" sfwMessageId="1148" sfwExpression="(this.icdoRelationship.relationship_value == &quot;SPOU&quot;) &amp;&amp; &#xA;(this.CheckDependentMaritalStatus() == True)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_EFFECTIVE_START_DATE_IS_BLANK" sfwMessageId="1135" sfwExpression="(this.icdoRelationship.effective_start_date == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_END_DATE_LESS_THAN_START_DATE" sfwMessageId="1145" sfwExpression="(this.icdoRelationship.effective_end_date != DateTime.MinValue) &amp;&amp; &#xA;(this.icdoRelationship.effective_end_date &lt; this.icdoRelationship.effective_start_date)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_PERSON_ID_SAME_AS_DEPENDENT_PERSON_ID" sfwMessageId="1132" sfwExpression="(RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusPerson.icdoPerson.person_id&quot;) == this.icdoRelationship.dependent_person_id)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="RULE_CHECK_PERSON_ID_SAME_AS_DEPENDENT_PERSON_ID" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_DEPENDENT_ALREADY_EXISTS" sfwMode="New" sfwStatus="Active" />
+    <item ID="RULE_CHECK_DEPENDENT_ID_IS_BLANK" sfwMode="New" sfwStatus="Active" />
+    <item ID="RULE_CHECK_DEPENDENT_DOB" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_DEPENDENT_IS_UNMARRIED" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_PARTICIPANT_IS_UNMARRIED" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_RELATIONSHIP_IS_BLANK" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <attributes>
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrFullName" sfwValue="icdoRelationship.istrFullName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="RelationshipDescription" sfwValue="icdoRelationship.relationship_description" />
+    <attribute sfwDataType="int" sfwType="Property" ID="PersonRelationshipId" sfwValue="icdoRelationship.person_relationship_id" />
+    <attribute sfwDataType="int" sfwType="Property" ID="DependentPersonId" sfwValue="icdoRelationship.dependent_person_id" />
+    <attribute ID="objPersonDependent" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPersonDependent" />
+    <attribute sfwDataType="string" sfwType="Property" ID="RelationshipValue" sfwValue="icdoRelationship.relationship_value" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMpiPersonID" sfwValue="icdoRelationship.istrMpiPersonID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoRelationship.created_by" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UpdateSeq" sfwValue="icdoRelationship.update_seq" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoRelationship.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoRelationship.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoRelationship.modified_date" />
+  </attributes>
+</entity>

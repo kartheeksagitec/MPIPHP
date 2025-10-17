@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_FLAG]
+    FROM VARCHAR (1) NOT NULL;
+

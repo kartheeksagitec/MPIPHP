@@ -1,0 +1,408 @@
+﻿<form ID="wfmBPMPerformanceTestMaintenance" sfwType="Maintenance" sfwEntity="entBPMPerformanceTest" sfwTitle="BPM Performance Test Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBPMPerformanceTestLookup">
+  <initialload />
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="ProcessandOverview" sfwGroupCaption="Internal Dashboard Details" sfwCaption="BPM Key Performance Indicators">
+          <sfwTable ID="tblNewPage3" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblDateFrom" Text="Date From: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDateFrom" sfwDataFormat="{0:G}" sfwDataType="DateTime" sfwOperator="=" sfwEntityField="FromDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateTo" Text="Date To: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDateTo" sfwDataFormat="{0:G}" sfwDataType="DateTime" sfwOperator="=" sfwEntityField="ToDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCaseName" Text="Case Name: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList" DataTextField="CASE_NAME" DataValueField="CASE_ID" sfwLoadType="Query" sfwLoadSource="entBPMPerformanceTest.GetCaseList" sfwDefaultValue="0" sfwEntityField="CaseId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnGetDetails" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Go" sfwObjectMethod="LoadDetails" sfwExecuteMethodType="ObjectMethod" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="7">
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshNewPage6" HeaderText="Case Execution Details">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Case Instance Execution Details" sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMPerformanceTest.GetCaseInstanceCount" ShowLegend="True" ID="chrCaseInstanceCount" ChartType="Column" CategoryAxisRotation="45" sfwShowDataLabels="True" sfwShowValues="True" sfwShowYaxisLabel="True" Width="1000px" Height="400">
+                              <Series>
+                                <sfwSeries Name="Avg Time" XValueMember="CASE_INSTANCE_ID" YValueMembers="TIME" ChartType="Column" YMemberColor="#3067bf" IsValueShownAsLabel="True" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea>
+                                  <Area3DStyle Enable3D="false" IsEnable3D="False" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwChart>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvCaseInstanceCount" AllowPaging="True" AllowSorting="True" sfwBoundToQuery="True" sfwBaseQuery="entBPMPerformanceTest.GetCaseInstanceCount" sfwQueryLoadType="Update">
+                              <Columns>
+                                <TemplateField HeaderText="Case Instance">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CASE_INSTANCE_ID" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="CREATED_DATE" sfwDataFormat="{0:G}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Average Time(In Seconds)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="TIME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Total Process Instances">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Total Process Instances" Width="1000px" Height="400" sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMPerformanceTest.GetProcessInstanceCount" ShowLegend="True" ID="chrProcessCount" ChartType="Donut" CategoryAxisRotation="45" sfwLegendColCount="3" sfwShowDataLabels="True" sfwShowYaxisLabel="True" XAxisRotation="-80" sfwIsDynamicSeries="False">
+                              <Series>
+                                <sfwSeries Name="Count" XValueMember="PROCESS_NAME" YValueMembers="INSTANCE_COUNT" ChartType="Donut" YMemberColor="#4f701a" IsValueShownAsLabel="True" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea ChartAreaName="Process Instance Count">
+                                  <Area3DStyle Enable3D="false" IsEnable3D="False" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                              </Parameters>
+                            </sfwChart>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvProcessCount" AllowPaging="True" AllowSorting="True" sfwBoundToQuery="True" sfwBaseQuery="entBPMPerformanceTest.GetProcessInstanceCount" sfwQueryLoadType="Update">
+                              <Columns>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PROCESS_NAME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Total Instances">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="INSTANCE_COUNT" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage1" HeaderText="Process Instance Status">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Process Completion Status" ShowLegend="true" sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMPerformanceTest.GetProcessStatusCount" ID="chrProcessStatus" ChartType="StackedColumn" Width="1000px" Height="400px" CategoryAxisRotation="45" sfwLegendColCount="3">
+                              <Series>
+                                <sfwSeries XValueMember="PROCESS_NAME" YValueMembers="Completed" Name="Processed" ChartType="StackedColumn" YMemberColor="#b0865d" SeriesWidth="0.25" />
+                                <sfwSeries XValueMember="PROCESS_NAME" YValueMembers="Inprocess" Name="Active" ChartType="StackedColumn" YMemberColor="#0f617d" SeriesWidth="0.25" />
+                                <sfwSeries XValueMember="PROCESS_NAME" YValueMembers="Term_Fail" Name="Terminated" ChartType="StackedColumn" YMemberColor="#847aa7" SeriesWidth="0.25" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea ChartAreaName="Process Status Count">
+                                  <Area3DStyle Enable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwChart>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvProcessStatus" AllowPaging="True" AllowSorting="True" sfwBoundToQuery="True" sfwBaseQuery="entBPMPerformanceTest.GetProcessStatusCount" sfwQueryLoadType="Update" PageSize="50">
+                              <Columns>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PROCESS_NAME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Active">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwShowZero="True" sfwEntityField="Inprocess" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Processed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwShowZero="True" sfwEntityField="Completed" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Terminated">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwShowZero="True" sfwEntityField="Term_Fail" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage2" HeaderText="Average Time (Process Completion)">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Process Completion-Average Time(In Seconds)" sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMPerformanceTest.GetProcessAverageTime" ShowLegend="True" ID="chrProcessAvgTime" ChartType="Line" CategoryAxisRotation="45" sfwLegendColCount="3" sfwShowDataLabels="True" sfwShowValues="True" sfwShowYaxisLabel="True" sfwIsDynamicSeries="False" Width="500px" Height="400">
+                              <Series>
+                                <sfwSeries Name="Avg Time" XValueMember="PROCESS_NAME" YValueMembers="TIME" ChartType="Line" YMemberColor="#1fbcd3" IsValueShownAsLabel="True" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea>
+                                  <Area3DStyle Enable3D="false" IsEnable3D="False" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwChart>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvProcessAvgTime" AllowPaging="True" AllowSorting="True" sfwBoundToQuery="True" sfwBaseQuery="entBPMPerformanceTest.GetProcessAverageTime" sfwQueryLoadType="Update">
+                              <Columns>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PROCESS_NAME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Average Time(In Seconds)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="TIME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage3" HeaderText="Activity Instance Status">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Activity Completion Status" ShowLegend="True" ID="chrActivityStatus" ChartType="StackedColumn" Width="1000px" Height="400" CategoryAxisRotation="45" sfwLegendColCount="5" sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMPerformanceTest.GetActivityStatusCount">
+                              <Series>
+                                <sfwSeries Name="Active" ChartType="StackedColumn" YValueMembers="Inprocess" YMemberColor="#008be4" XValueMember="ACTIVITY_NAME" SeriesWidth="0.25" />
+                                <sfwSeries Name="Completed" XValueMember="ACTIVITY_NAME" YValueMembers="Completed" ChartType="StackedColumn" YMemberColor="#ffdd23" SeriesWidth="0.25" />
+                                <sfwSeries Name="Terminated" ChartType="StackedColumn" YValueMembers="Fail" XValueMember="ACTIVITY_NAME" YMemberColor="#c85555" SeriesWidth="0.25" />
+                                <sfwSeries Name="Approved" ChartType="StackedColumn" XValueMember="ACTIVITY_NAME" YValueMembers="Approved" SeriesWidth="0.25" />
+                                <sfwSeries Name="Rejected" ChartType="StackedColumn" XValueMember="ACTIVITY_NAME" YValueMembers="Rejected" SeriesWidth="0.25" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea ChartAreaName="Activity Status Count">
+                                  <Area3DStyle Enable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwChart>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvActivityStatus" AllowPaging="True" AllowSorting="True" sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMPerformanceTest.GetActivityStatusCount">
+                              <Columns>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PROCESS_NAME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Activity Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ACTIVITY_NAME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Active">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="Inprocess" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Completed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="Completed" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Terminated">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="Fail" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Approved">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="Approved" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Rejected">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="Rejected" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage4" HeaderText="Average Time (Activity Completion)">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Activity Completion-Average Time(In Seconds)" sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMPerformanceTest.GetActivityAverageTime" ShowLegend="True" ID="chrActivityAvgTime" ChartType="Line" CategoryAxisRotation="45" sfwLegendColCount="3" sfwShowDataLabels="True" sfwShowValues="True" sfwShowYaxisLabel="True" sfwIsDynamicSeries="False" Width="500px" Height="400">
+                              <Series>
+                                <sfwSeries Name="Avg Time" XValueMember="ACTIVITY_NAME" YValueMembers="TIME" ChartType="Line" YMemberColor="#7a1148" IsValueShownAsLabel="True" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea>
+                                  <Area3DStyle Enable3D="false" IsEnable3D="False" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwChart>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvActivityAvgTime" AllowPaging="True" AllowSorting="True" sfwBoundToQuery="True" sfwBaseQuery="entBPMPerformanceTest.GetActivityAverageTime" sfwQueryLoadType="Update">
+                              <Columns>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PROCESS_NAME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Activity Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ACTIVITY_NAME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Average Time(In Seconds)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="TIME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage5" HeaderText="Activity Call Analysis">
+                      <sfwTable ID="tblNewPage">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpen" sfwRelatedControl="grvActivityCalls" sfwActiveForm="wfmBPMPerformanceActivityCallsMaintenance" sfwNavigationParameter="aintProcessInstanceId=PROCESS_INSTANCE_ID" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvActivityCalls" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwBoundToQuery="True" sfwBaseQuery="entBPMPerformanceTest.GetProcessInstanceList" sfwQueryLoadType="Update">
+                              <Columns>
+                                <TemplateField HeaderText="Instance ID" Visible="false">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PROCESS_INSTANCE_ID" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwRelatedControl="btnOpen" sfwLinkable="True" sfwEntityField="PROCESS_NAME" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CREATED_DATE" sfwDataFormat="{0:G}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@DATE_TO" sfwDataType="datetime" sfwEntityField="ToDate" />
+                                <parameter ID="@CASE_ID" sfwDataType="datetime" sfwEntityField="CaseId" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails />
+</form>

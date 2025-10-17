@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entAttorney" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoAttorney" sfwObjectID="busAttorney" sfwTableName="sgt_attorney" sfwView="False" sfwDataObjectID="doAttorney">
+  <rules>
+    <rule ID="Rule-AttorneyInfoVisible" sfwExpression="(string.IsNullOrEmpty(RFunc.GetValue&lt;String&gt;(this, &quot;iobjbusQdroApplication.icdoDroApplication.dro_status_value&quot;))) || &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;iobjbusQdroApplication.icdoDroApplication.dro_status_value&quot;) == &quot;RCVD&quot;) || &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;iobjbusQdroApplication.icdoDroApplication.dro_status_value&quot;) == &quot;APRD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule-AttroneyInfoEnable" sfwExpression="!(this.IsEffectiveEndDateNull() == True)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="Rule-AttroneyInfoEnable" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-AttorneyInfoVisible" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries />
+  <attributes>
+    <attribute sfwValue="attorney_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="AttorneyId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="first_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="FirstName" sfwIsSequence="False" sfwCaption="First Name" />
+    <attribute sfwValue="last_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="LastName" sfwIsSequence="False" sfwCaption="Last Name" />
+    <attribute sfwValue="middle_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="MiddleName" sfwIsSequence="False" sfwCaption="Middle Name" />
+    <attribute sfwValue="addr_line_1" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="60" sfwIsNull="True" ID="AddrLine1" sfwIsSequence="False" sfwCaption="Addr Line 1" />
+    <attribute sfwValue="addr_line_2" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="60" sfwIsNull="True" ID="AddrLine2" sfwIsSequence="False" sfwCaption="Addr Line 2" />
+    <attribute sfwValue="addr_city" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="AddrCity" sfwIsSequence="False" sfwCaption="Addr City" />
+    <attribute sfwType="Description" ID="AddrStateDescription" sfwCaption="Addr State" sfwValue="addr_state_description" />
+    <attribute sfwValue="addr_state_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AddrStateId" sfwCodeID="150" sfwIsSequence="False" sfwCaption="Addr State" />
+    <attribute sfwValue="addr_state_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="AddrStateValue" sfwIsSequence="False" sfwCaption="Addr State" />
+    <attribute sfwType="Description" ID="AddrCountryDescription" sfwCaption="Addr Country" sfwValue="addr_country_description" />
+    <attribute sfwValue="addr_country_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AddrCountryId" sfwCodeID="151" sfwIsSequence="False" sfwCaption="Addr Country" />
+    <attribute sfwValue="addr_country_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="AddrCountryValue" sfwIsSequence="False" sfwCaption="Addr Country" />
+    <attribute sfwValue="addr_zip_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AddrZipCode" sfwIsSequence="False" sfwCaption="Addr Zip Code" />
+    <attribute sfwValue="addr_zip_4_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AddrZip4Code" sfwIsSequence="False" sfwCaption="Addr Zip 4 Code" />
+    <attribute sfwValue="phone_nbr" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="PhoneNbr" sfwIsSequence="False" sfwCaption="Phone Nbr" />
+    <attribute sfwValue="email_address" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="70" sfwIsNull="True" ID="EmailAddress" sfwIsSequence="False" sfwCaption="Email Address" />
+    <attribute sfwType="Description" ID="AddrTypeDescription" sfwCaption="Addr Type" sfwValue="addr_type_description" />
+    <attribute sfwValue="addr_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AddrTypeId" sfwIsSequence="False" sfwCaption="Addr Type" />
+    <attribute sfwValue="addr_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="AddrTypeValue" sfwIsSequence="False" sfwCaption="Addr Type" />
+    <attribute sfwType="Description" ID="ContactTypeDescription" sfwCaption="Contact Type" sfwValue="contact_type_description" />
+    <attribute sfwValue="contact_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ContactTypeId" sfwCodeID="6010" sfwIsSequence="False" sfwCaption="Contact Type" />
+    <attribute sfwValue="contact_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ContactTypeValue" sfwIsSequence="False" sfwCaption="Contact Type" />
+    <attribute sfwType="Description" ID="AttorneyTypeDescription" sfwCaption="Attorney Type" sfwValue="attorney_type_description" />
+    <attribute sfwValue="attorney_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AttorneyTypeId" sfwCodeID="6009" sfwIsSequence="False" sfwCaption="Attorney Type" />
+    <attribute sfwValue="attorney_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="AttorneyTypeValue" sfwIsSequence="False" sfwCaption="Attorney Type" />
+    <attribute sfwValue="date_eff_from" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="DateEffFrom" sfwIsSequence="False" sfwCaption="Date Eff From" />
+    <attribute sfwValue="date_eff_to" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="DateEffTo" sfwIsSequence="False" sfwCaption="Date Eff To" />
+    <attribute sfwValue="dro_application_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="DroApplicationId" sfwIsSequence="False" sfwCaption="Dro Application Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

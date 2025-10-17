@@ -1,0 +1,181 @@
+﻿<form ID="wfmQDROApplicationLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="203" sfwType="Lookup" sfwTitle="DRO Application Lookup" version="3.5" sfwEntity="entQDROApplication" sfwGridCollection="busQDROApplicationLookup.iclbQdroApplication">
+  <initialload>
+    <query ID="cdoDroApplication" sfwQueryRef="entDroApplication.DROLookUp" sfwMethodName="LoadQDROApplications" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtParticipantmpid" ID="capParticipantmpid" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtParticipantmpid" sfwDataField="per.MPI_PERSON_ID" sfwOperator="=" sfwQueryID="cdoDroApplication" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtParticipantmpid" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtPayeempid" ID="capPayeempid" Text="Alternate Payee MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPayeempid" sfwDataField="pas.MPI_PERSON_ID" sfwOperator="=" sfwQueryID="cdoDroApplication" />
+                <sfwImageButton ID="btnRetrieve1" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtPayeempid" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capReceivedDateFrom" Text="Received Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtReceivedDateFrom" sfwDataField="DRO.received_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoDroApplication" sfwRelatedControl="txtReceivedDateTo" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capReceivedDateTo" Text="Received Date To: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtReceivedDateTo" sfwDataField="DRO.received_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoDroApplication" sfwRelatedControl="txtReceivedDateFrom" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlDroModelId" ID="capDroModelId" Text="DRO Model : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDroModelId" sfwDataField="dro_ben.dro_model_value" sfwOperator="=" sfwQueryID="cdoDroApplication" sfwLoadType="CodeGroup" sfwLoadSource="6004" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlPlanId" ID="capPlanId" Text="Plan : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="plan_name" DataValueField="plan_id" ID="ddlPlanId" sfwDataField="dro_ben.plan_id" sfwOperator="=" sfwQueryID="cdoDroApplication" sfwLoadType="Query" sfwLoadSource="entPlan.Lookup" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlDroStatusValue" ID="capDroStatusValue" Text="DRO Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDroStatusValue" sfwDataField="DRO.dro_status_value" sfwOperator="like" sfwQueryID="cdoDroApplication" sfwLoadType="CodeGroup" sfwLoadSource="6005" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtCaseNumber" ID="capCaseNumber" Text="Case Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCaseNumber" sfwDataField="DRO.case_number" sfwOperator="like" sfwQueryID="cdoDroApplication" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtDroApplicationId" ID="capDroApplicationId" Text="DRO Application ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDroApplicationId" sfwDataField="DRO.dro_application_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoDroApplication" sfwTwoWayBinding="False" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmQDROApplicationMaintenance" sfwCopyActivitySessionVariables="True" sfwMethodName="btnNew_Click" sfwNavigationParameter="astrPersonMPId=txtParticipantmpid;astrPayeeMPId=txtPayeempid" Text="New" sfwToolBarGrid="dgrResult" sfwToolBarGridImage="StaticResources/neoGrid-images/btnNew_Click.png" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmQDROApplicationMaintenance" sfwCopyActivitySessionVariables="True" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintdroapplicationid=DroApplicationId" sfwRelatedControl="dgrResult" Text="Open" Visible="False" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" Visible="False" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="DRO Application ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="DroApplicationId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant MPID" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objParticipant.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objParticipant.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee MPID" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objAlternatePayee.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee Name ">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objAlternatePayee.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="DRO Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DroStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Case Number">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CaseNumber" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="ReceivedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="DROModel">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrDROModel" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPlan" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

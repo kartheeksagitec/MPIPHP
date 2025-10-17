@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmPacketTrackingMaintenance" WebSite="MPIPHPWebClient" sfwResource="206 " sfwRemoteObject="srvCorrespondence" sfwType="Maintenance" sfwTitle="Packet Tracking Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmPacketTrackingLookup" sfwEntity="entCorTracking">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindCorrTracking" />
+    <callmethods sfwMode="Update" sfwMethodName="FindCorrTracking" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" sfwNavigationParameter="aintTrackingId=TrackingId" sfwVisibleRule="Visible Rule - Save Button" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlPerson" sfwCaption="Person Information">
+          <sfwTable ID="tblNewPage1" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="MPI Person ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnLinkButton" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=objPerson.PersonId" sfwEntityField="objPerson.MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" sfwEntityField="objPerson.IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" sfwDataFormat="{0:d}" sfwEntityField="objPerson.IdtDateofBirth" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel6" Text="Last 4 Digits of SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel5" sfwEntityField="objPerson.IstrLast4DigitsofSSN" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox" Visible="False" sfwEntityField="objPerson.PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="PacketTracking Details" sfwCaption="Packet Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capTrackingId" Text="Tracking ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnTrackingId" sfwMethodName="btnOpenDoc_Click" sfwEntityField="TrackingId" sfwNavigationParameter="TemplateName=objCorTemplates.TemplateName;TrackingId=TrackingId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capTemplateDesc" Text="Packet Name : " AssociatedControlID="lblTemplateDesc" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblTemplateDesc" sfwVisibleRule="Visible Rule - OPUS Data" sfwEntityField="objCorTemplates.TemplateDesc" />
+                <sfwLabel ID="lblAccessTemplateName" sfwVisibleRule="Visible Rule - Access Data" sfwEntityField="objCorPacketContentTracking.AccessTemplateName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMailedDate" Text="Mailed Date : " AssociatedControlID="lblMailedDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblMailedDate" sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.MailedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capReceivedDate" Text="Received Date : " AssociatedControlID="txtReceivedDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtReceivedDate" sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.ReceivedDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMailedBy" Text="Mailed By : " AssociatedControlID="lblMailedBy" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblMailedBy" sfwEntityField="objCorPacketContentTracking.MailedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capReceivedBy" Text="Received By : " AssociatedControlID="lblReceivedBy" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblReceivedBy" sfwEntityField="objCorPacketContentTracking.ReceivedBy" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel7" Text="Retirement Date : " AssociatedControlID="ddlPacketStatusValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel8" sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.RetirementDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capPacketStatusValue" Text="Packet Status : " AssociatedControlID="ddlPacketStatusValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn HorizontalAlign="Left">
+                <sfwDropDownList ID="ddlPacketStatusValue" DataTextField="description" DataValueField="code_value" sfwLoadType="CodeGroup" sfwLoadSource="7094" sfwEntityField="objCorPacketContentTracking.PacketStatusValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capGeneratedDate" Text="Generated Date : " AssociatedControlID="lblGeneratedDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblGeneratedDate" sfwDataFormat="{0:d}" sfwEntityField="GeneratedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capNotes" Text="Notes : " AssociatedControlID="txtNotes" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtNotes" TextMode="MultiLine" sfwEntityField="objCorPacketContentTracking.Notes" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capBenefitAppicaltionId" Text="Benefit Application ID : " AssociatedControlID="btnBenefitAppicaltionId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnBenefitAppicaltionId" sfwMethodName="btnOpenLookup_Click" sfwActiveForm="wfmBenefitApplicationLookup" sfwNavigationParameter="SBA.BENEFIT_APPLICATION_ID=objCorPacketContentTracking.BenefitAppicaltionId" sfwEntityField="objCorPacketContentTracking.BenefitAppicaltionId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capBenefitCalculationHeaderId" Text="Benefit Calculation Header ID : " AssociatedControlID="btnBenefitCalculationHeaderId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnBenefitCalculationHeaderId" sfwMethodName="btnOpenLookup_Click" sfwActiveForm="wfmBenefitCalculationLookup" sfwNavigationParameter="HDR.benefit_calculation_header_id=objCorPacketContentTracking.BenefitCalculationHeaderId" sfwEntityField="objCorPacketContentTracking.BenefitCalculationHeaderId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capQdroAppicaltionId" Text="Qdro Application ID : " AssociatedControlID="btnQdroAppicaltionId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnQdroAppicaltionId" sfwMethodName="btnOpenLookup_Click" sfwActiveForm="wfmQDROApplicationLookup" sfwNavigationParameter="DRO.dro_application_id=objCorPacketContentTracking.QdroAppicaltionId" sfwEntityField="objCorPacketContentTracking.QdroAppicaltionId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capQdroCalculationHeaderId" Text="Qdro Calculation Header ID : " AssociatedControlID="btnQdroCalculationHeaderId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnQdroCalculationHeaderId" sfwMethodName="btnOpenLookup_Click" sfwActiveForm="wfmDROCalculationLookup" sfwNavigationParameter="hdr.qdro_calculation_header_id=objCorPacketContentTracking.QdroCalculationHeaderId" sfwEntityField="objCorPacketContentTracking.QdroCalculationHeaderId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblLabel10" sfwEntityField="objCorTemplates.TemplateName" CssClass="hideControl" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel9" Text="Access Packet Status : " AssociatedControlID="ddlPacketStatusValue" sfwVisibleRule="Visible Rule - Access Data" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblAccessPaketStatus" sfwVisibleRule="Visible Rule - Access Data" sfwEntityField="objCorPacketContentTracking.AccessPaketStatus" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlPacketDetailsHistory" sfwCaption="Packet Details History">
+          <sfwTable ID="tblNewPage2" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="grvBusCorPacketContentTrackingHistory" AllowPaging="True" AllowSorting="True" sfwEntityField="objCorPacketContentTracking.lstCorPacketContentTrackingHistory" sfwGridEntity="entCorPacketContentTrackingHistory">
+                  <Columns>
+                    <TemplateField HeaderText="Cor Packet Content Tracking History ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel Visible="False" sfwEntityField="CorPacketContentTrackingHistoryId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Cor Packet Content Tracking ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel Visible="False" sfwEntityField="CorPacketContentTrackingId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailed By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MailedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailed Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="MailedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReceivedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="ReceivedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PacketStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Notes">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Notes" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="MM/dd/yyyy HH:mm:ss" sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlOtherCorrespondences" sfwCaption="Other Packet Details">
+          <sfwTable ID="tblNewPage" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwMethodName="btnOpen_Click" Text="Open" sfwActiveForm="wfmPacketTrackingMaintenance" sfwRelatedControl="grvBusCorTracking" sfwNavigationParameter="aintTrackingId=TrackingId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="10">
+                <sfwGridView ID="grvBusCorTracking" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="lstCorTracking" sfwGridEntity="entCorTracking">
+                  <Columns>
+                    <TemplateField HeaderText="Tracking ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="TrackingId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorTemplates.TemplateDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Access Template Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.AccessTemplateName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailed By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.MailedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailed Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.MailedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.ReceivedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.ReceivedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.PacketStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Access Packet Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.AccessPaketStatus" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Generated By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Generated Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="GeneratedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPerson" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objCorTemplates" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objCorPacketContentTracking" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objCorPacketContentTracking.lstCorPacketContentTrackingHistory" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstCorTracking" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

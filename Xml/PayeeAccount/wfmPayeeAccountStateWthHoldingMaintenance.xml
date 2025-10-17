@@ -1,0 +1,267 @@
+﻿<form ID="wfmPayeeAccountStateWthHoldingMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="205" sfwType="Maintenance" sfwTitle="Retirement Wizard" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entPayeeAccount">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindPayeeAccountStateTaxWithholdingDetails" />
+    <callmethods sfwMode="Update" sfwMethodName="FindPayeeAccountStateTaxWithholdingDetails" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Payee Information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPayeeAccountId" Text="Payee Account ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblPayeeAccountId" sfwVisibleRule="VisibleRule-PayeeID" sfwEntityField="PayeeAccountId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPersonId" SkinID="textBoxDisplayStyleNone" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtOrgId" SkinID="textBoxDisplayStyleNone" sfwEntityField="objOrganization.OrgId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMpiPersonId" sfwVisibleRule="VisibleRule-PayeeID" Text="Payee MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblMpiPersonId" sfwVisibleRule="VisibleRule-PayeeID" sfwEntityField="objPayee.MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" sfwVisibleRule="VisibleRule-PayeeID" Text="Payee Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwVisibleRule="VisibleRule-PayeeID" sfwEntityField="objPayee.IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMpiOrgId" sfwVisibleRule="VisibleRule-OrgID" Text="Organization ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMpiOrgId" sfwActiveForm="wfmOrganizationMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintorgid=objOrganization.OrgId" sfwVisibleRule="VisibleRule-OrgID" sfwEntityField="objOrganization.MpiOrgId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capOrgName" sfwVisibleRule="VisibleRule-OrgID" Text="Organization Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgName" sfwVisibleRule="VisibleRule-OrgID" sfwEntityField="objOrganization.OrgName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblBenefitAccountTypeDescription" ID="capBenefitAccountTypeDescription" Text="Benefit Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBenefitAccountTypeDescription" sfwEntityField="BenefitAccountTypeDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblRetirementTypeDescription" ID="capRetirementTypeDescription" Text="Retirement Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblRetirementTypeDescription" sfwEntityField="RetirementTypeDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtAccountRelationValue" SkinID="textBoxDisplayStyleNone" sfwEntityField="AccountRelationValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtIstrBenefitOption" SkinID="textBoxDisplayStyleNone" sfwEntityField="IstrBenefitOption" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtIsQualifiedSpouse" SkinID="textBoxDisplayStyleNone" sfwEntityField="IstrQualifiedSpouse" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtIintPlanId" SkinID="textBoxDisplayStyleNone" sfwEntityField="IintPlanId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtFamilyRelationValue" SkinID="textBoxDisplayStyleNone" sfwEntityField="FamilyRelationValue" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="State Tax Withholding Information">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="CabState" Text="State : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStateDesc" sfwEntityField="IstrWizardStateDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabelReq2" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlWizardStateBenefitDistributionTypeValue1" ID="capBenefitDistributionTypeValue1" Text="Benefit Distribution Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList ID="ddlWizardStateBenefitDistributionTypeValue1" sfwLoadType="CodeGroup" sfwLoadSource="7005" sfwEntityField="IstrWizardMinDistributionType" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabelReq3" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtStartDate1" ID="capStartDate1" Text="Start Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStartDate1" sfwDataFormat="{0:d}" sfwEntityField="IdtWizardStartDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtEndDate1" ID="capEndDate1" Text="End Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEndDate1" sfwDataFormat="{0:d}" sfwEntityField="IdtWizardEndDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblmaritalstatus" Text="Marital Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList DataTextField="description" DataValueField="code_value" ID="ddlMaritalStatusValue11" sfwParameters="astrCodeValue=lblWizardTaxIdentifier" sfwLoadType="Method" sfwLoadSource="GetMaritalStatusByTaxIdentifier" sfwEntityField="IstrWizardMaritalStatusValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabelReq4" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capTaxOptionValue1" Text="Tax Option : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList DataTextField="description" DataValueField="code_value" ID="ddlTaxOptionValue11" sfwParameters="astrCodeValue=lblWizardTaxIdentifier;astrdistributiontypecodevalue=ddlWizardStateBenefitDistributionTypeValue1;astrTaxWithholdId=#0" sfwParentControl="ddlWizardStateBenefitDistributionTypeValue1" sfwLoadType="Method" sfwLoadSource="GetTaxOptionsByIdentifier" sfwEntityField="IstrWizardTaxOptionValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblwtxtTaxAllowance" Text="Tax Allowance : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtwTaxAllowance" sfwShowZero="True" sfwEntityField="IWizardtax_allowance" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtwAdditionalTaxAmount1" ID="lblwtxtAdditionalTaxAmount1" Text="Additional/Flat Tax Amount : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtwAdditionalTaxAmount1" sfwEntityField="IdecWizardadditional_tax_amount" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtwTaxPercentage" ID="lblwtxtTaxPercentage" Text="Tax Percentage : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtwTaxPercentage" sfwEntityField="IdecWizardtax_percentage" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lbltxtPersonalExemptions" Text="Personal Exemptions : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPersonalExemptions" sfwEntityField="IintWizardPersonlExemption" sfwShowZero="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lbltxtAgeandBlindnessExemptions" Text="Age and Blindness Exemptions : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAgeandBlindnessExemptions" sfwEntityField="IintWizardAgeandBlindnessExemptions" sfwShowZero="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lbltxtVoluntary_Withholding" Text="VA Voluntary Withholding : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtVoluntary_Withholding" sfwEntityField="IintWizardVoluntary_Withholding" sfwShowZero="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnOpen_Click" Text="OpenPerson" ID="btnOpenPerson" sfwActiveForm="wfmPersonMaintenance" sfwNavigationParameter="aintpersonid=PersonId" CssClass="hideControl" sfwCopyActivitySessionVariables="True" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="textBoxDisplayStyleNone" ID="lblWizardTaxIdentifier" SkinID="textBoxDisplayStyleNone" sfwEntityField="IstrWizardTaxIdentifier" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnExecuteBusinessMethod_Click" Text="Cancel Application" ID="btnCancelRetirementApplicationStateWthHolding" sfwObjectMethod="Cancel_RetirementApplication_Wizard" sfwExecuteMethodType="ObjectMethod" sfwNavigationParameter="aintPayeeAccountId=PayeeAccountId" sfwResource="333" OnClientClick="return confirm('If you need to start over, please cancel the Retirement Application” and it shall close out the Retirement Wizard....')" sfwExecuteAfterSuccess="btnOpenPerson" ToolTip="Cancel the changes" sfwMode="Update" sfwCopyActivitySessionVariables="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpenPerson" sfwActiveForm="wfmPersonMaintenance" sfwNavigationParameter="aintpersonid=PersonId" CssClass="hideControl" sfwCopyActivitySessionVariables="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnSaveStateWthHolding" sfwMethodName="btnNoChangesSave_Click" sfwNavigationParameter="aintPayeeAccountId=PayeeAccountId" Text="Save and Exit" sfwExecuteAfterSuccess="btnOpenPerson" ToolTip="Save the changes" sfwCopyActivitySessionVariables="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objOrganization" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objPayee" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

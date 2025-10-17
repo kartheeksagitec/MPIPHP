@@ -1,0 +1,96 @@
+﻿<entity ID="entPayeeAccountRolloverDetail" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPayeeAccountRolloverDetail" sfwObjectID="busPayeeAccountRolloverDetail" sfwTableName="sgt_payee_account_rollover_detail" sfwView="False" sfwDataObjectID="doPayeeAccountRolloverDetail">
+  <rules>
+    <rule ID="VisibleRule-CheckStatus" sfwExpression="(this.icdoPayeeAccountRolloverDetail.status_value != &quot;PRCS&quot; &amp;&amp; this.iintPrimaryKey &gt; 0)" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="lstPayeeAccountRolloverItemDetail" />
+  </delete>
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-CheckStatus" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetRolloverVerificationDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;  so.ORG_NAME ,&#xA; PIT.AMOUNT,&#xA; PRD.STATUS_VALUE,&#xA; PB.FUNDS_TYPE_value  &#xA;FROM&#xA;  SGT_PAYEE_ACCOUNT_ROLLOVER_DETAIL PRD WITH(NOLOCK) &#xA; INNER &#xA;  JOIN SGT_PAYEE_ACCOUNT_ROLLOVER_ITEM_DETAIL PRIT WITH(NOLOCK)&#xA;  ON PRD.PAYEE_ACCOUNT_ROLLOVER_DETAIL_ID = PRIT.PAYEE_ACCOUNT_ROLLOVER_DETAIL_ID &#xA; INNER &#xA;  JOIN SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE PIT WITH(NOLOCK)&#xA;  ON PIT.PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE_ID = PRIT.PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE_ID &#xA; INNER &#xA;  JOIN SGT_ORGANIZATION SO WITH(NOLOCK)&#xA;  ON so.ORG_ID = PRD.ROLLOVER_ORG_ID &#xA;  INNER JOIN SGT_PAYEE_ACCOUNT PA WITH(NOLOCK) ON PRD.PAYEE_ACCOUNT_ID = PA.PAYEE_ACCOUNT_ID&#xA;  INNER JOIN SGT_PAYEE_BENEFIT_ACCOUNT PB WITH(NOLOCK) ON  PA.PAYEE_BENEFIT_ACCOUNT_ID = PB.PAYEE_BENEFIT_ACCOUNT_ID&#xA;WHERE&#xA;  PRD.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select SO.MPI_ORG_ID,so.ORG_NAME,SPARD.*, SPARD.STATUS_VALUE &#xD;&#xA;from SGT_ORGANIZATION SO&#xD;&#xA;join SGT_PAYEE_ACCOUNT_ROLLOVER_DETAIL SPARD on  SO.ORG_ID = SPARD.ROLLOVER_ORG_ID">
+      <parameters />
+    </query>
+    <query ID="UpdateRolloverDetailWithPayment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Update&#xD;&#xA;SGT_PAYEE_ACCOUNT_ROLLOVER_DETAIL&#xD;&#xA;set STATUS_VALUE='PRCS',&#xD;&#xA;MODIFIED_DATE = GETDATE(),MODIFIED_BY = 'OPUS Batch',UPDATE_SEQ = UPDATE_SEQ+1 &#xD;&#xA;where  PAYEE_ACCOUNT_ROLLOVER_DETAIL_ID in&#xD;&#xA;(&#xD;&#xA;&#xD;&#xA;SELECT &#xD;&#xA;       PARD.PAYEE_ACCOUNT_ROLLOVER_DETAIL_ID&#xD;&#xA;       FROM &#xD;&#xA;SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE PAPIT &#xD;&#xA;      INNER JOIN  TEMP_TABLE_FOR_PAYMENT AS PAYEE&#xD;&#xA;               ON PAYEE.PAYEE_ACCOUNT_ID = PAPIT.PAYEE_ACCOUNT_ID &#xD;&#xA;      INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT &#xD;&#xA;              ON PAPIT.PAYMENT_ITEM_TYPE_ID = PIT.PAYMENT_ITEM_TYPE_ID &#xD;&#xA;      INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT1 WITH(NOLOCK)&#xD;&#xA;              ON PIT.ROLLOVER_ITEM_CODE = PIT1.ITEM_TYPE_CODE&#xD;&#xA;      INNER JOIN SGT_PAYEE_ACCOUNT_ROLLOVER_DETAIL PARD WITH(NOLOCK)&#xD;&#xA;              ON PARD.PAYEE_ACCOUNT_ID = PAPIT.PAYEE_ACCOUNT_ID&#xD;&#xA;      INNER JOIN SGT_PAYEE_ACCOUNT_ROLLOVER_ITEM_DETAIL PARID WITH(NOLOCK)&#xD;&#xA;              ON PARD.PAYEE_ACCOUNT_ROLLOVER_DETAIL_ID = PARID.PAYEE_ACCOUNT_ROLLOVER_DETAIL_ID&#xD;&#xA;              AND PAPIT.PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE_ID = PARID.PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE_ID&#xD;&#xA;      INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHH  &#xD;&#xA;              ON PHH.PAYEE_ACCOUNT_ID=PAYEE.PAYEE_ACCOUNT_ID AND PHH.PAYMENT_SCHEDULE_ID = @PAYMENTSCHEDULEID&#xD;&#xA;              AND PHH.ORG_ID = PARD.ROLLOVER_ORG_ID&#xD;&#xA;WHERE&#xD;&#xA;     --DBO.fn_Check_Date_Overlapping(PAPIT.START_DATE,PAPIT.END_DATE,@PAYMENTDATE)=1&#xD;&#xA;     PAPIT.START_DATE &lt;= @PAYMENTDATE AND (PAPIT.END_DATE IS NULL OR PAPIT.END_DATE &gt;= @PAYMENTDATE)&#xD;&#xA;  AND PIT.ALLOW_ROLLOVER_CODE_VALUE = 'RRED'&#xD;&#xA;  AND PARD.STATUS_VALUE = 'ACTV'&#xD;&#xA;  AND PHH.PAYEE_ACCOUNT_ID IS NOT NULL&#xD;&#xA;  --AND PIT.CHECK_TYPE_VALUE &lt;&gt; 'SPCK'&#xD;&#xA;  --AND ISNULL(PAPIT.REISSUE_ITEM_FLAG,'N') &lt;&gt; 'Y' &#xD;&#xA;     GROUP BY PAPIT.PAYEE_ACCOUNT_ID,PIT1.PAYMENT_ITEM_TYPE_ID,PHH.PAYMENT_HISTORY_HEADER_ID,PARD.ROLLOVER_ORG_ID ,PARD.PAYEE_ACCOUNT_ROLLOVER_DETAIL_ID &#xD;&#xA;     )">
+      <parameters>
+        <parameter ID="@PAYMENTSCHEDULEID" sfwDataType="int" />
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetRolloverMPIDOrgDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select SO.*,SOA.*,&#xD;&#xA;ISNULL('ATTN: ' + SO.CARE_OF,'') AS CO&#xD;&#xA;from  SGT_ORGANIZATION SO&#xD;&#xA;left outer join SGT_ORG_ADDRESS SOA on SOA.ORG_ID = SO.org_ID AND SOA.ADDRESS_TYPE_VALUE in ('MAIL','PYAM')">
+      <parameters />
+    </query>
+    <query ID="GetRolloverOptionOfOldRolloverOrg" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT ROLLOVER_OPTION_VALUE,ROLLOVER_TYPE_VALUE FROM SGT_PAYEE_ACCOUNT_ROLLOVER_DETAIL&#xD;&#xA; WHERE PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID AND STATUS_VALUE = 'PRCS'">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="payee_account_rollover_detail_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PayeeAccountRolloverDetailId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="payee_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PayeeAccountId" sfwIsSequence="False" sfwCaption="Payee Account Id" />
+    <attribute sfwValue="rollover_org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RolloverOrgId" sfwIsSequence="False" sfwCaption="Rollover Org Id" />
+    <attribute sfwType="Description" ID="RolloverOptionDescription" sfwCaption="Rollover Option" sfwValue="rollover_option_description" />
+    <attribute sfwValue="rollover_option_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RolloverOptionId" sfwCodeID="7007" sfwIsSequence="False" sfwCaption="Rollover Option" />
+    <attribute sfwValue="rollover_option_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="RolloverOptionValue" sfwIsSequence="False" sfwCaption="Rollover Option" />
+    <attribute sfwValue="percent_of_taxable" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="PercentOfTaxable" sfwIsSequence="False" sfwCaption="Percent Of Taxable" />
+    <attribute sfwValue="amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Amount" sfwIsSequence="False" sfwCaption="Amount" />
+    <attribute sfwValue="account_number" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="40" sfwIsNull="True" ID="AccountNumber" sfwIsSequence="False" sfwCaption="Account Number" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="7028" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwType="Description" ID="RolloverTypeDescription" sfwCaption="Rollover Type" sfwValue="rollover_type_description" />
+    <attribute sfwValue="rollover_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RolloverTypeId" sfwCodeID="7041" sfwIsSequence="False" sfwCaption="Rollover Type" />
+    <attribute sfwValue="rollover_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="RolloverTypeValue" sfwIsSequence="False" sfwCaption="Rollover Type" />
+    <attribute sfwValue="old_rollover_dtl_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="OldRolloverDtlId" sfwIsSequence="False" sfwCaption="Old Rollover Dtl Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="org_address" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="250" sfwIsNull="True" ID="OrgAddress" sfwIsSequence="False" sfwCaption="Org Address" />
+    <attribute sfwValue="contact_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="ContactName" sfwIsSequence="False" sfwCaption="Contact Name" />
+    <attribute sfwValue="send_to_participant" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="SendToParticipant" sfwIsSequence="False" sfwCaption="Send To Participant" />
+    <attribute sfwValue="participant_pickup" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="ParticipantPickup" sfwIsSequence="False" sfwCaption="Participant Pickup" />
+    <attribute sfwValue="addr_line_1" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="60" sfwIsNull="True" ID="AddrLine1" sfwIsSequence="False" sfwCaption="Addr Line 1" />
+    <attribute sfwValue="addr_line_2" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="60" sfwIsNull="True" ID="AddrLine2" sfwIsSequence="False" sfwCaption="Addr Line 2" />
+    <attribute sfwValue="city" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="City" sfwIsSequence="False" sfwCaption="City" />
+    <attribute sfwType="Description" ID="StateDescription" sfwCaption="State" sfwValue="state_description" />
+    <attribute sfwValue="state_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StateId" sfwCodeID="150" sfwIsSequence="False" sfwCaption="State" />
+    <attribute sfwValue="state_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StateValue" sfwIsSequence="False" sfwCaption="State" />
+    <attribute sfwType="Description" ID="CountryDescription" sfwCaption="Country" sfwValue="country_description" />
+    <attribute sfwValue="country_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CountryId" sfwCodeID="151" sfwIsSequence="False" sfwCaption="Country" />
+    <attribute sfwValue="country_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="CountryValue" sfwIsSequence="False" sfwCaption="Country" />
+    <attribute sfwValue="zip_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="5" sfwIsNull="True" ID="ZipCode" sfwIsSequence="False" sfwCaption="Zip Code" />
+    <attribute sfwValue="zip_4_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="Zip4Code" sfwIsSequence="False" sfwCaption="Zip 4 Code" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrOrgMPID" sfwValue="icdoPayeeAccountRolloverDetail.istrOrgMPID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrOrgName" sfwValue="icdoPayeeAccountRolloverDetail.istrOrgName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrFullAddress" sfwValue="icdoPayeeAccountRolloverDetail.istrFullAddress" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSendToParticipant" sfwValue="icdoPayeeAccountRolloverDetail.istrSendToParticipant" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantPickup" sfwValue="icdoPayeeAccountRolloverDetail.istrParticipantPickup" />
+    <attribute ID="objPayeeAccount" sfwType="Object" sfwEntity="entPayeeAccount" sfwValue="ibusPayeeAccount" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPayableTo" sfwValue="istrPayableTo" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecRolloverAmountRequired" sfwValue="idecRolloverAmountRequired" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBlank" sfwValue="icdoPayeeAccountRolloverDetail.istrBlank" />
+    <attribute sfwType="Collection" sfwEntity="entPayeeAccountRolloverItemDetail" ID="lstPayeeAccountRolloverItemDetail" sfwValue="iclbPayeeAccountRolloverItemDetail" />
+  </attributes>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields />
+</entity>

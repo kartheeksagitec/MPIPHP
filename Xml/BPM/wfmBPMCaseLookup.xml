@@ -1,0 +1,120 @@
+﻿<form ID="wfmBPMCaseLookup" sfwType="Lookup" sfwTitle="BPM Case Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBPMCaseLookup" sfwEntity="entBpmCase" sfwResource="20007008">
+  <initialload>
+    <query ID="entBpmCase" sfwQueryRef="entBpmCase.CaseLookup" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Search Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCaseId" Text="Case ID : " AssociatedControlID="txtCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCaseId" sfwDataField="case_id" sfwQueryID="entBpmCase" sfwDataType="Numeric" sfwOperator="=" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDescription" Text="Description : " AssociatedControlID="txtDescription" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDescription" sfwQueryID="cdoBpmCase" sfwDataField="description" sfwOperator="like" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capName" Text="Name : " AssociatedControlID="txtName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtName" sfwQueryID="cdoBpmCase" sfwDataField="name" sfwOperator="like" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatusValue" Text="Status : " AssociatedControlID="ddlStatusValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" sfwDataField="status_value" sfwQueryID="cdoBpmCase" sfwOperator="in" DataTextField="description" DataValueField="code_value" sfwLoadType="CodeGroup" sfwLoadSource="3002" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblcapShowAll" Text="Show All Versions :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkShowAll" AutoPostBack="True" sfwDefaultValue="Y" sfwDataField="current_version" sfwQueryID="entBpmCase" sfwValueChecked="N" sfwValueUnChecked="Y" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" ImageUrl="~/Images/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" sfwActiveForm="wfmBPMCaseMaintenance" Text="Open" sfwNavigationParameter="aintCaseId=CaseId" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Images/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+                <sfwButton ID="btnButton" sfwMethodName="btnDelete_Click" Text="Delete" sfwRelatedControl="dgrResult" sfwRefreshUpdatePanels="uppWorkflowNew" Visible="False" />
+                <sfwButton ID="btnExecutionPath" sfwMethodName="btnMap_Click" Text="Execution Path" sfwNavigationParameter="aint_case_instance_id=CaseId" sfwRelatedControl="dgrResult" SkinID="hideControl" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Case ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="CaseId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExecutionPath" sfwLinkable="True" sfwEntityField="Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Version">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Version" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Effective Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EffectiveDate" sfwDataFormat="{0:MM/dd/yyyy}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails />
+</form>

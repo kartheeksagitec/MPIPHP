@@ -1,0 +1,1 @@
+kR]C:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPBusinessObjects\MPIPHPBusinessObjects.csprojò	CSharp7_3

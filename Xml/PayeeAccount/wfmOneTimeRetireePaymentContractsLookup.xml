@@ -1,0 +1,153 @@
+﻿<form ID="wfmOneTimeRetireePaymentContractsLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="205" sfwType="Lookup" sfwTitle="One Time Retiree Payment Contracts Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entOnetimeRetireePaymentContract" sfwGridCollection="busOnetimeRetireePaymentContract.iclbOnetimeRetireePaymentContract">
+  <initialload>
+    <query ID="cdoOnetimeRetireePaymentContract" sfwQueryRef="entOnetimeRetireePaymentContract.LookUp" sfwMethodName="LoadOnetimeRetireePaymentContracts" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtonetimeretiree_payment_contract_id" ID="caponetimeretiree_payment_contract_idId" Text="One Time Retiree Payment Contract ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtonetimeretiree_payment_contract_id" sfwDataField="OnetimeRetireePaymentContractId" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoOnetimeRetireePaymentContract" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPlanYear" ID="capPlanYear" Text="Plan Year : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPlanYear" sfwDataField="plan_year" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoOnetimeRetireePaymentContract" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtEffectiveStartDate" ID="capEffectiveStartDate" Text="Effective Start Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEffectiveStartDate" sfwDataField="effective_start_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwQueryID="cdoOnetimeRetireePaymentContract" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtEffectiveEndDate" ID="capEffectiveEndDate" Text="Effective End Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEffectiveEndDate" sfwDataField="effective_end_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwQueryID="cdoOnetimeRetireePaymentContract" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtRetirementDateFrom" ID="capRetirementDateFrom" Text="Retirement Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRetirementDateFrom" sfwDataField="retirement_date_from" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwQueryID="cdoOnetimeRetireePaymentContract" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtRetirementDateTo" ID="capRetirementDateTo" Text="Retirement Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRetirementDateTo" sfwDataField="retirement_date_to" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwQueryID="cdoOnetimeRetireePaymentContract" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlPercentIncreaseValue" ID="capPercentIncreaseValue" Text="Percent Increase : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPercentIncreaseValue" sfwDataField="percent_increase_value" sfwOperator="like" sfwQueryID="cdoOnetimeRetireePaymentContract" sfwTwoWayBinding="False" sfwLoadType="CodeGroup" sfwLoadSource="7040" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlContractStatusValue" ID="capContractStatusValue" Text="Contract Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlContractStatusValue" sfwData1EqualTo="RETINC" sfwDataField="contract_status_value" sfwOperator="like" sfwQueryID="cdoOnetimeRetireePaymentContract" sfwTwoWayBinding="False" sfwLoadType="CodeGroup" sfwLoadSource="1503" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmOneTimeRetireePaymentContractMaintenance" sfwMethodName="btnNew_Click" Text="New" sfwToolBarGrid="dgrResult" sfwToolBarGridImage="StaticResources/neoGrid-images/btnNew_Click.png" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmOneTimeRetireePaymentContractMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintOneTimeRetireePaymentContractId=OnetimeRetireePaymentContractId" sfwRelatedControl="dgrResult" Text="Open" Visible="False" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult">
+                  <Columns>
+                    <TemplateField HeaderText="One time Retiree Payment Contract ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="OnetimeRetireePaymentContractId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PlanYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Effective Start Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EffectiveStartDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Effective End Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EffectiveEndDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Percent Increase">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PercentIncreaseDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Date From">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="RetirementDateFrom" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Date To">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="RetirementDateTo" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="  Contract Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ContractStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

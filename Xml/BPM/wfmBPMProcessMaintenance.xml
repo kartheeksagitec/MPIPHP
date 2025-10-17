@@ -1,0 +1,320 @@
+﻿<form ID="wfmBPMProcessMaintenance" sfwType="Maintenance" sfwTitle="BPM Process Maintenance" sfwActive="True" sfwStatus="Review" version="3.5" sfwAspNetCaching="False" sfwFormObjectType="RemoteObject" sfwEntity="entBpmProcess" sfwRemoteObject="srvBPMN">
+  <initialload>
+    <callmethods sfwMethodName="FindBpmProcess" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnNoChangesSave_Click" Text="Save" sfwRefreshFromObject="True" sfwExecuteAfterSuccess="btnRefresh" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Previous" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnRefresh" sfwMethodName="btnCancel_Click" Text="Refresh" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="BPMProcess Details" sfwCaption="Process Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCaseId" Text="Case ID : " AssociatedControlID="lblCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton sfwMethodName="btnOpen_Click" ID="btnOpen" sfwActiveForm="wfmBPMCaseMaintenance" sfwNavigationParameter="aintCaseId=CaseId" sfwEntityField="CaseId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCaseName" Text="Case Name : " AssociatedControlID="lblCaseName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIbusBpmCaseIcdoBpmCaseName" sfwEntityField="CaseName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Process Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblName" sfwEntityField="Name" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capProcessId" Text="ProcessId : " AssociatedControlID="lblProcessId" sfwIsCaption="True" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessId" sfwEntityField="ProcessId" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" Text="Description :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDescription" sfwEntityField="Description" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="Process Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlTypeValue" sfwAddEmptyItem="False" sfwEntityField="TypeValue" sfwLoadType="CodeGroup" sfwLoadSource="3003" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capRestrictNotifyFlag" Text="Restrict / Notify Flag :" AssociatedControlID="chkRestrictNotifyFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkRestrictNotifyFlag" sfwDefaultValue="N" sfwEntityField="RestrictNotifyFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSlaDays" Text="SLA Days : " AssociatedControlID="txtSlaDays" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSlaDays" sfwEntityField="SlaDays" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capSlaHours" Text="SLA Hours : " AssociatedControlID="txtSlaHours" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSlaHours" sfwEntityField="SlaHours" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSlaMinutes" Text="SLA Minutes : " AssociatedControlID="txtSlaMinutes" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSlaMinutes" sfwEntityField="SlaMinutes" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblLabel6" Text="Status :" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusValue" Visible="False" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel" sfwCaption="Details">
+          <sfwTable ID="tblNewPage" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Activity Details">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnOpenActivity" sfwMethodName="btnOpen_Click" sfwMode="Update" sfwNavigationParameter="aintPrimaryKey=ActivityId" sfwRelatedControl="grvActivity" Text="Open" sfwActiveForm="wfmBPMSolActivityMaintenance" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvActivity" sfwSelection="Many" sfwEntityField="lstBpmActivity" sfwGridEntity="entBpmActivity">
+                              <Columns>
+                                <TemplateField HeaderText="Activity ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel Visible="False" sfwEntityField="ActivityId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Activity Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwRelatedControl="btnOpenActivity" sfwLinkable="True" sfwEntityField="Name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Role Name">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblRoleDescription" Visible="False" sfwEntityField="objRoles.RoleDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Activity Type">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblActivityDescription" sfwEntityField="ActivityTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="SLA Days">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SlaDays" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="SLA Hours">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SlaHours" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="SLA Minutes">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SlaMinutes" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshProcessEvents" HeaderText="Process Events">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="2">
+                            <sfwButton ID="btnNew" sfwActiveForm="wfmBpmProcessEventXrMaintenance" sfwMethodName="btnNew_Click" Text="New" Visible="False" />
+                            <sfwButton ID="btnOpenEventsButton" sfwMethodName="btnOpen_Click" sfwMode="Update" sfwNavigationParameter="aintPrimaryKey=BpmProcessEventXrId" sfwRelatedControl="grvBusBpmProcessEventXr" Text="Open" sfwActiveForm="wfmBpmProcessEventXrMaintenance" Visible="False" />
+                            <sfwButton ID="btnAdd" sfwMethodName="btnAddNewChild_Click" sfwRelatedControl="grvBusBpmProcessEventXr" Text="Add New" />
+                            <sfwButton ID="btnButton" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvBusBpmProcessEventXr" Text="Delete" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="2">
+                            <sfwGridView ID="grvBusBpmProcessEventXr" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwTwoWayBinding="True" sfwAllowNew="True" AllowEditing="True" sfwEntityField="lstBpmProcessEventXr" sfwGridEntity="entBpmProcessEventXr">
+                              <Columns>
+                                <TemplateField HeaderText="Event Description" SortExpression="objBpmEvent.EventDesc" SortExpressionUpdated="true">
+                                  <ItemTemplate>
+                                    <sfwDropDownList ID="ddlDropDownList1" DataTextField="event_desc" DataValueField="bpm_event_id" sfwLoadType="Query" sfwLoadSource="entBpmEvent.GetActiveEventDescription" sfwEntityField="EventId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Action">
+                                  <ItemTemplate>
+                                    <sfwDropDownList ID="ddlDropDownList" DataTextField="description" DataValueField="code_value" sfwLoadType="CodeGroup" sfwLoadSource="2005" sfwEntityField="ActionValue" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Activity">
+                                  <ItemTemplate>
+                                    <sfwDropDownList DataTextField="name" DataValueField="activity_id" ID="ddlActivity" sfwLoadType="ChildMethod" sfwLoadSource="GetProcessActivities" sfwEntityField="ActivityId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Process Event Cross Ref ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblProssesdEventCrossRefID" sfwEntityField="BpmProcessEventXrId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Event ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblEventID" sfwEntityField="objBpmEvent.BpmEventId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Process" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblProcess" sfwEntityField="objBpmProcess.Description" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshRestrictNotifyProcesses" HeaderText="Process Restrict / Notify ID" sfwVisibleRule="Visible Rule - Show Ristrict Notify Process List">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capCaseId1" Text="Select Case : " AssociatedControlID="lblCaseId" sfwIsCaption="True" />
+                            <sfwDropDownList ID="ddlDropDownList3" sfwLoadType="Query" sfwEntityField="IintDependentCaseId" sfwNavigationParameter="PROCESS_ID=ProcessId" DataTextField="namewithversion" DataValueField="case_id" sfwLoadSource="entBpmProcess.GetCaseNamesForProcess" Visible="False" />
+                            <sfwCascadingDropDownList ID="ddlCaseId" sfwDataField="sbc.case_id" sfwQueryID="cdoBpmProcessEscalation" sfwDataType="Numeric" DataValueField="case_id" DataTextField="namewithversion" sfwLoadType="Query" sfwLoadSource="entBpmCase.CaseLookupWithVersionAppendedToName" sfwEntityField="IintDependentCaseId" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capIintDependentProcessId" Text="Select Process : " AssociatedControlID="ddlIintDependentProcessId" sfwIsCaption="True" />
+                            <sfwDropDownList ID="ddlDropDownList2" DataValueField="process_id" DataTextField="name" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetProcessesForOnlineInitialization" sfwEntityField="IintDependentProcessId" Visible="False" />
+                            <sfwCascadingDropDownList ID="ddlProcessId" sfwDataField="sbp.process_id" sfwQueryID="cdoBpmProcessEscalation" sfwDataType="Numeric" DataValueField="process_id" DataTextField="name" sfwParameters="CASE_ID=ddlCaseId" sfwParentControl="ddlCaseId" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetProcessByCaseId" sfwEntityField="IintDependentProcessId" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnExecuteRefreshFromObject" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Add" sfwObjectMethod="AddDependentProcess" sfwNavigationParameter="aintDependentProcessId=IintDependentProcessId" sfwExecuteAfterSuccess="btnCancel" />
+                            <sfwButton ID="btnDelete" sfwMethodName="btnGridViewDelete_Click" Text="Delete" sfwRelatedControl="grvBusBpmProcessRestrictNotifyXr" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusBpmProcessRestrictNotifyXr" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwTwoWayBinding="True" AllowEditing="True" sfwEntityField="lstParentProcessRestrictNotify" sfwGridEntity="entBpmProcessRestrictNotifyXr">
+                              <Columns>
+                                <TemplateField HeaderText="Case  Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objDependentProcess.objBpmCase.Name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objDependentProcess.Name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Restrict Notify Code">
+                                  <ItemTemplate>
+                                    <sfwDropDownList DataTextField="description" DataValueField="code_value" sfwLoadType="CodeGroup" sfwLoadSource="2034" sfwEntityField="RestrictNotifyCodeValue" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Process Restrict Notify ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ProcessRestrictNotifyId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwDataFormat="{0:G}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwDataFormat="{0:G}" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstBpmActivity" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmProcessEventXr" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstParentProcessRestrictNotify" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

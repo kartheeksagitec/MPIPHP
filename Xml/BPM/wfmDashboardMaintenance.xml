@@ -1,0 +1,307 @@
+﻿<form ID="wfmDashboardMaintenance" sfwResource="20007020" sfwFormObject="busBpmDashboard" sfwType="Maintenance" sfwTitle="Internal Dashboard Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmDashboardLookup" sfwFormObjectType="FormObject" sfwEntity="entBpmDashboard">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewObject" />
+    <callmethods sfwMode="Update" sfwMethodName="Group1" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="ProcessandOverview" sfwGroupCaption="InternalDashboard Details" sfwCaption="Process and Activity Overview">
+          <sfwTable ID="tblNewPage3" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn CssClass="captionTd">
+                <sfwLabel ID="lblDateFrom" Text="Date From: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="width-160">
+                <sfwTextBox ID="txtDateFrom" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwEntityField="IdtDateFrom" />
+                <CompareValidator ID="cmvCompareValidator" Operator="LessThanEqual" Type="Date" ControlToCompare="txtDateTo" ErrorMessage="Date From should be Less Than or Equal to Date To." ControlToValidate="txtDateFrom" />
+              </sfwColumn>
+              <sfwColumn CssClass="captionTd">
+                <sfwLabel ID="lblDateTo" Text="Date To: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="width-160">
+                <sfwTextBox ID="txtDateTo" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwEntityField="IdtDateTo" />
+                <CompareValidator ID="cmvCompareValidator1" Operator="GreaterThanEqual" ControlToValidate="txtDateTo" ControlToCompare="txtDateFrom" ErrorMessage="Date To should be Greater Than or Equal to Date From" Type="Date" />
+              </sfwColumn>
+              <sfwColumn CssClass="full-width">
+                <sfwButton ID="btnButton1" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Load Charts" sfwObjectMethod="LoadDashboardData" sfwMessageId="10026" sfwValidateClientJavascript="True" sfwRefreshFromObject="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="5">
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Top 10 Activity Trends">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Top 10 Activity Trends" ShowLegend="True" ID="chrChartTaskTrend" ChartType="StackedColumn" Width="1000" Height="500" CategoryAxisRotation="45" sfwLegendColCount="4" sfwEntityField="lstChartTaskTrend" sfwGridEntity="entBpmBAMTaskTrend">
+                              <Series>
+                                <sfwSeries Name="Completed" XValueMember="IstrShortActivityName" YValueMembers="IintCompleted" swfAddtionalChartColumns="IintActivityId,IstrActivityName" sfwActiveForm="wfmActivityDashboardMaintenance" ChartType="StackedBar" sfwNavigationParameter="aintActivityId=IintActivityId" YMemberColor="#ffdd23" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Activity Name  &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrActivityName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; In Progress :&lt;/td&gt;&lt;td&gt;{IintInProgress}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Completed :&lt;/td&gt;&lt;td&gt;{IintCompleted}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Resumed :&lt;/td&gt;&lt;td&gt;{IintResumed}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Cancelled :&lt;/td&gt;&lt;td&gt;{IintCancSuspFail}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                                <sfwSeries Name="In Process" ChartType="StackedBar" YValueMembers="IintInProgress" YMemberColor="#008be4" XValueMember="IstrShortActivityName" sfwActiveForm="wfmActivityDashboardMaintenance" sfwNavigationParameter="aintActivityId=IintActivityId" swfAddtionalChartColumns="IintActivityId,IstrActivityName" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Activity Name  &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrActivityName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; In Progress :&lt;/td&gt;&lt;td&gt;{IintInProgress}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Completed :&lt;/td&gt;&lt;td&gt;{IintCompleted}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Resumed :&lt;/td&gt;&lt;td&gt;{IintResumed}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Cancelled :&lt;/td&gt;&lt;td&gt;{IintCancSuspFail}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                                <sfwSeries Name="Resumed" ChartType="StackedBar" YValueMembers="IintResumed" XValueMember="IstrShortActivityName" YMemberColor="#00d4cd" sfwActiveForm="wfmActivityDashboardMaintenance" sfwNavigationParameter="aintActivityId=IintActivityId" swfAddtionalChartColumns="IintActivityId,IstrActivityName" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Activity Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrActivityName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; In Progress :&lt;/td&gt;&lt;td&gt;{IintInProgress}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Completed :&lt;/td&gt;&lt;td&gt;{IintCompleted}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Resumed :&lt;/td&gt;&lt;td&gt;{IintResumed}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Cancelled :&lt;/td&gt;&lt;td&gt;{IintCancSuspFail}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                                <sfwSeries Name="Cancelled" ChartType="StackedBar" YValueMembers="IintCancSuspFail" XValueMember="IstrShortActivityName" sfwActiveForm="wfmActivityDashboardMaintenance" sfwNavigationParameter="aintActivityId=IintActivityId" swfAddtionalChartColumns="IintActivityId,IstrActivityName" YMemberColor="#c85555" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Activity Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrActivityName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; In Progress :&lt;/td&gt;&lt;td&gt;{IintInProgress}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Completed :&lt;/td&gt;&lt;td&gt;{IintCompleted}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Resumed :&lt;/td&gt;&lt;td&gt;{IintResumed}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Cancelled :&lt;/td&gt;&lt;td&gt;{IintCancSuspFail}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea ChartAreaName="Task Trend">
+                                  <Area3DStyle Enable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                            </sfwChart>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusBpmBAMTaskTrend" AllowPaging="True" AllowSorting="True" sfwEntityField="lstViewTaskTrend" sfwGridEntity="entBpmBAMTaskTrend" CssClass="hideControl">
+                              <Columns>
+                                <TemplateField HeaderText="Activity Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrActivityName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="In Progress">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="IintInProgress" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Resumed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="IintResumed" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Completed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="IintCompleted" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Cancelled / Suspended / Failed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="IintCancSuspFail" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusBpmBAMTaskTrend1" AllowPaging="True" AllowSorting="True" sfwBaseQuery="entBpmDashboard.ActivityTrendNew" sfwBoundToQuery="True" sfwQueryLoadType="New and Update">
+                              <Columns>
+                                <TemplateField HeaderText="Activity Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="activity_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="process_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="In Progress">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="inprocess" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Resumed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="resumed" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Completed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="completed" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Cancelled / Suspended / Failed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="canc_susp_fail" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@DATE_FROM" sfwEntityField="IdtDateFrom" />
+                                <parameter ID="@DATE_TO" sfwEntityField="IdtDateTo" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage1" HeaderText="Top 10 Process Trends">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Top 10 Process Trends" ShowLegend="True" ID="chrProcessTrend" ChartType="Pie" Width="500" Height="450px" sfwLegendPosition="outside" sfwLegendColCount="1" OffsetX="w" sfwShowDataLabels="True" sfwEntityField="lstChartProcessTrend" sfwGridEntity="entBpmBAMProcessTrend" CssClass="ProcessAndActivity">
+                              <Series>
+                                <sfwSeries XValueMember="IstrProcessName" YValueMembers="IintInProgress" Name="Series 1" sfwActiveForm="wfmProcessDashboardMaintenance" ChartType="Pie" swfAddtionalChartColumns="IintCompleted,IintProcessId,IstrProcessName,IintTermFail" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Process Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrProcessName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; In Progress :&lt;/td&gt;&lt;td&gt;{IintInProgress}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Completed : &lt;/td&gt;&lt;td&gt;{IintCompleted}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Terminated / Failed : &lt;/td&gt;&lt;td&gt; {IintTermFail} &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" sfwNavigationParameter="aintProcessId=IintProcessId" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea ChartAreaName="Process Trend">
+                                  <Area3DStyle Enable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                            </sfwChart>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusBpmBAMProcessTrend" AllowPaging="True" AllowSorting="True" sfwEntityField="lstViewProcessTrend" sfwGridEntity="entBpmBAMProcessTrend">
+                              <Columns>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrProcessName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="In Progress">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwShowZero="True" sfwEntityField="IintInProgress" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Completed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="IintCompleted" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Terminated / Failed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="IintTermFail" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage2" HeaderText="Top 10 Process Summary">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Top 10 Process Summary" ShowLegend="true" ID="chrProcessRankingAnalytics" ChartType="StackedColumn" Width="1000px" Height="400" CategoryAxisRotation="45" sfwLegendColCount="3" sfwEntityField="lstChartProcessRankingAnalytics" sfwGridEntity="entBpmProcessRankingAnalytics">
+                              <Series>
+                                <sfwSeries XValueMember="IstrShortProcessName" YValueMembers="IintProcCount" Name="Processed" sfwActiveForm="wfmProcessDashboardMaintenance" swfAddtionalChartColumns="IintProcessId,IstrProcessName" ChartType="StackedColumn" sfwNavigationParameter="aintProcessId=IintProcessId" YMemberColor="#847aa7" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Process Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrProcessName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Processed Count :&lt;/td&gt;&lt;td&gt;{IintProcCount}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Active Count :&lt;/td&gt;&lt;td&gt;{IintActvCount}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Terminated Count :&lt;/td&gt;&lt;td&gt;{IintTermSuspCount}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                                <sfwSeries XValueMember="IstrShortProcessName" YValueMembers="IintActvCount" Name="Active" sfwActiveForm="wfmProcessDashboardMaintenance" swfAddtionalChartColumns="IintProcessId,IstrShortProcessName" ChartType="StackedColumn" sfwNavigationParameter="aintProcessId=IintProcessId" YMemberColor="#34d2ff" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Process Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrProcessName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Processed Count :&lt;/td&gt;&lt;td&gt;{IintProcCount}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Active Count :&lt;/td&gt;&lt;td&gt;{IintActvCount}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Terminated Count :&lt;/td&gt;&lt;td&gt;{IintTermSuspCount}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                                <sfwSeries XValueMember="IstrShortProcessName" YValueMembers="IintTermSuspCount" Name="Terminated" sfwActiveForm="wfmProcessDashboardMaintenance" swfAddtionalChartColumns="IintProcessId,IstrShortProcessName" ChartType="StackedColumn" sfwNavigationParameter="aintProcessId=IintProcessId" YMemberColor="#b0865d" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Process Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrProcessName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Processed Count :&lt;/td&gt;&lt;td&gt;{IintProcCount}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Active Count :&lt;/td&gt;&lt;td&gt;{IintActvCount}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Terminated Count :&lt;/td&gt;&lt;td&gt;{IintTermSuspCount}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea ChartAreaName="Process Ranking Analytics">
+                                  <Area3DStyle Enable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                            </sfwChart>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusBpmProcessRankingAnalytics" AllowPaging="True" AllowSorting="True" sfwEntityField="lstViewProcessRankingAnalytics" sfwGridEntity="entBpmProcessRankingAnalytics">
+                              <Columns>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrProcessName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Active">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwShowZero="True" sfwEntityField="IintActvCount" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Processed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwShowZero="True" sfwEntityField="IintProcCount" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Terminated / Suspended">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwShowZero="True" sfwEntityField="IintTermSuspCount" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage3" HeaderText="Top 10 Process Instances">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Top 10 Process Instances Created" ShowLegend="True" ID="chrAnalytics" ChartType="Pie" Width="500" Height="400" sfwShowDataLabels="True" sfwEntityField="lstChartAnalytics" sfwGridEntity="entBpmAnalytics" CssClass="ProcessAndActivity">
+                              <Series>
+                                <sfwSeries XValueMember="IstrProcessName" Name="Instance Count" YValueMembers="IintInstanceCount" sfwActiveForm="wfmAnalyticsDashboardMaintenance" ChartType="Pie" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Process Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrProcessName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Instance Count :&lt;/td&gt;&lt;td&gt;{IintInstanceCount}&lt;/td&gt;&lt;/tr&gt;&lt;/tr&gt;&lt;/table&gt;" sfwNavigationParameter="aintProcessId=IintProcessId" swfAddtionalChartColumns="IintProcessId,IstrProcessName" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea ChartAreaName="Process Analytics">
+                                  <Area3DStyle Enable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                            </sfwChart>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusBpmAnalytics" AllowPaging="True" AllowSorting="True" sfwEntityField="lstViewAnalytics" sfwGridEntity="entBpmAnalytics">
+                              <Columns>
+                                <TemplateField HeaderText="Process Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrProcessName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Total Instances">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IintInstanceCount" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstChartTaskTrend" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstViewTaskTrend" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstChartProcessTrend" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstViewProcessTrend" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstChartProcessRankingAnalytics" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstViewProcessRankingAnalytics" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstChartAnalytics" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstViewAnalytics" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

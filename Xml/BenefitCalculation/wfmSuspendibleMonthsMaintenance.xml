@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmSuspendibleMonthsMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCalculation" sfwResource="206 " sfwType="Maintenance" sfwTitle="Suspendible Months Maintenance" version="3.5" sfwEntity="entBenefitCalculationYearlyDetail">
+  <initialload>
+    <callmethods sfwMethodName="FindBenefitCalculationYearlyDetail" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" Visible="False" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" Visible="False" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" Visible="False" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" Visible="False" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" sfwResource="335" Text="Correspondence" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Calculation Header Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblBenefitCalculationHeaderId" ID="capBenefitCalculationHeaderId" Text="Benefit Calculation Header ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBenefitCalculationHeaderId" sfwEntityField="objBenefitCalculationDetail.objBenefitCalculationHeader.BenefitCalculationHeaderId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" Text="Participant Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="objBenefitCalculationDetail.objBenefitCalculationHeader.objPerson.IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblSuspendibleMonthsCount" ID="capSuspendibleMonthsCount" Text="Total Suspendible Months Count :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblSuspendibleMonthsCount" sfwEntityField="SuspendibleMonthsCount" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Suspendible Months Details">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvBenefitCalculationNonsuspendibleDetail" sfwEntityField="lstBenefitCalculationNonsuspendibleDetail" sfwGridEntity="entBenefitCalculationNonsuspendibleDetail">
+                  <Columns>
+                    <TemplateField HeaderText="Benefit Calculation Non-Suspendible Detail ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitCalculationNonsuspendibleDetailId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Calculation Plan Year" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CalculationPlanYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Suspendible Month" SortExpression="NonsuspendibleMonthDescription" ItemStyle.HorizontalAlign="Left" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NonsuspendibleMonthValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Pension Hours" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PensionHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objBenefitCalculationDetail.objBenefitCalculationHeader" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objBenefitCalculationDetail.objBenefitCalculationHeader.objPerson" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstBenefitCalculationNonsuspendibleDetail" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

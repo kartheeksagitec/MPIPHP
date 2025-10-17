@@ -1,0 +1,53 @@
+﻿<entity ID="entRetirementWizard" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoBenefitApplication" sfwObjectID="busRetirementWizard" sfwParentEntity="entBenefitApplication">
+  <ExtraFields />
+  <queries />
+  <constraint />
+  <rules />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="BenefitApplicationId" sfwValue="icdoBenefitApplication.benefit_application_id" />
+    <attribute sfwDataType="int" sfwType="Property" ID="BenefitApplicationPersonId" sfwValue="icdoBenefitApplication.person_id" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute sfwDataType="int" sfwType="Property" ID="PlanId" sfwValue="icdoBenefitApplication.iintPlanId" />
+    <attribute sfwDataType="string" sfwType="Property" ID="SpouseConsent" sfwValue="strSpouseConsent" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlanDescription" sfwValue="strPlanDescription" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIAPPlanDescription" sfwValue="strIAPPlanDescription" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitOptionValue" sfwValue="strBenefitOptionValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIAPBenefitOptionValue" sfwValue="strIAPBenefitOptionValue" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IPlanId" sfwValue="intPlan_Id" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IIAPPlanId" sfwValue="intIAPPlan_Id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="PlanDescription" sfwValue="icdoBenefitApplicationnDetail.istrPlanDescription" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintPlan_id" sfwValue="icdoBenefitApplicationnDetail.iintPlan_id" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitApplicationDetail" ID="lstBenefitApplicationDetail" sfwValue="iclbBenefitApplicationDetail" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSpouseConsent" sfwValue="strSpouseConsent" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIAPSpouseConsent" sfwValue="strIAPSpouseConsent" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintJointAnnuiant" sfwValue="intJointAnnuiant" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintIAPJointAnnuiant" sfwValue="intIAPJointAnnuiant" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintEligiblePlanId" sfwValue="intEligiblePlanId" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintIAPEligiblePlanId" sfwValue="intIAPEligiblePlanId" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ApplicationReceivedDate" sfwValue="icdoBenefitApplication.application_received_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="RetirementDate" sfwValue="icdoBenefitApplication.retirement_date" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IPayeeAccountId" sfwValue="PayeeAccountId" />
+  </attributes>
+  <objectmethods>
+    <method ID="GetBenefitOptionsforPlan" sfwReturnType="Collection" sfwObjectID="cdoPlanBenefitXr" sfwEntity="entPlanBenefitXr">
+      <parameters>
+        <parameter ID="aintPlan_Id" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="GetBeneficariesOfParticipant" sfwReturnType="Collection" sfwObjectID="cdoPerson" sfwEntity="entIAPAllocationDetailPersonOverview">
+      <parameters>
+        <parameter ID="aintPlan_Id" sfwDataType="int" />
+        <parameter ID="istrMPI_ID" sfwDataType="String" />
+      </parameters>
+    </method>
+  </objectmethods>
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <lifecycle />
+  <methods />
+</entity>

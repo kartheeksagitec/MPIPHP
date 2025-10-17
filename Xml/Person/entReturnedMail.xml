@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="entReturnedMail" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoReturnedMail" sfwObjectID="busReturnedMail" sfwTableName="sgt_returned_mail" sfwView="False" sfwDataObjectID="doReturnedMail">
+  <rules>
+    <rule ID="RULE CHECK IF DOCUMENT TYPE IS NULL" sfwMessage="Document type is required" sfwExpression="(string.IsNullOrEmpty(this.icdoReturnedMail.doc_Id_Source))" sfwObjectBased="True" />
+    <rule ID="RULE CHECK IF RETURN MAIL DATE IS NULL" sfwMessage="Return mail date is required" sfwExpression="(this.icdoReturnedMail.returned_mail_date == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK IF ONE RETURN FLAG IS CHECKED FOR PERSON" sfwMessage="Atleast one address must be selected" sfwExpression="(this.CheckReturFlagPerson() == False)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK IF MPID IS NULL" sfwMessage="One Person must be selected" sfwExpression="(this.CheckSelectedFlagPerson() == False)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK IF ORG MPID IS NULL" sfwMessage="One Organization must be selected" sfwExpression="(this.CheckReturFlagOrg() == False)" sfwObjectBased="True" />
+    <rule ID="RULE RULE CHECK IF ONE RETURN FLAG IS CHECKED FOR ORG" sfwMessage="Atleast one address must be selected" sfwExpression="(this.CheckReturFlagOrg() == False)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK IF VIP ACCESS" sfwMessageId="6175" sfwExpression="(this.CheckVIPFlagPerson() == False)" sfwObjectBased="True" />
+    <rule ID="RULE IF RETURN MAIL DATE IS FUTURE DATE" sfwMessage="End date should not future date." sfwExpression="(this.CheckreturnMailDatePerson() == False)" sfwObjectBased="True" />
+    <rule ID="RULE IF RETURN MAILS DATE IS FUTURE DATE" sfwMessage="Return mail date should not be Future date." sfwExpression="(this.icdoReturnedMail.returned_mail_date &gt; RFunc.CurrentDate())" sfwObjectBased="True" />
+    <rule ID="RULE IF OLD END DATE CHANGED" sfwMessage="Process does not allow to change / remove an End date." sfwExpression="(this.iblnAddressChangeError == True)" sfwObjectBased="True" />
+    <rule ID="RULE IF NO OR MULTIPLE RETURN ADDR SELECTED" sfwMessage="Select Only One Return Mail Address" sfwExpression="!(this.CheckOnlyOneReturnMailFlag() == TRUE)" sfwObjectBased="True" />
+    <rule ID="RULE IF MANAGERS APPR RQ FOR ADDR CHANGE" sfwRuleType="Validation" sfwExpression="(this.IsManagerApprovalRequiredForAddressChange() == True)" sfwMessageId="6223" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="RULE IF RETURN MAILS DATE IS FUTURE DATE" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE IF NO OR MULTIPLE RETURN ADDR SELECTED" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE IF MANAGERS APPR RQ FOR ADDR CHANGE" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <validatedelete />
+  <groupslist>
+    <group ID="Step1">
+      <item ID="RULE CHECK IF DOCUMENT TYPE IS NULL" sfwMode="All" sfwStatus="Active" />
+      <item ID="RULE CHECK IF RETURN MAIL DATE IS NULL" sfwMode="All" sfwStatus="Active" />
+      <item ID="RULE IF RETURN MAILS DATE IS FUTURE DATE" sfwMode="All" sfwStatus="Active" />
+    </group>
+    <group ID="Step2">
+      <item ID="RULE IF RETURN MAIL DATE IS FUTURE DATE" sfwMode="All" sfwStatus="Active" />
+      <item ID="RULE IF OLD END DATE CHANGED" sfwMode="All" sfwStatus="Active" />
+      <item ID="RULE IF NO OR MULTIPLE RETURN ADDR SELECTED" sfwMode="All" sfwStatus="Active" />
+    </group>
+    <group ID="Stpep0">
+      <item ID="RULE CHECK IF MPID IS NULL" sfwStatus="Active" />
+      <item ID="RULE CHECK IF VIP ACCESS" sfwStatus="Active" />
+    </group>
+    <group ID="Step0_ORG">
+      <item ID="RULE CHECK IF ORG MPID IS NULL" sfwStatus="Active" />
+    </group>
+    <group ID="Step2_ORG">
+      <item ID="RULE RULE CHECK IF ONE RETURN FLAG IS CHECKED FOR ORG" sfwStatus="Active" />
+    </group>
+  </groupslist>
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <queries>
+    <query ID="LoadReturnMailForPerson" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select RMAIL.*,ADDR.*,DOCUMENT_ID,DOC_TYPE,DOCUMENT_NAME,APP_NAME,GROUP_NAME&#xD;&#xA;from SGT_RETURNED_MAIL RMAIL&#xD;&#xA;LEFT OUTER JOIN SGT_PERSON_ADDRESS ADDR&#xD;&#xA;ON RMAIL.ADDRESS_ID=ADDR.ADDRESS_ID&#xD;&#xA;INNER JOIN SGT_DOCUMENT DOC&#xD;&#xA;ON RMAIL.DOC_ID=DOC.DOCUMENT_ID AND RMAIL.DOC_TYPE_SOURCE_VALUE='PEND'&#xD;&#xA;Where RMAIL.PERSON_ID = @PERSON_ID&#xD;&#xA;UNION ALL &#xD;&#xA;Select RMAIL.*,ADDR.*,DOCUMENT_ID,DOC_TYPE,DOCUMENT_NAME,APP_NAME,GROUP_NAME&#xD;&#xA;from SGT_RETURNED_MAIL RMAIL&#xD;&#xA;LEFT OUTER JOIN SGT_PERSON_ADDRESS ADDR&#xD;&#xA;ON RMAIL.ADDRESS_ID=ADDR.ADDRESS_ID&#xD;&#xA;INNER JOIN  SGT_HE_DOCUMENT HEDOC&#xD;&#xA;ON RMAIL.DOC_ID=HEDOC.DOCUMENT_ID AND RMAIL.DOC_TYPE_SOURCE_VALUE='HEDC'&#xD;&#xA;Where RMAIL.PERSON_ID = @PERSON_ID&#xD;&#xA;UNION ALL &#xD;&#xA;Select RMAIL.*,ADDR.*,DOCUMENT_ID,RMAIL.OTHER_DOCUMENT_TYPE as  DOC_TYPE,DOCUMENT_NAME,APP_NAME,GROUP_NAME&#xD;&#xA;from SGT_RETURNED_MAIL RMAIL&#xD;&#xA;LEFT OUTER JOIN SGT_PERSON_ADDRESS ADDR&#xD;&#xA;ON RMAIL.ADDRESS_ID=ADDR.ADDRESS_ID&#xD;&#xA;LEFT OUTER JOIN  SGT_HE_DOCUMENT HEDOC&#xD;&#xA;ON RMAIL.DOC_ID=HEDOC.DOCUMENT_ID AND RMAIL.DOC_TYPE_SOURCE_VALUE='PEND'&#xD;&#xA;Where RMAIL.PERSON_ID = @PERSON_ID and RMAIL.DOC_ID is NULL">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadReturnMailForOrg" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select RMAIL.*,ADDR.*,DOCUMENT_ID,DOC_TYPE,DOCUMENT_NAME,APP_NAME,GROUP_NAME&#xD;&#xA;from SGT_RETURNED_MAIL RMAIL&#xD;&#xA;LEFT OUTER JOIN SGT_ORG_ADDRESS ADDR&#xD;&#xA;ON RMAIL.ORG_ADDRESS_ID=ADDR.ORG_ADDRESS_ID&#xD;&#xA;INNER JOIN SGT_DOCUMENT DOC&#xD;&#xA;ON RMAIL.DOC_ID=DOC.DOCUMENT_ID AND RMAIL.DOC_TYPE_SOURCE_VALUE='PEND'&#xD;&#xA;Where ADDR.ORG_ID = @ORG_ID&#xD;&#xA;UNION ALL &#xD;&#xA;Select RMAIL.*,ADDR.*,DOCUMENT_ID,DOC_TYPE,DOCUMENT_NAME,APP_NAME,GROUP_NAME&#xD;&#xA;from SGT_RETURNED_MAIL RMAIL&#xD;&#xA;LEFT OUTER JOIN SGT_ORG_ADDRESS ADDR&#xD;&#xA;ON RMAIL.ORG_ADDRESS_ID=ADDR.ORG_ADDRESS_ID&#xD;&#xA;INNER JOIN  SGT_HE_DOCUMENT HEDOC&#xD;&#xA;ON RMAIL.DOC_ID=HEDOC.DOCUMENT_ID AND RMAIL.DOC_TYPE_SOURCE_VALUE='HEDC'&#xD;&#xA;Where ADDR.ORG_ID = @ORG_ID&#xD;&#xA;UNION ALL &#xD;&#xA;Select RMAIL.*,ADDR.*,DOCUMENT_ID,RMAIL.OTHER_DOCUMENT_TYPE as  DOC_TYPE,DOCUMENT_NAME,APP_NAME,GROUP_NAME&#xD;&#xA;from SGT_RETURNED_MAIL RMAIL&#xD;&#xA;LEFT OUTER JOIN SGT_ORG_ADDRESS ADDR&#xD;&#xA;ON RMAIL.ORG_ADDRESS_ID=ADDR.ORG_ADDRESS_ID&#xD;&#xA;LEFT OUTER JOIN  SGT_HE_DOCUMENT HEDOC&#xD;&#xA;ON RMAIL.DOC_ID=HEDOC.DOCUMENT_ID AND RMAIL.DOC_TYPE_SOURCE_VALUE='PEND'&#xD;&#xA;Where ADDR.ORG_ID = @ORG_ID and RMAIL.DOC_ID is NULL">
+      <parameters>
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadDataForReturnedMailReport" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SP.MPI_PERSON_ID,(SP.FIRST_NAME + '  ' + SP.LAST_NAME)NAME,RMAIL.*,ADDR.*,DOCUMENT_ID,DOC_TYPE,DOCUMENT_NAME,APP_NAME,GROUP_NAME,&#xD;&#xA;  (ISNULL(ADDR.ADDR_LINE_1,'') + ' ' + ISNULL(ADDR.ADDR_LINE_2,'') + ' ' + ISNULL(ADDR.ADDR_CITY,'') + ' ' + ISNULL(ADDR.ADDR_STATE_VALUE,'') + ' ' + ISNULL(ADDR.FOREIGN_PROVINCE,'')&#xD;&#xA;    + ' ' + ISNULL(ADDR.ADDR_COUNTRY_VALUE,'') + ' ' + ISNULL(ADDR.ADDR_ZIP_CODE,'') + ' ' + ISNULL(ADDR.ADDR_ZIP_4_CODE,'')  + ' '+ ISNULL(ADDR.FOREIGN_POSTAL_CODE,'')) ADDRESS,&#xD;&#xA;    SCVDOCTYPESOURCE.DESCRIPTION AS DOCTYPESOURCEDESCRIPTION,SCVREASON.DESCRIPTION AS REASONDESCRIPTION&#xD;&#xA;FROM SGT_RETURNED_MAIL RMAIL&#xD;&#xA;INNER JOIN SGT_PERSON SP ON SP.PERSON_ID = RMAIL.PERSON_ID&#xD;&#xA;LEFT OUTER JOIN SGT_PERSON_ADDRESS ADDR&#xD;&#xA;ON RMAIL.ADDRESS_ID=ADDR.ADDRESS_ID&#xD;&#xA;INNER JOIN SGT_DOCUMENT DOC&#xD;&#xA;ON RMAIL.DOC_ID=DOC.DOCUMENT_ID AND RMAIL.DOC_TYPE_SOURCE_VALUE='PEND'&#xD;&#xA;LEFT OUTER JOIN SGS_CODE_VALUE SCVDOCTYPESOURCE WITH(NOLOCK) ON SCVDOCTYPESOURCE.CODE_ID = RMAIL.DOC_TYPE_SOURCE_ID AND SCVDOCTYPESOURCE.CODE_VALUE = RMAIL.DOC_TYPE_SOURCE_VALUE&#xD;&#xA; LEFT OUTER JOIN SGS_CODE_VALUE SCVREASON WITH(NOLOCK) ON SCVREASON.CODE_ID = RMAIL.REASON_ID AND SCVREASON.CODE_VALUE = RMAIL.REASON_VALUE&#xD;&#xA;WHERE RMAIL.CREATED_DATE BETWEEN @START_DATE AND @END_DATE&#xD;&#xA;UNION ALL &#xD;&#xA;SELECT SP.MPI_PERSON_ID,(SP.FIRST_NAME + '  ' + SP.LAST_NAME)NAME,RMAIL.*,ADDR.*,DOCUMENT_ID,DOC_TYPE,DOCUMENT_NAME,APP_NAME,GROUP_NAME,&#xD;&#xA;  (ISNULL(ADDR.ADDR_LINE_1,'') + ' ' + ISNULL(ADDR.ADDR_LINE_2,'') + ' ' + ISNULL(ADDR.ADDR_CITY,'') + ' ' + ISNULL(ADDR.ADDR_STATE_VALUE,'') + ' ' + ISNULL(ADDR.FOREIGN_PROVINCE,'')&#xD;&#xA;    + ' ' + ISNULL(ADDR.ADDR_COUNTRY_VALUE,'') + ' ' + ISNULL(ADDR.ADDR_ZIP_CODE,'') + ' ' + ISNULL(ADDR.ADDR_ZIP_4_CODE,'')  + ' '+ ISNULL(ADDR.FOREIGN_POSTAL_CODE,'')) ADDRESS,&#xD;&#xA;    SCVDOCTYPESOURCE.DESCRIPTION AS DOCTYPESOURCEDESCRIPTION,SCVREASON.DESCRIPTION AS REASONDESCRIPTION&#xD;&#xA;FROM SGT_RETURNED_MAIL RMAIL&#xD;&#xA;INNER JOIN SGT_PERSON SP ON SP.PERSON_ID = RMAIL.PERSON_ID&#xD;&#xA;LEFT OUTER JOIN SGT_PERSON_ADDRESS ADDR&#xD;&#xA;ON RMAIL.ADDRESS_ID=ADDR.ADDRESS_ID&#xD;&#xA;INNER JOIN  SGT_HE_DOCUMENT HEDOC&#xD;&#xA;ON RMAIL.DOC_ID=HEDOC.DOCUMENT_ID AND RMAIL.DOC_TYPE_SOURCE_VALUE='HEDC'&#xD;&#xA;LEFT OUTER JOIN SGS_CODE_VALUE SCVDOCTYPESOURCE WITH(NOLOCK) ON SCVDOCTYPESOURCE.CODE_ID = RMAIL.DOC_TYPE_SOURCE_ID AND SCVDOCTYPESOURCE.CODE_VALUE = RMAIL.DOC_TYPE_SOURCE_VALUE&#xD;&#xA; LEFT OUTER JOIN SGS_CODE_VALUE SCVREASON WITH(NOLOCK) ON SCVREASON.CODE_ID = RMAIL.REASON_ID AND SCVREASON.CODE_VALUE = RMAIL.REASON_VALUE&#xD;&#xA;WHERE RMAIL.CREATED_DATE BETWEEN @START_DATE AND @END_DATE&#xD;&#xA;UNION ALL &#xD;&#xA;SELECT SP.MPI_PERSON_ID,(SP.FIRST_NAME + '  ' + SP.LAST_NAME)NAME,RMAIL.*,ADDR.*,DOCUMENT_ID,RMAIL.OTHER_DOCUMENT_TYPE AS  DOC_TYPE,DOCUMENT_NAME,APP_NAME,GROUP_NAME,&#xD;&#xA;  (ISNULL(ADDR.ADDR_LINE_1,'') + ' ' + ISNULL(ADDR.ADDR_LINE_2,'') + ' ' + ISNULL(ADDR.ADDR_CITY,'') + ' ' + ISNULL(ADDR.ADDR_STATE_VALUE,'') + ' ' + ISNULL(ADDR.FOREIGN_PROVINCE,'')&#xD;&#xA;    + ' ' + ISNULL(ADDR.ADDR_COUNTRY_VALUE,'') + ' ' + ISNULL(ADDR.ADDR_ZIP_CODE,'') + ' ' + ISNULL(ADDR.ADDR_ZIP_4_CODE,'')  + ' '+ ISNULL(ADDR.FOREIGN_POSTAL_CODE,'')) ADDRESS,&#xD;&#xA;    SCVDOCTYPESOURCE.DESCRIPTION AS DOCTYPESOURCEDESCRIPTION,SCVREASON.DESCRIPTION AS REASONDESCRIPTION&#xD;&#xA;FROM SGT_RETURNED_MAIL RMAIL&#xD;&#xA;INNER JOIN SGT_PERSON SP ON SP.PERSON_ID = RMAIL.PERSON_ID&#xD;&#xA;LEFT OUTER JOIN SGT_PERSON_ADDRESS ADDR&#xD;&#xA;ON RMAIL.ADDRESS_ID=ADDR.ADDRESS_ID&#xD;&#xA;LEFT OUTER JOIN  SGT_HE_DOCUMENT HEDOC&#xD;&#xA;ON RMAIL.DOC_ID=HEDOC.DOCUMENT_ID AND RMAIL.DOC_TYPE_SOURCE_VALUE='PEND'&#xD;&#xA;LEFT OUTER JOIN SGS_CODE_VALUE SCVDOCTYPESOURCE WITH(NOLOCK) ON SCVDOCTYPESOURCE.CODE_ID = RMAIL.DOC_TYPE_SOURCE_ID AND SCVDOCTYPESOURCE.CODE_VALUE = RMAIL.DOC_TYPE_SOURCE_VALUE&#xD;&#xA; LEFT OUTER JOIN SGS_CODE_VALUE SCVREASON WITH(NOLOCK) ON SCVREASON.CODE_ID = RMAIL.REASON_ID AND SCVREASON.CODE_VALUE = RMAIL.REASON_VALUE&#xD;&#xA;WHERE  RMAIL.CREATED_DATE BETWEEN @START_DATE AND @END_DATE AND RMAIL.DOC_ID IS NULL">
+      <parameters>
+        <parameter ID="@START_DATE" sfwDataType="DateTime" />
+        <parameter ID="@END_DATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="returned_mail_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ReturnedMailId" sfwCaption="ID" />
+    <attribute sfwValue="returned_mail_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ReturnedMailDate" sfwCaption="Returned Mail Date" />
+    <attribute sfwValue="doc_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="DocId" sfwCaption="Doc Id" />
+    <attribute sfwType="Description" ID="DocTypeSourceDescription" sfwCaption="Doc Type Source" sfwValue="doc_type_source_description" />
+    <attribute sfwValue="doc_type_source_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="DocTypeSourceId" sfwCodeID="7078" sfwCaption="Doc Type Source" />
+    <attribute sfwValue="doc_type_source_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="DocTypeSourceValue" sfwCaption="Doc Type Source" />
+    <attribute sfwValue="address_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AddressId" sfwCaption="Address Id" />
+    <attribute sfwValue="org_address_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="OrgAddressId" sfwCaption="Org Address Id" />
+    <attribute sfwValue="returned_mail_addres_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="ReturnedMailAddresFlag" sfwCaption="Returned Mail Addres Flag" />
+    <attribute sfwType="Description" ID="ReasonDescription" sfwCaption="Reason" sfwValue="reason_description" />
+    <attribute sfwValue="reason_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ReasonId" sfwCodeID="7079" sfwCaption="Reason" />
+    <attribute sfwValue="reason_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ReasonValue" sfwCaption="Reason" />
+    <attribute sfwValue="notes" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4096" sfwIsNull="True" ID="Notes" sfwCaption="Notes" />
+    <attribute sfwValue="other_document_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="False" ID="OtherDocumentType" sfwCaption="Other Document Type" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonId" sfwCaption="Person Id" />
+    <attribute sfwValue="org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="OrgId" sfwCaption="Org Id" />
+    <attribute ID="objOrgAddress" sfwType="Object" sfwEntity="entOrgAddress" sfwValue="ibusOrgAddress" />
+    <attribute ID="objDocument" sfwType="Object" sfwEntity="entDocument" sfwValue="ibusDocument" />
+    <attribute ID="objLookupOrganization" sfwType="Object" sfwEntity="entOrganization" sfwValue="ibusLookupOrganization" />
+    <attribute sfwType="Collection" sfwEntity="entOrganization" ID="lstOrganization" sfwValue="iclbOrganization" />
+    <attribute sfwDataType="string" sfwType="Property" ID="DocIdSource" sfwValue="icdoReturnedMail.doc_Id_Source" />
+    <attribute sfwType="Collection" sfwEntity="entOrgAddress" ID="lstOrgAddress" sfwValue="iclbOrgAddress" />
+    <attribute ID="objOrganization" sfwType="Object" sfwEntity="entOrganization" sfwValue="ibusOrganization" />
+    <attribute ID="objPersonAddress" sfwType="Object" sfwEntity="entPersonAddress" sfwValue="ibusPersonAddress" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute ID="objLookupPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusLookupPerson" />
+    <attribute sfwType="Collection" sfwEntity="entPerson" ID="lstPerson" sfwValue="iclbPerson" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAddress" ID="lstPersonAddress" sfwValue="iclbPersonAddress" />
+  </attributes>
+</entity>

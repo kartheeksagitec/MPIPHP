@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmProcessMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvWorkflow" sfwResource="200 " sfwType="Maintenance" sfwTitle="Process Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entProcess">
+  <initialload>
+    <callmethods sfwMethodName="FindProcess" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnNoChangesSave_Click" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Process Information" CssClass="fullWidth">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capProcessName" Text="Process Code : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwLabel ID="lblProcessName" sfwEntityField="Name" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capProcessDescription" Text="Process Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessDescription" sfwEntityField="Description" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capProcessTypeValue" Text="Process Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlProcessTypeValue" sfwLoadType="CodeGroup" sfwLoadSource="1603" sfwEntityField="TypeValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStatusValue" Text="Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" sfwLoadType="CodeGroup" sfwLoadSource="5003" sfwEntityField="StatusValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessId" Visible="False" sfwEntityField="ProcessId" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlActivityTab" sfwCaption="Other Details">
+          <sfwTable ID="tblActivityTab">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer CssClass="ajax__tab_xp" ID="tctActivityTab">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Activity" ID="tshActivity">
+                      <sfwTable ID="tblActivity">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnOpenActivity" sfwActiveForm="wfmActivityMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintactivityid=ActivityId" sfwRelatedControl="grvActivity" Text="Open" />
+                            <sfwButton ID="btnExportExcelActivity" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvActivity" Text="Export To Excel" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvActivity" sfwSelection="Many" sfwSortExpression="SortOrder,ActivityId" sfwEntityField="lstActivity" sfwGridEntity="entActivity" SortExpressionUpdated="true">
+                              <Columns>
+                                <TemplateField HeaderText="Activity Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenActivity" sfwEntityField="DisplayName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Role ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objRoles.RoleDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Standard Time(in mins)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StandardTimeInMinutes" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="ActivityId" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActivityId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="SortOrder" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SortOrder" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Document By Process" ID="tshDocumentByProcess">
+                      <sfwTable ID="tblDocumentByProcess">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNewDocumentType" sfwActiveForm="wfmDocumentProcessCrossRefMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintProcessID=lblProcessId" Text="New" />
+                            <sfwButton ID="btnOpenDocumentType" sfwActiveForm="wfmDocumentProcessCrossRefMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="Aintdocumentprocesscrossrefid=DocumentProcessCrossrefId;doc_type=objDocument.DocType" sfwRelatedControl="grvDocumentType" Text="Open" />
+                            <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvDocumentType" Text="Delete" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvDocumentType" sfwSelection="Many" sfwEntityField="lstDocumentProcessCrossref" sfwGridEntity="entDocumentProcessCrossref">
+                              <Columns>
+                                <TemplateField HeaderText="Document Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenDocumentType" sfwEntityField="objDocument.DocumentName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Action">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DocumentTypeActionDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="document id" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DocumentId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Document Process Crossref ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DocumentProcessCrossrefId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Document Code" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objDocument.DocType" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstActivity" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstDocumentProcessCrossref" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

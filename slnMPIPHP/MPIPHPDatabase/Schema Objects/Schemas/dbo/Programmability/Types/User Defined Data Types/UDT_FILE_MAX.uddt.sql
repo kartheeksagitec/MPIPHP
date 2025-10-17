@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_FILE_MAX]
+    FROM VARCHAR (MAX) NULL;
+

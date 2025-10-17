@@ -1,0 +1,64 @@
+﻿<entity ID="entPayeeAccountAchDetail" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPayeeAccountAchDetail" sfwObjectID="busPayeeAccountAchDetail" sfwTableName="sgt_payee_account_ach_detail" sfwView="False" sfwDataObjectID="doPayeeAccountAchDetail">
+  <rules>
+    <rule ID="Rule-StartDateLessThanTodaysDate" sfwMessageId="5112" sfwExpression="!(this.IsStartDateNull() == True) &amp;&amp; &#xA;(this.icdoPayeeAccountAchDetail.ach_start_date &lt; RFunc.CurrentDate())" sfwObjectBased="True" />
+    <rule ID="Rule-EndDateGreaterThanStartDate" sfwMessageId="5111" sfwExpression="!(this.IsENDDateNull() == True) &amp;&amp; &#xA;!(this.IsStartDateNull() == True) &amp;&amp; &#xA;(this.icdoPayeeAccountAchDetail.ach_end_date &lt; this.icdoPayeeAccountAchDetail.ach_start_date)" sfwObjectBased="True" />
+    <rule ID="Rule-StartDateGreaterThanEndDate" sfwMessageId="5139" sfwExpression="!(this.IsStartDateNull() == True) &amp;&amp; &#xA;!(this.IsENDDateNull() == True) &amp;&amp; &#xA;(this.icdoPayeeAccountAchDetail.ach_start_date &gt; this.icdoPayeeAccountAchDetail.ach_end_date)" sfwObjectBased="True" />
+    <rule ID="RuleIsStartDateNull" sfwMessageId="5113" sfwExpression="(this.IsStartDateNull() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-IsEndDateNull" sfwMessageId="5478" sfwExpression="(this.IsENDDateNull() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-ACHEndDateNotFuture" sfwMessage="Start Date cannot be past date." sfwExpression="(this.icdoPayeeAccountAchDetail.ach_start_date &gt;= RFunc.CurrentDate())" sfwObjectBased="True" />
+    <rule ID="Rule-ACHNoNumeric" sfwMessage="Start Date cannot be past date." sfwExpression="(this.icdoPayeeAccountAchDetail.account_number In[&quot;Numeric&quot;])" sfwObjectBased="True" />
+    <rule ID="Rule-Check_Routing_Numer_9_Digits" sfwMessageId="6059" sfwExpression="(this.icdoPayeeAccountAchDetail.iintRoutingNumber != 0) &amp;&amp; &#xA;(RFunc.Length(this.icdoPayeeAccountAchDetail.iintRoutingNumber) != 9)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="Rule-ACHEndDateNotFuture" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <item ID="Rule-StartDateLessThanTodaysDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="RuleIsStartDateNull" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-ACHNoNumeric" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-Check_Routing_Numer_9_Digits" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="ACHPreNoteVerificationBatch" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT &#xD;&#xA;'PE' AS [TYPE],PER1.MPI_PERSON_ID,&#xD;&#xA;PE.PAYEE_ACCOUNT_ACH_DETAIL_ID AS ACH_DETAIL_ID,&#xD;&#xA;PE.BANK_ACCOUNT_TYPE_VALUE AS TRANSACTION_CODE,&#xD;&#xA;ORG.ROUTING_NUMBER,&#xD;&#xA;PE.ACCOUNT_NUMBER AS ACCOUNT_NO,&#xD;&#xA;PER1.PERSON_ID  AS PERSON_ID,&#xD;&#xA;PER1.FIRST_NAME  + ' ' + PER1.LAST_NAME  AS PERSON_NAME,&#xD;&#xA;PBXR.PLAN_ID&#xD;&#xA;FROM SGT_PAYEE_ACCOUNT_ACH_DETAIL PE WITH (NOLOCK)&#xD;&#xA;LEFT JOIN SGT_ORGANIZATION ORG ON ORG.ORG_ID=PE.BANK_ORG_ID&#xD;&#xA;LEFT JOIN SGT_PAYEE_ACCOUNT SPE ON SPE.PAYEE_ACCOUNT_ID=PE.PAYEE_ACCOUNT_ID&#xD;&#xA;LEFT JOIN SGT_PERSON PER1 ON PER1.PERSON_ID=SPE.PERSON_ID&#xD;&#xA;LEFT JOIN SGT_PLAN_BENEFIT_XR PBXR on PBXR.PLAN_BENEFIT_ID=SPE.PLAN_BENEFIT_ID&#xD;&#xA;where PRE_NOTE_FLAG='Y'">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="payee_account_ach_detail_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PayeeAccountAchDetailId" sfwCaption="ID" />
+    <attribute sfwValue="payee_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PayeeAccountId" sfwCaption="Payee Account Id" />
+    <attribute sfwValue="bank_org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BankOrgId" sfwCaption="Bank Org Id" />
+    <attribute sfwType="Description" ID="BankAccountTypeDescription" sfwCaption="Bank Account Type" sfwValue="bank_account_type_description" />
+    <attribute sfwValue="bank_account_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BankAccountTypeId" sfwCodeID="7003" sfwCaption="Bank Account Type" />
+    <attribute sfwValue="bank_account_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="BankAccountTypeValue" sfwCaption="Bank Account Type" />
+    <attribute sfwValue="account_number" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="40" sfwIsNull="True" ID="AccountNumber" sfwCaption="Account Number" />
+    <attribute sfwValue="pre_note_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="PreNoteFlag" sfwCaption="Pre Note Flag" />
+    <attribute sfwValue="primary_account_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="PrimaryAccountFlag" sfwCaption="Primary Account Flag" />
+    <attribute sfwValue="ach_start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="AchStartDate" sfwCaption="Ach Start Date" />
+    <attribute sfwValue="ach_end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="AchEndDate" sfwCaption="Ach End Date" />
+    <attribute sfwValue="pre_note_completion_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="PreNoteCompletionDate" sfwCaption="Pre Note Completion Date" />
+    <attribute sfwValue="percentage_of_net_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="PercentageOfNetAmount" sfwCaption="Percentage Of Net Amount" />
+    <attribute sfwValue="partial_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="PartialAmount" sfwCaption="Partial Amount" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="joint_account_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="JointAccountFlag" sfwCaption="Joint Account Flag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRoutingNumber" sfwValue="icdoPayeeAccountAchDetail.istrRoutingNumber" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrOrgName" sfwValue="icdoPayeeAccountAchDetail.istrOrgName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPreNoteFlag" sfwValue="icdoPayeeAccountAchDetail.istrPreNoteFlag" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintRoutingNumber" sfwValue="icdoPayeeAccountAchDetail.iintRoutingNumber" />
+  </attributes>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+</entity>

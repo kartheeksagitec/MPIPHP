@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfpParticipantOverviewMaintenance" sfwActive="True" sfwStatus="Valid" sfwType="Maintenance" sfwTitle="Participant Maintenance" version="3.5" sfwEntity="entPrototype">
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Cancel" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlSection0" sfwCaption="Participant Information">
+          <sfwTable ID="Section0">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblPID" Text="Participant ID" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblPerson" Text="1" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="Last Name" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Smith" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="First Name" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" Text="John" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="Middle Name" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel5" Text="Thomas" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel6" Text="Date of Birth" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel7" Text="04/01/1950" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel8" Text="SSN" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel9" Text="123-12-1234" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Participant Types">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel10" Text="Participant" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox Checked="True" ID="chkCheckBox" sfwDefaultValue="Y" sfwTwoWayBinding="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="Beneficiary" Text="Beneficiary" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkCheckBox1" sfwDefaultValue="Y" sfwTwoWayBinding="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage1" sfwCaption="Other Details">
+          <sfwTable ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctNewPage1">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Beneficiary" ID="tshNewPage2">
+                      <sfwTable ID="tblNewPage2">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNew" sfwActiveForm="wfpParticipantBeneficiaryMaintenance" sfwMethodName="btnNew_Click" Text="New" />
+                            <sfwButton ID="btnOpen" sfwActiveForm="wfpParticipantBeneficiaryMaintenance" sfwMethodName="btnOpen_Click" Text="Open" sfwNavigationParameter="form_name=#wfpParticipantOverviewMaintenance;grid_view=#;row_index=#Index" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" sfwSelection="Many" ID="grvGridView" sfwEntityField="Collection0">
+                              <Columns>
+                                <TemplateField HeaderText="Beneficiary Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="Property0" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Beneficiary ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Property1" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Relationship">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Property2" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Date of Birth">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Property4" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Data>
+                                <DataRow>
+                                  <DataColumn Value="Jane Doe" sfwEntityField="Property0" />
+                                  <DataColumn Value="3" sfwEntityField="Property1" />
+                                  <DataColumn Value="Spouse" sfwEntityField="Property2" />
+                                  <DataColumn Value="04/03/1948" sfwEntityField="Property3" />
+                                  <DataColumn sfwEntityField="Property4" />
+                                </DataRow>
+                                <DataRow>
+                                  <DataColumn Value="Mary Doe" sfwEntityField="Property0" />
+                                  <DataColumn Value="4" sfwEntityField="Property1" />
+                                  <DataColumn Value="Daughter" sfwEntityField="Property2" />
+                                  <DataColumn Value="01/01/1980" sfwEntityField="Property3" />
+                                  <DataColumn sfwEntityField="Property4" />
+                                </DataRow>
+                              </Data>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="TBD" ID="tshNewPage">
+                      <sfwTable ID="tblNewPage3">
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" Text="siddhartha.jain" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" Text="07/01/2011" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" Text="siddhartha.jain" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" Text="07/14/2011" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

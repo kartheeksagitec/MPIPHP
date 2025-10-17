@@ -1,0 +1,71 @@
+﻿<entity ID="entBpmActivityRejection" sfwView="False" sfwActive="True" sfwMainCDO="icdoBpmActivityRejection" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgw_bpm_activity_rejection" sfwObjectID="busBpmActivityRejection" sfwDataObjectID="doBpmActivityRejection" CreateWithClass="True">
+  <attributes>
+    <attribute sfwValue="bpm_activity_rejection_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BpmActivityRejectionId" sfwCaption="ID" />
+    <attribute sfwValue="activity_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ActivityId" sfwCaption="Activity Id" />
+    <attribute sfwValue="rejection_reason_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RejectionReasonId" sfwCaption="Rejection Reason" sfwCodeID="20007003" />
+    <attribute sfwValue="rejection_reason_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="RejectionReasonValue" sfwCaption="Rejection Reason" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwType="Description" ID="RejectionReasonDescription" sfwCaption="Rejection Reason" sfwValue="rejection_reason_description" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgw_bpm_activity_rejection WITH(NOLOCK)" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgw_bpm_activity_rejection" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgw_bpm_activity_rejection">
+      <parameters />
+    </query>
+    <query ID="GetActivityRejectionReasons" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;      AIR.* ,&#xA;&#x9;    SCV.COMMENTS      AS REION_REASON_DESCRIPTION_SHORT &#xA;&#x9;FROM&#xA;&#x9;     SGW_BPM_ACTIVITY_REJECTION AIR WITH(NOLOCK)   &#xA;&#x9;     join SGS_CODE_VALUE SCV WITH(NOLOCK)   &#xA;&#x9;     ON (SCV.CODE_ID = AIR.REJECTION_REASON_ID AND&#xA;&#x9;     SCV.CODE_VALUE = AIR.REJECTION_REASON_VALUE AND&#xA;&#x9;     SCV.DATA2 = 'R') &#xA;&#x9;WHERE&#xA;&#x9;     ACTIVITY_ID = @ACTIVITY_ID" sfwOracle="select AIR.*,SCV.Comments AS REJECTION_REASON_DESC_SHORT&#xD;&#xA; FROM&#xD;&#xA;  SGW_BPM_ACTIVITY_REJECTION AIR&#xD;&#xA;  Join SGS_CODE_VALUE SCV&#xD;&#xA;  ON (&#xD;&#xA;    SCV.CODE_ID = AIR.REJECTION_REASON_ID AND&#xD;&#xA;    SCV.CODE_VALUE = AIR.REJECTION_REASON_VALUE AND&#xD;&#xA;    SCV.DATA2= 'R'&#xD;&#xA;  )&#xD;&#xA;  WHERE&#xD;&#xA;&#x9;     ACTIVITY_ID=@ACTIVITY_ID" sfwPostgre="select AIR.*,SCV.Comments AS REJECTION_REASON_DESC_SHORT&#xD;&#xA; FROM&#xD;&#xA;  SGW_BPM_ACTIVITY_REJECTION AIR&#xD;&#xA;  Join SGS_CODE_VALUE SCV&#xD;&#xA;  ON (&#xD;&#xA;    SCV.CODE_ID = AIR.REJECTION_REASON_ID AND&#xD;&#xA;    SCV.CODE_VALUE = AIR.REJECTION_REASON_VALUE AND&#xD;&#xA;    SCV.DATA2= 'R'&#xD;&#xA;  )&#xD;&#xA;  WHERE&#xD;&#xA;&#x9;     ACTIVITY_ID = @ACTIVITY_ID">
+      <parameters>
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetRejectionsByType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; AR.* &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_REJECTION AR WITH(NOLOCK) INNER  &#xA;&#x9; JOIN SGS_CODE_VALUE SC WITH(NOLOCK)&#xA;&#x9; ON AR.REJECTION_REASON_ID = SC.CODE_ID AND&#xA;&#x9; AR.REJECTION_REASON_VALUE = SC.CODE_VALUE AND&#xA;&#x9; sc.DATA2 = @RejectionType AND&#xA;&#x9; AR.ACTIVITY_ID = @ACTIVITY_ID" sfwOracle="SELECT&#xD;&#xA;&#x9; AR.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_REJECTION AR  INNER  &#xD;&#xA;&#x9; JOIN SGS_CODE_VALUE SC &#xD;&#xA;&#x9; ON AR.REJECTION_REASON_ID = SC.CODE_ID AND&#xD;&#xA;&#x9; AR.REJECTION_REASON_VALUE = SC.CODE_VALUE AND&#xD;&#xA;&#x9; sc.DATA2 = @RejectionType AND&#xD;&#xA;&#x9; AR.ACTIVITY_ID = @ACTIVITY_ID" sfwPostgre="SELECT&#xD;&#xA;&#x9; AR.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_REJECTION AR  INNER  &#xD;&#xA;&#x9; JOIN SGS_CODE_VALUE SC &#xD;&#xA;&#x9; ON AR.REJECTION_REASON_ID = SC.CODE_ID AND&#xD;&#xA;&#x9; AR.REJECTION_REASON_VALUE = SC.CODE_VALUE AND&#xD;&#xA;&#x9; sc.DATA2 = @RejectionType AND&#xD;&#xA;&#x9; AR.ACTIVITY_ID = @ACTIVITY_ID">
+      <parameters>
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+        <parameter ID="@RejectionType" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetAllRejectionReasons" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGS_CODE_VALUE WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; CODE_ID = 20007003 AND&#xA;&#x9; DATA2 = 'R'&#xA;&#x9; ORDER BY [DESCRIPTION]" sfwOracle="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_CODE_VALUE &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CODE_ID = 20007003 AND&#xD;&#xA;&#x9; DATA2 = 'R'&#xD;&#xA;&#x9; ORDER BY DESCRIPTION" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGS_CODE_VALUE &#xA;WHERE&#xA;&#x9; CODE_ID = 20007003 AND&#xA;&#x9; DATA2 = 'R'&#xA;&#x9; ORDER BY DESCRIPTION">
+      <parameters />
+    </query>
+    <query ID="GetAllExceptionReasons" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_CODE_VALUE WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CODE_ID = 20007003 AND&#xD;&#xA;&#x9; DATA2 = 'E'" sfwOracle="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_CODE_VALUE &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CODE_ID = 20007003 AND&#xD;&#xA;&#x9; DATA2 = 'E'" sfwPostgre="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_CODE_VALUE &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CODE_ID = 20007003 AND&#xD;&#xA;&#x9; DATA2 = 'E'">
+      <parameters />
+    </query>
+    <query ID="GetActivityExceptionReasons" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;  AIR.* ,&#xA;&#x9;SCV.COMMENTS  &#x9;AS REJECTION_REASON_DESC_SHORT &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_REJECTION AIR WITH(NOLOCK)     &#xA;&#x9; join SGS_CODE_VALUE SCV WITH(NOLOCK)    &#xA;&#x9; ON (SCV.CODE_ID = AIR.REJECTION_REASON_ID AND&#xA;&#x9; SCV.CODE_VALUE = AIR.REJECTION_REASON_VALUE AND&#xA;&#x9; SCV.DATA2 = 'E') &#xA;WHERE&#xA;&#x9; ACTIVITY_ID = @ACTIVITY_ID" sfwOracle="SELECT&#xD;&#xA;&#x9;  AIR.* ,&#xD;&#xA;&#x9;SCV.COMMENTS  &#x9;AS REJECTION_REASON_DESC_SHORT &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_REJECTION AIR     &#xD;&#xA;&#x9; join SGS_CODE_VALUE SCV    &#xD;&#xA;&#x9; ON (SCV.CODE_ID = AIR.REJECTION_REASON_ID AND&#xD;&#xA;&#x9; SCV.CODE_VALUE = AIR.REJECTION_REASON_VALUE AND&#xD;&#xA;&#x9; SCV.DATA2 = 'E') &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ACTIVITY_ID = @ACTIVITY_ID" sfwPostgre="SELECT&#xD;&#xA;&#x9;  AIR.* ,&#xD;&#xA;&#x9;SCV.COMMENTS  &#x9;AS REJECTION_REASON_DESC_SHORT &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_REJECTION AIR     &#xD;&#xA;&#x9; join SGS_CODE_VALUE SCV    &#xD;&#xA;&#x9; ON (SCV.CODE_ID = AIR.REJECTION_REASON_ID AND&#xD;&#xA;&#x9; SCV.CODE_VALUE = AIR.REJECTION_REASON_VALUE AND&#xD;&#xA;&#x9; SCV.DATA2 = 'E') &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ACTIVITY_ID = @ACTIVITY_ID">
+      <parameters>
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetActivityMissingInformation" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9;      AIR.* ,&#xD;&#xA;&#x9;    SCV.COMMENTS      AS REJECTION_REASON_DESCRIPTION_SHORT &#xD;&#xA;&#x9;FROM&#xD;&#xA;&#x9;     SGW_BPM_ACTIVITY_REJECTION AIR WITH(NOLOCK)   &#xD;&#xA;&#x9;     join SGS_CODE_VALUE SCV WITH(NOLOCK)   &#xD;&#xA;&#x9;     ON (SCV.CODE_ID = AIR.REJECTION_REASON_ID AND&#xD;&#xA;&#x9;     SCV.CODE_VALUE = AIR.REJECTION_REASON_VALUE AND&#xD;&#xA;&#x9;     SCV.DATA2 = 'M') &#xD;&#xA;&#x9;WHERE&#xD;&#xA;&#x9;     ACTIVITY_ID = @ACTIVITY_ID" sfwOracle="select AIR.*,SCV.Comments AS REJECTION_REASON_DESC_SHORT&#xD;&#xA; FROM&#xD;&#xA;  SGW_BPM_ACTIVITY_REJECTION AIR&#xD;&#xA;  Join SGS_CODE_VALUE SCV&#xD;&#xA;  ON (&#xD;&#xA;    SCV.CODE_ID = AIR.REJECTION_REASON_ID AND&#xD;&#xA;    SCV.CODE_VALUE = AIR.REJECTION_REASON_VALUE AND&#xD;&#xA;    SCV.DATA2= 'M'&#xD;&#xA;  )&#xD;&#xA;  WHERE&#xD;&#xA;&#x9;     ACTIVITY_ID = @ACTIVITY_ID" sfwPostgre="select AIR.*,SCV.Comments AS REJECTION_REASON_DESC_SHORT&#xD;&#xA; FROM&#xD;&#xA;  SGW_BPM_ACTIVITY_REJECTION AIR&#xD;&#xA;  Join SGS_CODE_VALUE SCV&#xD;&#xA;  ON (&#xD;&#xA;    SCV.CODE_ID = AIR.REJECTION_REASON_ID AND&#xD;&#xA;    SCV.CODE_VALUE = AIR.REJECTION_REASON_VALUE AND&#xD;&#xA;    SCV.DATA2= 'M'&#xD;&#xA;  )&#xD;&#xA;  WHERE&#xD;&#xA;&#x9;     ACTIVITY_ID = @ACTIVITY_ID">
+      <parameters>
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAllMissingInformation" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_CODE_VALUE WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CODE_ID = 20007003 AND&#xD;&#xA;&#x9; DATA2 = 'M'" sfwOracle="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_CODE_VALUE &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CODE_ID = 20007003 AND&#xD;&#xA;&#x9; DATA2 = 'M'" sfwPostgre="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_CODE_VALUE &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CODE_ID = 20007003 AND&#xD;&#xA;&#x9; DATA2 = 'M'">
+      <parameters />
+    </query>
+    <query ID="GetSelectedActivityRejectionReasons" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; DISTINCT BAR.* ,&#xA;&#x9;SCV.COMMENTS  &#x9;AS REJECTION_REASON_DESCRIPTION_SHORT &#xA;&#x9;,(CASE WHEN ISNULL(BPM_ACTY_INST_REJECTION_ID,0) = 0  THEN 0 ELSE 1 END ) AS CHECKED&#xA;&#x9;,CHECKED_OUT_USER&#xA;FROM&#xA; -- (For a given Activity_Id get All Rejections Reasons (When Joined to SCV on Data2 = 'R'))   &#xA;&#x9; SGW_BPM_ACTIVITY_REJECTION BAR WITH(NOLOCK)   &#xA;&#x9;&#x9;join SGS_CODE_VALUE SCV WITH(NOLOCK)   &#xA;&#x9;&#x9;&#x9;ON (SCV.CODE_ID = BAR.REJECTION_REASON_ID &#xA;&#x9;&#x9;&#x9;AND SCV.CODE_VALUE = BAR.REJECTION_REASON_VALUE &#xA;&#x9;&#x9;&#x9;AND SCV.DATA2 = 'R') &#xA; -- (For a given Activity_Id get Get this instance of the activity for the member  &#xA;&#x9;&#x9;LEFT JOIN SGW_BPM_ACTIVITY_INSTANCE BAI &#xA;&#x9;&#x9;&#x9;ON (BAR.ACTIVITY_ID = BAI.ACTIVITY_ID AND BAI.ACTIVITY_INSTANCE_ID =  @ACTIVITY_INSTANCE_ID)&#xA;-- (For a given Activity_Id and instance get get the selected rejections of the activity for the member&#x9;&#xA;&#x9;&#x9;LEFT JOIN SGW_BPM_ACTY_INST_REJECTION BAIR WITH (NOLOCK) &#xA;&#x9;        ON (BAI.ACTIVITY_INSTANCE_ID = BAIR.ACTIVITY_INSTANCE_ID &#xA;&#x9;&#x9;&#x9;AND BAIR.REJECTION_REASON_ID = SCV.CODE_ID&#xA;&#x9;&#x9;&#x9;AND SCV.CODE_VALUE = BAIR.REJECTION_REASON_VALUE &#xA;&#x9;&#x9;&#x9;AND SCV.DATA2 = 'R')&#xA;WHERE&#xA;&#x9; BAR.ACTIVITY_ID = @ACTIVITY_ID">
+      <parameters>
+        <parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields>
+    <ExtraField ID="Runway" Value="Neobase" />
+  </ExtraFields>
+</entity>

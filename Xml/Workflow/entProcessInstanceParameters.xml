@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entProcessInstanceParameters" sfwTableName="sgw_process_instance_parameters" sfwView="False" sfwDataObjectID="doProcessInstanceParameters">
+  <queries>
+    <query ID="GetParameters" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgw_process_instance_parameters&#xD;&#xA; where process_instance_id = @process_instance_id&#xD;&#xA; ">
+      <parameters>
+        <parameter ID="@process_instance_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetParameter" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select parameter_value &#xD;&#xA;  from sgw_process_instance_parameters&#xD;&#xA; where process_instance_id = @process_instance_id&#xD;&#xA;   and parameter_name = @parameter_name">
+      <parameters>
+        <parameter ID="@process_instance_id" sfwDataType="int" />
+        <parameter ID="@parameter_name" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="process_instance_parameter_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessInstanceParameterId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="process_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessInstanceId" sfwIsSequence="False" sfwCaption="Process Instance Id" />
+    <attribute sfwValue="parameter_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ParameterName" sfwIsSequence="False" sfwCaption="Parameter Name" />
+    <attribute sfwValue="parameter_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="ParameterValue" sfwIsSequence="False" sfwCaption="Parameter Value" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

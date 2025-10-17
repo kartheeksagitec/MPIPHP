@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entHealthEligibiltyActuaryData" sfwMainCDO="icdoHealthEligibiltyActuaryData" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busHealthEligibiltyActuaryData" sfwTableName="sgt_health_eligibilty_actuary_data" sfwView="False" sfwDataObjectID="doHealthEligibiltyActuaryData">
+  <queries>
+    <query ID="GetHealthEligibilityActuaryData" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#x9;&#xD;&#xA;&#x9;DBO.FN_GET_DECRYPTED_TEXT(PERSON_SSN) AS PERSON_SSN,&#xD;&#xA;&#x9;PLAN_YEAR,&#xD;&#xA;&#x9;PERSON_FIRST_NAME,&#xD;&#xA;&#x9;PERSON_LAST_NAME,&#xD;&#xA;&#x9;CONVERT(DATETIME,DBO.FN_GET_DECRYPTED_TEXT(PERSON_DOB)) AS PERSON_DOB,&#xD;&#xA;&#x9;PERSON_DOD,&#xD;&#xA;&#x9;RETIREMENT_DATE,&#xD;&#xA;&#x9;QUALIFIED_YEARS_TILL_BATCH_DATE,&#xD;&#xA;&#x9;QUALIFIED_HOURS_TILL_BATCH_DATE,&#xD;&#xA;&#x9;CURRENT_HOURS,&#xD;&#xA;&#x9;PRIOR_HOURS,&#xD;&#xA;&#x9;RET_HEALTH_ELIG_FLAG,&#xD;&#xA;&#x9;ELIGIBLE_RULE,&#xD;&#xA;&#x9;ENROLLED_IN_LOCAL_PLAN_FLAG,&#xD;&#xA;&#x9;RETIREMENT_TYPE&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGT_HEALTH_ELIGIBILTY_ACTUARY_DATA WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;&#x9; PLAN_YEAR = (SELECT MAX(PLAN_YEAR) FROM SGT_HEALTH_ELIGIBILTY_ACTUARY_DATA) --PIR 1024&#xD;&#xA;&#x9; AND QUALIFIED_YEARS_TILL_BATCH_DATE &gt;= 1 AND QUALIFIED_HOURS_TILL_BATCH_DATE &gt;= 400">
+      <parameters>
+        <parameter ID="@PLAN_YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="UpdatePersonDateOfDeath" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="update SGT_HEALTH_ELIGIBILTY_ACTUARY_DATA&#xD;&#xA;set PERSON_DOD = NULL&#xD;&#xA;where PERSON_DOD = '1/1/1753'">
+      <parameters />
+    </query>
+    <query ID="UpdateRetirementDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="update SGT_HEALTH_ELIGIBILTY_ACTUARY_DATA&#xD;&#xA;set RETIREMENT_DATE = NULL&#xD;&#xA;where RETIREMENT_DATE = '1/1/1753'">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="health_actuary_data_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="HealthActuaryDataId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonId" sfwIsSequence="False" sfwCaption="Person Id" />
+    <attribute sfwValue="person_ssn" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="256" sfwIsNull="True" ID="PersonSsn" sfwIsSequence="False" sfwCaption="Person Ssn" />
+    <attribute sfwValue="plan_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PlanYear" sfwIsSequence="False" sfwCaption="Plan Year" />
+    <attribute sfwValue="person_first_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="PersonFirstName" sfwIsSequence="False" sfwCaption="Person First Name" />
+    <attribute sfwValue="person_last_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="PersonLastName" sfwIsSequence="False" sfwCaption="Person Last Name" />
+    <attribute sfwValue="person_dob" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="PersonDob" sfwIsSequence="False" sfwCaption="Person Dob" />
+    <attribute sfwValue="person_dod" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="PersonDod" sfwIsSequence="False" sfwCaption="Person Dod" />
+    <attribute sfwValue="retirement_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="RetirementDate" sfwIsSequence="False" sfwCaption="Retirement Date" />
+    <attribute sfwValue="qualified_years_till_batch_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="QualifiedYearsTillBatchDate" sfwIsSequence="False" sfwCaption="Qualified Years Till Batch Date" />
+    <attribute sfwValue="qualified_hours_till_batch_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="14,4" sfwIsNull="True" ID="QualifiedHoursTillBatchDate" sfwIsSequence="False" sfwCaption="Qualified Hours Till Batch Date" />
+    <attribute sfwValue="current_hours" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="14,4" sfwIsNull="True" ID="CurrentHours" sfwIsSequence="False" sfwCaption="Current Hours" />
+    <attribute sfwValue="prior_hours" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="14,4" sfwIsNull="True" ID="PriorHours" sfwIsSequence="False" sfwCaption="Prior Hours" />
+    <attribute sfwValue="ret_health_elig_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="RetHealthEligFlag" sfwIsSequence="False" sfwCaption="Ret Health Elig Flag" />
+    <attribute sfwValue="eligible_rule" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="EligibleRule" sfwIsSequence="False" sfwCaption="Eligible Rule" />
+    <attribute sfwValue="enrolled_in_local_plan_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="EnrolledInLocalPlanFlag" sfwIsSequence="False" sfwCaption="Enrolled In Local Plan Flag" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="retirement_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="RetirementType" sfwCaption="Retirement Type" />
+  </attributes>
+</entity>

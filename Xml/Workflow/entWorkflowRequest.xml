@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entWorkflowRequest" sfwMainCDO="icdoWorkflowRequest" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busWorkflowRequest" sfwTableName="sgw_workflow_request" sfwView="False" sfwDataObjectID="doWorkflowRequest">
+  <queries>
+    <query ID="GetDocType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT SCR.DOC_TYPE FROM SGS_COR_TEMPLATES SCR INNER JOIN SGS_COR_TRACKING SCTR&#xD;&#xA;ON SCR.TEMPLATE_ID = SCTR.TEMPLATE_ID INNER JOIN SGW_WORKFLOW_REQUEST SWR&#xD;&#xA;ON SCTR.TRACKING_ID=SWR.TRACKING_ID WHERE SWR.TRACKING_ID=@TRACKING_ID">
+      <parameters>
+        <parameter ID="@TRACKING_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUnprocessRequestForPerson" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_WORKFLOW_REQUEST WITH(NOLOCK) &#xD;&#xA;WHERE PERSON_ID = @PERSON_ID AND PROCESS_ID = @PROCESS_ID&#xD;&#xA;AND STATUS_VALUE IN ('UNPC')">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUnprocessRequestForPersonWithRefId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_WORKFLOW_REQUEST WITH(NOLOCK) &#xD;&#xA;WHERE PERSON_ID = @PERSON_ID AND PROCESS_ID = @PROCESS_ID and REFERENCE_ID = @REFERENCE_ID&#xD;&#xA;AND STATUS_VALUE IN ('UNPC')&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@REFERENCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="workflow_request_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="WorkflowRequestId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="doc_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="DocType" sfwIsSequence="False" sfwCaption="Doc Type" />
+    <attribute sfwValue="process_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ProcessId" sfwIsSequence="False" sfwCaption="Process Id" />
+    <attribute sfwValue="reference_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="long" sfwDBDataType="bigint" sfwIsNull="True" ID="ReferenceId" sfwIsSequence="False" sfwCaption="Reference Id" />
+    <attribute sfwValue="filenet_document_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="FilenetDocumentType" sfwIsSequence="False" sfwCaption="Filenet Document Type" />
+    <attribute sfwValue="image_doc_category" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="ImageDocCategory" sfwIsSequence="False" sfwCaption="Image Doc Category" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonId" sfwIsSequence="False" sfwCaption="Person Id" />
+    <attribute sfwValue="org_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="10" sfwIsNull="True" ID="OrgCode" sfwIsSequence="False" sfwCaption="Org Code" />
+    <attribute sfwValue="process_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ProcessInstanceId" sfwIsSequence="False" sfwCaption="Process Instance Id" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="1601" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwType="Description" ID="SourceDescription" sfwCaption="Source" sfwValue="source_description" />
+    <attribute sfwValue="source_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="SourceId" sfwCodeID="1602" sfwIsSequence="False" sfwCaption="Source" />
+    <attribute sfwValue="source_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="SourceValue" sfwIsSequence="False" sfwCaption="Source" />
+    <attribute sfwValue="initiated_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="InitiatedDate" sfwIsSequence="False" sfwCaption="Initiated Date" />
+    <attribute sfwValue="contact_ticket_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ContactTicketId" sfwIsSequence="False" sfwCaption="Contact Ticket Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="additional_parameter1" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="255" sfwIsNull="True" ID="AdditionalParameter1" sfwIsSequence="False" sfwCaption="Additional Parameter1" />
+    <attribute sfwValue="tracking_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TrackingId" sfwIsSequence="False" sfwCaption="Tracking Id" />
+    <attribute sfwValue="timestamp" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="Timestamp" sfwIsSequence="False" sfwCaption="Timestamp" />
+    <attribute sfwValue="group_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="GroupName" sfwIsSequence="False" sfwCaption="Group Name" />
+  </attributes>
+</entity>

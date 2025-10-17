@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_DBOBJ]
+    FROM VARCHAR (128) NOT NULL;
+

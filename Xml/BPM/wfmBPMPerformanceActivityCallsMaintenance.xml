@@ -1,0 +1,62 @@
+﻿<form ID="wfmBPMPerformanceActivityCallsMaintenance" sfwType="Maintenance" sfwEntity="entBPMPerformanceTest" sfwTitle="BPM Activity Calls Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBPMPerformanceActivityCallsLookup">
+  <initialload>
+    <query />
+    <callmethods sfwMethodName="LoadActivityDetails" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="BPMActivity Details" sfwCaption="Activity Call Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwChart ChartName="Activity Details" sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMPerformanceTest.GetActivityInstanceCount" ID="chrActivityCount" ChartType="Column" sfwShowDataLabels="True" sfwShowYaxisLabel="True" Width="600px" Height="600px" ShowLegend="True" CategoryAxisRotation="25">
+                  <Series>
+                    <sfwSeries Name="Count" XValueMember="ACTIVITY_NAME" YValueMembers="ACTIVITY_COUNT" ChartType="Column" YMemberColor="#4f701a" IsValueShownAsLabel="True" SeriesWidth="0.25" />
+                  </Series>
+                  <ChartAreas>
+                    <sfwChartArea ChartAreaName="Activity Instance Details">
+                      <Area3DStyle Enable3D="false" IsEnable3D="False" />
+                    </sfwChartArea>
+                  </ChartAreas>
+                  <Parameters>
+                    <parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="datetime" sfwEntityField="ProcessInstanceId" />
+                  </Parameters>
+                </sfwChart>
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="grvActivityCount" AllowPaging="True" AllowSorting="True" sfwBoundToQuery="True" sfwBaseQuery="entBPMPerformanceTest.GetActivityInstanceCount" sfwQueryLoadType="Update">
+                  <Columns>
+                    <TemplateField HeaderText="Activity Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ACTIVITY_NAME" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Calls">
+                      <ItemTemplate>
+                        <sfwLabel sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="ACTIVITY_COUNT" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Parameters>
+                    <parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="datetime" sfwEntityField="ProcessInstanceId" />
+                  </Parameters>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails />
+</form>

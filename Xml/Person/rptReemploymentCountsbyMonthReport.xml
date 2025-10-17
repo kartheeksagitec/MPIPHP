@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptReemploymentCountsbyMonthReport" sfwActive="True" sfwDescription="Re-employment Counts by Month" sfwStatus="Review" sfwResource="505 " sfwType="Report" sfwReportName="rptReemploymentCountsbyMonthReport.rdlc" sfwReportCategory="Reports" version="4.0">
+  <initialload>
+    <custommethod sfwMethodName="ReemploymentCountDetails" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="From Date : " ID="lblFromDate" sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="FROM" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="To Date : " ID="lblToDate" sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="TO" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+        <CompareValidator ID="valDateRange" Text="*" ControlToValidate="TO" ControlToCompare="FROM" Type="Date" Operator="GreaterThanEqual" ErrorMessage="TO date cannot be less than FROM date." />
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

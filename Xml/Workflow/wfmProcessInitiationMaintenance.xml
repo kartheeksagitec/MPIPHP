@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmProcessInitiationMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvWorkflow" sfwResource="200 " sfwType="Maintenance" sfwTitle="Online Workflow Initiation" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entProcessInitiation">
+  <initialload>
+    <callmethods sfwMethodName="InitiateOnlineProcessInitiation" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Online Workflow Initiation">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDocumentType" Text="Process Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="process_id" ID="ddlIintProcessID" sfwLoadType="Query" sfwLoadSource="entProcess.LoadActiveProcesses" sfwEntityField="IintProcessID" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPersonId" Text="Participant MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMpiPersonId" sfwEntityField="objPerson.MpiPersonId" />
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPersonId" SkinID="textBoxDisplayStyleNone" sfwEntityField="IintPersonId" />
+                <sfwImageButton ID="btnRetrieve1" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtMpiPersonId" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capOrgId" Text="Org Code ID : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOrgId" Visible="False" sfwEntityField="IstrOrgCodeId" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmOrganizationLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtOrgId" Visible="False" sfwSelectedIndex="OrgId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnInitiateProcess" sfwMessageId="937" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InitializeProcess" sfwResource="309" Text="Initiate Process" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnServerSideRefresh" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="ReloadHandButtonData" SkinID="ServerSideRefresh" Text="Execute Refresh From Object" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPerson" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

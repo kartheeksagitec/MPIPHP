@@ -1,0 +1,109 @@
+﻿<form ID="wfmBpmTraceInstActnDtlLookup" sfwType="Lookup" sfwEntity="entBpmTraceInstActnDtl" sfwTitle="Bpm Trace Instance Action Detail Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBpmTraceInstActnDtlLookup">
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Search Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capReferenceType" Text="Reference Type : " AssociatedControlID="txtReferenceType" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="txtReferenceType" sfwDataField="reference_type" sfwLoadType="Query" sfwLoadSource="entBpmTraceInstActn.GetActionTypeValue" DataTextField="action_type" DataValueField="action_type" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStartTime" Text="Start Time : " AssociatedControlID="txtStartTime" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStartTime" sfwDataField="start_time" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capEndTime" Text="End Time : " AssociatedControlID="txtEndTime" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEndTime" sfwDataField="end_time" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwTextBox ID="txtTransactionId" sfwDataField="transaction_id" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" ImageUrl="~/Image/gNew.gif" sfwMethodName="btnNew_Click" sfwOperateOn="tblCriteria" Text="New" Visible="False" />
+                <sfwButton ID="btnOpen" ImageUrl="~/Image/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" Text="Open" sfwActiveForm="wfmBpmTraceInstActnDtlMaintenance" sfwActiveFormKey="TraceInstActnDtlId" sfwNavigationParameter="TRANSACTION_ID=TransactionId;REFERENCE_ID=ReferenceId;SUB_TRANSACTION_ID=SubTransactionId" />
+                <sfwButton ID="btnDelete" ImageUrl="~/Image/gDelete.gif" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" Visible="False" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Image/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Transaction Id" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TransactionId" sfwLinkable="True" sfwRelatedControl="btnOpen" Visible="False" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="SubTransactionId" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SubTransactionId" Visible="False" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="ReferenceId" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReferenceId" Visible="False" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Detail Id">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TraceInstActnDtlId" sfwRelatedControl="btnOpen" sfwLinkable="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Reference Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReferenceType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Start Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StartTime" sfwDataFormat="{0:MM/dd/yyyy hh:mm:ss.fff tt}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="End Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EndTime" sfwDataFormat="{0:MM/dd/yyyy hh:mm:ss.fff tt}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+</form>

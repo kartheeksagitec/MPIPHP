@@ -1,0 +1,76 @@
+﻿<entity ID="entBpmProcessEscalation" sfwMainCDO="icdoBpmProcessEscalation" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmProcessEscalation" sfwObjectType="Sagitec.Bpm.busBpmProcessEscalation, SagitecBpm, Version=5.0.0.0, Culture=neutral, PublicKeyToken=df17fdb7b963e064" sfwTableName="sgw_bpm_process_escalation" sfwView="False" sfwDataObjectID="doBpmProcessEscalation">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete>
+    <property ID="lstBpmProcessEscalationInstance" sfwMethodName="LoadBpmProcessEscalationInstances" />
+    <property ID="lstBpmProcessEscalationRecipient" sfwMethodName="LoadBpmProcessEscalationRecipients" />
+    <property ID="lstBpmProcessEscalationRecipientRole" sfwMethodName="LoadBpmProcessEscalationRecipientRoles" />
+    <property ID="IobjMainCDO" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint />
+  <rules />
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SBPE.*, SBP.NAME as process_name,&#xA;       sbc.case_name&#xA;FROM sgw_bpm_process_escalation SBPE WITH(NOLOCK)&#xA;INNER&#xA;&#x9; JOIN&#xA;  (SELECT sgw_bpm_case.NAME AS case_name,&#xA;          sgw_bpm_case.CASE_ID,&#xA;          sgw_bpm_case.RESOURCE_ID,&#xA;          CASE&#xA;              WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N'&#xA;              ELSE 'Y'&#xA;          END AS CURRENT_VERSION&#xA;   FROM sgw_bpm_case WITH(NOLOCK)&#xA;   LEFT&#xA;&#x9; JOIN&#xA;     (SELECT *&#xA;      FROM&#xA;        (SELECT case_id,&#xA;                CASE&#xA;                    WHEN (ROW_NUMBER() OVER(PARTITION BY name&#xA;                                            ORDER BY case_id DESC)) = 1 THEN 'Y'&#xA;                    ELSE 'N'&#xA;                END AS ACTIVE_VERSION&#xA;         FROM sgw_bpm_case WITH(NOLOCK)&#xA;         WHERE EFFECTIVE_DATE &lt; = GETDATE()&#xA;           AND STATUS_VALUE = 'ACTV') AS C&#xA;      WHERE ACTIVE_VERSION = 'Y') AS ACTIVE_BPM_CASE ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID)AS SBC ON SBPE.CASE_ID = SBC.CASE_ID&#xA;INNER&#xA;&#x9; JOIN SGW_BPM_PROCESS SBP WITH(NOLOCK) ON SBP.CASE_ID = SBPE.CASE_ID&#xA;LEFT OUTER JOIN&#xA;  (SELECT DISTINCT d.resource_id,&#xA;                   a.USER_ID&#xA;   FROM sgs_user a WITH(NOLOCK),&#xA;                   sgs_user_roles b WITH(NOLOCK),&#xA;                                    sgs_resources d WITH(NOLOCK),&#xA;                                                    sgs_security e WITH(NOLOCK)&#xA;   WHERE a.user_serial_id = b.user_serial_id&#xA;     AND b.role_id = e.role_id&#xA;     AND e.resource_id = d.resource_id&#xA;     AND ((b.effective_start_DATE IS NULL)&#xA;          OR (b.effective_start_date &lt; = convert(dateTime, convert(char, getdate(), 103), 103)))&#xA;     AND ((b.effective_end_DATE IS NULL)&#xA;          OR (b.effective_end_date &gt; = convert(dateTime, convert(char, getdate(), 103), 103)))&#xA;     AND d.RESOURCE_TYPE_VALUE = 'BPM') RES ON RES.RESOURCE_ID = SBC.RESOURCE_ID&#xA;     WHERE&#xA;&#x9;    SBPE.STATUS_VALUE = 'ACTV'" sfwOracle="SELECT&#xD;&#xA;&#x9;  distinct  SBPE.*,SBP.NAME as process_name,&#xD;&#xA;    case_name&#xD;&#xA;FROM&#xD;&#xA;&#x9;   sgw_bpm_process_escalation SBPE    INNER  &#xD;&#xA;&#x9; JOIN   (SELECT&#xD;&#xA;&#x9;   sgw_bpm_case.CASE_ID,&#xD;&#xA;     sgw_bpm_case.NAME as case_name,&#xD;&#xA;&#x9; sgw_bpm_case.RESOURCE_ID,&#xD;&#xA;&#x9; CASE WHEN ACTIVE_BPM_CASE.CASE_ID   IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION,&#xD;&#xA;&#x9;sgw_bpm_case.NAME  &#xD;&#xA;FROM&#xD;&#xA;&#x9;   sgw_bpm_case    left  &#xD;&#xA;&#x9; join   (SELECT&#xD;&#xA;&#x9;   *  &#xD;&#xA;FROM&#xD;&#xA;&#x9; (SELECT&#xD;&#xA;&#x9;  case_id,&#xD;&#xA;&#x9;name,&#xD;&#xA;&#x9;CASE WHEN (ROW_NUMBER()  OVER(PARTITION BY name  &#xD;&#xA;ORDER BY   case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION    &#xD;&#xA;FROM&#xD;&#xA;&#x9;  sgw_bpm_case    &#xD;&#xA;WHERE&#xD;&#xA;&#x9;   EFFECTIVE_DATE &lt; =  sysdate AND&#xD;&#xA;&#x9;   STATUS_VALUE  = 'ACTV')  C    &#xD;&#xA;WHERE&#xD;&#xA;&#x9;   ACTIVE_VERSION  = 'Y') ACTIVE_BPM_CASE &#xD;&#xA;&#x9; ON sgw_bpm_case.CASE_ID  = ACTIVE_BPM_CASE.CASE_ID) SBC  &#xD;&#xA;&#x9; ON SBPE.CASE_ID = SBC.CASE_ID     INNER  &#xD;&#xA;&#x9; JOIN  SGW_BPM_PROCESS SBP   &#xD;&#xA;&#x9; ON  SBP.CASE_ID = SBPE.CASE_ID    &#xD;&#xA;&#x9; LEFT OUTER JOIN    (SELECT&#xD;&#xA;&#x9;   distinct d.resource_id,&#xD;&#xA;&#x9; a.USER_ID  &#xD;&#xA;FROM&#xD;&#xA;&#x9;   sgs_user a   ,&#xD;&#xA;&#x9; sgs_user_roles b  ,&#xD;&#xA;&#x9; sgs_resources d  ,&#xD;&#xA;&#x9;   sgs_security  e     &#xD;&#xA;WHERE&#xD;&#xA;&#x9;   a.user_serial_id = b.user_serial_id    AND&#xD;&#xA;&#x9;   b.role_id  = e.role_id    AND&#xD;&#xA;&#x9;   e.resource_id = d.resource_id    AND&#xD;&#xA;&#x9;   ((b.effective_start_DATE  is null)  or (b.effective_start_date &lt; =  sysdate))    AND&#xD;&#xA;&#x9;   ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =   sysdate))  AND&#xD;&#xA;&#x9;   d.RESOURCE_TYPE_VALUE = 'BPM') RES  &#xD;&#xA;&#x9; ON RES.RESOURCE_ID = SBC.RESOURCE_ID  &#xD;&#xA;WHERE&#xD;&#xA;&#x9;    SBPE.STATUS_VALUE = 'ACTV'" sfwPostgre="SELECT&#xD;&#xA;&#x9;  distinct  SBPE.*,SBP.NAME as process_name,&#xD;&#xA;    case_name&#xD;&#xA;FROM&#xD;&#xA;&#x9;   sgw_bpm_process_escalation SBPE    INNER  &#xD;&#xA;&#x9; JOIN   (SELECT&#xD;&#xA;&#x9;   sgw_bpm_case.CASE_ID,&#xD;&#xA;     sgw_bpm_case.NAME as case_name,&#xD;&#xA;&#x9; sgw_bpm_case.RESOURCE_ID,&#xD;&#xA;&#x9; CASE WHEN ACTIVE_BPM_CASE.CASE_ID   IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION,&#xD;&#xA;&#x9;sgw_bpm_case.NAME  &#xD;&#xA;FROM&#xD;&#xA;&#x9;   sgw_bpm_case    left  &#xD;&#xA;&#x9; join   (SELECT&#xD;&#xA;&#x9;   *  &#xD;&#xA;FROM&#xD;&#xA;&#x9; (SELECT&#xD;&#xA;&#x9;  case_id,&#xD;&#xA;&#x9;name,&#xD;&#xA;&#x9;CASE WHEN (ROW_NUMBER()  OVER(PARTITION BY name  &#xD;&#xA;ORDER BY   case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION    &#xD;&#xA;FROM&#xD;&#xA;&#x9;  sgw_bpm_case    &#xD;&#xA;WHERE&#xD;&#xA;&#x9;   EFFECTIVE_DATE &lt;=  now() AND&#xD;&#xA;&#x9;   STATUS_VALUE  = 'ACTV')  C    &#xD;&#xA;WHERE&#xD;&#xA;&#x9;   ACTIVE_VERSION  = 'Y') ACTIVE_BPM_CASE &#xD;&#xA;&#x9; ON sgw_bpm_case.CASE_ID  = ACTIVE_BPM_CASE.CASE_ID) SBC  &#xD;&#xA;&#x9; ON SBPE.CASE_ID = SBC.CASE_ID     INNER  &#xD;&#xA;&#x9; JOIN  SGW_BPM_PROCESS SBP   &#xD;&#xA;&#x9; ON  SBP.CASE_ID = SBPE.CASE_ID    &#xD;&#xA;&#x9; LEFT OUTER JOIN    (SELECT&#xD;&#xA;&#x9;   distinct d.resource_id,&#xD;&#xA;&#x9; a.USER_ID  &#xD;&#xA;FROM&#xD;&#xA;&#x9;   sgs_user a   ,&#xD;&#xA;&#x9; sgs_user_roles b  ,&#xD;&#xA;&#x9; sgs_resources d  ,&#xD;&#xA;&#x9;   sgs_security  e     &#xD;&#xA;WHERE&#xD;&#xA;&#x9;   a.user_serial_id = b.user_serial_id    AND&#xD;&#xA;&#x9;   b.role_id  = e.role_id    AND&#xD;&#xA;&#x9;   e.resource_id = d.resource_id    AND&#xD;&#xA;&#x9;   ((b.effective_start_DATE  is null)  or (b.effective_start_date &lt;=  now()))    AND&#xD;&#xA;&#x9;   ((b.effective_end_DATE is null) or (b.effective_end_date &gt;=   now()))  AND&#xD;&#xA;&#x9;   d.RESOURCE_TYPE_VALUE = 'BPM') RES  &#xD;&#xA;&#x9; ON RES.RESOURCE_ID = SBC.RESOURCE_ID  &#xD;&#xA;WHERE&#xD;&#xA;&#x9;    SBPE.STATUS_VALUE = 'ACTV'">
+      <parameters />
+      <mappedcolumns>
+        <column ID="process_name" sfwEntityField="objBpmProcess.Name" />
+        <column ID="case_name" sfwEntityField="objBpmCase.Name" />
+      </mappedcolumns>
+    </query>
+    <query ID="CheckIfEscalationWithNameExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; PROCESS_ESCALATION_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_ESCALATION WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; PROCESS_ESCALATION_NAME = @PROCESS_ESCALATION_NAME" sfwPostgre="SELECT&#xA;&#x9; PROCESS_ESCALATION_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_ESCALATION &#xA;WHERE&#xA;&#x9; PROCESS_ESCALATION_NAME = @PROCESS_ESCALATION_NAME">
+      <parameters>
+        <parameter ID="@PROCESS_ESCALATION_NAME" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="LapseValues" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgs_code_value WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; code_id = 3002" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgs_code_value &#xA;WHERE&#xA;&#x9; code_id = 3002">
+      <parameters />
+    </query>
+  </queries>
+  <ExtraFields />
+  <methods />
+  <lifecycle />
+  <attributes>
+    <attribute sfwType="Collection" sfwEntity="entBpmProcessEscalationInstance" ID="lstBpmProcessEscalationInstance" sfwValue="iclbBpmProcessEscalationInstance" />
+    <attribute sfwType="Collection" sfwEntity="entBpmProcessEscalationRecipient" ID="lstBpmProcessEscalationRecipient" sfwValue="iclbBpmProcessEscalationRecipient" />
+    <attribute sfwType="Collection" sfwEntity="entBpmProcessEscalationRecipientRole" ID="lstBpmProcessEscalationRecipientRole" sfwValue="iclbBpmProcessEscalationRecipientRole" />
+    <attribute sfwType="Property" ID="IobjMainCDO" sfwValue="iobjMainCDO" />
+    <attribute ID="objBpmProcess" sfwType="Object" sfwEntity="entBpmProcess" sfwValue="ibusBpmProcess" />
+    <attribute ID="objBpmCase" sfwType="Object" sfwEntity="entBpmCase" sfwValue="ibusBpmCase" />
+    <attribute sfwValue="process_escalation_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessEscalationId" sfwCaption="ID" />
+    <attribute sfwValue="process_escalation_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="False" ID="ProcessEscalationName" sfwCaption="Process Escalation Name" />
+    <attribute sfwValue="process_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessId" sfwCaption="Process Id" />
+    <attribute sfwValue="case_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="CaseId" sfwCaption="Case Id" />
+    <attribute sfwValue="lapse_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="LapseTypeId" sfwCodeID="3001" sfwCaption="Lapse Type" />
+    <attribute sfwValue="lapse_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="LapseTypeValue" sfwCaption="Lapse Type" />
+    <attribute sfwValue="lapse_time_in_minutes" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="LapseTimeInMinutes" sfwCaption="Lapse Time In Minutes" />
+    <attribute sfwValue="recur_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RecurTypeId" sfwCodeID="6413" sfwCaption="Recur Type" />
+    <attribute sfwValue="recur_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="RecurTypeValue" sfwCaption="Recur Type" />
+    <attribute sfwValue="recur_time_in_days" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RecurTimeInDays" sfwCaption="Recur Time In Days" />
+    <attribute sfwValue="recur_time_in_hours" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RecurTimeInHours" sfwCaption="Recur Time In Hours" />
+    <attribute sfwValue="recur_time_in_minutes" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RecurTimeInMinutes" sfwCaption="Recur Time In Minutes" />
+    <attribute sfwValue="correspondence_template_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CorrespondenceTemplateId" sfwCaption="Correspondence Template Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="6414" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwType="Description" ID="LapseTypeDescription" sfwCaption="Lapse Type" sfwValue="lapse_type_description" />
+    <attribute sfwType="Description" ID="RecurTypeDescription" sfwCaption="Recur Type" sfwValue="recur_type_description" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="notify_process_owner" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="NotifyProcessOwner" sfwCaption="Notify Process Owner" />
+    <attribute ID="iintRoleId" sfwDataType="int" sfwPrivate="False" sfwValue="iintRoleId" sfwType="Property" />
+    <attribute ID="iintUserId" sfwDataType="int" sfwPrivate="False" sfwValue="iintUserId" sfwType="Property" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadBpmProcessEscalationInstances" sfwReturnType="Void" />
+    <method ID="LoadBpmProcessEscalationRecipients" sfwReturnType="Void" />
+    <method ID="LoadBpmProcessEscalationRecipientRoles" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

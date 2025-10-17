@@ -1,0 +1,105 @@
+﻿<entity ID="entBpmCaseInstance" sfwMainCDO="icdoBpmCaseInstance" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmCaseInstance" sfwTableName="sgw_bpm_case_instance" sfwView="False">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete>
+    <property ID="lstBpmProcessInstance" sfwMethodName="LoadBpmProcessInstances" />
+    <property ID="lstBpmCaseInstanceParameter" sfwMethodName="LoadBpmCaseInstanceParameters" />
+    <property ID="lstBpmCaseInstanceExecutionPath" sfwMethodName="LoadBpmBpmCaseInstanceExecutionPath" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <Constraint />
+  <rules />
+  <constraint />
+  <queries>
+    <query ID="CaseInstanceLookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT A.NAME,&#xD;&#xA;&#x9;A.EFFECTIVE_DATE,&#xD;&#xA;&#x9;B.CASE_INSTANCE_ID,&#xD;&#xA;&#x9;B.CASE_ID,&#xD;&#xA;&#x9;B.STATUS_ID,&#xD;&#xA;&#x9;B.STATUS_VALUE,&#xD;&#xA;&#x9;B.CREATED_DATE,&#xD;&#xA;&#x9;C.FIRST_NAME,&#xD;&#xA;&#x9;C.MIDDLE_NAME,&#xD;&#xA;&#x9;C.LAST_NAME,&#xD;&#xA;&#x9;C.MPI_PERSON_ID,&#xD;&#xA;&#x9;D.ORG_NAME &#xD;&#xA;&#x9;,AIC.STATUS_VALUE as ACTIVITY_STATUS_VALUE,&#xD;&#xA;&#x9;B.PRIORITY_CODE_VALUE&#xD;&#xA;FROM SGW_BPM_CASE_INSTANCE B WITH (NOLOCK)&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI (nolock) on pi.CASE_INSTANCE_ID=B.CASE_INSTANCE_ID&#xD;&#xA;outer apply&#xD;&#xA;(&#xD;&#xA;&#x9;select top 1 AI.STATUS_VALUE from SGW_BPM_ACTIVITY_INSTANCE(nolock)  AI&#xD;&#xA;&#x9;where AI.PROCESS_INSTANCE_ID = pi.PROCESS_INSTANCE_ID and AI.STATUS_VALUE='FAIL'&#xD;&#xA;&#x9;order by ACTIVITY_INSTANCE_ID&#xD;&#xA;)AIC&#xD;&#xA;LEFT JOIN SGT_PERSON C WITH (NOLOCK) ON B.PERSON_ID = C.PERSON_ID&#xD;&#xA;LEFT JOIN SGT_ORGANIZATION D WITH (NOLOCK) ON B.ORG_ID = D.ORG_ID&#xD;&#xA;LEFT JOIN SGW_BPM_CASE A WITH (NOLOCK) ON A.CASE_ID = B.CASE_ID&#xD;&#xA;ORDER BY B.CASE_INSTANCE_ID DESC" sfwPostgre="select &#xD;&#xA;&#x9; A.NAME,&#xD;&#xA;&#x9;A.EFFECTIVE_DATE,&#xD;&#xA;&#x9;B.CASE_INSTANCE_ID,&#xD;&#xA;&#x9;B.CASE_ID,&#xD;&#xA;&#x9;B.STATUS_ID,&#xD;&#xA;&#x9;B.STATUS_VALUE,&#xD;&#xA;&#x9;B.CREATED_DATE,&#xD;&#xA;&#x9;C.FIRST_NAME,&#xD;&#xA;&#x9;C.MIDDLE_NAME,&#xD;&#xA;&#x9;C.LAST_NAME,&#xD;&#xA;&#x9;D.ORG_NAME &#xD;&#xA;&#x9;,AIC.STATUS_VALUE  ACTIVITY_STATUS_VALUE,&#xD;&#xA;&#x9;B.PRIORITY_CODE_VALUE&#xD;&#xA;from sgw_bpm_case_instance B&#xD;&#xA;LEFT JOIN SGT_PERSON C  ON B.PERSON_ID = C.PERSON_ID&#xD;&#xA;LEFT JOIN SGT_ORGANIZATION D  ON B.ORG_ID = D.ORG_ID&#xD;&#xA;LEFT JOIN SGW_BPM_CASE A  ON A.CASE_ID = B.CASE_ID&#xD;&#xA;inner join  SGW_BPM_PROCESS_INSTANCE PI on PI.CASE_INSTANCE_ID=B.CASE_INSTANCE_ID &#xD;&#xA;left join lateral&#xD;&#xA;(&#xD;&#xA;&#x9;select AI.STATUS_VALUE from SGW_BPM_ACTIVITY_INSTANCE AI&#xD;&#xA;&#x9;where AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID and AI.STATUS_VALUE='FAIL'&#xD;&#xA;&#x9;order by AI.ACTIVITY_INSTANCE_ID desc&#xD;&#xA;&#x9;fetch first 1 row only&#xD;&#xA;) AIC&#xD;&#xA;ON true&#xD;&#xA;ORDER BY B.CASE_INSTANCE_ID DESC" sfwOracle="select &#xD;&#xA;&#x9; A.NAME,&#xD;&#xA;&#x9;A.EFFECTIVE_DATE,&#xD;&#xA;&#x9;B.CASE_INSTANCE_ID,&#xD;&#xA;&#x9;B.CASE_ID,&#xD;&#xA;&#x9;B.STATUS_ID,&#xD;&#xA;&#x9;B.STATUS_VALUE,&#xD;&#xA;&#x9;B.CREATED_DATE,&#xD;&#xA;&#x9;C.FIRST_NAME,&#xD;&#xA;&#x9;C.MIDDLE_NAME,&#xD;&#xA;&#x9;C.LAST_NAME,&#xD;&#xA;&#x9;D.ORG_NAME &#xD;&#xA;&#x9;,AIC.STATUS_VALUE  ACTIVITY_STATUS_VALUE,&#xD;&#xA;&#x9;B.PRIORITY_CODE_VALUE&#xD;&#xA;from sgw_bpm_case_instance B&#xD;&#xA;LEFT JOIN SGT_PERSON C  ON B.PERSON_ID = C.PERSON_ID&#xD;&#xA;LEFT JOIN SGT_ORGANIZATION D  ON B.ORG_ID = D.ORG_ID&#xD;&#xA;LEFT JOIN SGW_BPM_CASE A  ON A.CASE_ID = B.CASE_ID&#xD;&#xA;inner join  SGW_BPM_PROCESS_INSTANCE PI on PI.CASE_INSTANCE_ID=B.CASE_INSTANCE_ID &#xD;&#xA;outer apply (select AI.Status_value from SGW_BPM_ACTIVITY_INSTANCE AI&#xD;&#xA;            where AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID and AI.STATUS_VALUE='FAIL'&#xD;&#xA;            order by AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;            fetch first 1 row only) AIC&#xD;&#xA;ORDER BY B.CASE_INSTANCE_ID DESC">
+      <parameters />
+      <mappedcolumns>
+        <column ID="name" sfwEntityField="objBpmCase.Name" />
+        <column ID="effective_date" sfwEntityField="objBpmCase.EffectiveDate" />
+        <column ID="first_name" sfwEntityField="objPerson.FirstName" />
+        <column ID="middle_name" sfwEntityField="objPerson.MiddleName" />
+        <column ID="last_name" sfwEntityField="objPerson.LastName" />
+        <column ID="org_name" sfwEntityField="objOrganization.OrgName" />
+      </mappedcolumns>
+    </query>
+    <query ID="GetParameterValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;  PARAMETER_VALUE &#xA;FROM&#xA;&#x9;  SGW_BPM_CASE_INST_PARAMETER WITH(NOLOCK) &#xA;WHERE&#xA;&#x9;  CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND&#xA;&#x9;  PARAMETER_NAME = @PARAMETER_NAME" sfwPostgre="SELECT&#xD;&#xA;&#x9;  PARAMETER_VALUE &#xD;&#xA;FROM&#xD;&#xA;&#x9;  SGW_BPM_CASE_INST_PARAMETER &#xD;&#xA;WHERE&#xD;&#xA;&#x9;  CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND&#xD;&#xA;&#x9;  PARAMETER_NAME = @PARAMETER_NAME">
+      <parameters>
+        <parameter ID="@CASE_INSTANCE_ID" sfwDataType="int" />
+        <parameter ID="@PARAMETER_NAME" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="CaseInstancesByCaseIdGrouppedByStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; CV.DESCRIPTION,&#xA;&#x9;count(*) AS &quot;NoOfCases&quot; &#xA;FROM&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK) INNER  &#xA;&#x9; JOIN SGS_CODE_VALUE CV WITH(NOLOCK)&#xA;&#x9; ON CI.STATUS_ID = CV.CODE_ID AND&#xA;&#x9; CI.STATUS_VALUE = CV.CODE_VALUE &#xA;WHERE&#xA;&#x9; CI.CASE_ID = @CASE_ID &#xA;GROUP BY   CV.DESCRIPTION" sfwPostgre="SELECT&#xD;&#xA;&#x9; CV.DESCRIPTION,&#xD;&#xA;&#x9;count(*) AS &quot;NoOfCases&quot; &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI  INNER  &#xD;&#xA;&#x9; JOIN SGS_CODE_VALUE CV &#xD;&#xA;&#x9; ON CI.STATUS_ID = CV.CODE_ID AND&#xD;&#xA;&#x9; CI.STATUS_VALUE = CV.CODE_VALUE &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CI.CASE_ID = @CASE_ID &#xD;&#xA;GROUP BY   CV.DESCRIPTION">
+      <parameters>
+        <parameter ID="@CASE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetCaseInstancesByPersonId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_CASE_INSTANCE WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; STATUS_VALUE = 'INPC' AND&#xA;&#x9; PERSON_ID = @PERSON_ID" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_CASE_INSTANCE &#xA;WHERE&#xA;&#x9; STATUS_VALUE = 'INPC' AND&#xA;&#x9; PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUnusedExecutionElementByGuid" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_CASE_INST_EXEC_PATH WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND&#xA;&#x9; ELEMENT_ID = @ELEMENT_ID AND&#xA;&#x9; INITIATED_ACTIVITY_INSTANCE_ID = @INITIATED_ACTIVITY_INSTANCE_ID AND&#xA;&#x9; STATUS_VALUE = 'UNUD'" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_CASE_INST_EXEC_PATH &#xA;WHERE&#xA;&#x9; CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND&#xA;&#x9; ELEMENT_ID = @ELEMENT_ID AND&#xA;&#x9; INITIATED_ACTIVITY_INSTANCE_ID = @INITIATED_ACTIVITY_INSTANCE_ID AND&#xA;&#x9; STATUS_VALUE = 'UNUD'">
+      <parameters>
+        <parameter ID="@CASE_INSTANCE_ID" sfwDataType="int" />
+        <parameter ID="@ELEMENT_ID" sfwDataType="varchar" />
+        <parameter ID="@INITIATED_ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBpmRequestsByDocTypesAndByCaseInstanceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; distinct DOC_TYPE &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; (DOC_TYPE IS NOT NULL OR DOC_TYPE &lt;&gt; '') AND&#xA;&#x9; CASE_INSTANCE_ID = @CASE_INSTANCE_ID" sfwPostgre="SELECT&#xA;&#x9; distinct DOC_TYPE &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST &#xA;WHERE&#xA;&#x9; (DOC_TYPE IS NOT NULL OR DOC_TYPE &lt;&gt; '') AND&#xA;&#x9; CASE_INSTANCE_ID = @CASE_INSTANCE_ID">
+      <parameters>
+        <parameter ID="@CASE_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetCountByProcessStatusAndUserActivity" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT count(*) from SGW_BPM_PROCESS_INSTANCE sbpi WITH(NOLOCK) &#xD;&#xA;INNER  JOIN SGW_BPM_ACTIVITY_INSTANCE sbai WITH(NOLOCK)&#xD;&#xA; ON sbpi.PROCESS_INSTANCE_ID = sbai.PROCESS_INSTANCE_ID &#xD;&#xA; inner  JOIN SGW_BPM_ACTIVITY sba WITH(NOLOCK)&#xD;&#xA; ON sbai.ACTIVITY_ID = sba.ACTIVITY_ID &#xD;&#xA; WHERE (( sba.activity_type_value = 'USTK' AND sbai.STATUS_VALUE in ('RESU','SUSP','INPC','UNPC','FAIL')) &#xD;&#xA; OR  (sba.activity_type_value = 'USTK' and sbai.status_value in('SUSP','FAIL'))) AND &#xD;&#xA; sbpi.case_Instance_ID = @case_Instance_ID" sfwOracle="SELECT count(*) from SGW_BPM_PROCESS_INSTANCE sbpi &#xD;&#xA;INNER  JOIN SGW_BPM_ACTIVITY_INSTANCE sbai &#xD;&#xA; ON sbpi.PROCESS_INSTANCE_ID = sbai.PROCESS_INSTANCE_ID &#xD;&#xA; inner  JOIN SGW_BPM_ACTIVITY sba&#xD;&#xA; ON sbai.ACTIVITY_ID = sba.ACTIVITY_ID &#xD;&#xA; WHERE (( sba.activity_type_value = 'USTK' AND sbai.STATUS_VALUE in ('RESU','SUSP','INPC','UNPC','FAIL')) &#xD;&#xA; OR  (sba.activity_type_value = 'USTK' and sbai.status_value in('SUSP','FAIL'))) AND &#xD;&#xA; sbpi.case_Instance_ID = @case_Instance_ID" sfwPostgre="SELECT count(*) from SGW_BPM_PROCESS_INSTANCE sbpi &#xD;&#xA;INNER  JOIN SGW_BPM_ACTIVITY_INSTANCE sbai &#xD;&#xA; ON sbpi.PROCESS_INSTANCE_ID = sbai.PROCESS_INSTANCE_ID &#xD;&#xA; inner  JOIN SGW_BPM_ACTIVITY sba&#xD;&#xA; ON sbai.ACTIVITY_ID = sba.ACTIVITY_ID &#xD;&#xA; WHERE (( sba.activity_type_value = 'USTK' AND sbai.STATUS_VALUE in ('RESU','SUSP','INPC','UNPC','FAIL')) &#xD;&#xA; OR  (sba.activity_type_value = 'USTK' and sbai.status_value in('SUSP','FAIL'))) AND &#xD;&#xA; sbpi.case_Instance_ID = @case_Instance_ID">
+      <parameters>
+        <parameter ID="@case_Instance_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select distinct name from SGW_BPM_CASE">
+      <parameters />
+    </query>
+  </queries>
+  <methods />
+  <lifecycle />
+  <attributes>
+    <attribute ID="objBpmCase" sfwType="Object" sfwEntity="entBpmCase" sfwValue="ibusBpmCase" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute ID="objOrganization" sfwType="Object" sfwEntity="entOrganization" sfwValue="ibusOrganization" />
+    <attribute ID="objBpmRequest" sfwType="Object" sfwEntity="entBpmRequest" sfwValue="ibusBpmRequest" />
+    <attribute sfwType="Collection" sfwEntity="entBpmProcessInstance" ID="lstBpmProcessInstance" sfwValue="iclbBpmProcessInstance" />
+    <attribute sfwType="Collection" sfwEntity="entBpmCaseInstanceParameter" ID="lstBpmCaseInstanceParameter" sfwValue="iclbBpmCaseInstanceParameter" />
+    <attribute sfwType="Collection" sfwEntity="entBpmCaseInstanceExecutionPath" ID="lstBpmCaseInstanceExecutionPath" sfwValue="iclbBpmCaseInstanceExecutionPath" />
+    <attribute sfwValue="case_instance_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwIsNull="False" ID="CaseInstanceId" sfwCaption="ID" />
+    <attribute sfwValue="case_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="CaseId" sfwCaption="Case Id" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="PersonId" sfwCaption="Person Id" />
+    <attribute sfwValue="org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="OrgId" sfwCaption="Org Id" />
+    <attribute sfwValue="reference_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="bigint" sfwIsNull="True" ID="ReferenceId" sfwCaption="Reference Id" />
+    <attribute sfwValue="request_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="RequestId" sfwCaption="Request Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="2004" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwValue="priority_code_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="PriorityCodeId" sfwCodeID="3008" sfwCaption="Priority Code" />
+    <attribute sfwValue="priority_code_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" sfwIsNull="True" ID="PriorityCodeValue" sfwCaption="Priority Code" />
+    <attribute sfwValue="case_owner" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="100" sfwIsNull="True" ID="CaseOwner" sfwCaption="Case Owner" />
+    <attribute sfwValue="termination_reason" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1000" sfwIsNull="True" ID="TerminationReason" sfwCaption="Termination Reason" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwType="Description" ID="PriorityCodeDescription" sfwCaption="Priority Code" sfwValue="priority_code_description" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadBpmProcessInstances" sfwReturnType="Void" />
+    <method ID="LoadBpmCaseInstanceParameters" sfwReturnType="Void" />
+    <method ID="LoadBpmBpmCaseInstanceExecutionPath" sfwReturnType="Void" />
+    <method ID="AbortCaseInstance" sfwReturnType="ArrayList">
+      <parameters />
+    </method>
+  </objectmethods>
+  <ExtraFields />
+</entity>

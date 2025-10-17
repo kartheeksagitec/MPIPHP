@@ -1,0 +1,932 @@
+﻿<form ID="wfmQDROCalculationMaintenance" sfwUseSessionStoreObjForCor="True" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCalculation" sfwResource="504" sfwType="Maintenance" sfwTitle="QDRO Calculation Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entQdroCalculationHeader">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewQdroCalculationHeader" />
+    <callmethods sfwMode="Update" sfwMethodName="FindQdroCalculationHeader" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnNoChangesSave_Click" sfwNavigationParameter="aintQdroCalculationHeaderId=QdroCalculationHeaderId" sfwResource="305" sfwVisibleRule="Rule - ShowCalculateandSaveButton" Text="Calculate&amp;Save" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" sfwResource="335" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_CancelCalculation" sfwResource="305" sfwVisibleRule="Rule - ShowCancelButton" Text="Cancel" />
+                <sfwButton ID="btnApprove" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_ApproveCalculation" sfwResource="305" sfwVisibleRule="Rule - ShowApproveButton" Text="Approve" />
+                <sfwButton ID="btnExecuteRefreshFromObject" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btn_RefreshCalculation" sfwResource="305" sfwVisibleRule="VisibleRule - ShowRefreshCalculationButton" Text="Refresh Calculations" />
+                <sfwButton ID="btnPayeeAccount" sfwMethodName="btnOpen_Click" sfwObjectID="busQdroCalculationHeader" sfwActiveForm="wfmPayeeAccountMaintenance" sfwResource="305" sfwVisibleRule="VisibleRule-PayeeAccountButton" Text="Open Payee Account" sfwNavigationParameter="aintPayeeAccountId=IintPayeeAccountId" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="QDRO Calculation Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblQdroCalculationHeaderId" ID="capQdroCalculationHeaderId" Text="QDRO Calculation ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblQdroCalculationHeaderId" sfwEntityField="QdroCalculationHeaderId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="QDRO Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblCalculationTypeDescription" ID="capCalculationTypeDescription" Text="QDRO Calculation Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCalculationTypeDescription" sfwEntityField="CalculationTypeDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblCreatedDate1" ID="capCreatedDate" Text="QDRO Calculation Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate1" sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblQdroApplicationId" ID="capQdroApplicationId" Text="QDRO Application ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblQdroApplicationId" sfwEntityField="QdroApplicationId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtDateOfMarriage" ID="capDateOfMarriage1" Text="Date Of Marriage : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDateOfMarriage" sfwDataFormat="{0:d}" sfwEntityField="DateOfMarriage" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtDateOfSeperation" ID="capDateOfSeperation" Text="Date Of Seperation : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDateOfSeperation" sfwDataFormat="{0:d}" sfwEntityField="DateOfSeperation" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkIsFinalEstimate" ID="capIsFinalEstimate1" sfwMode="Update" sfwVisibleRule="ShowFinalEstimateCheckbox" Text="Final Estimate : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkIsFinalEstimate" sfwDefaultValue="N" sfwMode="Update" sfwVisibleRule="ShowFinalEstimateCheckbox" sfwEntityField="IsFinalEstimate" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlParticipantDetails" sfwCaption="Participant Details">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMpiPersonId" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMpiPersonId" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=PersonId" sfwEntityField="objParticipant.MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="objParticipant.IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDateOfBirth" Text="Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtDateofBirth" sfwDataFormat="{0:d}" sfwEntityField="objParticipant.IdtDateofBirth" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIdecAge" Text="Age as of Determination : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblAge" sfwEntityField="IintParticipantAtRetirement" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPersonId" SkinID="textBoxDisplayStyleNone" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAlternatePayeeDetail" sfwCaption="Alternate Payee Detail">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMpiPersonId1" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnAlternatePayeeId" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=AlternatePayeeId" sfwEntityField="objAlternatePayee.MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName1" ID="capIstrFullName1" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName1" sfwEntityField="objAlternatePayee.IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDateOfBirth1" Text="Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtDateofBirth1" sfwDataFormat="{0:d}" sfwEntityField="objAlternatePayee.IdtDateofBirth" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIdecAge1" Text="Age as of Determination : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIintAltPayeeAgeAtRetirement" sfwEntityField="IintAltPayeeAgeAtRetirement" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblIintPayeeAccountId" sfwEntityField="IintPayeeAccountId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtAlternatePayeeId1" SkinID="textBoxDisplayStyleNone" sfwEntityField="AlternatePayeeId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlDROParameters" sfwCaption="QDRO Parameters">
+          <sfwTable CssClass="Table" ID="tblNewPage2">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtQdroCommencementDate" ID="capQdroCommencementDate" Text="Determination Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtQdroCommencementDate" sfwDataFormat="{0:d}" sfwEntityField="QdroCommencementDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capRetirementDate" sfwVisibleRule="ShowEarliestEligibleDate" Text="Earliest Eligible Date To Retire :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblRetirementDate1" sfwDataFormat="{0:d}" sfwVisibleRule="ShowEarliestEligibleDate" sfwEntityField="RetirementDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtBenefitComencementDate1" ID="capBenefitComencementDate" Text="Benefit Commencement Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtBenefitComencementDate1" sfwDataFormat="{0:d}" sfwEntityField="BenefitComencementDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkIsAltPayeeEligibleForIap" ID="capIsAltPayeeEligibleForIap" sfwVisibleRule="Rule - ShowIsApplicableforIAPCheckbox" Text="Is Alternate Payee Eligible For IAP : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkIsAltPayeeEligibleForIap" sfwDefaultValue="N" sfwVisibleRule="Rule - ShowIsApplicableforIAPCheckbox" sfwEntityField="IsAltPayeeEligibleForIap" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkIsParticipantDisabled" ID="capIsParticipantDisabled" Text="Is Participant Disabled : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkIsParticipantDisabled" sfwEntityField="IsParticipantDisabled" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlDROPlanDetails" sfwCaption="QDRO Plan Details" sfwVisibleRule="Rule - CalculationIdIsNotZero">
+          <sfwTable CssClass="Table" ID="tblNewPage3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwPanel ID="pnlNewPage3" sfwCollapsible="False" sfwVisibleRule="Rule - ShowCalculateandSaveButton">
+                  <sfwTable CssClass="Table" ID="tblNewPage7">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="ddlQdroModelValue" ID="capQdroModelValue" Text="QDRO Model : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwDropDownList ID="ddlQdroModelValue" sfwRelatedGrid="grvQdroCalculationDetail" sfwLoadType="CodeGroup" sfwLoadSource="6004" sfwEntityField="QdroModelValue" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="ddlBenefitCalculationBasedOnValue" ID="capBenefitCalculationBasedOnValue" Text="Community Property Based On : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwDropDownList ID="ddlBenefitCalculationBasedOnValue" sfwRelatedGrid="grvQdroCalculationDetail" sfwLoadType="CodeGroup" sfwLoadSource="6039" sfwEntityField="BenefitCalculationBasedOnValue" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="txtCommunityPropertyEndDate" ID="capCommunityPropertyEndDate" Text="Community Property End Date : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtCommunityPropertyEndDate" sfwDataFormat="{0:d}" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="CommunityPropertyEndDate" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel12" Visible="False" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel10" sfwIsCaption="True" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="txtOverridenTotalValue" ID="capOverridenTotalValue" Text="Overridden Total Service: " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtOverridenTotalValue" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="OverridenTotalValue" MaxLength="11" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel2" Text="Overridden Community Property Period:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtOverridenCommunityPropertyPeriod" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="OverridenCommunityPropertyPeriod" MaxLength="11" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel3" Text="Overridden UV&amp;HP:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtOverridenUVHPAmount" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="OverridenUvhpAmount" MaxLength="11" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel4" Text="Overridden UV&amp;HP Interest:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtOverridenUvUvhpIntAmount" sfwDataFormat="{0:C}" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="OverridenUvUvhpIntAmount" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel5" Text="Overridden Accrued Benefit Amount:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtAccruedBenefitAmount" sfwDataFormat="{0:C}" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="AccruedBenefitAmt" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtTotalService" sfwRelatedGrid="grvQdroCalculationDetail" SkinID="textBoxDisplayStyleNone" sfwEntityField="TotalService" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel14" sfwIsCaption="True" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel CssClass="hideControl" ID="lblAccruedBenefit" SkinID="textBoxDisplayStyleNone" Text="Accrued Benefit Amount:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtUnreducedBenefitAmount" sfwDataFormat="{0:C}" sfwRelatedGrid="grvQdroCalculationDetail" SkinID="textBoxDisplayStyleNone" sfwEntityField="EarlyReducedBenefitAmount" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtCommunityPropertyService" sfwRelatedGrid="grvQdroCalculationDetail" SkinID="textBoxDisplayStyleNone" sfwEntityField="CommunityPropertyService" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel15" sfwIsCaption="True" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="txtQdroPercent" ID="capQdroPercent" Text="Brown Formula% : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtQdroPercent" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="QdroPercent" MaxLength="11" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel11" Visible="False" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel16" sfwIsCaption="True" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="txtFlatPercent" ID="capFlatPercent" Text="Flat % : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtFlatPercent" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="FlatPercent" MaxLength="11" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="txtFlatAmount" ID="capFlatAmount" Text="Flat Dollar : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtFlatAmount" sfwDataFormat="{0:C}" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="FlatAmount" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel14t" Text="Adjustment Amount:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtTextBox" sfwDataFormat="{0:C}" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="AdjustmentAmt" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel100" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel17" sfwIsCaption="True" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel6" Text="Balance as of Plan Year:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtBalanceAsOfPlanYear" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="BalanceAsOfPlanYear" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel7" Text="Alternate Payee Benefit Cap Year:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtAltPayeeBenefitCapYear" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="AltPayeeBenefitCapYear" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel8" Text="Net Investment Income From Date:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtNetInvestmentFromDate" sfwDataFormat="{0:d}" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="NetInvestmentFromDate" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel9" Text="Net Investment Income to Date:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtNetInvestmentToDate" sfwDataFormat="{0:d}" sfwRelatedGrid="grvQdroCalculationDetail" sfwEntityField="NetInvestmentToDate" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn Width="200px">
+                        <sfwButton ID="btnUpdate" sfwForceValidateNew="True" sfwMethodName="btnGridViewUpdate_Click" sfwNavigationParameter="icdoQdroCalculationDetail.overriden_community_property_period;icdoQdroCalculationDetail.overriden_total_value;icdoQdroCalculationDetail.balance_as_of_plan_year;icdoQdroCalculationDetail.alt_payee_benefit_cap_year;icdoQdroCalculationDetail.net_investment_from_date;icdoQdroCalculationDetail.net_investment_to_date;icdoQdroCalculationDetail.benefit_calculation_based_on_value;icdoQdroCalculationDetail.overriden_uvhp_amount;icdoQdroCalculationDetail.community_property_end_date;icdoQdroCalculationDetail.flat_percent;icdoQdroCalculationDetail.flat_amount;icdoQdroCalculationDetail.early_reduced_benefit_amount;icdoQdroCalculationDetail.accrued_benefit_amt;icdoQdroCalculationDetail.qdro_percent;icdoQdroCalculationDetail.community_property_service;icdoQdroCalculationDetail.total_service" sfwRelatedControl="grvQdroCalculationDetail" sfwVisibleRule="Rule - ShowPlanDetails" Text="Update" sfwToolBarGrid="grvQdroCalculationDetail" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnUpdate_Click.png" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn Width="200px">
+                        <sfwLabel ID="lblLabel13" Visible="False" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn ColumnSpan="5" />
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="5" CssClass="bneFitCalDetl">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvQdroCalculationDetail" sfwSelection="Many" SkinID="WrapGrid" sfwEntityField="lstQdroCalculationDetail" sfwGridEntity="entQdroCalculationDetail">
+                  <Columns>
+                    <TemplateField HeaderText="Qdro Calculation Detail ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLinkButton ID="btnQdroCalculationClick" sfwEntityField="QdroCalculationDetailId" sfwMethodName="btnCancel_Click" OnClientClick="QdroCalClick" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan" sfwVisibleRule="Rule - PlanIsMPIPPorIAP">
+                      <ItemTemplate>
+                        <sfwLinkButton ID="btnPlanforIAPMPI" sfwDataField="icdoQdroCalculationDetail.istrPlanCode" sfwMethodName="btnGridViewSelect_Click" sfwRelatedControl="grvQdroCalculationDetail" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan" sfwVisibleRule="ShowPlanColumnasLabel">
+                      <ItemTemplate>
+                        <sfwLinkButton ID="btnPlanforLocal" sfwEntityField="IstrPlanCode" sfwMethodName="btnGridViewSelect_Click" sfwRelatedControl="grvQdroCalculationDetail" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Type" sfwVisibleRule="ShowRetTypeColumn">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="grvQdroCalculationDetail" sfwEntityField="BenefitSubtypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Type" sfwVisibleRule="ShowRetTypeDisabiltyColumn">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="grvQdroCalculationDetail" sfwEntityField="IstrRetirementTypeDisability" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="DRO Model">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="grvQdroCalculationDetail" sfwEntityField="QdroModelDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Community Property Based On">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="grvQdroCalculationDetail" sfwEntityField="BenefitCalculationBasedOnDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Service">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:n1}" sfwEntityField="TotalService" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Community Property Service">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:n1}" sfwEntityField="CommunityPropertyService" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Overridden Total Service">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:n1}" sfwEntityField="OverridenTotalValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Overridden Community Property Period">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:n1}" sfwEntityField="OverridenCommunityPropertyPeriod" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Accrued Benefit Amount" sfwVisibleRule="VisibleRule-ParticipantsAmountIsZero">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="EarlyReducedBenefitAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Overridden Accrued Benefit Amount" sfwVisibleRule="VisibleRule-ParticipantsAmountIsZero">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="AccruedBenefitAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retired Participant's Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="RetiredParticipantAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee Fraction">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AltPayeeFraction" sfwDataFormat="{0:0.000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee Benefit Before Conversion">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="AltPayeeAmtBeforeConversion" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="ParticipantBenefitAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Brown Formula Percent">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="QdroPercent" sfwDataFormat="{0:0.00}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Flat Dollar">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="FlatAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Flat %">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FlatPercent" sfwDataFormat="{0:0.00}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Balance as Plan Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BalanceAsOfPlanYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee Benefit Cap Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AltPayeeBenefitCapYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Net Investment From Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="NetInvestmentFromDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Net Investment To Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="NetInvestmentToDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Overridden UVHP Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="OverridenUvhpAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Calculation Based On Value" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblCalculationBasedOn" sfwRelatedControl="grvQdroCalculationDetail" sfwEntityField="BenefitCalculationBasedOnValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="OverriddenUVHP Int Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="OverridenUvUvhpIntAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Vested EE Contribution">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="VestedEeAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Vested EE Interest">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="VestedEeInterest" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Exclusion Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="MemberExclusionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Minimum Guarantee Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="MinimumGuaranteeAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee MEA Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="AltPayeeMemberExclusionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee MG Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="AltPayeeMinimumGuaranteeAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Load Child Grid" CssClass="hideControl" ControlStyle.CssClass="hideControl" HeaderStyle.CssClass="hideControl">
+                      <ItemTemplate>
+                        <sfwLinkButton ID="btnLoadChildGrid" sfwDataField="icdoQdroCalculationDetail.istrPlanCode" sfwMethodName="btnMasterDetailHeader_Click" sfwRelatedControl="grvQdroCalculationDetail" sfwObjectMethod="LoadChildGridForQDROCalculationMaintenance" CssClass="hideControl" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlDroPayeeBenefitOptions" sfwCaption="QDRO Payee Benefit Options" sfwVisibleRule="Rule - CalculationIdIsNotZero">
+          <sfwTable CssClass="Table" ID="tblNewPage4">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvQdroCalculationOptions" sfwParentGrid="grvQdroCalculationDetail" sfwEntityField="lstQdroCalculationOptions" sfwGridEntity="entQdroCalculationOptions">
+                  <Columns>
+                    <TemplateField HeaderText="Benefit Option">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrBenefitOptionDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Life Conversion Factor">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LifeConversionFactor" sfwDataFormat="{0:N6}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Early Reduction Factor">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EarlyReductionFactor" sfwDataFormat="{0:N6}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Option Factor">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitOptionFactor" sfwDataFormat="{0:N6}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee Benefit Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="AltPayeeBenefitAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Calculation Option ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="QdroCalculationOptionId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAnnualBenefitSummary" sfwCaption="Annual Benefit Summary" sfwVisibleRule="Rule - CalculationIdIsNotZero">
+          <sfwTable CssClass="Table" ID="tblNewPage6">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvQdroCalculationYearlyDetail" sfwParentGrid="grvQdroCalculationDetail" sfwEntityField="lstQdroCalculationYearlyDetail" sfwGridEntity="entQdroCalculationYearlyDetail">
+                  <Columns>
+                    <TemplateField HeaderText="Plan Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PlanYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Credited Hours">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AnnualHours" sfwDataFormat="{0:N4}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Hours Community Property Hours">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="QdroHours" sfwDataFormat="{0:N4}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Thru 79 Hours" sfwVisibleRule="IAP_Plan_Selected">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Thru79hours" sfwDataFormat="{0:N4}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Rate" sfwVisibleRule="Rule - PlanIsNotMPIPPAndIAP">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitRate" sfwDataFormat="{0:N7}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Amount" sfwVisibleRule="Rule - PlanIsNotMPIPPAndIAP">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="AccruedBenefitAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Benefit Amount" sfwVisibleRule="Rule - PlanIsNotMPIPPAndIAP">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActuarialAccruedBenenfit" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Calculation Yearly Detail ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel Visible="False" sfwEntityField="QdroCalculationYearlyDetailId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlIAPAllocationSummary" sfwCaption="IAP Allocation Summary">
+          <sfwTable CssClass="Table" ID="tblNewPage8">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvQdroIapAllocationDetail" sfwParentGrid="grvQdroCalculationDetail" sfwEntityField="lstQdroIapAllocationDetail" sfwGridEntity="entQdroIapAllocationDetail">
+                  <Columns>
+                    <TemplateField HeaderText="Plan Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ComputationYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Quarter 1 Factor" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Quarter1Factor" sfwDataFormat="{0:N6}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Quarter 2 Factor" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Quarter2Factor" sfwDataFormat="{0:N6}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Quarter 3 Factor" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Quarter3Factor" sfwDataFormat="{0:N6}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Quarter 4 Factor" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Quarter4Factor" sfwDataFormat="{0:N6}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Gain/Loss" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="GainLossAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Balance" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="BalanceAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Qdro Iap Allocation Detail ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="QdroIapAllocationDetailId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlPacketTracking" sfwCaption="Packet Tracking">
+          <sfwTable ID="tblNewPage31" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn ColumnSpan="2" HorizontalAlign="Center" />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpenBusCorTrackingMaintenance" sfwMethodName="btnOpen_Click" sfwActiveForm="wfmPacketTrackingMaintenance" sfwRelatedControl="grvBusCorTracking" Text="Open Maintenance" sfwNavigationParameter="aintTrackingId=TrackingId" />
+                <sfwButton ID="btnRefreshData" sfwMethodName="btnCancel_Click" Text="Refresh Data" sfwToolBarGrid="grvBusCorTracking" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnRefresh_click.png" ToolTip="Cancel the changes" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="8">
+                <sfwGridView ID="grvBusCorTracking" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="objAlternatePayee.lstCorTracking" sfwGridEntity="entCorTracking">
+                  <Columns>
+                    <TemplateField HeaderText="Tracking ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnOpenBusCorTrackingMaintenance" sfwLinkable="True" sfwEntityField="TrackingId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorTemplates.TemplateDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Access Template Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.AccessTemplateName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailed Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.MailedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailed By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.MailedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.ReceivedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.ReceivedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.PacketStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Access Packet Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.AccessPaketStatus" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Generated By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Generated Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="GeneratedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Retiree Increase Details">
+          <sfwTable CssClass="Table" ID="tblNewPage5">
+            <sfwRow>
+              <sfwColumn CssClass="width100">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvDisabilityRetireeIncrease" sfwEntityField="lstDisabilityRetireeIncrease" sfwGridEntity="entDisabilityRetireeIncrease">
+                  <Columns>
+                    <TemplateField HeaderText="Disability Retiree Increase ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DisabilityRetireeIncreaseId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retiree Increase Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="RetireeIncreaseAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retiree Increase Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="RetireeIncreaseDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objParticipant" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objAlternatePayee" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstQdroCalculationDetail" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstQdroCalculationOptions" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstQdroCalculationYearlyDetail" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstQdroIapAllocationDetail" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objAlternatePayee.lstCorTracking" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstDisabilityRetireeIncrease" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

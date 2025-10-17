@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entMssHome" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="ibusPerson.icdoPerson" sfwObjectID="busMSSHome">
+  <rules>
+    <rule ID="CheckDobNull" sfwExpression="!(this.CheckIfDOBISNull() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-ProcessRetirementApplication" sfwExpression="(RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusProcess.icdoProcess.process_id&quot;) == 5)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="CheckDobNull" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-ProcessRetirementApplication" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <attributes>
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute sfwType="Collection" sfwEntity="entAnnualStatementBatchData" ID="lstAnnualStatementBatchData" sfwValue="iclbAnnualStatementBatchData" />
+    <attribute sfwType="Collection" sfwEntity="entApplication_Process" ID="lstApplicationActivties" sfwValue="iclbApplicationActivties" />
+    <attribute sfwType="Collection" sfwEntity="entApplication_Process" ID="lstApplicationActivitiesForUser" sfwValue="iclbApplicationActivitiesForUser" />
+    <attribute sfwType="Collection" sfwEntity="entProcessInstance" ID="lstProcessInstance" sfwValue="iclbProcessInstance" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitEstimateOptions" sfwValue="istrBenefitEstimateOptions" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitEstimateType" sfwValue="istrBenefitEstimateType" />
+  </attributes>
+  <objectmethods>
+    <method ID="GetBenefitEstimateTypeOptions" sfwReturnType="Collection" sfwObjectID="cdoCodeValue" sfwEntity="entCodeValue">
+      <parameters>
+        <parameter ID="aintPersonID" sfwDataType="int" />
+      </parameters>
+    </method>
+  </objectmethods>
+</entity>

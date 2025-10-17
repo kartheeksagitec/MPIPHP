@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmJobHeaderLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvAdmin" sfwResource="401 " sfwType="Lookup" sfwTitle="Batch Schedule Instance Lookup" sfwMaxCount="1000" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entJobHeader" sfwGridCollection="busJobHeaderLookup.iclbJobHeader">
+  <initialload>
+    <query ID="cdoJobHeader" sfwQueryRef="entJobHeader.Lookup" sfwMethodName="LoadJobHeaders" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capJhJobName" Text="Batch Schedule Instance Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtJhJobName" sfwDataField="jh.job_name" sfwOperator="like" sfwQueryID="cdoJobHeader" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capJhStatusValue" Text="Batch Schedule Instance Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlJhStatusValue" sfwDataField="jh.status_value" sfwOperator="like" sfwQueryID="cdoJobHeader" sfwLoadType="CodeGroup" sfwLoadSource="6018" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capJhStartTime" Text="Start Time : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtJhStartTime" sfwDataField="jh.start_time" sfwDataType="DateTime" sfwOperator="&gt;=" sfwQueryID="cdoJobHeader" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capJhEndTime" Text="End Time : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtJhEndTime" sfwDataField="jh.end_time" sfwDataType="DateTime" sfwOperator="&lt;=" sfwQueryID="cdoJobHeader" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capJhCreatedDate2" Text="Queued Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtJhCreatedDate2" sfwDataField="jh.created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoJobHeader" sfwRelatedControl="txtJhCreatedDate3" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capJhCreatedDate3" Text="Queued Date To: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtJhCreatedDate3" sfwDataField="jh.created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoJobHeader" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capJhCreatedDate" Text="Queued Time From: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtJhCreatedDate" sfwDataField="convert(varchar(10), jh.created_date, 108)" sfwDataFormat="{0:HH:mm:ss}" sfwOperator="between" sfwQueryID="cdoJobHeader" sfwRelatedControl="txtJhCreatedDate1" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capJhCreatedDate1" Text="Queued Time To: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtJhCreatedDate1" sfwDataField="convert(varchar(10), jh.created_date, 108)" sfwDataFormat="{0:HH:mm:ss}" sfwOperator="between" sfwQueryID="cdoJobHeader" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="StoreSearch" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmJobHeaderMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="Aintjobheaderid=JobHeaderId" sfwRelatedControl="dgrResult" sfwSelection="Many" Text="Open" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="ChangeAlign">
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" PageSize="50" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Batch Schedule Instance Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="JobName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Batch Schedule Instance Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Queued Date Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:G}" sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Processing Start Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StartTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Processing End Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:G}" sfwEntityField="EndTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Batch Schedule Instance ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="JobHeaderId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Step No" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objLookupJobDetail.StepNo" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Detail Status" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objLookupJobDetail.StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

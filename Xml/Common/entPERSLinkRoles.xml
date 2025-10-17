@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPERSLinkRoles" sfwObjectID="busPERSLinkRoles" sfwObjectType="MPIPHP.BusinessObjects.busPERSLinkRoles" sfwType="RuleEntity" sfwActive="True" sfwStatus="Review">
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="RoleId" sfwValue="icdoRoles.role_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="RoleDescription" sfwValue="icdoRoles.role_description" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrResourceId" sfwValue="istrResourceId" />
+    <attribute sfwType="Collection" sfwEntity="entSecurity" ID="lstSecurityByRoles" sfwValue="iclbSecurityByRoles" />
+    <attribute sfwType="Collection" sfwEntity="entUser" ID="lstUsers" sfwValue="iclbUsers" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrUserSerialId" sfwValue="istrUserSerialId" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoRoles.created_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoRoles.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoRoles.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoRoles.modified_date" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadUnassignedRolesByUser" sfwReturnType="Collection" sfwObjectID="cdoResources" sfwEntity="entResources" />
+    <method ID="AddResource" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="astrResourceId" sfwDataType="String" />
+      </parameters>
+    </method>
+    <method ID="AddUser" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="astrUserSerialId" sfwDataType="String" />
+      </parameters>
+    </method>
+  </objectmethods>
+</entity>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptPayeeErrorReport" sfwReportName="rpt17_PayeeErrorReport.rdlc" sfwReportCategory="Reports" sfwResource="505 " sfwDescription="Payee Error Report" sfwType="Report" sfwActive="True" sfwStatus="Review" version="4.0">
+  <initialload>
+    <custommethod sfwMethodName="PayeeErrorReport" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn />
+      <sfwColumn />
+      <sfwColumn />
+      <sfwColumn />
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="Plan : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList ID="aintPlanId" sfwLoadType="Items">
+          <ListItem Text=" " />
+          <ListItem Text="IAP" Value="1" />
+          <ListItem Text="Pension" Value="2" />
+        </sfwDropDownList>
+        <RequiredFieldValidator ID="rfvRequiredFieldValidator" ControlToValidate="aintPlanId" ErrorMessage="Please select Plan" />
+      </sfwColumn>
+      <sfwColumn />
+      <sfwColumn />
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="Status Effective Date From : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="adtStatusEffectiveDateFrom" sfwDataFormat="{0:d}" />
+        <RequiredFieldValidator ControlToValidate="adtStatusEffectiveDateFrom" ErrorMessage="Status Effective Date To is Required" ID="arfvStatusEffectiveDateFrom" Text="*" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="Status Effective Date To : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="adtStatusEffectiveDateTo" sfwDataFormat="{0:d}" />
+        <CompareValidator ControlToValidate="adtStatusEffectiveDateTo" ErrorMessage="Status Effective Date To must be in mm/dd/yyyy format." ID="acvStatusEffectiveDateTo" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <CompareValidator ControlToCompare="adtStatusEffectiveDateFrom" ControlToValidate="adtStatusEffectiveDateTo" ErrorMessage="Status Effective Date To cannot be less than Status Effective Date From." ID="valDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="adtStatusEffectiveDateTo" ErrorMessage="Status Effective Date To is Required" ID="arfvStatusEffectiveDateTo" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

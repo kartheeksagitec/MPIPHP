@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmPendingPaymentCycleLookup" WebSite="MPIPHPWebClient" sfwResource="400 " sfwType="Lookup" sfwTitle="Pending Payment Cycle Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmPendingPaymentCycleLookup" sfwMaxCount="1000" sfwRemoteObject="srvCorrespondence" sfwEntity="entCorPacketContentTracking" sfwGridCollection="busPendingPaymentCycleLookup.iclbCorPacketContentTracking">
+  <initialload>
+    <query ID="cdoCorPacketContentTracking" sfwQueryRef="entCorPacketContentTracking.PendingPaymentCycleLookup" sfwMethodName="LoadPendingPaymentCycleStatus" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria" HorizontalAlign="Left" CssClass="fullWidth">
+          <sfwTable ID="Criteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctCriteria">
+                  <Tabs>
+                    <sfwTabSheet ID="tshCriteria" HeaderText="Criteria">
+                      <sfwTable ID="tblCriteria">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capRetirementDate" Text="Retirement Date : " AssociatedControlID="txtRetirementDate" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtRetirementDate" sfwQueryID="cdoCorPacketContentTracking" sfwDataField="packet.retirement_date" sfwOperator="=" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="capRetirementType" Text="Retirement Type : " AssociatedControlID="ddlRetirementType" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlRetirementType" sfwDataField="CV4.DESCRIPTION" sfwOperator="like" sfwQueryID="cdoCorPacketContentTracking" DataValueField="description" DataTextField="description" sfwLoadType="Query" sfwLoadSource="entCorPacketContentTracking.GetPendingPaymentCycleRetirementTypes" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capPacketPlanCode" Text="Plan Code : " AssociatedControlID="ddlPacketPlanCode" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlPacketPlanCode" sfwDataField="packet.plan_code" sfwOperator="like" sfwQueryID="cdoCorPacketContentTracking" DataValueField="plan_code" DataTextField="plan_code" sfwLoadType="Query" sfwLoadSource="entCorPacketContentTracking.GetPendingPaymentCyclePlanCodes" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="capAppCreatedBy" Text="App Created By : " AssociatedControlID="ddlAppCreatedBy" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlAppCreatedBy" sfwDataField="BA.CREATED_BY AND " sfwOperator="like" sfwQueryID="cdoCorPacketContentTracking" DataValueField="user_id" DataTextField="user_id" sfwLoadType="Query" sfwLoadSource="entUser.LOADACTIVEUSER" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capCalcCreatedBy" Text="Calc Created By : " AssociatedControlID="ddlCalcCreatedBy" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlCalcCreatedBy" sfwDataField="CH.CREATED_BY" sfwOperator="like" sfwQueryID="cdoCorPacketContentTracking" DataValueField="user_id" DataTextField="user_id" sfwLoadType="Query" sfwLoadSource="entUser.LOADACTIVEUSER" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="capPaCreatedBy" Text="Payee Account Created By : " AssociatedControlID="ddlPaCreatedBy" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlPaCreatedBy" sfwDataField="PA.CREATED_BY" sfwOperator="like" sfwQueryID="cdoCorPacketContentTracking" DataValueField="user_id" DataTextField="user_id" sfwLoadType="Query" sfwLoadSource="entUser.LOADACTIVEUSER" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capPaVerifiedBy" Text="Payee Account Verified By : " AssociatedControlID="ddlPaVerifiedBy" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlPaVerifiedBy" sfwDataField="PA.VERIFIED_BY" sfwOperator="like" sfwQueryID="cdoCorPacketContentTracking" DataValueField="user_id" DataTextField="user_id" sfwLoadType="Query" sfwLoadSource="entUser.LOADACTIVEUSER" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="PayApprovedBy" Text="Payee Account Approved By : " AssociatedControlID="ddlPayApprovedBy" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlPayApprovedBy" sfwDataField="PASS.MODIFIED_BY" sfwOperator="like" sfwQueryID="cdoCorPacketContentTracking" DataValueField="user_id" DataTextField="user_id" sfwLoadType="Query" sfwLoadSource="entUser.LOADACTIVEUSER" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel6" Text="Analyst Assigned : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList DataTextField="analystname" DataValueField="analyst_id" ID="ddlDropDownList1" sfwDataField="SU.USER_SERIAL_ID" sfwOperator="like" sfwQueryID="cdoCorTracking" sfwLoadType="Query" sfwLoadSource="entPerson.GetCaseAnalyst" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                            <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshAdvSort" HeaderText="Adv. Sort" Visible="False">
+                      <sfwTable ID="tblAdvSort">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwAdvSort ID="AdvSort" sfwRelatedControl="dgrResult" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnApplySort" sfwMethodName="btnApplySort_Click" sfwOperateOn="tblAdvSort" sfwRelatedControl="dgrResult" Text="Apply Sort" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Image/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True">
+                  <Columns>
+                    <TemplateField HeaderText="ANALYST ASSIGNED">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ANALYSTNAME" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MPID" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="NAME">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NAME" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RETIREMENT TYPE">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RETIREMENTTYPE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RETIREMENT DATE">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="RetirementDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="PLAN CODE">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PLANCODE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="APP RETIREMEN DATE">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="APPRETIREMENDATE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="APP CREATED DATE">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="APPCREATEDDATE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="APP CREATED BY">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="APPCREATEDBY" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="APP MODIFIED BY">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="APPMODIFIEDBY" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="APP STATUS">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="APPSTATUS" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="CALC CREATED BY">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CALCCREATEDBY" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="CALC CREATED DATE">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CALCCREATEDDATE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="CALC MODIFIED BY">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CALCMODIFIEDBY" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="CALC MODIFIED DATE">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CALCMODIFIEDDATE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="PA CREATED BY">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PACREATEDBY" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="PA CREATED DATE">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="PACREATEDDATE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="PA STATUS">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PASTATUS" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="STATUS BY">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="STATUSBY" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="STATUS DATE">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="STATUSDATE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="PA VERIFIED BY">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PAVERIFIEDBY" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="PA VERIFIED DATE">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="PAVERIFIEDDATE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="PA APPROVED BY">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PASAPRDBY" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

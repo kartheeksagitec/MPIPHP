@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptWorkflowMetricsSummaryReport" sfwActive="False" sfwDescription="Workflow Metrics Summary Report" sfwStatus="Review" sfwResource="506" sfwType="Report" sfwReportName="rptWorkflowMetricSummaryReport.rdlc" sfwReportCategory="Reports" version="4.0">
+  <initialload>
+    <custommethod sfwMethodName="WorkflowMetricSummaryReport" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="From Date : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="startTime" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+        <CompareValidator ControlToValidate="startTime" ErrorMessage="From Date must be in mm/dd/yyyy format." ID="valFromDate" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="startTime" ErrorMessage="From Date is Required" ID="rfvFromDate" Text="*" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="To Date : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="endTime" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+        <CompareValidator ControlToValidate="endTime" ErrorMessage="To Date must be in mm/dd/yyyy format." ID="valToDate" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <CompareValidator ControlToCompare="startTime" ControlToValidate="endTime" ErrorMessage="To Date cannot be less than From Date." ID="valDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="endTime" ErrorMessage="To Date is Required" ID="rfvToDate" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel ID="lblLabel" Text="Process Name :" sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList DataTextField="description" DataValueField="process_id" ID="typeId" sfwLoadType="Query" sfwLoadSource="entTempdata.LoadProcessNames" sfwAddEmptyItem="False" />
+      </sfwColumn>
+      <sfwColumn />
+      <sfwColumn />
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+</form>

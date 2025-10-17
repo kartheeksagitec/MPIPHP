@@ -1,0 +1,43 @@
+﻿<entity ID="entUserPrefPageState" sfwView="False" sfwActive="True" sfwMainCDO="icdoUserPrefPageState" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_user_pref_page_state" Text="User stored page state data" sfwObjectID="busUserPrefPageState" sfwParentEntity="entUserPreferences" sfwDataObjectID="doUserPrefPageState">
+  <attributes>
+    <attribute sfwValue="user_pref_page_state_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UserPrefPageStateId" sfwCaption="User Pref Page State Id" />
+    <attribute sfwValue="user_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="UserName" sfwCaption="User Name" />
+    <attribute sfwValue="application_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ApplicationName" sfwCaption="Application Name" />
+    <attribute sfwValue="form_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="128" sfwIsNull="False" ID="FormName" sfwCaption="Form Name" />
+    <attribute sfwValue="page_state_data" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="image" sfwDBDataType="image" sfwIsNull="True" ID="PageStateData" sfwCaption="Page State Data" />
+  </attributes>
+  <queries>
+    <query ID="LookUp" sfwSql="select * from sgs_user_pref_page_state" sfwDataType="EntityTable" sfwQueryType="SelectQuery">
+      <parameters />
+    </query>
+    <query ID="GetPageStateDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT user_pref_page_state_id, form_name, user_name, application_name  FROM sgs_user_pref_page_state WITH(NOLOCK) WHERE application_name   = @Application_Name &#xA;AND 1 = (CASE WHEN @User_Name = 'system' THEN 1&#xA;              WHEN user_name =@User_Name THEN 1&#xA;              ELSE 0&#xA;          END)">
+      <parameters>
+        <parameter ID="@Application_Name" sfwDataType="string" />
+        <parameter ID="@User_Name" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetUserNames" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct user_name as 'UserName' FROM sgs_user_pref_page_state WITH(NOLOCK) WHERE application_name   = @Application_Name">
+      <parameters>
+        <parameter ID="@Application_Name" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindUserPrefPageState" sfwMethodType="Load" sfwMode="All">
+      <item ID="icdoUserPrefPageState" sfwParameter="aintPrimaryKey" sfwItemType="MainCDO" sfwMethodName="Other" />
+      <parameter ID="aintPrimaryKey" sfwDataType="Int32" />
+    </method>
+  </methods>
+  <ExtraFields />
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <lifecycle />
+  <objectmethods />
+</entity>

@@ -1,0 +1,63 @@
+﻿<entity ID="entActLogAppActor" sfwView="False" sfwActive="True" sfwMainCDO="icdoActLogAppActor" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_act_log_app_actor" sfwObjectID="busActLogAppActor" sfwDataObjectID="doActLogAppActor">
+  <attributes>
+    <attribute ID="objActLogApp" sfwPrivate="False" sfwEntity="entActLogApp" sfwValue="ibusActLogApp" sfwType="Object" />
+    <attribute sfwValue="act_log_app_actor_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogAppActorId" sfwCaption="ID" />
+    <attribute sfwValue="act_log_app_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogAppId" sfwCaption="Act Log App Id" />
+    <attribute sfwValue="actor_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="ActorName" sfwCaption="Actor Name" />
+    <attribute sfwValue="action_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ActionFlag" sfwCaption="Action Flag" />
+    <attribute sfwValue="action_step_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ActionStepFlag" sfwCaption="Action Step Flag" />
+    <attribute sfwValue="query_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="QueryFlag" sfwCaption="Query Flag" />
+    <attribute sfwValue="rule_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="RuleFlag" sfwCaption="Rule Flag" />
+    <attribute sfwValue="validation_rule_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ValidationRuleFlag" sfwCaption="Validation Rule Flag" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+  <queries>
+    <query ID="LookUp" sfwSql="select * from sgs_act_log_app_actor" sfwDataType="EntityTable" sfwQueryType="SelectQuery">
+      <parameters />
+    </query>
+    <query ID="FilterByAppID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_act_log_app_actor &#xA;where act_log_app_id = @act_log_app_id">
+      <parameters>
+        <parameter ID="@act_log_app_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountByActorName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgs_act_log_app_actor&#xA;where act_log_app_id = @act_log_app_id &#xA;    and actor_name = @actor_name">
+      <parameters>
+        <parameter ID="@actor_name" sfwDataType="string" />
+        <parameter ID="@act_log_app_id" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindActLogAppActor" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+    </method>
+  </methods>
+  <ExtraFields />
+  <constraint>
+    <item sfwFieldName="ActorName" sfwDataType="string" sfwDisplayName="Actor Name" sfwRequired="True" sfwReqMessageId="20001071">
+      <portalmessages />
+      <rulequeryconstraints />
+    </item>
+  </constraint>
+  <rules>
+    <rule ID="ActorExists" sfwRuleType="Validation" sfwExpression="ActLogAppActorId == 0 &amp;&amp;&#xA;RFunc.ExecuteQuery&lt;int&gt;(&quot;entActLogAppActor.CountByActorName&quot;, ActorName, ActLogAppId ) &gt; 0" sfwMessage="Duplicate Actor" />
+    <rule ID="InUpdateMode" sfwRuleType="Validation" sfwExpression="ActLogAppActorId &gt; 0" />
+  </rules>
+  <initialload>
+    <item ID="InUpdateMode" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <item ID="ActorExists" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <lifecycle />
+  <objectmethods />
+</entity>

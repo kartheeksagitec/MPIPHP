@@ -1,0 +1,22 @@
+﻿<entity ID="entLegacy" sfwView="False" sfwActive="True" sfwType="EntityRule" sfwStatus="Review" CreateWithClass="False" sfwDatabase="Legacy">
+  <ExtraFields />
+  <queries>
+    <query ID="CheckPersonIsParticipant" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SUM(XYZ) FROM &#xD;&#xA;(&#xD;&#xA;SELECT COUNT(*) AS XYZ FROM Hours A WHERE (HoursReported &gt; 0 OR HoursWorked &gt; 0) AND SSN=@SSN&#xD;&#xA;UNION&#xD;&#xA;select COUNT(*) AS XYZ from CPASPre95_11222011 B where HRSACT &gt; 0 and MKEY=@SSN&#xD;&#xA;UNION&#xD;&#xA;select COUNT(*) AS XYZ from Pension_PreMerger_Annual_History C where Credited_Hours &gt; 0 and SSN=@SSN&#xD;&#xA;UNION&#xD;&#xA;select COUNT(*) AS XYZ from HPTransactions D where Hours &gt; 0 and SSN=@SSN&#xD;&#xA;)AS TEMP">
+      <parameters>
+        <parameter ID="@SSN" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <attributes />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+</entity>

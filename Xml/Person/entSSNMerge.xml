@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entSSNMerge" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPerson" sfwObjectID="busSSNMerge" sfwParentEntity="entPerson">
+  <rules>
+    <rule ID="RULE_CHECK_PERSON_MERGED" sfwExpression="!(this.CheckIsPersonMerged() == True)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="RULE_CHECK_PERSON_MERGED" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <attributes>
+    <attribute sfwType="Collection" sfwEntity="entPerson" ID="lstOldPersonToBeMerged" sfwValue="iclbOldPersonToBeMerged" />
+    <attribute sfwType="Collection" sfwEntity="entPerson" ID="lstNewPerson" sfwValue="iclbNewPerson" />
+    <attribute sfwType="Collection" sfwEntity="entPerson" ID="lstMergedPersonReord" sfwValue="iclbMergedPersonReord" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoPerson.created_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoPerson.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoPerson.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoPerson.modified_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="MpiPersonId" sfwValue="icdoPerson.mpi_person_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrNewMergedMPIID" sfwValue="istrNewMergedMPIID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSSNNonEncrypted" sfwValue="icdoPerson.istrSSNNonEncrypted" />
+    <attribute sfwDataType="string" sfwType="Property" ID="NamePrefixDescription" sfwValue="icdoPerson.name_prefix_description" />
+    <attribute sfwDataType="string" sfwType="Property" ID="FirstName" sfwValue="icdoPerson.first_name" />
+    <attribute sfwDataType="string" sfwType="Property" ID="LastName" sfwValue="icdoPerson.last_name" />
+    <attribute sfwDataType="string" sfwType="Property" ID="NameSuffix" sfwValue="icdoPerson.name_suffix" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateofBirth" sfwValue="icdoPerson.idtDateofBirth" />
+    <attribute sfwDataType="string" sfwType="Property" ID="GenderDescription" sfwValue="icdoPerson.gender_description" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DateOfDeath" sfwValue="icdoPerson.date_of_death" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPersonType" sfwValue="icdoPerson.istrPersonType" />
+    <attribute sfwDataType="string" sfwType="Property" ID="UnionCode" sfwValue="icdoPerson.UnionCode" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrEmployerName" sfwValue="icdoPerson.istrEmployerName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPersonAddress" sfwValue="istrPersonAddress" />
+    <attribute sfwType="Collection" sfwEntity="entPayeeAccount" ID="lstPayeeAccounts" sfwValue="iclbPayeeAccounts" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMPID" sfwValue="istrMPID" />
+    <attribute sfwType="Collection" sfwEntity="entPayeeAccount" ID="lstPayeeAccountsForPossibleDuplicates" sfwValue="iclbPayeeAccountsForPossibleDuplicates" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UpdateSeq" sfwValue="icdoPerson.update_seq" />
+  </attributes>
+  <objectmethods>
+    <method ID="btnMergedPersonPreview" sfwReturnType="ArrayList" />
+    <method ID="btn_MergeClick" sfwReturnType="ArrayList" />
+    <method ID="btn_SearchWithMPID" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="astrMPID" sfwDataType="String" />
+      </parameters>
+    </method>
+  </objectmethods>
+</entity>

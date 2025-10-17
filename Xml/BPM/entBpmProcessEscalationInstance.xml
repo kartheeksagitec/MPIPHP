@@ -1,0 +1,56 @@
+﻿<entity ID="entBpmProcessEscalationInstance" sfwMainCDO="icdoBpmProcessEscalationInstance" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmProcessEscalationInstance" sfwTableName="SGW_BPM_PRCS_ESC_INSTANCE" sfwView="False" sfwDataObjectID="doBpmPrcsEscInstance">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete>
+    <property ID="lstBpmEscalationMessage" sfwMethodName="LoadBpmEscalationMessages" />
+    <property ID="IobjMainCDO" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint />
+  <rules />
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGW_BPM_PRCS_ESC_INSTANCE " sfwPostgre="select * from SGW_BPM_PRCS_ESC_INSTANCE">
+      <parameters />
+    </query>
+    <query ID="GetUserEmailIdsForRole" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; USER_SERIAL_ID,&#xA;&#x9;EMAIL_ADDRESS &#xA;FROM&#xA;&#x9; SGS_USER WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; USER_SERIAL_ID IN (SELECT&#xA;&#x9; USER_SERIAL_ID &#xA;FROM&#xA;&#x9; SGS_USER_ROLES WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; ROLE_ID = @ROLE_ID)" sfwPostgre="SELECT&#xD;&#xA;&#x9; USER_SERIAL_ID,&#xD;&#xA;&#x9;EMAIL_ADDRESS &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER &#xD;&#xA;WHERE&#xD;&#xA;&#x9; USER_SERIAL_ID IN (SELECT&#xD;&#xA;&#x9; USER_SERIAL_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER_ROLES&#xD;&#xA;WHERE&#xD;&#xA;&#x9; ROLE_ID = @ROLE_ID)">
+      <parameters>
+        <parameter ID="@ROLE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetEscalationsToSent" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; PEI.* &#xA;FROM&#xA;&#x9; SGW_BPM_PRCS_ESC_INSTANCE PEI WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE BPI WITH(NOLOCK)&#xA;&#x9; ON PEI.PROCESS_INSTANCE_ID = BPI.PROCESS_INSTANCE_ID &#xA;WHERE&#xA;&#x9; (PEI.ESCALATION_DATE_TIME &lt; @NOW AND&#xA;&#x9; PEI.STATUS_VALUE = 'ACTV') AND&#xA;&#x9; BPI.STATUS_VALUE IN ('INPC')" sfwPostgre="SELECT&#xD;&#xA;&#x9; PEI.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PRCS_ESC_INSTANCE PEI &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE BPI &#xD;&#xA;&#x9; ON PEI.PROCESS_INSTANCE_ID = BPI.PROCESS_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; (PEI.ESCALATION_DATE_TIME &lt; @NOW AND&#xD;&#xA;&#x9; PEI.STATUS_VALUE = 'ACTV') AND&#xD;&#xA;&#x9; BPI.STATUS_VALUE IN ('INPC')">
+      <parameters>
+        <parameter ID="@NOW" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwType="Collection" sfwEntity="entBpmEscalationMessage" ID="lstBpmEscalationMessage" sfwValue="iclbBpmEscalationMessage" />
+    <attribute sfwType="Property" ID="IobjMainCDO" sfwValue="iobjMainCDO" />
+    <attribute sfwValue="process_escalation_instance_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessEscalationInstanceId" sfwCaption="ID" />
+    <attribute sfwValue="process_escalation_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessEscalationId" sfwCaption="Process Escalation Id" />
+    <attribute sfwValue="process_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessInstanceId" sfwCaption="Process Instance Id" />
+    <attribute sfwValue="escalation_date_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="EscalationDateTime" sfwCaption="Escalation Date Time" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="3003" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="processing_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="ProcessingFlag" sfwCaption="Processing Flag" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute ID="NotifyAdditionalRole" sfwDataType="string" sfwPrivate="False" sfwValue="NotifyAdditionalRole" sfwType="Property" />
+    <attribute ID="NotifyAdditionalRoleById" sfwDataType="int" sfwPrivate="False" sfwValue="NotifyAdditionalRoleById" sfwType="Property" />
+    <attribute ID="NotifyProcessOwner" sfwDataType="bool" sfwPrivate="False" sfwValue="NotifyProcessOwner" sfwType="Property" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadBpmEscalationMessages" sfwReturnType="Void" />
+  </objectmethods>
+  <methods />
+  <lifecycle />
+  <ExtraFields />
+</entity>

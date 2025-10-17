@@ -1,0 +1,45 @@
+﻿<entity ID="entActLogJobStep" sfwView="False" sfwActive="True" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_act_log_job_step" CreateWithClass="False">
+  <attributes>
+    <attribute ID="ScheduleName" sfwDataType="string" sfwPrivate="False" sfwType="Property" sfwCaption="Schedule Name" sfwValue="ScheduleName" />
+    <attribute ID="ScheduleStepName" sfwDataType="string" sfwPrivate="False" sfwType="Property" sfwCaption="Schedule Step Name" sfwValue="ScheduleStepName" />
+    <attribute sfwValue="act_log_job_step_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogJobStepId" sfwCaption="ID" />
+    <attribute sfwValue="job_schedule_detail_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="JobScheduleDetailId" sfwCaption="Job Schedule Detail Id" />
+    <attribute sfwValue="job_monitoring_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="JobMonitoringFlag" sfwCaption="Job Monitoring Flag" />
+    <attribute sfwValue="step_limit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StepLimit" sfwCaption="Step Limit" />
+    <attribute sfwValue="query_limit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="QueryLimit" sfwCaption="Query Limit" />
+    <attribute sfwValue="rule_limit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RuleLimit" sfwCaption="Rule Limit" />
+    <attribute sfwValue="validation_rule_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ValidationRuleFlag" sfwCaption="Validation Rule Flag" />
+    <attribute sfwValue="alert_email_address" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="AlertEmailAddress" sfwCaption="Alert Email Address" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute ID="JobScheduleID" sfwDataType="int" sfwPrivate="False" sfwType="Property" sfwCaption="Job Schedule ID" sfwValue="JobScheduleID" />
+    <attribute sfwValue="query_high_limit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="QueryHighLimit" sfwCaption="Query High Limit" />
+    <attribute sfwValue="query_high_limit_alert" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="QueryHighLimitAlert" sfwCaption="Query High Limit Alert" />
+    <attribute sfwValue="rule_high_limit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RuleHighLimit" sfwCaption="Rule High Limit" />
+    <attribute sfwValue="rule_high_limit_alert" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="RuleHighLimitAlert" sfwCaption="Rule High Limit Alert" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="GetAllJobStep" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select c.job_schedule_id, b.step_name, a.*&#xA;  from sgs_act_log_job_step a,&#xA;       sgs_job_schedule_detail b, &#xA;&#x9;   sgs_job_schedule c&#xA; where a.job_schedule_detail_id = b.job_schedule_detail_id&#xA;   and b.job_schedule_id = c.job_schedule_id&#xA; order by c.schedule_name, b.step_name" sfwPostgre="SELECT c.job_schedule_id, b.step_name, a.* FROM dbo.sgs_act_log_job_step AS a, dbo.sgs_job_schedule_detail AS b, dbo.sgs_job_schedule AS c WHERE a.job_schedule_detail_id = b.job_schedule_detail_id AND b.job_schedule_id = c.job_schedule_id ORDER BY c.schedule_name NULLS FIRST, b.step_name NULLS FIRST">
+      <parameters />
+      <mappedcolumns>
+        <column ID="job_schedule_id" sfwEntityField="JobScheduleID" />
+        <column ID="step_name" sfwEntityField="ScheduleStepName" />
+      </mappedcolumns>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+</entity>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmLastFiveDaysErrorMaintenance" sfwResource="-1" sfwFormObjectType="FormObject" sfwFormObject="busExceptionLog" sfwType="Maintenance" sfwTitle="Last Five Days Errors" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmLastFiveDaysErrorLookup" sfwEntity="entExceptionLog">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewObject" />
+    <callmethods sfwMode="Update" sfwMethodName="FindExceptionLogLastFiveDays" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="LastFiveDaysError Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwChart ID="chrLastFiveDaysError" ChartType="Line" Width="800" Height="500" sfwEntityField="lstErrorsInLastFiveDays" sfwGridEntity="entChartKeyValue">
+                  <Series>
+                    <sfwSeries Name="LastFiveDaysError" XValueMember="Key" YValueMembers="Value" ChartType="Line" />
+                  </Series>
+                  <ChartAreas>
+                    <sfwChartArea ChartAreaName="LastFiveDaysError">
+                      <Area3DStyle Enable3D="false" />
+                    </sfwChartArea>
+                  </ChartAreas>
+                </sfwChart>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstErrorsInLastFiveDays" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

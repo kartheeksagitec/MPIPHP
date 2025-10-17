@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_ZIP4]
+    FROM VARCHAR (4) NULL;
+

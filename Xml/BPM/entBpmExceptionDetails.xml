@@ -1,0 +1,124 @@
+﻿<entity ID="entBpmExceptionDetails" sfwView="False" sfwActive="True" sfwMainCDO="icdoBpmExceptionDetails" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgw_bpm_exception_details" sfwObjectID="busBpmExceptionDetails" sfwDataObjectID="doBpmExceptionDetails" CreateWithClass="True">
+  <attributes>
+    <attribute sfwValue="id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="long" sfwDBDataType="bigint" sfwIsNull="False" ID="Id" sfwCaption="ID" />
+    <attribute sfwValue="activity_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActivityInstanceId" sfwCaption="Activity Instance Id" />
+    <attribute sfwValue="exception_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="guid" sfwDBDataType="uniqueidentifier" sfwIsNull="False" ID="ExceptionInstanceId" sfwCaption="Exception Instance Id" />
+    <attribute sfwValue="exception_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="nvarchar" sfwDBDataType="nvarchar" sfwIsNull="False" ID="ExceptionType" sfwCaption="Exception Type" />
+    <attribute sfwValue="exception_message" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="nvarchar" sfwDBDataType="nvarchar" sfwIsNull="False" ID="ExceptionMessage" sfwCaption="Exception Message" />
+    <attribute sfwValue="roles" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="nvarchar" sfwDBDataType="nvarchar" sfwIsNull="True" ID="Roles" sfwCaption="Roles" />
+    <attribute sfwValue="retry_count" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RetryCount" sfwCaption="Retry Count" />
+    <attribute sfwValue="retry_frequency" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RetryFrequency" sfwCaption="Retry Frequency" />
+    <attribute sfwValue="next_retry" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="NextRetry" sfwCaption="Next Retry" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="2007" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute ID="objBpmActivityInstance" sfwPrivate="False" sfwEntity="entBpmActivityInstance" sfwValue="ibusBpmActivityInstance" sfwType="Object" />
+    <attribute ID="NotifyRole" sfwDataType="string" sfwPrivate="False" sfwValue="NotifyRole" sfwType="Property" />
+    <attribute ID="IstrProcessId" sfwDataType="string" sfwPrivate="False" sfwValue="istrProcessId" sfwType="Property" />
+    <attribute ID="IstrExceptionType" sfwDataType="string" sfwPrivate="False" sfwValue="istrExceptionType" sfwType="Property" />
+    <attribute ID="IintQuickFilter" sfwDataType="int" sfwPrivate="False" sfwValue="iintQuickFilter" sfwType="Property" />
+    <attribute ID="IdtStartDate" sfwDataType="datetime" sfwPrivate="False" sfwValue="idtStartDate" sfwType="Property" />
+    <attribute ID="IdtEndDate" sfwDataType="datetime" sfwPrivate="False" sfwValue="idtEndDate" sfwType="Property" />
+    <attribute ID="IstrUserID" sfwDataType="string" sfwPrivate="False" sfwValue="iobjPassInfo.istrUserID" sfwType="Property" />
+    <attribute ID="IstrActivityName" sfwDataType="string" sfwPrivate="False" sfwValue="istrActivityName" sfwType="Property" />
+    <attribute ID="IstrProcessName" sfwDataType="string" sfwPrivate="False" sfwValue="istrProcessName" sfwType="Property" />
+    <attribute ID="lstResults" sfwType="Collection" sfwValue="iclbResults" sfwEntity="entBpmExceptionDetails" sfwPrivate="False" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="machine_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="MachineName" sfwCaption="Machine Name" />
+    <attribute ID="lstStatistics" sfwType="Collection" sfwValue="iclbStatistics" sfwEntity="entBpmExceptionStatistics" sfwPrivate="False" />
+    <attribute ID="lstStatisticsByProcessName" sfwType="Collection" sfwValue="iclbStatisticsByProcessName" sfwEntity="entBpmExceptionStatistics" sfwPrivate="False" />
+    <attribute ID="lstStatisticsByExceptionType" sfwType="Collection" sfwValue="iclbStatisticsByExceptionType" sfwEntity="entBpmExceptionStatistics" sfwPrivate="False" />
+    <attribute ID="lstStatisticsByStatus" sfwType="Collection" sfwValue="iclbStatisticsByStatus" sfwEntity="entBpmExceptionStatistics" sfwPrivate="False" />
+    <attribute ID="NotifyProcessOwner" sfwDataType="bool" sfwPrivate="False" sfwValue="NotifyProcessOwner" sfwType="Property" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="GetProcessNames" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select DISTINCT P.NAME,CAST(P.PROCESS_ID as VARCHAR(10)) AS PROCESS_ID from SGW_BPM_EXCEPTION_DETAILS EX WITH(NOLOCK)&#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK) WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetExceptionTypes" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select DISTINCT EX.EXCEPTION_TYPE from SGW_BPM_EXCEPTION_DETAILS EX WITH(NOLOCK)&#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;INNER JOIN SGS_ROLES R WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK) WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="FilterDefaultLast4Hours" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select EX.*,A.NAME as ACTIVITY_NAME, P.NAME AS PROCESS_NAME from SGW_BPM_EXCEPTION_DETAILS  EX WITH(NOLOCK)&#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI  WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_ACTIVITY A  WITH(NOLOCK) on AI.ACTIVITY_ID = A.ACTIVITY_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI  WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P  WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R  WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR  WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK)  WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID&#xD;&#xA;WHERE EX.CREATED_DATE &gt; dateadd(HOUR, -4, getdate()) &#xD;&#xA;ORDER BY P.NAME, ex.EXCEPTION_TYPE;">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+      <mappedcolumns>
+        <column ID="activity_name" sfwEntityField="IstrActivityName" />
+        <column ID="process_name" sfwEntityField="IstrProcessName" />
+      </mappedcolumns>
+    </query>
+    <query ID="StatisticsDefaultLast4Hours" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select Count(ID) NoOfExceptions, P.NAME,EX.EXCEPTION_TYPE from SGW_BPM_EXCEPTION_DETAILS  EX WITH(NOLOCK) &#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK) WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID&#xD;&#xA;WHERE EX.CREATED_DATE &gt; dateadd(HOUR, -4, getdate()) &#xD;&#xA;GROUP BY P.NAME, ex.EXCEPTION_TYPE;">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="FilterByDateRange" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select EX.*,A.NAME as ACTIVITY_NAME, P.NAME AS PROCESS_NAME from SGW_BPM_EXCEPTION_DETAILS  EX WITH(NOLOCK)&#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI  WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_ACTIVITY A  WITH(NOLOCK) on AI.ACTIVITY_ID = A.ACTIVITY_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI  WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P  WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R  WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR  WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK)  WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID&#xD;&#xA;WHERE EX.CREATED_DATE BETWEEN @startdate and @enddate &#xD;&#xA;ORDER BY P.NAME, ex.EXCEPTION_TYPE;">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+        <parameter ID="@startdate" sfwDataType="DateTime" />
+        <parameter ID="@enddate" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="StatisticsByDateRange" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select Count(ID) NoOfExceptions, P.NAME,EX.EXCEPTION_TYPE from SGW_BPM_EXCEPTION_DETAILS  EX WITH(NOLOCK) &#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK) WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID&#xD;&#xA;WHERE EX.CREATED_DATE BETWEEN @startdate and @enddate &#xD;&#xA;GROUP BY P.NAME, ex.EXCEPTION_TYPE;">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+        <parameter ID="@startdate" sfwDataType="DateTime" />
+        <parameter ID="@enddate" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="DefaultFilter" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select EX.*,A.NAME as ACTIVITY_NAME, P.NAME AS PROCESS_NAME from SGW_BPM_EXCEPTION_DETAILS  EX WITH(NOLOCK)&#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI  WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_ACTIVITY A  WITH(NOLOCK) on AI.ACTIVITY_ID = A.ACTIVITY_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI  WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P  WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R  WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR  WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK)  WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="DefaultStatistics" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select Count(ID) NoOfExceptions, P.NAME,EX.EXCEPTION_TYPE from SGW_BPM_EXCEPTION_DETAILS  EX WITH(NOLOCK) &#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK) WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID&#xD;&#xA;GROUP BY P.NAME, ex.EXCEPTION_TYPE">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods>
+    <method ID="Search" sfwMethodType="Other">
+      <item ID="LoadDashboardData" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+    <method ID="LoadMethod" sfwMethodType="Load" sfwMode="All" sfwDescription="Load Method">
+      <item ID="LoadDashboardData" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+    <method ID="LoadInfoMethod" sfwMethodType="Load" sfwMode="All">
+      <item ID="IstrProcessId" sfwParameter="IstrProcessId" sfwItemType="Property" sfwDataType="string" />
+      <parameter ID="IstrProcessId" sfwDataType="string" />
+      <item ID="IstrExceptionType" sfwParameter="IstrExceptionType" sfwItemType="Property" sfwDataType="string" />
+      <item ID="Filter" sfwItemType="Method" sfwDataType="Void" />
+      <parameter ID="IstrExceptionType" sfwDataType="string" />
+    </method>
+  </methods>
+  <lifecycle />
+  <objectmethods>
+    <method ID="Filter" sfwReturnType="Void" />
+    <method ID="ProcessExceptions" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aarrSelectedObjects" sfwDataType="arraylist" />
+      </parameters>
+    </method>
+    <method ID="LoadDashboardData" sfwReturnType="Void" />
+    <method ID="FilterExceptions" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

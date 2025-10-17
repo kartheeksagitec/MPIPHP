@@ -1,0 +1,120 @@
+﻿<form xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="wfmBPMProcessLookup" sfwRemoteObject="srvBPMN" sfwType="Lookup" sfwTitle="BPM Process Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBPMProcessLookup" sfwEntity="entBpmProcess" sfwGridCollection="busBPNMProcessLookup.iclbBpmProcess" sfwApplyXSLT="False" sfwResource="20007009">
+  <initialload>
+    <query ID="cdoBpmProcess" sfwQueryRef="entBpmProcess.Lookup" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Search Criteria">
+          <sfwTable ID="Criteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctCriteria">
+                  <Tabs>
+                    <sfwTabSheet ID="tshCriteria" HeaderText="Criteria">
+                      <sfwTable ID="tblCriteria">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capName" Text="Process Name : " AssociatedControlID="ddlName" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlName" sfwDataField="process_id" sfwQueryID="cdoBpmProcess" sfwOperator="in" DataTextField="name" DataValueField="process_id" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetAllProcess" sfwDataType="Numeric" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="capTypeValue" Text="Type : " AssociatedControlID="ddlTypeValue" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlTypeValue" sfwDataField="type_value" sfwQueryID="cdoBpmProcess" sfwOperator="in" DataTextField="description" DataValueField="code_value" sfwLoadType="CodeGroup" sfwLoadSource="3003" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capStatusValue" Text="Status : " AssociatedControlID="ddlStatusValue" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlStatusValue" sfwDataField="status_value" sfwQueryID="cdoBpmProcess" sfwOperator="in" DataTextField="description" DataValueField="code_value" sfwLoadType="CodeGroup" sfwLoadSource="3002" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capCurrentVersion" Text="Show All Versions :" AssociatedControlID="chkCurrentVersion" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwCheckBox ID="chkCurrentVersion" sfwDataField="current_version" sfwQueryID="cdoBpmProcess" sfwDefaultValue="Y" sfwValueChecked="N" sfwValueUnChecked="Y" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                            <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" ImageUrl="~/Images/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" sfwActiveForm="wfmBPMProcessMaintenance" Text="Open" sfwNavigationParameter="aintProcessId=ProcessId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many" AllowEditing="True" sfwTwoWayBinding="True">
+                  <Columns>
+                    <TemplateField HeaderText="Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Case Id">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CaseId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Case Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CaseName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails />
+</form>

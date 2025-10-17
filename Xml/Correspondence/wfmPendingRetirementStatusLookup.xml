@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmPendingRetirementStatusLookup" WebSite="MPIPHPWebClient" sfwResource="400 " sfwRemoteObject="srvCorrespondence" sfwType="Lookup" sfwTitle="Pending Retirement Status Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmPendingRetirementStatusLookup" sfwMaxCount="5000" sfwEntity="entCorPacketContentTracking" sfwGridCollection="busPendingRetirementPacketStatusLookup.iclbCorPacketContentTracking">
+  <initialload>
+    <query ID="cdoCorPacketContent" sfwQueryRef="entCorPacketContent.PendingRetirementPacketTrackingLookup" sfwMethodName="LoadPendingRetirementPacketStatus" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria" CssClass="fullWidth">
+          <sfwTable ID="Criteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctCriteria">
+                  <Tabs>
+                    <sfwTabSheet ID="tshCriteria" HeaderText="Criteria">
+                      <sfwTable ID="tblCriteria">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capCpctRetirementDateFrom" Text="Retirement Date From : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtCpctRetirementDateFrom" sfwQueryID="cdoCorPacketContent" sfwDataField="cpct.retirement_date" sfwOperator="between" sfwRelatedControl="txtCpctRetirementDateTo" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                            <CompareValidator ID="valCpctRetirementDateFrom" Text="*" Operator="DataTypeCheck" ControlToValidate="txtCpctRetirementDateFrom" Type="Date" ErrorMessage="Retirement Date From must be in mm/dd/yyyy format." />
+                            <sfwLabel ID="lblLabeldatefrom" SkinID="ReqInformation" Text="  *" sfwIsCaption="True" CssClass="hideControl" Font.Bold="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="capCpctRetirementDateTo" Text="Retirement Date To : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtCpctRetirementDateTo" sfwQueryID="cdoCorPacketContent" sfwDataField="cpct.retirement_date" sfwOperator="between" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                            <CompareValidator ID="valCpctRetirementDateTo" Text="*" Operator="DataTypeCheck" ControlToValidate="txtCpctRetirementDateTo" Type="Date" ErrorMessage="Retirement Date To must be in mm/dd/yyyy format." />
+                            <CompareValidator ID="valCpctRetirementDateRange" Text="*" Operator="GreaterThanEqual" ControlToValidate="txtCpctRetirementDateTo" ControlToCompare="txtCpctRetirementDateFrom" ErrorMessage="Retirement Date To cannot be less than Retirement Date From." Type="Date" />
+                            <sfwLabel ID="lblLabeldateto" SkinID="ReqInformation" Text="  *" sfwIsCaption="True" CssClass="hideControl" Font.Bold="True" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" OnClientClick="ValidateRequiredField" />
+                            <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshAdvSort" HeaderText="Adv. Sort" Visible="False">
+                      <sfwTable ID="tblAdvSort">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwAdvSort ID="AdvSort" sfwRelatedControl="dgrResult" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnApplySort" sfwMethodName="btnApplySort_Click" sfwOperateOn="tblAdvSort" sfwRelatedControl="dgrResult" Text="Apply Sort" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" ImageUrl="~/Image/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" sfwActiveForm="wfmPacketTrackingMaintenance" Text="Open" sfwNavigationParameter="aintTrackingId=TrackingId" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Image/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many" PageSize="100" sfwSortExpression="RetirementDate" SortExpressionUpdated="true">
+                  <Columns>
+                    <TemplateField HeaderText="Analyst Assigned" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExportExcel" sfwEntityField="ANALYSTNAME" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Tracking ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="TrackingId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Date" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwRelatedControl="btnExportExcel" sfwEntityField="RetirementDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExportExcel" sfwEntityField="AccessPlan" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPI Person Id" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExportExcel" sfwEntityField="MPID" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retiree Name" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExportExcel" sfwEntityField="NAME" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Category" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExportExcel" sfwEntityField="TEMPLATEDESC" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Mailed Date" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwRelatedControl="btnExportExcel" sfwEntityField="MailedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received Date" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwRelatedControl="btnExportExcel" sfwEntityField="ReceivedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Status" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExportExcel" sfwEntityField="PacketStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Access Paket Status" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExportExcel" sfwEntityField="AccessPaketStatus" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Monthly Cycle" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwRelatedControl="btnExportExcel" sfwEntityField="AccessMonthlyCycle" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Email Address" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExportExcel" sfwEntityField="EMAILADDRESS1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Phone Number" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:(###)###-####}" sfwRelatedControl="btnExportExcel" sfwEntityField="CELLPHONENO" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

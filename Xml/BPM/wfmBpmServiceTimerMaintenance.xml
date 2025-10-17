@@ -1,0 +1,155 @@
+﻿<form ID="wfmBpmServiceTimerMaintenance" sfwType="Maintenance" sfwEntity="entBpmServiceTimer" sfwTitle="BPM Service Timer Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBpmServerSettingsLookup" sfwResource="20007024">
+  <initialload>
+    <callmethods sfwMethodName="FindServiceTimers" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" ToolTip="Save BPM Service Timer changes" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" ToolTip="Refresh BPM Service Timer data" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain">
+          <sfwPanel ID="pnlServerConfigurations" sfwCaption="Service Configurations">
+            <sfwTable ID="tblServerConfigurations">
+              <sfwRow>
+                <sfwColumn>
+                  <sfwButton ID="btnAddTimer" sfwMethodName="btnAddNewChild_Click" Text="Add Timer" sfwRelatedControl="grvServiceTimers" />
+                  <sfwButton ID="btnDelete" sfwMethodName="btnGridViewDelete_Click" Text="Delete" Visible="False" sfwRelatedControl="grvServiceTimers" />
+                </sfwColumn>
+              </sfwRow>
+              <sfwRow>
+                <sfwColumn>
+                  <sfwGridView ID="grvServiceTimers" AllowEditing="True" sfwEntityField="lstDefaultServiceTimers" sfwBoundToQuery="False" sfwTwoWayBinding="True">
+                    <Columns>
+                      <TemplateField HeaderText="ID" Visible="False">
+                        <ItemTemplate>
+                          <sfwLabel sfwEntityField="ServiceTimerId" />
+                        </ItemTemplate>
+                      </TemplateField>
+                      <TemplateField HeaderText="Action Method">
+                        <ItemTemplate>
+                          <sfwTextBox ID="txtActionMethod" sfwEntityField="ActionMethod" sfwTwoWayBinding="False" />
+                        </ItemTemplate>
+                      </TemplateField>
+                      <TemplateField HeaderText="Interval">
+                        <ItemTemplate>
+                          <sfwTextBox ID="txtInterval" sfwEntityField="Interval" sfwTwoWayBinding="False" />
+                        </ItemTemplate>
+                      </TemplateField>
+                      <TemplateField HeaderText="Enabled">
+                        <ItemTemplate>
+                          <sfwCheckBox ID="chkEnabled" sfwEntityField="Enabled" />
+                        </ItemTemplate>
+                      </TemplateField>
+                    </Columns>
+                    <Parameters />
+                  </sfwGridView>
+                </sfwColumn>
+              </sfwRow>
+            </sfwTable>
+          </sfwPanel>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlServerSettings" sfwCaption="Server Settings">
+          <sfwTable ID="tblServerSettings">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnAdd" sfwMethodName="btnAddNewChild_Click" Text="Add Server Settings" sfwRelatedControl="grvServerSettings" />
+                <sfwButton ID="btnDeleteServerSettings" sfwMethodName="btnGridViewDelete_Click" Text="Delete" Visible="False" sfwRelatedControl="grvServerSettings" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="grvServerSettings" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwEntityField="lstSeverSettings" sfwSortExpression="ServiceTimerId">
+                  <Columns>
+                    <TemplateField HeaderText="ID" ItemStyle.HorizontalAlign="Center" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ServiceTimerId" ID="lblLabel2" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="ServerName" HeaderText="Server Name">
+                      <ItemTemplate>
+                        <sfwDropDownList ID="ddlServerName" sfwEntityField="ServerId" sfwLoadType="Query" sfwLoadSource="entServers.GetServerName" DataTextField="server_name" DataValueField="server_id" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="ServiceTimerId" HeaderText="Action Method">
+                      <ItemTemplate>
+                        <sfwDropDownList ID="ddlDropDownList" sfwEntityField="ServiceTimerId" sfwTwoWayBinding="False" sfwLoadType="Query" sfwLoadSource="entBpmServiceTimer.GetActionMethod" DataTextField="action_method" DataValueField="service_timer_id" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Server Id" ItemStyle.HorizontalAlign="Center" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel3" sfwEntityField="ServerId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="Interval" HeaderText="Interval">
+                      <ItemTemplate>
+                        <sfwTextBox ID="txtLabel4" sfwEntityField="Interval" sfwDataType="Numeric" sfwShowZero="True" sfwDataFormat="{0:999999}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Enabled" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwCheckBox ID="chkCheckBox" sfwEntityField="Enabled" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwEntityField="UpdateSeq" sfwTwoWayBinding="True" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails>
+    <entityfield ID="lstDefaultServiceTimers" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstSeverSettings" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

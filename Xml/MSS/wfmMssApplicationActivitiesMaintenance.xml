@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMssApplicationActivitiesMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvMPIPHPMSS" sfwResource="790 " sfwType="Maintenance" sfwTitle="Mss Application Activities Maintenance" version="3.5" sfwEntity="entMssHome">
+  <initialload>
+    <callmethods sfwMethodName="FindActivitiesForProcess" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeader" sfwCollapsible="False">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn CssClass="NaviHeadtxt15Size">
+                <sfwLiteral ID="ltrLiteral" Text="Application Details" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Application Details" sfwCollapsible="False">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn Visible="False">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvApplicationActivties" PageSize="15" sfwSelection="One" sfwEntityField="lstApplicationActivties" sfwGridEntity="entApplication_Process">
+                  <Columns>
+                    <TemplateField HeaderText="IdtStartTime" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtStartTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrDisplayMessage" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="IstrName" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <rowformat sfwEntityField="IstrStatusDescription">
+                    <Conditions>
+                      <condition value="Pending" cssclass="Pending" />
+                      <condition value="In Progress" cssclass="Current" />
+                    </Conditions>
+                  </rowformat>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AutoGenerateColumns="False" BorderStyle="Solid" BorderWidth="1px" CssClass="status-grid" ID="grvApplicationActivitiesForUser" PageSize="20" SkinID="MSS" sfwEntityField="lstApplicationActivitiesForUser" sfwGridEntity="entApplication_Process">
+                  <Columns>
+                    <TemplateField HeaderText="Application" FooterStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Center" HeaderStyle.Width="500px" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrDisplayMessage" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="IstrStatusValue" Visible="False" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrStatusValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtCompletionDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <rowformat sfwEntityField="IstrStatusValue">
+                    <Conditions>
+                      <condition value="INPC" cssclass="Current" />
+                      <condition value="UNPC" cssclass="Pending" />
+                      <condition value="PROC" cssclass="Completed" />
+                    </Conditions>
+                  </rowformat>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCancelForm" sfwCaption="Cancellation Form">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLinkButton ID="btnLinkButton" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="CANCEL_FORM.pdf" Text="Download Cancellation Form" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstApplicationActivties" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstApplicationActivitiesForUser" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

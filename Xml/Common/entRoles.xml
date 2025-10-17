@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entRoles" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvAdmin" sfwType="BusinessRule" sfwMainCDO="icdoRoles" sfwObjectID="busRoles" sfwTableName="sgs_roles" sfwDataObjectID="doRoles">
+  <rules>
+    <rule ID="Duplicate Desc New" sfwMessageId="5070" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entRoles.CountByDescNew&quot;, this.icdoRoles.role_description) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="Duplicate Desc Update" sfwMessageId="5070" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entRoles.CountByDescUpdate&quot;, this.icdoRoles.role_description, this.icdoRoles.role_id) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK ROLE DESC IS BLANK" sfwMessageId="2006" sfwExpression="(string.IsNullOrEmpty(this.icdoRoles.role_description))" sfwObjectBased="True" />
+    <rule ID="Rule Delete Roles User not Active" sfwMessageId="5106" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entRoles.checkUserStatus&quot;, this.icdoRoles.role_id) &gt; 0)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="Duplicate Desc New" sfwMode="New" sfwStatus="Active" />
+    <item ID="Duplicate Desc Update" sfwMode="Update" sfwStatus="Active" />
+    <item ID="RULE CHECK ROLE DESC IS BLANK" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete>
+    <item ID="Rule Delete Roles User not Active" sfwMode="All" sfwStatus="Active" />
+  </validatedelete>
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_roles &#xD;&#xA; order by role_description&#xD;&#xA;&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="ListOfUnassignedRolesByUser" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SGS_ROLES.ROLE_ID, ROLE_DESCRIPTION FROM SGS_ROLES &#xD;&#xA;WHERE ROLE_ID NOT IN(SELECT ROLE_ID FROM SGS_USER_ROLES WHERE SGS_USER_ROLES.USER_SERIAL_ID = @USER_SERIAL_ID) ">
+      <parameters>
+        <parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="ListOfUnassignedRolesByResource" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SGS_ROLES.ROLE_ID, ROLE_DESCRIPTION FROM SGS_ROLES &#xD;&#xA;  WHERE ROLE_ID NOT IN(SELECT ROLE_ID FROM SGS_SECURITY WHERE SGS_SECURITY.SECURITY_VALUE &lt;&gt; 0 &#xD;&#xA;  AND RESOURCE_ID = @RESOURCE_ID) ">
+      <parameters>
+        <parameter ID="@RESOURCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="ListOfRoles" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select role_id, role_description from sgs_roles order by role_description ">
+      <parameters />
+    </query>
+    <query ID="CountByDescNew" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) &#xD;&#xA;  from sgs_roles&#xD;&#xA; where role_description = @role_description">
+      <parameters>
+        <parameter ID="@role_description" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="CountByDescUpdate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) &#xD;&#xA;  from sgs_roles&#xD;&#xA; where role_description = @role_description&#xD;&#xA;and role_id &lt;&gt; @role_id">
+      <parameters>
+        <parameter ID="@role_description" sfwDataType="string" />
+        <parameter ID="@role_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="checkUserStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from SGS_USER_ROLES UR, SGS_USER U where &#xD;&#xA;UR.role_id=@role_id and &#xD;&#xA;U.USER_SERIAL_ID=UR.USER_SERIAL_ID &#xD;&#xA;AND U.USER_STATUS_VALUE='A'">
+      <parameters>
+        <parameter ID="@role_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="rptResourceBySecurityRole" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT R.ROLE_DESCRIPTION AS ROLENAME,RES.RESOURCE_DESCRIPTION AS RESOURCENAME, CV.DESCRIPTION AS RESOURCE_TYPE,CV1.DESCRIPTION AS SECURITY_LEVEL FROM SGS_ROLES R&#xD;&#xA;JOIN SGS_SECURITY S ON R.ROLE_ID = S.ROLE_ID AND S.SECURITY_VALUE &lt;&gt; 0&#xD;&#xA;JOIN SGS_RESOURCES RES ON S.RESOURCE_ID = RES.RESOURCE_ID&#xD;&#xA;JOIN SGS_CODE_VALUE CV ON RES.RESOURCE_TYPE_ID = CV.CODE_ID AND RES.RESOURCE_TYPE_VALUE = CV.CODE_VALUE&#xD;&#xA;JOIN SGS_CODE_VALUE CV1 ON S.SECURITY_ID = CV1.CODE_ID AND CAST(S.SECURITY_VALUE AS VARCHAR(4)) = CV1.CODE_VALUE">
+      <parameters />
+    </query>
+    <query ID="RolesForDropDown" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT  ROLE_ID,ROLE_DESCRIPTION &#xD;&#xA;FROM   SGS_ROLES WITH(NOLOCK) &#xD;&#xA;ORDER BY  ROLE_DESCRIPTION">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="role_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RoleId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="role_description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="False" ID="RoleDescription" sfwIsSequence="False" sfwCaption="Role Description" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

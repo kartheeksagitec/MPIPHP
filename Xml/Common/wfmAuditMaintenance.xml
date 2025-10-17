@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmAuditMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvAudit" sfwResource="200 " sfwType="Maintenance" sfwTitle="Audit history" version="3.5" sfwEntity="entAuditLookup">
+  <initialload>
+    <callmethods sfwMethodName="GetAuditDetails" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Summary audit information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrHdr" PageSize="5" sfwEntityField="lstLookupResult" sfwGridEntity="entAudit">
+                  <Columns>
+                    <TemplateField HeaderText="Transaction ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="dgrDtl" sfwEntityField="AuditLogId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Form Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FormName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Table Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TableName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Primary Key">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PrimaryKey" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Change">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ChangeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Detail audit information">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrDtl" sfwObjectID="iclcAuditLogDetail">
+                  <Columns>
+                    <TemplateField HeaderText="Transaction ID" SortExpression="audit_log_id">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="audit_log_id" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Column Name" SortExpression="column_name">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="column_name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Old Value" SortExpression="old_value">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="old_value" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="New Value" SortExpression="new_value">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="new_value" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstLookupResult" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

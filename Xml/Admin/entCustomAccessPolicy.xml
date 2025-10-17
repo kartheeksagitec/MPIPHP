@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entCustomAccessPolicy" sfwMainCDO="icdoCustomAccessPolicy" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busCustomAccessPolicy" sfwTableName="sgs_custom_access_policy" sfwView="False" sfwDataObjectID="doCustomAccessPolicy">
+  <queries>
+    <query ID="DeleteRecordsIFNotCAH" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DELETE FROM SGS_CUSTOM_ACCESS_POLICY WHERE USER_SERIAL_ID = @USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="ByUser" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_CUSTOM_ACCESS_POLICY WHERE USER_SERIAL_ID = @USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="custom_access_policy_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="CustomAccessPolicyId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="user_serial_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UserSerialId" sfwIsSequence="False" sfwCaption="User Serial Id" />
+    <attribute sfwType="Description" ID="WeekdayDescription" sfwCaption="Weekday" sfwValue="weekday_description" />
+    <attribute sfwValue="weekday_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="WeekdayId" sfwIsSequence="False" sfwCaption="Weekday" />
+    <attribute sfwValue="weekday_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="WeekdayValue" sfwIsSequence="False" sfwCaption="Weekday" />
+    <attribute sfwValue="from_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="4,2" sfwIsNull="True" ID="FromTime" sfwIsSequence="False" sfwCaption="From Time" />
+    <attribute sfwValue="to_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="4,2" sfwIsNull="True" ID="ToTime" sfwIsSequence="False" sfwCaption="To Time" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

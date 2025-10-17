@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entQdroCalculationHeader" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoQdroCalculationHeader" sfwObjectID="busQdroCalculationHeader" sfwTableName="sgt_qdro_calculation_header" sfwView="False" sfwDataObjectID="doQdroCalculationHeader">
+  <rules>
+    <rule ID="Rule - ApplicationIdIsZero" sfwExpression="(this.icdoQdroCalculationHeader.qdro_application_id == 0)" sfwObjectBased="True" />
+    <rule ID="Rule - CalculationIdIsNotZero" sfwExpression="!(this.icdoQdroCalculationHeader.qdro_calculation_header_id == 0)" sfwObjectBased="True" />
+    <rule ID="Rule - CheckValidBenefitCommencementDate" sfwMessageId="5459" sfwExpression="(this.CheckValidBenefitCommencementDate() == False)" sfwObjectBased="True" />
+    <rule ID="Rule - CheckValidCommunityPropertyEndDate" sfwMessageId="5473" sfwExpression="(this.CheckValidCommunityPropertyEndDate() == False)" sfwObjectBased="True" />
+    <rule ID="Rule - CommencementDateGreaterThanERD" sfwMessageId="5415" sfwExpression="!(this.icdoQdroCalculationHeader.is_participant_disabled == &quot;Y&quot;) &amp;&amp; &#xA;(this.CheckCommnencementDateLessThanERD() == True) &amp;&amp; &#xA;!(this.icdoQdroCalculationHeader.iintPlanId == 1)" sfwObjectBased="True" />
+    <rule ID="Rule - DateOfMarriageCannotbeNull" sfwMessageId="1106" sfwExpression="(this.CheckIfDateOfMarriageIsRequired() == True)" sfwObjectBased="True" />
+    <rule ID="Rule - DateOfSeperationCannotbeNull" sfwMessageId="5423" sfwExpression="(this.CheckIfDateOfSeperationIsRequired() == True)" sfwObjectBased="True" />
+    <rule ID="Rule - EligibleForDisabilityBenefits" sfwMessageId="5434" sfwExpression="(this.CheckEligiblePlansForDisability() == False)" sfwObjectBased="True" />
+    <rule ID="Rule - PlanIsMPIPPorIAP" sfwExpression="(this.icdoQdroCalculationHeader.iintPlanId == 1) || &#xA;(this.icdoQdroCalculationHeader.iintPlanId == 2)" sfwObjectBased="True" />
+    <rule ID="Rule - PlanIsNotMPIPPAndIAP" sfwExpression="!(this.icdoQdroCalculationHeader.iintPlanId == 1) || &#xA;!(this.icdoQdroCalculationHeader.iintPlanId == 2)" sfwObjectBased="True" />
+    <rule ID="Rule - ShowApproveButton" sfwExpression="!(this.icdoQdroCalculationHeader.status_value == &quot;APPR&quot;) &amp;&amp; &#xA;!(this.icdoQdroCalculationHeader.status_value == &quot;CANC&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule - ShowCalculateandSaveButton" sfwExpression="((this.icdoQdroCalculationHeader.calculation_type_value == &quot;ESTI&quot;)||(this.icdoQdroCalculationHeader.calculation_type_value == &quot;FINL&quot;)|| &#xA;(this.icdoQdroCalculationHeader.calculation_type_value == &quot;ADCL&quot;))&amp;&amp;(this.icdoQdroCalculationHeader.status_value == &quot;PEND&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule - ShowCancelButton" sfwExpression="!(this.icdoQdroCalculationHeader.status_value == &quot;CANC&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule - ShowContributionPanel" sfwExpression="!(this.icdoQdroCalculationHeader.qdro_calculation_header_id == 0) &amp;&amp; &#xA;((this.icdoQdroCalculationHeader.iintPlanId == 1) || &#xA;(this.icdoQdroCalculationHeader.iintPlanId == 2))" sfwObjectBased="True" />
+    <rule ID="Rule - ShowIsApplicableforIAPCheckbox" sfwExpression="(this.icdoQdroCalculationHeader.iintPlanId == 2) &amp;&amp; &#xA;(this.icdoQdroCalculationHeader.calculation_type_value == &quot;ESTI&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule - ShowPlanDetails" sfwExpression="((this.icdoQdroCalculationHeader.calculation_type_value == &quot;ESTI&quot;)||(this.icdoQdroCalculationHeader.calculation_type_value == &quot;FINL&quot;)|| &#xD;&#xA;(this.icdoQdroCalculationHeader.calculation_type_value == &quot;ADCL&quot;))" sfwObjectBased="True" />
+    <rule ID="Rule- DateOfSepGreaterThanDateOfMarr" sfwMessageId="5477" sfwExpression="!(this.CheckIfDateOfSeperationIsRequired() == True) &amp;&amp; &#xA;!(this.CheckIfDateOfMarriageIsRequired() == True) &amp;&amp; &#xA;(this.CheckValidDateOfSeperation() == False)" sfwObjectBased="True" />
+    <rule ID="Rule-DateOfMarriageNotFutureDate" sfwMessageId="5456" sfwExpression="!(this.CheckIfDateOfMarriageIsRequired() == True) &amp;&amp; &#xA;(this.icdoQdroCalculationHeader.date_of_marriage &gt;= RFunc.CurrentDate())" sfwObjectBased="True" />
+    <rule ID="Rule-DateOfSeprationNotFutureDate" sfwMessageId="5457" sfwExpression="!(this.CheckIfDateOfSeperationIsRequired() == True) &amp;&amp; &#xA;(this.icdoQdroCalculationHeader.date_of_seperation &gt; RFunc.CurrentDate())" sfwObjectBased="True" />
+    <rule ID="ShowEarliestEligibleDate" sfwExpression="(this.icdoQdroCalculationHeader.calculation_type_value == &quot;ESTI&quot;)" sfwObjectBased="True" />
+    <rule ID="ShowFinalEstimateCheckbox" sfwExpression="(this.icdoQdroCalculationHeader.calculation_type_value == &quot;ESTI&quot;)" sfwObjectBased="True" />
+    <rule ID="ShowPlanColumnasLabel" sfwExpression="!(this.icdoQdroCalculationHeader.iintPlanId == 1) &amp;&amp; &#xA;!(this.icdoQdroCalculationHeader.iintPlanId == 2)" sfwObjectBased="True" />
+    <rule ID="ShowRetTypeColumn" sfwExpression="!(this.icdoQdroCalculationHeader.is_participant_disabled == &quot;Y&quot;)" sfwObjectBased="True" />
+    <rule ID="ShowRetTypeDisabiltyColumn" sfwExpression="(this.icdoQdroCalculationHeader.is_participant_disabled == &quot;Y&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleRule - ShowRefreshCalculationButton" sfwExpression="(this.icdoQdroCalculationHeader.calculation_type_value == &quot;FINL&quot; || this.icdoQdroCalculationHeader.calculation_type_value == &quot;ADCL&quot;) &amp;&amp; &#xA;(this.icdoQdroCalculationHeader.status_value == &quot;PEND&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-ParticipantAmount" sfwExpression="(this.idecParticipantAmount &gt; 0)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-ParticipantsAmountIsZero" sfwExpression="!(this.idecParticipantAmount &gt; 0)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-PayeeAccountButton" sfwRuleType="Validation" sfwExpression="this.icdoQdroCalculationHeader.iintPayeeAccountId &gt; 0" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="Rule - ApplicationIdIsZero" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - CalculationIdIsNotZero" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - ShowCalculateandSaveButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - ShowApproveButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - ShowCancelButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - ShowPlanDetails" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - PlanIsNotMPIPPAndIAP" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - PlanIsMPIPPorIAP" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - ShowContributionPanel" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - ShowIsApplicableforIAPCheckbox" sfwMode="All" sfwStatus="Active" />
+    <item ID="ShowPlanColumnasLabel" sfwMode="All" sfwStatus="Active" />
+    <item ID="ShowRetTypeDisabiltyColumn" sfwMode="All" sfwStatus="Active" />
+    <item ID="ShowRetTypeColumn" sfwMode="All" sfwStatus="Active" />
+    <item ID="ShowEarliestEligibleDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="ShowFinalEstimateCheckbox" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-ParticipantAmount" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-ParticipantsAmountIsZero" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule - ShowRefreshCalculationButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-PayeeAccountButton" sfwStatus="Active" sfwMode="All" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <item ID="Rule - CommencementDateGreaterThanERD" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - DateOfSeperationCannotbeNull" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - DateOfMarriageCannotbeNull" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-DateOfMarriageNotFutureDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-DateOfSeprationNotFutureDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - CheckValidBenefitCommencementDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule- DateOfSepGreaterThanDateOfMarr" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT HDR.*,DTL.*,PLN.PLAN_NAME as istrPlanDescription,HDR.QDRO_APPLICATION_ID,&#xD;&#xA; hdr.DATE_OF_MARRIAGE, hdr.DATE_OF_SEPERATION,&#xD;&#xA;(sp.FIRST_NAME + ' ' + sp.LAST_NAME) as ParticipantName,&#xD;&#xA; (SP1.FIRST_NAME + ' ' + SP1.LAST_NAME) as AlternatePayeeName,&#xD;&#xA;  sp.MPI_PERSON_ID, sp1.MPI_PERSON_ID as AlternatePayeeMPIId, scv.description as QDROModelDescription,&#xD;&#xA;  sda.CASE_NUMBER, sda.RECEIVED_DATE,sda.QUALIFIED_DATE,&#xD;&#xA;    istrRelativeVipFlag =(&#xD;&#xA;        SELECT CASE WHEN (COUNT(*) &gt; 0 OR SP.VIP_FLAG='Y') THEN 'Y' ELSE 'N' END FROM SGT_RELATIONSHIP SR&#xD;&#xA;        INNER JOIN SGT_PERSON SPP ON SPP.PERSON_ID = SR.PERSON_ID WHERE (SR.BENEFICIARY_PERSON_ID = SP.PERSON_ID OR SR.DEPENDENT_PERSON_ID = SP.PERSON_ID) &#xD;&#xA;        AND SPP.VIP_FLAG = 'Y'&#xD;&#xA;            )&#xD;&#xA;FROM SGT_QDRO_CALCULATION_HEADER HDR WITH(NOLOCK) &#xD;&#xA;INNER JOIN SGT_QDRO_CALCULATION_DETAIL DTL WITH(NOLOCK) &#xD;&#xA;ON DTL.QDRO_CALCULATION_HEADER_ID = HDR.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;left outer join sgt_dro_application sda on sda.DRO_APPLICATION_ID = HDR.QDRO_APPLICATION_ID&#xD;&#xA;INNER JOIN SGT_PERSON SP WITH(NOLOCK) ON SP.PERSON_ID = HDR.PERSON_ID&#xD;&#xA;INNER JOIN SGT_PERSON SP1 WITH(NOLOCK) ON SP1.PERSON_ID = HDR.ALTERNATE_PAYEE_ID&#xD;&#xA;INNER JOIN SGT_PLAN PLN WITH(NOLOCK)  ON PLN.PLAN_ID = DTL.PLAN_ID&#xD;&#xA;left outer join sgs_code_value scv on scv.code_id = dtl.qdro_model_id and scv.code_value = dtl.qdro_model_value&#xD;&#xA;where (HDR.MSS_FLAG IS NULL OR MSS_FLAG &lt;&gt; 'Y')">
+      <parameters />
+    </query>
+    <query ID="GetQDROOffSet" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA;SELECT &#xD;&#xA;istrIsFinal = CASE WHEN SQCH.CALCULATION_TYPE_VALUE='FINL' THEN 'Y' ELSE 'N' END, &#xD;&#xA;SQCD.QDRO_CALCULATION_DETAIL_ID&#xD;&#xA;,SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;,SQCD.QDRO_APPLICATION_DETAIL_ID&#xD;&#xA;,SQCD.PERSON_ACCOUNT_ID&#xD;&#xA;,SQCD.PLAN_ID&#xD;&#xA;,SQCD.VESTED_DATE&#xD;&#xA;,SQCD.BENEFIT_SUBTYPE_ID&#xD;&#xA;,SQCD.BENEFIT_SUBTYPE_VALUE&#xD;&#xA;,SQCD.UNREDUCED_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.FINAL_MONTHLY_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.EARLY_REDUCTION_FACTOR&#xD;&#xA;,SQCD.EARLY_REDUCED_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.ADDITIONAL_ACCRUED_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.ACTUARIAL_ACCRUED_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.IAP_BALANCE_AMOUNT&#xD;&#xA;,SQCD.SPECIAL_ACCOUNT_BALANCE_AMOUNT&#xD;&#xA;,SQCD.MINIMUM_GUARANTEE_AMOUNT&#xD;&#xA;,SQCD.MEMBER_EXCLUSION_AMOUNT&#xD;&#xA;,SQCD.STATUS_ID&#xD;&#xA;,SQCD.STATUS_VALUE&#xD;&#xA;,SQCD.CREATED_BY&#xD;&#xA;,SQCD.CREATED_DATE&#xD;&#xA;,SQCD.MODIFIED_BY&#xD;&#xA;,SQCD.MODIFIED_DATE&#xD;&#xA;,SQCD.UPDATE_SEQ&#xD;&#xA;,SQCD.QDRO_MODEL_ID&#xD;&#xA;,SQCD.QDRO_MODEL_VALUE&#xD;&#xA;,SQCD.BENEFIT_CALCULATION_BASED_ON_ID&#xD;&#xA;,SQCD.BENEFIT_CALCULATION_BASED_ON_VALUE&#xD;&#xA;,SQCD.TOTAL_SERVICE&#xD;&#xA;,SQCD.COMMUNITY_PROPERTY_SERVICE&#xD;&#xA;,SQCD.OVERRIDEN_TOTAL_VALUE&#xD;&#xA;,SQCD.QDRO_PERCENT&#xD;&#xA;,SQCD.FLAT_AMOUNT&#xD;&#xA;,SQCD.FLAT_PERCENT&#xD;&#xA;,SQCD.IS_ALT_PAYEE_EARLY_RET_FLAG&#xD;&#xA;,SQCD.ALT_PAYEE_FRACTION&#xD;&#xA;--PIR 1013 changed case statement&#xD;&#xA;,CASE WHEN SQCD.PLAN_ID = 1 AND ISNULL(SDCO.ALT_PAYEE_BENEFIT_AMOUNT,0) - ISNULL(DROPMT.QDRO_PAYMENT_AMOUNT,0) &gt;= 0 &#xD;&#xA;&#x9;THEN ISNULL(SDCO.ALT_PAYEE_BENEFIT_AMOUNT,0) - ISNULL(DROPMT.QDRO_PAYMENT_AMOUNT,0)&#xD;&#xA;&#x9;WHEN SQCD.PLAN_ID = 1 AND ISNULL(SDCO.ALT_PAYEE_BENEFIT_AMOUNT,0) - ISNULL(DROPMT.QDRO_PAYMENT_AMOUNT,0) &lt; 0 THEN 0 &#xD;&#xA;    ELSE SQCD.ALT_PAYEE_AMT_BEFORE_CONVERSION  END ALT_PAYEE_AMT_BEFORE_CONVERSION&#xD;&#xA;,SQCD.PARTICIPANT_EE_CONTRIBUTION&#xD;&#xA;,SQCD.ALT_PAYEE_EE_CONTRIBUTION&#xD;&#xA;,SQCD.ALT_PAYEE_INTEREST_AMOUNT&#xD;&#xA;,SQCD.OVERRIDEN_COMMUNITY_PROPERTY_PERIOD&#xD;&#xA;,SQCD.EE_AS_OF_DATE&#xD;&#xA;,SQCD.total_uvhp_contribution_amount&#xD;&#xA;,SQCD.total_uvhp_interest_amount&#xD;&#xA;,SQCD.uvhp_as_of_date&#xD;&#xA;,SQCD.ALT_PAYEE_UVHP&#xD;&#xA;,SQCD.ALT_PAYEE_UVHP_INTEREST&#xD;&#xA;,SQCD.COMMUNITY_PROPERTY_END_DATE&#xD;&#xA;,SQCD.OVERRIDEN_UVHP_AMOUNT&#xD;&#xA;,SQCD.OVERRIDEN_UV_UVHP_INT_AMOUNT&#xD;&#xA;,SQCD.BALANCE_AS_OF_PLAN_YEAR&#xD;&#xA;,SQCD.ALT_PAYEE_BENEFIT_CAP_YEAR&#xD;&#xA;,SQCD.NET_INVESTMENT_FROM_DATE&#xD;&#xA;,SQCD.NET_INVESTMENT_TO_DATE&#xD;&#xA;,SQCD.PARTICIPANT_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.local52_special_acct_bal_amount&#xD;&#xA;,SQCD.EE_FLAG&#xD;&#xA;,SQCD.UVHP_FLAG&#xD;&#xA;,SQCD.L52_SPL_ACC_FLAG&#xD;&#xA;,SQCD.L161_SPL_ACC_FLAG&#xD;&#xA;,SQCD.local161_special_acct_bal_amount&#xD;&#xA;,SQCD.iap_as_of_date&#xD;&#xA;,SQCD.ALT_PAYEE_L52_SPL_ACC_AMT&#xD;&#xA;,SQCD.ALT_PAYEE_L161_SPL_ACC_AMT&#xD;&#xA;,SQCD.ALT_PAYEE_L52_SPL_ACC_FRACTION&#xD;&#xA;,SQCD.ALT_PAYEE_L161_SPL_ACC_FRACTION&#xD;&#xA;,SQCD.ALT_PAYEE_UVHP_FRACTION&#xD;&#xA;,SQCD.ALT_PAYEE_EE_FRACTION&#xD;&#xA;,SQCD.PARTICIPANT_L52_SPL_ACC_AMT&#xD;&#xA;,SQCD.PARTICIPANT_L161_SPL_ACC_AMT&#xD;&#xA;,SQCD.ALT_PAYEE_MINIMUM_GUARANTEE_AMOUNT&#xD;&#xA;,SQCD.ALT_PAYEE_MEMBER_EXCLUSION_AMOUNT&#xD;&#xA;,SQCD.ADJUSTMENT_AMT&#xD;&#xA;,SQCD.ACCRUED_BENEFIT_AMT&#xD;&#xA;,SQCD.VESTED_EE_AMOUNT&#xD;&#xA;,SQCD.VESTED_EE_INTEREST&#xD;&#xA;,SQCD.NON_VESTED_EE_AMOUNT&#xD;&#xA;,SQCD.NON_VESTED_EE_INTEREST&#xD;&#xA;,SQCD.NON_VESTED_ALTPAYEE_EE_AMOUNT&#xD;&#xA;,SQCD.NON_VESTED_ALTPAYEE_EE_INTEREST&#xD;&#xA;,SQCD.ADJUSMENT_PAYMENT&#xD;&#xA;,SQCD.ADJUSTMENT_IAP_PAYMENT_FLAG&#xD;&#xA;,SQCD.RETIRED_PARTICIPANT_AMOUNT&#xD;&#xA;,SQCD.REFERENECE_PARTICIPANT_PAYEE_ACCOUNT_ID&#xD;&#xA;,SQCD.ADJUSTMENT_L52SPL_PAYMENT_FLAG&#xD;&#xA;,SQCD.ADJUSTMENT_L161SPL_PAYMENT_FLAG&#xD;&#xA;FROM SGT_QDRO_CALCULATION_HEADER SQCH&#xD;&#xA;INNER JOIN SGT_QDRO_CALCULATION_DETAIL SQCD&#xD;&#xA;ON SQCH.QDRO_CALCULATION_HEADER_ID =SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;LEFT OUTER JOIN SGT_QDRO_CALCULATION_OPTIONS SDCO ON SQCD.QDRO_CALCULATION_DETAIL_ID = SDCO.QDRO_CALCULATION_DETAIL_ID &#xD;&#xA;and SDCO.QDRO_CALCULATION_OPTION_ID IN (SELECT TOP(1)Q.QDRO_CALCULATION_OPTION_ID&#xD;&#xA; FROM SGT_QDRO_CALCULATION_OPTIONS Q WHERE Q.QDRO_CALCULATION_DETAIL_ID = SQCD.QDRO_CALCULATION_DETAIL_ID)&#xD;&#xA;--PIR 1013 added new join to get payment history&#xD;&#xA;LEFT OUTER JOIN (SELECT PA.DRO_APPLICATION_DETAIL_ID, (SUM(CASE WHEN PIT.ITEM_TYPE_DIRECTION = 1 THEN AMOUNT ELSE 0 END) - &#xD;&#xA;SUM(CASE WHEN PIT.ALLOW_ROLLOVER_CODE_VALUE = 'RRED' THEN AMOUNT ELSE 0 END)) AS QDRO_PAYMENT_AMOUNT          &#xD;&#xA;FROM SGT_PAYMENT_HISTORY_HEADER PHH&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT PA ON PA.PAYEE_ACCOUNT_ID=PHH.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DETAIL SPHD WITH(NOLOCK) ON PHH.PAYMENT_HISTORY_HEADER_ID = SPHD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION SPD WITH(NOLOCK) ON PHH.PAYMENT_HISTORY_HEADER_ID = SPD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT WITH(NOLOCK) ON PIT.PAYMENT_ITEM_TYPE_ID = SPHD.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;WHERE SPD.DISTRIBUTION_STATUS_VALUE NOT IN ('CNLD','RCMD') AND OLD_DISTRIBUTION_ID IS NULL&#xD;&#xA;GROUP BY PA.DRO_APPLICATION_DETAIL_ID) DROPMT ON SQCD.QDRO_APPLICATION_DETAIL_ID = DROPMT.DRO_APPLICATION_DETAIL_ID&#xD;&#xA;WHERE (SQCH.CALCULATION_TYPE_VALUE='FINL' OR (SQCH.CALCULATION_TYPE_VALUE='ESTI' AND SQCH.IS_FINAL_ESTIMATE='Y') OR (SQCH.CALCULATION_TYPE_VALUE='ADCL' AND SQCD.PLAN_ID = 2))&#xD;&#xA;AND SQCH.STATUS_VALUE='APPR' AND SQCH.PERSON_ID = @PERSON_ID AND SQCD.PLAN_ID = @PLAN_ID&#xD;&#xA;AND (SQCD.QDRO_MODEL_VALUE &lt;&gt; 'STRF' OR SQCD.QDRO_MODEL_VALUE IS NULL) ORDER BY CASE WHEN SQCH.CALCULATION_TYPE_VALUE = 'ADCL' THEN '0' &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN SQCH.CALCULATION_TYPE_VALUE = 'FINL' THEN '1'  ELSE '2' END ASC">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckIfDROApplicationorPendingFinalCalc" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SQCD.* FROM SGT_QDRO_CALCULATION_HEADER SQCH&#xD;&#xA;INNER JOIN SGT_QDRO_CALCULATION_DETAIL SQCD&#xD;&#xA;ON SQCH.QDRO_CALCULATION_HEADER_ID =SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;WHERE SQCH.CALCULATION_TYPE_VALUE='FINL' AND SQCH.STATUS_VALUE='PEND'&#xD;&#xA;AND SQCH.PERSON_ID=@PERSON_ID AND SQCD.PLAN_ID=@PLAN_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckIfApprovedEstimateExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select QDRO_MODEL_VALUE, PERSON_ID, ALTERNATE_PAYEE_ID, SQCH.STATUS_VALUE from SGT_QDRO_CALCULATION_HEADER SQCH&#xD;&#xA;JOIN SGT_QDRO_CALCULATION_DETAIL SQCD ON SQCH.QDRO_CALCULATION_HEADER_ID = SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;where PERSON_ID = @PERSON_ID and ALTERNATE_PAYEE_ID = @ALTERNATE_PAYEE_ID&#xD;&#xA;AND SQCH.STATUS_VALUE = 'APPR' and SQCH.IS_FINAL_ESTIMATE = 'Y'&#xD;&#xA;AND PLAN_ID = @PLAN_ID &#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@ALTERNATE_PAYEE_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckIFFinalApprovedEstimateExistsforIAPPlan" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select QDRO_MODEL_VALUE, PERSON_ID, ALTERNATE_PAYEE_ID, SQCH.STATUS_VALUE from SGT_QDRO_CALCULATION_HEADER SQCH&#xD;&#xA;JOIN SGT_QDRO_CALCULATION_DETAIL SQCD ON SQCH.QDRO_CALCULATION_HEADER_ID = SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;where PERSON_ID = @PERSON_ID and ALTERNATE_PAYEE_ID = @ALTERNATE_PAYEE_ID&#xD;&#xA;AND SQCH.STATUS_VALUE = 'APPR'&#xD;&#xA;AND PLAN_ID = @PLAN_ID &#xD;&#xA;AND QDRO_MODEL_VALUE = @QDRO_MODEL_VALUE&#xD;&#xA;and CALCULATION_TYPE_VALUE = 'ESTI'&#xD;&#xA;and IS_FINAL_ESTIMATE = 'Y'">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@ALTERNATE_PAYEE_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+        <parameter ID="@QDRO_MODEL_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetCalculationStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT hdr.STATUS_VALUE,PLAN_ID, * FROM SGT_QDRO_CALCULATION_HEADER HDR WITH(NOLOCK) &#xD;&#xA;INNER JOIN SGT_QDRO_CALCULATION_DETAIL DTL WITH(NOLOCK) &#xD;&#xA;ON DTL.QDRO_CALCULATION_HEADER_ID = HDR.QDRO_CALCULATION_HEADER_ID &#xD;&#xA;WHERE HDR.PERSON_ID = @PERSON_ID AND DTL.PLAN_ID = @PLAN_ID &#xD;&#xA;AND HDR.CALCULATION_TYPE_VALUE = @CALCULATION_TYPE_VALUE &#xD;&#xA;AND HDR.STATUS_VALUE = @STATUS_VALUE&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PERSON_ID" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+        <parameter ID="@CALCULATION_TYPE_VALUE" sfwDataType="string" />
+        <parameter ID="@STATUS_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetQDROOffSetEstimate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SQCD.ALT_PAYEE_AMT_BEFORE_CONVERSION AS ALT_PAYEE_AMT_BEFORE_CONVERSION FROM SGT_QDRO_CALCULATION_HEADER SQCH&#xD;&#xA;INNER JOIN SGT_QDRO_CALCULATION_DETAIL SQCD&#xD;&#xA;ON SQCH.QDRO_CALCULATION_HEADER_ID =SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;WHERE (SQCH.CALCULATION_TYPE_VALUE='ESTI' AND SQCH.IS_FINAL_ESTIMATE='Y')&#xD;&#xA;AND SQCH.STATUS_VALUE='APPR' AND SQCH.PERSON_ID=@PERSON_ID&#xD;&#xA;AND SQCH.ALTERNATE_PAYEE_ID=@ALTERNATE_PAYEE_ID AND SQCD.PLAN_ID=@PLAN_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+        <parameter ID="@ALTERNATE_PAYEE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetQDROOffSetEstimateDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SQCD.[QDRO_CALCULATION_DETAIL_ID]&#xD;&#xA;      ,SQCD.[QDRO_CALCULATION_HEADER_ID]&#xD;&#xA;      ,[QDRO_APPLICATION_DETAIL_ID]&#xD;&#xA;      ,[PERSON_ACCOUNT_ID]&#xD;&#xA;      ,[PLAN_ID]&#xD;&#xA;      ,[VESTED_DATE]&#xD;&#xA;      ,[BENEFIT_SUBTYPE_ID]&#xD;&#xA;      ,[BENEFIT_SUBTYPE_VALUE]&#xD;&#xA;      ,[UNREDUCED_BENEFIT_AMOUNT]&#xD;&#xA;      ,[FINAL_MONTHLY_BENEFIT_AMOUNT]&#xD;&#xA;      ,SQCD.[EARLY_REDUCTION_FACTOR]&#xD;&#xA;      ,[EARLY_REDUCED_BENEFIT_AMOUNT]&#xD;&#xA;      ,[ADDITIONAL_ACCRUED_BENEFIT_AMOUNT]&#xD;&#xA;      ,[ACTUARIAL_ACCRUED_BENEFIT_AMOUNT]&#xD;&#xA;      ,[IAP_BALANCE_AMOUNT]&#xD;&#xA;      ,[SPECIAL_ACCOUNT_BALANCE_AMOUNT]&#xD;&#xA;      ,[MINIMUM_GUARANTEE_AMOUNT]&#xD;&#xA;      ,[MEMBER_EXCLUSION_AMOUNT]&#xD;&#xA;      ,SQCD.[STATUS_ID]&#xD;&#xA;      ,SQCD.[STATUS_VALUE]&#xD;&#xA;      ,SQCD.[CREATED_BY]&#xD;&#xA;      ,SQCD.[CREATED_DATE]&#xD;&#xA;      ,SQCD.[MODIFIED_BY]&#xD;&#xA;      ,SQCD.[MODIFIED_DATE]&#xD;&#xA;      ,SQCD.[UPDATE_SEQ]&#xD;&#xA;      ,[QDRO_MODEL_ID]&#xD;&#xA;      ,[QDRO_MODEL_VALUE]&#xD;&#xA;      ,[BENEFIT_CALCULATION_BASED_ON_ID]&#xD;&#xA;      ,[BENEFIT_CALCULATION_BASED_ON_VALUE]&#xD;&#xA;      ,[TOTAL_SERVICE]&#xD;&#xA;      ,[COMMUNITY_PROPERTY_SERVICE]&#xD;&#xA;      ,[OVERRIDEN_TOTAL_VALUE]&#xD;&#xA;      ,[QDRO_PERCENT]&#xD;&#xA;      ,[FLAT_AMOUNT]&#xD;&#xA;      ,[FLAT_PERCENT]&#xD;&#xA;      ,[IS_ALT_PAYEE_EARLY_RET_FLAG]&#xD;&#xA;      ,[ALT_PAYEE_FRACTION]&#xD;&#xA;      ,CASE WHEN @PLAN_ID = 1 THEN SQCO.ALT_PAYEE_BENEFIT_AMOUNT ELSE SQCD.ALT_PAYEE_AMT_BEFORE_CONVERSION END &#xD;&#xA;       AS ALT_PAYEE_AMT_BEFORE_CONVERSION --PIR 797&#xD;&#xA;      --,[ALT_PAYEE_AMT_BEFORE_CONVERSION]&#xD;&#xA;      ,[PARTICIPANT_EE_CONTRIBUTION]&#xD;&#xA;      ,[ALT_PAYEE_EE_CONTRIBUTION]&#xD;&#xA;      ,[ALT_PAYEE_INTEREST_AMOUNT]&#xD;&#xA;      ,[OVERRIDEN_COMMUNITY_PROPERTY_PERIOD]&#xD;&#xA;      ,[EE_AS_OF_DATE]&#xD;&#xA;      ,[total_uvhp_contribution_amount]&#xD;&#xA;      ,[total_uvhp_interest_amount]&#xD;&#xA;      ,[uvhp_as_of_date]&#xD;&#xA;      ,[ALT_PAYEE_UVHP]&#xD;&#xA;      ,[ALT_PAYEE_UVHP_INTEREST]&#xD;&#xA;      ,[COMMUNITY_PROPERTY_END_DATE]&#xD;&#xA;      ,[OVERRIDEN_UVHP_AMOUNT]&#xD;&#xA;      ,[OVERRIDEN_UV_UVHP_INT_AMOUNT]&#xD;&#xA;      ,[BALANCE_AS_OF_PLAN_YEAR]&#xD;&#xA;      ,[ALT_PAYEE_BENEFIT_CAP_YEAR]&#xD;&#xA;      ,[NET_INVESTMENT_FROM_DATE]&#xD;&#xA;      ,[NET_INVESTMENT_TO_DATE]&#xD;&#xA;      ,[PARTICIPANT_BENEFIT_AMOUNT]&#xD;&#xA;      ,[local52_special_acct_bal_amount]&#xD;&#xA;      ,SQCD.[EE_FLAG]&#xD;&#xA;      ,SQCD.[UVHP_FLAG]&#xD;&#xA;      ,SQCD.[L52_SPL_ACC_FLAG]&#xD;&#xA;      ,SQCD.[L161_SPL_ACC_FLAG]&#xD;&#xA;      ,[local161_special_acct_bal_amount]&#xD;&#xA;      ,[iap_as_of_date]&#xD;&#xA;      ,[ALT_PAYEE_L52_SPL_ACC_AMT]&#xD;&#xA;      ,[ALT_PAYEE_L161_SPL_ACC_AMT]&#xD;&#xA;      ,[ALT_PAYEE_L52_SPL_ACC_FRACTION]&#xD;&#xA;      ,[ALT_PAYEE_L161_SPL_ACC_FRACTION]&#xD;&#xA;      ,[ALT_PAYEE_UVHP_FRACTION]&#xD;&#xA;      ,[ALT_PAYEE_EE_FRACTION]&#xD;&#xA;      ,[PARTICIPANT_L52_SPL_ACC_AMT]&#xD;&#xA;      ,[PARTICIPANT_L161_SPL_ACC_AMT]&#xD;&#xA;      ,[ALT_PAYEE_MINIMUM_GUARANTEE_AMOUNT]&#xD;&#xA;      ,[ALT_PAYEE_MEMBER_EXCLUSION_AMOUNT]&#xD;&#xA;      ,[ADJUSTMENT_AMT]&#xD;&#xA;      ,[ACCRUED_BENEFIT_AMT]&#xD;&#xA;      ,[VESTED_EE_AMOUNT]&#xD;&#xA;      ,[VESTED_EE_INTEREST]&#xD;&#xA;      ,[NON_VESTED_EE_AMOUNT]&#xD;&#xA;      ,[NON_VESTED_EE_INTEREST]&#xD;&#xA;      ,[NON_VESTED_ALTPAYEE_EE_AMOUNT]&#xD;&#xA;      ,[NON_VESTED_ALTPAYEE_EE_INTEREST]&#xD;&#xA;      ,[ADJUSMENT_PAYMENT]&#xD;&#xA;      ,[ADJUSTMENT_IAP_PAYMENT_FLAG]&#xD;&#xA;      ,[RETIRED_PARTICIPANT_AMOUNT]&#xD;&#xA;      ,[REFERENECE_PARTICIPANT_PAYEE_ACCOUNT_ID]&#xD;&#xA;      ,[ADJUSTMENT_L52SPL_PAYMENT_FLAG]&#xD;&#xA;      ,[ADJUSTMENT_L161SPL_PAYMENT_FLAG]&#xD;&#xA;FROM SGT_QDRO_CALCULATION_HEADER SQCH INNER JOIN SGT_QDRO_CALCULATION_DETAIL SQCD &#xD;&#xA;ON SQCH.QDRO_CALCULATION_HEADER_ID = SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;LEFT JOIN SGT_QDRO_CALCULATION_OPTIONS SQCO &#xD;&#xA;ON SQCD.QDRO_CALCULATION_DETAIL_ID = SQCO.QDRO_CALCULATION_DETAIL_ID --PIR 797&#xD;&#xA;WHERE (SQCH.CALCULATION_TYPE_VALUE = 'ESTI' AND SQCH.IS_FINAL_ESTIMATE = 'Y')&#xD;&#xA;AND SQCH.STATUS_VALUE='APPR' AND SQCH.PERSON_ID = @PERSON_ID&#xD;&#xA;AND SQCH.ALTERNATE_PAYEE_ID = @ALTERNATE_PAYEE_ID AND SQCD.PLAN_ID = @PLAN_ID&#xD;&#xA;AND (SQCD.QDRO_MODEL_VALUE &lt;&gt; 'STRF' OR SQCD.QDRO_MODEL_VALUE IS NULL)">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@ALTERNATE_PAYEE_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAlternatePayeeFromFinalQDROEstimate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT SQCH.ALTERNATE_PAYEE_ID  FROM SGT_QDRO_CALCULATION_HEADER SQCH&#xD;&#xA;INNER JOIN SGT_QDRO_CALCULATION_DETAIL SQCD&#xD;&#xA;ON SQCH.QDRO_CALCULATION_HEADER_ID =SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;WHERE (SQCH.CALCULATION_TYPE_VALUE='ESTI' AND SQCH.IS_FINAL_ESTIMATE='Y')&#xD;&#xA;AND SQCH.STATUS_VALUE='APPR' AND SQCH.PERSON_ID=@PERSON_ID&#xD;&#xA;AND SQCD.PLAN_ID=@PLAN_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitAmount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SUM(SPAPIT.AMOUNT) AS BENEFIT_AMOUNT FROM SGT_PAYEE_ACCOUNT SPA&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE SPAPIT&#xD;&#xA;ON SPAPIT.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE SPIT&#xD;&#xA;ON SPAPIT.PAYMENT_ITEM_TYPE_ID = SPIT.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;WHERE SPIT.ITEM_TYPE_DIRECTION =  1 AND SPA.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID&#xD;&#xA;AND SPAPIT.START_DATE &lt;= @PAYMENTDATE AND &#xD;&#xA;(SPAPIT.END_DATE IS NULL OR SPAPIT.END_DATE &gt;= @PAYMENTDATE)&#xD;&#xA;AND SPIT.ITEM_TYPE_CODE not in (SELECT TO_ITEM_TYPE from SGT_RETRO_ITEM_TYPE)&#xD;&#xA;&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetQDROCalculationsPendingStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGT_QDRO_CALCULATION_HEADER SQCH&#xD;&#xA;INNER JOIN SGT_QDRO_CALCULATION_DETAIL SQCD&#xD;&#xA;ON SQCH.QDRO_CALCULATION_HEADER_ID = SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;WHERE SQCH.CALCULATION_TYPE_VALUE = 'FINL' AND &#xD;&#xA;SQCD.QDRO_MODEL_VALUE &lt;&gt; 'STRF' AND SQCH.STATUS_VALUE = 'PEND'&#xD;&#xA;AND SQCH.PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckIfPayeeAccountActive" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF @DRO_CALCULATION_DETAIL_ID &gt; 0&#xD;&#xA;BEGIN&#xD;&#xA;SELECT COUNT(*) FROM SGT_PAYEE_ACCOUNT SPA WHERE &#xD;&#xA;(SELECT TOP(1) Q.STATUS_VALUE FROM SGT_PAYEE_ACCOUNT_STATUS Q &#xD;&#xA;WHERE Q.PAYEE_ACCOUNT_ID =  SPA.PAYEE_ACCOUNT_ID &#xD;&#xA;ORDER BY STATUS_EFFECTIVE_DATE DESC) NOT IN ('CNCL')&#xD;&#xA;AND SPA.DRO_CALCULATION_DETAIL_ID = @DRO_CALCULATION_DETAIL_ID&#xD;&#xA;END&#xD;&#xA;ELSE&#xD;&#xA;BEGIN&#xD;&#xA;SELECT COUNT(*) FROM SGT_PAYEE_ACCOUNT SPA WHERE &#xD;&#xA;(SELECT TOP(1) Q.STATUS_VALUE FROM SGT_PAYEE_ACCOUNT_STATUS Q &#xD;&#xA;WHERE Q.PAYEE_ACCOUNT_ID =  SPA.PAYEE_ACCOUNT_ID &#xD;&#xA;ORDER BY STATUS_EFFECTIVE_DATE DESC) NOT IN ('CNCL')&#xD;&#xA;AND SPA.BENEFIT_CALCULATION_DETAIL_ID = @BENEFIT_CALCULATION_DETAIL_ID&#xD;&#xA;END">
+      <parameters>
+        <parameter ID="@DRO_CALCULATION_DETAIL_ID" sfwDataType="int" />
+        <parameter ID="@BENEFIT_CALCULATION_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckIfApprovedDROApplAndNoCalculation" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) AS CNT  FROM SGT_DRO_APPLICATION SDA &#xD;&#xA;INNER JOIN SGT_DRO_BENEFIT_DETAILS SDBD ON SDA.DRO_APPLICATION_ID = SDBD.DRO_APPLICATION_ID &#xD;&#xA;INNER JOIN SGT_PLAN_BENEFIT_XR X ON X.PLAN_BENEFIT_ID = SDBD.PLAN_BENEFIT_ID AND X.PLAN_ID = 1&#xD;&#xA;--PIR 1013 added new join.&#xD;&#xA;LEFT OUTER JOIN (SELECT PA.DRO_APPLICATION_DETAIL_ID, (SUM(CASE WHEN PIT.ITEM_TYPE_DIRECTION = 1 THEN AMOUNT ELSE 0 END) - &#xD;&#xA;&#x9;SUM(CASE WHEN PIT.ALLOW_ROLLOVER_CODE_VALUE = 'RRED' THEN AMOUNT ELSE 0 END)) AS QDRO_PAYMENT_AMOUNT          &#xD;&#xA;&#x9;FROM SGT_PAYMENT_HISTORY_HEADER PHH&#xD;&#xA;&#x9;INNER JOIN SGT_PAYEE_ACCOUNT PA ON PA.PAYEE_ACCOUNT_ID=PHH.PAYEE_ACCOUNT_ID&#xD;&#xA;&#x9;INNER JOIN SGT_PAYMENT_HISTORY_DETAIL SPHD WITH(NOLOCK) ON PHH.PAYMENT_HISTORY_HEADER_ID = SPHD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;&#x9;INNER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION SPD WITH(NOLOCK) ON PHH.PAYMENT_HISTORY_HEADER_ID = SPD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;&#x9;INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT WITH(NOLOCK) ON PIT.PAYMENT_ITEM_TYPE_ID = SPHD.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;&#x9;WHERE SPD.DISTRIBUTION_STATUS_VALUE NOT IN ('CNLD','RCMD') AND OLD_DISTRIBUTION_ID IS NULL&#xD;&#xA;&#x9;GROUP BY PA.DRO_APPLICATION_DETAIL_ID&#xD;&#xA;) DROPMT ON SDBD.DRO_BENEFIT_ID = DROPMT.DRO_APPLICATION_DETAIL_ID&#xD;&#xA;WHERE SDA.DRO_STATUS_VALUE NOT IN ('AMQL','RCVD','CNLD')&#xD;&#xA;AND SDA.PERSON_ID = @PERSON_ID &#xD;&#xA;AND NOT EXISTS (&#xD;&#xA;&#x9;SELECT SQCD.* FROM SGT_QDRO_CALCULATION_HEADER SQCH&#xD;&#xA;&#x9;INNER JOIN SGT_QDRO_CALCULATION_DETAIL SQCD ON SQCH.QDRO_CALCULATION_HEADER_ID = SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;&#x9;WHERE SQCH.CALCULATION_TYPE_VALUE='FINL' AND SQCH.STATUS_VALUE &lt;&gt; 'CANC'&#xD;&#xA;&#x9;AND SQCH.PERSON_ID=@PERSON_ID AND SQCD.PLAN_ID = @PLAN_ID)&#xD;&#xA;AND DROPMT.DRO_APPLICATION_DETAIL_ID IS NULL --PIR 1013  added this condition.">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetQDROPaymentAmountAndFirstPayDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="--PIR 965&#xD;&#xA;SELECT &#xD;&#xA;SUM(CASE WHEN PIT.ACH_CHECK_GROUP_VALUE = 'GROS' THEN (ITEM_TYPE_DIRECTION * AMOUNT) ELSE 0 END) AS AMOUNT,&#xD;&#xA;MIN(PHH.PAYMENT_DATE) AS PAYMENT_DATE&#xD;&#xA;FROM SGT_PAYMENT_HISTORY_HEADER PHH&#xD;&#xA;JOIN  SGT_PAYMENT_HISTORY_DISTRIBUTION PHD ON PHD.PAYMENT_HISTORY_HEADER_ID=PHH.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;JOIN  SGT_PAYMENT_HISTORY_DETAIL PHDE ON PHDE.PAYMENT_HISTORY_HEADER_ID=PHH.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;JOIN  SGT_PAYMENT_ITEM_TYPE(NOLOCK) PIT ON PHDE.PAYMENT_ITEM_TYPE_ID = PIT.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;JOIN SGT_PAYEE_ACCOUNT SPA ON SPA.PAYEE_ACCOUNT_ID = PHH.PAYEE_ACCOUNT_ID AND BENEFIT_ACCOUNT_TYPE_VALUE = 'QDRO'&#xD;&#xA;JOIN SGT_PAYEE_BENEFIT_ACCOUNT SPBA ON SPBA.PAYEE_BENEFIT_ACCOUNT_ID = SPA.PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;WHERE PHD.DISTRIBUTION_STATUS_VALUE IN ('OUTS','CLRD','RSUD') AND&#xD;&#xA;SPBA.PERSON_ID = @PARTICIPANTPERSONID AND SPA.PERSON_ID = @ALTERNATEPERSONID AND PHH.PLAN_ID = @PLAN_ID&#xD;&#xA;AND PHD.OLD_DISTRIBUTION_ID IS NULL AND PHH.OLD_PAYMENT_HISTORY_HEADER_ID IS NULL">
+      <parameters>
+        <parameter ID="@PARTICIPANTPERSONID" sfwDataType="int" />
+        <parameter ID="@ALTERNATEPERSONID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetParticipantWithDisabilityAppl" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT SBA.* FROM SGT_BENEFIT_APPLICATION SBA&#xD;&#xA;INNER JOIN SGT_BENEFIT_APPLICATION_DETAIL SBAD ON SBA.BENEFIT_APPLICATION_ID = SBAD.BENEFIT_APPLICATION_ID&#xD;&#xA;INNER JOIN SGT_PLAN_BENEFIT_XR X ON X.PLAN_BENEFIT_ID = SBAD.PLAN_BENEFIT_ID&#xD;&#xA;WHERE SBA.BENEFIT_TYPE_VALUE = 'DSBL' AND X.PLAN_ID = @PLAN_ID AND SBA.PERSON_ID = @PERSON_ID AND SBA.APPLICATION_STATUS_VALUE = 'APPR'">
+      <parameters>
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetQDROOffSetPreRetirement" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT &#xD;&#xA;istrIsFinal = CASE WHEN SQCH.CALCULATION_TYPE_VALUE='FINL' THEN 'Y' ELSE 'N' END, &#xD;&#xA;SQCD.QDRO_CALCULATION_DETAIL_ID&#xD;&#xA;,SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;,SQCD.QDRO_APPLICATION_DETAIL_ID&#xD;&#xA;,SQCD.PERSON_ACCOUNT_ID&#xD;&#xA;,SQCD.PLAN_ID&#xD;&#xA;,SQCD.VESTED_DATE&#xD;&#xA;,SQCD.BENEFIT_SUBTYPE_ID&#xD;&#xA;,SQCD.BENEFIT_SUBTYPE_VALUE&#xD;&#xA;,SQCD.UNREDUCED_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.FINAL_MONTHLY_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.EARLY_REDUCTION_FACTOR&#xD;&#xA;,SQCD.EARLY_REDUCED_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.ADDITIONAL_ACCRUED_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.ACTUARIAL_ACCRUED_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.IAP_BALANCE_AMOUNT&#xD;&#xA;,SQCD.SPECIAL_ACCOUNT_BALANCE_AMOUNT&#xD;&#xA;,SQCD.MINIMUM_GUARANTEE_AMOUNT&#xD;&#xA;,SQCD.MEMBER_EXCLUSION_AMOUNT&#xD;&#xA;,SQCD.STATUS_ID&#xD;&#xA;,SQCD.STATUS_VALUE&#xD;&#xA;,SQCD.CREATED_BY&#xD;&#xA;,SQCD.CREATED_DATE&#xD;&#xA;,SQCD.MODIFIED_BY&#xD;&#xA;,SQCD.MODIFIED_DATE&#xD;&#xA;,SQCD.UPDATE_SEQ&#xD;&#xA;,SQCD.QDRO_MODEL_ID&#xD;&#xA;,SQCD.QDRO_MODEL_VALUE&#xD;&#xA;,SQCD.BENEFIT_CALCULATION_BASED_ON_ID&#xD;&#xA;,SQCD.BENEFIT_CALCULATION_BASED_ON_VALUE&#xD;&#xA;,SQCD.TOTAL_SERVICE&#xD;&#xA;,SQCD.COMMUNITY_PROPERTY_SERVICE&#xD;&#xA;,SQCD.OVERRIDEN_TOTAL_VALUE&#xD;&#xA;,SQCD.QDRO_PERCENT&#xD;&#xA;,SQCD.FLAT_AMOUNT&#xD;&#xA;,SQCD.FLAT_PERCENT&#xD;&#xA;,SQCD.IS_ALT_PAYEE_EARLY_RET_FLAG&#xD;&#xA;,SQCD.ALT_PAYEE_FRACTION&#xD;&#xA;,SQCD.ALT_PAYEE_AMT_BEFORE_CONVERSION  AS ALT_PAYEE_AMT_BEFORE_CONVERSION&#xD;&#xA;,SQCD.PARTICIPANT_EE_CONTRIBUTION&#xD;&#xA;,SQCD.ALT_PAYEE_EE_CONTRIBUTION&#xD;&#xA;,SQCD.ALT_PAYEE_INTEREST_AMOUNT&#xD;&#xA;,SQCD.OVERRIDEN_COMMUNITY_PROPERTY_PERIOD&#xD;&#xA;,SQCD.EE_AS_OF_DATE&#xD;&#xA;,SQCD.total_uvhp_contribution_amount&#xD;&#xA;,SQCD.total_uvhp_interest_amount&#xD;&#xA;,SQCD.uvhp_as_of_date&#xD;&#xA;,SQCD.ALT_PAYEE_UVHP&#xD;&#xA;,SQCD.ALT_PAYEE_UVHP_INTEREST&#xD;&#xA;,SQCD.COMMUNITY_PROPERTY_END_DATE&#xD;&#xA;,SQCD.OVERRIDEN_UVHP_AMOUNT&#xD;&#xA;,SQCD.OVERRIDEN_UV_UVHP_INT_AMOUNT&#xD;&#xA;,SQCD.BALANCE_AS_OF_PLAN_YEAR&#xD;&#xA;,SQCD.ALT_PAYEE_BENEFIT_CAP_YEAR&#xD;&#xA;,SQCD.NET_INVESTMENT_FROM_DATE&#xD;&#xA;,SQCD.NET_INVESTMENT_TO_DATE&#xD;&#xA;,SQCD.PARTICIPANT_BENEFIT_AMOUNT&#xD;&#xA;,SQCD.local52_special_acct_bal_amount&#xD;&#xA;,SQCD.EE_FLAG&#xD;&#xA;,SQCD.UVHP_FLAG&#xD;&#xA;,SQCD.L52_SPL_ACC_FLAG&#xD;&#xA;,SQCD.L161_SPL_ACC_FLAG&#xD;&#xA;,SQCD.local161_special_acct_bal_amount&#xD;&#xA;,SQCD.iap_as_of_date&#xD;&#xA;,SQCD.ALT_PAYEE_L52_SPL_ACC_AMT&#xD;&#xA;,SQCD.ALT_PAYEE_L161_SPL_ACC_AMT&#xD;&#xA;,SQCD.ALT_PAYEE_L52_SPL_ACC_FRACTION&#xD;&#xA;,SQCD.ALT_PAYEE_L161_SPL_ACC_FRACTION&#xD;&#xA;,SQCD.ALT_PAYEE_UVHP_FRACTION&#xD;&#xA;,SQCD.ALT_PAYEE_EE_FRACTION&#xD;&#xA;,SQCD.PARTICIPANT_L52_SPL_ACC_AMT&#xD;&#xA;,SQCD.PARTICIPANT_L161_SPL_ACC_AMT&#xD;&#xA;,SQCD.ALT_PAYEE_MINIMUM_GUARANTEE_AMOUNT&#xD;&#xA;,SQCD.ALT_PAYEE_MEMBER_EXCLUSION_AMOUNT&#xD;&#xA;,SQCD.ADJUSTMENT_AMT&#xD;&#xA;,SQCD.ACCRUED_BENEFIT_AMT&#xD;&#xA;,SQCD.VESTED_EE_AMOUNT&#xD;&#xA;,SQCD.VESTED_EE_INTEREST&#xD;&#xA;,SQCD.NON_VESTED_EE_AMOUNT&#xD;&#xA;,SQCD.NON_VESTED_EE_INTEREST&#xD;&#xA;,SQCD.NON_VESTED_ALTPAYEE_EE_AMOUNT&#xD;&#xA;,SQCD.NON_VESTED_ALTPAYEE_EE_INTEREST&#xD;&#xA;,SQCD.ADJUSMENT_PAYMENT&#xD;&#xA;,SQCD.ADJUSTMENT_IAP_PAYMENT_FLAG&#xD;&#xA;,SQCD.RETIRED_PARTICIPANT_AMOUNT&#xD;&#xA;,SQCD.REFERENECE_PARTICIPANT_PAYEE_ACCOUNT_ID&#xD;&#xA;,SQCD.ADJUSTMENT_L52SPL_PAYMENT_FLAG&#xD;&#xA;,SQCD.ADJUSTMENT_L161SPL_PAYMENT_FLAG&#xD;&#xA;FROM SGT_QDRO_CALCULATION_HEADER SQCH&#xD;&#xA;INNER JOIN SGT_QDRO_CALCULATION_DETAIL SQCD&#xD;&#xA;ON SQCH.QDRO_CALCULATION_HEADER_ID =SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;LEFT OUTER JOIN SGT_QDRO_CALCULATION_OPTIONS SDCO ON SQCD.QDRO_CALCULATION_DETAIL_ID = SDCO.QDRO_CALCULATION_DETAIL_ID &#xD;&#xA;and SDCO.QDRO_CALCULATION_OPTION_ID IN (SELECT TOP(1)Q.QDRO_CALCULATION_OPTION_ID&#xD;&#xA; FROM SGT_QDRO_CALCULATION_OPTIONS Q WHERE Q.QDRO_CALCULATION_DETAIL_ID = SQCD.QDRO_CALCULATION_DETAIL_ID)&#xD;&#xA;--PIR 1013 added new join to get payment history&#xD;&#xA;LEFT OUTER JOIN (SELECT PA.DRO_APPLICATION_DETAIL_ID, (SUM(CASE WHEN PIT.ITEM_TYPE_DIRECTION = 1 THEN AMOUNT ELSE 0 END) - &#xD;&#xA;SUM(CASE WHEN PIT.ALLOW_ROLLOVER_CODE_VALUE = 'RRED' THEN AMOUNT ELSE 0 END)) AS QDRO_PAYMENT_AMOUNT          &#xD;&#xA;FROM SGT_PAYMENT_HISTORY_HEADER PHH&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT PA ON PA.PAYEE_ACCOUNT_ID=PHH.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DETAIL SPHD WITH(NOLOCK) ON PHH.PAYMENT_HISTORY_HEADER_ID = SPHD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION SPD WITH(NOLOCK) ON PHH.PAYMENT_HISTORY_HEADER_ID = SPD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT WITH(NOLOCK) ON PIT.PAYMENT_ITEM_TYPE_ID = SPHD.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;WHERE SPD.DISTRIBUTION_STATUS_VALUE NOT IN ('CNLD','RCMD') AND OLD_DISTRIBUTION_ID IS NULL&#xD;&#xA;GROUP BY PA.DRO_APPLICATION_DETAIL_ID) DROPMT ON SQCD.QDRO_APPLICATION_DETAIL_ID = DROPMT.DRO_APPLICATION_DETAIL_ID&#xD;&#xA;WHERE (SQCH.CALCULATION_TYPE_VALUE='FINL' OR (SQCH.CALCULATION_TYPE_VALUE='ESTI' AND SQCH.IS_FINAL_ESTIMATE='Y') OR (SQCH.CALCULATION_TYPE_VALUE='ADCL' AND SQCD.PLAN_ID = 2))&#xD;&#xA;AND SQCH.STATUS_VALUE='APPR' AND SQCH.PERSON_ID = @PERSON_ID AND SQCD.PLAN_ID = @PLAN_ID&#xD;&#xA;AND (SQCD.QDRO_MODEL_VALUE &lt;&gt; 'STRF' OR SQCD.QDRO_MODEL_VALUE IS NULL) ORDER BY CASE WHEN SQCH.CALCULATION_TYPE_VALUE = 'ADCL' THEN '0' &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN SQCH.CALCULATION_TYPE_VALUE = 'FINL' THEN '1'  ELSE '2' END ASC">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetQDROFirstPayment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" Select QCO.ALT_PAYEE_BENEFIT_AMOUNT AS FirstPayement from SGT_QDRO_CALCULATION_HEADER QCH&#xD;&#xA;Inner Join SGT_QDRO_CALCULATION_DETAIL  QCD On QCH.QDRO_CALCULATION_HEADER_ID = QCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;Inner join SGT_QDRO_CALCULATION_OPTIONS QCO ON QCD.QDRO_CALCULATION_DETAIL_ID = QCO.QDRO_CALCULATION_DETAIL_ID&#xD;&#xA;where QCH.PERSON_ID=@PERSON_ID and QCH.CALCULATION_TYPE_VALUE ='finl' AND QCD.PLAN_ID=1">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAltPayeeBenefitAmountByCalculationType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select TOP 1 QCH.QDRO_CALCULATION_HEADER_ID, QCO.ALT_PAYEE_BENEFIT_AMOUNT,QCH.CALCULATION_TYPE_VALUE as istrCalculationType from SGT_QDRO_CALCULATION_HEADER QCH&#xD;&#xA;inner join SGT_QDRO_CALCULATION_DETAIL QCD ON QCH.QDRO_CALCULATION_HEADER_ID = QCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;INNER JOIN SGT_QDRO_CALCULATION_OPTIONS QCO ON QCD.QDRO_CALCULATION_DETAIL_ID = QCO.QDRO_CALCULATION_DETAIL_ID&#xD;&#xA;WHERE QCH.PERSON_ID = @person_id AND QCD.PLAN_ID = @plan_id AND QCH.STATUS_VALUE ='APPR' &#xD;&#xA;Order by QCH.QDRO_CALCULATION_HEADER_ID desc">
+      <parameters>
+        <parameter ID="@person_id" sfwDataType="int" />
+        <parameter ID="@plan_id" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="qdro_calculation_header_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="QdroCalculationHeaderId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="qdro_application_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="QdroApplicationId" sfwIsSequence="False" sfwCaption="Qdro Application Id" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonId" sfwIsSequence="False" sfwCaption="Person Id" />
+    <attribute sfwValue="alternate_payee_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AlternatePayeeId" sfwIsSequence="False" sfwCaption="Alternate Payee Id" />
+    <attribute sfwValue="alternate_payee_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="AlternatePayeeName" sfwIsSequence="False" sfwCaption="Alternate Payee Name" />
+    <attribute sfwValue="alternate_payee_date_of_birth" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="AlternatePayeeDateOfBirth" sfwIsSequence="False" sfwCaption="Alternate Payee Date Of Birth" />
+    <attribute sfwType="Description" ID="CalculationTypeDescription" sfwCaption="Calculation Type" sfwValue="calculation_type_description" />
+    <attribute sfwValue="calculation_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="CalculationTypeId" sfwCodeID="2001" sfwIsSequence="False" sfwCaption="Calculation Type" />
+    <attribute sfwValue="calculation_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="CalculationTypeValue" sfwIsSequence="False" sfwCaption="Calculation Type" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="2002" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="retirement_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="RetirementDate" sfwIsSequence="False" sfwCaption="Retirement Date" />
+    <attribute sfwValue="age" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="False" ID="Age" sfwIsSequence="False" sfwCaption="Age" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="qdro_commencement_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="QdroCommencementDate" sfwIsSequence="False" sfwCaption="Qdro Commencement Date" />
+    <attribute sfwValue="date_of_marriage" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="DateOfMarriage" sfwIsSequence="False" sfwCaption="Date Of Marriage" />
+    <attribute sfwValue="date_of_seperation" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="DateOfSeperation" sfwIsSequence="False" sfwCaption="Date Of Seperation" />
+    <attribute sfwValue="is_alt_payee_eligible_for_iap" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsAltPayeeEligibleForIap" sfwIsSequence="False" sfwCaption="Is Alt Payee Eligible For Iap" />
+    <attribute sfwValue="is_participant_disabled" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsParticipantDisabled" sfwIsSequence="False" sfwCaption="Is Participant Disabled" />
+    <attribute sfwValue="benefit_comencement_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="BenefitComencementDate" sfwIsSequence="False" sfwCaption="Benefit Comencement Date" />
+    <attribute sfwValue="is_participant_dead_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsParticipantDeadFlag" sfwIsSequence="False" sfwCaption="Is Participant Dead Flag" />
+    <attribute sfwValue="is_final_estimate" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsFinalEstimate" sfwIsSequence="False" sfwCaption="Is Final Estimate" />
+    <attribute sfwValue="mss_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="MssFlag" sfwIsSequence="False" sfwCaption="Mss Flag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlanDescription" sfwValue="icdoQdroCalculationHeader.istrPlanDescription" />
+    <attribute ID="objAlternatePayee" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusAlternatePayee" />
+    <attribute ID="objParticipant" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusParticipant" />
+    <attribute sfwDataType="string" sfwType="Property" ID="QDROModelDescription" sfwValue="icdoQdroCalculationHeader.QDROModelDescription" />
+    <attribute ID="objQdroApplication" sfwType="Object" sfwEntity="entQDROApplication" sfwValue="ibusQdroApplication" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CASENUMBER" sfwValue="icdoQdroCalculationHeader.CASE_NUMBER" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="QUALIFIEDDATE" sfwValue="icdoQdroCalculationHeader.QUALIFIED_DATE" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="RECEIVEDDATE" sfwValue="icdoQdroCalculationHeader.RECEIVED_DATE" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintPayeeAccountId" sfwValue="icdoQdroCalculationHeader.iintPayeeAccountId" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintParticipantAtRetirement" sfwValue="icdoQdroCalculationHeader.iintParticipantAtRetirement" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintAltPayeeAgeAtRetirement" sfwValue="icdoQdroCalculationHeader.iintAltPayeeAgeAtRetirement" />
+    <attribute sfwType="Collection" sfwEntity="entQdroCalculationDetail" ID="lstQdroCalculationDetail" sfwValue="iclbQdroCalculationDetail" />
+    <attribute sfwType="Collection" sfwEntity="entDisabilityRetireeIncrease" ID="lstDisabilityRetireeIncrease" sfwValue="iclbDisabilityRetireeIncrease" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBeforeCommencementDate" sfwValue="istrBeforeCommencementDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsUSA" sfwValue="istrIsUSA" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsRetireeModel" sfwValue="istrIsRetireeModel" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecMPIAlternatePayeeAmount" sfwValue="idecMPIAlternatePayeeAmount" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitSubType" sfwValue="istrBenefitSubType" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DtEstimateRetrDate" sfwValue="dtEstimateRetrDate" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecTotalAccruedBenefit" sfwValue="idecTotalAccruedBenefit" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IintIAPAsOfYear" sfwValue="iintIAPAsOfYear" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecAlternatePayeeBenefitBeforeConversion" sfwValue="idecAlternatePayeeBenefitBeforeConversion" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecParticipantIAPBalanceAmount" sfwValue="idecParticipantIAPBalanceAmount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecIAPAlternatePayeeLumpSumAmount" sfwValue="idecIAPAlternatePayeeLumpSumAmount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecTotalIAPBalanceAmount" sfwValue="idecTotalIAPBalanceAmount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecParticipantAccruedBenefit" sfwValue="idecParticipantAccruedBenefit" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrCommencementDate" sfwValue="istrCommencementDate" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecMPIAltPayeeAmtTenYearCerAndLife" sfwValue="idecMPIAltPayeeAmtTenYearCerAndLife" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsAmountTaxabale" sfwValue="istrIsAmountTaxabale" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecUVHPContri" sfwValue="idecUVHPContri" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecUVHPInt" sfwValue="idecUVHPInt" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecUVHPTotal" sfwValue="idecUVHPTotal" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintPlanId" sfwValue="icdoQdroCalculationHeader.iintPlanId" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLumpSumBenefitAmount" sfwValue="istrLumpSumBenefitAmount" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintLumpSumYearByAge" sfwValue="iintLumpSumYearByAge" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantMPIID" sfwValue="istrParticipantMPIID" />
+    <attribute sfwDataType="int" sfwType="Property" ID="Iintyear" sfwValue="iintyear" />
+    <attribute ID="objBenefitApplication" sfwType="Object" sfwEntity="entBenefitApplication" sfwValue="ibusBenefitApplication" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantFullName" sfwValue="istrParticipantFullName" />
+    <attribute ID="IstrRelativeVipFlag" sfwDataType="string" sfwPrivate="False" sfwValue="icdoQdroCalculationHeader.istrRelativeVipFlag" sfwType="Property" />
+    <attribute ID="lintPrimaryKey" sfwDataType="long" sfwPrivate="False" sfwValue="icdoQdroCalculationHeader.iintAPrimaryKey" sfwType="Property" />
+  </attributes>
+  <objectmethods>
+    <method ID="btn_CancelCalculation" sfwReturnType="ArrayList" />
+    <method ID="btn_ApproveCalculation" sfwReturnType="ArrayList" />
+    <method ID="btn_RefreshCalculation" sfwReturnType="ArrayList" />
+  </objectmethods>
+  <methods />
+  <lifecycle />
+</entity>

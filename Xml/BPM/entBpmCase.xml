@@ -1,0 +1,103 @@
+﻿<entity ID="entBpmCase" sfwMainCDO="icdoBpmCase" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmCase" sfwObjectType="Sagitec.Bpm.busBpmCase, SagitecBpm, Version=5.0.0.0, Culture=neutral, PublicKeyToken=df17fdb7b963e064" sfwTableName="sgw_bpm_case" sfwView="False">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete>
+    <property ID="lstBpmCaseInstances" sfwMethodName="LoadBpmCaseInstances" />
+    <property ID="lstBpmProcess" sfwMethodName="LoadBpmProcesss" />
+    <property ID="lstBpmCaseDetails" sfwMethodName="LoadBpmCaseDetailsCollection" />
+    <property ID="IobjMainCDO" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <Constraint />
+  <rules />
+  <constraint />
+  <queries>
+    <query ID="CaseLookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; distinct BPM_CASE.* &#xA;FROM&#xA;&#x9; (SELECT&#xA;&#x9; sgw_bpm_case.CASE_ID,&#xA;&#x9;sgw_bpm_case.CASE_FILE,&#xA;&#x9;sgw_bpm_case.NAME,&#xA;&#x9;sgw_bpm_case.DESCRIPTION,&#xA;&#x9;sgw_bpm_case.VERSION,&#xA;&#x9;sgw_bpm_case.STATUS_VALUE,&#xA;&#x9;sgw_bpm_case.STATUS_ID,&#xA;&#x9;sgw_bpm_case.RESOURCE_ID,&#xA;        sgw_bpm_case.EFFECTIVE_DATE,&#xA;&#x9;CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xA;FROM&#xA;&#x9; sgw_bpm_case WITH(NOLOCK) left &#xA;&#x9; join (SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; (SELECT&#xA;&#x9; case_id,&#xA;&#x9;CASE WHEN (ROW_NUMBER() OVER(PARTITION BY name &#xA;ORDER BY   case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xA;FROM&#xA;&#x9; sgw_bpm_case WITH(NOLOCK)  &#xA;WHERE&#xA;&#x9; EFFECTIVE_DATE &lt; =  GETDATE()) AS C &#xA;WHERE&#xA;&#x9; ACTIVE_VERSION  = 'Y') AS ACTIVE_BPM_CASE&#xA;&#x9; ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID)AS BPM_CASE &#xA;&#x9; LEFT OUTER JOIN  (SELECT&#xA;&#x9; distinct d.resource_id,&#xA;&#x9;a.USER_ID &#xA;FROM&#xA;&#x9; sgs_user a WITH(NOLOCK) ,&#xA;&#x9;sgs_user_roles b WITH(NOLOCK) ,&#xA;&#x9;sgs_resources d WITH(NOLOCK) ,&#xA;&#x9;sgs_security e WITH(NOLOCK)   &#xA;WHERE&#xA;&#x9; a.user_serial_id = b.user_serial_id    AND&#xA;&#x9; b.role_id = e.role_id    AND&#xA;&#x9; e.resource_id = d.resource_id    AND&#xA;&#x9; ((b.effective_start_DATE is null) or (b.effective_start_date &lt; =  convert(dateTime,&#xA;&#x9;convert(char,&#xA;&#x9;getdate(),&#xA;&#x9;103),&#xA;&#x9;103)))   AND&#xA;&#x9; ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =  convert(dateTime,&#xA;&#x9;convert(char,&#xA;&#x9;getdate(),&#xA;&#x9;103),&#xA;&#x9;103))) AND&#xA;&#x9; d.RESOURCE_TYPE_VALUE = 'BPM') RES&#xA;&#x9; ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID &#xA;where&#xA;CASE_ID  &gt; 0&#xA;ORDER BY   CASE_FILE,&#xA;&#x9;CASE_ID desc" sfwOracle="SELECT&#xD;&#xA;&#x9; distinct BPM_CASE.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; (SELECT&#xD;&#xA;&#x9; sgw_bpm_case.CASE_ID,&#xD;&#xA;&#x9;sgw_bpm_case.CASE_FILE,&#xD;&#xA;&#x9;sgw_bpm_case.NAME,&#xD;&#xA;&#x9;sgw_bpm_case.DESCRIPTION,&#xD;&#xA;&#x9;sgw_bpm_case.VERSION,&#xD;&#xA;&#x9;sgw_bpm_case.STATUS_VALUE,&#xD;&#xA;&#x9;sgw_bpm_case.STATUS_ID,&#xD;&#xA;&#x9;sgw_bpm_case.RESOURCE_ID,&#xD;&#xA;   sgw_bpm_case.EFFECTIVE_DATE,&#xD;&#xA;&#x9;CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case  left &#xD;&#xA;&#x9; join (SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; (SELECT&#xD;&#xA;&#x9; case_id,&#xD;&#xA;&#x9;CASE WHEN (ROW_NUMBER() OVER ( PARTITION BY name &#xD;&#xA;ORDER BY case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt; =  UDF_GET_SYSTEM_DATE('Y'))  C &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ACTIVE_VERSION  = 'Y')  ACTIVE_BPM_CASE&#xD;&#xA;&#x9; ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID) BPM_CASE &#xD;&#xA;&#x9; LEFT OUTER JOIN  (SELECT&#xD;&#xA;&#x9; distinct d.resource_id,&#xD;&#xA;&#x9;a.USER_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgs_user a  ,&#xD;&#xA;&#x9;sgs_user_roles b  ,&#xD;&#xA;&#x9;sgs_resources d  ,&#xD;&#xA;&#x9;sgs_security e    &#xD;&#xA;WHERE&#xD;&#xA;&#x9; a.user_serial_id = b.user_serial_id    AND&#xD;&#xA;&#x9; b.role_id = e.role_id    AND&#xD;&#xA;&#x9; e.resource_id = d.resource_id    AND&#xD;&#xA;&#x9; ((b.effective_start_DATE is null) or (b.effective_start_date &lt; =  UDF_GET_SYSTEM_DATE('Y')))   AND&#xD;&#xA;&#x9; ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =  UDF_GET_SYSTEM_DATE('Y'))) AND&#xD;&#xA;&#x9; d.RESOURCE_TYPE_VALUE = 'BPM') RES&#xD;&#xA;&#x9; ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID  &#xD;&#xA;where&#xD;&#xA;case_id &gt;0&#xD;&#xA;ORDER BY   CASE_FILE,&#xD;&#xA;&#x9;CASE_ID desc" sfwPostgre="SELECT&#xD;&#xA;&#x9; distinct BPM_CASE.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; (SELECT&#xD;&#xA;&#x9; sgw_bpm_case.CASE_ID,&#xD;&#xA;&#x9;sgw_bpm_case.CASE_FILE,&#xD;&#xA;&#x9;sgw_bpm_case.NAME,&#xD;&#xA;&#x9;sgw_bpm_case.DESCRIPTION,&#xD;&#xA;&#x9;sgw_bpm_case.VERSION,&#xD;&#xA;&#x9;sgw_bpm_case.STATUS_VALUE,&#xD;&#xA;&#x9;sgw_bpm_case.STATUS_ID,&#xD;&#xA;&#x9;sgw_bpm_case.RESOURCE_ID,&#xD;&#xA;   sgw_bpm_case.EFFECTIVE_DATE,&#xD;&#xA;&#x9;CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case  left &#xD;&#xA;&#x9; join (SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; (SELECT&#xD;&#xA;&#x9; case_id,&#xD;&#xA;&#x9;CASE WHEN (ROW_NUMBER() OVER ( PARTITION BY name &#xD;&#xA;ORDER BY case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt;=  UDF_GET_SYSTEM_DATE('Y'))  C &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ACTIVE_VERSION  = 'Y')  ACTIVE_BPM_CASE&#xD;&#xA;&#x9; ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID) BPM_CASE &#xD;&#xA;&#x9; LEFT OUTER JOIN  (SELECT&#xD;&#xA;&#x9; distinct d.resource_id,&#xD;&#xA;&#x9;a.USER_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgs_user a  ,&#xD;&#xA;&#x9;sgs_user_roles b  ,&#xD;&#xA;&#x9;sgs_resources d  ,&#xD;&#xA;&#x9;sgs_security e    &#xD;&#xA;WHERE&#xD;&#xA;&#x9; a.user_serial_id = b.user_serial_id    AND&#xD;&#xA;&#x9; b.role_id = e.role_id    AND&#xD;&#xA;&#x9; e.resource_id = d.resource_id    AND&#xD;&#xA;&#x9; ((b.effective_start_DATE is null) or (b.effective_start_date &lt;=  UDF_GET_SYSTEM_DATE('Y')))   AND&#xD;&#xA;&#x9; ((b.effective_end_DATE is null) or (b.effective_end_date &gt;=  UDF_GET_SYSTEM_DATE('Y'))) AND&#xD;&#xA;&#x9; d.RESOURCE_TYPE_VALUE = 'BPM') RES&#xD;&#xA;&#x9; ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID  &#xD;&#xA;where case_id &gt;0&#xD;&#xA;ORDER BY   CASE_FILE,&#xD;&#xA;&#x9;CASE_ID desc">
+      <parameters />
+    </query>
+    <query ID="CaseLatestVersionLookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_CASE C WITH(NOLOCK)  &#xA;WHERE&#xA;&#x9; C.CASE_ID = (SELECT&#xA;&#x9; top 1 case_id &#xA;FROM&#xA;&#x9; sgw_bpm_case WITH(NOLOCK)  &#xA;WHERE&#xA;&#x9; EFFECTIVE_DATE &lt; =  CONVERT(date,&#xA;&#x9;GETDATE()) AND&#xA;&#x9; [CASE_FILE] = C.[CASE_FILE]  &#xA;ORDER BY  EFFECTIVE_DATE desc,&#xA;&#x9;case_id desc)" sfwOracle="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE C   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; C.CASE_ID = (SELECT&#xD;&#xA;&#x9; case_id &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt; =  UDF_GET_SYSTEM_DATE('Y') AND&#xD;&#xA;&#x9; CASE_FILE = C.CASE_FILE  &#xD;&#xA;ORDER BY  EFFECTIVE_DATE desc,&#xD;&#xA;&#x9;case_id desc&#xD;&#xA;  FETCH FIRST ROW ONLY)" sfwPostgre="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE C   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; C.CASE_ID = (SELECT&#xD;&#xA;&#x9; case_id &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt;=  UDF_GET_SYSTEM_DATE('Y') AND&#xD;&#xA;&#x9; CASE_FILE = C.CASE_FILE  &#xD;&#xA;ORDER BY  EFFECTIVE_DATE desc,&#xD;&#xA;&#x9;case_id desc&#xD;&#xA;  FETCH FIRST ROW ONLY)">
+      <parameters />
+    </query>
+    <query ID="GetCaseVersionByCaseFileName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; TOP 1 CASE_ID,&#xA;&#x9;VERSION &#xA;FROM&#xA;&#x9; SGW_BPM_CASE WITH(NOLOCK)   &#xA;WHERE&#xA;&#x9; CASE_FILE = @CASE_FILE &#xA;ORDER&#x9; BY      VERSION DESC" sfwOracle="SELECT&#xA;&#x9;  CASE_ID,&#xA;&#x9;VERSION &#xA;FROM&#xA;&#x9; SGW_BPM_CASE   &#xA;WHERE&#xA;&#x9; CASE_FILE = @CASE_FILE &#xA;ORDER&#x9; BY      VERSION DESC&#xA;FETCH FIRST ROW ONLY" sfwPostgre="SELECT&#xA;&#x9;  CASE_ID,&#xA;&#x9;VERSION &#xA;FROM&#xA;&#x9; SGW_BPM_CASE   &#xA;WHERE&#xA;&#x9; CASE_FILE = @CASE_FILE &#xA;ORDER&#x9; BY      VERSION DESC&#xA;FETCH FIRST ROW ONLY">
+      <parameters>
+        <parameter ID="@CASE_FILE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="CaseLookupWithVersionAppendedToName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; CASE_ID,&#xA;&#x9;CASE_FILE,&#xA;&#x9;DESCRIPTION,&#xA;&#x9;CASE WHEN DESCRIPTION='serviceretirementbpm' THEN REPLACE(DESCRIPTION, 'bpm', '')&#xA;        ELSE DESCRIPTION&#xA;    END + '(Ver.' + CONVERT(VARCHAR,&#xA;&#x9;VERSION) + ')'AS NameWithVersion &#xA;&#x9;&#xA;FROM&#xA;&#x9; SGW_BPM_CASE WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; STATUS_VALUE = 'ACTV' &#xA;ORDER BY DESCRIPTION" sfwOracle="SELECT&#xA;&#x9; CASE_ID,&#xA;&#x9;CASE_FILE,&#xA;&#x9;DESCRIPTION,&#xA;&#x9;name ||'(Ver.' || CAST( VERSION AS VARCHAR(30)) || ')' AS NameWithVersion &#xA;FROM&#xA;&#x9; SGW_BPM_CASE&#xA;WHERE&#xA;&#x9; STATUS_VALUE = 'ACTV'" sfwPostgre="SELECT&#xA;&#x9; CASE_ID,&#xA;&#x9;CASE_FILE,&#xA;&#x9;DESCRIPTION,&#xA;&#x9;name ||'(Ver.' || CAST( VERSION AS VARCHAR(30)) || ')' AS NameWithVersion &#xA;FROM&#xA;&#x9; SGW_BPM_CASE &#xA;WHERE&#xA;&#x9; STATUS_VALUE = 'ACTV'">
+      <parameters />
+    </query>
+    <query ID="GetLatestVersionCaseDetailsByCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; TOP 1 * &#xA;FROM&#xA;&#x9; SGW_BPM_CASE WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; NAME = @NAME &#xA;ORDER&#x9; BY  case_id desc" sfwOracle="SELECT&#xD;&#xA;&#x9; A. * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE A &#xD;&#xA;--WHERE&#xD;&#xA;&#x9;-- NAME = @NAME &#xD;&#xA;ORDER&#x9; BY  case_id desc&#xD;&#xA;FETCH FIRST ROW ONLY" sfwPostgre="SELECT&#xD;&#xA;&#x9; A. * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE A &#xD;&#xA;--WHERE&#xD;&#xA;&#x9;-- NAME = @NAME &#xD;&#xA;ORDER&#x9; BY  case_id desc&#xD;&#xA;FETCH FIRST ROW ONLY">
+      <parameters>
+        <parameter ID="@NAME" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetLatestVersionOfCaseByCaseId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; top 1 CASE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_CASE WITH(NOLOCK)  &#xA;WHERE&#xA;&#x9; NAME = (SELECT&#xA;&#x9; NAME &#xA;FROM&#xA;&#x9; SGW_BPM_CASE WITH(NOLOCK)  &#xA;WHERE&#xA;&#x9; CASE_ID = @CASE_ID) AND&#xA;&#x9; EFFECTIVE_DATE &lt; =  CONVERT(date,&#xA;&#x9;@Today) &#xA;ORDER BY  EFFECTIVE_DATE desc,&#xA;&#x9;case_id desc" sfwOracle="SELECT&#xD;&#xA;&#x9; CASE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; NAME = (SELECT&#xD;&#xA;&#x9; NAME &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE   &#xD;&#xA;   WHERE&#xD;&#xA;&#x9; CASE_ID = @CASE_ID) AND&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt; =  @Today &#xD;&#xA;ORDER BY  EFFECTIVE_DATE desc,&#xD;&#xA;&#x9;case_id desc&#xD;&#xA;  FETCH FIRST ROW ONLY" sfwPostgre="SELECT&#xD;&#xA;&#x9; CASE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; NAME = (SELECT&#xD;&#xA;&#x9; NAME &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE   &#xD;&#xA;   WHERE&#xD;&#xA;&#x9; CASE_ID = @CASE_ID) AND&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt;=  @Today &#xD;&#xA;ORDER BY  EFFECTIVE_DATE desc,&#xD;&#xA;&#x9;case_id desc&#xD;&#xA;  FETCH FIRST ROW ONLY">
+      <parameters>
+        <parameter ID="@CASE_ID" sfwDataType="int" />
+        <parameter ID="@Today" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetLatestEffectiveCaseDetailsByCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; top 1 * &#xA;FROM&#xA;&#x9; sgw_bpm_case WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; NAME = @NAME AND&#xA;&#x9; EFFECTIVE_DATE &lt; =  CONVERT(date,&#xA;&#x9;@Today) &#xA;ORDER BY  EFFECTIVE_DATE desc,&#xA;&#x9;case_id desc" sfwOracle="SELECT&#xA;&#x9; A.* &#xA;FROM&#xA;&#x9; sgw_bpm_case A &#xA;WHERE&#xA;&#x9; NAME = @NAME AND&#xA;&#x9; EFFECTIVE_DATE &lt; =  @today&#xA;ORDER BY  EFFECTIVE_DATE desc,&#xA;&#x9;case_id desc" sfwPostgre="SELECT&#xD;&#xA;&#x9; A.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case A &#xD;&#xA;WHERE&#xD;&#xA;&#x9; NAME = @NAME AND&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt;=  @today&#xD;&#xA;ORDER BY  EFFECTIVE_DATE desc,&#xD;&#xA;&#x9;case_id desc">
+      <parameters>
+        <parameter ID="@NAME" sfwDataType="string" />
+        <parameter ID="@Today" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetAllDistinctCaseFile" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct CASE_FILE,DESCRIPTION ,CASE_ID,Name&#xD;&#xA;  FROM SGW_BPM_CASE WITH(NOLOCK) WHERE STATUS_VALUE = 'ACTV' ORDER BY  DESCRIPTION" sfwPostgre="SELECT distinct CASE_FILE,DESCRIPTION ,CASE_ID ,Name&#xD;&#xA;  FROM SGW_BPM_CASE  WHERE STATUS_VALUE = 'ACTV' ORDER BY  DESCRIPTION" sfwOracle="SELECT distinct CASE_FILE,DESCRIPTION ,CASE_ID, Name&#xD;&#xA;  FROM SGW_BPM_CASE  WHERE STATUS_VALUE = 'ACTV' ORDER BY  DESCRIPTION">
+      <parameters />
+    </query>
+    <query ID="GetCaseVersionByCaseID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select CASE_FILE,CASE_ID,version &#xA;from SGW_BPM_CASE WITH(NOLOCK)&#xA;where case_id=@case_id" sfwPostgre="select CASE_FILE,CASE_ID,version &#xA;from SGW_BPM_CASE&#xA;where case_id=@case_id" sfwOracle="select CASE_FILE,CASE_ID,version &#xA;from SGW_BPM_CASE&#xA;where case_id=@case_id">
+      <parameters>
+        <parameter ID="@case_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAllDistinctCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct CASE_FILE,DESCRIPTION ,name&#xA;FROM SGW_BPM_CASE WITH(NOLOCK) &#xA; WHERE STATUS_VALUE = 'ACTV' ORDER&#xA;  BY  DESCRIPTION" sfwOracle="SELECT distinct CASE_FILE,DESCRIPTION ,name&#xD;&#xA;FROM SGW_BPM_CASE &#xD;&#xA; WHERE STATUS_VALUE = 'ACTV' ORDER&#xD;&#xA;  BY  DESCRIPTION" sfwPostgre="SELECT distinct CASE_FILE,DESCRIPTION ,name&#xD;&#xA;FROM SGW_BPM_CASE &#xD;&#xA; WHERE STATUS_VALUE = 'ACTV' ORDER&#xD;&#xA;  BY  DESCRIPTION">
+      <parameters />
+    </query>
+    <query ID="GetAllVersionByCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select distinct version,case_id&#xD;&#xA;  from SGW_BPM_CASE WITH(NOLOCK)&#xD;&#xA;  where name=@name" sfwOracle="select distinct version,case_id&#xD;&#xA;  from SGW_BPM_CASE&#xD;&#xA;  where name=@name" sfwPostgre="select distinct version,case_id&#xD;&#xA;  from SGW_BPM_CASE&#xD;&#xA;  where name=@name">
+      <parameters>
+        <parameter ID="@name" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <methods />
+  <lifecycle />
+  <attributes>
+    <attribute sfwType="Collection" sfwEntity="entBpmProcess" ID="lstDisplayBpmProcesses" sfwValue="DisplayBpmProcesses" />
+    <attribute sfwType="Collection" sfwEntity="entBpmCaseMessageFlow" ID="lstBpmCaseMessageFlow" sfwValue="iclbBpmCaseMessageFlow" />
+    <attribute sfwType="Collection" sfwEntity="entBpmCaseParameter" ID="lstBpmCaseParameter" sfwValue="iclbBpmCaseParameter" />
+    <attribute sfwType="Collection" sfwEntity="entCaseInstanceCountByStatus" ID="lstCaseInstancesByStatus" sfwValue="iclbCaseInstancesByStatus" />
+    <attribute ID="lstCaseNameByCaseID" sfwType="Collection" sfwEntity="entBpmCase" sfwValue="icdoBpmCase" sfwPrivate="False" />
+    <attribute sfwValue="case_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwIsNull="False" ID="CaseId" sfwCaption="Case Id" />
+    <attribute sfwValue="case_file" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="-1" sfwIsNull="True" ID="CaseFile" sfwCaption="Case File" />
+    <attribute sfwValue="description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="-1" sfwIsNull="True" ID="Description" sfwCaption="Description" />
+    <attribute sfwValue="name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="-1" sfwIsNull="True" ID="Name" sfwCaption="Name" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="version" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="Version" sfwCaption="Version" />
+    <attribute sfwValue="bpmmap" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="-1" sfwIsNull="True" ID="Bpmmap" sfwCaption="Bpmmap" />
+    <attribute sfwValue="bbpmmap" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="image" sfwIsNull="True" ID="Bbpmmap" sfwCaption="Bbpmmap" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="3002" sfwCaption="Status Id" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwCaption="Status Value" />
+    <attribute sfwValue="effective_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="EffectiveDate" sfwCaption="Effective Date" />
+    <attribute sfwValue="resource_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="ResourceId" sfwCaption="Resource Id" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status Description" sfwValue="status_description" />
+    <attribute sfwType="Collection" sfwEntity="entBpmCaseInstance" ID="lstBpmCaseInstances" sfwValue="iclbBpmCaseInstances" />
+    <attribute sfwType="Collection" sfwEntity="entBpmProcess" ID="lstBpmProcess" sfwValue="iclbBpmProcess" />
+    <attribute sfwType="Collection" sfwEntity="entBpmCaseDetails" ID="lstBpmCaseDetails" sfwValue="iclbBpmCaseDetails" />
+    <attribute sfwType="Property" ID="IobjMainCDO" sfwValue="iobjMainCDO" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadBpmCaseInstances" sfwReturnType="Void" />
+    <method ID="LoadBpmProcesss" sfwReturnType="Void" />
+    <method ID="LoadBpmCaseDetailsCollection" sfwReturnType="Void" />
+  </objectmethods>
+  <ExtraFields />
+</entity>

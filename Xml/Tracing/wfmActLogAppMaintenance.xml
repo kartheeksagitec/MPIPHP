@@ -1,0 +1,276 @@
+﻿<form ID="wfmActLogAppMaintenance" sfwType="Maintenance" sfwEntity="entActLogApp" sfwTitle="Act Log App Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmActLogAppLookup">
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnNoChangesSave_Click" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="ActLogApp Details" sfwCaption="Application Tracing Configuration">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel Text="Act Log App Id :" sfwIsCaption="True" ID="lblLabel" AssociatedControlID="lblActLogAppId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActLogAppId" sfwEntityField="ActLogAppId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capAppName" Text="App Name : " AssociatedControlID="txtAppName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAppName" sfwEntityField="AppName" Width="350px" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActionFlag" Text="Transaction Flag : " AssociatedControlID="chkActionFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkActionFlag" sfwEntityField="ActionFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActionStepFlag" Text="Appserver call Flag : " AssociatedControlID="chkActionStepFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkActionStepFlag" sfwEntityField="ActionStepFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capSelectFlag" Text="Query Flag : " AssociatedControlID="chkSelectFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkSelectFlag" sfwEntityField="QueryFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capRulesFlag" Text="Rule Flag : " AssociatedControlID="chkRulesFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkRulesFlag" sfwEntityField="RuleFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capValidationRuleFlag" Text="Validation Rule Flag : " AssociatedControlID="chkValidationRuleFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkValidationRuleFlag" sfwEntityField="ValidationRuleFlag" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActionStepSizeFlag" Text="Action Step Size Flag : " AssociatedControlID="chkActionStepSizeFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkActionStepSizeFlag" sfwEntityField="ActionStepSizeFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capBrowserTimeFlag" Text="Browser Time Flag : " AssociatedControlID="chkBrowserTimeFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkBrowserTimeFlag" sfwEntityField="BrowserTimeFlag" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlActorDetails" sfwCaption="User Configuration">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwPanel ID="pnlNewPanel" sfwCollapsible="False" GroupingText="Search Criteria">
+                  <sfwTable>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capActorName" Text="Actor Name : " AssociatedControlID="txtActorName" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtActorName" sfwDataField="actor_name" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capModifiedDate" Text="Modified Date : " AssociatedControlID="txtModifiedDate" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtModifiedDate" sfwDataField="modified_date" sfwDataFormat="{0:d}" />
+                        <sfwLiteral ID="ltrSearchSpace" />
+                      </sfwColumn>
+                      <sfwColumn HorizontalAlign="Right">
+                        <sfwButton sfwMethodName="btnGridSearch_Click" Text="Search" ID="btnGridSearchClick" sfwRelatedControl="grvLstActLogAppActor" sfwNavigationParameter="txtActorName;txtModifiedDate" />
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnAddNewActor" sfwMethodName="btnNewPopupDialog_Click" Text="New Actor" sfwRelatedControl="grvLstActLogAppActor" sfwRelatedDialogPanel="pnlActLogApp" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnGridViewDelete_Click" Text="Delete Actor" sfwRelatedControl="grvLstActLogAppActor" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwDialogPanel ID="pnlActLogApp" sfwCaption="Add User">
+                  <sfwTable ID="tblNewPage1">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capTraceAction" Text="Trace Action : " AssociatedControlID="chkTraceAction" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCheckBox ID="chkTraceAction" sfwEntityField="ActionFlag" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capTraceActionStep" Text="Trace Action Step : " AssociatedControlID="chkTraceActionStep" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCheckBox ID="chkTraceActionStep" sfwEntityField="ActionStepFlag" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capActorName1" Text="User Name : " AssociatedControlID="txtActorName1" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn CssClass="posRelative setTopActName">
+                        <sfwTextBox ID="txtActorName1" sfwEntityField="ActorName" sfwAutoQuery="entUser.LOADACTIVEUSER" sfwAutoColumns="user_id,user id,like,String" sfwAutoFillMapping="txtActorName1=user_id" CssClass="ui-select" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capTraceInsertQuesy" Text="Trace Query :" AssociatedControlID="chkTraceInsertQuesy" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCheckBox ID="chkTraceInsertQuesy" sfwEntityField="QueryFlag" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capTraceRules" Text="Trace Rule : " AssociatedControlID="chkTraceRules" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCheckBox ID="chkTraceRules" sfwEntityField="RuleFlag" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capValidationRuleFlag1" Text="Validation Rule Flag : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCheckBox ID="chkValidationRuleFlag1" sfwEntityField="ValidationRuleFlag" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwButton ID="btnFinishPopupDialogClick" sfwMethodName="btnFinishPopupDialog_Click" Text="Finish" sfwRelatedControl="grvLstActLogAppActor" sfwRelatedDialogPanel="pnlActLogApp" />
+                        <sfwButton ID="btnClosePopupDialogClick" sfwMethodName="btnClosePopupDialog_Click" Text="Close" sfwRelatedControl="grvLstActLogAppActor" sfwRelatedDialogPanel="pnlActLogApp" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                  </sfwTable>
+                </sfwDialogPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="grvLstActLogAppActor" sfwEntityField="lstActLogAppActor" AllowEditing="True" sfwTwoWayBinding="True" sfwSelection="Many" sfwAllowNew="True" sfwBaseQuery="entActLogAppActor.FilterByAppID">
+                  <Columns>
+                    <TemplateField HeaderText="ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActLogAppActorId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User Name" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblActorNameInfo" sfwEntityField="ActorName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Action" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="ActionFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Appserver" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="ActionStepFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Query" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="QueryFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Rules" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="RuleFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Validation Rule Flag">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="ValidationRuleFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Parameters>
+                    <parameter ID="@act_log_app_id" sfwEntityField="ActLogAppId" />
+                  </Parameters>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwEntityField="UpdateSeq" sfwTwoWayBinding="True" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails>
+    <entityfield ID="lstActLogAppActor" sfwUpdateAutoLoad="True" sfwNewAutoLoad="True" />
+  </loaddetails>
+</form>

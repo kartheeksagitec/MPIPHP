@@ -1,0 +1,152 @@
+﻿<entity ID="entBPMMonitoring" sfwView="False" sfwActive="True" sfwType="EntityRule" sfwStatus="Review" CreateWithClass="False" sfwDatabase="bpmtracing" Text="entBPMMonitoring">
+  <ExtraFields />
+  <queries>
+    <query ID="GetActLogBPM" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_TRACING WITH(NOLOCK)" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_TRACING" sfwPostgre="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_TRACING">
+      <parameters />
+    </query>
+    <query ID="GetBPMSummary" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM&#xD;&#xA;(SELECT 1 as ID, 'Failed' as Status, COUNT(*) as Count FROM SGW_BPM_REQUEST SBR WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CREATED_DATE BETWEEN    @START_TIME AND @END_TIME + 1 AND STATUS_VALUE = 'FAIL'&#xD;&#xA;&#x9;  UNION &#xD;&#xA;SELECT 2 as ID, 'Unprocessed' as Status, COUNT(*) as Count FROM SGW_BPM_REQUEST SBR WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CREATED_DATE BETWEEN    @START_TIME AND @END_TIME + 1 AND STATUS_VALUE = 'UNPC'&#xD;&#xA;UNION&#xD;&#xA;SELECT 3 as ID, 'Processed' as Status, COUNT(*) as Count FROM SGW_BPM_REQUEST SBR WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CREATED_DATE BETWEEN    @START_TIME AND @END_TIME + 1 AND STATUS_VALUE = 'PROC' &#x9;  &#xD;&#xA;) AS T&#xD;&#xA;&#x9; ORDER BY ID" sfwOracle="SELECT * FROM&#xD;&#xA;(SELECT 1  ID, 'Failed'  Status, COUNT(*)  Count FROM SGW_BPM_REQUEST SBR&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CREATED_DATE BETWEEN @START_TIME AND @END_TIME + 1 AND STATUS_VALUE = 'FAIL'&#xD;&#xA;&#x9;  UNION &#xD;&#xA;SELECT 2  ID, 'Unprocessed'  Status, COUNT(*)  Count FROM SGW_BPM_REQUEST SBR&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CREATED_DATE BETWEEN @START_TIME AND @END_TIME + 1 AND STATUS_VALUE = 'UNPC'&#xD;&#xA;UNION&#xD;&#xA;SELECT 3  ID, 'Processed'  Status, COUNT(*)  Count FROM SGW_BPM_REQUEST SBR&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CREATED_DATE BETWEEN @START_TIME AND @END_TIME + 1 AND STATUS_VALUE = 'PROC' &#x9;  &#xD;&#xA;)  T&#xD;&#xA;&#x9; ORDER BY ID" sfwPostgre="SELECT * FROM&#xD;&#xA;(SELECT 1  ID, 'Failed'  Status, COUNT(*)  Count FROM SGW_BPM_REQUEST SBR&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CREATED_DATE BETWEEN @START_TIME AND @END_TIME + interval '1' day AND STATUS_VALUE = 'FAIL'&#xD;&#xA;&#x9;  UNION &#xD;&#xA;SELECT 2  ID, 'Unprocessed'  Status, COUNT(*)  Count FROM SGW_BPM_REQUEST SBR&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CREATED_DATE BETWEEN @START_TIME AND @END_TIME + interval '1' day  AND STATUS_VALUE = 'UNPC'&#xD;&#xA;UNION&#xD;&#xA;SELECT 3  ID, 'Processed'  Status, COUNT(*)  Count FROM SGW_BPM_REQUEST SBR&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CREATED_DATE BETWEEN @START_TIME AND @END_TIME + interval '1' day  AND STATUS_VALUE = 'PROC' &#x9;  &#xD;&#xA;)  T&#xD;&#xA;&#x9; ORDER BY ID">
+      <parameters>
+        <parameter ID="@START_TIME" sfwDataType="DateTime" />
+        <parameter ID="@END_TIME" sfwDataType="DateTime" />
+      </parameters>
+      <mappedcolumns>
+        <column ID="count" sfwEntityField="Count" />
+      </mappedcolumns>
+    </query>
+    <query ID="GetBPMInitiatedStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; STATUS_ID,&#xA;&#x9;STATUS_VALUE,&#xA;&#x9;COUNT(*) 'COUNT' &#xA;FROM&#xA;&#x9; SGW_BPM_CASE_INSTANCE WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; CREATED_DATE  BETWEEN @START_TIME AND&#xA;&#x9; @END_TIME + 1&#xA;GROUP BY  STATUS_ID,&#xA;&#x9;STATUS_VALUE" sfwOracle="SELECT&#xA;&#x9; STATUS_ID,&#xA;&#x9;STATUS_VALUE,&#xA;&#x9;COUNT(*) COUNT&#xA;FROM&#xA;&#x9; SGW_BPM_CASE_INSTANCE &#xA;WHERE&#xA;&#x9; CREATED_DATE  BETWEEN @START_TIME AND @END_TIME + 1&#xA;GROUP BY  STATUS_ID,&#xA;&#x9;STATUS_VALUE" sfwPostgre="[12:36 PM] Rakhonde, Akash&#xA;    &#xA;SELECT&#xA;STATUS_ID,&#xA;STATUS_VALUE,&#xA;COUNT(*) COUNT&#xA;FROM&#xA;SGW_BPM_CASE_INSTANCE&#xA;WHERE&#xA;CREATED_DATE BETWEEN @START_TIME AND @END_TIME + interval '1' day&#xA;GROUP BY STATUS_ID,&#xA;STATUS_VALUE">
+      <parameters>
+        <parameter ID="@START_TIME" sfwDataType="DateTime" />
+        <parameter ID="@END_TIME" sfwDataType="DateTime" />
+      </parameters>
+      <mappedcolumns>
+        <column ID="count" sfwEntityField="Count" />
+      </mappedcolumns>
+    </query>
+    <query ID="GetBpmCaseInstanceStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT STATUS_ID, STATUS_VALUE, COUNT(*) 'COUNT'&#xD;&#xA;  FROM SGW_BPM_CASE_INSTANCE&#xD;&#xA; WHERE CREATED_DATE BETWEEN @start_time and @end_time + 1&#xD;&#xA; GROUP BY STATUS_ID, STATUS_VALUE" sfwOracle="SELECT STATUS_ID, STATUS_VALUE, COUNT(*) COUNT&#xD;&#xA;  FROM SGW_BPM_CASE_INSTANCE&#xD;&#xA; WHERE CREATED_DATE BETWEEN @start_time AND @end_time + 1&#xD;&#xA; GROUP BY STATUS_ID, STATUS_VALUE" sfwPostgre="SELECT STATUS_ID, STATUS_VALUE, COUNT(*) COUNT&#xD;&#xA;  FROM SGW_BPM_CASE_INSTANCE&#xD;&#xA; WHERE CREATED_DATE BETWEEN @start_time AND @end_time + interval '1' day&#xD;&#xA; GROUP BY STATUS_ID, STATUS_VALUE">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetRequests" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; REQUEST_ID,&#xA;&#x9;PERSON_ID,&#xA;&#x9;ORG_ID,&#xA;&#x9;SBP.NAME AS PROCESSNAME,&#xA;&#x9;SBR.STATUS_ID, SBR.STATUS_VALUE,&#xA;&#x9;SBR.PROCESSED_BY_MACHINE,&#xA;&#x9;SBR.SERVER_NAME,&#xA;&#x9;SBR.CREATED_DATE&#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST SBR WITH(NOLOCK)  &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_PROCESS SBP WITH(NOLOCK) &#xA;&#x9; ON SBR.PROCESS_ID = SBP.PROCESS_ID  AND SBR.STATUS_VALUE IN ('FAIL', 'UNPC')&#xA;WHERE&#xA;&#x9; SBR.CREATED_DATE BETWEEN @start_time AND&#xA;&#x9; @end_time + 1&#xA;ORDER BY  SBR.CREATED_DATE DESC" sfwOracle="SELECT&#xA;&#x9; REQUEST_ID,&#xA;&#x9;PERSON_ID,&#xA;&#x9;ORG_ID,&#xA;&#x9;SBP.NAME AS PROCESSNAME,&#xA;&#x9;SBR.STATUS_ID, SBR.STATUS_VALUE,&#xA;&#x9;SBR.PROCESSED_BY_MACHINE,&#xA;&#x9;SBR.SERVER_NAME,&#xA;&#x9;SBR.CREATED_DATE&#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST SBR &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_PROCESS SBP &#xA;&#x9; ON SBR.PROCESS_ID = SBP.PROCESS_ID  AND SBR.STATUS_VALUE IN ('FAIL', 'UNPC')&#xA;WHERE&#xA;&#x9; SBR.CREATED_DATE BETWEEN @start_time AND @end_time + 1&#xA;ORDER BY  SBR.CREATED_DATE DESC" sfwPostgre="SELECT&#xD;&#xA;&#x9; REQUEST_ID,&#xD;&#xA;&#x9;PERSON_ID,&#xD;&#xA;&#x9;ORG_ID,&#xD;&#xA;&#x9;SBP.NAME AS PROCESSNAME,&#xD;&#xA;&#x9;SBR.STATUS_ID, SBR.STATUS_VALUE,&#xD;&#xA;&#x9;SBR.PROCESSED_BY_MACHINE,&#xD;&#xA;&#x9;SBR.SERVER_NAME,&#xD;&#xA;&#x9;SBR.CREATED_DATE&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_REQUEST SBR &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS SBP &#xD;&#xA;&#x9; ON SBR.PROCESS_ID = SBP.PROCESS_ID  AND SBR.STATUS_VALUE IN ('FAIL', 'UNPC')&#xD;&#xA;WHERE&#xD;&#xA;&#x9; SBR.CREATED_DATE BETWEEN @start_time AND @end_time + interval '1' day&#xD;&#xA;ORDER BY  SBR.CREATED_DATE DESC">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetProcessesByEngine" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;TRACE_INSTANCE_ID,&#xA;&#x9;  ENGINE_NAME,&#xA;&#x9;MACHINE_NAME,&#xA;&#x9;USER_ID,&#xA;&#x9;PARAMETER_DETAILS,&#xA;&#x9;START_TIME,&#xA;&#x9;END_TIME,&#xA;&#x9;CREATED_DATE&#xA;FROM&#xA;&#x9; SGW_BPM_TRACE_INSTANCE SBTI WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; SBTI.CREATED_DATE BETWEEN @start_time AND&#xA;&#x9; @end_time + 1&#xA;GROUP BY  ENGINE_NAME,&#xA;&#x9;MACHINE_NAME,&#xA;&#x9;USER_ID,&#xA;&#x9;PARAMETER_DETAILS, TRACE_INSTANCE_ID, START_TIME, END_TIME, CREATED_DATE" sfwOracle="SELECT&#xA;TRACE_INSTANCE_ID,&#xA;&#x9;  ENGINE_NAME,&#xA;&#x9;MACHINE_NAME,&#xA;&#x9;USER_ID,&#xA;&#x9;PARAMETER_DETAILS,&#xA;&#x9;START_TIME,&#xA;&#x9;END_TIME,&#xA;&#x9;CREATED_DATE&#xA;FROM&#xA;&#x9; SGW_BPM_TRACE_INSTANCE SBTI&#xA;WHERE&#xA;&#x9; SBTI.CREATED_DATE BETWEEN @start_time AND @end_time + 1&#xA;GROUP BY  ENGINE_NAME,&#xA;&#x9;MACHINE_NAME,&#xA;&#x9;USER_ID,&#xA;&#x9;PARAMETER_DETAILS, TRACE_INSTANCE_ID, START_TIME, END_TIME, CREATED_DATE" sfwPostgre="SELECT&#xD;&#xA;TRACE_INSTANCE_ID,&#xD;&#xA;&#x9;  ENGINE_NAME,&#xD;&#xA;&#x9;MACHINE_NAME,&#xD;&#xA;&#x9;USER_ID,&#xD;&#xA;&#x9;PARAMETER_DETAILS,&#xD;&#xA;&#x9;START_TIME,&#xD;&#xA;&#x9;END_TIME,&#xD;&#xA;&#x9;CREATED_DATE&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_TRACE_INSTANCE SBTI&#xD;&#xA;WHERE&#xD;&#xA;&#x9; SBTI.CREATED_DATE BETWEEN @start_time AND @end_time + interval '1' day&#xD;&#xA;GROUP BY  ENGINE_NAME,&#xD;&#xA;&#x9;MACHINE_NAME,&#xD;&#xA;&#x9;USER_ID,&#xD;&#xA;&#x9;PARAMETER_DETAILS, TRACE_INSTANCE_ID, START_TIME, END_TIME, CREATED_DATE">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetServerTraceConfigurations" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT 1 AS PRIMARY_KEY, SBST.*, SBSS.*, SS.SERVER_NAME, SBST.ENABLED FROM SGW_BPM_SERVICE_TIMER SBST WITH(NOLOCK)&#xD;&#xA;&#x9;LEFT JOIN SGW_BPM_SERVER_SETTINGS SBSS WITH(NOLOCK)&#xD;&#xA;&#x9;ON SBST.SERVICE_TIMER_ID = SBSS.SERVICE_TIMER_ID&#xD;&#xA;&#x9;INNER JOIN SGS_SERVERS SS WITH(NOLOCK)&#xD;&#xA;&#x9;ON SBSS.SERVER_ID = SS.SERVER_ID&#xD;&#xA;&#x9;ORDER BY SBST.SERVICE_TIMER_ID" sfwOracle="SELECT 1 AS PRIMARY_KEY, SBST.*, SBSS.*, SS.SERVER_NAME, SBST.ENABLED FROM SGW_BPM_SERVICE_TIMER SBST&#xD;&#xA;&#x9;LEFT JOIN SGW_BPM_SERVER_SETTINGS SBSS &#xD;&#xA;&#x9;ON SBST.SERVICE_TIMER_ID = SBSS.SERVICE_TIMER_ID&#xD;&#xA;&#x9;INNER JOIN SGS_SERVERS SS &#xD;&#xA;&#x9;ON SBSS.SERVER_ID = SS.SERVER_ID&#xD;&#xA;&#x9;ORDER BY SBST.SERVICE_TIMER_ID" sfwPostgre="SELECT 1 AS PRIMARY_KEY, SBST.*, SBSS.*, SS.SERVER_NAME, SBST.ENABLED FROM SGW_BPM_SERVICE_TIMER SBST&#xD;&#xA;&#x9;LEFT JOIN SGW_BPM_SERVER_SETTINGS SBSS &#xD;&#xA;&#x9;ON SBST.SERVICE_TIMER_ID = SBSS.SERVICE_TIMER_ID&#xD;&#xA;&#x9;INNER JOIN SGS_SERVERS SS &#xD;&#xA;&#x9;ON SBSS.SERVER_ID = SS.SERVER_ID&#xD;&#xA;&#x9;ORDER BY SBST.SERVICE_TIMER_ID">
+      <parameters />
+    </query>
+    <query ID="GetFailedOrUnProcessedQueueItems" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; MACHINE_NAME,&#x9;&#xA;&#x9;SBQ.STATUS_ID,&#xA;&#x9;SBQ.STATUS_VALUE,&#xA;&#x9;SBP.NAME AS PROCESSNAME,&#xA;&#x9;SBA.NAME  AS ACTIVITYNAME,&#xA;&#x9;SBQ.CREATED_DATE&#xA;FROM&#xA;&#x9; SGW_BPM_QUEUE SBQ WITH(NOLOCK) INNER  &#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE SBPI WITH(NOLOCK)&#xA;&#x9; ON SBQ.SRC_PRCS_INST_ID = SBPI.PROCESS_INSTANCE_ID INNER  &#xA;&#x9; JOIN SGW_BPM_PROCESS SBP WITH(NOLOCK)&#xA;&#x9; ON SBPI.PROCESS_ID = SBP.PROCESS_ID &#xA;&#x9; INNER JOIN SGW_BPM_CASE SBC WITH(NOLOCK) ON&#xA;&#x9; SBC.CASE_ID = SBP.CASE_ID INNER  &#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI WITH(NOLOCK)&#xA;&#x9; ON SBQ.ACTV_INST_ID_TO_EXEC = SBAI.ACTIVITY_INSTANCE_ID INNER  &#xA;&#x9; JOIN SGW_BPM_ACTIVITY SBA WITH(NOLOCK)&#xA;&#x9; ON SBAI.ACTIVITY_ID = SBA.ACTIVITY_ID&#xA;&#x9; WHERE SBQ.CREATED_DATE BETWEEN @start_time AND&#xA;&#x9; @end_time + 1" sfwOracle="SELECT&#xD;&#xA;&#x9; MACHINE_NAME,&#x9;&#xD;&#xA;&#x9;SBQ.STATUS_ID,&#xD;&#xA;&#x9;SBQ.STATUS_VALUE,&#xD;&#xA;&#x9;SBP.NAME AS PROCESSNAME,&#xD;&#xA;&#x9;SBA.NAME  AS ACTIVITYNAME,&#xD;&#xA;&#x9;SBQ.CREATED_DATE&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_QUEUE SBQ  INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE SBPI &#xD;&#xA;&#x9; ON SBQ.SRC_PRCS_INST_ID = SBPI.PROCESS_INSTANCE_ID INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS SBP &#xD;&#xA;&#x9; ON SBPI.PROCESS_ID = SBP.PROCESS_ID &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_CASE SBC  ON&#xD;&#xA;&#x9; SBC.CASE_ID = SBP.CASE_ID INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI&#xD;&#xA;&#x9; ON SBQ.ACTV_INST_ID_TO_EXEC = SBAI.ACTIVITY_INSTANCE_ID INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY SBA &#xD;&#xA;&#x9; ON SBAI.ACTIVITY_ID = SBA.ACTIVITY_ID&#xD;&#xA;&#x9; WHERE SBQ.CREATED_DATE BETWEEN @start_time AND&#xD;&#xA;&#x9; @end_time + 1" sfwPostgre="SELECT&#xD;&#xA;&#x9; MACHINE_NAME,&#x9;&#xD;&#xA;&#x9;SBQ.STATUS_ID,&#xD;&#xA;&#x9;SBQ.STATUS_VALUE,&#xD;&#xA;&#x9;SBP.NAME AS PROCESSNAME,&#xD;&#xA;&#x9;SBA.NAME  AS ACTIVITYNAME,&#xD;&#xA;&#x9;SBQ.CREATED_DATE&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_QUEUE SBQ  INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE SBPI &#xD;&#xA;&#x9; ON SBQ.SRC_PRCS_INST_ID = SBPI.PROCESS_INSTANCE_ID INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS SBP &#xD;&#xA;&#x9; ON SBPI.PROCESS_ID = SBP.PROCESS_ID &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_CASE SBC  ON&#xD;&#xA;&#x9; SBC.CASE_ID = SBP.CASE_ID INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI&#xD;&#xA;&#x9; ON SBQ.ACTV_INST_ID_TO_EXEC = SBAI.ACTIVITY_INSTANCE_ID INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY SBA &#xD;&#xA;&#x9; ON SBAI.ACTIVITY_ID = SBA.ACTIVITY_ID&#xD;&#xA;&#x9; WHERE SBQ.CREATED_DATE BETWEEN @start_time AND&#xD;&#xA;&#x9; @end_time + interval '1' day">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetEngineNamesForPassedDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT ENGINE_NAME FROM SGW_BPM_TRACE_INSTANCE WITH(NOLOCK) WHERE START_TIME BETWEEN @START_TIME AND @END_TIME + 1&#xD;&#xA;ORDER BY ENGINE_NAME" sfwOracle="SELECT DISTINCT ENGINE_NAME FROM SGW_BPM_TRACE_INSTANCE WHERE START_TIME BETWEEN @START_TIME AND @END_TIME + 1&#xD;&#xA;ORDER BY ENGINE_NAME" sfwPostgre="SELECT DISTINCT ENGINE_NAME FROM SGW_BPM_TRACE_INSTANCE WHERE START_TIME BETWEEN @START_TIME AND @END_TIME + interval '1' day&#xD;&#xA;ORDER BY ENGINE_NAME">
+      <parameters>
+        <parameter ID="@START_TIME" sfwDataType="DateTime" />
+        <parameter ID="@END_TIME" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="TimersHandledPerEngine" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SBTIA.ACTION_TYPE, COUNT(*) AS PROCESSED_COUNT  FROM SGW_BPM_TRACE_INSTANCE SBTI&#xA;INNER JOIN SGW_BPM_TRACE_INST_ACTN SBTIA&#xA;ON SBTI.TRACE_INSTANCE_ID = SBTIA.TRACE_INSTANCE_ID AND SBTI.ENGINE_NAME = @ENGINE_NAME&#xA;INNER JOIN SGW_BPM_TRACE_INST_ACTN_DTL SBTIAD ON SBTIA.TRANSACTION_ID = SBTIAD.TRANSACTION_ID&#xA;AND SBTI.CREATED_DATE BETWEEN @START_TIME AND @END_TIME + 1&#xA;GROUP BY ACTION_TYPE, SBTI.ENGINE_NAME" sfwOracle="SELECT SBTIA.ACTION_TYPE, COUNT(*)  PROCESSED_COUNT  FROM SGW_BPM_TRACE_INSTANCE SBTI&#xD;&#xA;INNER JOIN SGW_BPM_TRACE_INST_ACTN SBTIA&#xD;&#xA;ON SBTI.TRACE_INSTANCE_ID = SBTIA.TRACE_INSTANCE_ID AND SBTI.ENGINE_NAME = @ENGINE_NAME&#xD;&#xA;INNER JOIN SGW_BPM_TRACE_INST_ACTN_DTL SBTIAD ON SBTIA.TRANSACTION_ID = SBTIAD.TRANSACTION_ID&#xD;&#xA;AND SBTI.CREATED_DATE BETWEEN @START_TIME AND @END_TIME + 1&#xD;&#xA;GROUP BY ACTION_TYPE, SBTI.ENGINE_NAME" sfwPostgre="SELECT SBTIA.ACTION_TYPE, COUNT(*)  PROCESSED_COUNT  FROM SGW_BPM_TRACE_INSTANCE SBTI&#xD;&#xA;INNER JOIN SGW_BPM_TRACE_INST_ACTN SBTIA&#xD;&#xA;ON SBTI.TRACE_INSTANCE_ID = SBTIA.TRACE_INSTANCE_ID AND SBTI.ENGINE_NAME = @ENGINE_NAME&#xD;&#xA;INNER JOIN SGW_BPM_TRACE_INST_ACTN_DTL SBTIAD ON SBTIA.TRANSACTION_ID = SBTIAD.TRANSACTION_ID&#xD;&#xA;AND SBTI.CREATED_DATE BETWEEN @START_TIME AND @END_TIME + interval '1' day&#xD;&#xA;GROUP BY ACTION_TYPE, SBTI.ENGINE_NAME">
+      <parameters>
+        <parameter ID="@START_TIME" sfwDataType="DateTime" />
+        <parameter ID="@END_TIME" sfwDataType="DateTime" />
+        <parameter ID="@ENGINE_NAME" sfwDataType="string" />
+      </parameters>
+      <mappedcolumns>
+        <column ID="action_type" sfwEntityField="ActionType" />
+        <column ID="processed_count" sfwEntityField="ProcessedCount" />
+      </mappedcolumns>
+    </query>
+    <query ID="GetBpmQueueStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT 'Failed' as ActionType, COUNT(*) as Count FROM SGW_BPM_QUEUE SBQ WITH(NOLOCK)&#xD;&#xA;WHERE CREATED_DATE BETWEEN @START_DATE AND @END_DATE + 1&#xD;&#xA;AND STATUS_VALUE = 'FAIL'&#xD;&#xA;UNION&#xD;&#xA;SELECT 'Unprocessed', COUNT(*) FROM SGW_BPM_QUEUE SBQ WITH(NOLOCK)&#xD;&#xA;WHERE CREATED_DATE BETWEEN @START_DATE AND @END_DATE + 1&#xD;&#xA;AND STATUS_VALUE = 'UNPC'&#xD;&#xA;UNION&#xD;&#xA;SELECT 'Picked', COUNT(*) FROM SGW_BPM_QUEUE SBQ WITH(NOLOCK)&#xD;&#xA;WHERE CREATED_DATE BETWEEN @START_DATE AND @END_DATE + 1&#xD;&#xA;AND STATUS_VALUE = 'PICK'" sfwOracle="SELECT 'Failed'  ActionType, COUNT(*)  Count FROM SGW_BPM_QUEUE SBQ &#xD;&#xA;WHERE CREATED_DATE BETWEEN @START_DATE AND @END_DATE + 1&#xD;&#xA;AND STATUS_VALUE = 'FAIL'&#xD;&#xA;UNION&#xD;&#xA;SELECT 'Unprocessed' ActionType, COUNT(*) Count FROM SGW_BPM_QUEUE SBQ&#xD;&#xA;WHERE CREATED_DATE BETWEEN @START_DATE AND @END_DATE + 1&#xD;&#xA;AND STATUS_VALUE = 'UNPC'&#xD;&#xA;UNION&#xD;&#xA;SELECT 'Picked' ActionType, COUNT(*) Count FROM SGW_BPM_QUEUE SBQ &#xD;&#xA;WHERE CREATED_DATE BETWEEN @START_DATE AND @END_DATE + 1&#xD;&#xA;AND STATUS_VALUE = 'PICK'" sfwPostgre="SELECT 'Failed'  ActionType, COUNT(*)  Count FROM SGW_BPM_QUEUE SBQ &#xD;&#xA;WHERE CREATED_DATE BETWEEN @START_DATE AND @END_DATE + interval '1' day &#xD;&#xA;AND STATUS_VALUE = 'FAIL'&#xD;&#xA;UNION&#xD;&#xA;SELECT 'Unprocessed' ActionType, COUNT(*) Count FROM SGW_BPM_QUEUE SBQ&#xD;&#xA;WHERE CREATED_DATE BETWEEN @START_DATE AND @END_DATE + interval '1' day&#xD;&#xA;AND STATUS_VALUE = 'UNPC'&#xD;&#xA;UNION&#xD;&#xA;SELECT 'Picked' ActionType, COUNT(*) Count FROM SGW_BPM_QUEUE SBQ &#xD;&#xA;WHERE CREATED_DATE BETWEEN @START_DATE AND @END_DATE + interval '1' day&#xD;&#xA;AND STATUS_VALUE = 'PICK'">
+      <parameters>
+        <parameter ID="@START_DATE" sfwDataType="DateTime" />
+        <parameter ID="@END_DATE" sfwDataType="DateTime" />
+      </parameters>
+      <mappedcolumns>
+        <column ID="action_type" sfwEntityField="ActionType" />
+        <column ID="error_count" sfwEntityField="ErrorCount" />
+      </mappedcolumns>
+    </query>
+    <query ID="GetBPMProcessingError" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;SBPE.TRACE_INSTANCE_ID, SBPE.SUB_TRANSACTION_ID, ENGINE_NAME, METHOD_NAME, EXCEPTION_MESSAGE, EXCEPTION_DATE, TRANSACTION_ID&#xA;FROM&#xA;&#x9; SGW_BPM_PROCESSING_ERROR SBPE WITH(NOLOCK) INNER  &#xA;&#x9; JOIN SGW_BPM_TRACE_INSTANCE SBTI WITH(NOLOCK)&#xA;&#x9; ON SBPE.TRACE_INSTANCE_ID = SBTI.TRACE_INSTANCE_ID  INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI WITH(NOLOCK)&#xA;&#x9; ON SBPE.SUB_TRANSACTION_ID = SBAI.ACTIVITY_INSTANCE_ID &#xA;&#x9; AND SBPE.EXCEPTION_DATE BETWEEN @start_time AND&#xA;&#x9; @end_time + 1" sfwOracle="SELECT&#xA;&#x9;SBPE.TRACE_INSTANCE_ID, SBPE.SUB_TRANSACTION_ID, ENGINE_NAME, METHOD_NAME, EXCEPTION_MESSAGE, EXCEPTION_DATE, TRANSACTION_ID&#xA;FROM&#xA;&#x9; SGW_BPM_PROCESSING_ERROR SBPE INNER  &#xA;&#x9; JOIN SGW_BPM_TRACE_INSTANCE SBTI &#xA;&#x9; ON SBPE.TRACE_INSTANCE_ID = SBTI.TRACE_INSTANCE_ID  INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI &#xA;&#x9; ON SBPE.SUB_TRANSACTION_ID = SBAI.ACTIVITY_INSTANCE_ID &#xA;&#x9; AND SBPE.EXCEPTION_DATE BETWEEN @start_time AND&#xA;&#x9; @end_time + 1" sfwPostgre="SELECT&#xD;&#xA;&#x9;SBPE.TRACE_INSTANCE_ID, SBPE.SUB_TRANSACTION_ID, ENGINE_NAME, METHOD_NAME, EXCEPTION_MESSAGE, EXCEPTION_DATE, TRANSACTION_ID&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESSING_ERROR SBPE INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_TRACE_INSTANCE SBTI &#xD;&#xA;&#x9; ON SBPE.TRACE_INSTANCE_ID = SBTI.TRACE_INSTANCE_ID  INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI &#xD;&#xA;&#x9; ON SBPE.SUB_TRANSACTION_ID = SBAI.ACTIVITY_INSTANCE_ID &#xD;&#xA;&#x9; AND SBPE.EXCEPTION_DATE BETWEEN @start_time AND&#xD;&#xA;&#x9; @end_time + interval '1' day">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetCountEngineNamesForPassedDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT Count(*) FROM SGW_BPM_TRACE_INSTANCE WITH(NOLOCK) WHERE START_TIME BETWEEN @START_TIME AND @END_TIME + 1" sfwOracle="SELECT Count(*) FROM SGW_BPM_TRACE_INSTANCE WHERE START_TIME BETWEEN @START_TIME AND @END_TIME + 1&#xD;&#xA;ORDER BY ENGINE_NAME" sfwPostgre="SELECT Count(*) FROM SGW_BPM_TRACE_INSTANCE WHERE START_TIME BETWEEN @START_TIME AND @END_TIME + interval '1' day">
+      <parameters>
+        <parameter ID="@START_TIME" sfwDataType="DateTime" />
+        <parameter ID="@END_TIME" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules>
+    <rule ID="Visible Rule: Engine Grid Visiblility" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="RFunc.ExecuteQuery&lt;int&gt;(&quot;entBPMMonitoring.GetCountEngineNamesForPassedDate&quot;, FromDate, ToDate) &gt; 0" />
+  </rules>
+  <attributes>
+    <attribute ID="FromDate" sfwDataType="datetime" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="ToDate" sfwDataType="datetime" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="LastMinutes" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="LastDays" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="AllCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="ProcessedCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="FailureCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="ErrorCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="StatusDescription" sfwType="Description" />
+    <attribute ID="StatusId" sfwType="Property" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="StatusValue" sfwType="Property" sfwDataType="string" sfwRequired="False" sfwLength="4" />
+    <attribute ID="StartTime" sfwType="Property" sfwDataType="DateTime" sfwRequired="False" />
+    <attribute ID="EndTime" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="True" sfwIsIdentity="False" sfwDataType="DateTime" sfwRequired="False" />
+    <attribute ID="OperatorDescription" sfwType="Description" />
+    <attribute ID="CreatedBy" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwDataType="string" sfwRequired="False" sfwLength="50" />
+    <attribute ID="CreatedDate" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwDataType="DateTime" sfwRequired="False" />
+    <attribute ID="ModifiedBy" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwDataType="string" sfwRequired="False" sfwLength="50" />
+    <attribute ID="ModifiedDate" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwDataType="DateTime" sfwRequired="False" />
+    <attribute ID="UpdateSeq" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="StepName" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="True" sfwIsIdentity="False" sfwDataType="string" sfwRequired="False" sfwLength="256" />
+    <attribute ID="FirstQuery" sfwDataType="string" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="EngineName" sfwDataType="string" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="objBpmTraceInstance" sfwType="Object" sfwEntity="entBpmTraceInstance" sfwPrivate="False" Text="Trace Instance" />
+    <attribute ID="objBpmTraceInstActn" sfwType="Object" sfwEntity="entBpmTraceInstActn" sfwPrivate="False" Text="Trace Instance Action" />
+    <attribute ID="objBpmTraceInstActnDtl" sfwType="Object" sfwEntity="entBpmTraceInstActnDtl" sfwPrivate="False" Text="Trace Instance Action Detail" />
+    <attribute ID="lstBpmRequestSummary" sfwType="Collection" sfwEntity="entBPMMonitoring" sfwPrivate="False" />
+    <attribute ID="lstEngineLoad" sfwType="Collection" sfwEntity="entBPMMonitoring" sfwPrivate="False" />
+    <attribute ID="ActionType" sfwDataType="string" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="Count" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="PrimaryKey" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+  </attributes>
+  <initialload>
+    <item ID="Visible Rule: Engine Grid Visiblility" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods>
+    <method ID="LoadBPMSummary" sfwMethodType="Load" sfwLoadMainObject="False" sfwMode="All">
+      <item ID="PrimaryKey" sfwParameter="PrimaryKey" sfwItemType="Property" sfwDataType="int" />
+      <item ID="rulInitializeBPMMonitoring" sfwItemType="Rule" />
+      <item ID="objBpmTraceInstance" sfwItemType="Object" sfwLoadType="None" />
+      <parameter ID="PrimaryKey" sfwDataType="int" Value="#1" />
+    </method>
+    <method ID="TimersHandledPerEngine" sfwMethodType="Other" sfwLoadMainObject="False">
+      <item ID="lstEngineLoad" sfwParameter="@START_TIME,@END_TIME,@ENGINE_NAME" sfwItemType="Collection" sfwLoadType="Query" sfwLoadSource="entBPMMonitoring.TimersHandledPerEngine" />
+      <parameter ID="START_TIME" sfwDataType="DateTime" />
+      <parameter ID="END_TIME" sfwDataType="DateTime" />
+      <parameter ID="ENGINE_NAME" sfwDataType="string" />
+    </method>
+  </methods>
+  <lifecycle />
+</entity>

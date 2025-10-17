@@ -1,0 +1,304 @@
+﻿<form ID="wfmPacketTrackingLookup" WebSite="MPIPHPWebClient" sfwResource="206" sfwRemoteObject="srvCorrespondence" sfwType="Lookup" sfwTitle="Packet Tracking Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmPacketTrackingLookup" sfwMaxCount="1000" sfwEntity="entCorTracking" sfwGridCollection="busCorTrackingLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoCorTracking" sfwQueryRef="entCorTracking.PacketLookup" sfwMethodName="LoadCorTracking" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria" ClientIDMode="AutoID" CssClass="fullWidth packetContectLookup">
+          <sfwTable ID="Criteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctCriteria">
+                  <Tabs>
+                    <sfwTabSheet ID="tshCriteria" HeaderText="Criteria">
+                      <sfwTable ID="tblCriteria">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel1" Text="Tracking Id :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtTextBox" sfwDataField="SCT.tracking_id" sfwQueryID="cdoCorTracking" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel" Text="Status :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlDropDownList" sfwDataField="PT.packet_status_value" sfwQueryID="cdoCorTracking" DataTextField="description" DataValueField="code_value" sfwLoadType="CodeGroup" sfwLoadSource="7094" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel2" Text="Date Mailed (From) :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtMailedDateFrom" sfwDataField="mailed_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoCorTracking" sfwRelatedControl="txttxtMailedDateTo" />
+                            <CompareValidator ControlToValidate="txtMailedDateFrom" ErrorMessage="Mailed Date From must be in mm/dd/yyyy format" ID="cmvCompareValidator" Operator="DataTypeCheck" Text="*" Type="Date" sfwDataField="mailed_date" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel3" Text="Date Mailed (To) :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txttxtMailedDateTo" sfwDataFormat="{0:d}" sfwQueryID="cdoCorTracking" sfwDataField="mailed_date" sfwRelatedControl="txtMailedDateFrom" />
+                            <CompareValidator ControlToValidate="txttxtMailedDateTo" ErrorMessage="Mailed Date To must be in mm/dd/yyyy format" ID="cmvCompareValidator1" Operator="DataTypeCheck" Text="*" Type="Date" />
+                            <CompareValidator ControlToCompare="txtMailedDateFrom" ControlToValidate="txttxtMailedDateTo" ErrorMessage="Mailed Date To cannot be less than Mailed Date From" ID="cmvCompareValidator2" Operator="GreaterThanEqual" Text="*" Type="Date" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel4" Text="Date Received (From) : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtReceivedDateFrom" sfwDataField="received_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoCorTracking" sfwRelatedControl="txtReceivedDateTo" />
+                            <CompareValidator ControlToValidate="txtReceivedDateFrom" ErrorMessage="Received Date From must be in mm/dd/yyyy format" ID="cmvCompareValidator3" Operator="DataTypeCheck" Text="*" Type="Date" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel5" Text="Date Received (To) : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtReceivedDateTo" sfwDataField="received_date" sfwDataFormat="{0:d}" sfwQueryID="cdoCorTracking" sfwRelatedControl="txtReceivedDateFrom" />
+                            <CompareValidator ControlToValidate="txtReceivedDateTo" ErrorMessage="Printed Date To must be in mm/dd/yyyy format" ID="cmvCompareValidator4" Operator="DataTypeCheck" Text="*" Type="Date" />
+                            <CompareValidator ControlToCompare="txtReceivedDateFrom" ControlToValidate="txtReceivedDateTo" ErrorMessage="Printed Date To cannot be less than Received Date From" ID="cmvCompareValidator5" Operator="GreaterThanEqual" Text="*" Type="Date" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel7" Text="Retirement Date (From) : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="imageddatefrom" sfwDataField="retirement_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoCorTracking" sfwRelatedControl="imageddateto" />
+                            <CompareValidator ControlToValidate="imageddatefrom" ErrorMessage="Retirement Date From must be in mm/dd/yyyy format" ID="cmvCompareValidator6" Operator="DataTypeCheck" Text="*" Type="Date" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel8" Text="Retirement Date (To) : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="imageddateto" sfwDataField="retirement_date" sfwDataFormat="{0:d}" sfwQueryID="cdoCorTracking" sfwRelatedControl="imageddatefrom" />
+                            <CompareValidator ControlToValidate="imageddateto" ErrorMessage="Retirement Date To must be in mm/dd/yyyy format" ID="cmvCompareValidator7" Operator="DataTypeCheck" Text="*" Type="Date" />
+                            <CompareValidator ControlToCompare="imageddatefrom" ControlToValidate="imageddateto" ErrorMessage="Retirement Date To cannot be less than Retirement Date From" ID="cmvCompareValidator8" Operator="GreaterThanEqual" Text="*" Type="Date" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel10" Text="Date Generated (From) :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtGeneratedDateFrom" sfwDataField="generated_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoCorTracking" sfwRelatedControl="txtGeneratedDateTo" />
+                            <CompareValidator ControlToValidate="txtGeneratedDateFrom" ErrorMessage="Generated Date From must be in mm/dd/yyyy format" ID="cmvCompareValidator9" Operator="DataTypeCheck" Text="*" Type="Date" sfwDataField="mailed_date" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel11" Text="Date Generated  (To) :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtGeneratedDateTo" sfwDataFormat="{0:d}" sfwQueryID="cdoCorTracking" sfwDataField="generated_date" sfwRelatedControl="txtGeneratedDateFrom" />
+                            <CompareValidator ControlToValidate="txtGeneratedDateTo" ErrorMessage="Generated Date To must be in mm/dd/yyyy format" ID="cmvCompareValidator10" Operator="DataTypeCheck" Text="*" Type="Date" />
+                            <CompareValidator ControlToCompare="txtGeneratedDateFrom" ControlToValidate="txtGeneratedDateTo" ErrorMessage="Generated Date To cannot be less than Mailed Date From" ID="cmvCompareValidator11" Operator="GreaterThanEqual" Text="*" Type="Date" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capTemplateName" Text="Template Name : " AssociatedControlID="txtTemplateName" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtTemplateName" sfwDataField="template_name" sfwQueryID="cdoCorTracking" sfwOperator="like" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblIstrmpipersonid" Text="MPID :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtIstrmpipersonid" sfwDataField="sp.mpi_person_id" sfwOperator="=" sfwQueryID="cdoCorTracking" />
+                            <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtIstrmpipersonid" sfwSelectedIndex="MpiPersonId" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel9" Text="Packet Name : " AssociatedControlID="ddlDropDownList2" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlDropDownList2" sfwQueryID="cdoCorTracking" sfwDataField="template_name" sfwOperator="like" DataValueField="template_name" DataTextField="template_desc" sfwLoadType="Query" sfwLoadSource="entCorPacketContent.GetPacketInfo" sfwFirstItemText="All" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel12" Text="Access Packet Desc :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlDropDownList3" sfwQueryID="cdoCorTracking" sfwDataField="access_template_name" sfwOperator="like" DataValueField="access_template_name" DataTextField="access_template_name" sfwLoadType="Query" sfwLoadSource="entCorPacketContent.GetAccessPacketInfo" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel6" Text="Analyst Assigned : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList DataTextField="analystname" DataValueField="analyst_id" ID="ddlDropDownList1" sfwDataField="SU.USER_SERIAL_ID" sfwOperator="like" sfwQueryID="cdoCorTracking" sfwLoadType="Query" sfwLoadSource="entPerson.GetCaseAnalyst" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capTemplateName1" Text="Template Name : " AssociatedControlID="cblTemplateName" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwCheckBoxList ID="cblTemplateName" sfwDataField="template_name" sfwQueryID="cdoCorTracking" sfwOperator="in">
+                              <ListItem Text="Active Death - Beneficiary Packet - Pension and IAP" Value="BENF-0007" />
+                              <ListItem Text="Active Death - Beneficiary Packet - Pension Only" Value="BENF-0008" />
+                              <ListItem Text="Retirement Benefit Election Packet - MPI" Value="RETR-0063" />
+                              <ListItem Text="Retirement Benefit Election Packet - Local52" Value="RETR-0064" />
+                              <ListItem Text="Retirement Benefit Election Packet - Local161" Value="RETR-0065" />
+                              <ListItem Text="Retirement Benefit Election Packet - Local600" Value="RETR-0066" />
+                              <ListItem Text="Retirement Benefit Election Packet - Local666" Value="RETR-0067" />
+                              <ListItem Text="Retirement Benefit Election Packet - Local700" Value="RETR-0068" />
+                              <ListItem Text="Retirement Application Packet - MPI" Value="RETR-0054" />
+                              <ListItem Text="Retirement Application Packet - Local 161" Value="RETR-0055" />
+                              <ListItem Text="Retirement Application Packet - Locals 52-600-666-700" Value="RETR-0056" />
+                            </sfwCheckBoxList>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                            <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshAdvSort" HeaderText="Adv. Sort" Visible="False">
+                      <sfwTable ID="tblAdvSort">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwAdvSort ID="AdvSort" sfwRelatedControl="dgrResult" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnApplySort" sfwMethodName="btnApplySort_Click" sfwOperateOn="tblAdvSort" sfwRelatedControl="dgrResult" Text="Apply Sort" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" ImageUrl="~/Image/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" sfwActiveForm="wfmPacketTrackingMaintenance" Text="Open" sfwNavigationParameter="aintTrackingId=TrackingId" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Image/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="packetContectLookup">
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Analyst Assigned" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Analystname" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Tracking ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnOpen" sfwLinkable="True" sfwEntityField="TrackingId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrMpiPersonID" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Template Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorTemplates.TemplateName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Access Packet Name" sfwVisibleRule="Visible Rule - Access Data">
+                      <ItemTemplate>
+                        <sfwLabel sfwVisibleRule="Visible Rule - Access Data" sfwEntityField="objCorPacketContentTracking.AccessTemplateName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwVisibleRule="Visible Rule - OPUS Data" sfwEntityField="objCorTemplates.TemplateDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Date" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.RetirementDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailed By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.MailedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailed Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.MailedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.ReceivedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.ReceivedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.PacketStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Access Paket Status" sfwVisibleRule="Visible Rule - Access Data">
+                      <ItemTemplate>
+                        <sfwLabel sfwVisibleRule="Visible Rule - Access Data" sfwEntityField="objCorPacketContentTracking.AccessPaketStatus" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Generated By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Generated Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="GeneratedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

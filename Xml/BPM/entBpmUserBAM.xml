@@ -1,0 +1,39 @@
+﻿<entity ID="entBpmUserBAM" Text="User Dashboard" sfwObjectID="busBpmUserBAM" sfwObjectType="NeoSpin.BusinessObjects.busBpmUserBAM, NeoSpinBusinessObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" sfwView="False">
+  <queries>
+    <query ID="GetUserAssignedActivitiesByUserId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT&#xD;&#xA;&#x9; ACTIVITY_INSTANCE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CHECKED_OUT_USER = @CHECKED_OUT_USER AND&#xD;&#xA;&#x9; AI.STATUS_VALUE = 'INPC' " sfwPostgre="SELECT&#xD;&#xA;&#x9; ACTIVITY_INSTANCE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE AI &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CHECKED_OUT_USER = @CHECKED_OUT_USER AND&#xD;&#xA;&#x9; AI.STATUS_VALUE = 'INPC'">
+      <parameters />
+    </query>
+    <query ID="GetListofUsersForLoggedInSupervisor" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; U.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER U WITH(NOLOCK) &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGS_USER S WITH(NOLOCK)&#xD;&#xA;&#x9; ON U.SUPERVISOR_ID = S.USER_SERIAL_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; S.USER_ID = @USER_ID" sfwPostgre="SELECT&#xD;&#xA;&#x9; U.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER U &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGS_USER S &#xD;&#xA;&#x9; ON U.SUPERVISOR_ID = S.USER_SERIAL_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; S.USER_ID = @USER_ID">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint />
+  <rules />
+  <ExtraFields />
+  <methods>
+    <method sfwMethodType="Load" ID="Group1" sfwMode="All">
+      <item ID="LoadDashboardData" sfwItemType="Method" />
+    </method>
+  </methods>
+  <lifecycle />
+  <attributes>
+    <attribute ID="ActivityInstanceId" sfwType="Column" sfwValue="activity_instance_id" sfwIsNull="False" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateFrom" sfwValue="idtDateFrom" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateTo" sfwValue="idtDateTo" />
+    <attribute sfwType="Collection" sfwEntity="entBpmUserWorkStatistics" ID="lstChartUserWorkStatistics" sfwValue="iclbChartUserWorkStatistics" />
+    <attribute sfwType="Collection" sfwEntity="entBpmUserWorkStatistics" ID="lstViewUserWorkStatistics" sfwValue="iclbViewUserWorkStatistics" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadDashboardData" sfwReturnType="ArrayList" />
+  </objectmethods>
+</entity>

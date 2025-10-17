@@ -1,0 +1,155 @@
+﻿<form ID="wfmActBusinessTransactionLookup" sfwType="Lookup" sfwEntity="entActLogInstActn" sfwTitle="Business Transaction Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMaxCount="500" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmActBusinessTransactionLookup">
+  <initialload>
+    <query ID="BusinessTransaction" sfwQueryRef="entActLogInstActn.BusinessTransaction" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStartTimeFrom" sfwIsCaption="True" Text="Start Time  From : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStartTimeFrom" sfwDataField="start_time" sfwOperator="between" sfwRelatedControl="txtStartTimeTo" sfwDataType="datetime" sfwDataFormat="{0:d}" sfwQueryID="BusinessTransaction" />
+                <CompareValidator ID="valStartTimeFrom" Text="*" Operator="DataTypeCheck" ControlToValidate="txtStartTimeFrom" Type="Date" ErrorMessage="Start Time : From must be in mm/dd/yyyy format. " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStartTimeTo" sfwIsCaption="True" Text="Start Time  To : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStartTimeTo" sfwDataField="to_start_time" sfwOperator="between" sfwDataType="datetime" sfwDataFormat="{0:d}" sfwQueryID="BusinessTransaction" />
+                <CompareValidator ID="valStartTimeTo" Text="*" Operator="DataTypeCheck" ControlToValidate="txtStartTimeTo" Type="Date" ErrorMessage="Start Time : To must be in mm/dd/yyyy format." />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capErrorFlag" Text="Error Flag : " AssociatedControlID="chkErrorFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkErrorFlag" sfwDataField="error_flag" sfwQueryID="BusinessTransaction" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSlowFlag" Text="Slow Flag : " AssociatedControlID="chkSlowFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkSlowFlag" sfwDataField="slow_flag" sfwQueryID="BusinessTransaction" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capTimeInMs" Text="Time (ms) &gt;= : " AssociatedControlID="txtTimeInMs" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTimeInMs" sfwDataField="time_in_ms" sfwDataType="Numeric" sfwOperator="&gt;=" sfwQueryID="BusinessTransaction" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActionName" Text="Action Name : " AssociatedControlID="txtActionName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtActionName" sfwDataField="transaction_name" sfwQueryID="BusinessTransaction" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capWebServerName" Text="Web Server Name : " AssociatedControlID="txtWebServerName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtWebServerName" sfwDataField="web_server_name" sfwQueryID="BusinessTransaction" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" ImageUrl="~/Image/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" Text="Open" sfwActiveForm="wfmActLogInstanceActionMaintenance" sfwNavigationParameter="aintPrimaryKey=ActLogInstActnId" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Image/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" AllowFiltering="True">
+                  <Columns>
+                    <TemplateField HeaderText="Action Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActionName" sfwLinkable="True" sfwRelatedControl="btnOpen" sfwDisplayLength="25" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Request From">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RequestFrom" sfwDisplayLength="25" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Start Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StartTime" sfwDataFormat="{0:G}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Time In Ms">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TimeInMs" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Error Flag">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="ErrorFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Action Result">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActionResult" sfwDisplayLength="50" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Action Source">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActionSource" sfwDisplayLength="25" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Action Target">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActionTarget" sfwDisplayLength="25" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Web Server Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="WebServerName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActLogInstActnId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+</form>

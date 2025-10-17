@@ -1,0 +1,39 @@
+﻿<entity ID="entDatabaseTransaction" sfwView="False" sfwActive="True" sfwType="EntityRule" sfwStatus="Review" sfwObjectID="busDatabaseTransaction">
+  <attributes>
+    <attribute ID="Query" sfwDataType="string" sfwValue="query" sfwType="Property" />
+    <attribute ID="QueryHash" sfwDataType="string" sfwValue="QueryHash" sfwType="Property" />
+    <attribute ID="ResponseTime" sfwDataType="int" sfwValue="ResponseTime" sfwType="Property" />
+    <attribute ID="SlowCount" sfwDataType="int" sfwValue="SlowCount" sfwType="Property" />
+    <attribute ID="MaxTime" sfwDataType="int" sfwValue="MaxTime" sfwType="Property" />
+    <attribute ID="Calls" sfwDataType="int" sfwValue="Calls" sfwType="Property" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="GetSummaryByDatabaseTransaction" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select query, &#xA;      query_hash QueryHash,&#xA;       count(*) Calls,  &#xA;&#x9;   sum(time_in_ms) / count(*) ResponseTime, &#xA;&#x9;   max(time_in_ms) MaxTime,&#xA;       sum(case when time_in_ms &gt; b.QUERY_LIMIT then 1 else 0 end) SlowCount&#xA;  from sgv_database_transaction a, sgs_act_log b&#xA; where start_time between @start_time and @end_time&#xA; group by query, query_hash&#xA; order by max(time_in_ms) desc;">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+      <mappedcolumns>
+        <column ID="query" sfwEntityField="Query" />
+        <column ID="queryhash" sfwEntityField="QueryHash" />
+        <column ID="calls" sfwEntityField="Calls" />
+        <column ID="responsetime" sfwEntityField="ResponseTime" />
+        <column ID="maxtime" sfwEntityField="MaxTime" />
+        <column ID="slowcount" sfwEntityField="SlowCount" />
+      </mappedcolumns>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+</entity>

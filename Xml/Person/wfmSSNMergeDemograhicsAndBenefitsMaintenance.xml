@@ -1,0 +1,423 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmSSNMergeDemograhicsAndBenefitsMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="206 " sfwType="Maintenance" sfwTitle="SSN Merge Demographics And Benefits Maintenance" version="3.5" sfwEntity="entSSNMerge">
+  <initialload>
+    <callmethods sfwMethodName="FindSSNMergeDemoGraphicInfo" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" Visible="False" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMergeDetails" sfwCaption="Merge Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLiteral ID="ltrLiteral" Text="From" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvOldPersonToBeMerged" sfwAllowNew="True" sfwTwoWayBinding="True" sfwEntityField="lstOldPersonToBeMerged" sfwGridEntity="entPerson">
+                  <Columns>
+                    <TemplateField HeaderText="MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText=" ">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="IsFromSSNChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrSSNNonEncrypted" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="IsFromPrefixNameChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Prefix">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NamePrefixDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="IsFromLastNameChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LastName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="IsFromFirstNameChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="First Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FirstName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="IsFromMiddleNameChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Middle Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MiddleName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="IsFromSuffixNameChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Suffix">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NameSuffix" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="IsFromDOBChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date of Birth">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtDateofBirth" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="IsFromDODChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText=" Date of Death">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DateOfDeath" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="IsFromAddressChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Address">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPersonAddress" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Contribution Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecEEContributionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Contribution Interest">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecEEContributionInterest" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="UVHP Contribution Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecUVHPContributionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="UVHP Contribution Interest">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecUVHPContributionInterest" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="  IAP Contribution Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecIAPContributionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLiteral ID="ltrLiteral1" Text="To" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvNewPerson" sfwAllowNew="True" sfwTwoWayBinding="True" sfwEntityField="lstNewPerson" sfwGridEntity="entPerson">
+                  <Columns>
+                    <TemplateField HeaderText="MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwDefaultValue="N" sfwEntityField="IsToSSNChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrSSNNonEncrypted" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwDefaultValue="N" sfwEntityField="IsToPrefixNameChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Prefix">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NamePrefixDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwDefaultValue="N" sfwEntityField="IsToLastNameChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LastName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwDefaultValue="N" sfwEntityField="IsToFirstNameChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="First Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FirstName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwDefaultValue="N" sfwEntityField="IsToMiddleNameChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Middle Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MiddleName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwDefaultValue="N" sfwEntityField="IsToSuffixNameChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Suffix">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NameSuffix" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwDefaultValue="N" sfwEntityField="IsToDOBChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date of Birth">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtDateofBirth" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwDefaultValue="N" sfwEntityField="IsToDODChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date of Death">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DateOfDeath" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="IsToAddressChecked" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Address">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPersonAddress" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Contribution Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecEEContributionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Contribution Interest">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecEEContributionInterest" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="  UVHP Contribution Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecUVHPContributionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText=" UVHP Contribution Interest">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecUVHPContributionInterest" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="  IAP Contribution Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecIAPContributionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnMergedPersonPreview" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btnMergedPersonPreview" sfwVisibleRule="RULE_CHECK_PERSON_MERGED" Text="Preview" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLiteral ID="Literal12" Text="Merged Participant Information" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvMergedPersonReord" sfwAllowNew="True" sfwEntityField="lstMergedPersonReord" sfwGridEntity="entPerson">
+                  <Columns>
+                    <TemplateField HeaderText="MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrSSNNonEncrypted" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Prefix">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NamePrefixDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LastName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="First Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FirstName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Middle Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MiddleName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Suffix">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NameSuffix" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date of Birth">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtDateofBirth" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText=" Date of Death">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DateOfDeath" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Address">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPersonAddress" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText=" EE Contribution Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecEEContributionAmount" sfwDataFormat="{0:#0.00'}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Contribution Interest">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecEEContributionInterest" sfwDataFormat="{0:#0.00'}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="UVHP Contribution Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecUVHPContributionAmount" sfwDataFormat="{0:#0.00'}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="UVHP Contribution Interest">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecUVHPContributionInterest" sfwDataFormat="{0:#0.00'}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnMergeData" OnClientClick="return confirm('Are you sure to merge the person records?')" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btn_MergeClick" sfwRefreshFromObject="True" sfwResource="302" sfwVisibleRule="RULE_CHECK_PERSON_MERGED" Text="Merge" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstOldPersonToBeMerged" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstNewPerson" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstMergedPersonReord" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

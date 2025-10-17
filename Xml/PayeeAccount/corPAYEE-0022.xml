@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="corPAYEE-0022" sfwActive="True" sfwDescription="Repayment Schedule" sfwStatus="Review" sfwRemoteObject="busPayeeAccount" sfwType="Correspondence" sfwTemplate="PAYEE-0022.docx" version="4.0" sfwEntity="entPayeeAccount">
+  <sfwFieldBookMarks>
+    <sfwFieldBookMark ID="PlanId" />
+    <sfwFieldBookMark ID="OriginalRetrDate" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtOriginalRetirementDate" />
+    <sfwFieldBookMark ID="MinDistDate" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtMinimumDistributionDate" />
+    <sfwFieldBookMark ID="AdjstRetrDate" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtAdjustedRetirementDate" />
+    <sfwFieldBookMark ID="PaymtAdjstDate" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtPaymentAdjustmentDate" />
+    <sfwFieldBookMark ID="SumTotalShudHvPaid" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecSumTotalShudHvPaid" />
+    <sfwFieldBookMark ID="SumActuallyPaidForMonth" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecSumActuallyPaidForMonth" />
+    <sfwFieldBookMark ID="SumOverUnderPaymentPerMonth" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecSumOverUnderPaymentPerMonth" />
+    <sfwFieldBookMark ID="SumTotal" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecSumTotal" />
+    <sfwFieldBookMark ID="SumPayableForTheMonth" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecSumPayableForTheMonth" />
+    <sfwFieldBookMark ID="SumReimbrAmtInCurrentMonth" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecSumReimbrAmtInCurrentMonth" />
+    <sfwFieldBookMark ID="GrandTotal" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecGrandTotal" />
+    <sfwFieldBookMark ID="GrandTotalPayableForMonth" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecGrandTotalPayableForMonth" />
+    <sfwFieldBookMark ID="GrandTotalReimbrAmt" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecGrandTotalReimbrAmt" />
+    <sfwFieldBookMark ID="FlatPercent" sfwDataType="Decimal" sfwEntityField="IdecFlatPercent" />
+    <sfwFieldBookMark ID="MonthlyAmtOfReduction" sfwDataType="Decimal" sfwEntityField="IdecMonthlyAmtOfReduction" />
+    <sfwFieldBookMark ID="SumEEDerivedShudHvPaid" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecSumEEDerivedShudHvPaid" />
+    <sfwFieldBookMark ID="SumERDerivedShudHvPaid" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecSumERDerivedShudHvPaid" />
+    <sfwFieldBookMark ID="SumEEDerived" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecSumEEDerived" />
+    <sfwFieldBookMark ID="SumERDerived" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="IdecSumERDerived" />
+    <sfwFieldBookMark ID="GrossPaymentAmount" sfwDataFormat="{0:C}" sfwDataType="Decimal" sfwEntityField="objPayeeBenefitAccount.GrossAmount" />
+    <sfwFieldBookMark ID="BenPaymtDtAftertOvrpymtRecovery" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtEstimatedEndDate" />
+  </sfwFieldBookMarks>
+  <sfwTableBookMarks>
+    <sfwTableBookMark ID="BenefitMonthwiseAdjstDetails" sfwObjectID="busPayeeAccount.iclbPayeeAccountBenefitOverpayment[0].iclbBenefitMonthwiseAdjustmentDetail">
+      <sfwColumn sfwColumnHeader="Payment Date" sfwDataField="icdoBenefitMonthwiseAdjustmentDetail.payment_date" />
+      <sfwColumn sfwColumnHeader="Suspendible Month?" sfwDataField="icdoBenefitMonthwiseAdjustmentDetail.suspended_flag" />
+      <sfwColumn sfwColumnHeader="EE-Derived Should Have Paid" sfwDataField="icdoBenefitMonthwiseAdjustmentDetail.idecEEDerivedShouldHavePaid" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="ER-Derived Should Have Paid" sfwDataField="icdoBenefitMonthwiseAdjustmentDetail.idecERDerivedShouldHavePaid" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="Total Should have Paid" sfwDataField="icdoBenefitMonthwiseAdjustmentDetail.idecTotalShouldHavePaid" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="Actually Paid For The Month" sfwDataField="icdoBenefitMonthwiseAdjustmentDetail.idecAcctualPaidForTheMonth" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="(Over)/Under Payment/Month" sfwDataField="icdoBenefitMonthwiseAdjustmentDetail.idecOverUnderPaymentPerMonth" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="To-Date (Over)/Under Payment" sfwDataField="icdoBenefitMonthwiseAdjustmentDetail.idecToDateOverUnderPayment" sfwDataFormat="{0:C}" />
+    </sfwTableBookMark>
+    <sfwTableBookMark ID="RepaymentSchedule" sfwObjectID="busPayeeAccount.iclbPayeeAccountBenefitOverpayment[0].iclbRepaymentSchedule">
+      <sfwColumn sfwColumnHeader="Payment Date" sfwDataField="icdoRepaymentSchedule.idtPaymentDate" />
+      <sfwColumn sfwColumnHeader="Suspendible Month?" sfwDataField="icdoRepaymentSchedule.istrSuspendibleMonth" />
+      <sfwColumn sfwColumnHeader="EE-Derived" sfwDataField="icdoRepaymentSchedule.idecEEDerived" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="ER-Derived" sfwDataField="icdoRepaymentSchedule.idecERDerived" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="Total" sfwDataField="icdoRepaymentSchedule.idecTotal" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="Re-Payment to the Plan" sfwDataField="icdoRepaymentSchedule.idecRepaymentToTheplan" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="Payable For The Month " sfwDataField="icdoRepaymentSchedule.idecPayableForTheMonth" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="Reimbursed Amount In Current Month" sfwDataField="icdoRepaymentSchedule.idecReimbrAmtInCurrentMonth" sfwDataFormat="{0:C}" />
+      <sfwColumn sfwColumnHeader="To-Date Reimbursed Amount" sfwDataField="icdoRepaymentSchedule.idecToDateReimbrAmount" sfwDataFormat="{0:C}" />
+    </sfwTableBookMark>
+  </sfwTableBookMarks>
+</form>

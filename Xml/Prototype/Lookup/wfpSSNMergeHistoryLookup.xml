@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfpSSNMergeHistoryLookup" sfwActive="True" sfwStatus="Review" sfwType="Lookup" sfwTitle="SSN Merge History" version="3.5" sfwAspNetCaching="False" sfwEntity="entPrototype">
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="Old MPID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="New MPID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox1" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="Old SSN :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox2" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" Text="New SSN :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox3" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="Merge Date From :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox4" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel5" Text="Merge Date To :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox5" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnPrototypeSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfpSSNMergeHistoryMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="prototype_id=#0" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwObjectID="busPrototypeLookup.iclbPrototype" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Old MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwEntityField="Property0" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Old SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="New MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwEntityField="Property2" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="New SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property3" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Merge Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property4" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Merged By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property5" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Data>
+                    <DataRow>
+                      <DataColumn Value="M30034589" sfwEntityField="Property0" />
+                      <DataColumn Value="545-98-4670" sfwEntityField="Property1" />
+                      <DataColumn Value="M30034054" sfwEntityField="Property2" />
+                      <DataColumn Value="545-98-3670" sfwEntityField="Property3" />
+                      <DataColumn Value="11/08/2012" sfwEntityField="Property4" />
+                      <DataColumn Value="vthomas" sfwEntityField="Property5" />
+                    </DataRow>
+                  </Data>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

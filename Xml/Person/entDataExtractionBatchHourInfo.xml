@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entDataExtractionBatchHourInfo" sfwMainCDO="icdoDataExtractionBatchHourInfo" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busDataExtractionBatchHourInfo" sfwTableName="sgt_data_extraction_batch_hour_info" sfwView="False" sfwDataObjectID="doDataExtractionBatchHourInfo">
+  <queries>
+    <query ID="DeleteRecords" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="delete &#xA;FROM&#xA;  SGT_DATA_EXTRACTION_BATCH_HOUR_INFO &#xA;WHERE&#xA;  YEAR_END_DATA_EXTRACTION_HEADER_ID = @YEAR_END_DATA_EXTRACTION_HEADER_ID ">
+      <parameters>
+        <parameter ID="@YEAR_END_DATA_EXTRACTION_HEADER_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="DeleteSelectedParticipants" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DELETE FROM SGT_DATA_EXTRACTION_BATCH_HOUR_INFO &#xD;&#xA;WHERE YEAR_END_DATA_EXTRACTION_HEADER_ID = @YEAR_END_DATA_EXTRACTION_HEADER_ID &#xD;&#xA;AND ((@TempTable = 'Y' and PERSON_ID IN (SELECT PERSON_ID FROM TEMP_TABLE_FOR_ANNUAL_BATCHES T INNER JOIN SGT_PERSON SP WITH(NOLOCK) ON T.SSN = SP.SSN)) OR  @TempTable = 'N')&#xD;&#xA;&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@YEAR_END_DATA_EXTRACTION_HEADER_ID" sfwDataType="int" />
+        <parameter ID="@TempTable" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="data_extraction_batch_hour_info_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DataExtractionBatchHourInfoId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="data_extraction_batch_info_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DataExtractionBatchInfoId" sfwIsSequence="False" sfwCaption="Data Extraction Batch Info Id" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonId" sfwIsSequence="False" sfwCaption="Person Id" />
+    <attribute sfwValue="employer_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="EmployerNo" sfwIsSequence="False" sfwCaption="Employer No" />
+    <attribute sfwValue="employer_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="250" sfwIsNull="True" ID="EmployerName" sfwIsSequence="False" sfwCaption="Employer Name" />
+    <attribute sfwValue="computation_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ComputationYear" sfwIsSequence="False" sfwCaption="Computation Year" />
+    <attribute sfwValue="hours_reported" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="14,4" sfwIsNull="True" ID="HoursReported" sfwIsSequence="False" sfwCaption="Hours Reported" />
+    <attribute sfwValue="late_hour_reported" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="14,4" sfwIsNull="True" ID="LateHourReported" sfwIsSequence="False" sfwCaption="Late Hour Reported" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="union_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="UnionCode" sfwIsSequence="False" sfwCaption="Union Code" />
+    <attribute sfwValue="year_end_data_extraction_header_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="YearEndDataExtractionHeaderId" sfwIsSequence="False" sfwCaption="Year End Data Extraction Header Id" />
+    <attribute sfwValue="negative_qualified_years" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="NegativeQualifiedYears" sfwIsSequence="False" sfwCaption="Negative Qualified Years" />
+  </attributes>
+</entity>

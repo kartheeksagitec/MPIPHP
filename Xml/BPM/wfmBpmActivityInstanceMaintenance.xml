@@ -1,0 +1,475 @@
+﻿<form ID="wfmBpmActivityInstanceMaintenance" sfwActive="True" sfwStatus="Review" sfwType="Maintenance" sfwTitle="BPM Activity Instance Maintenance" version="3.5" sfwFormObjectType="RemoteObject" sfwEntity="entSolBpmActivityInstance">
+  <initialload>
+    <callmethods sfwMethodName="FindBpmActivityInstance" />
+    <query />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSuspendActivity" sfwMessageId="1508" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwRefreshFromObject="True" sfwSecurityLevel="2" Text="Suspend" ToolTip="Suspend current activity" sfwObjectMethod="InvokeWorkflowAction" sfwVisibleRule="IsStatusInProcess" OnClientClick="SuspendAndTerminateConfirmation" />
+                <sfwButton ID="btnResumeActivity" sfwMessageId="1555" sfwMethodName="btnExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshFromObject="True" sfwSecurityLevel="2" Text="Resume" ToolTip="Resume current activity" sfwVisibleRule="VisibleResumeLink" OnClientClick="return confirm(&quot;Are you sure you want to Resume the activity?&quot;)" />
+                <sfwButton ID="btnCancelActivity" OnClientClick="return confirm('Are you sure you want to terminate BPM?')" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwSecurityLevel="2" sfwVisibleRule="VisibleCancelButton" Text="Terminate BPM" ToolTip="Terminate the BPM" />
+                <sfwButton ID="btnReleaseActivity" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwSecurityLevel="2" Text="Release" ToolTip="Return current activity" sfwRefreshFromObject="True" sfwVisibleRule="Visible Rule - ShoworHideReleaseButton" sfwMessageId="1502" CssClass="hideControl" />
+                <sfwButton ID="btnCompleteActivity" sfwMessageId="1503" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwSecurityLevel="2" sfwVisibleRule="VisibleCompleteButton" Text="Complete" ToolTip="Complete current activity and get next activity" sfwObjectMethod="InvokeWorkflowAction" />
+                <sfwButton ID="btnReturntoAuditActivity" sfwMessageId="4071" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwSecurityLevel="2" Visible="False" Text="Recheck" ToolTip="Recheck current activity" />
+                <sfwButton ID="btnReturnActivity" sfwMessageId="4072" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Visible="False" sfwSecurityLevel="2" Text="Rework" ToolTip="Rework current activity" sfwObjectMethod="InvokeWorkflowAction" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Previous" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCheckoutActivity" sfwCheckOut="True" sfwMessageId="1509" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwSecurityLevel="2" sfwVisibleRule="VisibleCheckoutButton" Text="Checkout" />
+                <sfwButton ID="btnRefreshData" sfwMethodName="btnCancel_Click" Text="Reset" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="BPM Process Information">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblCaseInstanceId" ID="capCaseInstanceId" Text="Case Instance ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCaseInstanceId" sfwEntityField="objBpmProcessInstance.CaseInstanceId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblName" ID="capName" Text="Case Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblName" sfwEntityField="objBpmProcessInstance.objBpmCaseInstance.objBpmCase.Name" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capProcessId" Text="Process Instance ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessInstanceId2" sfwEntityField="objBpmProcessInstance.ProcessInstanceId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capProcessDescription" Text="Process Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessDescription" sfwEntityField="objBpmProcessInstance.objBpmProcess.Name" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActivityname" Text="Activity Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActivityname" sfwEntityField="objBpmActivity.Name" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capQueueId" Text="Role ID : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblQueueId" Visible="False" sfwEntityField="objBpmActivity.RoleId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStatus" Text="Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatus" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDateInitiated" Text="Date Initiated : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateInitiated" sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblPersonId" Text="MPID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton sfwMethodName="btnOpen_Click" ID="btnOpen" sfwActiveForm="wfmPersonMaintenance" sfwNavigationParameter="aintpersonid=objSolActivityInstancePerson.PersonId" sfwEntityField="objSolActivityInstancePerson.MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capFullName" Text="Person Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="objSolActivityInstancePerson.IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgCodeId" Text="Organization ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgId" sfwEntityField="objSolActivityInstanceOrganization.OrgId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capOrgName" Text="Organization Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgName" sfwEntityField="objSolActivityInstanceOrganization.OrgName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDueDate" Text="Process Due Date : " AssociatedControlID="lblDueDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDueDate" sfwEntityField="objBpmProcessInstance.DueDate" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capLabel" Text="Activity Due Date : " AssociatedControlID="lblDueDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" sfwEntityField="DueDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capLabel1" sfwIsCaption="True" Text="SLA : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblSlaDays" sfwEntityField="SlaDays" sfwShowZero="True" />
+                <sfwLabel ID="capLabel3" sfwIsCaption="True" Text=" Days, " />
+                <sfwLabel ID="lblSlaHours" sfwEntityField="SlaHours" sfwShowZero="True" sfwWrap="True" />
+                <sfwLabel ID="capLabel4" sfwIsCaption="True" Text=" Hours, " />
+                <sfwLabel ID="lblSlaMinutes" sfwEntityField="SlaMinutes" sfwShowZero="True" Text="SLA   " />
+                <sfwLabel ID="capLabel5" sfwIsCaption="True" sfwShowZero="True" Text=" Minutes" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Suspension Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblActivityInstanceId" Visible="False" sfwEntityField="ActivityInstanceId" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblSuspensionReason" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capSuspensionReasonValue" Text="Suspension Reason : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlCMSuspensionReasonValue" sfwClientVisibility="controllist:txtCMSuspensionDate,lblCMSuspendEndDate#SRPD:lblCMSuspendEndDate;default:txtCMSuspensionDate;" sfwLoadType="CodeGroup" sfwLoadSource="2011" sfwEntityField="SuspensionReasonValue" OnClientChange="ChangeForSuspensionEndDateForCenterMiddle" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="ReqSuspensionDate" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capSuspensionDate" Text="Suspension End Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCMSuspensionDate" sfwDataFormat="{0:d}" sfwDefaultValue="30" sfwEntityField="SuspensionEndDate" />
+                <sfwLabel ID="lblCMSuspendEndDate" sfwDefaultValue="30" sfwEntityField="SuspensionEndDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblResumeAction" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capResumeActionValue" Text="Resume Action : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="istrDescription" DataValueField="istrValue" ID="ddlCMResumeActionValue" sfwLoadType="Method" sfwLoadSource="GetResumeActions" sfwEntityField="ResumeActionValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblSuspensionNotes" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capComments" Text="Suspension Notes : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCMComments" Rows="2" TextMode="MultiLine" Width="500px" sfwEntityField="Comments" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlTerminationDetails" sfwCaption="Termination Details">
+          <sfwTable ID="tblNewPage2">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="ReqTerminationReason" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capTerminationReason" Text="Termination Reason : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTerminationReason" sfwEntityField="lstrTerminationReason" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewTabControl" sfwCaption="Other Details">
+          <sfwTable ID="tblProcessHistory">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshImage" HeaderText="ECM Documents" Visible="False">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capLabel2" sfwIsCaption="True" Text="Document Type :  " />
+                            <sfwTextBox ID="txtTextBox1" sfwEntityField="lstrDocTypeforAddAttachment" />
+                            <sfwLabel ID="capLabel6" sfwIsCaption="True" />
+                            <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Search Image" ID="btnExecuteRefreshFromObject1" sfwObjectMethod="SearchImages" sfwExecuteMethodType="ObjectMethod" />
+                            <sfwButton sfwMethodName="btnExecuteBusinessMethodSelectRows_Click" Text="Associate Image" ID="btnExecutePassSelectedRows1" sfwObjectMethod="AddToBpmActivityInstanceAttachments" sfwExecuteMethodType="ObjectMethod" sfwRelatedControl="grvBusBpmProcessInstanceAttachments" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton sfwMethodName="btnOpenECMDocumentLink_Click" Text="View Image" ID="btnView" sfwRelatedControl="grvBusBpmProcessInstanceAttachments" sfwNavigationParameter="astrGuID=EcmGuid;astrDocClass=DocClass" OnClientClick="OpenECMDocumentClick()" sfwResource="-1" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusBpmProcessInstanceAttachments" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="lstDocuments" sfwGridEntity="entBpmProcessInstanceAttachments" AllowEditing="True" sfwTwoWayBinding="True">
+                              <Columns>
+                                <TemplateField SortExpression="BpmProcessInstanceId" HeaderText="Process Instance Attachment ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="BpmProcessInstanceId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Document Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnView" sfwEntityField="DocType" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Event Description">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objBpmEvent.EventDesc" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="ECM Guid">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EcmGuid" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Received Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:G}" sfwEntityField="ModifiedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage1" HeaderText="Uploaded Documents">
+                      <sfwTable ID="tblTable">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwFileUpload ID="fluFileUpload" StatusUploadedMessage="File uploaded successfully." StatusFailedMessage="Error found. Unable to upload file." />
+                            <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Upload Document" ID="btnExecuteRefreshFromObject" sfwObjectMethod="UploadBPMDocument" sfwMessageNoRowSelected="101" />
+                            <sfwButton sfwMethodName="btnDownload_Click" Text="Download File" ID="btnDownload" sfwObjectMethod="DownloadBPMUploadedDocument" sfwNavigationParameter="aintBpmDocumentUploadId=BpmDocumentUploadId" sfwResource="-1" CssClass="hideControl" sfwRelatedControl="grvLstBpmDocumentUpload" />
+                            <sfwButton sfwMethodName="btnExecuteBusinessMethodSelectRows_Click" Text="Delete" ID="btnExecutePassSelectedRows" sfwObjectMethod="DeleteBPMDocument" sfwExecuteMethodType="ObjectMethod" sfwRelatedControl="grvLstBpmDocumentUpload" OnClientClick="return confirm('This will permanently delete the file from the Process Instance.    Are you sure you want to delete this file?')" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvLstBpmDocumentUpload" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="lstBpmDocumentUpload">
+                              <Columns>
+                                <TemplateField Visible="False" HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="BpmDocumentUploadId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="BPM Process Instance Id">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="BpmProcessInstanceId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="File Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="BpmDocumentName" sfwLinkable="True" sfwRelatedControl="btnDownload" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Uploaded By">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CreatedBy" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Uploaded Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CreatedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshActivityChecklist" HeaderText="Activity Checklist">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="2">
+                            <sfwButton sfwMethodName="btnSave_Click" Text="Update Checklist" ID="btnSave" sfwNavigationParameter="aintActivityInstanceID=ActivityInstanceId" sfwSecurityLevel="2" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="2">
+                            <sfwGridView ID="grvBpmActivityInstanceChecklist" AllowPaging="True" AllowSorting="True" sfwTwoWayBinding="True" sfwAllowNew="True" AllowEditing="True" sfwEntityField="lstBpmActivityInstanceChecklist" sfwGridEntity="entBpmActivityInstanceChecklist">
+                              <Columns>
+                                <TemplateField HeaderText="Checklist ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblProcess" sfwEntityField="ActivityChecklistId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Checklist Description">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblDropDownList1" Width="500px" sfwEntityField="objBpmActivityChecklist.Description" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Event Description">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblLabel1" sfwEntityField="objBpmEvent.EventDesc" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Required">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblDropDownList" sfwDefaultValue="N" sfwEntityField="objBpmActivityChecklist.RequiredFlag" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Completed">
+                                  <ItemTemplate>
+                                    <sfwCheckBox ID="chkTextBox" sfwDefaultValue="N" sfwEntityField="CompletedInd" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Completed Date">
+                                  <ItemTemplate>
+                                    <sfwTextBox ID="txtTextBox" sfwDataFormat="{0:d}" sfwEntityField="CompletedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Activity Escalation">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpen1" sfwRelatedControl="grvLstBpmEscalationInstance" sfwActiveForm="wfmBpmEscalationMaintenance" sfwNavigationParameter="aintPrimaryKey=objBpmEscalation.EscalationId" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvLstBpmEscalationInstance" sfwEntityField="lstBpmEscalationInstances" sfwSelection="Many">
+                              <Columns>
+                                <TemplateField HeaderText="Escalation Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objBpmEscalation.EscalationName" sfwLinkable="True" sfwRelatedControl="btnOpen1" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Escalation Instance ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EscalationInstanceId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Escalation Date Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EsclationDateTime" sfwDataFormat="{0:G}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField Visible="False" HeaderText="EscalationId">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objBpmEscalation.EscalationId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwDataFormat="{0:G}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwDataFormat="{0:G}" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="objBpmProcessInstance" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objBpmProcessInstance.objBpmCaseInstance.objBpmCase" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objBpmProcessInstance.objBpmProcess" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objBpmActivity" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objSolActivityInstancePerson" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objSolActivityInstanceOrganization" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstDocuments" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmDocumentUpload" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmActivityInstanceChecklist" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmEscalationInstances" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

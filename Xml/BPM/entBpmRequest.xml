@@ -1,0 +1,129 @@
+﻿<entity ID="entBpmRequest" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoBpmRequest" sfwObjectID="busBpmRequest" sfwTableName="sgw_bpm_request" sfwView="False">
+  <reference />
+  <conditionlist />
+  <compoundconditionlist />
+  <rulelist />
+  <harderror />
+  <groupslist />
+  <aliaslist />
+  <softerror />
+  <validatedelete />
+  <delete>
+    <property ID="lstBpmRequestParameter" sfwMethodName="LoadBpmRequestParameters" />
+  </delete>
+  <updateablecdo />
+  <initialload />
+  <checklist />
+  <commonproperties />
+  <expressionfields />
+  <logicalrulelist />
+  <rules />
+  <queries>
+    <query ID="GetUnprocessedRequestsToExecuteOnCurrentDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; STATUS_VALUE in ('UNPC')" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST  &#xA;WHERE&#xA;&#x9; STATUS_VALUE in ('UNPC')">
+      <parameters />
+    </query>
+    <query ID="GetUnprocessRequestForPersonByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; PERSON_ID = @PERSON_ID  AND&#xA;&#x9; PROCESS_ID = @PROCESS_ID  AND&#xA;&#x9; STATUS_VALUE IN ('UNPC')" sfwPostgre="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST&#xA;WHERE&#xA;&#x9; PERSON_ID = @PERSON_ID  AND&#xA;&#x9; PROCESS_ID = @PROCESS_ID  AND&#xA;&#x9; STATUS_VALUE IN ('UNPC')">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUnprocessedRequestForOrgByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST WITH(NOLOCK) &#xA;WHERE&#xA;&#x9;  ORG_ID = @ORG_ID AND&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; STATUS_VALUE IN ('UNPC')" sfwPostgre="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST &#xA;WHERE&#xA;&#x9;  ORG_ID = @ORG_ID AND&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; STATUS_VALUE IN ('UNPC')">
+      <parameters>
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetRequests" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SR.REQUEST_ID,&#xA;&#x9; SR.PROCESS_ID,&#xA;&#x9; SP.DESCRIPTION,&#xA;&#x9; P.PERSON_ID,&#xA;&#x9; O.ORG_ID,&#xA;&#x9; O.ORG_NAME,&#xA;&#x9;P.FIRST_NAME,&#xA;&#x9;P.MIDDLE_NAME,&#xA;&#x9;P.LAST_NAME,&#xA;&#x9;&#x9;P.MPI_PERSON_ID,&#xA;&#x9; SR.STATUS_VALUE,&#xA;&#x9; SR.STATUS_ID ,&#xA;&#x9;  C.case_id,&#xA;&#x9; C.case_file,&#xA;&#x9; C.version,&#xA;&#x9; C.Name&#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST SR WITH(NOLOCK)  LEFT JOIN SGW_BPM_PROCESS SP WITH(NOLOCK)&#xA;&#x9; ON SR.PROCESS_ID = SP.PROCESS_ID LEFT JOIN SGW_BPM_case C WITH(NOLOCK)&#xA;&#x9; ON SP.CASE_ID = C.CASE_ID LEFT JOIN SGT_PERSON P WITH(NOLOCK)&#xA;&#x9; ON SR.PERSON_ID = P.PERSON_ID LEFT JOIN SGT_ORGANIZATION O WITH(NOLOCK)&#xA;&#x9; ON SR.ORG_ID = O.ORG_ID  &#xA;ORDER BY SR.REQUEST_ID desc" sfwPostgre="SELECT&#xD;&#xA;&#x9; SR.REQUEST_ID,&#xD;&#xA;&#x9; SR.PROCESS_ID,&#xD;&#xA;&#x9; SP.DESCRIPTION,&#xD;&#xA;&#x9; P.PERSON_ID,&#xD;&#xA;&#x9; O.ORG_ID,&#xD;&#xA;&#x9; O.ORG_NAME,&#xD;&#xA;&#x9;P.FIRST_NAME,&#xD;&#xA;&#x9;P.MIDDLE_NAME,&#xD;&#xA;&#x9;P.LAST_NAME,&#xD;&#xA;&#x9; SR.STATUS_VALUE,&#xD;&#xA;&#x9; SR.STATUS_ID ,&#xD;&#xA;&#x9;  C.case_id,&#xD;&#xA;&#x9;   C.case_file,&#xD;&#xA;&#x9; C.version,&#xD;&#xA;&#x9; C.Name&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_REQUEST SR   LEFT JOIN SGW_BPM_PROCESS SP &#xD;&#xA;&#x9; ON SR.PROCESS_ID = SP.PROCESS_ID LEFT JOIN SGW_BPM_case C &#xD;&#xA;&#x9; ON SP.CASE_ID = C.CASE_ID LEFT JOIN SGT_PERSON P &#xD;&#xA;&#x9; ON SR.PERSON_ID = P.PERSON_ID LEFT JOIN SGT_ORGANIZATION O &#xD;&#xA;&#x9; ON SR.ORG_ID = O.ORG_ID  &#xD;&#xA;ORDER BY SR.REQUEST_ID desc">
+      <parameters />
+      <mappedcolumns>
+        <column ID="description" sfwEntityField="objBpmProcess.Description" />
+        <column ID="org_name" sfwEntityField="objOrganization.OrgName" />
+        <column ID="first_name" sfwEntityField="objPerson.FirstName" />
+        <column ID="middle_name" sfwEntityField="objPerson.MiddleName" />
+        <column ID="last_name" sfwEntityField="objPerson.LastName" />
+        <column ID="mpi_person_id" sfwEntityField="objPerson.MpiPersonId" />
+      </mappedcolumns>
+    </query>
+    <query ID="GetUnprocessedRequestsToExecuteOnCurrentDateInDebugMode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; STATUS_VALUE in ('UNPC') AND&#xA;&#x9; MACHINE_NAME = @MACHINE_NAME" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST  &#xA;WHERE&#xA;&#x9; STATUS_VALUE in ('UNPC') AND&#xA;&#x9; MACHINE_NAME = @MACHINE_NAME">
+      <parameters>
+        <parameter ID="@MACHINE_NAME" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetUnprocessRequestForReferenceIdByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_BPM_REQUEST WITH(NOLOCK) &#xD;&#xA;WHERE REFERENCE_ID = @REFERENCE_ID&#xD;&#xA;  AND PROCESS_ID IN (SELECT&#xD;&#xA;               process_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_process          p2 WITH(NOLOCK)  &#xD;&#xA;WHERE&#xD;&#xA;               case_id in ( SELECT&#xD;&#xA;               c2.case_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c2 WITH(NOLOCK)  INNER    &#xD;&#xA;                JOIN (SELECT&#xD;&#xA;               case_file &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c1 WITH(NOLOCK)  INNER    &#xD;&#xA;                JOIN sgw_bpm_process p1 WITH(NOLOCK) &#xD;&#xA;                ON p1.CASE_ID = c1.CASE_ID &#xD;&#xA;WHERE&#xD;&#xA;               p1.PROCESS_ID = @PROCESS_ID)             details&#xD;&#xA;               ON details.CASE_FILE = c2.CASE_FILE ))&#xD;&#xA;  AND STATUS_VALUE IN ('UNPC','PICK') AND REQUEST_ID &lt;&gt; @REQUEST_ID" sfwPostgre="SELECT COUNT(*) FROM SGW_BPM_REQUEST &#xD;&#xA;WHERE REFERENCE_ID = @REFERENCE_ID&#xD;&#xA;  AND PROCESS_ID IN (SELECT&#xD;&#xA;               process_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_process          p2  &#xD;&#xA;WHERE&#xD;&#xA;               case_id in ( SELECT&#xD;&#xA;               c2.case_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c2   INNER    &#xD;&#xA;                JOIN (SELECT&#xD;&#xA;               case_file &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c1   INNER    &#xD;&#xA;                JOIN sgw_bpm_process p1 &#xD;&#xA;                ON p1.CASE_ID = c1.CASE_ID &#xD;&#xA;WHERE&#xD;&#xA;               p1.PROCESS_ID = @PROCESS_ID)             details&#xD;&#xA;               ON details.CASE_FILE = c2.CASE_FILE ))&#xD;&#xA;  AND STATUS_VALUE IN ('UNPC','PICK') AND REQUEST_ID &lt;&gt; @REQUEST_ID">
+      <parameters>
+        <parameter ID="@REFERENCE_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@REQUEST_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUnprocessedRequestForOrgByProcessIdAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST WITH(NOLOCK)  &#xA;WHERE&#xA;&#x9; REQUEST_ID &lt;&gt; @REQUEST_ID AND&#xA;&#x9; ORG_ID = @ORG_ID AND&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; REFERENCE_ID = @REFERENCE_ID AND&#xA;&#x9; STATUS_VALUE IN ('UNPC',&#xA;&#x9;'PICK')" sfwPostgre="SELECT&#xD;&#xA;&#x9; COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_REQUEST &#xD;&#xA;WHERE&#xD;&#xA;&#x9; REQUEST_ID &lt;&gt; @REQUEST_ID AND&#xD;&#xA;&#x9; ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; STATUS_VALUE IN ('UNPC',&#xD;&#xA;&#x9;'PICK')">
+      <parameters>
+        <parameter ID="@REQUEST_ID" sfwDataType="int" />
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@REFERENCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUnprocessRequestForPersonByProcessIdAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST WITH(NOLOCK)  &#xA;WHERE&#xA;&#x9; REQUEST_ID &lt;&gt; @REQUEST_ID AND&#xA;&#x9; PERSON_ID = @PERSON_ID  AND&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; REFERENCE_ID = @REFERENCE_ID  AND&#xA;&#x9; STATUS_VALUE IN ('UNPC',&#xA;&#x9;'PICK')" sfwPostgre="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_REQUEST &#xA;WHERE&#xA;&#x9; REQUEST_ID &lt;&gt; @REQUEST_ID AND&#xA;&#x9; PERSON_ID = @PERSON_ID  AND&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; REFERENCE_ID = @REFERENCE_ID  AND&#xA;&#x9; STATUS_VALUE IN ('UNPC',&#xA;&#x9;'PICK')">
+      <parameters>
+        <parameter ID="@REQUEST_ID" sfwDataType="int" />
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@REFERENCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetCaseNameByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; C.NAME &#xA;FROM&#xA;&#x9; SGW_BPM_CASE  C WITH(NOLOCK) INNER  &#xA;&#x9; JOIN SGW_BPM_PROCESS  P WITH(NOLOCK)&#xA;&#x9; ON C.CASE_ID = P.CASE_ID &#xA;WHERE&#xA;&#x9; P.PROCESS_ID = @PROCESS_ID">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <attributes>
+    <attribute ID="RequestId" sfwType="Column" sfwValue="request_id" sfwIsNull="False" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" />
+    <attribute ID="PersonId" sfwType="Column" sfwValue="person_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="OrgId" sfwType="Column" sfwValue="org_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="ProcessId" sfwType="Column" sfwValue="process_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="ReferenceId" sfwType="Column" sfwValue="reference_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="SourceDescription" sfwType="Description" sfwValue="source_description" />
+    <attribute ID="SourceId" sfwType="Column" sfwValue="source_id" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwCodeID="2021" />
+    <attribute ID="SourceValue" sfwType="Column" sfwValue="source_value" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" />
+    <attribute ID="StatusDescription" sfwType="Description" sfwValue="status_description" />
+    <attribute ID="StatusId" sfwType="Column" sfwValue="status_id" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwCodeID="3001" />
+    <attribute ID="StatusValue" sfwType="Column" sfwValue="status_value" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" />
+    <attribute ID="CreatedBy" sfwType="Column" sfwValue="created_by" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" />
+    <attribute ID="CreatedDate" sfwType="Column" sfwValue="created_date" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" />
+    <attribute ID="ModifiedBy" sfwType="Column" sfwValue="modified_by" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" />
+    <attribute ID="ModifiedDate" sfwType="Column" sfwValue="modified_date" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" />
+    <attribute ID="UpdateSeq" sfwType="Column" sfwValue="update_seq" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="RetryCount" sfwType="Column" sfwValue="retry_count" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="CaseInstanceId" sfwType="Column" sfwValue="case_instance_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="BpmMessageFlowId" sfwType="Column" sfwValue="bpm_message_flow_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" />
+    <attribute ID="DocType" sfwType="Column" sfwValue="doc_type" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" />
+    <attribute ID="EcmGuid" sfwType="Column" sfwValue="ecm_guid" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4000" />
+    <attribute ID="MachineName" sfwType="Column" sfwValue="machine_name" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4000" />
+    <attribute ID="ErrorMessage" sfwType="Column" sfwValue="Error_Message" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="500" />
+    <attribute ID="PriorityCodeDescription" sfwType="Description" sfwValue="priority_code_description" />
+    <attribute ID="PriorityCodeId" sfwType="Column" sfwValue="priority_code_id" sfwIsNull="False" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwCodeID="3008" />
+    <attribute ID="PriorityCodeValue" sfwType="Column" sfwValue="priority_code_value" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" />
+    <attribute ID="ParentCaseInstanceId" sfwType="Column" sfwValue="parent_case_instance_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="ParentProcessInstanceId" sfwType="Column" sfwValue="parent_process_instance_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute ID="TrackingId" sfwType="Column" sfwValue="tracking_id" sfwIsNull="True" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" />
+    <attribute sfwType="Description" ID="ReasonDescription" sfwCaption="Reason Description" sfwValue="reason_description" />
+    <attribute sfwValue="reason_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="ReasonId" sfwCaption="Reason Id" sfwCodeID="3013" />
+    <attribute sfwValue="reason_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" sfwIsNull="True" ID="ReasonValue" sfwCaption="Reason Value" />
+    <attribute sfwType="Collection" sfwEntity="entBpmRequestParameter" ID="lstBpmRequestParameter" sfwValue="iclbRequestParametersForOnlineInitiation" />
+    <attribute ID="objBpmProcess" sfwType="Object" sfwEntity="entBpmProcess" sfwValue="ibusBpmProcess" />
+    <attribute ID="objOrganization" sfwType="Object" sfwEntity="entOrganization" sfwValue="ibusOrganization" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrNotes" sfwValue="istrNotes" />
+    <attribute sfwValue="check_for_existing_inst" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="CheckForExistingInst" sfwCaption="Check For Existing Inst" sfwDefaultValue="Y" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadBpmRequestParameters" sfwReturnType="Void" />
+  </objectmethods>
+  <ExtraFields />
+</entity>

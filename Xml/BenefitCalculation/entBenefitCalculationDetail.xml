@@ -1,0 +1,163 @@
+﻿<entity ID="entBenefitCalculationDetail" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoBenefitCalculationDetail" sfwObjectID="busBenefitCalculationDetail" sfwTableName="sgt_benefit_calculation_detail" sfwView="False" sfwDataObjectID="doBenefitCalculationDetail">
+  <rules>
+    <rule ID="New Rule" sfwObjectBased="True" />
+    <rule ID="ShowNonVestedEEColumn" sfwExpression="(RFunc.GetValue&lt;String&gt;(this, &quot;ibusBenefitCalculationHeader.icdoBenefitCalculationHeader.calculation_type_value&quot;) == &quot;[ESTI]&quot;) || &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusBenefitCalculationHeader.icdoBenefitCalculationHeader.benefit_type_value&quot;) == &quot;[WDRL]&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleRuleForIAP" sfwExpression="(this.icdoBenefitCalculationDetail.plan_id == 2)" sfwObjectBased="True" />
+    <rule ID="VisibleRuleForMPI" sfwExpression="(this.icdoBenefitCalculationDetail.plan_id == 1) &amp;&amp; &#xA;!(this.icdoBenefitCalculationDetail.iintIAPasYear == 0)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-IsSpecialAccount" sfwExpression="(this.icdoBenefitCalculationDetail.l161_spl_acc_flag == &quot;Y&quot;) || &#xA;(this.icdoBenefitCalculationDetail.l52_spl_acc_flag == &quot;Y&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleRuleRetirementTypeLate" sfwExpression="(this.icdoBenefitCalculationDetail.benefit_subtype_value == &quot;LATE&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleRuleRetirementTypeNotLate" sfwExpression="!(this.icdoBenefitCalculationDetail.benefit_subtype_value == &quot;LATE&quot;)" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="lstBenefitCalculationOptions" />
+  </delete>
+  <checklist />
+  <initialload>
+    <item ID="VisibleRuleForMPI" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRuleForIAP" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRuleRetirementTypeLate" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRuleRetirementTypeNotLate" sfwMode="All" sfwStatus="Active" />
+    <item ID="ShowNonVestedEEColumn" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-IsSpecialAccount" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_BENEFIT_CALCULATION_HEADER HDR WITH(NOLOCK) &#xD;&#xA;INNER JOIN SGT_BENEFIT_CALCULATION_DETAIL DTL WITH(NOLOCK) ON DTL.BENEFIT_CALCULATION_HEADER_ID = HDR.BENEFIT_CALCULATION_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PERSON SP WITH(NOLOCK) ON SP.PERSON_ID = HDR.PERSON_ID&#xD;&#xA;INNER JOIN SGT_BENEFIT_APPLICATION SBA WITH(NOLOCK) ON SBA.BENEFIT_APPLICATION_ID = HDR.BENEFIT_APPLICATION_ID&#xD;&#xA;INNER JOIN SGT_PLAN PLN WITH(NOLOCK) ON PLN.PLAN_ID = DTL.PLAN_ID">
+      <parameters />
+    </query>
+    <query ID="GetBenefitDetailsByDetailID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPA.PAYEE_ACCOUNT_ID,SBA.BENEFIT_APPLICATION_ID,  SBCD.BENEFIT_CALCULATION_HEADER_ID, &#xD;&#xA;SPBXR.BENEFIT_OPTION_ID, SPBXR.BENEFIT_OPTION_VALUE, SPBXR.PLAN_ID, SP.PLAN_NAME, SBA.RETIREMENT_DATE, &#xD;&#xA;SBCH.CALCULATION_TYPE_VALUE, SBA.WITHDRAWAL_DATE,SBCD.BENEFIT_CALCULATION_DETAIL_ID, SP.PLAN_CODE,SBA.CONVERTED_MIN_DISTRIBUTION_FLAG,&#xD;&#xA;XSBAD.BENEFIT_OPTION_VALUE AS ORIGINAL_BENEFIT_OPTION_VALUE,JA.DATE_OF_DEATH AS SPOUSE_DOD,SBA.DISABILITY_CONVERSION_DATE, SBA.CHILD_SUPPORT_FLAG,&#xD;&#xA;SBA.EMERGENCY_ONETIME_PAYMENT_FLAG,&#xD;&#xA;SBA.COVID_OPTION_VALUE, SBA.WITHDRAWAL_TYPE_VALUE&#xD;&#xA;FROM SGT_BENEFIT_APPLICATION_DETAIL SBAD WITH(NOLOCK)&#xD;&#xA;INNER JOIN SGT_BENEFIT_APPLICATION SBA WITH(NOLOCK) ON SBA.BENEFIT_APPLICATION_ID = SBAD.BENEFIT_APPLICATION_ID &#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT SPA WITH(NOLOCK) ON SPA.BENEFIT_APPLICATION_DETAIL_ID = SBAD.BENEFIT_APPLICATION_DETAIL_ID&#xD;&#xA;INNER JOIN SGT_PLAN_BENEFIT_XR SPBXR WITH(NOLOCK) ON SPBXR.PLAN_BENEFIT_ID = SPA.PLAN_BENEFIT_ID &#xD;&#xA;INNER JOIN SGT_PLAN SP WITH(NOLOCK) ON SP.PLAN_ID = SPBXR.PLAN_ID&#xD;&#xA;INNER JOIN SGT_PLAN_BENEFIT_XR XSBAD ON XSBAD.PLAN_BENEFIT_ID = SBAD.PLAN_BENEFIT_ID &#xD;&#xA;LEFT OUTER JOIN SGT_BENEFIT_CALCULATION_DETAIL SBCD WITH(NOLOCK) ON SBCD.BENEFIT_CALCULATION_DETAIL_ID =  SPA.BENEFIT_CALCULATION_DETAIL_ID&#xD;&#xA;LEFT OUTER JOIN SGT_BENEFIT_CALCULATION_HEADER SBCH WITH(NOLOCK) ON SBCH.BENEFIT_CALCULATION_HEADER_ID = SBCD.BENEFIT_CALCULATION_HEADER_ID&#xD;&#xA;LEFT OUTER JOIN SGT_PERSON JA ON SBAD.JOINT_ANNUITANT_ID = JA.PERSON_ID&#xD;&#xA;WHERE SBAD.BENEFIT_APPLICATION_DETAIL_ID = @BENEFIT_APPLICATION_DETAIL_ID">
+      <parameters>
+        <parameter ID="@BENEFIT_APPLICATION_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetDRODetailsByDetailID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPA.PAYEE_ACCOUNT_ID, SPBXR.PLAN_ID, SP.PLAN_NAME, SDA.DRO_APPLICATION_ID AS QDRO_APPLICATION_ID, SQCD.QDRO_CALCULATION_HEADER_ID, SDA.DRO_COMMENCEMENT_DATE,&#xD;&#xA;SPBXR.BENEFIT_OPTION_ID, SPBXR.BENEFIT_OPTION_VALUE,SQCD.QDRO_CALCULATION_DETAIL_ID,SP.PLAN_CODE &#xD;&#xA;FROM SGT_DRO_BENEFIT_DETAILS SDBD&#xD;&#xA;INNER JOIN SGT_DRO_APPLICATION SDA ON SDA.DRO_APPLICATION_ID = SDBD.DRO_APPLICATION_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT SPA WITH(NOLOCK) ON SPA.DRO_APPLICATION_DETAIL_ID = SDBD.DRO_BENEFIT_ID&#xD;&#xA;INNER JOIN SGT_PLAN_BENEFIT_XR SPBXR WITH(NOLOCK) ON SPBXR.PLAN_BENEFIT_ID = SPA.PLAN_BENEFIT_ID &#xD;&#xA;INNER JOIN SGT_PLAN SP WITH(NOLOCK) ON SP.PLAN_ID = SPBXR.PLAN_ID &#xD;&#xA;LEFT OUTER JOIN SGT_QDRO_CALCULATION_DETAIL SQCD WITH(NOLOCK) ON SQCD.QDRO_CALCULATION_DETAIL_ID = SPA.DRO_CALCULATION_DETAIL_ID&#xD;&#xA;LEFT OUTER JOIN SGT_QDRO_CALCULATION_HEADER SQCH ON SQCH.QDRO_CALCULATION_HEADER_ID = SQCD.QDRO_CALCULATION_HEADER_ID&#xD;&#xA;WHERE SPA.DRO_APPLICATION_DETAIL_ID = @DRO_APPLICATION_DETAIL_ID">
+      <parameters>
+        <parameter ID="@DRO_APPLICATION_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitCalculationDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_BENEFIT_CALCULATION_DETAIL WHERE BENEFIT_CALCULATION_DETAIL_ID=@BENEFIT_CALCULATION_DETAIL_ID">
+      <parameters>
+        <parameter ID="@BENEFIT_CALCULATION_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitDetailsByPersonID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SBCH.*,SBCD.* FROM SGT_BENEFIT_CALCULATION_HEADER SBCH WITH(NOLOCK)&#xD;&#xA;JOIN SGT_BENEFIT_CALCULATION_DETAIL SBCD WITH(NOLOCK) ON&#xD;&#xA;SBCH.BENEFIT_CALCULATION_HEADER_ID=SBCD.BENEFIT_CALCULATION_HEADER_ID&#xD;&#xA;WHERE PERSON_ID=@PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBeneficiaryDistPercentage" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select spab.DIST_PERCENT,spb.PERSON_RELATIONSHIP_ID, sp.PERSON_ID,sp.FIRST_NAME + ' ' + sp.LAST_NAME istrBenFullName,sp.LAST_NAME istrBenLastName,sp.NAME_PREFIX_VALUE istrNamePrefixValue,&#xD;&#xA;sp.DATE_OF_DEATH idtBenDateOfDeath,spl.PLAN_NAME istrPlan,spb.RELATIONSHIP_VALUE ,spab.*,sp.MPI_PERSON_ID as istrBenMPID,spl.PLAN_ID iaintPlan&#xD;&#xA;from SGT_PERSON_ACCOUNT_BENEFICIARY spab WITH(NOLOCK) &#xD;&#xA;join SGT_PERSON_ACCOUNT spa WITH(NOLOCK)  on spa.PERSON_ACCOUNT_ID = spab.PERSON_ACCOUNT_ID&#xD;&#xA;join SGT_PLAN spl WITH(NOLOCK) on spa.PLAN_ID = spl.PLAN_ID&#xD;&#xA;right outer join SGT_RELATIONSHIP spb WITH(NOLOCK) on spab.PERSON_RELATIONSHIP_ID = spb.PERSON_RELATIONSHIP_ID&#xD;&#xA;join SGT_PERSON sp WITH(NOLOCK) on sp.PERSON_ID = spb.BENEFICIARY_PERSON_ID &#xD;&#xA;where spb.BENEFICIARY_PERSON_ID=@PERSON_ID and spl.PLAN_ID = @PLAN_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckAlternateParticipantIsPaid" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT COUNT(DISTINCT TPA.PAYEE_ACCOUNT_ID) AS [COUNT]&#xD;&#xA;FROM SGT_PAYMENT_HISTORY_HEADER PHH&#xD;&#xA;JOIN  SGT_PAYMENT_HISTORY_DISTRIBUTION PHD ON PHD.PAYMENT_HISTORY_HEADER_ID=PHH.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;JOIN  SGT_PAYMENT_HISTORY_DETAIL PHDE ON PHDE.PAYMENT_HISTORY_HEADER_ID=PHH.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;JOIN SGT_PAYEE_ACCOUNT TPA ON TPA.PAYEE_ACCOUNT_ID=PHH.PAYEE_ACCOUNT_ID&#xD;&#xA;JOIN SGT_PAYEE_BENEFIT_ACCOUNT SPBA ON TPA.PAYEE_BENEFIT_ACCOUNT_ID = SPBA.PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;JOIN SGT_BENEFIT_APPLICATION_DETAIL SBAD ON TPA.BENEFIT_APPLICATION_DETAIL_ID = SBAD.BENEFIT_APPLICATION_DETAIL_ID&#xD;&#xA;JOIN SGT_BENEFIT_APPLICATION SBA ON SBAD.BENEFIT_APPLICATION_ID = SBA.BENEFIT_APPLICATION_ID &#xD;&#xA;JOIN  SGT_PAYMENT_ITEM_TYPE(NOLOCK) PIT ON PHDE.PAYMENT_ITEM_TYPE_ID = PIT.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;WHERE PHD.DISTRIBUTION_STATUS_VALUE NOT IN ('CDRE','CNLD','RCMD')  AND (PHD.OLD_DISTRIBUTION_ID IS NULL OR &#xD;&#xA;       (PHD.OLD_DISTRIBUTION_ID IS NOT NULL AND EXISTS(SELECT * FROM SGT_PAYMENT_HISTORY_DISTRIBUTION Q WHERE Q.PAYMENT_HISTORY_DISTRIBUTION_ID = PHD.OLD_DISTRIBUTION_ID AND Q.DISTRIBUTION_STATUS_VALUE = 'CDRE')))&#xD;&#xA;AND SPBA.PERSON_ID = @PERSON_ID AND TPA.BENEFIT_ACCOUNT_TYPE_VALUE = 'WDRL' AND SBA.DRO_APPLICATION_ID IS NOT NULL AND PHD.OLD_DISTRIBUTION_ID IS NULL AND PHH.OLD_PAYMENT_HISTORY_HEADER_ID IS NULL&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="benefit_calculation_detail_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitCalculationDetailId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="benefit_calculation_header_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitCalculationHeaderId" sfwIsSequence="False" sfwCaption="Benefit Calculation Header Id" />
+    <attribute sfwValue="benefit_application_detail_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BenefitApplicationDetailId" sfwIsSequence="False" sfwCaption="Benefit Application Detail Id" />
+    <attribute sfwValue="person_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonAccountId" sfwIsSequence="False" sfwCaption="Person Account Id" />
+    <attribute sfwValue="plan_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PlanId" sfwIsSequence="False" sfwCaption="Plan Id" />
+    <attribute sfwValue="vested_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="VestedDate" sfwIsSequence="False" sfwCaption="Vested Date" />
+    <attribute sfwType="Description" ID="BenefitSubtypeDescription" sfwCaption="Benefit Subtype" sfwValue="benefit_subtype_description" />
+    <attribute sfwValue="benefit_subtype_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitSubtypeId" sfwCodeID="1501" sfwIsSequence="False" sfwCaption="Benefit Subtype" />
+    <attribute sfwValue="benefit_subtype_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="BenefitSubtypeValue" sfwIsSequence="False" sfwCaption="Benefit Subtype" />
+    <attribute sfwValue="unreduced_benefit_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="UnreducedBenefitAmount" sfwIsSequence="False" sfwCaption="Unreduced Benefit Amount" />
+    <attribute sfwValue="final_monthly_benefit_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="FinalMonthlyBenefitAmount" sfwIsSequence="False" sfwCaption="Final Monthly Benefit Amount" />
+    <attribute sfwValue="early_reduction_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,6" sfwIsNull="True" ID="EarlyReductionFactor" sfwIsSequence="False" sfwCaption="Early Reduction Factor" />
+    <attribute sfwValue="early_reduced_benefit_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="EarlyReducedBenefitAmount" sfwIsSequence="False" sfwCaption="Early Reduced Benefit Amount" />
+    <attribute sfwValue="additional_accrued_benefit_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="AdditionalAccruedBenefitAmount" sfwIsSequence="False" sfwCaption="Additional Accrued Benefit Amount" />
+    <attribute sfwValue="actuarial_accrued_benefit_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="ActuarialAccruedBenefitAmount" sfwIsSequence="False" sfwCaption="Actuarial Accrued Benefit Amount" />
+    <attribute sfwValue="iap_balance_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="IapBalanceAmount" sfwIsSequence="False" sfwCaption="Iap Balance Amount" />
+    <attribute sfwValue="minimum_guarantee_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="MinimumGuaranteeAmount" sfwIsSequence="False" sfwCaption="Minimum Guarantee Amount" />
+    <attribute sfwValue="monthly_exclusion_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="MonthlyExclusionAmount" sfwIsSequence="False" sfwCaption="Monthly Exclusion Amount" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="2002" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="total_uvhp_contribution_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="TotalUvhpContributionAmount" sfwIsSequence="False" sfwCaption="Total Uvhp Contribution Amount" />
+    <attribute sfwValue="total_uvhp_interest_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="TotalUvhpInterestAmount" sfwIsSequence="False" sfwCaption="Total Uvhp Interest Amount" />
+    <attribute sfwValue="ee_as_of_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EeAsOfDate" sfwIsSequence="False" sfwCaption="Ee As Of Date" />
+    <attribute sfwValue="uvhp_as_of_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="UvhpAsOfDate" sfwIsSequence="False" sfwCaption="Uvhp As Of Date" />
+    <attribute sfwValue="iap_as_of_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="IapAsOfDate" sfwIsSequence="False" sfwCaption="Iap As Of Date" />
+    <attribute sfwValue="local52_special_acct_bal_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Local52SpecialAcctBalAmount" sfwIsSequence="False" sfwCaption="Local52 Special Acct Bal Amount" />
+    <attribute sfwValue="local161_special_acct_bal_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Local161SpecialAcctBalAmount" sfwIsSequence="False" sfwCaption="Local161 Special Acct Bal Amount" />
+    <attribute sfwValue="special_account_as_of_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="SpecialAccountAsOfDate" sfwIsSequence="False" sfwCaption="Special Account As Of Date" />
+    <attribute sfwValue="retirement_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="RetirementDate" sfwIsSequence="False" sfwCaption="Retirement Date" />
+    <attribute sfwValue="ee_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="EeFlag" sfwIsSequence="False" sfwCaption="Ee Flag" />
+    <attribute sfwValue="uvhp_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="UvhpFlag" sfwIsSequence="False" sfwCaption="Uvhp Flag" />
+    <attribute sfwValue="l52_spl_acc_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="L52SplAccFlag" sfwIsSequence="False" sfwCaption="L52 Spl Acc Flag" />
+    <attribute sfwValue="l161_spl_acc_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="L161SplAccFlag" sfwIsSequence="False" sfwCaption="L161 Spl Acc Flag" />
+    <attribute sfwValue="elected_benefit_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="ElectedBenefitAmount" sfwIsSequence="False" sfwCaption="Elected Benefit Amount" />
+    <attribute sfwValue="present_value_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="PresentValueAmount" sfwIsSequence="False" sfwCaption="Present Value Amount" />
+    <attribute sfwValue="qdro_offset" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="QdroOffset" sfwIsSequence="False" sfwCaption="Qdro Offset" />
+    <attribute sfwValue="l161_spl_acc_qdro_offset" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="L161SplAccQdroOffset" sfwIsSequence="False" sfwCaption="L161 Spl Acc Qdro Offset" />
+    <attribute sfwValue="l52_spl_acc_qdro_offset" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="L52SplAccQdroOffset" sfwIsSequence="False" sfwCaption="L52 Spl Acc Qdro Offset" />
+    <attribute sfwValue="total_uvhp_contribution_qdro_offset" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="TotalUvhpContributionQdroOffset" sfwIsSequence="False" sfwCaption="Total Uvhp Contribution Qdro Offset" />
+    <attribute sfwValue="total_ee_contribution_qdro_offset" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="TotalEeContributionQdroOffset" sfwIsSequence="False" sfwCaption="Total Ee Contribution Qdro Offset" />
+    <attribute sfwType="Description" ID="DroModelDescription" sfwCaption="Dro Model" sfwValue="dro_model_description" />
+    <attribute sfwValue="dro_model_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="DroModelId" sfwCodeID="6004" sfwIsSequence="False" sfwCaption="Dro Model" />
+    <attribute sfwValue="dro_model_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="DroModelValue" sfwIsSequence="False" sfwCaption="Dro Model" />
+    <attribute sfwType="Description" ID="Local52RuleDescription" sfwCaption="Local52 Rule" sfwValue="local52_rule_description" />
+    <attribute sfwValue="local52_rule_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="Local52RuleId" sfwCodeID="1508" sfwIsSequence="False" sfwCaption="Local52 Rule" />
+    <attribute sfwValue="local52_rule_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="Local52RuleValue" sfwIsSequence="False" sfwCaption="Local52 Rule" />
+    <attribute sfwValue="alternate_payee_pure_contribution" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="AlternatePayeePureContribution" sfwIsSequence="False" sfwCaption="Alternate Payee Pure Contribution" />
+    <attribute sfwValue="total_ee_interest_qdro_offset" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="TotalEeInterestQdroOffset" sfwIsSequence="False" sfwCaption="Total Ee Interest Qdro Offset" />
+    <attribute sfwValue="total_uvhp_interest_qdro_offset" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="TotalUvhpInterestQdroOffset" sfwIsSequence="False" sfwCaption="Total Uvhp Interest Qdro Offset" />
+    <attribute sfwValue="vested_ee_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="VestedEeAmount" sfwIsSequence="False" sfwCaption="Vested Ee Amount" />
+    <attribute sfwValue="vested_ee_interest" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="VestedEeInterest" sfwIsSequence="False" sfwCaption="Vested Ee Interest" />
+    <attribute sfwValue="non_vested_ee_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="NonVestedEeAmount" sfwIsSequence="False" sfwCaption="Non Vested Ee Amount" />
+    <attribute sfwValue="non_vested_ee_interest" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="NonVestedEeInterest" sfwIsSequence="False" sfwCaption="Non Vested Ee Interest" />
+    <attribute sfwValue="adjusment_payment" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="AdjusmentPayment" sfwIsSequence="False" sfwCaption="Adjusment Payment" />
+    <attribute sfwValue="adjustment_iap_payment_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="AdjustmentIapPaymentFlag" sfwIsSequence="False" sfwCaption="Adjustment Iap Payment Flag" />
+    <attribute sfwValue="adjustment_l52spl_payment_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="AdjustmentL52splPaymentFlag" sfwIsSequence="False" sfwCaption="Adjustment L52spl Payment Flag" />
+    <attribute sfwValue="adjustment_l161spl_payment_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="AdjustmentL161splPaymentFlag" sfwIsSequence="False" sfwCaption="Adjustment L161spl Payment Flag" />
+    <attribute sfwValue="ee_derived_benefit_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="EeDerivedBenefitAmount" sfwIsSequence="False" sfwCaption="Ee Derived Benefit Amount" />
+    <attribute sfwValue="reemployed_accrued_benefit_effective_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ReemployedAccruedBenefitEffectiveDate" sfwIsSequence="False" sfwCaption="Reemployed Accrued Benefit Effective Date" />
+    <attribute sfwValue="accrued_at_retirement_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="AccruedAtRetirementAmount" sfwIsSequence="False" sfwCaption="Accrued At Retirement Amount" />
+    <attribute sfwValue="popup_monthly_exclusion_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="PopupMonthlyExclusionAmount" sfwCaption="Popup Monthly Exclusion Amount" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitCalculationOptions" ID="lstBenefitCalculationOptions" sfwValue="iclbBenefitCalculationOptions" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSpecialAccount" sfwValue="icdoBenefitCalculationDetail.istrSpecialAccount" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitOptionValue" sfwValue="icdoBenefitCalculationDetail.istrBenefitOptionValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSpecialAccountDescrioption" sfwValue="icdoBenefitCalculationDetail.istrSpecialAccountDescrioption" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorRelationshipDescription" sfwValue="icdoBenefitCalculationDetail.istrSurvivorRelationshipDescription" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecSurvivorAmount" sfwValue="icdoBenefitCalculationDetail.idecSurvivorAmount" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitOptionValueDescrioption" sfwValue="icdoBenefitCalculationDetail.istrBenefitOptionValueDescrioption" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecBenefitsAfterQDROOffSet" sfwValue="icdoBenefitCalculationDetail.idecBenefitsAfterQDROOffSet" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlanCode" sfwValue="icdoBenefitCalculationDetail.istrPlanCode" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitCalculationYearlyDetail" ID="lstBenefitCalculationYearlyDetail" sfwValue="iclbBenefitCalculationYearlyDetail" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitCalculationYearlyDetail" ID="lstAnnualBenfitSummayOverviewTotal" sfwValue="iclbAnnualBenfitSummayOverviewTotal" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecLumpSumBenefitAmount" sfwValue="idecLumpSumBenefitAmount" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlanDescription" sfwValue="icdoBenefitCalculationDetail.istrPlanDescription" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrDisabilityType" sfwValue="istrDisabilityType" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtRetirementDate" sfwValue="idtRetirementDate" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintIAPasYear" sfwValue="icdoBenefitCalculationDetail.iintIAPasYear" />
+    <attribute sfwType="Collection" sfwEntity="entIAPAmountDetails" ID="lstIAPAmountDetails" sfwValue="iclbIAPAmountDetails" />
+    <attribute ID="objBenefitCalculationHeader" sfwType="Object" sfwEntity="entBenefitCalculationHeader" sfwValue="ibusBenefitCalculationHeader" />
+    <attribute sfwType="Collection" sfwEntity="entQDROOffsetDetails" ID="lstQDROOffsetDetails" sfwValue="iclbQDROOffsetDetails" />
+    <attribute ID="IintPersonId" sfwDataType="int" sfwPrivate="False" sfwValue="icdoBenefitCalculationDetail.iintPersonId" sfwType="Property" />
+  </attributes>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <objectmethods>
+    <method ID="LoadChildGridForBenefitCalculationMaintenances" />
+  </objectmethods>
+  <ExtraFields />
+</entity>

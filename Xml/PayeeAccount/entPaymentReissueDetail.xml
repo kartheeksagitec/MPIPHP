@@ -1,0 +1,125 @@
+﻿<entity ID="entPaymentReissueDetail" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPaymentReissueDetail" sfwObjectID="busPaymentReissueDetail" sfwTableName="sgt_payment_reissue_detail" sfwView="False" sfwDataObjectID="doPaymentReissueDetail">
+  <rules>
+    <rule ID="ShowReceipantRollover" sfwExpression="(this.istrBenefitOptionValue == &quot;LUMP&quot;)" sfwObjectBased="True" />
+    <rule ID="ShowRecipientMPID" sfwExpression="!(this.icdoPaymentReissueDetail.reissue_payment_type_value == &quot;PTOS&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-ShowDeleteButton" sfwExpression="(this.icdoPaymentReissueDetail.payment_reissue_detail_id &gt; 0)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="ShowRecipientMPID" sfwMode="All" sfwStatus="Active" />
+    <item ID="ShowReceipantRollover" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-ShowDeleteButton" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetPaymentReissueDetail" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_PAYMENT_REISSUE_DETAIL WHERE PAYMENT_HISTORY_DISTRIBUTION_ID = @PAYMENT_HISTORY_DISTRIBUTION_ID&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PAYMENT_HISTORY_DISTRIBUTION_ID" />
+      </parameters>
+    </query>
+    <query ID="CheckIfParticipantDODExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select COUNT(*) from SGT_PAYMENT_HISTORY_HEADER sphh &#xD;&#xA;inner join SGT_PAYMENT_HISTORY_DISTRIBUTION sphd on sphh.PAYMENT_HISTORY_HEADER_ID=sphd.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;inner join SGT_PERSON sp on sphh.PERSON_ID=sp.PERSON_ID where sphd.PAYMENT_HISTORY_DISTRIBUTION_ID=@PAYMENT_HISTORY_DISTRIBUTION_ID">
+      <parameters>
+        <parameter ID="@PAYMENT_HISTORY_DISTRIBUTION_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetSurvivorsForPayee" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT isnull(BP.PERSON_ID,so.ORG_ID) as person_id,isnull(BP.MPI_PERSON_ID,so.MPI_ORG_ID) as MPI_ORG_ID,isnull(BP.FIRST_NAME,SO.ORG_NAME) As FIRST_NAME  ,&#xD;&#xA; BP.MIDDLE_NAME,BP.LAST_NAME, BP.NAME_PREFIX_ID,BP.NAME_PREFIX_VALUE ,Bp.DATE_OF_BIRTH ,BP.DATE_OF_DEATH ,&#xD;&#xA;BP.SSN,BP.ETHNICITY,BP.GENDER_VALUE,BP.MARITAL_STATUS_ID,BP.MARITAL_STATUS_VALUE,BP.HOME_PHONE_NO,BP.WORK_PHONE_NO,BP.CELL_PHONE_NO ,BP.EXTENSION,BP.FAX_NO,BP.PAGER,BP.EMAIL_ADDRESS_1,BP.EMAIL_ADDRESS_2 &#xD;&#xA;,BP.COMMUNICATION_PREFERENCE_ID,BP.COMMUNICATION_PREFERENCE_VALUE,BP.STATUS_ID,BP.STATUS_VALUE,BP.CREATED_BY,BP.CREATED_DATE,BP.MODIFIED_BY,BP.MODIFIED_DATE,BP.UPDATE_SEQ,BP.VIP_FLAG,Bp.NAME_SUFFIX,&#xD;&#xA;BP.RECALCULATE_VESTING_FLAG,BP.RECALCULATE_VESTING_FLAG,BP.HEALTH_ELIGIBLE_FLAG,BP.PENSION_ELIGIBLE_NOTIFICATION_FLAG,BP.IS_PERSON_DELETED_FLAG,BP.SUSPENSION_OF_BENEFITS_NOTIFICATION_FLAG,BP.NEW_PARTICIPANT_LETTER_SEND_FLAG,              &#xD;&#xA; isnull(sr.BENEFICIARY_PERSON_ID,sr.BENEFICIARY_ORG_ID) as iintBenId,BENEFICIARY_TYPE_VALUE AS istrBenTypeValue,SPAB.DIST_PERCENT as idecBenPercentage ,&#xD;&#xA; CASE WHEN BP.PERSON_ID  IS NULL THEN SO.ORG_ID  END AS iintOrganisation&#xD;&#xA; FROM SGT_PERSON SP INNER JOIN SGT_PAYMENT_HISTORY_HEADER SPHH ON SPHH.PERSON_ID = SP.PERSON_ID&#xD;&#xA;INNER JOIN  SGT_RELATIONSHIP SR WITH(NOLOCK) ON  SP.PERSON_ID = SR.PERSON_ID --&#xD;&#xA;LEFT OUTER JOIN SGT_PERSON BP WITH(NOLOCK) ON  SR.BENEFICIARY_PERSON_ID = BP.PERSON_ID&#xD;&#xA;Left Outer join SGT_ORGANIZATION SO on sr.BENEFICIARY_ORG_ID = so.ORG_ID &#xD;&#xA;INNER JOIN SGT_PERSON_ACCOUNT_BENEFICIARY SPAB ON sr.PERSON_RELATIONSHIP_ID = SPAB.PERSON_RELATIONSHIP_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION SPHD ON SPHH.PAYMENT_HISTORY_HEADER_ID = SPHD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PERSON_ACCOUNT SPA ON SPAB.PERSON_ACCOUNT_ID = SPA.PERSON_ACCOUNT_ID AND SPHH.PLAN_ID = SPA.PLAN_ID &#xD;&#xA;WHERE SPHD.PAYMENT_HISTORY_DISTRIBUTION_ID = @PAYMENT_HISTORY_DISTRIBUTION_ID AND SPAB.STATUS_VALUE IN ('INAC') &#xD;&#xA;AND DATEPART(YYYY,SPAB.END_DATE) = DATEPART(YYYY,SP.DATE_OF_DEATH) AND  DATEPART(MM,SPAB.END_DATE) = DATEPART(MM,SP.DATE_OF_DEATH) AND&#xD;&#xA;DATEPART(DD,SPAB.END_DATE) = DATEPART(DD,SP.DATE_OF_DEATH) AND BP.DATE_OF_DEATH IS NULL">
+      <parameters>
+        <parameter ID="@PAYMENT_HISTORY_DISTRIBUTION_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetDataForProviderReportPayment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA; SELECT 7043 AS SUBSYSTEM_ID,'PMNT' AS SUBSYSTEM_VALUE,&#xD;&#xA;  PHD.PAYMENT_HISTORY_DETAIL_ID AS SUBSYSTEM_REF_ID,&#xD;&#xA;  PHH.PAYMENT_HISTORY_HEADER_ID,PHH.PERSON_ID,&#xD;&#xA;  PHD.VENDOR_ORG_ID AS PROVIDER_ORG_ID,&#xD;&#xA;  PHH.PAYEE_ACCOUNT_ID,&#xD;&#xA;  PS.PAYMENT_DATE AS EFFECTIVE_DATE,&#xD;&#xA;  PIT.ITEM_TYPE_CODE,&#xD;&#xA;  -SUM(PHD.AMOUNT * PIT.item_type_direction * -1) AS AMOUNT,PIT.PAYMENT_ITEM_TYPE_ID&#xD;&#xA; FROM SGT_PAYMENT_HISTORY_DETAIL  PHD WITH(NOLOCK)&#xD;&#xA; INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHH WITH(NOLOCK)  &#xD;&#xA;  ON PHD.PAYMENT_HISTORY_HEADER_ID = PHH.PAYMENT_HISTORY_HEADER_ID &#xD;&#xA; INNER JOIN TEMP_TABLE_FOR_PAYMENT PA WITH(NOLOCK) &#xD;&#xA;  ON PA.PAYEE_ACCOUNT_ID = PHH.PAYEE_ACCOUNT_ID&#xD;&#xA;  AND isnull(PHH.ORG_ID,0) = isnull(PA.ORG_ID,0) and ISNULL(PHH.PERSON_ID,0) = ISNULL(PA.PERSON_ID,0)  &#xD;&#xA; INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT WITH(NOLOCK)&#xD;&#xA;  ON PHD.PAYMENT_ITEM_TYPE_ID = PIT.PAYMENT_ITEM_TYPE_ID  &#xD;&#xA;  INNER JOIN SGT_PAYMENT_SCHEDULE PS WITH(NOLOCK)&#xD;&#xA;  ON PHH.PAYMENT_SCHEDULE_ID = PS.PAYMENT_SCHEDULE_ID &#xD;&#xA; WHERE PHH.PAYMENT_HISTORY_HEADER_ID = @PAYMENT_HISTORY_HEADER_ID and&#xD;&#xA; PHH.PAYEE_ACCOUNT_ID IS NOT NULL&#xD;&#xA;  AND PHD.VENDOR_ORG_ID IS NOT NULL&#xD;&#xA;     AND PIT.PAYEE_DETAIL_GROUP_VALUE IN  ('FEDX','STTX')&#xD;&#xA; GROUP BY  &#xD;&#xA;  PHD.PAYMENT_HISTORY_DETAIL_ID,&#xD;&#xA;  PHH.PAYMENT_HISTORY_HEADER_ID,&#xD;&#xA;  PHH.PERSON_ID,&#xD;&#xA;  PHD.VENDOR_ORG_ID, &#xD;&#xA;  PHH.PAYEE_ACCOUNT_ID,&#xD;&#xA;  PIT.ITEM_TYPE_CODE,&#xD;&#xA;  PS.PAYMENT_DATE,PIT.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PAYMENT_HISTORY_HEADER_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetSurvivorPercentage" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPAB.DIST_PERCENT FROM SGT_RELATIONSHIP SR &#xD;&#xA;INNER JOIN SGT_PERSON_ACCOUNT_BENEFICIARY SPAB&#xD;&#xA;ON SR.PERSON_RELATIONSHIP_ID = SPAB.PERSON_RELATIONSHIP_ID&#xD;&#xA;WHERE SR.PERSON_ID = @PERSON_ID  AND (SR.BENEFICIARY_PERSON_ID = @BENEFICIARY_PERSON_ID OR SR.BENEFICIARY_ORG_ID = @BENEFICIARY_PERSON_ID)">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFICIARY_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckIfNegativeTaxesPosted" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGT_PROVIDER_REPORT_PAYMENT&#xD;&#xA;WHERE PAYMENT_HISTORY_HEADER_ID = @PAYMENT_HISTORY_HEADER_ID AND AMOUNT &lt; 0">
+      <parameters>
+        <parameter ID="@PAYMENT_HISTORY_HEADER_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetTypeOfBeneficiary" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select  top 1 spab.BENEFICIARY_TYPE_value from SGT_RELATIONSHIP sr &#xD;&#xA;  inner join SGT_PERSON_ACCOUNT_BENEFICIARY spab &#xD;&#xA; on sr.PERSON_RELATIONSHIP_ID=spab.PERSON_RELATIONSHIP_ID&#xD;&#xA;  where sr.BENEFICIARY_PERSON_ID=@BENEFICIARY_PERSON_ID">
+      <parameters>
+        <parameter ID="@BENEFICIARY_PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="UpdateHistoryDistributionStatusToReissued" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DECLARE @END_PAYMENTDATE DATETIME&#xD;&#xA;SET @END_PAYMENTDATE  =  @PAYMENTDATE&#xD;&#xA;INSERT INTO SGT_PAYMENT_HISTORY_DISTRIBUTION_STATUS_HISTORY&#xD;&#xA;(&#xD;&#xA;       PAYMENT_HISTORY_DISTRIBUTION_ID, PAYMENT_HISTORY_HEADER_ID,&#xD;&#xA;       DISTRIBUTION_STATUS_ID, DISTRIBUTION_STATUS_VALUE, TRANSACTION_DATE,&#xD;&#xA;       STATUS_CHANGED_BY, STATUS_CHANGE_REASON_ID, STATUS_CHANGE_REASON_VALUE, &#xD;&#xA;       CREATED_BY, CREATED_DATE, MODIFIED_BY, MODIFIED_DATE, UPDATE_SEQ&#xD;&#xA;)&#xD;&#xA;SELECT Distinct&#xD;&#xA;      PAYMENT_HISTORY_DISTRIBUTION_ID,&#xD;&#xA;      PAYMENT_HISTORY_HEADER_ID,&#xD;&#xA;      DISTRIBUTION_STATUS_ID,&#xD;&#xA;      DISTRIBUTION_STATUS_VALUE,&#xD;&#xA;      TRANSACTION_DATE,&#xD;&#xA;      'OPUS Batch' as STATUS_CHANGED_BY,&#xD;&#xA;      7036 as STATUS_CHANGE_REASON_ID,&#xD;&#xA;      NULL as STATUS_CHANGE_REASON_VALUE,&#xD;&#xA;      'OPUS Batch' as CREATED_BY,&#xD;&#xA;      GETDATE() as CREATED_DATE,&#xD;&#xA;      'OPUS Batch' as MODIFIED_BY,&#xD;&#xA;      GETDATE() as MODIFIED_DATE,&#xD;&#xA;      0 as UPDATE_SEQ from&#xD;&#xA;     (select SPHD.PAYMENT_HISTORY_DISTRIBUTION_ID,SPHD.PAYMENT_HISTORY_HEADER_ID,&#xD;&#xA;     SPHD.DISTRIBUTION_STATUS_ID,  &#xD;&#xA;  CASE WHEN SPRD.REISSUE_PAYMENT_TYPE_VALUE IN('PTOS','PYEE','TORG') THEN  'RSUD' ELSE 'CDRE' END AS DISTRIBUTION_STATUS_VALUE&#xD;&#xA;     ,GETDATE() AS TRANSACTION_DATE&#xD;&#xA;     FROM SGT_PAYMENT_HISTORY_DISTRIBUTION SPHD &#xD;&#xA;  INNER JOIN SGT_PAYMENT_HISTORY_HEADER SPHH &#xD;&#xA;  ON SPHD.PAYMENT_HISTORY_HEADER_ID = SPHH.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;  INNER JOIN SGT_PAYMENT_HISTORY_DETAIL SPD&#xD;&#xA;  ON SPHH.PAYMENT_HISTORY_HEADER_ID = SPD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;  INNER JOIN TEMP_TABLE_FOR_PAYMENT PA&#xD;&#xA;  ON SPHH.PAYEE_ACCOUNT_ID = PA.PAYEE_ACCOUNT_ID&#xD;&#xA;  INNER JOIN SGT_PAYMENT_REISSUE_DETAIL SPRD&#xD;&#xA;  ON SPRD.PAYMENT_HISTORY_DISTRIBUTION_ID = SPHD.PAYMENT_HISTORY_DISTRIBUTION_ID&#xD;&#xA;  WHERE SPHD.DISTRIBUTION_STATUS_VALUE = 'RSUE' AND ISNULL(PA.REISSUE_ITEM_FLAG,'N') = 'Y'&#xD;&#xA;      )TEMP&#xD;&#xA;      &#xD;&#xA;UPDATE SPPIT&#xD;&#xA;SET SPPIT.END_DATE = @END_PAYMENTDATE,&#xD;&#xA;SPPIT.MODIFIED_BY = 'OPUS Batch',&#xD;&#xA;SPPIT.MODIFIED_DATE = GETDATE(),&#xD;&#xA;SPPIT.UPDATE_SEQ = SPPIT.UPDATE_SEQ + 1&#xD;&#xA;FROM SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE SPPIT&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER SPHH &#xD;&#xA; ON SPPIT.PAYEE_ACCOUNT_ID = SPHH.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION SPHD &#xD;&#xA; ON SPHD.PAYMENT_HISTORY_HEADER_ID = SPHH.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DETAIL SPD&#xD;&#xA; ON SPHH.PAYMENT_HISTORY_HEADER_ID = SPD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN TEMP_TABLE_FOR_PAYMENT PA&#xD;&#xA; ON SPHH.PAYEE_ACCOUNT_ID = PA.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_REISSUE_DETAIL SPRD&#xD;&#xA; ON SPRD.PAYMENT_HISTORY_DISTRIBUTION_ID = SPHD.PAYMENT_HISTORY_DISTRIBUTION_ID&#xD;&#xA;WHERE SPHD.DISTRIBUTION_STATUS_VALUE = 'RSUE' AND SPPIT.REISSUE_ITEM_FLAG='Y'&#xD;&#xA;&#xD;&#xA;UPDATE SPHD&#xD;&#xA;SET SPHD.DISTRIBUTION_STATUS_VALUE = CASE WHEN SPRD.REISSUE_PAYMENT_TYPE_VALUE IN ('PTOS','PYEE','TORG') THEN 'RSUD' ELSE 'CDRE' END,&#xD;&#xA;SPHD.MODIFIED_BY = 'OPUS Batch',&#xD;&#xA;SPHD.MODIFIED_DATE = GETDATE(),&#xD;&#xA;SPHD.UPDATE_SEQ = SPHD.UPDATE_SEQ + 1&#xD;&#xA;FROM SGT_PAYMENT_HISTORY_DISTRIBUTION SPHD &#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER SPHH &#xD;&#xA; ON SPHD.PAYMENT_HISTORY_HEADER_ID = SPHH.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DETAIL SPD&#xD;&#xA; ON SPHH.PAYMENT_HISTORY_HEADER_ID = SPD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN TEMP_TABLE_FOR_PAYMENT PA&#xD;&#xA; ON SPHH.PAYEE_ACCOUNT_ID = PA.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_REISSUE_DETAIL SPRD&#xD;&#xA; ON SPRD.PAYMENT_HISTORY_DISTRIBUTION_ID = SPHD.PAYMENT_HISTORY_DISTRIBUTION_ID&#xD;&#xA;WHERE SPHD.DISTRIBUTION_STATUS_VALUE = 'RSUE' AND ISNULL(PA.REISSUE_ITEM_FLAG,'N') = 'Y'">
+      <parameters>
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetAccountNumber" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT top (1) ACCOUNT_NUMBER,PAYEE_ACCOUNT_ROLLOVER_DETAIL_ID from SGT_PAYEE_ACCOUNT_ROLLOVER_DETAIL &#xD;&#xA;WHERE PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID&#xD;&#xA;AND ROLLOVER_ORG_ID = @ROLLOVER_ORG_ID&#xD;&#xA;AND STATUS_VALUE NOT IN ('PRCS')">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@ROLLOVER_ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetReissueIdForRolloverToPayee" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP(1) SPRD.PAYMENT_REISSUE_DETAIL_ID FROM SGT_PAYMENT_REISSUE_DETAIL SPRD&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION SPHD&#xD;&#xA;ON SPRD.PAYMENT_HISTORY_DISTRIBUTION_ID = SPHD.PAYMENT_HISTORY_DISTRIBUTION_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER SPHH&#xD;&#xA;ON SPHH.PAYMENT_HISTORY_HEADER_ID = SPHD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;WHERE SPHD.DISTRIBUTION_STATUS_VALUE = 'RSUE' AND SPRD.REISSUE_PAYMENT_TYPE_VALUE = 'ROTP'&#xD;&#xA;AND SPHH.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="UpdateOldHistoryDistributionId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE A&#xD;&#xA;SET A.OLD_DISTRIBUTION_ID=REISSAPP.PAYMENT_HISTORY_DISTRIBUTION_ID,&#xD;&#xA;    A.UPDATE_SEQ=A.UPDATE_SEQ+1&#xD;&#xA;FROM SGT_PAYMENT_HISTORY_DISTRIBUTION A &#xD;&#xA;  INNER JOIN SGT_PAYMENT_HISTORY_HEADER B&#xD;&#xA;    ON A.PAYMENT_HISTORY_HEADER_ID=B.PAYMENT_HISTORY_HEADER_ID  &#xD;&#xA;  INNER JOIN &#xD;&#xA;  (&#xD;&#xA;   SELECT A.PAYMENT_HISTORY_HEADER_ID,A.PAYMENT_HISTORY_DISTRIBUTION_ID,B.PAYEE_ACCOUNT_ID&#xD;&#xA;   FROM TEMP_TABLE_FOR_PAYMENT PAY &#xD;&#xA;    INNER JOIN SGT_PAYMENT_HISTORY_HEADER B&#xD;&#xA;     ON PAY.PAYEE_ACCOUNT_ID = B.PAYEE_ACCOUNT_ID &#xD;&#xA;    INNER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION A      &#xD;&#xA;      ON A.PAYMENT_HISTORY_HEADER_ID=B.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;   WHERE A.DISTRIBUTION_STATUS_VALUE in ('RSUE') AND B.PAYMENT_DATE&lt; @PAYMENTDATE AND ISNULL(PAY.REISSUE_ITEM_FLAG,'N') = 'Y'&#xD;&#xA;  )REISSAPP ON B.PAYEE_ACCOUNT_ID=REISSAPP.PAYEE_ACCOUNT_ID&#xD;&#xA;WHERE B.PAYMENT_SCHEDULE_ID=@PAYMENTSCHEDULEID AND A.DISTRIBUTION_STATUS_VALUE='OUTS'">
+      <parameters>
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+        <parameter ID="@PAYMENTSCHEDULEID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOrgDetailsByOrgID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct SO.MPI_ORG_ID,SO.ORG_NAME&#xD;&#xA;FROM SGT_PERSON SP&#xD;&#xA;INNER JOIN SGT_RELATIONSHIP R ON SP.PERSON_ID = R.PERSON_ID&#xD;&#xA;left outer join SGT_ORGANIZATION SO on R.BENEFICIARY_ORG_ID=SO.ORG_ID&#xD;&#xA;WHERE  R.PERSON_ID=@Person_Id and R.BENEFICIARY_ORG_ID=@ORG_ID  ">
+      <parameters>
+        <parameter ID="@Person_Id" sfwDataType="int" />
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPersonDetailsByPersonID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT MPI_PERSON_ID,(FIRST_NAME + ' ' + LAST_NAME)as FULLNAME &#xD;&#xA;FROM SGT_PERSON SP&#xD;&#xA;INNER JOIN SGT_RELATIONSHIP R ON SP.PERSON_ID = R.BENEFICIARY_PERSON_ID &#xD;&#xA;WHERE  R.PERSON_ID=@Person_Id and R.BENEFICIARY_PERSON_ID=@Survivor_ID &#xD;&#xA;">
+      <parameters>
+        <parameter ID="@Person_Id" sfwDataType="int" />
+        <parameter ID="@Survivor_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetMainPayeeID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT TOP 1 H.PERSON_ID FROM SGT_PAYMENT_HISTORY_DISTRIBUTION D&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER H ON D.PAYMENT_HISTORY_HEADER_ID = H.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;WHERE D.PAYMENT_HISTORY_DISTRIBUTION_ID = @PAYMENT_HISTORY_DISTRIBUTION_ID">
+      <parameters>
+        <parameter ID="@PAYMENT_HISTORY_DISTRIBUTION_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="payment_reissue_detail_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PaymentReissueDetailId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="payment_history_distribution_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PaymentHistoryDistributionId" sfwIsSequence="False" sfwCaption="Payment History Distribution Id" />
+    <attribute sfwValue="recipient_person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RecipientPersonId" sfwIsSequence="False" sfwCaption="Recipient Person Id" />
+    <attribute sfwValue="recipient_rollover_org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RecipientRolloverOrgId" sfwIsSequence="False" sfwCaption="Recipient Rollover Org Id" />
+    <attribute sfwType="Description" ID="ReissueReasonDescription" sfwCaption="Reissue Reason" sfwValue="reissue_reason_description" />
+    <attribute sfwValue="reissue_reason_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ReissueReasonId" sfwCodeID="7047" sfwIsSequence="False" sfwCaption="Reissue Reason" />
+    <attribute sfwValue="reissue_reason_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ReissueReasonValue" sfwIsSequence="False" sfwCaption="Reissue Reason" />
+    <attribute sfwType="Description" ID="ReissuePaymentTypeDescription" sfwCaption="Reissue Payment Type" sfwValue="reissue_payment_type_description" />
+    <attribute sfwValue="reissue_payment_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ReissuePaymentTypeId" sfwCodeID="7048" sfwIsSequence="False" sfwCaption="Reissue Payment Type" />
+    <attribute sfwValue="reissue_payment_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ReissuePaymentTypeValue" sfwIsSequence="False" sfwCaption="Reissue Payment Type" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="recipient_org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RecipientOrgId" sfwCaption="Recipient Org Id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRMPID" sfwValue="icdoPaymentReissueDetail.istrRMPID" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintSurvivorId" sfwValue="icdoPaymentReissueDetail.iintSurvivorId" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRecipientRollOverOrgMPID" sfwValue="icdoPaymentReissueDetail.istrRecipientRollOverOrgMPID" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintPartitipantID" sfwValue="icdoPaymentReissueDetail.iintPartitipantID" />
+  </attributes>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields />
+</entity>

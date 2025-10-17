@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_PROVINCE]
+    FROM VARCHAR (50) NULL;
+

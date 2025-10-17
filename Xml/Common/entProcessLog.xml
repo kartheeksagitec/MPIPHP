@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entProcessLog" sfwTableName="sgs_process_log" sfwDataObjectID="doProcessLog">
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select *&#xD;&#xA;  from sgs_process_log&#xD;&#xA; order by process_log_id desc">
+      <parameters />
+    </query>
+    <query ID="GetByCycleStepAndMessageType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select *&#xD;&#xA;  from sgs_process_log&#xD;&#xA;where &#xD;&#xA;    cycle_no = @cycle_no&#xD;&#xA;and process_name = @process_name&#xD;&#xA;and message_type_value = @message_type_value">
+      <parameters>
+        <parameter ID="@cycle_no" sfwDataType="int" />
+        <parameter ID="@process_name" sfwDataType="string" />
+        <parameter ID="@message_type_value" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="process_log_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessLogId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="cycle_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CycleNo" sfwIsSequence="False" sfwCaption="Cycle No" />
+    <attribute sfwValue="process_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="ProcessName" sfwIsSequence="False" sfwCaption="Process Name" />
+    <attribute sfwType="Description" ID="MessageTypeDescription" sfwCaption="Message Type" sfwValue="message_type_description" />
+    <attribute sfwValue="message_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="MessageTypeId" sfwCodeID="28" sfwIsSequence="False" sfwCaption="Message Type" />
+    <attribute sfwValue="message_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="MessageTypeValue" sfwIsSequence="False" sfwCaption="Message Type" />
+    <attribute sfwValue="message" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="Message" sfwIsSequence="False" sfwCaption="Message" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="subsystem_reference_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="30" sfwIsNull="True" ID="SubsystemReferenceId" sfwCaption="Subsystem Reference Id" />
+    <attribute sfwValue="subsystem_table_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="128" sfwIsNull="True" ID="SubsystemTableName" sfwCaption="Subsystem Table Name" />
+    <attribute sfwValue="job_header_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="JobHeaderId" sfwCaption="Job Header Id" />
+  </attributes>
+</entity>

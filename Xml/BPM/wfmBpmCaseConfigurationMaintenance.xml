@@ -1,0 +1,77 @@
+﻿<form ID="wfmBpmCaseConfigurationMaintenance" sfwType="Maintenance" sfwTitle="Case Configuration Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmCaseConfigurationLookup" sfwFormObjectType="FormObject" sfwFormObject="busBpmCaseConfiguration" sfwEntity="entBpmCaseConfiguration" sfwResource="20007023">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindBpmCaseConfiguration" />
+    <callmethods sfwMode="Update" sfwMethodName="FindBpmCaseConfiguration" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel" sfwCaption="Case Configuration">
+          <sfwTable ID="tblNewPage" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnAddCaseTracing" sfwMethodName="btnAddNewChild_Click" Text="Add" sfwRelatedControl="grvCaseConfig" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" Text="Delete" sfwRelatedControl="grvCaseConfig" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="grvCaseConfig" AllowPaging="True" AllowSorting="True" sfwEntityField="lstBpmCaseConfiguration" AllowEditing="True" sfwTwoWayBinding="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="ID" ItemStyle.HorizontalAlign="Center" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CaseConfigurationId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="CaseFile" HeaderText="Case File Name">
+                      <ItemTemplate>
+                        <sfwCascadingDropDownList ID="ddlCaseFile" sfwEntityField="CaseFile" sfwLoadType="Query" sfwLoadSource="entBpmCaseConfiguration.GetCaseFiles" DataTextField="case_file" DataValueField="case_file" sfwRequired="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="JobScheduleDetailId" HeaderText="Engine Value">
+                      <ItemTemplate>
+                        <sfwDropDownList ID="ddlEngineValue" sfwEntityField="EngineValue" sfwLoadType="CodeGroup" DataTextField="description" DataValueField="code_value" sfwRequired="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="JobScheduleDetailId" HeaderText="Source Value">
+                      <ItemTemplate>
+                        <sfwDropDownList ID="ddlSourceValue" sfwEntityField="SourceValue" sfwLoadType="CodeGroup" DataTextField="description" DataValueField="code_value" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="JobScheduleDetailId" HeaderText="Priority Value">
+                      <ItemTemplate>
+                        <sfwDropDownList ID="ddlPriorityValue" sfwEntityField="PriorityValue" sfwLoadType="CodeGroup" DataTextField="description" DataValueField="code_value" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstBpmCaseConfiguration" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+  <centerleft />
+</form>

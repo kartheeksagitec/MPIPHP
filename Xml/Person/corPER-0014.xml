@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="corPER-0014" sfwActive="True" sfwDescription="subpoena response-certification of records" sfwStatus="Review" sfwRemoteObject="busPersonOverview" sfwType="Correspondence" sfwTemplate="PER-0014.docx" version="4.0" sfwEntity="entPersonOverview">
+  <sfwFieldBookMarks>
+    <sfwFieldBookMark ID="PlanId" />
+    <sfwFieldBookMark ID="TotalBenAmount" sfwDataFormat="{0:C}" sfwEntityField="LdecTotalQualifiedAccuruedBft" />
+    <sfwFieldBookMark ID="TotalCreditedHrs" sfwDataType="Decimal" sfwEntityField="LdecTotalCreditedHrs" />
+    <sfwFieldBookMark ID="TotalQualifiedYr" sfwEntityField="LintTotalqualifiedYearsCnt" />
+    <sfwFieldBookMark ID="TotalBIS" sfwEntityField="LintBISYearCnt" />
+  </sfwFieldBookMarks>
+  <sfwQueryBookMarks>
+    <sfwQueryBookMark ID="VENDOR_NAME" />
+    <sfwQueryBookMark ID="VENDOR_ST_ADDRESS" />
+    <sfwQueryBookMark ID="VENDOR_ADDRESS" />
+    <sfwQueryBookMark ID="USER_PAR" />
+    <sfwQueryBookMark ID="CUR_DATE" />
+  </sfwQueryBookMarks>
+  <sfwQueryForm>
+    <sfwTable>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel AssociatedControlID="txtTextBox" ID="lblLabel" Text="Vendor Name" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwTextBox ID="txtTextBox" sfwQueryID="VENDOR_NAME" />
+        </sfwColumn>
+      </sfwRow>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel ID="lblLabel1" Text="Vendor Street Address" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwTextBox ID="txtTextBox1" sfwQueryID="VENDOR_ST_ADDRESS" />
+        </sfwColumn>
+      </sfwRow>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel ID="lblLabel2" Text="Vendor Address" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwTextBox ID="txtTextBox2" sfwQueryID="VENDOR_ADDRESS" />
+        </sfwColumn>
+      </sfwRow>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel ID="lblLabel3" Text="Case Number" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwTextBox ID="txtTextBox3" sfwQueryID="USER_PAR" />
+        </sfwColumn>
+      </sfwRow>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel ID="lblLabel4" Text="Date" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwTextBox ID="txtTextBox4" sfwDataFormat="{0:d}" sfwQueryID="CUR_DATE" />
+        </sfwColumn>
+      </sfwRow>
+    </sfwTable>
+  </sfwQueryForm>
+  <sfwTableBookMarks>
+    <sfwTableBookMark ID="IAP" sfwEntityField="objIAPAllocationDetailPersonOverview.lstIAPAllocationDetailPersonOverview" sfwGridEntity="entIapAllocationDetailCalculation">
+      <sfwColumn sfwColumnHeader="Computation Year" sfwEntityField="ComputationalYear" />
+      <sfwColumn sfwColumnHeader="Credited Hours" sfwDataType="Decimal" sfwEntityField="Ytdhours" />
+      <sfwColumn sfwColumnHeader="Annual Benefit" sfwDataFormat="{0:C}" sfwEntityField="Total" />
+      <sfwColumn sfwColumnHeader="Cumulative Balance" sfwDataFormat="{0:C}" sfwEntityField="IapAccountBalance" />
+    </sfwTableBookMark>
+    <sfwTableBookMark ID="WorkHistory" sfwEntityField="lstPersonWorkHistory" sfwGridEntity="entDummyWorkData">
+      <sfwColumn sfwColumnHeader="Beginning Date" sfwDataField="BeginingDate" sfwEntityField="BeginingDate" />
+      <sfwColumn sfwColumnHeader="Ending Date" sfwDataField="EndingDate" sfwEntityField="EndingDate" />
+      <sfwColumn sfwColumnHeader="Plan Year" sfwDataField="PlanYear" sfwEntityField="PlanYear" />
+      <sfwColumn sfwColumnHeader="IAP Hours" sfwDataField="IAPHours" sfwEntityField="IAPHours" />
+      <sfwColumn sfwColumnHeader="MPI Hours" sfwDataField="MPIHours" sfwEntityField="MPIHours" />
+      <sfwColumn sfwColumnHeader="Employer" sfwDataField="Employer" sfwEntityField="Employer" />
+      <sfwColumn sfwColumnHeader="Union" sfwDataField="UnionCodeDesc" sfwEntityField="UnionCodeDesc" />
+    </sfwTableBookMark>
+    <sfwTableBookMark ID="AnnualBeneiftSum" sfwEntityField="objAnnualBenefitSummaryOverview.objLbusBenefitApplication.lstAclbPersonWorkHistoryMPI" sfwGridEntity="entDummyWorkData">
+      <sfwColumn sfwColumnHeader="Computation Year" sfwEntityField="Year" />
+      <sfwColumn sfwColumnHeader="Credited Hours" sfwDataType="Decimal" sfwEntityField="QualifiedHours" />
+      <sfwColumn sfwColumnHeader="Qualified Years" sfwEntityField="QualifiedYearsCount" />
+      <sfwColumn sfwColumnHeader="Break in Service Years" sfwDataFormat="{0:0}" sfwEntityField="BisYearsCount" />
+      <sfwColumn sfwColumnHeader="Benefit Amount" sfwDataField="idecBenefitAmount" sfwDataFormat="{0:C}" sfwEntityField="idecBenefitAmount" />
+      <sfwColumn sfwColumnHeader="Comments" sfwEntityField="Comments" />
+    </sfwTableBookMark>
+  </sfwTableBookMarks>
+</form>

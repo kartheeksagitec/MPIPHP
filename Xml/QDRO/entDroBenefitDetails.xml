@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entDroBenefitDetails" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoDroBenefitDetails" sfwObjectID="busDroBenefitDetails" sfwTableName="sgt_dro_benefit_details" sfwView="False" sfwDataObjectID="doDroBenefitDetails">
+  <rules>
+    <rule ID="Rule -ShowFinalCalButton" sfwExpression="((string.IsNullOrEmpty(this.istrSubPlan)) || &#xA;(string.IsNullOrEmpty(this.istrSubPlan))) &amp;&amp; &#xA;((string.IsNullOrEmpty(this.icdoDroBenefitDetails.status_value)) || &#xA;(this.icdoDroBenefitDetails.status_value == &quot;CANC&quot;)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;iobjbusQdroApplication.icdoDroApplication.dro_status_value&quot;) == &quot;QLFD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule:ModelIDAndPlanIdNoNull" sfwMessageId="5090" sfwExpression="(this.icdoDroBenefitDetails.dro_model_id == 0) &amp;&amp; &#xA;(this.icdoDroBenefitDetails.plan_id == 0)" sfwObjectBased="True" />
+    <rule ID="Rule:QDRO%IsGreaterThn100" sfwMessageId="1121" sfwExpression="(this.icdoDroBenefitDetails.benefit_perc &gt; 100)" sfwObjectBased="True" />
+    <rule ID="Rule-BenefitInfoVisible" sfwExpression="(string.IsNullOrEmpty(RFunc.GetValue&lt;String&gt;(this, &quot;iobjbusQdroApplication.icdoDroApplication.dro_status_value&quot;))) || &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;iobjbusQdroApplication.icdoDroApplication.dro_status_value&quot;) == &quot;RCVD&quot;) || &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;iobjbusQdroApplication.icdoDroApplication.dro_status_value&quot;) == &quot;APRD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule-InvalidPercenatge" sfwMessageId="2020" sfwExpression="(this.CheckNumeric() == True)" sfwObjectBased="True" />
+    <rule ID="Rule:ValidateNetInvstFromDateNetInvstToDate" sfwRuleType="Validation" sfwExpression="((this.icdoDroBenefitDetails.net_investment_from_date == DateTime.MinValue ) &amp;&amp; &#xD;&#xA;(this.icdoDroBenefitDetails.net_investment_to_date != DateTime.MinValue)) ||&#xD;&#xA;((this.icdoDroBenefitDetails.net_investment_from_date != DateTime.MinValue ) &amp;&amp; &#xD;&#xA;(this.icdoDroBenefitDetails.net_investment_to_date == DateTime.MinValue))" sfwDescription="Net Investment Date From/To Cannot be Blank." sfwMessageId="6275" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="Rule-BenefitInfoVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule -ShowFinalCalButton" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <item ID="Rule:ValidateNetInvstFromDateNetInvstToDate" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <queries>
+    <query ID="LoadBenefitDetailsByDroApplId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select SDBD.*, SCV.DESCRIPTION as istrBenefitOptionDescription, SCV.CODE_VALUE as istrBenefitOptionValue,&#xD;&#xA;SP.PLAN_CODE AS istrPlanCode, SP.PLAN_NAME AS istrPlanName&#xD;&#xA;from SGT_DRO_BENEFIT_DETAILS SDBD WITH(NOLOCK)&#xD;&#xA;left outer JOIN SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) ON SDBD.PLAN_BENEFIT_ID = SPBX.PLAN_BENEFIT_ID&#xD;&#xA;left outer JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON &#xD;&#xA;SPBX.BENEFIT_OPTION_ID = SCV.CODE_ID AND SPBX.BENEFIT_OPTION_VALUE = SCV.CODE_VALUE&#xD;&#xA;join SGT_PLAN SP WITH(NOLOCK) ON SP.PLAN_ID = SDBD.PLAN_ID&#xD;&#xA;WHERE DRO_APPLICATION_ID = @DRO_APPLICATION_ID">
+      <parameters>
+        <parameter ID="@DRO_APPLICATION_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckPlanIsAddedForParticipant" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from SGT_DRO_BENEFIT_DETAILS &#xD;&#xA;where PLAN_ID = @PLAN_ID and DRO_APPLICATION_ID = @DRO_APPLICATION_ID">
+      <parameters>
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+        <parameter ID="@DRO_APPLICATION_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetRetireeApForParticipant" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;  SDA.ALTERNATE_PAYEE_ID,&#xA; SDBD.* &#xA;FROM&#xA;  SGT_DRO_APPLICATION SDA WITH(NOLOCK) &#xA;  join SGT_PERSON SP WITH(NOLOCK)&#xA;  ON SP.PERSON_ID = SDA.PERSON_ID &#xA;  join SGT_DRO_BENEFIT_DETAILS SDBD WITH(NOLOCK)&#xA;  ON SDA.DRO_APPLICATION_ID = SDBD.DRO_APPLICATION_ID &#xA;  join SGT_PAYEE_ACCOUNT SPA WITH(NOLOCK)&#xA;  ON spa.DRO_APPLICATION_DETAIL_ID = SDBD.DRO_BENEFIT_ID &#xA;WHERE&#xA;  SDBD.DRO_MODEL_VALUE = 'STRF'  AND&#xA;  SDA.PERSON_ID = @PERSON_ID AND&#xA;  (SELECT&#xA;  TOP 1 Q.STATUS_VALUE &#xA;FROM&#xA;  SGT_PAYEE_ACCOUNT_STATUS Q WITH(NOLOCK) &#xA;WHERE&#xA;  Q.PAYEE_ACCOUNT_ID  = SPA.PAYEE_ACCOUNT_ID &#xA;ORDER  BY  Q.STATUS_EFFECTIVE_DATE DESC) not in ('CMPL',&#xA; 'CNCL')">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPayeeAccountsForRetireeModel" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPA.*,sdbd.BENEFIT_FLAT_PERC,sdbd.BENEFIT_AMT from SGT_PAYEE_ACCOUNT SPA&#xD;&#xA;JOIN SGT_PLAN_BENEFIT_XR SPBX ON SPBX.PLAN_BENEFIT_ID = SPA.PLAN_BENEFIT_ID&#xD;&#xA;JOIN SGT_DRO_BENEFIT_DETAILS SDBD ON SPA.DRO_APPLICATION_DETAIL_ID = SDBD.DRO_BENEFIT_ID AND SPBX.PLAN_ID = SDBD.PLAN_ID&#xD;&#xA;JOIN SGT_DRO_APPLICATION SDA ON SDA.DRO_APPLICATION_ID = SDBD.DRO_APPLICATION_ID&#xD;&#xA;WHERE BENEFIT_ACCOUNT_TYPE_VALUE = 'QDRO' and  &#xD;&#xA;(SDBD.DRO_MODEL_VALUE = 'STRF' OR (SDBD.DRO_MODEL_VALUE &lt;&gt; 'STRF'&#xD;&#xA;AND SDA.DRO_COMMENCEMENT_DATE &gt;= @BENEFIT_BEGIN_DATE ))&#xD;&#xA;AND SDA.PERSON_ID = @PERSON_ID&#xD;&#xA;AND (SELECT TOP 1 Q.STATUS_VALUE FROM SGT_PAYEE_ACCOUNT_STATUS Q WITH(NOLOCK) &#xD;&#xA;WHERE Q.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID ORDER BY &#xD;&#xA;Q.STATUS_EFFECTIVE_DATE DESC) NOT IN  ('CMPL','CNCL')">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFIT_BEGIN_DATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetRetireeModelAPInSuspStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;  SPA.* ,SDBD.BENEFIT_PERC &#xD;&#xA;FROM&#xD;&#xA;  SGT_PAYEE_BENEFIT_ACCOUNT SPBA WITH(NOLOCK) &#xD;&#xA;  join SGT_PAYEE_ACCOUNT SPA WITH(NOLOCK)&#xD;&#xA;  ON SPA.PAYEE_BENEFIT_ACCOUNT_ID = SPBA.PAYEE_BENEFIT_ACCOUNT_ID &#xD;&#xA;  join SGT_DRO_BENEFIT_DETAILS SDBD WITH(NOLOCK)&#xD;&#xA;  ON SDBD.DRO_BENEFIT_ID = SPA.DRO_APPLICATION_DETAIL_ID &#xD;&#xA;  join SGT_DRO_APPLICATION SDA WITH(NOLOCK)&#xD;&#xA;  ON SDA.DRO_APPLICATION_ID = SDBD.DRO_APPLICATION_ID &#xD;&#xA;WHERE&#xD;&#xA;  SDBD.DRO_MODEL_VALUE = 'STRF'  AND&#xD;&#xA;  SPBA.PERSON_ID = @PERSON_ID AND&#xD;&#xA;  EXISTS(SELECT&#xD;&#xA;  TOP 1 Q.* FROM&#xD;&#xA;  SGT_PAYEE_ACCOUNT_STATUS Q WITH(NOLOCK) WHERE&#xD;&#xA;  Q.PAYEE_ACCOUNT_ID  = SPA.PAYEE_ACCOUNT_ID AND Q.STATUS_VALUE = 'SPND'&#xD;&#xA;  AND Q.SUSPENSION_STATUS_REASON_VALUE = 'REED'&#xD;&#xA;  ORDER BY Q.STATUS_EFFECTIVE_DATE DESC) &#xD;&#xA;  AND SDBD.PLAN_ID = @PLAN_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="ResumeBenefitForAlternatePayees" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;  sqco.*,&#xA; sqcd.BENEFIT_SUBTYPE_VALUE,&#xA; sqcd.alt_payee_ee_contribution,&#xA; sqcd.ALT_PAYEE_MEMBER_EXCLUSION_AMOUNT,sqcd.ALT_PAYEE_AMT_BEFORE_CONVERSION,&#xA; sqcd.FLAT_PERCENT,&#xA; spbx.BENEFIT_OPTION_VALUE &#xA;FROM&#xA;  SGT_QDRO_CALCULATION_OPTIONS SQCO WITH(NOLOCK)     &#xA;  join SGT_PLAN_BENEFIT_XR spbx WITH(NOLOCK)  &#xA;  ON  SQCO.PLAN_BENEFIT_ID = spbx.PLAN_BENEFIT_ID    &#xA;  join SGT_QDRO_CALCULATION_DETAIL sqcd WITH(NOLOCK)   &#xA;  ON sqcd.QDRO_CALCULATION_DETAIL_ID = SQCO.QDRO_CALCULATION_DETAIL_ID    &#xA;  join SGT_QDRO_CALCULATION_HEADER sqch WITH(NOLOCK)   &#xA;  ON sqch.QDRO_CALCULATION_HEADER_ID = sqcd.QDRO_CALCULATION_HEADER_ID   &#xA;WHERE&#xA;  sqcd.QDRO_CALCULATION_DETAIL_ID = @QDRO_CALCULATION_DETAIL_ID">
+      <parameters>
+        <parameter ID="@QDRO_CALCULATION_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetRetireeModelAltPayeeToResumeBenefits" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;  SPA.* ,SDBD.BENEFIT_PERC,SDBD.BENEFIT_FLAT_PERC,SDA.DRO_COMMENCEMENT_DATE&#xD;&#xA;FROM&#xD;&#xA;  SGT_PAYEE_BENEFIT_ACCOUNT SPBA WITH(NOLOCK) &#xD;&#xA;  join SGT_PAYEE_ACCOUNT SPA WITH(NOLOCK)&#xD;&#xA;  ON SPA.PAYEE_BENEFIT_ACCOUNT_ID = SPBA.PAYEE_BENEFIT_ACCOUNT_ID &#xD;&#xA;  join SGT_DRO_BENEFIT_DETAILS SDBD WITH(NOLOCK)&#xD;&#xA;  ON SDBD.DRO_BENEFIT_ID = SPA.DRO_APPLICATION_DETAIL_ID &#xD;&#xA;  join SGT_DRO_APPLICATION SDA WITH(NOLOCK)&#xD;&#xA;  ON SDA.DRO_APPLICATION_ID = SDBD.DRO_APPLICATION_ID &#xD;&#xA;WHERE&#xD;&#xA;  (SELECT TOP 1 Q.STATUS_VALUE FROM SGT_PAYEE_ACCOUNT_STATUS Q WITH(NOLOCK) &#xD;&#xA;     WHERE Q.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID ORDER BY &#xD;&#xA;     Q.STATUS_EFFECTIVE_DATE DESC) NOT IN  ('CMPL','CNCL') AND&#xD;&#xA;   (SDBD.DRO_MODEL_VALUE = 'STRF' OR (SDBD.DRO_MODEL_VALUE &lt;&gt; 'STRF'&#xD;&#xA;     AND  SDA.IS_PARTICIPANT_DISABLED_FLAG = 'Y' and SDA.WAIVED_DISABILITY_ENTITLEMENT_FLAG = 'N' and SDA.DRO_COMMENCEMENT_DATE &gt;= @BENEFIT_BEGIN_DATE ))&#xD;&#xA;  AND&#xD;&#xA;  SPBA.PERSON_ID &lt;&gt; SPA.PERSON_ID AND&#xD;&#xA;  SPBA.PERSON_ID = @PERSON_ID AND &#xD;&#xA;  SDBD.PLAN_ID = @PLAN_ID ">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+        <parameter ID="@BENEFIT_BEGIN_DATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetRetireeApForParticipantForReevaluation" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;  SPA.* ,SDBD.*&#xD;&#xA;FROM&#xD;&#xA;  SGT_PAYEE_BENEFIT_ACCOUNT SPBA WITH(NOLOCK) &#xD;&#xA;  join SGT_PAYEE_ACCOUNT SPA WITH(NOLOCK)&#xD;&#xA;  ON SPA.PAYEE_BENEFIT_ACCOUNT_ID = SPBA.PAYEE_BENEFIT_ACCOUNT_ID &#xD;&#xA;  join SGT_DRO_BENEFIT_DETAILS SDBD WITH(NOLOCK)&#xD;&#xA;  ON SDBD.DRO_BENEFIT_ID = SPA.DRO_APPLICATION_DETAIL_ID &#xD;&#xA;  join SGT_DRO_APPLICATION SDA WITH(NOLOCK)&#xD;&#xA;  ON SDA.DRO_APPLICATION_ID = SDBD.DRO_APPLICATION_ID &#xD;&#xA;WHERE&#xD;&#xA;  (SELECT TOP 1 Q.STATUS_VALUE FROM SGT_PAYEE_ACCOUNT_STATUS Q WITH(NOLOCK) &#xD;&#xA;     WHERE Q.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID ORDER BY &#xD;&#xA;     Q.STATUS_EFFECTIVE_DATE DESC) NOT IN  ('CMPL','CNCL') AND&#xD;&#xA;   SDBD.DRO_MODEL_VALUE = 'STRF'&#xD;&#xA;  AND&#xD;&#xA;  SPBA.PERSON_ID &lt;&gt; SPA.PERSON_ID AND&#xD;&#xA;  SPBA.PERSON_ID = @PERSON_ID AND &#xD;&#xA;  SDBD.PLAN_ID = @PLAN_ID ">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckIfEligibleForContinuance" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGT_DRO_APPLICATION SDA &#xD;&#xA;INNER JOIN SGT_DRO_BENEFIT_DETAILS SDBD&#xD;&#xA;ON SDA.DRO_APPLICATION_ID = SDBD.DRO_APPLICATION_ID&#xD;&#xA;WHERE SDA.ELIGIBLE_FOR_CONTINUANCE_FLAG = 'Y'&#xD;&#xA;AND SDBD.DRO_BENEFIT_ID = @DRO_BENEFIT_ID">
+      <parameters>
+        <parameter ID="@DRO_BENEFIT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetDisabledAlternatePayees" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select SPA.*,sdbd.BENEFIT_FLAT_PERC,sdbd.BENEFIT_AMT from SGT_PAYEE_ACCOUNT SPA&#xD;&#xA;JOIN SGT_PLAN_BENEFIT_XR SPBX ON SPBX.PLAN_BENEFIT_ID = SPA.PLAN_BENEFIT_ID&#xD;&#xA;JOIN SGT_DRO_BENEFIT_DETAILS SDBD ON SPA.DRO_APPLICATION_DETAIL_ID = SDBD.DRO_BENEFIT_ID AND SPBX.PLAN_ID = SDBD.PLAN_ID&#xD;&#xA;JOIN SGT_DRO_APPLICATION SDA ON SDA.DRO_APPLICATION_ID = SDBD.DRO_APPLICATION_ID&#xD;&#xA;WHERE BENEFIT_ACCOUNT_TYPE_VALUE = 'QDRO' and  &#xD;&#xA;(SDBD.DRO_MODEL_VALUE &lt;&gt; 'STRF'&#xD;&#xA;AND  SDA.IS_PARTICIPANT_DISABLED_FLAG = 'Y' and SDA.WAIVED_DISABILITY_ENTITLEMENT_FLAG = 'N')&#xD;&#xA;AND SDA.PERSON_ID = @PERSON_ID&#xD;&#xA;AND (SELECT TOP 1 Q.STATUS_VALUE FROM SGT_PAYEE_ACCOUNT_STATUS Q WITH(NOLOCK) &#xD;&#xA;WHERE Q.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID ORDER BY &#xD;&#xA;Q.STATUS_EFFECTIVE_DATE DESC) NOT IN  ('CMPL','CNCL')">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPayeeAccountsBenefitTypeForRetireeModel" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT SPA.*,sdbd.BENEFIT_FLAT_PERC,sdbd.BENEFIT_AMT from SGT_PAYEE_ACCOUNT SPA&#xD;&#xA;JOIN SGT_PLAN_BENEFIT_XR SPBX ON SPBX.PLAN_BENEFIT_ID = SPA.PLAN_BENEFIT_ID&#xD;&#xA;JOIN SGT_DRO_BENEFIT_DETAILS SDBD ON SPA.DRO_APPLICATION_DETAIL_ID = SDBD.DRO_BENEFIT_ID AND SPBX.PLAN_ID = SDBD.PLAN_ID&#xD;&#xA;JOIN SGT_DRO_APPLICATION SDA ON SDA.DRO_APPLICATION_ID = SDBD.DRO_APPLICATION_ID&#xD;&#xA;WHERE BENEFIT_ACCOUNT_TYPE_VALUE = 'QDRO' and  &#xD;&#xA;(SDBD.DRO_MODEL_VALUE = 'STRF' OR (SDBD.DRO_MODEL_VALUE &lt;&gt; 'STRF'&#xD;&#xA;AND  @BENEFIT_ACCOUNT_TYPE_VALUE ='DSBL' AND SDA.DRO_COMMENCEMENT_DATE &gt;= @BENEFIT_BEGIN_DATE  ))&#xD;&#xA;AND SDA.PERSON_ID = @PERSON_ID&#xD;&#xA;AND (SELECT TOP 1 Q.STATUS_VALUE FROM SGT_PAYEE_ACCOUNT_STATUS Q WITH(NOLOCK) &#xD;&#xA;WHERE Q.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID ORDER BY &#xD;&#xA;Q.STATUS_EFFECTIVE_DATE DESC) NOT IN  ('CMPL','CNCL')">
+      <parameters>
+        <parameter ID="@BENEFIT_ACCOUNT_TYPE_VALUE" sfwDataType="string" />
+        <parameter ID="@BENEFIT_BEGIN_DATE" sfwDataType="DateTime" />
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="dro_benefit_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DroBenefitId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="dro_application_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DroApplicationId" sfwIsSequence="False" sfwCaption="Dro Application Id" />
+    <attribute sfwType="Description" ID="DroModelDescription" sfwCaption="Dro Model" sfwValue="dro_model_description" />
+    <attribute sfwValue="dro_model_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DroModelId" sfwCodeID="6004" sfwIsSequence="False" sfwCaption="Dro Model" />
+    <attribute sfwValue="dro_model_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="DroModelValue" sfwIsSequence="False" sfwCaption="Dro Model" />
+    <attribute sfwValue="plan_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PlanId" sfwIsSequence="False" sfwCaption="Plan Id" />
+    <attribute sfwValue="benefit_perc" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="BenefitPerc" sfwIsSequence="False" sfwCaption="Benefit Perc" />
+    <attribute sfwValue="benefit_amt" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="BenefitAmt" sfwIsSequence="False" sfwCaption="Benefit Amt" />
+    <attribute sfwValue="alt_payee_increase" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="AltPayeeIncrease" sfwIsSequence="False" sfwCaption="Alt Payee Increase" />
+    <attribute sfwValue="alt_payee_early_ret" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="AltPayeeEarlyRet" sfwIsSequence="False" sfwCaption="Alt Payee Early Ret" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="benefit_flat_perc" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="BenefitFlatPerc" sfwIsSequence="False" sfwCaption="Benefit Flat Perc" />
+    <attribute sfwValue="plan_benefit_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PlanBenefitId" sfwIsSequence="False" sfwCaption="Plan Benefit Id" />
+    <attribute sfwValue="uvhp_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="UvhpFlag" sfwIsSequence="False" sfwCaption="Uvhp Flag" />
+    <attribute sfwValue="ee_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="EeFlag" sfwIsSequence="False" sfwCaption="Ee Flag" />
+    <attribute sfwValue="l52_spl_acc_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="L52SplAccFlag" sfwIsSequence="False" sfwCaption="L52 Spl Acc Flag" />
+    <attribute sfwValue="l161_spl_acc_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="L161SplAccFlag" sfwIsSequence="False" sfwCaption="L161 Spl Acc Flag" />
+    <attribute sfwValue="adjustment_amt" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="AdjustmentAmt" sfwIsSequence="False" sfwCaption="Adjustment Amt" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="2002" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="dro_withheld_perc" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="DroWithheldPerc" sfwIsSequence="False" sfwCaption="Dro Withheld Perc" />
+    <attribute sfwValue="balance_as_of_plan_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BalanceAsOfPlanYear" sfwIsSequence="False" sfwCaption="Balance As Of Plan Year" />
+    <attribute sfwValue="alt_payee_benefit_cap_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AltPayeeBenefitCapYear" sfwIsSequence="False" sfwCaption="Alt Payee Benefit Cap Year" />
+    <attribute sfwValue="net_investment_from_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="NetInvestmentFromDate" sfwIsSequence="False" sfwCaption="Net Investment From Date" />
+    <attribute sfwValue="net_investment_to_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="NetInvestmentToDate" sfwIsSequence="False" sfwCaption="Net Investment To Date" />
+    <attribute sfwValue="is_alt_payee_eligible_for_participant_retiree_increase" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsAltPayeeEligibleForParticipantRetireeIncrease" sfwIsSequence="False" sfwCaption="Is Alt Payee Eligible For Participant Retiree Increase" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSubPlan" sfwValue="istrSubPlan" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitOptionValue" sfwValue="icdoDroBenefitDetails.istrBenefitOptionValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrDroModelName" sfwValue="icdoDroBenefitDetails.istrDroModelName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlanName" sfwValue="icdoDroBenefitDetails.istrPlanName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSubPlanDescription" sfwValue="istrSubPlanDescription" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitOptionDescription" sfwValue="icdoDroBenefitDetails.istrBenefitOptionDescription" />
+  </attributes>
+</entity>

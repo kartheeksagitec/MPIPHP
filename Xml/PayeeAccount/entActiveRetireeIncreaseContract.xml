@@ -1,0 +1,106 @@
+﻿<entity ID="entActiveRetireeIncreaseContract" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoActiveRetireeIncreaseContract" sfwObjectID="busActiveRetireeIncreaseContract" sfwTableName="sgt_active_retiree_increase_contract" sfwView="False" sfwDataObjectID="doActiveRetireeIncreaseContract">
+  <rules>
+    <rule ID="Rule - CheckIfRetirementDatesAreOverlapping" sfwMessageId="6172" sfwExpression="(this.CheckIfRetirementDateOverlapping() == True)" sfwObjectBased="True" />
+    <rule ID="Rule - IncreasePercentIsNull" sfwMessageId="6066" sfwExpression="(string.IsNullOrEmpty(this.icdoActiveRetireeIncreaseContract.percent_increase_value))" sfwObjectBased="True" />
+    <rule ID="Rule - PlanYearIsZero" sfwMessageId="6065" sfwExpression="(this.icdoActiveRetireeIncreaseContract.plan_year == 0)" sfwObjectBased="True" />
+    <rule ID="Rule - RetirementDateFromCannotBeNull" sfwMessageId="6173" sfwExpression="(this.icdoActiveRetireeIncreaseContract.retirement_date_from == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="Rule -RetirementDateToCannotBeNull" sfwMessageId="6174" sfwExpression="(this.icdoActiveRetireeIncreaseContract.retirement_date_to == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="VisibleRule- ContractStatusPending" sfwExpression="(this.icdoActiveRetireeIncreaseContract.contract_status_value == &quot;PEND&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleRule- ContractStatusApproved" sfwExpression="(this.icdoActiveRetireeIncreaseContract.contract_status_value == &quot;APPR&quot; &amp;&amp; (this.icdoActiveRetireeIncreaseContract.effective_end_date == DateTime.MinValue))" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule- ContractStatusPending" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule- ContractStatusApproved" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <item ID="Rule - PlanYearIsZero" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - IncreasePercentIsNull" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule -RetirementDateToCannotBeNull" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_ACTIVE_RETIREE_INCREASE_CONTRACT">
+      <parameters />
+    </query>
+    <query ID="LoadContractByPlanYear" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_ACTIVE_RETIREE_INCREASE_CONTRACT WITH(NOLOCK) &#xD;&#xA;where PLAN_YEAR = @PLAN_YEAR and EFFECTIVE_END_DATE is null">
+      <parameters>
+        <parameter ID="@PLAN_YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadContractByRetirementDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_ACTIVE_RETIREE_INCREASE_CONTRACT WITH(NOLOCK) where &#xD;&#xA;((RETIREMENT_DATE_FROM is not null and RETIREMENT_DATE_FROM &lt;= @RETIREMENTDATE and RETIREMENT_DATE_TO &gt;= @RETIREMENTDATE) or&#xD;&#xA;(RETIREMENT_DATE_FROM is null and RETIREMENT_DATE_TO &gt;= @RETIREMENTDATE) or&#xD;&#xA; (RETIREMENT_DATE_FROM is null and RETIREMENT_DATE_TO is null))&#xD;&#xA;and EFFECTIVE_END_DATE is not null  and CONTRACT_STATUS_VALUE = 'APPR'&#xD;&#xA;order by ACTIVE_RETIREE_INCREASE_CONTRACT_ID desc">
+      <parameters>
+        <parameter ID="@RETIREMENTDATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="CheckForOverlappingDates" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_ACTIVE_RETIREE_INCREASE_CONTRACT where ((RETIREMENT_DATE_FROM &lt;= @startdate&#xD;&#xA;and RETIREMENT_DATE_TO &gt;= @startdate) or &#xD;&#xA;(RETIREMENT_DATE_FROM &lt;= @enddate&#xD;&#xA;and RETIREMENT_DATE_TO &gt;= @enddate) ) and PLAN_YEAR = @PLAN_YEAR">
+      <parameters>
+        <parameter ID="@PLAN_YEAR" sfwDataType="int" />
+        <parameter ID="@startdate" sfwDataType="DateTime" />
+        <parameter ID="@enddate" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="LoadContractByPlanYearSinceMDYear" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_ACTIVE_RETIREE_INCREASE_CONTRACT WITH(NOLOCK) &#xD;&#xA;where PLAN_YEAR &gt;= @PLAN_YEAR and EFFECTIVE_END_DATE is not null  and CONTRACT_STATUS_VALUE = 'APPR'&#xD;&#xA;order by ACTIVE_RETIREE_INCREASE_CONTRACT_ID desc">
+      <parameters>
+        <parameter ID="@PLAN_YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadActiveRetireeIncreaseContract" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT top 1 ACTIVE_RETIREE_INCREASE_CONTRACT_ID, PLAN_YEAR, EFFECTIVE_START_DATE, EFFECTIVE_END_DATE, RETIREMENT_DATE_FROM, RETIREMENT_DATE_TO, PERCENT_INCREASE_ID, PERCENT_INCREASE_VALUE, CONTRACT_STATUS_ID, CONTRACT_STATUS_VALUE, APPROVED_BY&#xD;&#xA;FROM SGT_ACTIVE_RETIREE_INCREASE_CONTRACT WITH(NOLOCK) &#xD;&#xA;WHERE EFFECTIVE_END_DATE IS NULL AND CONTRACT_STATUS_VALUE = 'APPR' &#xD;&#xA;ORDER BY PLAN_YEAR DESC">
+      <parameters />
+    </query>
+    <query ID="AllRIApprovedGroupsForTheYear" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DECLARE @Groups VARCHAR(50); SET @Groups = '';&#xD;&#xA;SELECT @Groups = @Groups + CASE WHEN @Groups &lt;&gt; '' THEN ',' ELSE '' END + Union_Group_Code FROM SGT_RETIREE_INCREASE_GROUP_CONTRACT &#xD;&#xA;WHERE PLAN_YEAR = @PLAN_YEAR  --All Group Status&#xD;&#xA;AND IS_APPROVED = 'Y' --Group which is approved for RI payment&#xD;&#xA;SELECT @Groups AS GROUPS&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PLAN_YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="RIApprovedGroupsCorrespondenceNotGenerated" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" DECLARE @Groups VARCHAR(50); SET @Groups = '';&#xD;&#xA;SELECT @Groups = @Groups + CASE WHEN @Groups &lt;&gt; '' THEN ',' ELSE '' END + Union_Group_Code FROM SGT_RETIREE_INCREASE_GROUP_CONTRACT &#xD;&#xA;WHERE PLAN_YEAR = @PLAN_YEAR  --All Group Status&#xD;&#xA;AND IS_APPROVED = 'Y' --Group which is approved for RI payment&#xD;&#xA;AND EFFECTIVE_END_DATE IS NULL  --Group RI correspondence is not run yet (First Batch)&#xD;&#xA;SELECT @Groups AS GROUPS&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PLAN_YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="RIApprovedGroupsPayeeAccountNotGenerated" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" DECLARE @Groups VARCHAR(50); SET @Groups = '';&#xD;&#xA;SELECT @Groups = @Groups + CASE WHEN @Groups &lt;&gt; '' THEN ',' ELSE '' END + Union_Group_Code FROM SGT_RETIREE_INCREASE_GROUP_CONTRACT &#xD;&#xA;WHERE PLAN_YEAR = @PLAN_YEAR  --All Group Status&#xD;&#xA;AND IS_APPROVED = 'Y' --Group which is approved for RI payment&#xD;&#xA;AND EFFECTIVE_END_DATE IS NOT NULL  --Group RI correspondence is not run yet (First Batch)&#xD;&#xA;AND RI_PA_GENERATED_DATE IS NULL --Group RI PA is not created yet (Second Batch)&#xD;&#xA;SELECT @Groups AS GROUPS&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PLAN_YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetActiveRetireeIncreasePlanYear" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select TOP 1 PLAN_YEAR FROM [OPUS].[dbo].[SGT_ACTIVE_RETIREE_INCREASE_CONTRACT] where CONTRACT_STATUS_VALUE = 'APPR' order by CREATED_DATE desc">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="active_retiree_increase_contract_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActiveRetireeIncreaseContractId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="plan_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PlanYear" sfwIsSequence="False" sfwCaption="Plan Year" />
+    <attribute sfwValue="effective_start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveStartDate" sfwIsSequence="False" sfwCaption="Effective Start Date" />
+    <attribute sfwValue="effective_end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveEndDate" sfwIsSequence="False" sfwCaption="Effective End Date" />
+    <attribute sfwValue="retirement_date_from" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="RetirementDateFrom" sfwIsSequence="False" sfwCaption="Retirement Date From" />
+    <attribute sfwValue="retirement_date_to" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="RetirementDateTo" sfwIsSequence="False" sfwCaption="Retirement Date To" />
+    <attribute sfwType="Description" ID="PercentIncreaseDescription" sfwCaption="Percent Increase" sfwValue="percent_increase_description" />
+    <attribute sfwValue="percent_increase_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PercentIncreaseId" sfwCodeID="7040" sfwIsSequence="False" sfwCaption="Percent Increase" />
+    <attribute sfwValue="percent_increase_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="PercentIncreaseValue" sfwIsSequence="False" sfwCaption="Percent Increase" />
+    <attribute sfwType="Description" ID="ContractStatusDescription" sfwCaption="Contract Status" sfwValue="contract_status_description" />
+    <attribute sfwValue="contract_status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ContractStatusId" sfwCodeID="1503" sfwIsSequence="False" sfwCaption="Contract Status" />
+    <attribute sfwValue="contract_status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="ContractStatusValue" sfwIsSequence="False" sfwCaption="Contract Status" />
+    <attribute sfwValue="approved_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="ApprovedBy" sfwIsSequence="False" sfwCaption="Approved By" />
+    <attribute sfwValue="notes" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4096" sfwIsNull="True" ID="Notes" sfwIsSequence="False" sfwCaption="Notes" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwType="Collection" sfwEntity="entActiveRetireeIncreaseContractHistory" ID="lstActiveRetireeIncreaseContractHistory" sfwValue="iclbActiveRetireeIncreaseContractHistory" />
+  </attributes>
+  <objectmethods>
+    <method ID="btn_Approve" sfwReturnType="ArrayList" />
+    <method ID="btn_Close" sfwReturnType="ArrayList" />
+  </objectmethods>
+  <methods />
+  <lifecycle />
+  <ExtraFields />
+</entity>

@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfpPayeeAccountRetroMaintenance" sfwActive="True" sfwStatus="Review" sfwType="Maintenance" sfwTitle="Payee Account Retro Payment" version="3.5" sfwEntity="entPrototype">
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Cancel" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" />
+                <sfwButton ID="btnExecuteRefreshFromObject" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Approve" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlSection0" sfwCaption="Retro Payment Details">
+          <sfwTable ID="Section0">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="Retro Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" SkinID="WhiteText" Text="Initial Retro" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="Retro Start Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox" Text="05/01/2012" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" Text="Retro End Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox1" Text="06/30/2012" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="Payment Start Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel5" SkinID="WhiteText" Text="07/01/2012" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel6" Text="Payment End Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel7" SkinID="WhiteText" Text="07/31/2012" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel8" Text="Payment Option :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList" sfwLoadType="Items">
+                  <ListItem Value="BLNK" Selected="True" />
+                  <ListItem Text="Regular" Value="REGL" />
+                  <ListItem Text="Special" Value="SPCL" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel11" Text="Gross Amount :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel12" SkinID="WhiteText" Text="$700.00" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel13" Text="Net Amount :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel14" SkinID="WhiteText" Text="$450.00" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Retro Payment Item Details">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="gvRetroItemDetails" sfwEntityField="Collection0">
+                  <Columns>
+                    <TemplateField HeaderText="Item Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property0" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Data>
+                    <DataRow>
+                      <DataColumn Value="Retro Taxable Amount" sfwEntityField="Property0" />
+                      <DataColumn Value="$600.00" sfwEntityField="Property1" />
+                    </DataRow>
+                    <DataRow>
+                      <DataColumn Value="Retro Nontaxable Amount" sfwEntityField="Property0" />
+                      <DataColumn Value="$100.00" sfwEntityField="Property1" />
+                    </DataRow>
+                    <DataRow>
+                      <DataColumn Value="Retro Federal Tax" sfwEntityField="Property0" />
+                      <DataColumn Value="$150.00" sfwEntityField="Property1" />
+                    </DataRow>
+                    <DataRow>
+                      <DataColumn Value="Retro State Tax" sfwEntityField="Property0" />
+                      <DataColumn Value="$100.00" sfwEntityField="Property1" />
+                    </DataRow>
+                  </Data>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" Text="Created By" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" Text="Created Date" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" Text="Modified By" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" Text="Modified Date" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

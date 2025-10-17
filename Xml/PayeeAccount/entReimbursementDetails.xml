@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entReimbursementDetails" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoReimbursementDetails" sfwObjectID="busReimbursementDetails" sfwTableName="sgt_reimbursement_details" sfwView="False" sfwDataObjectID="doReimbursementDetails">
+  <rules>
+    <rule ID="VisibleRule-DeleteButton" sfwExpression="(this.icdoReimbursementDetails.reimbursement_details_id &gt; 0)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-DeleteButton" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="LoadReimbursementDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_REIMBURSEMENT_DETAILS where REPAYMENT_SCHEDULE_ID=@REPAYMENT_SCHEDULE_ID">
+      <parameters>
+        <parameter ID="@REPAYMENT_SCHEDULE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetRepaymentDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT SBAD.PAYMENT_HISTORY_HEADER_ID,DATEPART(YEAR,SPHH.PAYMENT_DATE) AS YEAR&#xD;&#xA;FROM SGT_REPAYMENT_SCHEDULE SRP &#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_RETRO_PAYMENT SPARP&#xD;&#xA;ON SRP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;INNER JOIN SGT_BENEFIT_MONTHWISE_ADJUSTMENT_DETAIL SBAD &#xD;&#xA;ON SBAD.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER SPHH &#xD;&#xA;ON SPHH.PAYMENT_HISTORY_HEADER_ID = SBAD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;WHERE SRP.REPAYMENT_SCHEDULE_ID = @REPAYMENT_SCHEDULE_ID AND&#xD;&#xA;SPARP.RETRO_PAYMENT_TYPE_VALUE = 'OVER' ">
+      <parameters>
+        <parameter ID="@REPAYMENT_SCHEDULE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="reimbursement_details_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ReimbursementDetailsId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="repayment_schedule_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RepaymentScheduleId" sfwIsSequence="False" sfwCaption="Repayment Schedule Id" />
+    <attribute sfwValue="posted_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="PostedDate" sfwIsSequence="False" sfwCaption="Posted Date" />
+    <attribute sfwValue="check_number" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="CheckNumber" sfwIsSequence="False" sfwCaption="Check Number" />
+    <attribute sfwValue="amount_paid" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="AmountPaid" sfwIsSequence="False" sfwCaption="Amount Paid" />
+    <attribute sfwType="Description" ID="PaymentOptionDescription" sfwCaption="Payment Option" sfwValue="payment_option_description" />
+    <attribute sfwValue="payment_option_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PaymentOptionId" sfwCodeID="7051" sfwIsSequence="False" sfwCaption="Payment Option" />
+    <attribute sfwValue="payment_option_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="PaymentOptionValue" sfwIsSequence="False" sfwCaption="Payment Option" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="gross_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="GrossAmount" sfwIsSequence="False" sfwCaption="Gross Amount" />
+    <attribute sfwValue="state_tax" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="StateTax" sfwIsSequence="False" sfwCaption="State Tax" />
+    <attribute sfwValue="fed_tax" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="FedTax" sfwIsSequence="False" sfwCaption="Fed Tax" />
+  </attributes>
+</entity>

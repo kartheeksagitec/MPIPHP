@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entBenefitProvisionUvhpLifeFactor" sfwTableName="sgt_benefit_provision_uvhp_life_factor" sfwView="False" sfwDataObjectID="doBenefitProvisionUvhpLifeFactor">
+  <queries>
+    <query ID="GetUVHPLifeFactor" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DECLARE @PARTICIPANT INT, @YR INT&#xD;&#xA;SET @PARTICIPANT=@PARTICIPANT_AGE&#xD;&#xA;SET @YR = @YEAR&#xD;&#xA;if(@PARTICIPANT &gt;= 65)&#xD;&#xA;BEGIN&#xD;&#xA;SELECT UVHP_LIFE_FACTOR   FROM SGT_BENEFIT_PROVISION_UVHP_LIFE_FACTOR WHERE PARTICIPANT_AGE = @PARTICIPANT &#xD;&#xA;AND YEAR=@YR&#xD;&#xA;END&#xD;&#xA;else &#xD;&#xA;BEGIN&#xD;&#xA;SELECT DEF_TO_AGE_FACTOR FROM SGT_BENEFIT_PROVISION_UVHP_LIFE_FACTOR WHERE PARTICIPANT_AGE = @PARTICIPANT&#xD;&#xA;AND YEAR=@YR&#xD;&#xA;END &#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+        <parameter ID="@YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="benefit_provision_uvhp_life_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitProvisionUvhpLifeId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="participant_age" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="18,2" sfwIsNull="True" ID="ParticipantAge" sfwIsSequence="False" sfwCaption="Participant Age" />
+    <attribute sfwValue="year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="Year" sfwIsSequence="False" sfwCaption="Year" />
+    <attribute sfwValue="uvhp_life_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="18,5" sfwIsNull="True" ID="UvhpLifeFactor" sfwIsSequence="False" sfwCaption="Uvhp Life Factor" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="def_to_age_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="18,5" sfwIsNull="True" ID="DefToAgeFactor" sfwIsSequence="False" sfwCaption="Def To Age Factor" />
+  </attributes>
+</entity>

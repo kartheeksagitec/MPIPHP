@@ -1,0 +1,82 @@
+﻿<form ID="wfmUploadFileMaintenance" sfwActive="True" sfwStatus="Review" sfwResource="207" sfwType="Maintenance" sfwTitle="Upload File" version="3.5" WebSite="NeoSpinWebClient" sfwFormObjectType="RemoteObject" sfwEntity="entUploadFile" sfwRemoteObject="srvAdmin">
+  <initialload>
+    <callmethods sfwMethodName="NewUpload" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar" HorizontalAlign="Left" Wrap="False">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="File Upload">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLiteral ID="ltrLiteral" Text="To submit a file:" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLiteral ID="ltrLiteral1" Text="1. Use the &quot;Browse&quot;  button to select your file" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLiteral ID="ltrLiteral2" Text="2. Select or provide the Organization ID to associate the file to an Organization" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLiteral ID="ltrLiteral2" Text="3. Click the &quot;Upload File&quot; button" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLiteral ID="ltrLiteral3" Text="4. Wait for Confirmation" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" CssClass="ReqInformation" Text="*" ForeColor="Red" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlIintFileType" CssClass="LeftAlignedLabelWithReqInformation" ID="capIintFileType" SkinID="LeftAlignedLabelWithReqInformation" Text="File Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlFileType" sfwLoadType="Query" sfwLoadSource="entFile.LookupInbound" DataTextField="description" DataValueField="file_id" sfwEntityField="IintFileType" sfwTwoWayBinding="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" CssClass="ReqInformation" Text="*" ForeColor="Red" sfwIsCaption="True" />
+                <sfwLabel CssClass="LeftAlignedLabelWithReqInformation" ID="capIstrFilePath" SkinID="LeftAlignedLabelWithReqInformation" Text="File  :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="custom-upload-image">
+                <sfwFileUpload ID="files" UploadClick="UploadDocument(e)" SelectButtonText="Select Files" UploadButtonText="Upload Files" AllowMultiple="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="2">
+                <sfwLabel ID="lblIstrInfo" sfwEntityField="IstrInfo" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <ExtraFields />
+  <loaddetails />
+</form>

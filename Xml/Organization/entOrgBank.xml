@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entOrgBank" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoOrgBank" sfwObjectID="busOrgBank" sfwTableName="sgt_org_bank" sfwView="False" sfwDataObjectID="doOrgBank">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetOrgDetailsByOrgId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select *,o.ORG_NAME as istrOrgBankName,o.ROUTING_NUMBER as istrRoutingNumber from SGT_ORG_BANK sob&#xD;&#xA;inner join SGT_ORGANIZATION o on o.ORG_ID=sob.BANK_ORG_ID&#xD;&#xA;where sob.ORG_ID=@ORG_ID">
+      <parameters>
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_ORG_BANK WITH(NOLOCK)">
+      <parameters />
+    </query>
+    <query ID="CheckIfActiveOrgBankExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select COUNT(*) from SGT_ORG_BANK where STATUS_VALUE='ACTV' and ORG_ID=@ORG_ID">
+      <parameters>
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOrgNameByRoutingNumber" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select ORG_NAME from SGT_ORGANIZATION&#xD;&#xA;where ROUTING_NUMBER = @org_bank_routing_no">
+      <parameters>
+        <parameter ID="@org_bank_routing_no" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="org_bank_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="OrgBankId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="OrgId" sfwIsSequence="False" sfwCaption="Org Id" />
+    <attribute sfwValue="bank_org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BankOrgId" sfwIsSequence="False" sfwCaption="Bank Org Id" />
+    <attribute sfwValue="account_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="AccountNo" sfwIsSequence="False" sfwCaption="Account No" />
+    <attribute sfwType="Description" ID="UsageDescription" sfwCaption="Usage" sfwValue="usage_description" />
+    <attribute sfwValue="usage_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UsageId" sfwCodeID="213" sfwIsSequence="False" sfwCaption="Usage" />
+    <attribute sfwValue="usage_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="UsageValue" sfwIsSequence="False" sfwCaption="Usage" />
+    <attribute sfwType="Description" ID="AccountTypeDescription" sfwCaption="Account Type" sfwValue="account_type_description" />
+    <attribute sfwValue="account_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AccountTypeId" sfwCodeID="211" sfwIsSequence="False" sfwCaption="Account Type" />
+    <attribute sfwValue="account_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="AccountTypeValue" sfwIsSequence="False" sfwCaption="Account Type" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="400" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrOrgBankName" sfwValue="icdoOrgBank.istrOrgBankName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRoutingNumber" sfwValue="icdoOrgBank.istrRoutingNumber" />
+  </attributes>
+</entity>

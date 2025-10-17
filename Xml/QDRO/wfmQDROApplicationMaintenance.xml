@@ -1,0 +1,809 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmQDROApplicationMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwUseSessionStoreObjForCor="True" sfwResource="203" sfwType="Maintenance" sfwTitle="DRO Application Maintenance" version="3.5" sfwEntity="entQDROApplication">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewQdroApplication" />
+    <callmethods sfwMode="Update" sfwMethodName="FindQdroApplication" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnNoChangesSave_Click" sfwNavigationParameter="aintdroapplicationid=DroApplicationId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" sfwResource="335" Text="Correspondence" />
+                <sfwButton ID="btnApproved" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btnApproved_Clicked" sfwResource="305" sfwVisibleRule="Rule:ApprovedButtonIsVisible" Text="Approve" />
+                <sfwButton ID="btnQualified" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btnQualified_Clicked" sfwRefreshUpdatePanels="uppWorkflow" sfwResource="305" sfwVisibleRule="Rule:QualifiedButtonVisible" Text="Qualify" />
+                <sfwButton ID="btnCancelled" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btnCancelled_Clicked" sfwResource="305" sfwVisibleRule="Rule:CancelledButtonVisible" Text="Cancel Application" sfwIgnoreReadOnly="True" />
+                <sfwButton ID="btnConvertToDisabilityBenefits" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btnConvertToDisabilityBenefits_Clicked" sfwResource="305" sfwVisibleRule="Rule-ShowConvertToDisabilityButton" Text="Convert To Disability Benefits" />
+                <sfwButton ID="btnButton" sfwMethodName="btnOpenLookup_Click" sfwActiveForm="wfmDROCalculationLookup" sfwResource="333" sfwNavigationParameter="hdr.status_value=#PEND;qdro_application_id=DroApplicationId" Text="Open QDRO Calculation Lookup" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMainSection" sfwCaption="Main Section">
+          <sfwTable ID="tblMainSection">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblDroApplicationId" ID="capDroApplicationId" Text="DRO Application ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn HorizontalAlign="Left">
+                <sfwLabel ID="lblDroApplicationId" sfwEntityField="DroApplicationId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIstrBenefitAccountOwnerID" Text="Participant MPID :" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBenefitAccountOwnerid" sfwMode="Update" Visible="False" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIstrAlternatePayeeID" Text="Alternate Payee MPID : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn HorizontalAlign="Left">
+                <sfwLabel ID="lblAlternatePayeeid" sfwMode="Update" Visible="False" sfwEntityField="AlternatePayeeId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="btnIstrBenefitAccountOwnerName" ID="capIstrBenefitAccountOwnerName" Text="Participant Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="Qrdo">
+                <sfwLinkButton CssClass="Qrdo" ID="btnIstrBenefitAccountOwnerName" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=PersonId" sfwEntityField="objParticipant.IstrFullName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="btnIstrAlternatePayeeName" ID="capIstrAlternatePayeeName" Text="Alternate Payee Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="Qrdo">
+                <sfwLinkButton CssClass="Qrdo" ID="btnIstrAlternatePayeeName" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=AlternatePayeeId" sfwEntityField="objAlternatePayee.IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlAddrStateValue" ID="capAddrStateValue" Text="Filing State : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlAddrStateValue" sfwLoadType="CodeGroup" sfwLoadSource="150" sfwEntityField="AddrStateValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabelTemp" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtCaseNumber" ID="capCaseNumber" Text="Case Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCaseNumber" sfwEntityField="CaseNumber" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtJoinderRecvDate" ID="capJoinderRecvDate" Text="Joinder Received Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtJoinderRecvDate" sfwDataFormat="{0:d}" sfwEntityField="JoinderRecvDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtOrderDate" ID="capOrderDate" Text="Entry Of Order Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOrderDate" sfwDataFormat="{0:d}" sfwEntityField="OrderDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtReceivedDate1" ID="capReceivedDate1" Text="DRO Received Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtReceivedDate1" sfwDataFormat="{0:d}" sfwEntityField="ReceivedDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtDateOfMarriage" ID="capDateOfMarriage" Text="Date Of Marriage : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDateOfMarriage" sfwDataFormat="{0:d}" sfwEntityField="DateOfMarriage" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtDateOfSeparation" ID="capDateOfSeparation" Text="Date Of Separation: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDateOfSeparation" sfwDataFormat="{0:d}" sfwEntityField="DateOfDivorce" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblApprovedByUser" ID="capApprovedByUser" Text="Approved By User : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblApprovedByUser" sfwEntityField="ApprovedByUser" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblApprovedDate" ID="capApprovedDate" Text="Approved Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblApprovedDate" sfwDataFormat="{0:d}" sfwEntityField="ApprovedDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtQualifiedDate" ID="capQualifiedDate" Text="Qualified Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtQualifiedDate" sfwDataFormat="{0:d}" sfwEntityField="QualifiedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkJoinderOnFile" ID="capJoinderOnFile" Text="Joinder On File : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkJoinderOnFile" sfwEntityField="JoinderOnFile" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblDroStatusDescription" ID="capDroStatusDescription" Text="DRO Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDroStatusDescription" sfwEntityField="DroStatusDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIsAmended" Text="Is-Amended :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkIsAmmendedFlag" sfwEntityField="IsAmmendedFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capReasonDescription" Text="Cancellation Reason : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtReasonDescription" Rows="3" TextMode="MultiLine" Width="200px" sfwIgnoreReadOnly="True" sfwEntityField="CancellationReason" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtDroCommencementDate" ID="capDroCommencementDate" Text="DRO Commencement Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDroCommencementDate" sfwDataFormat="{0:d}" sfwEntityField="DroCommencementDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkIsParticipantDisabledFlag" ID="capIsParticipantDisabledFlag" Text="Eligible for Participants Disability Benefit : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkIsParticipantDisabledFlag" sfwEntityField="IsParticipantDisabledFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkLifeConversionFactorFlag" ID="capLifeConversionFactorFlag" Text="Apply Life Conversion Factor :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkLifeConversionFactorFlag" sfwEntityField="LifeConversionFactorFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkWaivedDisabilityEntitlementFlag" ID="capWaivedDisabilityEntitlementFlag" Text="Waived Disability Entitlement : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkWaivedDisabilityEntitlementFlag" sfwEntityField="WaivedDisabilityEntitlementFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkEligibleForContinuanceFlag" ID="capEligibleForContinuanceFlag" Text="Standard Retiree Model - Eligible For Continuance to Children : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkEligibleForContinuanceFlag" sfwEntityField="EligibleForContinuanceFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlOtherDetails" sfwCaption="Other Details" CssClass="fullWidth">
+          <sfwTable ID="tblOtherDetails">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctOtherDetails">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Benefit Information" ID="tshBenefitInfo">
+                      <sfwTable CssClass="Table" ID="tblNewPage">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="ddlDroModelId" CssClass="None" ID="capDroModelId" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="DRO Model : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwCascadingDropDownList ID="ddlDroModelId" sfwClientVisibility="controllist:capDateOfMarriage,txtDateOfMarriage,capDateOfSeparation,txtDateOfSeparation,lblLabelTemp#6:lblLabelTemp;4:lblLabelTemp;default:txtDateOfMarriage,capDateOfMarriage,capDateOfSeparation,txtDateOfSeparation;" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwLoadType="CodeGroup" sfwLoadSource="6004" sfwEntityField="DroModelValue" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="ddlPlanId" CssClass="None" ID="capPlanId" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text=" Plan : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn HorizontalAlign="Left">
+                            <sfwCascadingDropDownList DataTextField="plan_name" DataValueField="plan_id" ID="ddlPlanId" OnClientChange="SetDefaultValuesforQdro" sfwClientVisibility="controllist:chkAltPayeeIncrease,capAltPayeeIncrease,lblSpecialAccounts,ddlIstrSubPlan,capIstrUVHPEE#1:chkAltPayeeIncrease,capAltPayeeIncrease,lblSpecialAccounts,ddlIstrSubPlan;2:chkAltPayeeIncrease,capAltPayeeIncrease,capIstrUVHPEE,ddlIstrSubPlan;default:chkAltPayeeIncrease,capAltPayeeIncrease;" sfwParameters="astrDroModelValue=ddlDroModelId" sfwParentControl="ddlDroModelId" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwLoadType="Method" sfwLoadSource="GetPlansBasedonDroModel" sfwEntityField="PlanId" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel CssClass="None" ID="capIstrUVHPEE" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="UVHP/EE :" sfwIsCaption="True" />
+                            <sfwLabel CssClass="None" ID="lblSpecialAccounts" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Special Accounts :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn CssClass="full-width">
+                            <sfwCascadingDropDownList DataTextField="plan_name" DataValueField="plan_code" ID="ddlIstrSubPlan" sfwParameters="aintPlan_Id=ddlPlanId" sfwParentControl="ddlPlanId" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwLoadType="Method" sfwLoadSource="GetSubPlan" sfwEntityField="IstrSubPlan" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="ddlIstrBenefitOptionValue" CssClass="None" ID="capIstrBenefitOptionValue" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Benefit Option : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwCascadingDropDownList DataTextField="description" DataValueField="code_value" ID="ddlIstrBenefitOptionValue" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwParameters="aintPlanId=ddlPlanId" sfwParentControl="ddlPlanId" sfwLoadType="Query" sfwLoadSource="entPlanBenefitXr.LoadBenefitOptionforQdro" sfwEntityField="IstrBenefitOptionValue" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtBenefitPerc" CssClass="None" ID="lblLabel" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text=" QDRO % : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtBenefitPerc" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" Width="30px" sfwEntityField="BenefitPerc" MaxLength="7" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtBenefitAmt" CssClass="None" ID="capBenefitAmt" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text=" Flat Amount : " Width="10px" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtBenefitAmt" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" Width="100px" sfwEntityField="BenefitAmt" MaxLength="11" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtBenefitFlatPerc" CssClass="None" ID="capBenefitFlatPerc" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Flat %: " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtBenefitFlatPerc" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwEntityField="BenefitFlatPerc" MaxLength="7" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel CssClass="None" ID="lblLabel1" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Adjustment Amount : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtAdjustmentAmount" sfwDataFormat="{0:C}" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwEntityField="AdjustmentAmt" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtDroWithheldPerc" CssClass="None" ID="capDroWithheldPerc" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="DRO Withheld % : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtDroWithheldPerc" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwEntityField="DroWithheldPerc" MaxLength="7" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtBalanceAsOfPlanYear" CssClass="None" ID="capBalanceAsOfPlanYear" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Balance As Of Plan Year : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtBalanceAsOfPlanYear" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwEntityField="BalanceAsOfPlanYear" MaxLength="10" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtAltPayeeBenefitCapYear" CssClass="None" ID="capAltPayeeBenefitCapYear" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Alt Payee Benefit Cap Year : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtAltPayeeBenefitCapYear" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwEntityField="AltPayeeBenefitCapYear" MaxLength="10" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtNetInvestmentFromDate" CssClass="None" ID="capNetInvestmentFromDate" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Net Investment From Date : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtNetInvestmentFromDate" sfwDataFormat="{0:d}" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwEntityField="NetInvestmentFromDate" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtNetInvestmentToDate" CssClass="None" ID="capNetInvestmentToDate" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Net Investment To Date : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtNetInvestmentToDate" sfwDataFormat="{0:d}" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule-BenefitInfoVisible" sfwEntityField="NetInvestmentToDate" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="chkAltPayeeIncrease" CssClass="None" ID="capAltPayeeIncrease" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text=" Alt. Payee Entitled to Retiree Increase :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwCheckBox ID="chkAltPayeeIncrease" sfwDefaultValue="N" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" sfwEntityField="AltPayeeIncrease" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="chkIsAltPayeeEligibleForParticipantRetireeIncrease" CssClass="None" ID="capIsAltPayeeEligibleForParticipantRetireeIncrease" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text=" Alt. Payee Entitled to Participant Retiree Increase :" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwCheckBox ID="chkIsAltPayeeEligibleForParticipantRetireeIncrease" sfwDefaultValue="N" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" sfwEntityField="IsAltPayeeEligibleForParticipantRetireeIncrease" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn CssClass="full-width" />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="chkAltPayeeEarlyRet" CssClass="None" ID="capAltPayeeEarlyRet" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Eligible for Retirement prior to Participant Commencement Date." sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwCheckBox ID="chkAltPayeeEarlyRet" sfwDefaultValue="N" sfwRelatedGrid="grvDroBenefitDetails" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" sfwEntityField="AltPayeeEarlyRet" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="2">
+                            <sfwButton ID="btnAddBenefitInfo" sfwMethodName="btnGridViewAdd_Click" sfwNavigationParameter="PlanId;BenefitPerc;BenefitAmt;DroModelValue;IstrSubPlan;IstrBenefitOptionValue;BenefitFlatPerc;DroWithheldPerc;AltPayeeIncrease;AltPayeeEarlyRet;BalanceAsOfPlanYear;AltPayeeBenefitCapYear;NetInvestmentFromDate;NetInvestmentToDate;IsAltPayeeEligibleForParticipantRetireeIncrease" sfwRelatedControl="grvDroBenefitDetails" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Add Information" sfwToolBarGrid="grvDroBenefitDetails" sfwToolBarGridImage="StaticResources/neoGrid-images/btnNew_Click.png" />
+                            <sfwButton ID="btnUpdate" sfwForceValidateNew="True" sfwMethodName="btnGridViewUpdate_Click" sfwNavigationParameter="PlanId;BenefitPerc;BenefitAmt;DroModelValue;BenefitFlatPerc;PlanBenefitId;IstrBenefitOptionValue;DroBenefitId;IstrSubPlan;DroWithheldPerc;AltPayeeIncrease;AltPayeeEarlyRet;BalanceAsOfPlanYear;AltPayeeBenefitCapYear;NetInvestmentFromDate;NetInvestmentToDate" sfwRelatedControl="grvDroBenefitDetails" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Update Information" sfwToolBarGrid="grvDroBenefitDetails" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnUpdate_Click.png" />
+                            <sfwButton ID="btnDelete" sfwMethodName="btnGridViewDelete_Click" sfwRelatedControl="grvDroBenefitDetails" sfwResource="310" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Delete Information" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnDelete_Click.png" sfwToolBarGrid="grvDroBenefitDetails" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtDroBenefitId" sfwRelatedGrid="grvDroBenefitDetails" SkinID="textBoxDisplayStyleNone" sfwEntityField="DroBenefitId" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="6" CssClass="droBeneDetTbl">
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvDroBenefitDetails" sfwAllowNew="True" sfwSelection="Many" sfwEntityField="lstDroBenefitDetails" sfwGridEntity="entDroBenefitDetails">
+                              <Columns>
+                                <TemplateField Visible="False">
+                                  <ItemTemplate>
+                                    <sfwButton ID="btnSelect" sfwMethodName="btnGridViewSelect_Click" sfwRelatedControl="grvDroBenefitDetails" Text="Select" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Dro Benefit ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwEntityField="DroBenefitId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="DRO Model" SortExpression="IstrDroModelName" SortExpressionUpdated="true">
+                                  <ItemTemplate>
+                                    <sfwLinkButton ID="btnDroModel" sfwDataField="icdoDroBenefitDetails.dro_model_description" sfwMethodName="btnGridViewSelect_Click" sfwRelatedControl="grvDroBenefitDetails" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Plan">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrPlanName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Funds">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrSubPlanDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Funds" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrSubPlan" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Benefit Option">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrBenefitOptionDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Plan ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PlanId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Benefit Flat %">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="BenefitFlatPerc" sfwDataFormat="{0:#0.0000'}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="QDRO %">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="BenefitPerc" sfwDataFormat="{0:N4}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="DRO Withheld %">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DroWithheldPerc" sfwDataFormat="{0:#0.0000'}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Flat Amount">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="BenefitAmt" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alt. Payee Retiree Increases" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwCheckBox sfwDefaultValue="N" sfwTwoWayBinding="False" sfwEntityField="AltPayeeIncrease" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alt. Payee Early Ret." ItemStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwCheckBox sfwDefaultValue="N" sfwTwoWayBinding="False" sfwEntityField="AltPayeeEarlyRet" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Plan Benefit ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PlanBenefitId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="IstrBenefitOptionValue" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrBenefitOptionValue" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Balance As Of Plan Year">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="BalanceAsOfPlanYear" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alternate Payee Benefit Cap Year">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AltPayeeBenefitCapYear" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Net Investment From Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="NetInvestmentFromDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Net Investment To Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="NetInvestmentToDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible">
+                                  <ItemTemplate>
+                                    <sfwImageButton ID="btnDeleteBenefitDetailsInfo" ImageUrl="delete_button.gif" sfwMethodName="btnGridViewDelete_Click" sfwRelatedControl="grvDroBenefitDetails" sfwResource="310" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField sfwVisibleRule="Rule:CancelledButtonVisible">
+                                  <ItemTemplate>
+                                    <sfwImageButton ID="btnExecuteRefreshFromObject" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwMode="Update" sfwNavigationParameter="aintDroBenefitId=DroBenefitId" sfwObjectMethod="btn_CalculateBenefitClick" sfwRelatedControl="grvDroBenefitDetails" sfwResource="305" sfwVisibleRule="Rule -ShowFinalCalButton" Text="Process Final Calculation" ImageUrl="btnProcessCalc.png" sfwIgnoreReadOnly="True" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Attorney &amp; Court Information" ID="tshAttorneyInformation" Visible="False">
+                      <sfwTable ID="tblNewPage1">
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="1">
+                            <sfwLabel AssociatedControlID="txtFirstName" ID="capFirstName" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Name : " sfwIsCaption="True" />
+                            <sfwTextBox ID="txtFirstName" sfwRelatedGrid="grvAttorney" sfwVisibleRule="Rule-AttorneyInfoVisible" sfwEntityField="FirstName" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn ColumnSpan="1">
+                            <sfwLabel AssociatedControlID="txtPhoneNbr" ID="capPhoneNbr" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Phone Number : " sfwIsCaption="True" />
+                            <sfwTextBox ID="txtPhoneNbr" sfwDataFormat="{0:(###)###-####}" sfwRelatedGrid="grvAttorney" sfwVisibleRule="Rule-AttorneyInfoVisible" sfwEntityField="PhoneNbr" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn ColumnSpan="1">
+                            <sfwLabel AssociatedControlID="txtDateEffFrom" ID="capDateEffFrom" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Effective Date From : " sfwIsCaption="True" />
+                            <sfwTextBox ID="txtDateEffFrom" sfwDataFormat="{0:d}" sfwRelatedGrid="grvAttorney" sfwVisibleRule="Rule-AttorneyInfoVisible" sfwEntityField="DateEffFrom" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn ColumnSpan="1">
+                            <sfwLabel AssociatedControlID="ddlAttorneyTypeValue" ID="capAttorneyTypeValue" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Attorney Type : " sfwIsCaption="True" />
+                            <sfwDropDownList ID="ddlAttorneyTypeValue" sfwRelatedGrid="grvAttorney" sfwVisibleRule="Rule-AttorneyInfoVisible" sfwLoadType="CodeGroup" sfwLoadSource="6009" sfwEntityField="AttorneyTypeValue" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="1">
+                            <sfwLabel AssociatedControlID="txtAddrLine1" ID="capAddrLine1" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="   Address : " sfwIsCaption="True" />
+                            <sfwTextBox ID="txtAddrLine1" sfwRelatedGrid="grvAttorney" sfwVisibleRule="Rule-AttorneyInfoVisible" sfwEntityField="AddrLine1" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn ColumnSpan="1">
+                            <sfwLabel AssociatedControlID="txtEmailAddress" ID="capEmailAddress" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Email Address : " sfwIsCaption="True" />
+                            <sfwTextBox ID="txtEmailAddress" sfwRelatedGrid="grvAttorney" sfwVisibleRule="Rule-AttorneyInfoVisible" sfwEntityField="EmailAddress" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn ColumnSpan="1">
+                            <sfwLabel AssociatedControlID="txtDateEffTo" ID="capDateEffTo" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Effective Date To :" sfwIsCaption="True" />
+                            <sfwTextBox ID="txtDateEffTo" sfwDataFormat="{0:d}" sfwRelatedGrid="grvAttorney" sfwVisibleRule="Rule-AttorneyInfoVisible" sfwEntityField="DateEffTo" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn ColumnSpan="1">
+                            <sfwLabel AssociatedControlID="ddlContactTypeValue" ID="capContactTypeValue" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Contact Type : " sfwIsCaption="True" />
+                            <sfwDropDownList ID="ddlContactTypeValue" sfwRelatedGrid="grvAttorney" sfwVisibleRule="Rule-AttorneyInfoVisible" sfwLoadType="CodeGroup" sfwLoadSource="6010" sfwEntityField="ContactTypeValue" OnClientChange="OnContactTypeChange" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="8">
+                            <sfwButton ID="btnAddAttorney" sfwMethodName="btnGridViewAdd_Click" sfwRelatedControl="grvAttorney" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Add Information" />
+                            <sfwButton ID="btnUpdatAttorney" sfwMethodName="btnGridViewUpdate_Click" sfwRelatedControl="grvAttorney" sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible" Text="Update Information" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwButton ID="btnDelete1" sfwMethodName="btnGridViewDelete_Click" sfwRelatedControl="grvAttorney" sfwResource="310" Text="Delete Information" Visible="False" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="8">
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvAttorney" sfwAllowNew="True" sfwEntityField="lstAttorney" sfwGridEntity="entAttorney">
+                              <Columns>
+                                <TemplateField HeaderText="Attorney ID" Visible="False" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AttorneyId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Name">
+                                  <ItemTemplate>
+                                    <sfwLinkButton ID="btnAttorneyName" sfwDataField="icdoAttorney.first_name" sfwMethodName="btnGridViewSelect_Click" sfwRelatedControl="grvAttorney" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Address">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AddrLine1" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Phone Number">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:(###)###-####}" sfwEntityField="PhoneNbr" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Email Id">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EmailAddress" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Type" SortExpression="AttorneyTypeValue" SortExpressionUpdated="true">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AttorneyTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Eff. Date From">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DateEffFrom" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Eff. Date To">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DateEffTo" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Contact Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ContactTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField sfwVisibleRule="Rule:AddUpdateDeleteButtonVisible">
+                                  <ItemTemplate>
+                                    <sfwImageButton ID="btnDeleteImageButton" ImageUrl="delete_button.gif" sfwMethodName="btnGridViewDelete_Click" sfwRelatedControl="grvAttorney" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Status History" ID="tshStatusHistory">
+                      <sfwTable ID="tblNewPage4">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvDroStatusHistory" sfwSelection="Many" sfwEntityField="lstDroStatusHistory" sfwGridEntity="entDroApplicationStatusHistory">
+                              <Columns>
+                                <TemplateField HeaderText="Dro Application Status History ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DroApplicationStatusHistoryId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="DRO Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StatusDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Modified Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="ModifiedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Modified By">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ModifiedBy" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Notes" ID="tshNotes">
+                      <sfwTable ID="tblNewPage2">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlNewControls" sfwCaption="Note">
+                              <sfwTable CssClass="Table" ID="tblNewPage3">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtTextBox" Rows="6" sfwRelatedGrid="grvNotesPerson" TextMode="MultiLine" Width="900px" sfwEntityField="Notes" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwButton ID="btnAddNotes" sfwMethodName="btnGridViewAdd_Click" sfwRelatedControl="grvNotesPerson" sfwResource="305" Text="Add Notes" sfwToolBarGrid="none" sfwIgnoreReadOnly="True" />
+                                    <sfwButton ID="btnClear" sfwMethodName="btnCancel_Click" OnClientClick="ClearNotes" sfwResource="310" Text="Clear" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvNotesPerson" sfwAllowNew="True" sfwEntityField="objParticipant.lstNotes" sfwGridEntity="entNotes">
+                              <Columns>
+                                <TemplateField HeaderText="Note ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwWrap="True" Width="500px" sfwEntityField="NoteId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Notes">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Notes" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created By">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CreatedBy" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Org ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="OrgId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objParticipant" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objAlternatePayee" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstDroBenefitDetails" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstAttorney" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstDroStatusHistory" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objParticipant.lstNotes" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

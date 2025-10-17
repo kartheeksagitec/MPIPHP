@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entIapAnnunityAdjustmentMultiplier" sfwMainCDO="icdoIapAnnunityAdjustmentMultiplier" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busIapAnnunityAdjustmentMultiplier" sfwTableName="sgt_iap_annunity_adjustment_multiplier" sfwView="False" sfwDataObjectID="doIapAnnunityAdjustmentMultiplier">
+  <commonproperties />
+  <checklist />
+  <initialload>
+    <item ID="EnableRule-User-Is-Manager" sfwStatus="Active" sfwMode="All" />
+  </initialload>
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint />
+  <rules>
+    <rule ID="EnableRule-User-Is-Manager" sfwRuleType="Validation" sfwExpression="(this.CheckIfManager() == true)" sfwObjectBased="True" />
+  </rules>
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select IAP_ANNUNITY_ADJUSTMENT_MULTIPLIER_ID, ISNULL(MULTIPLIER,0.00)AS MULTIPLIER,END_DATE,CREATED_BY,CREATED_DATE,MODIFIED_BY,UPDATE_SEQ from sgt_iap_annunity_adjustment_multiplier where end_date is null">
+      <parameters />
+    </query>
+    <query ID="GetIAPAnnunityMultiplier" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT TOP 1 ISNULL(MULTIPLIER,0.00) FROM [OPUS].[DBO].[SGT_IAP_ANNUNITY_ADJUSTMENT_MULTIPLIER] where end_date is null">
+      <parameters />
+    </query>
+    <query ID="GetIAPAnnunityAdjustmentMultiplier" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" select * from sgt_iap_annunity_adjustment_multiplier Where IAP_ANNUNITY_ADJUSTMENT_MULTIPLIER_ID = @ADJUSTMENT_MULTIPLIER_ID and end_date is null">
+      <parameters>
+        <parameter ID="@ADJUSTMENT_MULTIPLIER_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="iap_annunity_adjustment_multiplier_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="IapAnnunityAdjustmentMultiplierId" sfwCaption="ID" />
+    <attribute sfwValue="multiplier" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Multiplier" sfwCaption="Multiplier" />
+    <attribute sfwValue="end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndDate" sfwCaption="End Date" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

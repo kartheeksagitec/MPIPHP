@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmRetireeIncreaseContractsMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="205 " sfwType="Maintenance" sfwTitle="Retiree Increase Contracts Maintenance" version="3.5" sfwEntity="entActiveRetireeIncreaseContract">
+  <initialload>
+    <callmethods sfwMethodName="FindActiveRetireeIncreaseContract" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintActiveRetireeIncreaseContractId=ActiveRetireeIncreaseContractId" sfwVisibleRule="VisibleRule- ContractStatusPending" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnApprove" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_Approve" sfwResource="306" sfwVisibleRule="VisibleRule- ContractStatusPending" Text="Approve" />
+                <sfwButton ID="btnClose" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_Close" sfwResource="306" sfwVisibleRule="VisibleRule- ContractStatusApproved" Text="Close" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Retiree Increase Contract">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblActiveRetireeIncreaseContractId" ID="capActiveRetireeIncreaseContractId" Text="Retiree Increase Contract ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActiveRetireeIncreaseContractId" sfwEntityField="ActiveRetireeIncreaseContractId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblContractStatusDescription" ID="capContractStatusDescription" Text="Contract Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblContractStatusDescription" sfwEntityField="ContractStatusDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPlanYear" ID="capPlanYear" Text="Plan Year : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPlanYear" sfwEntityField="PlanYear" MaxLength="4" sfwDataFormat="{0:9999}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlPercentIncreaseValue" ID="capPercentIncreaseValue" Text="Percent Increase : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPercentIncreaseValue" sfwLoadType="CodeGroup" sfwLoadSource="7040" sfwEntityField="PercentIncreaseValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblEffectiveStartDate" ID="capEffectiveStartDate" Text="Effective Start Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEffectiveStartDate" sfwDataFormat="{0:d}" sfwEntityField="EffectiveStartDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblEffectiveEndDate" ID="capEffectiveEndDate" Text="Effective End Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEffectiveEndDate" sfwDataFormat="{0:d}" sfwEntityField="EffectiveEndDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblRetirementDateFrom" ID="capRetirementDateFrom" Text="Retirement Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblRetirementDateFrom" sfwDataFormat="{0:d}" sfwEntityField="RetirementDateFrom" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtRetirementDateTo" ID="capRetirementDateTo" Text="Retirement Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRetirementDateTo" sfwDataFormat="{0:d}" sfwEntityField="RetirementDateTo" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtNotes" ID="capNotes" Text="Notes : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="4">
+                <sfwTextBox ID="txtNotes" Rows="3" TextMode="MultiLine" Width="500px" sfwEntityField="Notes" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblApprovedBy" ID="capApprovedBy" Text="Approved By : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblApprovedBy" sfwEntityField="ApprovedBy" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlContractHistory" sfwCaption="Retiree Increase Contract History">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvActiveRetireeIncreaseContractHistory" sfwSelection="Many" sfwEntityField="lstActiveRetireeIncreaseContractHistory" sfwGridEntity="entActiveRetireeIncreaseContractHistory">
+                  <Columns>
+                    <TemplateField HeaderText="Active Retiree Increase Contract History ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActiveRetireeIncreaseContractHistoryId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Year" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PlanYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Effective Start Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EffectiveStartDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Effective End Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EffectiveEndDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Percent Increase">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PercentIncreaseDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstActiveRetireeIncreaseContractHistory" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

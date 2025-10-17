@@ -1,0 +1,147 @@
+﻿<entity asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" sbpmn="SagitecBPMNExtensionElements" ID="entSolBpmActivityInstance" sfwMainCDO="icdoBpmActivityInstance" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busSolBpmActivityInstance" sfwParentEntity="entNeobaseBpmActivityInstance">
+  <rules>
+    <rule ID="IsOrgActivity" sfwExpression="(RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusBpmProcessInstance.ibusBpmCaseInstance.ibusOrganization.icdoOrganization.org_id&quot;) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="IsPersonActivity" sfwExpression="(RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusBpmProcessInstance.ibusBpmCaseInstance.ibusPerson.icdoPerson.person_id&quot;) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="IsStatusInProcess" sfwExpression="!(this.iblnHasAssignedActivities == False) &amp;&amp; &#xA;((this.icdoBpmActivityInstance.status_value == &quot;INPC&quot;) || &#xA;(this.icdoBpmActivityInstance.status_value == &quot;RESU&quot;))" sfwObjectBased="True" />
+    <rule ID="No Pending Activities" sfwExpression="(this.iblnHasAssignedActivities == False)" sfwObjectBased="True" />
+    <rule ID="Pending Activities" sfwExpression="!(this.iblnHasAssignedActivities == False)" sfwObjectBased="True" />
+    <rule ID="VisibleResumeLink" sfwRuleType="Validation" sfwExpression="(this.icdoBpmActivityInstance.status_value == &quot;SUSP&quot; || this.icdoBpmActivityInstance.status_value == &quot;FAIL&quot;)" sfwObjectBased="True" />
+    <rule ID="Visible Rule - ShoworHideReleaseButton" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="((this.icdoBpmActivityInstance.status_value == &quot;INPC&quot;)  ||&#xA;(this.icdoBpmActivityInstance.status_value == &quot;RESU&quot;)) &amp;&amp;&#xA;(this.ValidateCheckoutUserIsSame() == True)" />
+  </rules>
+  <delete>
+    <property ID="lstBpmActivityInstanceUsers" sfwMethodName="LoadBpmActivityInstanceEligibleUsers" />
+    <property ID="lstBpmProcessInstanceAttachments" sfwMethodName="LoadProcessInstanceAttachments" />
+    <property ID="lstBpmEscalationInstances" sfwMethodName="LoadBpmEscalationInstances" />
+    <property ID="lstBpmDocumentUpload" sfwMethodName="LoadDocumentUpload" />
+  </delete>
+  <checklist />
+  <initialload>
+    <item ID="IsOrgActivity" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsPersonActivity" sfwMode="All" sfwStatus="Active" />
+    <item ID="No Pending Activities" sfwMode="All" sfwStatus="Active" />
+    <item ID="Pending Activities" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsStatusInProcess" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleResumeLink" sfwStatus="Active" sfwMode="All" />
+    <item ID="IsNoteExist" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsActivityInstanceInProgressStatus" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleCancelButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleCheckoutButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleCompleteButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRegerateButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleReleaseButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleResumeButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleReturnButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleReturnToAuditButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleSendButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleSuspendButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleLaunchLink" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleCheckoutLink" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleCompleteLink" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible Rule - ShoworHideReleaseButton" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <RequiredItems />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <reference />
+  <rulelist />
+  <conditionlist />
+  <compoundconditionlist />
+  <Constraint />
+  <constraint />
+  <attributes>
+    <attribute ID="IsReWorkFlag" sfwDataType="string" sfwPrivate="False" sfwValue="ReWorkFlag" sfwType="Property" />
+    <attribute ID="IdtRetirementDate" sfwDataType="datetime" sfwPrivate="False" sfwValue="idtRetirementDate" sfwType="Property" />
+    <attribute ID="IstrPlanDescription" sfwDataType="string" sfwPrivate="False" sfwValue="istrPlanDescription" sfwType="Property" />
+  </attributes>
+  <objectmethods>
+    <method ID="InvokeWorkflowAction" sfwReturnType="ArrayList" />
+    <method ID="GetResumeActions" sfwReturnType="Collection" sfwEntity="entBpmResumeAction" />
+    <method ID="LoadNotes" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintNoteID" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="ReloadCenterleft" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintActivityInstanceID" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="UpdateUserEscalationMessage" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aarrSelectedObjects" sfwDataType="ArrayList" />
+      </parameters>
+    </method>
+    <method ID="LoadBpmActivityInstanceEligibleUsers" sfwReturnType="Void" />
+    <method ID="LoadProcessInstanceAttachments" sfwReturnType="Void" />
+    <method ID="LoadBpmEscalationInstances" sfwReturnType="Void" />
+    <method ID="LoadCenterleftObjects" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintActivityInstanceID" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="LoadBpmActivity" sfwReturnType="Void" />
+    <method ID="LoadBpmProcessInstance" sfwReturnType="Void" />
+    <method ID="LoadBpmProcessInstanceDetails" sfwReturnType="Void" />
+    <method ID="LoadBpmActivityInstanceChecklist" sfwReturnType="Void" />
+    <method ID="LoadProcessInstanceNotes" sfwReturnType="Void" />
+    <method ID="EvaluateInitialLoadRules" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aenmPageMode" sfwDataType="utlPageMode" />
+      </parameters>
+    </method>
+    <method ID="LoadActivityEscalation" sfwReturnType="Void" />
+    <method ID="UploadBPMDocument" sfwReturnType="Void" />
+    <method ID="LoadDocumentUpload" sfwReturnType="Void" />
+    <method ID="deleteBPMDocument" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintBPMDocumentUploadId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="LoadDocuments" sfwReturnType="Void" />
+    <method ID="SearchImages" sfwReturnType="Void" />
+    <method ID="AddToBpmActivityInstanceAttachments" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aarrSelectedObjects" sfwDataType="arraylist" />
+      </parameters>
+    </method>
+    <method ID="AddNotes" sfwReturnType="ArrayList" />
+  </objectmethods>
+  <queries>
+    <query ID="GetUserWithRoleId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; distinct U.[USER_ID],&#xA;&#x9;U.[USER_SERIAL_ID] &#xA;FROM&#xA;&#x9; SGS_USER AS U WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGS_USER_ROLES AS UR WITH(NOLOCK)&#xA;&#x9; ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xA;WHERE&#xA;&#x9; U.USER_STATUS_VALUE = 'A' AND&#xA;&#x9; ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt; =  CONVERT(DATETIME,&#xA;&#x9;CONVERT(CHAR,&#xA;&#x9;@CURRENT_DATE,&#xA;&#x9;103),&#xA;&#x9;103))) AND&#xA;&#x9; ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt; =  CONVERT(DATETIME,&#xA;&#x9;CONVERT(CHAR,&#xA;&#x9;@CURRENT_DATE,&#xA;&#x9;103),&#xA;&#x9;103))) and UR.ROLE_ID=@ROLE_ID">
+      <parameters>
+        <parameter ID="@CURRENT_DATE" sfwDataType="DateTime" />
+        <parameter ID="@ROLE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPlanAndRetirementDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;    sba.RETIREMENT_DATE,&#xA;&#x9;sbad.BENEFIT_APPLICATION_DETAIL_ID,&#xA;&#x9;spn.Plan_Name AS istrPlanDescription,&#xA;&#x9;spn.PLAN_ID AS iintPlanId,&#xA;&#x9;sp.MPI_PERSON_ID AS istrMpid&#xA;FROM&#xA;&#x9; SGT_BENEFIT_APPLICATION sba  left &#xA;&#x9; join SGT_BENEFIT_APPLICATION_DETAIL sbad&#xA;&#x9; ON sbad.BENEFIT_APPLICATION_ID = sba.BENEFIT_APPLICATION_ID left &#xA;&#x9; join SGT_PLAN_BENEFIT_XR spbx&#xA;&#x9; ON spbx.PLAN_BENEFIT_ID = sbad.PLAN_BENEFIT_ID &#xA;&#x9;INNER &#xA;&#x9; JOIN SGT_PERSON sp&#xA;&#x9; ON sp.PERSON_ID = sba.PERSON_ID left &#xA;&#x9; join SGT_PLAN spn&#xA;&#x9; ON spn.PLAN_ID = spbx.PLAN_ID left &#xA;&#x9; join SGT_PERSON spSurv&#xA;&#x9; ON spSurv.PERSON_ID = sbad.SURVIVOR_ID left &#xA;&#x9; join SGS_CODE_VALUE scv&#xA;&#x9; ON scv.CODE_VALUE = spbx.BENEFIT_OPTION_VALUE AND&#xA;&#x9; SCV.CODE_ID = 1504 &#xA;WHERE&#xA;sba.BENEFIT_TYPE_VALUE='RTMT' AND&#xA;&#x9; sba.PERSON_ID =@PERSON_ID AND sbad.BENEFIT_APPLICATION_DETAIL_ID=@BENEFIT_APPLICATION_DETAIL_ID &#xA;ORDER BY  sba.RETIREMENT_DATE">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@BENEFIT_APPLICATION_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindBpmActivityInstance" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="False">
+      <item sfwParameter="aintActivityInstanceID" ID="LoadCenterleftObjects" sfwDataType="Void" sfwItemType="Method" />
+      <parameter ID="aintActivityInstanceID" sfwDataType="int" />
+      <item ID="LoadBpmActivity" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmProcessInstance" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmProcessInstanceDetails" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmActivityInstanceChecklist" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadProcessInstanceNotes" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmEscalationInstances" sfwItemType="Method" sfwDataType="Void" />
+      <item ID="EvaluateInitialLoadRules" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadActivityEscalation" sfwItemType="Method" sfwDataType="Void" />
+      <item ID="LoadDocumentUpload" sfwItemType="Method" sfwDataType="Void" />
+      <item ID="LoadDocuments" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+  </methods>
+  <lifecycle />
+  <ExtraFields />
+</entity>

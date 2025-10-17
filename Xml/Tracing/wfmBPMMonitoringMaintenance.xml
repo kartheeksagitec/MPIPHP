@@ -1,0 +1,478 @@
+﻿<form ID="wfmBPMMonitoringMaintenance" sfwType="Maintenance" sfwEntity="entBPMMonitoring" sfwTitle="BPM Monitoring" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwResource="20007020">
+  <initialload>
+    <callmethods sfwMode="Update" sfwMethodName="LoadBPMSummary" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Search Parameters">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlLastMinutes" sfwEntityField="LastMinutes" sfwRelatedControl="btnSearch" AutoPostBack="True" Visible="False">
+                  <ListItem Value="0" />
+                  <ListItem Text="Last 15 minutes" Value="15" />
+                  <ListItem Text="Last 30 minutes" Value="30" />
+                  <ListItem Text="Last 45 minutes" Value="45" />
+                  <ListItem Text="Last one hours" Value="60" />
+                  <ListItem Text="Last two hours" Value="120" />
+                  <ListItem Text="Last four hours" Value="240" />
+                  <ListItem Text="Last eight hours" Value="480" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlLastDays" sfwEntityField="LastDays" sfwRelatedControl="btnSearch" AutoPostBack="True">
+                  <ListItem Value="0" />
+                  <ListItem Text="Current day" Value="1" />
+                  <ListItem Text="Last two days" Value="2" />
+                  <ListItem Text="Last three days" Value="3" />
+                  <ListItem Text="Last four days" Value="4" />
+                  <ListItem Text="Last five days" Value="5" />
+                  <ListItem Text="Last ten days" Value="10" />
+                  <ListItem Text="Last twenty days" Value="20" />
+                  <ListItem Text="Last thirty days" Value="30" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capFromDate" Text="From Date : " AssociatedControlID="txtFromDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFromDate" sfwEntityField="FromDate" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capToDate" Text="To Date : " AssociatedControlID="txtToDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtToDate" sfwEntityField="ToDate" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Search" ID="btnSearch" sfwObjectMethod="rulInitializeBPMMonitoring" sfwExecuteMethodType="Rule" sfwCustomAttributes="style=margin-left:20px !important" sfwExecuteAfterSuccess="btnSearchButton" />
+                <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpen" sfwActiveForm="wfmPersonMaintenance" sfwRelatedControl="tshMonitoredJobs" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel1" sfwCaption="Summary Information">
+          <sfwTable ID="tblSummaryInfo">
+            <sfwRow>
+              <sfwColumn VerticalAlign="Top">
+                <sfwPanel ID="pnRequestStatus" sfwCollapsible="False" sfwCaption="Request">
+                  <sfwTable ID="tblNewPage2">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="New and Update" sfwBaseQuery="entBPMMonitoring.GetBPMSummary" ID="grvRequestProcessing" AllowPaging="True" AllowSorting="True" AllowFilterButton="False">
+                          <Columns>
+                            <TemplateField HeaderText="Status">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="status" />
+                              </ItemTemplate>
+                            </TemplateField>
+                            <TemplateField HeaderText="Count">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="count" sfwShowZero="True" />
+                              </ItemTemplate>
+                            </TemplateField>
+                          </Columns>
+                          <Parameters>
+                            <parameter ID="@START_TIME" sfwEntityField="FromDate" />
+                            <parameter ID="@END_TIME" sfwEntityField="ToDate" />
+                          </Parameters>
+                        </sfwGridView>
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Top">
+                <sfwPanel ID="pnlQueueStatus" sfwCaption="Queue" sfwCollapsible="False">
+                  <sfwTable ID="tblQueueStatus">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="New and Update" sfwBaseQuery="entBPMMonitoring.GetBpmQueueStatus" ID="grvQueueStatus" AllowPaging="True" AllowSorting="True" AllowFilterButton="False">
+                          <Columns>
+                            <TemplateField HeaderText="Action Type">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="actiontype" />
+                              </ItemTemplate>
+                            </TemplateField>
+                            <TemplateField HeaderText="Count">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="count" sfwShowZero="True" />
+                              </ItemTemplate>
+                            </TemplateField>
+                          </Columns>
+                          <Parameters>
+                            <parameter ID="@START_DATE" sfwEntityField="FromDate" />
+                            <parameter ID="@END_DATE" sfwEntityField="ToDate" />
+                          </Parameters>
+                        </sfwGridView>
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Top">
+                <sfwPanel ID="pnlEngineLoad" sfwCaption="Load by Engine" sfwCollapsible="False">
+                  <sfwTable ID="tblNewPage3">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwDropDownList ID="ddlEngines" sfwLoadType="Query" sfwLoadSource="entBPMMonitoring.GetEngineNamesForPassedDate" sfwNavigationParameter="START_TIME=FromDate;END_TIME=ToDate" DataTextField="ENGINE_NAME" DataValueField="ENGINE_NAME" AutoPostBack="True" sfwEntityField="EngineName" sfwRelatedControl="btnSearchButton" />
+                        <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Search" ID="btnSearchButton" sfwObjectMethod="TimersHandledPerEngine" sfwExecuteMethodType="XmlMethod" sfwCustomAttributes="style=margin-left:20px !important" sfwNavigationParameter="START_TIME=FromDate;END_TIME=ToDate;ENGINE_NAME=EngineName" CssClass="hideControl" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwGridView ID="grvEngineLoad" AllowPaging="True" AllowSorting="True" sfwEntityField="lstEngineLoad" AllowFilterButton="False" sfwVisibleRule="Visible Rule: Engine Grid Visiblility">
+                          <Columns>
+                            <TemplateField HeaderText="Action Type">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="ActionType" />
+                              </ItemTemplate>
+                            </TemplateField>
+                            <TemplateField HeaderText="Processed Count">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="ProcessedCount" />
+                              </ItemTemplate>
+                            </TemplateField>
+                          </Columns>
+                          <Parameters />
+                        </sfwGridView>
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="3">
+                <sfwPanel ID="pnlNewPanel" sfwCaption="BPM Processing Details">
+                  <sfwTable ID="tblNewPage">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwTabContainer ID="tctSfwTabContainer">
+                          <Tabs>
+                            <sfwTabSheet ID="tshEngines" HeaderText="Engines">
+                              <sfwTable ID="tblTable">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwButton ID="btnOpenLookup" sfwMethodName="btnOpenLookup_Click" Text="Open Lookup" sfwActiveForm="wfmBpmTraceInstActnLookup" sfwRelatedControl="grvEngines" sfwNavigationParameter="trace_instance_id" Visible="False" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="New and Update" sfwBaseQuery="entBPMMonitoring.GetProcessesByEngine" ID="grvEngines" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True">
+                                      <Columns>
+                                        <TemplateField SortExpression="schedule_name" HeaderText="Trace Instance Id">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="trace_instance_id" Visible="False" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField SortExpression="schedule_name" HeaderText="Engine Name">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="engine_name" sfwLinkable="True" sfwRelatedControl="btnOpenLookup" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Machine Name">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="machine_name" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="User Id">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="user_id" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Parameter Details">
+                                          <ItemTemplate>
+                                            <sfwJSONData ID="jdataJSONData" sfwEntityField="parameter_details" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Start Time">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="start_time" sfwDataFormat="{0:MM/dd/yyyy hh:mm:ss.fff tt}" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="End Time">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="end_time" sfwDataFormat="{0:MM/dd/yyyy hh:mm:ss.fff tt}" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                      </Columns>
+                                      <Parameters>
+                                        <parameter ID="@start_time" sfwEntityField="FromDate" />
+                                        <parameter ID="@end_time" sfwEntityField="ToDate" />
+                                      </Parameters>
+                                    </sfwGridView>
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwTabSheet>
+                            <sfwTabSheet ID="tshConfigurations" HeaderText="Current Configurations" sfwShowRecordCount="True">
+                              <sfwTable ID="tblTable1">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpenServers" sfwActiveForm="wfmActLogMaintenance" sfwRelatedControl="grvServerConfigurations" sfwActiveFormKey="primary_key" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMMonitoring.GetServerTraceConfigurations" ID="grvServerConfigurations" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwLoadWhenRequired="True">
+                                      <Columns>
+                                        <TemplateField HeaderText="Primary Key" Visible="False">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="primary_key" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Service Timer Id" Visible="False">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="service_timer_id" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Server Id" Visible="False">
+                                          <ItemTemplate>
+                                            <sfwLinkButton sfwMethodName="btnOpen_Click" sfwEntityField="server_id" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Server Name" SortExpression="server_name">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="server_name" sfwLinkable="True" sfwRelatedControl="btnOpenServers" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Action Method" SortExpression="action_method">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="action_method" sfwRelatedControl="btnOpenServers" sfwLinkable="True" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Tracing Flag">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="bpm_tracing_flag" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Query Tracing Flag">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="bpm_query_tracing_flag" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Tracing Enabled">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="enabled" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                      </Columns>
+                                      <Parameters />
+                                    </sfwGridView>
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwTabSheet>
+                            <sfwTabSheet ID="tshRequests" HeaderText="Requests" sfwShowRecordCount="True">
+                              <sfwTable ID="tblTable7">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwButton Visible="False" sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpenRequest" sfwRelatedControl="grvRequests" sfwActiveForm="wfmBpmRequestMaintenance" sfwNavigationParameter="request_id" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMMonitoring.GetRequests" ID="grvRequests" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwDataKeyNames="request_id" sfwLoadWhenRequired="True">
+                                      <Columns>
+                                        <TemplateField HeaderText="Request ID">
+                                          <ItemTemplate>
+                                            <sfwLinkButton sfwMethodName="btnOpen_Click" sfwEntityField="request_id" sfwActiveForm="wfmBpmRequestMaintenance" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField SortExpression="schedule_name" HeaderText="Process Name">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="processname" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Person Id">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="person_id" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Organization Id">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="org_id" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Status">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="status_description" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Processed By Machine">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="processed_by_machine" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Server Name">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="server_name" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Created Date">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="created_date" sfwDataFormat="{0:MM/dd/yyyy hh:mm:ss.fff tt}" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                      </Columns>
+                                      <Parameters>
+                                        <parameter ID="@start_time" sfwEntityField="FromDate" />
+                                        <parameter ID="@end_time" sfwEntityField="ToDate" />
+                                      </Parameters>
+                                    </sfwGridView>
+                                  </sfwColumn>
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwTabSheet>
+                            <sfwTabSheet ID="tshQueue" HeaderText="Queue Items" sfwShowRecordCount="True">
+                              <sfwTable ID="tblTable2">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entBPMMonitoring.GetFailedOrUnProcessedQueueItems" ID="grvQueueItems" AllowPaging="True" AllowSorting="True" sfwLoadWhenRequired="True">
+                                      <Columns>
+                                        <TemplateField HeaderText="Process Name">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="processname" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Activity Name">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="activityname" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Machine Name">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="machine_name" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Engine">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="engine_value" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Status">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="status_description" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Created Date">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="created_date" sfwDataFormat="{0:MM/dd/yyyy hh:mm:ss.fff tt}" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                      </Columns>
+                                      <Parameters>
+                                        <parameter ID="@start_time" sfwEntityField="FromDate" />
+                                        <parameter ID="@end_time" sfwEntityField="ToDate" />
+                                      </Parameters>
+                                    </sfwGridView>
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwTabSheet>
+                            <sfwTabSheet ID="tshProcessingError" HeaderText="Processing Error" sfwShowRecordCount="True">
+                              <sfwTable ID="tblTable3">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpenActivityInstance" sfwRelatedControl="grvProcessingError" sfwActiveForm="wfmBpmActivityInstanceMaintenance" sfwNavigationParameter="aintActivityInstanceID=sub_transaction_id" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="New and Update" ID="grvProcessingError" AllowPaging="True" AllowSorting="True" sfwLoadWhenRequired="True" sfwBaseQuery="entBPMMonitoring.GetBPMProcessingError">
+                                      <Columns>
+                                        <TemplateField HeaderText="Trace Instance ID">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="trace_instance_id" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Sub Transaction Id">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="sub_transaction_id" sfwLinkable="True" sfwRelatedControl="btnOpenActivityInstance" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Engine Name">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="engine_name" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Method Name">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="method_name" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Exception Date">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="exception_date" sfwDataFormat="{0:MM/dd/yyyy hh:mm:ss.fff tt}" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Exception Message">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="exception_message" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Transaction ID">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="transaction_id" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                      </Columns>
+                                      <Parameters>
+                                        <parameter ID="@start_time" sfwEntityField="FromDate" />
+                                        <parameter ID="@end_time" sfwEntityField="ToDate" />
+                                      </Parameters>
+                                    </sfwGridView>
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwTabSheet>
+                          </Tabs>
+                        </sfwTabContainer>
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn />
+    </sfwRow>
+  </sfwTable>
+  <sfwTable ID="tblNewPage1" />
+  <ExtraFields />
+  <loaddetails>
+    <entityfield ID="lstEngineLoad" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmPirLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvScout" sfwResource="100 " sfwType="Lookup" sfwTitle="Problem Information Record Lookup" version="3.5" sfwMaxCount="1000" sfwEntity="entPir" sfwGridCollection="busPirLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoPir" sfwQueryRef="entPir.Lookup" sfwMethodName="LoadPirs" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel Text="Problem ID :" ID="lblCapProblemID" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPirKey" sfwDataField="pir_id" sfwQueryID="cdoPir" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Problem Description :" ID="lblCapProblemDescription" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwTextBox ID="txtShortDescription" sfwDataField="pir_description" sfwQueryID="cdoPir" Width="250px" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel Text="Status :" ID="lblCapStatus" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" sfwDataField="status_value" sfwQueryID="cdoPir" sfwLoadType="CodeGroup" sfwLoadSource="40" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Severity :" ID="lblCapSeverity" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList sfwDataField="severity_value" sfwQueryID="cdoPir" ID="ddlSeverityValue" sfwLoadType="CodeGroup" sfwLoadSource="42" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel Text="Reported By :" ID="lblCapReportedBy" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="full_name" DataValueField="user_serial_id" ID="ddlReportedBy" sfwDataField="reported_by_id" sfwQueryID="cdoPir" sfwLoadType="Query" sfwLoadSource="entPir.ListOfPirReporters" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Assigned To :" ID="lblCapAssignedTo" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="full_name" DataValueField="user_serial_id" ID="ddlAssignedTo" sfwDataField="assigned_to_id" sfwQueryID="cdoPir" sfwLoadType="Query" sfwLoadSource="entPir.ListOfPirFixers" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel Text="Testcase :" ID="lblCapTestcase" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlTestcaseScenario" sfwDataField="testcase_scenario" sfwQueryID="cdoPir" sfwLoadType="CodeGroup" sfwLoadSource="6016" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Priority :" ID="lblCapPriority" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPriorityValue" sfwDataField="priority_value" sfwOperator="like" sfwQueryID="cdoPir" sfwLoadType="CodeGroup" sfwLoadSource="41" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlProcessValue" ID="capProcessValue" Text="Block : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlProcessValue" sfwDataField="process_value" sfwOperator="like" sfwQueryID="cdoPir" sfwLoadType="Query" sfwLoadSource="entPir.ListOfBlock" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedBy" Text="Created By : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="user_id" DataValueField="user_id" ID="ddlCreatedBy" sfwDataField="created_by" sfwOperator="like" sfwQueryID="cdoPir" sfwLoadType="Query" sfwLoadSource="entUser.LOADACTIVEUSER" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedDateFrom" Text="Created Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedDateFrom" sfwDataField="created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwRelatedControl="txtCreatedDateTo" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedDateTo" Text="Created Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedDateTo" sfwDataField="created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwRelatedControl="txtCreatedDateFrom" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtReleaseInfo" ID="capReleaseInfo" Text="Release Info : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtReleaseInfo" sfwDataField="release_info" sfwQueryID="cdoPir" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Result">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmPirMaintenance" sfwMethodName="btnNew_Click" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmPirMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPirId=PirId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwNavigationParameter="PirId" sfwRelatedControl="dgrResult" Text="Delete" Visible="False" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+                <sfwButton ID="btnReadyforSystest" sfwMessageId="8308" sfwMethodName="btnExecuteLookUpBuisnessMethodSelectedRows_Click" sfwNavigationParameter="PirId" sfwObjectID="busPirLookup" sfwObjectMethod="btnReleaseToSystest" sfwRelatedControl="dgrResult" Text="Release to SysTest" Visible="False" />
+                <sfwButton ID="btnReleaseToUAT" sfwMessageId="8309" sfwMethodName="btnExecuteLookUpBuisnessMethodSelectedRows_Click" sfwNavigationParameter="PirId" sfwObjectID="busPirLookup" sfwObjectMethod="btnReleaseToUAT" sfwRelatedControl="dgrResult" Text="Release to UAT" Visible="False" />
+                <sfwButton ID="btnReleasetoProd" sfwMessageId="8310" sfwMethodName="btnExecuteLookUpBuisnessMethodSelectedRows_Click" sfwNavigationParameter="PirId" sfwObjectID="busPirLookup" sfwObjectMethod="btnReleaseToPROD" sfwRelatedControl="dgrResult" Text="Release to PROD" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" PageSize="200" sfwSelection="Many" sfwSortExpression="ModifiedDate desc" SortExpressionUpdated="true">
+                  <Columns>
+                    <TemplateField HeaderText="Pir ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="PirId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Priority">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="PriorityValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Test Case ">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TestcaseScenario" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PirDescription" Width="560px" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Severity">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SeverityValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status ">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Assigned To">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objAssignedTo.UserFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Reported By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objReportedBy.UserFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Release" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReleaseInfo" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Screen Affected" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ScreenAffected" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="ModifiedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Due Date">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblLabel" sfwDataFormat="{0:d}" sfwEntityField="DueDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Effort Hours">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecTotalPirEffortsHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

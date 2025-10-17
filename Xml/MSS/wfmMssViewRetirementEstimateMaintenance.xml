@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMssViewRetirementEstimateMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvMPIPHPMSS" sfwResource="790 " sfwType="Maintenance" sfwTitle="Mss View Retirement Estimate Maintenance" version="3.5" sfwEntity="entMssBenefitCalculationRetirement">
+  <initialload>
+    <callmethods sfwMethodName="FindBenefitCalculationRetirement" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeader" sfwCollapsible="False">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn CssClass="NaviHeadtxt15Size">
+                <sfwLiteral ID="ltrLiteral" Text="Retirement Estimate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeaderDetails" sfwCaption="Participant and Spouse Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblBenefitMssCalculationHeaderId" ID="capBenefitMssCalculationHeaderId" Text="Benefit Calculation ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBenefitMssCalculationHeaderId" sfwEntityField="BenefitCalculationHeaderId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblRetirementDate" ID="capRetirementDate" Text="Retirement Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblRetirementDate" sfwDataFormat="{0:d}" sfwEntityField="RetirementDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIdtDateofBirth" ID="capIdtDateofBirth" Text="Participant Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtDateofBirth" sfwDataFormat="{0:d}" sfwEntityField="objPerson.IdtDateofBirth" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblAge" ID="capAge" Text="Participant’s Age at Selected Retirement Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblAge" sfwEntityField="IdecParticipantFullAge" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblBeneficiaryPersonDateOfBirth" ID="capBeneficiaryPersonDateOfBirth" Text="Spouse Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBeneficiaryPersonDateOfBirth" sfwDataFormat="{0:d}" sfwEntityField="BeneficiaryPersonDateOfBirth" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIdecSurvivorFullAge" ID="capIdecSurvivorFullAge" Text="Spouse’s Age at Selected Retirement Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdecSurvivorFullAge" sfwEntityField="IdecSurvivorFullAge" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblCreatedDate" ID="capCreatedDate" Text="Calculation Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCalculationDetails" sfwCaption="Benefit Details">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AutoGenerateColumns="False" ID="grvMssBenefitCalculationDetail" sfwSelection="One" sfwEntityField="lstBenefitCalculationDetail" sfwGridEntity="entBenefitCalculationDetail">
+                  <Columns>
+                    <TemplateField HeaderText="Benefit Mss Calculation Detail ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitCalculationDetailId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Mss Calculation Header ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitCalculationHeaderId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Name">
+                      <ItemTemplate>
+                        <sfwLinkButton ID="btnLbtnPlanCode" sfwDataField="icdoBenefitCalculationDetail.istrPlanCode" sfwMethodName="btnGridViewSelect_Click" sfwRelatedControl="grvMssBenefitCalculationDetail" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PlanId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Vested Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="VestedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitSubtypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Accrued Benefit Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="UnreducedBenefitAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Offset">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="QdroOffset" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Early Retirement Factor (ERF)">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EarlyReductionFactor" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Life Annuity Benefit Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="EarlyReducedBenefitAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="IAP Balance Amount" sfwVisibleRule="Visible-Plan-MPI-Or-IAP">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IapBalanceAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="IAP Balance as-of-date" sfwVisibleRule="Visible-Plan-MPI-Or-IAP">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IapAsOfDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 161 Special Account Balance Amount" sfwVisibleRule="Visible-Plan-MPI-Or-IAP">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Local161SpecialAcctBalAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 52 Special Account Balance Amount" sfwVisibleRule="Visible-Plan-MPI-Or-IAP">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Local52SpecialAcctBalAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Present Value Amount" sfwVisibleRule="Visible-Plan-MPI-Or-IAP">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="PresentValueAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Benefit Options">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AutoGenerateColumns="False" ID="grvMssBenefitCalculationOptions" sfwParentGrid="grvMssBenefitCalculationDetail" sfwSelection="One" sfwEntityField="lstBenefitCalculationOptions" sfwGridEntity="entBenefitCalculationOptions">
+                  <Columns>
+                    <TemplateField HeaderText="Benefit Option">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrBenefitOptionDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Option Factor" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitOptionFactor1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="BenefitAmount1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Mss Calculation Option ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitCalculationOptionId1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Survivor Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="SurvivorAmount1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Relative Value">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RelativeValue1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage1" sfwCaption="Disclaimer">
+          <sfwTable CssClass="Table" ID="tblNewPage2">
+            <sfwRow>
+              <sfwColumn CssClass="AlignLeftForMss">
+                <sfwLabel ID="lblLabel" Text="&lt;i&gt;“The Motion Pictures Industry Pension and Health Plan (MPIPHP) Retirement Benefit Estimate Calculator is provided solely as a tool for an individual to obtain an UNOFFICIAL estimate of their potential Retirement or QDRO benefits. &lt;/i&gt;" sfwIsCaption="True" />
+                <sfwLabel ID="lblLabel1" Text="&lt;i&gt;MPIPHP has the sole authority under law to determine a member’s retirement and disability benefits. No estimate produced by this calculator shall in any way constitute a benefit determination by MPIPHP or be binding upon MPIPHP. All data used in the actual calculation of a member’s retirement allowance is subject to audit, verification, and possible recalculation if any subsequent errors are discovered.”&lt;/i&gt;" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage2" sfwCollapsible="False">
+          <sfwTable CssClass="Table" ID="tblNewPage3">
+            <sfwRow>
+              <sfwColumn CssClass="Alignleft">
+                <sfwLabel ID="lblLabel2" Text="&lt;i&gt;For further information on how to retire please &lt;/i&gt;" sfwIsCaption="True" />
+                <sfwLinkButton ID="btnLabel3" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="PENSION_SPD.pdf" Text="&lt;i&gt;click here &lt;/i&gt;" />
+                <sfwLabel ID="lblLabel4" Text="&lt;i&gt; or please read the &lt;/i&gt;" sfwIsCaption="True" />
+                <sfwLinkButton ID="btnLinkButton" sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="GUIDE_TO_RETR.pdf" Text="&lt;i&gt;Guide to Retirement&lt;/i&gt;" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPerson" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstBenefitCalculationDetail" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstBenefitCalculationOptions" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

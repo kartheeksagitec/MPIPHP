@@ -1,0 +1,165 @@
+﻿<form ID="wfmDeathNotificationLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="202" sfwType="Lookup" sfwTitle="Death Notification Lookup" version="3.5" sfwEntity="entDeathNotification" sfwGridCollection="busDeathNotificationLookup.iclbDeathNotification">
+  <initialload>
+    <query ID="cdoDeathNotification" sfwQueryRef="entDeathNotification.DeathNotificationLookup" sfwMethodName="LoadDeathNotifications" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtMpiPersonId" ID="capMpiPersonId" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMpiPersonId" sfwDataField="mpi_person_id" sfwOperator="like" sfwQueryID="cdoDeathNotification" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtMpiPersonId" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSpSsn" ID="capSpSsn" Text="SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="classFormatSSN" ID="txtSpSsn" sfwDataField="sp.ssn" sfwDataFormat="{0:000-##-####}" sfwOperator="like" sfwQueryID="cdoDeathNotification" SkinID="classFormatSSN" AllowPartialMask="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSpLastName" ID="capSpLastName" Text="Last Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSpLastName" sfwDataField="sp.last_name" sfwOperator="like" sfwQueryID="cdoDeathNotification" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSpFirstName" ID="capSpFirstName" Text="First Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSpFirstName" sfwDataField="sp.first_name" sfwOperator="like" sfwQueryID="cdoDeathNotification" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDateOfDeathFrom" Text="Date Of Death From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDateOfDeathFrom" sfwDataField="SDN.date_of_death" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoDeathNotification" sfwRelatedControl="txtDateOfDeathTo" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtDateOfDeathFrom" ErrorMessage="Date Of Death From must be in mm/dd/yyyy format." ID="valDateOfDeathFrom" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDateOfDeathTo" Text="Date Of Death To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDateOfDeathTo" sfwDataField="SDN.date_of_death" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoDeathNotification" sfwRelatedControl="txtDateOfDeathFrom" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtDateOfDeathTo" ErrorMessage="Date Of Death To must be in mm/dd/yyyy format." ID="valDateOfDeathTo" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtDateOfDeathFrom" ControlToValidate="txtDateOfDeathTo" ErrorMessage="Date Of Death To cannot be less than Date Of Death From." ID="valDateOfDeathRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDeathNotificationReceivedDateFrom" Text="Death Notification Received Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDeathNotificationReceivedDateFrom" sfwDataField="death_notification_received_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoDeathNotification" sfwRelatedControl="txtDeathNotificationReceivedDateTo" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDeathNotificationReceivedDateTo" Text="Death Notification Received Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDeathNotificationReceivedDateTo" sfwDataField="death_notification_received_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoDeathNotification" sfwRelatedControl="txtDeathNotificationReceivedDateFrom" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlDeathNotificationStatusValue" ID="capDeathNotificationStatusValue" Text="Death Notification Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDeathNotificationStatusValue" sfwDataField="death_notification_status_value" sfwOperator="like" sfwQueryID="cdoDeathNotification" sfwLoadType="CodeGroup" sfwLoadSource="6034" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtDeathNotificationId" ID="capDeathNotificationId" Text="Death Notification ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDeathNotificationId" sfwDataField="death_notification_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoDeathNotification" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmDeathNotificationMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="MPI_PERSON_ID=txtMpiPersonId" Text="New" Enabled="False" Visible="False" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmDeathNotificationMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintdeathnotificationid=DeathNotificationId;objPerson.MpiPersonId" sfwRelatedControl="dgrResult" Text="Open" Visible="False" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Death Notification ID" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="DeathNotificationId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPerson.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPerson.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Of Death" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DateOfDeath" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Death Notification Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DeathNotificationReceivedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Death Notification Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DeathNotificationStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last 4 Digits of SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPerson.IstrLast4DigitsofSSN" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

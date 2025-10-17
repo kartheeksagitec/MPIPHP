@@ -1,0 +1,369 @@
+﻿<form ID="wfmOrganizationMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvOrganization" sfwResource="300" sfwType="Maintenance" sfwTitle="Organization Maintenance" version="3.5" sfwEntity="entOrganization">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewOrganization" />
+    <callmethods sfwMode="Update" sfwMethodName="FindOrganization" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintorgid=OrgId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" sfwResource="335" Text="Correspondence" Visible="False" />
+                <sfwButton ID="btnReturn" sfwMethodName="btnReturn_Click" Text="Return" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Organization Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMpiOrgId" Text="MPI Organization ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblMpiOrgId" sfwEntityField="MpiOrgId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtOrgName" ID="capOrgName" Text="Organization Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOrgName" MaxLength="22" sfwEntityField="OrgName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capOrgTypeValue" Text="Organization Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgTypeDescription" sfwEntityField="OrgTypeDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPhoneNo" ID="capPhoneNo" Text="Phone Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPhoneNo" sfwDataFormat="{0:(###)###-####}" sfwEntityField="PhoneNo" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtFaxNo" ID="capFaxNo" Text="Fax Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFaxNo" sfwDataFormat="{0:(###)###-####}" sfwEntityField="FaxNo" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtFederalId" ID="capFederalId" sfwVisibleRule="VISIBLE_ORG_TYPE_NOT_ROLL" Text="Federal Tax ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFederalId" MaxLength="10" sfwVisibleRule="VISIBLE_ORG_TYPE_NOT_ROLL" sfwEntityField="FederalId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlPaymentTypeValue" ID="capPaymentTypeValue" Text="Payment Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlPaymentTypeValue" sfwLoadType="CodeGroup" sfwLoadSource="7039" sfwEntityField="PaymentTypeValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtRoutingNumber" ID="capRoutingNumber" sfwVisibleRule="VISIBLE_ROUTING_VISIBLE" Text="Routing Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRoutingNumber" MaxLength="9" sfwVisibleRule="VISIBLE_ROUTING_VISIBLE" sfwEntityField="RoutingNumber" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtAbaSwiftBankCode" ID="capAbaSwiftBankCode" Text="Aba Swift Bank Code : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAbaSwiftBankCode" MaxLength="11" sfwEntityField="AbaSwiftBankCode" sfwVisibleRule="VISIBLE_ROUTING_VISIBLE" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlStatusValue" ID="capStatusValue" Text="Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" sfwDefaultValue="A" sfwLoadType="CodeGroup" sfwLoadSource="10" sfwEntityField="StatusValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblOrgId" ID="capOrgId" Text="Organization ID : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgId" Visible="False" sfwEntityField="OrgId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtCareOf" ID="capCareOf" sfwVisibleRule="RULE_CHECK_ORG_TYPE_ESTATE_TRUST" Text="C/O : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCareOf" sfwVisibleRule="RULE_CHECK_ORG_TYPE_ESTATE_TRUST" sfwEntityField="CareOf" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Other Details" CssClass="fullWidth">
+          <sfwTable ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctNewPage">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Address" ID="tshAddress">
+                      <sfwTable CssClass="Table" ID="tblNewPage">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNewOrgAddress" sfwActiveForm="wfmOrgAddressMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintOrgAddressId=lblOrgId" Text="New" />
+                            <sfwButton ID="btnOpenOrgAddress" sfwActiveForm="wfmOrgAddressMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintorgaddressid=OrgAddressId" sfwRelatedControl="grvOrgAddress" Text="Open" />
+                            <sfwButton ID="btnDeleteOrgAddress" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvOrgAddress" Text="Delete" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvOrgAddress" sfwSelection="Many" sfwEntityField="lstOrgAddress" sfwGridEntity="entOrgAddress">
+                              <Columns>
+                                <TemplateField HeaderText="Address">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenOrgAddress" sfwEntityField="IstrFullAddress" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="State">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StateDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Address Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AddressTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Org Address ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="OrgAddressId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Notes" ID="tshNotes" sfwVisibleRule="RULE_CHECK_ORG_TYPE_BANK">
+                      <sfwTable ID="tblNewPage5">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlNotesDetails" sfwCaption="Note" CssClass="setNoteFontSize">
+                              <sfwTable CssClass="Table" ID="tblNewPage6">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtNotes" Rows="6" sfwRelatedGrid="grvNotes" TextMode="MultiLine" Width="900px" sfwEntityField="Notes" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwButton ID="btnAddNotes" sfwMethodName="btnGridViewAdd_Click" sfwRelatedControl="grvNotes" Text="Add Notes" sfwToolBarGrid="none" />
+                                    <sfwButton ID="btnClear" sfwMethodName="btnCancel_Click" Text="Clear" OnClientClick="ClearNotes" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvNotes" sfwAllowNew="True" sfwEntityField="lstNotes" sfwGridEntity="entNotes">
+                              <Columns>
+                                <TemplateField HeaderText="Notes">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwWrap="True" Width="500px" sfwEntityField="Notes" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created By">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CreatedBy" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Note ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="NoteId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Bank Information" ID="tshNewPage">
+                      <sfwTable ID="tblBankInformation">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnOpen" sfwActiveForm="wfmOrganizationBankMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintOrgId=OrgId" Text="Add/Change" sfwToolBarGrid="grvOrgBank" sfwToolBarGridImage="StaticResources/neoGrid-images/neogrid_addChange.png" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvOrgBank" sfwEntityField="lstOrgBank" sfwGridEntity="entOrgBank">
+                              <Columns>
+                                <TemplateField HeaderText="Org Bank ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="OrgBankId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Bank Org Code ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwRelatedControl="btnOpen" sfwEntityField="BankOrgId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Bank Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrOrgBankName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Routing Number">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrRoutingNumber" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Aba Swift Bank Code">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AbaSwiftBankCode" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Account Number">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AccountNo" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Account Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AccountTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Usage">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="UsageDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage1" HeaderText="Return Mail History">
+                      <sfwTable ID="tblReturnMailHistory">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnButton" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintOrgid=OrgId" Text="Load Returned Mail History" sfwActiveForm="wfmReturnedMailOrgHistoryMaintenance" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstOrgAddress" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstNotes" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstOrgBank" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

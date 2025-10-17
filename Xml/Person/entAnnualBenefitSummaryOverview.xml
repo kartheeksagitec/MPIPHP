@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entAnnualBenefitSummaryOverview" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPerson" sfwObjectID="busAnnualBenefitSummaryOverview" sfwParentEntity="entPerson">
+  <rules>
+    <rule ID="Visible-Rule-ShowRetireeDisclaimerMSS" sfwRuleType="Validation" sfwExpression="this.CheckIfRetiree() == true" sfwObjectBased="True" />
+    <rule ID="Visible-Rule-ActiveIncreaseMessageMSS-Temporary" sfwRuleType="Validation" sfwExpression="this.IsEligibleForActiveIncrease()==True" sfwObjectBased="True" />
+    <rule ID="Visible-Rule-ShowTotalSummaryInfo." sfwRuleType="Validation" sfwExpression="this.CheckIfRetiree() == false" sfwObjectBased="True" />
+    <rule ID="Visible-Rule-ShowFooter" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="this.ShowFooter()" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="Visible-Rule-PlanLocal161" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible-Rule-PlanLocal52" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible-Rule-PlanLocal600" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible-Rule-PlanLocal666" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible-Rule-PlanLocal700" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible-Rule-ShowFooter" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="PersonId" sfwValue="icdoPerson.person_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="MpiPersonId" sfwValue="icdoPerson.mpi_person_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrFullName" sfwValue="icdoPerson.istrFullName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLast4DigitsofSSN" sfwValue="icdoPerson.istrLast4DigitsofSSN" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateofBirth" sfwValue="icdoPerson.idtDateofBirth" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoPerson.created_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoPerson.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoPerson.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoPerson.modified_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtForfietureDate" sfwValue="icdoPerson.idtForfietureDate" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtWithdrawalDate" sfwValue="icdoPerson.idtWithdrawalDate" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtVestingDate" sfwValue="icdoPerson.idtVestingDate" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountRetirementContribution" ID="lstEEContributionInterest" sfwValue="iclbEEContributionInterest" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountRetirementContribution" ID="lstTotalEEContributionInterest" sfwValue="iclbTotalEEContributionInterest" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountRetirementContribution" ID="lstEEContributionInterestOPUS" sfwValue="iclbEEContributionInterestOPUS" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountRetirementContribution" ID="lstTotalEEContributionInterestOPUS" sfwValue="iclbTotalEEContributionInterestOPUS" />
+    <attribute ID="objLbusBenefitApplication" sfwType="Object" sfwEntity="entBenefitApplication" sfwValue="lbusBenefitApplication" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="LdecTotalQualifiedAccuruedBenefit" sfwValue="ldecTotalQualifiedAccuruedBenefit" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="LintTotalqualifiedYearsCount" sfwValue="lintTotalqualifiedYearsCount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="LdecTotalCreditedHours" sfwValue="ldecTotalCreditedHours" />
+    <attribute sfwDataType="int" sfwType="Property" ID="LintBISYearCount" sfwValue="lintBISYearCount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="LdecHealthQualifiedHours" sfwValue="ldecHealthQualifiedHours" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="LintTotalHealthYearsCount" sfwValue="lintTotalHealthYearsCount" />
+    <attribute ID="LintTotalvestedYearsCount" sfwDataType="int" sfwPrivate="False" sfwValue="lintTotalvestedYearsCount" sfwType="Property" />
+    <attribute ID="LintNonQualifiedYears" sfwDataType="int" sfwPrivate="False" sfwValue="lintNonQualifiedYears" sfwType="Property" />
+    <attribute ID="LdecTotalEEContribution" sfwDataType="decimal" sfwPrivate="False" sfwValue="ldecTotalEEContribution" sfwType="Property" />
+    <attribute ID="LdecTotalEEInterestContribution" sfwDataType="decimal" sfwPrivate="False" sfwValue="ldecTotalEEInterestContribution" sfwType="Property" />
+    <attribute ID="LdecTotalUVHPContribution" sfwDataType="decimal" sfwPrivate="False" sfwValue="ldecTotalUVHPContribution" sfwType="Property" />
+    <attribute ID="LdecTotalUVHPInterestContribution" sfwDataType="decimal" sfwPrivate="False" sfwValue="ldecTotalUVHPInterestContribution" sfwType="Property" />
+    <attribute ID="LdecTotalQualifiedAccruedBenefitLocal" sfwDataType="decimal" sfwPrivate="False" sfwValue="ldecTotalQualifiedAccruedBenefitLocal" sfwType="Property" />
+    <attribute ID="LdecWithdrawalHoursSum" sfwDataType="decimal" sfwPrivate="False" sfwValue="ldecWithdrawalHoursSum" sfwType="Property" />
+    <attribute ID="LdecTotalHealthHoursSum" sfwDataType="decimal" sfwPrivate="False" sfwValue="ldecTotalHealthHoursSum" sfwType="Property" />
+  </attributes>
+  <objectmethods>
+    <method ID="btn_PostEEInterest" sfwReturnType="ArrayList" />
+  </objectmethods>
+</entity>

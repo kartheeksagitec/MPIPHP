@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmCorTrackingLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCorrespondence" sfwResource="400 " sfwType="Lookup" sfwTitle="Correspondence Tracking Lookup" sfwMaxCount="300" version="3.5" sfwHelpFile="Create Correspondence=Create Correspondence.htm;Update Correspondence=Update Correspondence.htm;Delete Correspondence=Delete Correspondence.htm" sfwEntity="entCorTracking" sfwGridCollection="busCorTrackingLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoCorTracking" sfwQueryRef="entCorTracking.Lookup" sfwMethodName="LoadCorTracking" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capTrackingId" Text="Tracking Id :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTrackingId" sfwDataField="tracking_id" sfwQueryID="cdoCorTracking" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatus" Text="Status :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlCorStatusValue" sfwDataField="cor_status_value" sfwQueryID="cdoCorTracking" sfwLoadType="CodeGroup" sfwLoadSource="13" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDateGeneratedFrom" Text="Date Generated (From) :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbGeneratedDateFrom" sfwDataField="generated_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoCorTracking" sfwRelatedControl="txbGeneratedDateTo" />
+                <CompareValidator ControlToValidate="txbGeneratedDateFrom" ErrorMessage="Generated Date From must be in mm/dd/yyyy format" ID="id" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDateGeneratedTo" Text="Date Generated (To) :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbGeneratedDateTo" sfwDataFormat="{0:d}" sfwQueryID="cdoCorTracking" />
+                <CompareValidator ControlToValidate="txbGeneratedDateTo" ErrorMessage="Generated Date To must be in mm/dd/yyyy format" ID="id1" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txbGeneratedDateFrom" ControlToValidate="txbGeneratedDateTo" ErrorMessage="Generated Date To cannot be less than Generated Date From" ID="id2" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDatePrintedFrom" Text="Date Printed (From) : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbPrintOnDateFrom" sfwDataField="printed_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoCorTracking" sfwRelatedControl="txbPrintOnDateTo" />
+                <CompareValidator ControlToValidate="txbPrintOnDateFrom" ErrorMessage="Printed Date From must be in mm/dd/yyyy format" ID="id3" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDatePrintedTo" Text="Date Printed (To) : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbPrintOnDateTo" sfwDataField="printed_date" sfwDataFormat="{0:d}" sfwQueryID="cdoCorTracking" />
+                <CompareValidator ControlToValidate="txbPrintOnDateTo" ErrorMessage="Printed Date To must be in mm/dd/yyyy format" ID="id4" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txbPrintOnDateFrom" ControlToValidate="txbPrintOnDateTo" ErrorMessage="Printed Date To cannot be less than Generated Date From" ID="id5" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedBy" Text="User ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="user_id" DataValueField="user_id" ID="ddlCreatedBy" sfwDataField="sct.created_by" sfwOperator="like" sfwQueryID="cdoCorTracking" sfwLoadType="Query" sfwLoadSource="entUser.LOADACTIVEUSER" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtIstrmpipersonid" ID="capIstrmpipersonid" Text="MPID" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIstrmpipersonid" sfwDataField="sp.mpi_person_id" sfwOperator="like" sfwQueryID="cdoCorTracking" sfwRelatedControl="txtIstrmpipersonid" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtIstrmpipersonid" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="StoreSearch" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="Reprint" Text="Reprint" Visible="False" />
+                <sfwButton ID="ResetError" Text="ResetError" Visible="False" />
+                <sfwButton ID="Edit" sfwMethodName="btnOpenDoc_Click" Text="Edit" sfwToolBarGrid="dgrCorrespondence" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnEdit_Click.png" sfwRelatedControl="dgrCorrespondence" sfwNavigationParameter="TemplateName=objCorTemplates.TemplateName;TrackingId=TrackingId" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwNavigationParameter="TrackingId" sfwRelatedControl="dgrCorrespondence" sfwSelection="Many" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrCorrespondence" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrCorrespondence" PageSize="100" sfwSelection="Many" sfwSortExpression="TrackingId desc" SortExpressionUpdated="true">
+                  <Columns>
+                    <TemplateField HeaderText="Template ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TemplateId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Tracking ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="Edit" sfwEntityField="TrackingId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Template Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorTemplates.TemplateDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CorStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Generated Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="GeneratedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Printed Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="PrintedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Cor Status" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel Visible="False" sfwEntityField="CorStatusValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Template Name" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorTemplates.TemplateName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPI Person ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrMpiPersonID" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

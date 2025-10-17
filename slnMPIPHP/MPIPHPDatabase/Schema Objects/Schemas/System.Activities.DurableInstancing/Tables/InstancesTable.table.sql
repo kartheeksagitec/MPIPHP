@@ -1,0 +1,28 @@
+﻿CREATE TABLE [System.Activities.DurableInstancing].[InstancesTable] (
+    [Id]                               UNIQUEIDENTIFIER NOT NULL,
+    [SurrogateInstanceId]              BIGINT           IDENTITY (1, 1) NOT NULL,
+    [SurrogateLockOwnerId]             BIGINT           NULL,
+    [PrimitiveDataProperties]          VARBINARY (MAX)  DEFAULT (NULL) NULL,
+    [ComplexDataProperties]            VARBINARY (MAX)  DEFAULT (NULL) NULL,
+    [WriteOnlyPrimitiveDataProperties] VARBINARY (MAX)  DEFAULT (NULL) NULL,
+    [WriteOnlyComplexDataProperties]   VARBINARY (MAX)  DEFAULT (NULL) NULL,
+    [MetadataProperties]               VARBINARY (MAX)  DEFAULT (NULL) NULL,
+    [DataEncodingOption]               TINYINT          DEFAULT ((0)) NULL,
+    [MetadataEncodingOption]           TINYINT          DEFAULT ((0)) NULL,
+    [Version]                          BIGINT           NOT NULL,
+    [PendingTimer]                     DATETIME         NULL,
+    [CreationTime]                     DATETIME         NOT NULL,
+    [LastUpdated]                      DATETIME         DEFAULT (NULL) NULL,
+    [WorkflowHostType]                 UNIQUEIDENTIFIER NULL,
+    [ServiceDeploymentId]              BIGINT           NULL,
+    [SuspensionExceptionName]          NVARCHAR (450)   DEFAULT (NULL) NULL,
+    [SuspensionReason]                 NVARCHAR (MAX)   DEFAULT (NULL) NULL,
+    [BlockingBookmarks]                NVARCHAR (MAX)   DEFAULT (NULL) NULL,
+    [LastMachineRunOn]                 NVARCHAR (450)   DEFAULT (NULL) NULL,
+    [ExecutionStatus]                  NVARCHAR (450)   DEFAULT (NULL) NULL,
+    [IsInitialized]                    BIT              DEFAULT ((0)) NULL,
+    [IsSuspended]                      BIT              DEFAULT ((0)) NULL,
+    [IsReadyToRun]                     BIT              DEFAULT ((0)) NULL,
+    [IsCompleted]                      BIT              DEFAULT ((0)) NULL
+);
+

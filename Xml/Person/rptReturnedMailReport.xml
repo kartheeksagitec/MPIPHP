@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptReturnedMailReport" sfwActive="True" sfwDescription="Returned Mail Report" sfwStatus="Review" sfwResource="200 " sfwType="Report" sfwReportName="rptReturnedMailReport.rdlc" sfwReportCategory="Reports" version="4.0">
+  <initialload>
+    <query sfwQueryRef="entReturnedMail.LoadDataForReturnedMailReport" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="START DATE : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="START_DATE" sfwDataType="DateTime" />
+        <CompareValidator ErrorMessage="From Date must be in mm/dd/yyyy format." ID="valStartDate" Text="*" Type="Date" ControlToValidate="START_DATE" Operator="DataTypeCheck" />
+        <RequiredFieldValidator ID="rfvStartDate" Text="*" ControlToValidate="START_DATE" ErrorMessage="Start Date is Required" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="END DATE : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="END_DATE" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+        <CompareValidator ControlToValidate="END_DATE" ID="valEndDate" Text="*" ErrorMessage="To Date must be in mm/dd/yyyy format." Type="Date" Operator="DataTypeCheck" />
+        <CompareValidator ErrorMessage="To Date cannot be less than Start Date." ID="valDateRange" Text="*" Type="Date" ControlToCompare="START_DATE" ControlToValidate="END_DATE" Operator="GreaterThanEqual" />
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

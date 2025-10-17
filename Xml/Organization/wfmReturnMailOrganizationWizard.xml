@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmReturnMailOrganizationWizard" sfwActive="True" sfwDescription="Return Mail" sfwRemoteObject="srvOrganization" sfwResource="604 " sfwType="Wizard" sfwTitle="Organization Return Mail Wizard" WebSite="MPIPHPWebClient" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" sfwEntity="entReturnedMail">
+  <initialload>
+    <callmethods sfwMethodName="NewReturnedMail" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn />
+      <sfwColumn>
+        <sfwWizard ID="wizMain" ActiveStepIndex="0" DisplaySideBar="False" Width="100%">
+          <WizardSteps>
+            <sfwWizardStep ID="wzsGetMpid" sfwShowInHeader="True" sfwRulesGroup="Step0_ORG">
+              <sfwTable ID="tblStep" CssClass="Table">
+                <sfwRow>
+                  <sfwColumn />
+                  <sfwColumn />
+                  <sfwColumn />
+                  <sfwColumn />
+                </sfwRow>
+                <sfwRow>
+                  <sfwColumn>
+                    <sfwButton ID="btnNextStep2" sfwMethodName="btnWizardNext_Click" Text="Next" sfwMessageId="6320" />
+                  </sfwColumn>
+                  <sfwColumn />
+                  <sfwColumn />
+                  <sfwColumn />
+                </sfwRow>
+                <sfwRow>
+                  <sfwColumn ColumnSpan="4" CssClass="setNoteFontSize">
+                    <sfwPanel ID="pnlNewPanel" sfwCaption="Search">
+                      <sfwTable ID="tblNewPage">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtMpiOrgId" ID="capMpiOrgId" Text="MPI Organization ID : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtMpiOrgId" sfwDataField="mpi_org_id" sfwOperator="like" sfwQueryID="cdoOrganization" sfwEntityField="objLookupOrganization.MpiOrgId" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtOrgName" ID="capOrgName" Text="Organization Name : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtOrgName" sfwDataField="org_name" sfwOperator="like" sfwQueryID="cdoOrganization" sfwEntityField="objLookupOrganization.OrgName" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                            <sfwLabel AssociatedControlID="ddlOrgTypeValue" ID="capOrgTypeValue" Text="Organization Type : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlOrgTypeValue" sfwDataField="org_type_value" sfwOperator="like" sfwQueryID="cdoOrganization" sfwLoadType="CodeGroup" sfwLoadSource="201" sfwEntityField="objLookupOrganization.OrgTypeValue" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtPhoneNo" ID="capPhoneNo" Text="Phone Number : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtPhoneNo" sfwDataField="phone_no" sfwDataFormat="{0:(###)###-####}" sfwOperator="like" sfwQueryID="cdoOrganization" sfwEntityField="objLookupOrganization.PhoneNo" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="ddlStatusValue" ID="capStatusValue" Text="Status : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlStatusValue" sfwDataField="ORG.status_value" sfwOperator="like" sfwQueryID="cdoOrganization" sfwLoadType="CodeGroup" sfwLoadSource="10" sfwEntityField="objLookupOrganization.StatusValue" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtRoutingNumber" ID="capRoutingNumber" Text="Routing Number : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtRoutingNumber" sfwDataField="routing_number" sfwOperator="like" sfwQueryID="cdoOrganization" sfwTwoWayBinding="False" sfwEntityField="objLookupOrganization.RoutingNumber" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblAdd1" Text="Address Line 1" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtTextBox" sfwDataField="addr_line_1" sfwQueryID="cdoOrganization" sfwEntityField="objLookupOrganization.objOrgAddress.AddrLine1" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lbladd2" Text="Address Line 2" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtTextBox1" sfwDataField="addr_line_2" sfwQueryID="cdoOrganization" sfwEntityField="objLookupOrganization.objOrgAddress.AddrLine2" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblcity1" Text="City" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtTextBox2" sfwDataField="city" sfwQueryID="cdoOrganization" sfwEntityField="objLookupOrganization.objOrgAddress.City" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel2" Text="State : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlDropDownList" sfwDataField="state_value" sfwOperator="like" sfwQueryID="cdoOrganization" sfwLoadType="CodeGroup" sfwLoadSource="150" sfwEntityField="objLookupOrganization.objOrgAddress.StateValue" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel3" Text="Country: " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlDropDownList1" sfwDataField="country_value" sfwOperator="like" sfwQueryID="cdoOrganization" sfwLoadType="CodeGroup" sfwLoadSource="151" sfwEntityField="objLookupOrganization.objOrgAddress.CountryValue" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblforie" Text="Foreign Province" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtTextBox3" sfwDataField="foreign_province" sfwQueryID="cdoOrganization" sfwEntityField="objLookupOrganization.objOrgAddress.ForeignProvince" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblforiec" Text="Foreign Postal Code" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtTextBox4" sfwDataField="foreign_postal_code" sfwQueryID="cdoOrganization" sfwEntityField="objLookupOrganization.objOrgAddress.ForeignPostalCode" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtOrgId" sfwDataField="org_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoOrganization" Visible="False" sfwEntityField="objLookupOrganization.objOrgAddress.OrgId" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="6">
+                            <sfwButton ID="btnSearch" sfwMethodName="btnGridSearch_Click" Text="Search" sfwRelatedControl="dgrResult" sfwNavigationParameter="txtMpiOrgId;txtOrgName;ddlOrgTypeValue;txtPhoneNo;ddlStatusValue;txtRoutingNumber;txtTextBox;txtTextBox1;txtTextBox2;ddlDropDownList;ddlDropDownList1;txtTextBox3;txtTextBox4;txtOrgId" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwPanel>
+                  </sfwColumn>
+                </sfwRow>
+                <sfwRow>
+                  <sfwColumn ColumnSpan="4">
+                    <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwBaseQuery="entOrganization.LooupForReturnMail" sfwTwoWayBinding="True" AllowEditing="True" sfwEntityField="lstOrganization" sfwGridEntity="entOrganization">
+                      <Columns>
+                        <TemplateField>
+                          <ItemTemplate>
+                            <sfwCheckBox sfwEntityField="IstrSelectedFlag" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="ID" Visible="False">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="OrgId" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="MPI Organization ID">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="MpiOrgId" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Organization Name">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="OrgName" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Address">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="objOrgAddress.IstrFullAddress" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Phone No">
+                          <ItemTemplate>
+                            <sfwLabel sfwDataFormat="{0:(###)###-####}" sfwEntityField="PhoneNo" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="City">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="objOrgAddress.City" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="State">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="objOrgAddress.StateDescription" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Foreign Postal Code">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="objOrgAddress.ForeignPostalCode" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Country">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="objOrgAddress.CountryDescription" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Start Date">
+                          <ItemTemplate>
+                            <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objOrgAddress.StartDate" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="End Date">
+                          <ItemTemplate>
+                            <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objOrgAddress.EndDate" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Foreign Province">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="objOrgAddress.ForeignProvince" />
+                          </ItemTemplate>
+                        </TemplateField>
+                      </Columns>
+                    </sfwGridView>
+                  </sfwColumn>
+                </sfwRow>
+              </sfwTable>
+            </sfwWizardStep>
+            <sfwWizardStep ID="wzsStepAddReturnMailType" sfwShowInHeader="True" sfwNextButton="btnSaveAndNext" sfwPreviousButton="btnPrevious" sfwRulesGroup="Step1">
+              <sfwTable ID="tblStep1" CssClass="Table">
+                <sfwRow>
+                  <sfwColumn>
+                    <sfwLabel ID="capDocumentTypeValue" Text="Document Type : " AssociatedControlID="ddlDocumentTypeValue" sfwIsCaption="True" />
+                  </sfwColumn>
+                  <sfwColumn>
+                    <sfwDropDownList ID="ddlDocumentTypeValue" DataTextField="doc_type" DataValueField="doc_id" sfwClientVisibility="controllist:capOtherDocumentType,txtOtherDocumentType#0,PEND:capOtherDocumentType,txtOtherDocumentType;" sfwLoadType="Query" sfwLoadSource="entDocument.LoadDocumentType" sfwEntityField="DocIdSource" />
+                  </sfwColumn>
+                  <sfwColumn>
+                    <sfwLabel ID="capOtherDocumentType" Text="Other Document Type : " sfwIsCaption="True" />
+                  </sfwColumn>
+                  <sfwColumn>
+                    <sfwTextBox ID="txtOtherDocumentType" sfwEntityField="OtherDocumentType" />
+                  </sfwColumn>
+                </sfwRow>
+                <sfwRow>
+                  <sfwColumn>
+                    <sfwLabel ID="capReturnedMailDate" Text="Returned Mail Date : " AssociatedControlID="txtReturnedMailDate" sfwIsCaption="True" />
+                  </sfwColumn>
+                  <sfwColumn>
+                    <sfwTextBox ID="txtReturnedMailDate" sfwDataFormat="{0:d}" sfwEntityField="ReturnedMailDate" />
+                  </sfwColumn>
+                  <sfwColumn>
+                    <sfwLabel ID="capReasonValue" Text="Reason : " AssociatedControlID="ddlReasonValue" sfwIsCaption="True" />
+                  </sfwColumn>
+                  <sfwColumn CssClass="full-width">
+                    <sfwDropDownList ID="ddlReasonValue" DataTextField="description" DataValueField="code_value" sfwLoadType="CodeGroup" sfwLoadSource="7079" sfwEntityField="ReasonValue" />
+                  </sfwColumn>
+                </sfwRow>
+                <sfwRow>
+                  <sfwColumn>
+                    <sfwLabel ID="capNotes" Text="Notes : " AssociatedControlID="txtNotes" sfwIsCaption="True" />
+                  </sfwColumn>
+                  <sfwColumn ColumnSpan="3">
+                    <sfwTextBox ID="txtNotes" Rows="5" TextMode="MultiLine" Width="750px" sfwEntityField="Notes" />
+                  </sfwColumn>
+                </sfwRow>
+                <sfwRow>
+                  <sfwColumn>
+                    <sfwButton ID="btnPrevious" sfwMethodName="btnWizardPrevious_Click" Text="Previous" sfwMessageId="6321" />
+                    <sfwButton ID="btnSaveAndNext" sfwMethodName="btnWizardSaveAndNext_Click" Text="Next" sfwNavigationParameter="aint_returned_mail_id=ReturnedMailId" sfwMessageId="6322" />
+                  </sfwColumn>
+                  <sfwColumn />
+                  <sfwColumn />
+                  <sfwColumn>
+                    <sfwLabel ID="lblReturnedMailId" sfwEntityField="ReturnedMailId" />
+                  </sfwColumn>
+                </sfwRow>
+              </sfwTable>
+            </sfwWizardStep>
+            <sfwWizardStep ID="wzsReviewUpdateAddress" sfwShowInHeader="True" sfwRulesGroup="Step2_ORG">
+              <sfwTable ID="tblStep11" CssClass="Table">
+                <sfwRow>
+                  <sfwColumn>
+                    <sfwTextBox ID="txtAddressId" sfwEntityField="OrgAddressId" CssClass="hideControl" />
+                  </sfwColumn>
+                </sfwRow>
+                <sfwRow>
+                  <sfwColumn>
+                    <sfwGridView ID="grvBusOrgAddress" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwEntityField="lstOrgAddress" sfwGridEntity="entOrgAddress">
+                      <Columns>
+                        <TemplateField HeaderText="Return Flag">
+                          <ItemTemplate>
+                            <sfwCheckBox sfwEntityField="IsReturnFlag" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Address Type">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="AddressTypeDescription" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Address">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="IstrFullAddress" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Org Address ID" Visible="False">
+                          <ItemTemplate>
+                            <sfwLabel sfwEntityField="OrgAddressId" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="Start Date">
+                          <ItemTemplate>
+                            <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+                          </ItemTemplate>
+                        </TemplateField>
+                        <TemplateField HeaderText="End Date">
+                          <ItemTemplate>
+                            <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                          </ItemTemplate>
+                        </TemplateField>
+                      </Columns>
+                    </sfwGridView>
+                  </sfwColumn>
+                </sfwRow>
+                <sfwRow>
+                  <sfwColumn>
+                    <sfwButton ID="btnFinish" sfwMethodName="btnWizardFinish_Click" Text="Finish" sfwActiveForm="wfmReturnMailOrganizationWizard" sfwNavigationParameter="aintorgid=objOrganization.OrgId" />
+                    <sfwButton ID="btnButton" sfwMethodName="FinishReturnMailWizard" Text="Finish" Visible="False" />
+                  </sfwColumn>
+                </sfwRow>
+              </sfwTable>
+            </sfwWizardStep>
+          </WizardSteps>
+          <HeaderTemplate>
+            <sfwTable ID="tblHeaderTemplate" CssClass="Table">
+              <sfwRow>
+                <sfwColumn />
+                <sfwColumn />
+                <sfwColumn />
+                <sfwColumn />
+              </sfwRow>
+            </sfwTable>
+          </HeaderTemplate>
+          <SideBarTemplate>
+            <sfwTable />
+          </SideBarTemplate>
+        </sfwWizard>
+      </sfwColumn>
+      <sfwColumn />
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objLookupOrganization" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objLookupOrganization.objOrgAddress" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstOrganization" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstOrgAddress" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

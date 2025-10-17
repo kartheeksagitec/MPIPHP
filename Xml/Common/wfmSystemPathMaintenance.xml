@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmSystemPathMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207 " sfwType="Maintenance" sfwTitle="System Path Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Create System Path=Create System Path.htm;Update System Path=Update System Path.htm;Delete System Path=Delete System Path.htm" sfwEntity="entSystemPaths">
+  <initialload>
+    <session>
+      <field ID="path_code" sfwEntityField="PathCode" />
+      <field ID="path_value" sfwEntityField="PathValue" />
+    </session>
+    <callmethods sfwMethodName="FindPath" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintPathId=PathId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Relative Path Details ">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPathID" Text="Path ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblPathId" sfwEntityField="PathId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="cap" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capPathCode" Text="Path Code :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPathCode" sfwEntityField="PathCode" />
+                <RequiredFieldValidator ControlToValidate="txtPathCode" ErrorMessage="Path Code is required" ID="id" Text="*" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="cap1" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capRelativePath" Text="Relative Path :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbPathValue" Width="500px" sfwEntityField="PathValue" />
+                <RequiredFieldValidator ControlToValidate="txbPathValue" ErrorMessage="Relative path is required" ID="id1" Text="*" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="cap2" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capDescription" Text="Description :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbPathDescription" Width="500px" sfwEntityField="PathDescription" />
+                <RequiredFieldValidator ControlToValidate="txbPathDescription" ErrorMessage="Description is required" ID="id2" Text="*" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

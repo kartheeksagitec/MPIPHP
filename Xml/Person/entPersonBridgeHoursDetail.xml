@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPersonBridgeHoursDetail" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoPersonBridgeHoursDetail" sfwObjectID="busPersonBridgeHoursDetail" sfwTableName="sgt_person_bridge_hours_detail" sfwView="False" sfwDataObjectID="doPersonBridgeHoursDetail">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetPersonBridgeDetail" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT * FROM SGT_PERSON_BRIDGE_HOURS_DETAIL where PERSON_BRIDGE_ID=@PERSON_BRIDGE_ID ORDER BY COMPUTATION_YEAR">
+      <parameters>
+        <parameter ID="@PERSON_BRIDGE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="Get1VestedHourYearAfter1999" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select top 1 SPBHD.COMPUTATION_YEAR from SGT_PERSON_BRIDGE_HOURS SPBH&#xD;&#xA;inner join SGT_PERSON_BRIDGE_HOURS_DETAIL SPBHD&#xD;&#xA;on SPBH.PERSON_BRIDGE_ID=SPBHD.PERSON_BRIDGE_ID&#xD;&#xA;where SPBH.PERSON_ID = @PERSON_ID and SPBHD.HOURS &gt; 0 AND SPBHD.COMPUTATION_YEAR &gt;= 2000&#xD;&#xA;order by SPBHD.COMPUTATION_YEAR asc&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadBridgedDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select *,BRIDGE_TYPE_VALUE  from SGT_PERSON_BRIDGE_HOURS_DETAIL SPBHD WITH(NOLOCK)&#xD;&#xA;JOIN SGT_PERSON_BRIDGE_HOURS SPBH WITH(NOLOCK) ON SPBH.PERSON_BRIDGE_ID = SPBHD.PERSON_BRIDGE_ID&#xD;&#xA;WHERE PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="person_bridge_hours_detail_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonBridgeHoursDetailId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="person_bridge_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonBridgeId" sfwIsSequence="False" sfwCaption="Person Bridge Id" />
+    <attribute sfwValue="computation_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ComputationYear" sfwIsSequence="False" sfwCaption="Computation Year" />
+    <attribute sfwValue="hours" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="18,1" sfwIsNull="True" ID="Hours" sfwIsSequence="False" sfwCaption="Hours" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="from_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="FromDate" sfwIsSequence="False" sfwCaption="From Date" />
+    <attribute sfwValue="to_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ToDate" sfwIsSequence="False" sfwCaption="To Date" />
+  </attributes>
+</entity>

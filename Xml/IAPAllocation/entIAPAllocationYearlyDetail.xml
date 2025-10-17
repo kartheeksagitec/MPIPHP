@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entIAPAllocationYearlyDetail" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPerson" sfwObjectID="busIAPAllocationYearlyDetail" sfwParentEntity="entPerson">
+  <rules>
+    <rule ID="VisibleRule-AffiliateFlag" sfwExpression="(!string.IsNullOrEmpty(this.istrAffiliate))" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-AffiliateFlag" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="PersonId" sfwValue="icdoPerson.person_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="MpiPersonId" sfwValue="icdoPerson.mpi_person_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrFullName" sfwValue="icdoPerson.istrFullName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLast4DigitsofSSN" sfwValue="icdoPerson.istrLast4DigitsofSSN" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateofBirth" sfwValue="icdoPerson.idtDateofBirth" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrAffiliate" sfwValue="istrAffiliate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrTransactionType" sfwValue="istrTransactionType" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrContributionType" sfwValue="istrContributionType" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrContributionSubType" sfwValue="istrContributionSubType" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoPerson.created_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoPerson.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoPerson.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoPerson.modified_date" />
+  </attributes>
+  <objectmethods>
+    <method ID="btn_ApplyFilter" sfwReturnType="ArrayList" />
+  </objectmethods>
+</entity>

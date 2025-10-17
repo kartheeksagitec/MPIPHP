@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptIAPCountsandAmountsbyMonthReport" sfwActive="True" sfwDescription="IAP Payment Count and Amount by Month Report" sfwStatus="Review" sfwResource="505 " sfwType="Report" sfwReportName="rptIAPCountsandAmountsbyMonthReport.rdlc" sfwReportCategory="Reports" version="4.0">
+  <initialload>
+    <query sfwQueryRef="cdoTempdata.rptIAPCounts&amp;AmountsbyMonthReport" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="From Date : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="FROM" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+        <CompareValidator ControlToValidate="FROM" ErrorMessage="From Date must be in mm/dd/yyyy format." ID="valFromDate" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="FROM" ErrorMessage="From Date is Required" ID="rfvFromDate" Text="*" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="To Date : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="TO" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+        <CompareValidator ControlToValidate="TO" ErrorMessage="To Date must be in mm/dd/yyyy format." ID="valToDate" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <CompareValidator ControlToCompare="FROM" ControlToValidate="TO" ErrorMessage="To Date cannot be less than From Date." ID="valDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="TO" ErrorMessage="To Date is Required" ID="rfvToDate" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

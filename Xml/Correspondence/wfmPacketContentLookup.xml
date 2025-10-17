@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmPacketContentLookup" WebSite="MPIPHPWebClient" sfwResource="400 " sfwFormObject="busCorPacketContent" sfwType="Lookup" sfwTitle="Packet Content Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmPacketContentLookup" sfwEntity="entCorPacketContent" sfwGridCollection="busLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoCorPacketContent" sfwQueryRef="entCorPacketContent.LookUp" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria" CssClass="packetContectLookup">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPacketName" Text="Packet Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPacketName" sfwQueryID="cdoCorPacketContent" sfwDataField="ctp.template_name" sfwOperator="like" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capPacketDesc" Text="Packet Desc : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="txtPacketDesc" sfwQueryID="cdoCorPacketContent" sfwDataField="ctp.template_desc" sfwOperator="like" DataTextField="template_desc" DataValueField="template_desc" sfwLoadType="Query" sfwLoadSource="entCorPacketContent.GetPacketInfo" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIstrdoctemplatename" Text="Document Template Name : " AssociatedControlID="txtIstrdoctemplatename" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIstrdoctemplatename" sfwDataField="CTD.TEMPLATE_NAME" sfwQueryID="cdoCorPacketContent" sfwOperator="like" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Image/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="packetContectLookup">
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Packet Template Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPacketTemplateName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Template Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPacketTemplateDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Doc Template Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrDocTemplateName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Doc Template Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrDocTemplateDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

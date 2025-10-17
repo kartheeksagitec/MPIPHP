@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmPayeeAccountStatusMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="206" sfwType="Maintenance" sfwTitle="Payee Account Status Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entPayeeAccount">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindPayeeAccountStatusDetails" />
+    <callmethods sfwMode="Update" sfwMethodName="FindPayeeAccountStatusDetails" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" sfwResource="335" Text="Correspondence" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Payee Information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPayeeAccountId" Text="Payee Account ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnPayeeAccountId" sfwActiveForm="wfmPayeeAccountMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPayeeAccountId=PayeeAccountId" sfwEntityField="PayeeAccountId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPersonId" SkinID="textBoxDisplayStyleNone" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtOrgId" SkinID="textBoxDisplayStyleNone" sfwEntityField="OrgId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMpiPersonId" sfwVisibleRule="VisibleRule-PayeeID" Text="Payee MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMpiPersonId" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=PersonId" sfwVisibleRule="VisibleRule-PayeeID" sfwEntityField="objPayee.MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" sfwVisibleRule="VisibleRule-PayeeID" Text="Payee Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwVisibleRule="VisibleRule-PayeeID" sfwEntityField="objPayee.IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMpiOrgId" sfwVisibleRule="VisibleRule-OrgID" Text="Organization ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMpiOrgId" sfwActiveForm="wfmOrganizationMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintorgid=OrgId" sfwVisibleRule="VisibleRule-OrgID" sfwEntityField="objOrganization.MpiOrgId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capOrgName" sfwVisibleRule="VisibleRule-OrgID" Text="Organization Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgName" sfwVisibleRule="VisibleRule-OrgID" sfwEntityField="objOrganization.OrgName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblBenefitAccountTypeDescription" ID="capBenefitAccountTypeDescription" Text="Benefit Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBenefitAccountTypeDescription" sfwEntityField="BenefitAccountTypeDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblRetirementTypeDescription" ID="capRetirementTypeDescription" Text="Retirement Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblRetirementTypeDescription" sfwEntityField="RetirementTypeDescription" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Payee Account Status">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlStatusValue" ID="capStatusValue" Text="Payee Account Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" sfwRelatedGrid="grvPayeeAccountStatus" sfwLoadType="Items" sfwEntityField="StatusValue">
+                  <ListItem Text="Approved" Value="APRD" />
+                  <ListItem Text="Payments Completed" Value="CMPL" />
+                  <ListItem Text="Receiving" Value="RECV" />
+                  <ListItem Text="Review" Value="REVW" />
+                  <ListItem Text="Suspended" Value="SPND" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatusEffectiveDate" Text="Status Effective Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusEffectiveDate" sfwRelatedGrid="grvPayeeAccountStatus" sfwEntityField="StatusEffectiveDate" sfwDataFormat="{0:G}" EnableViewState="False" />
+                <sfwTextBox ID="txtStatusEffectiveDate" sfwEntityField="StatusEffectiveDate" sfwRelatedGrid="grvPayeeAccountStatus" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlTerminatedStatusReasonValue" ID="capTerminatedStatusReasonValue" Text="Termination Reason : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlTerminatedStatusReasonValue" sfwClientVisibility="controllist:capTerminationReasonDescription,txtTerminationReasonDescription,lblLabelReqFld1#OTHR:capTerminationReasonDescription,txtTerminationReasonDescription,lblLabelReqFld1;" sfwRelatedGrid="grvPayeeAccountStatus" sfwLoadType="CodeGroup" sfwLoadSource="7009" sfwEntityField="TerminatedStatusReasonValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlSuspensionStatusReasonValue" ID="capSuspensionStatusReasonValue" Text="Suspension Reason : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlSuspensionStatusReasonValue" sfwClientVisibility="controllist:txtSuspensionStatusReasonDescription,capSuspensionStatusReasonDescription,lblLabelReqFld2#OTHR:txtSuspensionStatusReasonDescription,capSuspensionStatusReasonDescription,lblLabelReqFld2;default:;" sfwRelatedGrid="grvPayeeAccountStatus" sfwLoadType="CodeGroup" sfwLoadSource="7008" sfwEntityField="SuspensionStatusReasonValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabelReqFld1" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtTerminationReasonDescription" ID="capTerminationReasonDescription" Text="Termination Reason Description : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTerminationReasonDescription" sfwRelatedGrid="grvPayeeAccountStatus" TextMode="MultiLine" sfwEntityField="TerminationReasonDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabelReqFld2" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtSuspensionStatusReasonDescription" ID="capSuspensionStatusReasonDescription" Text="Suspension Reason Description : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSuspensionStatusReasonDescription" sfwRelatedGrid="grvPayeeAccountStatus" TextMode="MultiLine" sfwEntityField="SuspensionReasonDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnAdd" sfwMethodName="btnGridViewAdd_Click" sfwNavigationParameter="StatusValue;StatusEffectiveDate;TerminatedStatusReasonValue;SuspensionStatusReasonValue;TerminationReasonDescription;SuspensionReasonDescription" sfwRelatedControl="grvPayeeAccountStatus" Text="Add" sfwToolBarGrid="grvPayeeAccountStatus" sfwToolBarGridImage="StaticResources/neoGrid-images/btnNew_Click.png" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="4">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPayeeAccountStatus" sfwAllowNew="True" sfwEntityField="lstPayeeAccountStatus" sfwGridEntity="entPayeeAccountStatus">
+                  <Columns>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwDataField="icdoPayeeAccountStatus.status_description" sfwMethodName="btnGridViewSelect_Click" sfwRelatedControl="grvPayeeAccountStatus" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status Effective Date" ItemStyle.Wrap="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusEffectiveDate" sfwDataFormat="{0:G}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Termination Status Reason">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TerminatedStatusReasonDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Suspension Status Reason">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SuspensionStatusReasonDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee Account Status ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PayeeAccountStatusId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified By" SortExpression="CreatedBy" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="CreatedBy" HeaderText="Created By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPayee" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objOrganization" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstPayeeAccountStatus" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

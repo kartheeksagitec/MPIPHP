@@ -1,0 +1,77 @@
+﻿<entity ID="entPayeeBenefitAccount" sfwMainCDO="icdoPayeeBenefitAccount" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busPayeeBenefitAccount" sfwTableName="sgt_payee_benefit_account" sfwView="False" sfwDataObjectID="doPayeeBenefitAccount">
+  <queries>
+    <query ID="GetBenefitAccountID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP 1 SGT_PAYEE_BENEFIT_ACCOUNT.PAYEE_BENEFIT_ACCOUNT_ID FROM SGT_PAYEE_BENEFIT_ACCOUNT &#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT ON SGT_PAYEE_BENEFIT_ACCOUNT.PAYEE_BENEFIT_ACCOUNT_ID=SGT_PAYEE_ACCOUNT.PAYEE_BENEFIT_ACCOUNT_ID &#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_STATUS ON SGT_PAYEE_ACCOUNT.PAYEE_ACCOUNT_ID = SGT_PAYEE_ACCOUNT_STATUS.PAYEE_ACCOUNT_ID &#xD;&#xA;WHERE SGT_PAYEE_BENEFIT_ACCOUNT.PERSON_ACCOUNT_ID=@PERSON_ACCOUNT_ID &#xD;&#xA;AND SGT_PAYEE_ACCOUNT_STATUS.STATUS_VALUE&lt;&gt;'CNCL' AND SGT_PAYEE_BENEFIT_ACCOUNT.FUNDS_TYPE_VALUE=@FUNDS_TYPE_VALUE&#xD;&#xA;&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PERSON_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@FUNDS_TYPE_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetPayeeBenefitAccount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT  * FROM SGT_PAYEE_BENEFIT_ACCOUNT WHERE PAYEE_BENEFIT_ACCOUNT_ID = @PAYEE_BENEFIT_ACCOUNT_ID">
+      <parameters>
+        <parameter ID="@PAYEE_BENEFIT_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitAccountIdWithoutFundType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select top 1 pba.PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;from dbo.SGT_PAYEE_BENEFIT_ACCOUNT pba&#xD;&#xA;inner join dbo.SGT_PAYEE_ACCOUNT pac on pac.PAYEE_BENEFIT_ACCOUNT_ID = pba.PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;cross apply(select isnull(pac.BENEFIT_APPLICATION_DETAIL_ID, isnull(pac.DRO_APPLICATION_DETAIL_ID, 0)) APPLICATION_DETAIL_ID) p1&#xD;&#xA;cross apply (select case when @BENEFIT_APPLICATION_DETAIL_ID &gt; 0 then @BENEFIT_APPLICATION_DETAIL_ID else @DRO_APPLICATION_DETAIL_ID end APPLICATION_DETAIL_ID) p2&#xD;&#xA;cross apply(&#xD;&#xA;&#x9;select top 1 with ties pas.STATUS_VALUE PAYEE_ACCOUNT_STATUS&#xD;&#xA;&#x9;from dbo.SGT_PAYEE_ACCOUNT_STATUS pas&#xD;&#xA;&#x9;where 1=1&#xD;&#xA;&#x9;&#x9;and pas.PAYEE_ACCOUNT_ID = pac.PAYEE_ACCOUNT_ID&#xD;&#xA;&#x9;order by pas.STATUS_EFFECTIVE_DATE desc&#xD;&#xA;) pas&#xD;&#xA;where 1=1&#xD;&#xA;&#x9;and isnull(pba.FUNDS_TYPE_VALUE, '') = ''&#xD;&#xA;&#x9;and pas.PAYEE_ACCOUNT_STATUS &lt;&gt; 'CNCL'&#xD;&#xA;&#x9;and pba.PERSON_ACCOUNT_ID = @PERSON_ACCOUNT_ID&#xD;&#xA;&#x9;and case when p2.APPLICATION_DETAIL_ID &gt; 0 then p1.APPLICATION_DETAIL_ID else 0 end = p2.APPLICATION_DETAIL_ID">
+      <parameters>
+        <parameter ID="@PERSON_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@BENEFIT_APPLICATION_DETAIL_ID" sfwDataType="int" />
+        <parameter ID="@DRO_APPLICATION_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOthActiveBeneficiary" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Declare @PAYEE_BENEFIT_ACCOUNT_ID int&#xD;&#xA;SELECT @PAYEE_BENEFIT_ACCOUNT_ID=PBA.PAYEE_BENEFIT_ACCOUNT_ID FROM SGT_PAYEE_BENEFIT_ACCOUNT PBA&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT PA &#xD;&#xA;ON PBA.PAYEE_BENEFIT_ACCOUNT_ID=PA.PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_STATUS PAS &#xD;&#xA;ON PAS.PAYEE_ACCOUNT_ID=PA.PAYEE_ACCOUNT_ID&#xD;&#xA;WHERE PA.PAYEE_ACCOUNT_ID=@PAYEE_ACCOUNT_ID &#xD;&#xA;&#xD;&#xA;SELECT PA.* FROM SGT_PAYEE_BENEFIT_ACCOUNT PBA&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT PA &#xD;&#xA;ON PBA.PAYEE_BENEFIT_ACCOUNT_ID=PA.PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_STATUS PAS &#xD;&#xA;ON PAS.PAYEE_ACCOUNT_ID=PA.PAYEE_ACCOUNT_ID &#xD;&#xA;AND PAS.PAYEE_ACCOUNT_STATUS_ID=&#xD;&#xA;(SELECT TOP 1 PAYEE_ACCOUNT_STATUS_ID&#xD;&#xA;   FROM SGT_PAYEE_ACCOUNT_STATUS PAS1 (nolock)&#xD;&#xA;   WHERE PAS1.PAYEE_ACCOUNT_ID = PA.PAYEE_ACCOUNT_ID&#xD;&#xA;   ORDER BY PAS1.STATUS_EFFECTIVE_DATE DESC,PAS1.PAYEE_ACCOUNT_STATUS_ID DESC&#xD;&#xA;  )&#xD;&#xA;&#xD;&#xA;WHERE PBA.PAYEE_BENEFIT_ACCOUNT_ID=@PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;AND PAS.STATUS_VALUE NOT IN ('CNCL','CMPL')&#xD;&#xA;AND PA.ACCOUNT_RELATION_VALUE='BENE'">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPayeeBenefitAndPlanDetailsByPersonID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select  spba.*, spa.PLAN_ID from sgt_payee_benefit_account spba WITH(NOLOCK)&#xD;&#xA;join SGT_PERSON_ACCOUNT spa WITH(NOLOCK) on spa.PERSON_ACCOUNT_ID = spba.PERSON_ACCOUNT_ID&#xD;&#xA;where spba.PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="ActiveRetireeIncreasePayeeAccountDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPA.PAYEE_ACCOUNT_ID,&#xD;&#xA;SUM(CASE WHEN ITEM_TYPE_CODE = 'ITEM48'&#xD;&#xA;    THEN (PAPIT.AMOUNT * PIT.ITEM_TYPE_DIRECTION) ELSE 0 END)   AS GROSS_AMOUNT&#xD;&#xA;FROM SGT_PAYEE_ACCOUNT SPA WITH(NOLOCK)&#xD;&#xA;INNER JOIN SGT_PERSON SP WITH(NOLOCK) ON SP.PERSON_ID = SPA.PERSON_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE PAPIT WITH(NOLOCK) ON PAPIT.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT WITH(NOLOCK) ON PIT.PAYMENT_ITEM_TYPE_ID = PAPIT.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;WHERE &#xD;&#xA;SP.MPI_PERSON_ID = @MPI_PERSON_ID&#xD;&#xA;AND SPA.RETIREE_INCR_FLAG = 'Y' &#xD;&#xA;AND (YEAR(SPA.BENEFIT_BEGIN_DATE) = (SELECT TOP 1 PLAN_YEAR FROM SGT_ACTIVE_RETIREE_INCREASE_CONTRACT WITH(NOLOCK) &#xD;&#xA;WHERE EFFECTIVE_END_DATE IS NULL AND CONTRACT_STATUS_VALUE = 'APPR' &#xD;&#xA;ORDER BY PLAN_YEAR DESC&#xD;&#xA;) OR YEAR(SPA.BENEFIT_BEGIN_DATE) = @YEAR)&#xD;&#xA;--AND SPA.BENEFIT_END_DATE IS NULL -- To get Active Retiree Increase Payee Account &#xD;&#xA;GROUP BY SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@MPI_PERSON_ID" sfwDataType="string" />
+        <parameter ID="@YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOrgNamebyName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP(1)ORG_ID FROM SGT_ORGANIZATION SO WITH(NOLOCK)&#xD;&#xA;WHERE ORG_NAME = @ORG_NAME AND ORG_TYPE_VALUE = 'RLIT'">
+      <parameters>
+        <parameter ID="@ORG_NAME" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetEstimateLifeAnnuityAmount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT CASE WHEN CD.EARLY_REDUCED_BENEFIT_AMOUNT IS NULL THEN ISNULL(CD.UNREDUCED_BENEFIT_AMOUNT,0) ELSE ISNULL(CD.EARLY_REDUCED_BENEFIT_AMOUNT,0) END AS EST_LIFE_ANNUITY_AMOUNT&#xD;&#xA;, ISNULL(CO.BENEFIT_AMOUNT,0) AS BENEFIT_AMOUNT, SPAS.STATUS_VALUE&#xD;&#xA;FROM SGT_PAYEE_ACCOUNT SPACC WITH(NOLOCK) INNER JOIN SGT_PAYEE_ACCOUNT_STATUS SPAS ON SPACC.PAYEE_ACCOUNT_ID = SPAS.PAYEE_ACCOUNT_ID AND &#xD;&#xA; SPAS.PAYEE_ACCOUNT_STATUS_ID = (SELECT TOP 1 Q.PAYEE_ACCOUNT_STATUS_ID FROM SGT_PAYEE_ACCOUNT_STATUS Q WHERE Q.PAYEE_ACCOUNT_ID = SPACC.PAYEE_ACCOUNT_ID ORDER BY Q.STATUS_EFFECTIVE_DATE DESC)&#xD;&#xA;INNER JOIN SGT_PERSON P ON SPACC.PERSON_ID = P.PERSON_ID&#xD;&#xA;LEFT OUTER JOIN SGT_BENEFIT_CALCULATION_DETAIL CD ON SPACC.BENEFIT_CALCULATION_DETAIL_ID = CD.BENEFIT_CALCULATION_DETAIL_ID&#xD;&#xA;LEFT OUTER JOIN SGT_BENEFIT_CALCULATION_HEADER CH ON CD.BENEFIT_CALCULATION_HEADER_ID = CH.BENEFIT_CALCULATION_HEADER_ID&#xD;&#xA;LEFT OUTER JOIN SGT_BENEFIT_CALCULATION_OPTIONS CO ON CD.BENEFIT_CALCULATION_DETAIL_ID = CO.BENEFIT_CALCULATION_DETAIL_ID&#xD;&#xA;LEFT OUTER JOIN SGT_PLAN_BENEFIT_XR SPBXR WITH(NOLOCK) ON SPACC.PLAN_BENEFIT_ID = SPBXR.PLAN_BENEFIT_ID   &#xD;&#xA;WHERE ISNULL(RETIREE_INCR_FLAG,'N') = 'N' AND &#xD;&#xA;ACCOUNT_RELATION_VALUE = 'PART' AND SPBXR.BENEFIT_OPTION_VALUE IN ('JP50','JP75','JPOP') &#xD;&#xA;AND CH.STATUS_VALUE = 'APPR' AND SPACC.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="payee_benefit_account_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PayeeBenefitAccountId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="starting_taxable_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="StartingTaxableAmount" sfwIsSequence="False" sfwCaption="Starting Taxable Amount" />
+    <attribute sfwValue="starting_nontaxable_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="StartingNontaxableAmount" sfwIsSequence="False" sfwCaption="Starting Nontaxable Amount" />
+    <attribute sfwValue="person_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonAccountId" sfwIsSequence="False" sfwCaption="Person Account Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="gross_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="GrossAmount" sfwIsSequence="False" sfwCaption="Gross Amount" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonId" sfwIsSequence="False" sfwCaption="Person Id" />
+    <attribute sfwType="Description" ID="FundsTypeDescription" sfwCaption="Funds Type" sfwValue="funds_type_description" />
+    <attribute sfwValue="funds_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="FundsTypeId" sfwCodeID="7033" sfwIsSequence="False" sfwCaption="Funds Type" />
+    <attribute sfwValue="funds_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="FundsTypeValue" sfwIsSequence="False" sfwCaption="Funds Type" />
+  </attributes>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields />
+</entity>

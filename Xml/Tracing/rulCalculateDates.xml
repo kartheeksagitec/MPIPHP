@@ -1,0 +1,56 @@
+﻿<neorule sfwNodeID="e604454a-8c0d-4a6a-b98c-778713276755" ID="rulCalculateDates" sfwEntity="entAppMonitoring" sfwRuleType="LogicalRule" sfwStatus="Active" sfwStatic="False" sfwTrace="False" sfwCacheResult="False" sfwPrivate="False">
+  <logicalrule sfwNodeID="3caad80c-c62b-4c85-a8ce-747534cd4634">
+    <switch sfwNodeID="dc01d24e-1329-42e1-abb4-a5312ac8e5f6" sfwExpression="LastMinutes">
+      <case sfwNodeID="741e4655-4882-444c-9fff-df205ac7bbe7" sfwExpression="&gt;0">
+        <actions sfwNodeID="63797052-76c4-4e7f-923c-b11c13b333fb">
+          <action sfwNodeID="f0e909b1-e6c2-4ba6-9553-cdc2fa450844" sfwExpression="FromDate=RFunc.CurrentDateTime().AddMinutes(-LastMinutes)" />
+          <action sfwNodeID="79405732-60e3-4ae5-83e8-3608669ab233" sfwExpression="ToDate=RFunc.CurrentDateTime()" />
+        </actions>
+      </case>
+      <default sfwNodeID="ad62116f-4451-45fa-8a83-3eec50c0332b">
+        <switch sfwNodeID="68d8c31e-db0e-4bed-85bf-ff628dac1596" sfwExpression="LastDays">
+          <case sfwNodeID="9a6235d7-5d0a-41af-bcd8-a7b2db76b0d0" sfwExpression="&gt;0">
+            <switch sfwNodeID="b3214189-d0b9-4b5e-9ac2-537797292efe" sfwExpression="LastDays">
+              <case sfwNodeID="6c38e131-a9c7-4a3c-96cd-5674fb7823d8" sfwExpression="== 1">
+                <actions sfwNodeID="8eabebea-2f26-44e7-b022-ee78ea3d8e57">
+                  <action sfwNodeID="2478cd44-0fc8-4358-8ab6-638abbe010cb" sfwExpression="FromDate=RFunc.CurrentDate()" />
+                </actions>
+              </case>
+              <default sfwNodeID="12b1fd9c-400f-49df-b64f-c88d640ea079">
+                <actions sfwNodeID="beafbe14-b1d5-439a-9d10-6ce96bef3fd5">
+                  <action sfwNodeID="de8084aa-fa21-4d08-9c52-c15ab8a16137" sfwExpression="FromDate=RFunc.CurrentDateTime().AddDays(-(LastDays-1)).Date" />
+                </actions>
+              </default>
+              <items sfwNodeID="c7376ed1-73b7-4d17-887b-67fd42b9b1bd">
+                <actions sfwNodeID="808be328-7de6-4ae2-8cc2-ca346e5c6969">
+                  <action sfwNodeID="bacf6ff9-7b60-46d3-8be2-a9a03bc2e5da" sfwExpression="ToDate=RFunc.CurrentDateTime()" />
+                </actions>
+              </items>
+            </switch>
+          </case>
+          <default sfwNodeID="920d0c9c-4c39-4fb2-a8a7-8b48bb38a433">
+            <switch sfwNodeID="53c8bea5-0e48-47b5-81ee-b3e4624d1b2d" sfwExpression="FromDate">
+              <case sfwNodeID="816cac12-1854-4e0b-98e4-2ad4982a8581" sfwExpression="==RFunc.MinDateTime()">
+                <actions sfwNodeID="6f2a3af8-05e8-48da-847a-5f4ef49b48d1">
+                  <action sfwNodeID="c551bffc-4176-4065-8173-aac2aae4f49a" sfwExpression="FromDate=RFunc.CurrentDateTime().AddHours(-1)" />
+                </actions>
+              </case>
+              <default sfwNodeID="f126980f-a16d-4b20-b508-531fc5ca0bdc" />
+            </switch>
+            <switch sfwNodeID="1b930bdb-91e6-49a8-a661-0c223795aeee" sfwExpression="ToDate">
+              <case sfwNodeID="082f9acd-0b3a-410d-b246-060b0b1e7b05" sfwExpression="==RFunc.MinDateTime()">
+                <actions sfwNodeID="b7f1c472-69b7-4c7e-9e2d-11de5e095720">
+                  <action sfwNodeID="2de02f5f-6953-43a0-a9fa-0f8673956302" sfwExpression="ToDate=RFunc.CurrentDateTime()" />
+                </actions>
+              </case>
+              <default sfwNodeID="238c723a-9474-48c4-9e04-5bcc19b981b0" />
+            </switch>
+          </default>
+        </switch>
+      </default>
+    </switch>
+    <variables />
+  </logicalrule>
+  <ExtraFields />
+  <parameters />
+</neorule>

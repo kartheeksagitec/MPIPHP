@@ -1,0 +1,39 @@
+﻿<entity ID="entXmlDeploymentDetail" sfwView="False" sfwActive="True" sfwMainCDO="icdoXmlDeploymentDetail" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_xml_deployment_detail" sfwObjectID="busXmlDeploymentDetail" sfwDataObjectID="doXmlDeploymentDetail">
+  <attributes>
+    <attribute sfwValue="xml_deployment_detail_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="XmlDeploymentDetailId" sfwCaption="ID" />
+    <attribute sfwValue="deployment_header_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DeploymentHeaderId" sfwCaption="Deployment Header Id" />
+    <attribute sfwValue="xml_document_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="250" sfwIsNull="True" ID="XmlDocumentName" sfwCaption="Xml Document Name" />
+    <attribute sfwValue="cached_data" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="image" sfwDBDataType="image" sfwIsNull="True" ID="CachedData" sfwCaption="Cached Data" />
+    <attribute sfwValue="xml_document_hashcode" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="250" sfwIsNull="False" ID="XmlDocumentHashcode" sfwCaption="Xml Document Hashcode" />
+    <attribute sfwValue="detail_status" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="DetailStatus" sfwCaption="Detail Status" />
+    <attribute sfwValue="deployment_message" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="False" ID="DeploymentMessage" sfwCaption="Deployment Message" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="TruncateTable" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="TRUNCATE TABLE SGS_XML_DEPLOYMENT_DETAIL">
+      <parameters />
+    </query>
+    <query ID="UpdateDeploymentHeaderID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGS_XML_DEPLOYMENT_DETAIL SET DEPLOYMENT_HEADER_ID = @DEPLOYMENT_HEADER_ID">
+      <parameters>
+        <parameter ID="@DEPLOYMENT_HEADER_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="DeleteRecordByXmlDocumentName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DELETE FROM SGS_XML_DEPLOYMENT_DETAIL WHERE XML_DOCUMENT_NAME = @XML_DOCUMENT_NAME">
+      <parameters>
+        <parameter ID="@XML_DOCUMENT_NAME" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+</entity>

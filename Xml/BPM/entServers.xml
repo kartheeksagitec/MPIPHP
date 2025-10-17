@@ -1,0 +1,80 @@
+﻿<entity ID="entServers" sfwView="False" sfwActive="True" sfwMainCDO="icdoServers" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_servers" sfwObjectID="busServers">
+  <queries>
+    <query ID="LookUp" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgs_servers WITH(NOLOCK)" sfwDataType="EntityTable" sfwQueryType="SelectQuery" sfwPostgre="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgs_servers">
+      <parameters />
+    </query>
+    <query ID="LoadServers" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT * FROM SGS_SERVERS WITH(NOLOCK)" sfwPostgre="SELECT * FROM SGS_SERVERS">
+      <parameters />
+    </query>
+    <query ID="LoadServerConfiguration" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_SERVER_CONFIGURATION WITH(NOLOCK) &#xA; WHERE SERVER_ID = @SERVER_ID" sfwPostgre="SELECT * FROM SGS_SERVER_CONFIGURATION &#xD;&#xA; WHERE SERVER_ID = @SERVER_ID">
+      <parameters>
+        <parameter ID="@SERVER_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetServerName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; server_id,&#xA;&#x9;server_name &#xA;FROM&#xA;&#x9; sgs_servers" sfwPostgre="SELECT&#xD;&#xA;&#x9; server_id,&#xD;&#xA;&#x9;server_name &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgs_servers">
+      <parameters />
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindServers" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="False">
+      <item ID="LoadServers" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+  </methods>
+  <commonproperties />
+  <checklist />
+  <initialload>
+    <item ID="Visible Rule - Show Engines" sfwStatus="Active" sfwMode="All" />
+  </initialload>
+  <delete>
+    <property ID="lstServerConfiguration" sfwDataObjectType="Collection`1" sfwDataType="Collection`1" sfwForeignKey="ServerId" sfwMethodName="LoadServerConfiguration" />
+    <property ID="lstServerConfiguration" sfwDataObjectType="Collection`1" sfwDataType="Collection`1" sfwForeignKey="ServerId" sfwMethodName="LoadServerConfiguration" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror>
+    <item ID="Rule - Is Server Name Blank" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Is Engine Value Blank" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <constraint />
+  <rules>
+    <rule ID="Visible Rule - Show Engines" sfwExpression="objSelectedServer != null" sfwObjectBased="False" />
+    <rule ID="Rule - Is Server Name Blank" sfwRuleType="Validation" sfwExpression="ServerName == &quot;&quot;" sfwObjectBased="False" sfwMessage="Server name is blank" />
+    <rule ID="Rule - Is Engine Value Blank" sfwRuleType="Validation" sfwExpression="IstrEngineValue == &quot;&quot;" sfwObjectBased="False" sfwMessage="Engine Value is blank" />
+  </rules>
+  <ExtraFields />
+  <lifecycle />
+  <attributes>
+    <attribute ID="lstServerConfiguration" sfwPrivate="False" sfwEntity="entServerConfiguration" sfwValue="iclbServerConfiguration" sfwType="Collection" />
+    <attribute sfwType="Collection" sfwEntity="entServers" ID="lstServers" sfwValue="iclbServers" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrEngineValue" sfwValue="istrEngineValue" />
+    <attribute ID="objSelectedServer" sfwType="Object" sfwEntity="entServers" sfwValue="ibusSelectedServer" />
+    <attribute sfwValue="server_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwIsNull="False" ID="ServerId" sfwCaption="ID" />
+    <attribute sfwValue="server_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4000" sfwIsNull="True" ID="ServerName" sfwCaption="Server Name" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+  <objectmethods>
+    <method ID="AddServers" sfwReturnType="ArrayList" />
+    <method ID="DeleteServersAndEngines" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aarrSelectedObjects" sfwDataType="ArrayList" />
+      </parameters>
+    </method>
+    <method ID="SelectServer" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aarrSelectedObjects" sfwDataType="ArrayList" />
+      </parameters>
+    </method>
+    <method ID="AddEngines" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="astrEngineValue" sfwDataType="String" />
+      </parameters>
+    </method>
+    <method ID="LoadServerConfiguration" sfwReturnType="Void" />
+    <method ID="LoadServers" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_FY_YEAR]
+    FROM NUMERIC (4) NULL;
+

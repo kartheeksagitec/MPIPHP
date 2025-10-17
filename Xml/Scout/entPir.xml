@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPir" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPir" sfwObjectID="busPir" sfwTableName="sgs_pir" sfwView="False" sfwDataObjectID="doPir">
+  <rules>
+    <rule ID="RuleIs AssignedTo" sfwMessageId="2000" sfwExpression="(this.icdoPir.assigned_to_id == 0)" sfwObjectBased="True" />
+    <rule ID="Rule-IsBlockNull" sfwMessageId="2001" sfwExpression="(string.IsNullOrEmpty(this.icdoPir.process_value))" sfwObjectBased="True" />
+    <rule ID="Rule-IsDescriptionNull" sfwMessageId="2002" sfwExpression="(string.IsNullOrEmpty(this.icdoPir.pir_description))" sfwObjectBased="True" />
+    <rule ID="Rule-IsReportedBy" sfwMessageId="2003" sfwExpression="(this.icdoPir.reported_by_id == 0)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="Rule-IsReportedBy" sfwMode="All" sfwStatus="Active" />
+    <item ID="RuleIs AssignedTo" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-IsDescriptionNull" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-IsBlockNull" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="ListOfPirReporters" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT u.user_serial_id,last_name + ', ' + first_name full_name  from sgs_user u&#xD;&#xA;inner join sgs_user_roles ur on u.USER_SERIAL_ID = ur.USER_SERIAL_ID &#xD;&#xA;--and ((ur.effective_start_DATE is null) or (ur.effective_start_date&lt;=convert(dateTime,convert(char,getdate(),103),103)))&#xD;&#xA;--and ((ur.effective_end_DATE is null) or (ur.effective_end_date&gt;=convert(dateTime,convert(char,getdate(),103),103)))   &#xD;&#xA;--Commented this to make sure ended roles are also to come into PIR Dropdown&#xD;&#xA;inner join sgs_security s on s.role_id = ur.role_id and s.security_value != 0&#xD;&#xA;inner join sgs_resources r on r.resource_id = s.resource_id&#xD;&#xA;where s.resource_id = 100 order by full_name">
+      <parameters />
+    </query>
+    <query ID="ListOfPirFixers" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT u.user_serial_id,last_name + ', ' + first_name full_name  from sgs_user u&#xD;&#xA;inner join sgs_user_roles ur on u.USER_SERIAL_ID = ur.USER_SERIAL_ID &#xD;&#xA;--and ((ur.effective_start_DATE is null) or (ur.effective_start_date&lt;=convert(dateTime,convert(char,getdate(),103),103)))&#xD;&#xA;--and ((ur.effective_end_DATE is null) or (ur.effective_end_date&gt;=convert(dateTime,convert(char,getdate(),103),103)))   &#xD;&#xA;--Commented this to make sure ended roles are also to come into PIR Dropdown&#xD;&#xA;inner join sgs_security s on s.role_id = ur.role_id and s.security_value != 0&#xD;&#xA;inner join sgs_resources r on r.resource_id = s.resource_id&#xD;&#xA;where s.resource_id = 101 order by full_name">
+      <parameters />
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_pir order by PIR_ID&#xD;&#xA;  &#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="ListOfBlock" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select CODE_ID,CODE_VALUE,DESCRIPTION from SGS_CODE_VALUE where CODE_ID= 65 order by DESCRIPTION">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="pir_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PirId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="pir_description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="PirDescription" sfwIsSequence="False" sfwCaption="Pir Description" />
+    <attribute sfwType="Description" ID="PriorityDescription" sfwCaption="Priority" sfwValue="priority_description" />
+    <attribute sfwValue="priority_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PriorityId" sfwIsSequence="False" sfwCaption="Priority" />
+    <attribute sfwValue="priority_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="PriorityValue" sfwIsSequence="False" sfwCaption="Priority" />
+    <attribute sfwType="Description" ID="SeverityDescription" sfwCaption="Severity" sfwValue="severity_description" />
+    <attribute sfwValue="severity_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="SeverityId" sfwIsSequence="False" sfwCaption="Severity" />
+    <attribute sfwValue="severity_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="SeverityValue" sfwIsSequence="False" sfwCaption="Severity" />
+    <attribute sfwValue="reported_by_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ReportedById" sfwIsSequence="False" sfwCaption="Reported By Id" />
+    <attribute sfwValue="assigned_to_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AssignedToId" sfwIsSequence="False" sfwCaption="Assigned To Id" />
+    <attribute sfwValue="screen_affected" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="128" sfwIsNull="False" ID="ScreenAffected" sfwIsSequence="False" sfwCaption="Screen Affected" />
+    <attribute sfwValue="otherui_objects" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="128" sfwIsNull="False" ID="OtheruiObjects" sfwIsSequence="False" sfwCaption="Otherui Objects" />
+    <attribute sfwValue="testcase_scenario" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="TestcaseScenario" sfwIsSequence="False" sfwCaption="Testcase Scenario" />
+    <attribute sfwType="Description" ID="DefectCauseDescription" sfwCaption="Defect Cause" sfwValue="defect_cause_description" />
+    <attribute sfwValue="defect_cause_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DefectCauseId" sfwIsSequence="False" sfwCaption="Defect Cause" />
+    <attribute sfwValue="defect_cause_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="DefectCauseValue" sfwIsSequence="False" sfwCaption="Defect Cause" />
+    <attribute sfwValue="date_resolved" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="DateResolved" sfwIsSequence="False" sfwCaption="Date Resolved" />
+    <attribute sfwType="Description" ID="EnvironmentDescription" sfwCaption="Environment" sfwValue="environment_description" />
+    <attribute sfwValue="environment_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="EnvironmentId" sfwIsSequence="False" sfwCaption="Environment" />
+    <attribute sfwValue="environment_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="EnvironmentValue" sfwIsSequence="False" sfwCaption="Environment" />
+    <attribute sfwType="Description" ID="TestPhaseDescription" sfwCaption="Test Phase" sfwValue="test_phase_description" />
+    <attribute sfwValue="test_phase_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TestPhaseId" sfwIsSequence="False" sfwCaption="Test Phase" />
+    <attribute sfwValue="test_phase_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="TestPhaseValue" sfwIsSequence="False" sfwCaption="Test Phase" />
+    <attribute sfwType="Description" ID="ProcessDescription" sfwCaption="Process" sfwValue="process_description" />
+    <attribute sfwValue="process_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ProcessId" sfwCodeID="65" sfwIsSequence="False" sfwCaption="Process" />
+    <attribute sfwValue="process_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ProcessValue" sfwIsSequence="False" sfwCaption="Process" />
+    <attribute sfwValue="defect_resolution" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="DefectResolution" sfwIsSequence="False" sfwCaption="Defect Resolution" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="release_info" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="ReleaseInfo" sfwIsSequence="False" sfwCaption="Release Info" />
+    <attribute sfwValue="due_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="DueDate" sfwIsSequence="False" sfwCaption="Due Date" />
+    <attribute sfwValue="long_description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="LongDescription" sfwIsSequence="False" sfwCaption="Long Description" />
+    <attribute sfwValue="hours_worked" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,4" sfwIsNull="True" ID="HoursWorked" sfwIsSequence="False" sfwCaption="Hours Worked" />
+    <attribute ID="objAssignedTo" sfwType="Object" sfwEntity="entUser" sfwValue="ibusAssignedTo" />
+    <attribute ID="objReportedBy" sfwType="Object" sfwEntity="entUser" sfwValue="ibusReportedBy" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecTotalPirEffortsHours" sfwValue="idecTotalPirEffortsHours" />
+    <attribute sfwDataType="string" sfwType="Property" ID="AdditionalNotes" sfwValue="icdoPir.additional_notes" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPriorityDate" sfwValue="icdoPir.istrPriorityDate" />
+    <attribute sfwType="Collection" sfwEntity="entPirHistory" ID="lstPirHistory" sfwValue="iclbPirHistory" />
+    <attribute sfwType="Collection" sfwEntity="entPirAttachment" ID="lstPirAttachment" sfwValue="iclbPirAttachment" />
+    <attribute sfwType="Collection" sfwEntity="entPirEffortsHours" ID="lstPirEffortsHours" sfwValue="iclbPirEffortsHours" />
+    <attribute ID="objPirEffortsHours" sfwType="Object" sfwEntity="entPirEffortsHours" sfwValue="ibusPirEffortsHours" />
+  </attributes>
+  <objectmethods>
+    <method ID="SavePIREffortErrors" sfwReturnType="ArrayList" />
+  </objectmethods>
+</entity>

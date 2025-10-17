@@ -1,0 +1,67 @@
+﻿<file ID="flePreNoteACHOut" sfwType="Outbound" sfwActive="True" sfwStatus="Review" sfwTitle="Pre Note Account OutBound File" sfwDescription="Pre Note Account OutBound File" sfwProgressCounter="10" sfwFileName="PreNoteACH.txt" sfwQueryID="entPayeeAccountAchDetail.ACHPreNoteVerificationBatch" sfwOutboundObject="MPIPHP.BusinessObjects.PayeeAccount.busPreNoteACHOutbound" sfwLoadMethod="LoadPreNoteVerificationACH" sfwCollection="iclbACHProvider">
+  <record ID="ACH Header Record" sfwRecordType="Header">
+    <sfwField sfwDescription="File Record Type" sfwLength="1" sfwRemoveDecimal="False" sfwConstant="1" />
+    <sfwField sfwDescription="Priority Code" sfwLength="2" sfwRemoveDecimal="False" sfwConstant="01" />
+    <sfwField sfwDescription="Immediate Destination" sfwLength="10" sfwRemoveDecimal="False" sfwConstant=" 042000013" />
+    <sfwField sfwDescription="Immediate Origin" sfwLength="10" sfwRemoveDecimal="False" sfwConstant="1951810805" />
+    <sfwField sfwDescription="File Creation Date" sfwLength="6" sfwObjectField="ldtTodaysDate" sfwDataFormat="{0:yyMMdd}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="File Creation Time" sfwLength="4" sfwObjectField="ldtTodaysDate" sfwDataFormat="{0:HHmm}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="File ID Modifier" sfwLength="1" sfwRemoveDecimal="False" sfwConstant="A" />
+    <sfwField sfwDescription="Record Size" sfwLength="3" sfwRemoveDecimal="False" sfwConstant="094" />
+    <sfwField sfwDescription="Blocking Factor" sfwLength="2" sfwRemoveDecimal="False" sfwConstant="10" />
+    <sfwField sfwDescription="Format Code" sfwLength="1" sfwRemoveDecimal="False" sfwConstant="1" />
+    <sfwField sfwDescription="Immediate Destination Name" sfwLength="23" sfwRemoveDecimal="False" sfwConstant="U.S. BANK" />
+    <sfwField sfwDescription="Immediate Origin Name" sfwLength="23" sfwRemoveDecimal="False" sfwConstant="MPIPHP" />
+    <sfwField sfwDescription="Reference Code" sfwObjectField="filler" sfwLength="8" sfwRemoveDecimal="False" />
+  </record>
+  <record ID="ACH Company Batch Header" sfwRecordType="Header">
+    <sfwField sfwDescription="File Record Type" sfwLength="1" sfwRemoveDecimal="False" sfwConstant="5" />
+    <sfwField sfwDescription="Service Class Code" sfwLength="3" sfwObjectField="lstrServiceClassCode" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Company Name" sfwLength="16" sfwObjectField="istrCompanyName" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Company Discretionary Data" sfwObjectField="filler" sfwLength="20" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Company Identification (Vendor#)" sfwLength="10" sfwObjectField="istrAccountNumber" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Standard Entry Class Code" sfwLength="3" sfwRemoveDecimal="False" sfwConstant="PPD" />
+    <sfwField sfwDescription="Company Entry Description" sfwLength="10" sfwRemoveDecimal="False" sfwConstant="PRENOTE   " />
+    <sfwField sfwDescription="Company Descriptive Date" sfwLength="6" sfwObjectField="idtEffectiveDate" sfwDataFormat="{0:yyMMdd}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Effective Entry Date" sfwLength="6" sfwObjectField="idtEffectiveDate" sfwDataFormat="{0:yyMMdd}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Reserved" sfwObjectField="filler" sfwLength="3" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Originator Status Code" sfwLength="1" sfwRemoveDecimal="False" sfwConstant="1" />
+    <sfwField sfwDescription="ODFI Identification " sfwLength="8" sfwRemoveDecimal="False" sfwConstant="04200001" />
+    <sfwField sfwDescription="Batch Number" sfwLength="7" sfwRemoveDecimal="False" sfwConstant="0000001" />
+  </record>
+  <record ID="ACH Entry Detail Record" sfwRecordType="Detail" sfwRecordObject="iclbACHProvider">
+    <sfwField sfwDescription="Record Type" sfwLength="1" sfwRemoveDecimal="False" sfwConstant="6" />
+    <sfwField sfwDescription="Transaction Code" sfwLength="2" sfwObjectField="lstrTransactionCode" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="RDFI Identification Number " sfwLength="9" sfwObjectField="lstrRoutingNumber" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="DFI Account Number" sfwLength="17" sfwObjectField="lstrDFIAccountNo" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Amount " sfwLength="10" sfwObjectField="ldclContributionAmountFormatted" sfwRemoveDecimal="True" />
+    <sfwField sfwDescription="Individual Identification Number" sfwLength="15" sfwObjectField="lstrMPIPersonId" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Individual Name" sfwLength="22" sfwObjectField="lstrPersonName" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Discretionary Data" sfwObjectField="filler" sfwLength="2" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Addenda Record Indicator " sfwLength="1" sfwRemoveDecimal="False" sfwConstant="0" />
+    <sfwField sfwDescription="ODFI Identification (UB Transit Routing Number)" sfwLength="8" sfwRemoveDecimal="False" sfwConstant="04200001" />
+    <sfwField sfwDescription="Trace Number - Ascending Sequence number " sfwLength="7" sfwObjectField="istrDetailCount" sfwRemoveDecimal="False" />
+  </record>
+  <record ID="ACH Company Batch Control" sfwRecordType="Footer">
+    <sfwField sfwDescription="Record Type" sfwLength="1" sfwRemoveDecimal="False" sfwConstant="8" />
+    <sfwField sfwDescription="Service Class Code" sfwLength="3" sfwObjectField="lstrServiceClassCode" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Entry Addenda Count" sfwLength="6" sfwObjectField="lintBatchControlRecordCount" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Entry/Hash" sfwLength="10" sfwObjectField="istrEntryHash" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Total Debit Amount " sfwLength="12" sfwObjectField="ldclTotalDebitAmountFormatted" sfwRemoveDecimal="True" />
+    <sfwField sfwDescription="Total Credit Amount" sfwLength="12" sfwObjectField="ldclTotalDebitAmountFormatted" sfwRemoveDecimal="True" />
+    <sfwField sfwDescription="Company Identification" sfwLength="10" sfwObjectField="istrAccountNumber" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Reserved" sfwObjectField="filler" sfwLength="25" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="ODFI Identification " sfwLength="8" sfwRemoveDecimal="False" sfwConstant="04200001" />
+    <sfwField sfwDescription="Batch Number " sfwLength="7" sfwRemoveDecimal="False" sfwConstant="0000001" />
+  </record>
+  <record ID="ACH File Control Record" sfwRecordType="Footer">
+    <sfwField sfwDescription="Record Type" sfwLength="1" sfwRemoveDecimal="False" sfwConstant="9" />
+    <sfwField sfwDescription="Batch Count" sfwLength="6" sfwRemoveDecimal="False" sfwConstant="000001" />
+    <sfwField sfwDescription="Block Count" sfwLength="6" sfwObjectField="lstrBlockCount" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Entry/Addenda Count" sfwLength="8" sfwObjectField="lintFileControlRecordCount" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Entry/Hash" sfwLength="10" sfwObjectField="istrEntryHash" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Total Debit Amount in File " sfwLength="12" sfwObjectField="ldclTotalDebitAmountFormatted" sfwRemoveDecimal="True" />
+    <sfwField sfwDescription="Total Credit Amount in File" sfwLength="12" sfwObjectField="ldclTotalDebitAmountFormatted" sfwRemoveDecimal="True" />
+    <sfwField sfwDescription="Filler " sfwObjectField="filler" sfwLength="39" sfwRemoveDecimal="False" />
+  </record>
+</file>

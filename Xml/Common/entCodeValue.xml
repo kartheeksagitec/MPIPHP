@@ -1,0 +1,137 @@
+﻿<entity ID="entCodeValue" sfwActive="False" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwType="BusinessRule" sfwMainCDO="icdoCodeValue" DesignStatus="Review" sfwObjectID="busCodeValue" sfwTableName="sgs_code_value" sfwDataObjectID="doCodeValue">
+  <rules>
+    <rule ID="CodeValueDescIsBlank" sfwMessageId="64" sfwExpression="(string.IsNullOrEmpty(this.icdoCodeValue.description))" sfwObjectBased="True" />
+    <rule ID="CodeValueExisitsUpdate" sfwMessageId="65" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entCodeValue.CodeValueExistsUpdate&quot;, this.icdoCodeValue.code_id, this.icdoCodeValue.code_value, this.icdoCodeValue.code_serial_id) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="CodeValueExistsNew" sfwMessageId="66" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entCodeValue.CodeValueExistsUpdate&quot;, this.icdoCodeValue.code_id, this.icdoCodeValue.code_value, this.icdoCodeValue.code_serial_id) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="CodeValueIsBlank" sfwMessageId="67" sfwExpression="(string.IsNullOrEmpty(this.icdoCodeValue.code_value))" sfwObjectBased="True" />
+    <rule ID="Data1ValueIsNotDate" sfwMessageId="55" sfwExpression="(!string.IsNullOrEmpty(this.icdoCodeValue.data1)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data1_type&quot;) == &quot;date&quot;) &amp;&amp; &#xA;(!RFunc.IsDate(this.icdoCodeValue.data1, &quot;MM/dd/yyyy&quot;))" sfwObjectBased="True" />
+    <rule ID="Data1ValueIsNotDecimal" sfwMessageId="56" sfwExpression="(!string.IsNullOrEmpty(this.icdoCodeValue.data1)) &amp;&amp; &#xA;(!RFunc.IsNumeric(this.icdoCodeValue.data1)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data1_type&quot;) == &quot;deci&quot;)" sfwObjectBased="True" />
+    <rule ID="Data1ValueIsNotNumeric" sfwMessageId="57" sfwExpression="(!string.IsNullOrEmpty(this.icdoCodeValue.data1)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data1_type&quot;) == &quot;int&quot;) &amp;&amp; &#xA;(!RFunc.IsNumeric(this.icdoCodeValue.data1))" sfwObjectBased="True" />
+    <rule ID="Data1ValueNoCaption" sfwMessageId="68" sfwExpression="(string.IsNullOrEmpty(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data1_caption&quot;))) &amp;&amp; &#xA;(!string.IsNullOrEmpty(this.icdoCodeValue.data1))" sfwObjectBased="True" />
+    <rule ID="Data2ValueIsNotDate" sfwMessageId="58" sfwExpression="(!string.IsNullOrEmpty(this.icdoCodeValue.data2)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data2_type&quot;) == &quot;date&quot;) &amp;&amp; &#xA;(!RFunc.IsDate(this.icdoCodeValue.data2, &quot;MM/dd/yyyy&quot;))" sfwObjectBased="True" />
+    <rule ID="Data2ValueIsNotDecimal" sfwMessageId="59" sfwExpression="(!string.IsNullOrEmpty(this.icdoCodeValue.data2)) &amp;&amp; &#xA;(!RFunc.IsNumeric(this.icdoCodeValue.data2)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data2_type&quot;) == &quot;deci&quot;)" sfwObjectBased="True" />
+    <rule ID="Data2ValueIsNotNumeric" sfwMessageId="60" sfwExpression="(!string.IsNullOrEmpty(this.icdoCodeValue.data2)) &amp;&amp; &#xA;(!RFunc.IsNumeric(this.icdoCodeValue.data2)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data2_type&quot;) == &quot;int&quot;)" sfwObjectBased="True" />
+    <rule ID="Data2ValueNoCaption" sfwMessageId="69" sfwExpression="(string.IsNullOrEmpty(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data2_caption&quot;))) &amp;&amp; &#xA;(!string.IsNullOrEmpty(this.icdoCodeValue.data2))" sfwObjectBased="True" />
+    <rule ID="Data3ValueIsNotDate" sfwMessageId="61" sfwExpression="(!string.IsNullOrEmpty(this.icdoCodeValue.data3)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data3_type&quot;) == &quot;date&quot;) &amp;&amp; &#xA;(!RFunc.IsDate(this.icdoCodeValue.data3, &quot;MM/dd/yyyy&quot;))" sfwObjectBased="True" />
+    <rule ID="Data3ValueIsNotDecimal" sfwMessageId="62" sfwExpression="(!string.IsNullOrEmpty(this.icdoCodeValue.data3)) &amp;&amp; &#xA;(!RFunc.IsNumeric(this.icdoCodeValue.data3)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data3_type&quot;) == &quot;deci&quot;)" sfwObjectBased="True" />
+    <rule ID="Data3ValueIsNotNumeric" sfwMessageId="63" sfwExpression="(!string.IsNullOrEmpty(this.icdoCodeValue.data3)) &amp;&amp; &#xA;(!RFunc.IsNumeric(this.icdoCodeValue.data3)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data3_type&quot;) == &quot;int&quot;)" sfwObjectBased="True" />
+    <rule ID="Data3ValueNoCaption" sfwMessageId="70" sfwExpression="(string.IsNullOrEmpty(RFunc.GetValue&lt;String&gt;(this, &quot;ibusCode.icdoCode.data3_caption&quot;))) &amp;&amp; &#xA;(!string.IsNullOrEmpty(this.icdoCodeValue.data3))" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="Data1ValueNoCaption" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data2ValueNoCaption" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data3ValueNoCaption" sfwMode="All" sfwStatus="Active" />
+    <item ID="CodeValueIsBlank" sfwMode="All" sfwStatus="Active" />
+    <item ID="CodeValueDescIsBlank" sfwMode="All" sfwStatus="Active" />
+    <item ID="CodeValueExistsNew" sfwMode="New" sfwStatus="Active" />
+    <item ID="CodeValueExisitsUpdate" sfwMode="Update" sfwStatus="Active" />
+    <item ID="Data1ValueIsNotDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data1ValueIsNotNumeric" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data1ValueIsNotDecimal" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data2ValueIsNotDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data2ValueIsNotDecimal" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data2ValueIsNotNumeric" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data3ValueIsNotDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data3ValueIsNotDecimal" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data3ValueIsNotNumeric" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <updateablecdo />
+  <queries>
+    <query ID="Count" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) &#xD;&#xA; from sgs_code_value &#xD;&#xA;where code_id = @code_id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@code_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="ValidKPFDepartment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) &#xD;&#xA; from sgs_code_value &#xD;&#xA;where code_id = 534&#xD;&#xA;and code_value = @code_value&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@code_value" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="ByData1" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_code_value &#xD;&#xA;where code_id = @code_id and data1 = @data1&#xD;&#xA;order by code_value_order">
+      <parameters>
+        <parameter ID="@code_id" sfwDataType="int" />
+        <parameter ID="@data1" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="ByData2" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_code_value &#xD;&#xA;where code_id = @code_id and data2 = @data2&#xD;&#xA;order by code_value_order">
+      <parameters>
+        <parameter ID="@code_id" sfwDataType="int" />
+        <parameter ID="@data2" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="ByData3" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_code_value &#xD;&#xA;where code_id = @code_id and data3 = @data3&#xD;&#xA;order by code_value_order">
+      <parameters>
+        <parameter ID="@code_id" sfwDataType="int" />
+        <parameter ID="@data3" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="CodeValuesExistsNew" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) &#xD;&#xA; from sgs_code_value &#xD;&#xA;where code_id = @code_id&#xD;&#xA;and code_value = @code_value">
+      <parameters>
+        <parameter ID="@code_id" sfwDataType="int" />
+        <parameter ID="@code_value" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="CodeValueExistsUpdate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) &#xD;&#xA; from sgs_code_value &#xD;&#xA;where code_id = @code_id&#xD;&#xA;and code_value = @code_value&#xD;&#xA;and code_serial_id &lt;&gt; @code_serial_id">
+      <parameters>
+        <parameter ID="@code_id" sfwDataType="int" />
+        <parameter ID="@code_value" sfwDataType="string" />
+        <parameter ID="@code_serial_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="ListCodeValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA; from sgs_code_value &#xD;&#xA;where code_id = @code_id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@code_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetExemptionValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_code_value a1&#xD;&#xA;where a1.code_id = 915 and a1.data1 = &#xD;&#xA;(select max(a2.data1) from sgs_code_value a2 where&#xD;&#xA;a1.code_id = a2.code_id and&#xD;&#xA;cast(a2.data1 as datetime) &lt;= @eff_date)">
+      <parameters>
+        <parameter ID="@eff_date" />
+      </parameters>
+    </query>
+    <query ID="AllByData1Value" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_code_value &#xD;&#xA;where code_id = 906&#xD;&#xA;and data1 is Null&#xD;&#xA;order by code_value_order">
+      <parameters />
+    </query>
+    <query ID="GetCodeValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select code_value&#xD;&#xA;from sgs_code_value&#xD;&#xA;where code_id = @code_id&#xD;&#xA;and description = @code_description">
+      <parameters>
+        <parameter ID="@code_id" sfwDataType="int" />
+        <parameter ID="@code_description" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetCodeValuesForBpmEscalationSupervisorLevel" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select *&#xD;&#xA; from sgs_code_value&#xD;&#xA;where code_id = 3004&#xD;&#xA;and DATA1 is not null order by CAST(data1 AS INT)">
+      <parameters />
+    </query>
+  </queries>
+  <constraint>
+    <item sfwFieldName="description" sfwRequired="True" />
+  </constraint>
+  <attributes>
+    <attribute sfwValue="code_serial_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="CodeSerialId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwType="Description" ID="CodeDescription" sfwCaption="Code" sfwValue="code_description" />
+    <attribute sfwValue="code_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="CodeId" sfwIsSequence="False" sfwCaption="Code" />
+    <attribute sfwValue="code_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="CodeValue" sfwIsSequence="False" sfwCaption="Code" />
+    <attribute sfwValue="description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="False" ID="description" sfwIsSequence="False" sfwCaption="Description" />
+    <attribute sfwValue="data1" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="255" sfwIsNull="True" ID="Data1" sfwIsSequence="False" sfwCaption="Data1" />
+    <attribute sfwValue="data2" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="255" sfwIsNull="True" ID="Data2" sfwIsSequence="False" sfwCaption="Data2" />
+    <attribute sfwValue="data3" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="255" sfwIsNull="True" ID="Data3" sfwIsSequence="False" sfwCaption="Data3" />
+    <attribute sfwValue="comments" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="Comments" sfwIsSequence="False" sfwCaption="Comments" />
+    <attribute sfwValue="start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="StartDate" sfwIsSequence="False" sfwCaption="Start Date" />
+    <attribute sfwValue="end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndDate" sfwIsSequence="False" sfwCaption="End Date" />
+    <attribute sfwValue="code_value_order" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CodeValueOrder" sfwIsSequence="False" sfwCaption="Code Value Order" />
+    <attribute sfwValue="legacy_code_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="10" sfwIsNull="True" ID="LegacyCodeId" sfwIsSequence="False" sfwCaption="Legacy Code Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute ID="objCode" sfwType="Object" sfwEntity="entCode" sfwValue="ibusCode" />
+  </attributes>
+  <groupslist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+</entity>

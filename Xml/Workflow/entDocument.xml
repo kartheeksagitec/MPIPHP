@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entDocument" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoDocument" sfwObjectID="busDocument" sfwTableName="sgt_document" sfwView="False" sfwDataObjectID="doDocument">
+  <rules>
+    <rule ID="CodeIsBlank" sfwMessageId="4198" sfwExpression="(string.IsNullOrEmpty(this.icdoDocument.doc_type))" sfwObjectBased="True" />
+    <rule ID="IsCodeDuplicateInNewMode" sfwMessageId="4050" sfwExpression="(!string.IsNullOrEmpty(this.icdoDocument.doc_type)) &amp;&amp; &#xA;(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entDocument.CheckCodeDuplicationInNewMode&quot;, this.icdoDocument.doc_type) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="IsCodeDuplicateInUpdateMode" sfwMessageId="4050" sfwExpression="(!string.IsNullOrEmpty(this.icdoDocument.doc_type)) &amp;&amp; &#xA;(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entDocument.CheckCodeDuplicationInUpdateMode&quot;, this.icdoDocument.document_id, this.icdoDocument.doc_type) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="NameIsBlank" sfwMessageId="4199" sfwExpression="(string.IsNullOrEmpty(this.icdoDocument.document_name))" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="CodeIsBlank" sfwMode="All" sfwStatus="Active" />
+    <item ID="NameIsBlank" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsCodeDuplicateInNewMode" sfwMode="New" sfwStatus="Active" />
+    <item ID="IsCodeDuplicateInUpdateMode" sfwMode="Update" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_document doc WITH(NOLOCK)&#xD;&#xA;order by doc.document_id desc">
+      <parameters />
+    </query>
+    <query ID="CheckCodeDuplicationInNewMode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgt_document WITH(NOLOCK)&#xD;&#xA;where doc_type=@doc_type">
+      <parameters>
+        <parameter ID="@doc_type" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="LoadDocumentsForLeftPanel" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9;BPIA.*,&#xD;&#xA;&#x9;coalesce(BE.EVENT_DESC,'View') AS EVENT_DESC&#xD;&#xA;FROM&#xD;&#xA;&#x9;SGW_BPM_PRCS_INST_ATTACHMENTS BPIA &#xD;&#xA;  JOIN SGW_BPM_EVENT BE ON BE.DOC_TYPE = BPIA.DOC_TYPE AND&#xD;&#xA;&#x9; BE.DOC_CLASS = BPIA.DOC_CLASS &#xD;&#xA;WHERE&#xD;&#xA;&#x9;  BPIA.BPM_PROCESS_INSTANCE_ID = @BPM_PROCESS_INSTANCE_ID" sfwPostgre="SELECT&#xD;&#xA;&#x9;BPIA.*,&#xD;&#xA;&#x9;coalesce(BE.EVENT_DESC,'View') AS EVENT_DESC&#xD;&#xA;FROM&#xD;&#xA;&#x9;SGW_BPM_PRCS_INST_ATTACHMENTS BPIA &#xD;&#xA;  JOIN SGW_BPM_EVENT BE ON BE.DOC_TYPE = BPIA.DOC_TYPE AND&#xD;&#xA;&#x9; BE.DOC_CLASS = BPIA.DOC_CLASS &#xD;&#xA;WHERE&#xD;&#xA;&#x9;  BPIA.BPM_PROCESS_INSTANCE_ID = @BPM_PROCESS_INSTANCE_ID">
+      <parameters>
+        <parameter ID="@BPM_PROCESS_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckCodeDuplicationInUpdateMode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgt_document WITH(NOLOCK)&#xD;&#xA;where doc_type=@doc_type&#xD;&#xA;and Document_id &lt;&gt; @document_id">
+      <parameters>
+        <parameter ID="@document_id" sfwDataType="int" />
+        <parameter ID="@doc_type" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="LoadDocumentType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from (&#xD;&#xA;select CAST( DOCUMENT_ID as varchar) +',PEND'  as DOC_ID,DOC_TYPE from sgt_document doc WITH(NOLOCK)&#xD;&#xA; &#xD;&#xA;UNION ALL &#xD;&#xA;select CAST( DOCUMENT_ID as varchar) +',HEDC' DOC_ID,DOC_TYPE from SGT_HE_DOCUMENT doc WITH(NOLOCK)&#xD;&#xA;&#xD;&#xA;UNION ALL&#xD;&#xA;SELECT  CAST( 0 as varchar)  +',PEND' AS DOC_ID, 'OTHER' as  DOC_TYPE&#xD;&#xA;)&#xD;&#xA;TEMP&#xD;&#xA;where DOC_TYPE is Not NULL and DOC_TYPE NOT IN ('IAP Aged Date Transmittal Cancellation Report','REPAYMENT SCHEDULE','RETIRING WITH MPI','PAYEE','MISCELLANEOUS','WORK HISTORY REQUEST')&#xD;&#xA;order by DOC_TYPE&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="LoadDocumentTypeBasedOnSource" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select *&#xD;&#xA;from  SGT_DOCUMENT DOC&#xD;&#xA; &#xD;&#xA;Where DOC.DOCUMENT_ID = @DOCUMENT_ID AND DOC.DOC_TYPE_SOURCE_VALUE=@DOC_TYPE_SOURCE_VALUE&#xD;&#xA;UNION ALL &#xD;&#xA;Select *&#xD;&#xA;from  SGT_HE_DOCUMENT DOC&#xD;&#xA; &#xD;&#xA;Where DOC.DOCUMENT_ID = @DOCUMENT_ID AND DOC.DOC_TYPE_SOURCE_VALUE=@DOC_TYPE_SOURCE_VALUE">
+      <parameters>
+        <parameter ID="@DOCUMENT_ID" sfwDataType="int" />
+        <parameter ID="@DOC_TYPE_SOURCE_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="document_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DocumentId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="doc_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="DocType" sfwIsSequence="False" sfwCaption="Doc Type" />
+    <attribute sfwValue="document_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="DocumentName" sfwIsSequence="False" sfwCaption="Document Name" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="ignore_process_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IgnoreProcessFlag" sfwIsSequence="False" sfwCaption="Ignore Process Flag" />
+    <attribute sfwValue="app_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="500" sfwIsNull="True" ID="AppName" sfwIsSequence="False" sfwCaption="App Name" />
+    <attribute sfwValue="group_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="GroupName" sfwIsSequence="False" sfwCaption="Group Name" />
+    <attribute sfwValue="doc_description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="DocDescription" sfwCaption="Doc Description" />
+  </attributes>
+</entity>

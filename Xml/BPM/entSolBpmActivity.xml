@@ -1,0 +1,68 @@
+﻿<entity ID="entSolBpmActivity" sfwMainCDO="icdoBpmActivity" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busSolBpmActivity" sfwParentEntity="entBpmActivity">
+  <commonproperties />
+  <checklist />
+  <initialload>
+    <item ID="Visible Rule - Is Activity Type User Task" sfwStatus="Active" sfwMode="All" />
+  </initialload>
+  <delete>
+    <property ID="lstBpmEscalations" sfwMethodName="LoadBpmEscalations" />
+    <property ID="lstBpmActivityChecklist" sfwMethodName="LoadBpmActivityChecklist" />
+    <property ID="IobjMainCDO" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <Constraint />
+  <rules>
+    <rule ID="Visible Rule - Is Activity Type User Task" sfwRuleType="Validation" sfwExpression="(this.icdoBpmActivity.activity_type_value == &quot;USTK&quot;)" sfwObjectBased="True" />
+  </rules>
+  <constraint />
+  <attributes>
+    <attribute sfwType="Property" ID="IobjMainCDO" sfwValue="iobjMainCDO" />
+    <attribute ID="lstBpmActivityRejection" sfwType="Collection" sfwValue="iclbBpmActivityRejection" sfwEntity="entBpmActivityRejection" sfwPrivate="False" />
+    <attribute ID="lstBpmActivityException" sfwType="Collection" sfwValue="iclbBpmActivityException" sfwEntity="entBpmActivityRejection" sfwPrivate="False" />
+    <attribute ID="lstBpmActivityMissingInformation" sfwType="Collection" sfwValue="iclbBpmActivityMissingInformation" sfwEntity="entBpmActivityRejection" sfwPrivate="False" />
+    <attribute ID="IstrRejectionReason" sfwDataType="string" sfwPrivate="False" sfwValue="istrRejectionReason" sfwType="Property" />
+    <attribute ID="IstrExceptionReason" sfwDataType="string" sfwPrivate="False" sfwValue="istrExceptionReason" sfwType="Property" />
+    <attribute ID="IstrMissingInformation" sfwDataType="string" sfwPrivate="False" sfwValue="istrMissingInformation" sfwType="Property" />
+  </attributes>
+  <queries />
+  <methods>
+    <method ID="FindBpmActivity" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item ID="LoadBpmProcess" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadRoles" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmActivityChecklist" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBPMActivityExceptionReasons" sfwItemType="Method" sfwDataType="Void" />
+      <item ID="LoadBPMActivityMissingInformation" sfwItemType="Method" sfwDataType="Void" />
+      <item ID="LoadBPMActivityRejectionReasons" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+  </methods>
+  <lifecycle />
+  <objectmethods>
+    <method ID="LoadBpmEscalations" sfwReturnType="Void" />
+    <method ID="LoadBpmActivityChecklist" sfwReturnType="Void" />
+    <method ID="LoadBpmProcess" sfwReturnType="Void" />
+    <method ID="LoadRoles" sfwReturnType="Void" />
+    <method ID="GetGroupData" sfwReturnType="Object" />
+    <method ID="AddBPMActivityRejectionReason" sfwReturnType="ArrayList">
+      <parameters />
+    </method>
+    <method ID="LoadBPMActivityReasons" sfwReturnType="Void" />
+    <method ID="AddBPMActivityExceptionReason" sfwReturnType="ArrayList">
+      <parameters />
+    </method>
+    <method ID="AddBPMActivityMissingInformation" sfwReturnType="ArrayList">
+      <parameters />
+    </method>
+    <method ID="LoadBPMActivityExceptionReasons" sfwReturnType="Void" />
+    <method ID="LoadBPMActivityMissingInformation" sfwReturnType="Void">
+      <parameters />
+    </method>
+    <method ID="LoadBPMActivityRejectionReasons" sfwReturnType="Void">
+      <parameters />
+    </method>
+  </objectmethods>
+  <ExtraFields />
+</entity>

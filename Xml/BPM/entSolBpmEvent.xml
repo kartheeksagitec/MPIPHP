@@ -1,0 +1,31 @@
+﻿<entity ID="entSolBpmEvent" sfwView="False" sfwActive="True" sfwType="EntityRule" sfwStatus="Review" sfwParentEntity="entBpmEvent" sfwObjectID="busSolBpmEvent" sfwMainCDO="icdoBpmEvent">
+  <ExtraFields />
+  <queries />
+  <constraint />
+  <rules>
+    <rule ID="Rule-Event Desc Required" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(string.IsNullOrEmpty(this.icdoBpmEvent.event_desc))" sfwMessageId="20007006" />
+    <rule ID="Rule - Is Bpm Event Already  Exists" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="RFunc.ExecuteQuery&lt;int&gt;(&quot;entBpmEvent.GetBPMEventCount&quot;,&#xA;this.icdoBpmEvent.doc_type) &gt;0 &amp;&amp; this.icdoBpmEvent.bpm_event_id == 0" sfwMessageId="20007016" />
+    <rule ID="Rule - Is Document Type  Blank" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(string.IsNullOrEmpty(this.icdoBpmEvent.doc_type))" sfwMessageId="20007009" />
+    <rule ID="Rule - Is Event Type  Selected" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(string.IsNullOrEmpty(this.icdoBpmEvent.event_type_value))" sfwMessageId="20007010" />
+    <rule ID="Rule - Is Status  Selected" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(string.IsNullOrEmpty(this.icdoBpmEvent.status_value))" sfwMessageId="20007011" />
+    <rule ID="Rule - Is Document Class  Blank" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(string.IsNullOrEmpty(this.icdoBpmEvent.doc_class))" sfwMessageId="20007015" />
+  </rules>
+  <attributes />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="Rule-Event Desc Required" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Is Document Class  Blank" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Is Status  Selected" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Is Event Type  Selected" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Is Document Type  Blank" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Is Bpm Event Already  Exists" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+</entity>

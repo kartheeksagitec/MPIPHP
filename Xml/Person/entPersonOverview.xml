@@ -1,0 +1,115 @@
+﻿<entity ID="entPersonOverview" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPerson" sfwObjectID="busPersonOverview" sfwParentEntity="entPerson">
+  <rules>
+    <rule ID="VisibleRule-IsShowBtnVisible" sfwExpression="(this.IsShowAllWorkFlowBtnVisisble() == True)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_PRE_DEATH_APP_EXISTS" sfwExpression="(this.IsDeathPreRetrAppExists() == True)" sfwObjectBased="True" />
+    <rule ID="Visible-Rule-ActiveIncreaseMessageMSS-Temporary" sfwRuleType="Validation" sfwExpression="(this.IsEligibleForActiveIncrease()==True)" sfwObjectBased="True" />
+    <rule ID="CancelButtonVisibleRule" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="this.IsCancelButtonVisible()==True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-IsShowBtnVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_PRE_DEATH_APP_EXISTS" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible-Rule-GenerateAnnualStatementBtn" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible-Rule-ActiveIncreaseMessageMSS-Temporary" sfwStatus="Active" sfwMode="All" />
+    <item ID="CancelButtonVisibleRule" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="PersonId" sfwValue="icdoPerson.person_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="MpiPersonId" sfwValue="icdoPerson.mpi_person_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="HomePhoneNo" sfwValue="icdoPerson.home_phone_no" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSSN" sfwValue="icdoPerson.istrSSN" />
+    <attribute sfwDataType="string" sfwType="Property" ID="WorkPhoneNo" sfwValue="icdoPerson.work_phone_no" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPersonName" sfwValue="icdoPerson.istrPersonName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CellPhoneNo" sfwValue="icdoPerson.cell_phone_no" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateofBirth" sfwValue="icdoPerson.idtDateofBirth" />
+    <attribute sfwDataType="string" sfwType="Property" ID="FaxNo" sfwValue="icdoPerson.fax_no" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecAge" sfwValue="idecAge" />
+    <attribute sfwDataType="string" sfwType="Property" ID="EmailAddress1" sfwValue="icdoPerson.email_address_1" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DateOfDeath" sfwValue="icdoPerson.date_of_death" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CommunicationPreferenceDescription" sfwValue="icdoPerson.communication_preference_description" />
+    <attribute sfwDataType="string" sfwType="Property" ID="GenderDescription" sfwValue="icdoPerson.gender_description" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrVipFlagOverview" sfwValue="icdoPerson.istrVipFlagOverview" />
+    <attribute sfwDataType="string" sfwType="Property" ID="MaritalStatusDescription" sfwValue="icdoPerson.marital_status_description" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRetireeHealthEligibleFlag" sfwValue="icdoPerson.istrRetireeHealthEligibleFlag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="Ssn" sfwValue="icdoPerson.ssn" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IblnParticipant" sfwValue="iblnParticipant" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IblnBeneficiary" sfwValue="iblnBeneficiary" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IblnDependent" sfwValue="iblnDependent" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IblnAlternatePayee" sfwValue="iblnAlternatePayee" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRetiree" sfwValue="istrRetiree" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAddress" ID="lstPersonAddress" sfwValue="iclbPersonAddress" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountBeneficiary" ID="lstPersonAccountBeneficiary" sfwValue="iclbPersonAccountBeneficiary" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountBeneficiary" ID="lstPersonAccountBeneficiaryOf" sfwValue="iclbPersonAccountBeneficiaryOf" />
+    <attribute sfwType="Collection" sfwEntity="entPersonDependent" ID="lstPersonDependent" sfwValue="iclbPersonDependent" />
+    <attribute sfwType="Collection" sfwEntity="entPerson" ID="lstDependentOf" sfwValue="iclbDependentOf" />
+    <attribute sfwType="Collection" sfwEntity="entPersonContact" ID="lstPersonContact" sfwValue="iclbPersonContact" />
+    <attribute sfwType="Collection" sfwEntity="entActivityInstance" ID="lstPersonWorkflows" sfwValue="iclbPersonWorkflows" />
+    <attribute sfwType="Collection" sfwEntity="entDeathNotification" ID="lstDeathNotifications" sfwValue="iclbDeathNotifications" />
+    <attribute sfwType="Collection" sfwEntity="entQDROApplication" ID="lstQdroApplication" sfwValue="iclbQdroApplication" />
+    <attribute sfwType="Collection" sfwEntity="entNotes" ID="lstNotes" sfwValue="iclbNotes" />
+    <attribute sfwType="Collection" sfwEntity="entPayeeAccount" ID="lstPayeeAccount" sfwValue="iclbPayeeAccount" />
+    <attribute sfwType="Collection" sfwEntity="entCorTracking" ID="lstCorTracking" sfwValue="iclbCorTracking" />
+    <attribute sfwType="Collection" sfwEntity="entProcessActivityLog" ID="lstProcessActivityLog" sfwValue="iclbProcessActivityLog" />
+    <attribute sfwType="Collection" sfwEntity="entPensionVerificationHistory" ID="lstPensionVerificationHistory" sfwValue="iclbPensionVerificationHistory" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitApplication" ID="lstBenefitApplication" sfwValue="iclbBenefitApplication" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoPerson.created_by" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UpdateSeq" sfwValue="icdoPerson.update_seq" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoPerson.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoPerson.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoPerson.modified_date" />
+    <attribute sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" ID="objPerson" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrCurrentDate" sfwValue="istrCurrentDate" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="LdecTotalCreditedHrs" sfwValue="ldecTotalCreditedHrs" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="LintTotalqualifiedYearsCnt" sfwValue="lintTotalqualifiedYearsCnt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLastBisYears" sfwValue="istrLastBisYears" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="LdtResumptionDate" sfwValue="ldtResumptionDate" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="LdecTotalQualifiedAccuruedBft" sfwValue="ldecTotalQualifiedAccuruedBft" />
+    <attribute sfwDataType="int" sfwType="Property" ID="LintBISYearCnt" sfwValue="lintBISYearCnt" />
+    <attribute ID="objIAPAllocationDetailPersonOverview" sfwType="Object" sfwEntity="entIAPAllocationDetailPersonOverview" sfwValue="ibusIAPAllocationDetailPersonOverview" />
+    <attribute sfwType="CDOCollection" sfwEntity="entDummyWorkData" ID="lstPersonWorkHistory" sfwValue="iclbPersonWorkHistory" />
+    <attribute ID="objAnnualBenefitSummaryOverview" sfwType="Object" sfwEntity="entAnnualBenefitSummaryOverview" sfwValue="ibusAnnualBenefitSummaryOverview" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintYear" sfwValue="iintYear" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintNextConsecutiveYear" sfwValue="iintNextConsecutiveYear" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecEEContributionAmount" sfwValue="idecEEContributionAmount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecSumEEUVHPAmount" sfwValue="idecSumEEUVHPAmount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecIAPBalance" sfwValue="idecIAPBalance" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecTotalIAPBalance" sfwValue="idecTotalIAPBalance" />
+    <attribute sfwDataType="string" sfwType="Property" ID="LdecTotalAccuruedBftAmt" sfwValue="ldecTotalAccuruedBftAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="LdecTotalSpecialAmt" sfwValue="ldecTotalSpecialAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="LdecTotalEEUVHPAmt" sfwValue="ldecTotalEEUVHPAmt" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="LdtLastReportedDate" sfwValue="ldtLastReportedDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="LdecIsvested" sfwValue="ldecIsvested" />
+    <attribute ID="objPersonAddressForCorr" sfwType="Object" sfwEntity="entPersonAddress" sfwValue="ibusPersonAddressForCorr" />
+    <attribute ID="objLbusBenefitApplication" sfwType="Object" sfwEntity="entBenefitApplication" sfwValue="lbusBenefitApplication" />
+    <attribute ID="lstPersonOverviewAccount" sfwType="Collection" sfwValue="iclcdoPersonAccountOverview" sfwEntity="entPersonAccount" sfwPrivate="False" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrAdverseInterestFlag" sfwValue="icdoPerson.istrAdverseInterestFlag" />
+    <attribute ID="lstPersonAccountOverviewBase" sfwType="Collection" sfwValue="iclbPersonAccountOverview" sfwEntity="entPersonAccount" sfwPrivate="False" />
+    <attribute ID="lstPersonBPMflows" sfwType="Collection" sfwValue="iclbPersonBPMflows" sfwEntity="entBpmActivityInstanceHistory" sfwPrivate="False" />
+  </attributes>
+  <objectmethods>
+    <method ID="MonthOfSuspendibleServiceReport" sfwReturnType="Byte[]">
+      <parameters>
+        <parameter ID="aintPersonId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="ReCalculateVesting" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintpersonid" sfwDataType="int" />
+      </parameters>
+    </method>
+  </objectmethods>
+  <queries />
+  <methods />
+  <lifecycle />
+  <ExtraFields />
+</entity>

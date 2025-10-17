@@ -1,0 +1,68 @@
+﻿<entity ID="entSolBpmProcessEscalation" sfwMainCDO="icdoBpmProcessEscalation" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busSolBpmProcessEscalation" sfwParentEntity="entBpmProcessEscalation">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete>
+    <property ID="lstBpmProcessEscalationRecipient" sfwMethodName="LoadBpmProcessEscalationRecipients" />
+    <property ID="lstBpmProcessEscalationRecipientRole" sfwMethodName="LoadBpmProcessEscalationRecipientRoles" />
+    <property ID="lstBpmProcessEscalationInstance" sfwMethodName="LoadBpmProcessEscalationInstances" />
+    <property ID="IobjMainCDO" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror>
+    <item ID="Rule - Case Not Selected" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Process Not Selected" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Lapse Time In Minutes Not Entered" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Recur Time Not Entered" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Escalation Not Entered" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Check if Escalation With Same Name Exists - New Mode" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Check if Escalation With Same Name Exists - Update Mode" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Check If Atleast One Recipient Selected" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <constraint />
+  <rules>
+    <rule ID="Rule - Case Not Selected" sfwRuleType="Validation" sfwExpression="(this.icdoBpmProcessEscalation.case_id == 0)" sfwMessageId="20007017" sfwObjectBased="True" />
+    <rule ID="Rule - Process Not Selected" sfwRuleType="Validation" sfwExpression="(this.icdoBpmProcessEscalation.process_id == 0)" sfwMessageId="20007022" sfwObjectBased="True" />
+    <rule ID="Rule - Lapse Time In Minutes Not Entered" sfwRuleType="Validation" sfwExpression="((this.icdoBpmProcessEscalation.lapse_type_value == &quot;LTBE&quot; || this.icdoBpmProcessEscalation.lapse_type_value == &quot;LTAE&quot;)&#xD;&#xA;&amp;&amp; (this.icdoBpmProcessEscalation.lapse_time_in_minutes == 0))" sfwMessageId="20007019" sfwObjectBased="True" />
+    <rule ID="Rule - Recur Time Not Entered" sfwRuleType="Validation" sfwExpression="((this.icdoBpmProcessEscalation.recur_type_value == &quot;RTET&quot;) &amp;&amp; (this.icdoBpmProcessEscalation.recur_time_in_days == 0 &amp;&amp; this.icdoBpmProcessEscalation.recur_time_in_hours == 0 &amp;&amp; this.icdoBpmProcessEscalation.recur_time_in_minutes == 0))" sfwMessageId="20007026" sfwObjectBased="True" />
+    <rule ID="Rule - Escalation Not Entered" sfwRuleType="Validation" sfwExpression="(this.icdoBpmProcessEscalation.process_escalation_name == null || this.icdoBpmProcessEscalation.process_escalation_name == &quot;&quot;)" sfwMessageId="20007028" sfwObjectBased="True" />
+    <rule ID="Rule - Check if Escalation With Same Name Exists - New Mode" sfwRuleType="Validation" sfwExpression="!(this.icdoBpmProcessEscalation.process_escalation_name == null || this.icdoBpmProcessEscalation.process_escalation_name == &quot;&quot;)&#xD;&#xA;&amp;&amp;&#xD;&#xA;(this.icdoBpmProcessEscalation.process_escalation_id == 0 &amp;&amp; RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entBpmProcessEscalation.CheckIfEscalationWithNameExists&quot;, this.icdoBpmProcessEscalation.process_escalation_name)  &gt; 0)" sfwMessageId="20007014" sfwObjectBased="True" />
+    <rule ID="Rule - Check if Escalation With Same Name Exists - Update Mode" sfwRuleType="Validation" sfwExpression="!(this.icdoBpmProcessEscalation.process_escalation_name == null || this.icdoBpmProcessEscalation.process_escalation_name == &quot;&quot;)&#xD;&#xA;&amp;&amp;&#xD;&#xA;(&#xD;&#xA;(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entBpmProcessEscalation.CheckIfEscalationWithNameExists&quot;, this.icdoBpmProcessEscalation.process_escalation_name)  &gt; 0) &amp;&amp; &#xD;&#xA;(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entBpmProcessEscalation.CheckIfEscalationWithNameExists&quot;, this.icdoBpmProcessEscalation.process_escalation_name)  != this.icdoBpmProcessEscalation.process_escalation_id)&#xD;&#xA;)" sfwMessageId="20007014" sfwObjectBased="True" />
+    <rule ID="Rule - Check If Atleast One Recipient Selected" sfwRuleType="Validation" sfwExpression="(!this.HasOneRecipient())" sfwMessageId="20007023" sfwObjectBased="True" />
+  </rules>
+  <attributes>
+    <attribute sfwType="Property" ID="IobjMainCDO" sfwValue="iobjMainCDO" />
+  </attributes>
+  <objectmethods>
+    <method ID="GetLapseCodeValues" sfwReturnType="Collection" sfwObjectID="cdoCodeValue" sfwEntity="entCodeValue" />
+    <method ID="AddRecipient" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintUserSerialId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="AddRole" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintRoleId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="LoadBpmProcessEscalationRecipients" sfwReturnType="Void" />
+    <method ID="LoadBpmProcessEscalationRecipientRoles" sfwReturnType="Void" />
+    <method ID="LoadBpmProcessEscalationInstances" sfwReturnType="Void" />
+    <method ID="LoadBpmProcess" sfwReturnType="Void" />
+    <method ID="LoadBpmCase" sfwReturnType="Void" />
+  </objectmethods>
+  <queries />
+  <methods>
+    <method ID="FindBpmProcessEscalation" sfwMethodType="Load" sfwMode="Update" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item ID="LoadBpmProcessEscalationRecipients" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmProcessEscalationRecipientRoles" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmProcess" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmCase" sfwDataType="Void" sfwItemType="Method" />
+    </method>
+  </methods>
+  <lifecycle />
+  <ExtraFields />
+</entity>

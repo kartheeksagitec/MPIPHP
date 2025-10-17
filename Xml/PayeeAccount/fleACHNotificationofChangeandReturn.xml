@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<file ID="fleACHNotificationofChangeandReturn" sfwType="Inbound" sfwActive="True" sfwStatus="Review" sfwTitle="ACH Notification of Change and Return File" sfwDescription="ACH Notification of Change and Return File" sfwProgressCounter="10" sfwProcessDetail="True" sfwInboundObject="MPIPHP.BusinessObjects.PayeeAccount.busACHNotificationofChangeandReturnInboundFile">
+  <record ID="1" sfwDescription="File Header Record" sfwRecordType="FixedLength" sfwDetailEntity="entPaymentHistoryDistribution">
+    <sfwField sfwDescription="Record Type Code" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Priority Code" sfwLength="2" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Immediate Destination:" sfwLength="10" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Immediate Origin:  Union Bank’s Transit Routing Number" sfwLength="10" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="File Creation Date" sfwLength="6" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="File Creation Time" sfwLength="4" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="File ID Modifier" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Record Size" sfwLength="3" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Blocking Factor" sfwLength="2" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Format code" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Immediate Destination Name" sfwLength="23" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Immediate Origin Name" sfwLength="23" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Reference Code" sfwLength="8" sfwRequired="False" sfwBindHeader="False" />
+  </record>
+  <record ID="5" sfwDescription="Batch Header Record" sfwRecordType="Header" sfwDetailEntity="entPaymentHistoryDistribution">
+    <sfwField sfwDescription="Record Type Code" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Service Class Code" sfwLength="3" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Batch Header Name/ Company Name" sfwLength="16" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Company Discretionary Data" sfwLength="20" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Company Identification:  Your Company ID as agreed to by Union Bank" sfwLength="10" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Standard Entry Class Code" sfwLength="3" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Company Entry Description" sfwLength="10" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Company Descriptive Date" sfwLength="6" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Effective Entry Date" sfwLength="6" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Settlement Date (Julian)" sfwLength="3" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Originator Status Code" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Originating DFI Identification" sfwLength="8" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Batch Number" sfwLength="7" sfwRequired="False" sfwBindHeader="False" />
+  </record>
+  <record ID="6" sfwDescription="Entry Detail Record" sfwRecordType="Detail" sfwDetailEntity="entPaymentHistoryDistribution">
+    <sfwField sfwDescription="Record Type Code" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Transaction Code" sfwLength="2" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="DFI Identification Number" sfwLength="8" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Check Digit" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="DFI Account Number" sfwLength="17" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Amount" sfwLength="10" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Identification Number" sfwLength="15" sfwRequired="False" sfwBindHeader="False" sfwEntityField="IstrEntryDetailIdentificationNumber" />
+    <sfwField sfwDescription="Individual Name/ Receiving Company Name" sfwLength="22" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Discretionary Data" sfwLength="2" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Addenda Record Indicator" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Trace Number" sfwLength="15" sfwRequired="False" sfwBindHeader="False" />
+  </record>
+  <record ID="7" sfwDescription="Addenda Record" sfwRecordType="FixedLength" sfwDetailEntity="entPaymentHistoryDistribution">
+    <sfwField sfwDescription="Record Type Code" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Addenda Type Code" sfwLength="2" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Return Reason Code" sfwLength="3" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Original Entry Trace Number" sfwLength="15" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Date of Death" sfwLength="6" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Original Receiving DFI Identification " sfwLength="8" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Addenda Information" sfwLength="44" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Trace Number" sfwLength="15" sfwRequired="False" sfwBindHeader="False" />
+  </record>
+  <record ID="8" sfwDescription="Batch Control Record" sfwRecordType="FixedLength" sfwDetailEntity="entPaymentHistoryDistribution">
+    <sfwField sfwDescription="Record Type Code" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Service Class Code" sfwLength="3" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Entry / Addenda Count" sfwLength="6" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Entry Hash" sfwLength="10" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Total Debit Entry Dollar Amount" sfwLength="12" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Total Credit Entry Dollar Amount" sfwLength="12" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Company Identification" sfwLength="10" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Message Authentication Code" sfwLength="19" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Filler" sfwLength="6" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Originating DFI Identification" sfwLength="8" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Batch Number" sfwLength="7" sfwRequired="False" sfwBindHeader="False" />
+  </record>
+  <record ID="9" sfwDescription="File Control Record" sfwRecordType="FixedLength" sfwDetailEntity="entPaymentHistoryDistribution">
+    <sfwField sfwDescription="Record Type Code" sfwLength="1" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Batch Count" sfwLength="6" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Block Count" sfwLength="6" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Addenda Count" sfwLength="8" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Entry Hash" sfwLength="10" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Total Debit Entry Dollar Amount in File" sfwLength="12" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Total Credit Entry Dollar Amount in File" sfwLength="12" sfwRequired="False" sfwBindHeader="False" />
+    <sfwField sfwDescription="Reserved" sfwLength="39" sfwRequired="False" sfwBindHeader="False" />
+  </record>
+</file>

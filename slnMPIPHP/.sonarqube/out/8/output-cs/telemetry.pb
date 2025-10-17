@@ -1,0 +1,1 @@
+aRSC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\NeoSpinBPMEngine\NeoSpinBPMEngine.csprojò	CSharp7_3

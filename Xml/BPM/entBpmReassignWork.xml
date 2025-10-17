@@ -1,0 +1,51 @@
+﻿<entity ID="entBpmReassignWork" sfwObjectID="busBpmReassignWork" sfwObjectType="NeoSpin.BusinessObjects.busBpmReassignWork" sfwType="RuleEntity" sfwActive="True" sfwStatus="Review" sfwParentEntity="entNeoSpinBase">
+  <objectmethods>
+    <method ID="GetAccessibleUserProcesses" sfwReturnType="Collection" sfwObjectID="cdoBpmProcess" sfwEntity="entBpmProcess" />
+    <method ID="SearchReassignWorkItems" sfwReturnType="ArrayList" />
+    <method ID="WorkReassignment" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aarrSelectedObjects" sfwDataType="ArrayList" />
+      </parameters>
+    </method>
+    <method ID="SearchAndLoadReassignmentBasket" sfwReturnType="ArrayList" />
+    <method ID="CheckError" sfwReturnType="ArrayList" />
+    <method ID="ReassignToSupervisour" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aarrSelectedObjects" sfwDataType="arraylist" />
+      </parameters>
+    </method>
+  </objectmethods>
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="IintProcessID" sfwValue="iintProcessID" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintActivityID" sfwValue="iintActivityID" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintOrgnID" sfwValue="iintOrgnID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrCheckedOutUser" sfwValue="istrCheckedOutUser" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintRoleID" sfwValue="iintRoleID" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtCreatedDateFrom" sfwValue="idtCreatedDateFrom" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtCreatedDateTo" sfwValue="idtCreatedDateTo" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrReassignUser" sfwValue="istrReassignUser" />
+    <attribute sfwType="Collection" sfwEntity="entSolBpmActivityInstance" ID="lstReassignmentActivities" sfwValue="iclbReassignmentActivities" />
+    <attribute ID="IstrActivityInstanceStatus" sfwDataType="string" sfwPrivate="False" sfwValue="istrActivityInstanceStatus" sfwType="Property" />
+    <attribute ID="IstrPriority" sfwDataType="string" sfwPrivate="False" sfwValue="istrPriority" sfwType="Property" />
+    <attribute ID="IdtActivityDueDateFrom" sfwDataType="datetime" sfwPrivate="False" sfwValue="idtActivityDueDateFrom" sfwType="Property" />
+    <attribute ID="IdtActivityDueDateTo" sfwDataType="datetime" sfwPrivate="False" sfwValue="idtActivityDueDateTo" sfwType="Property" />
+    <attribute ID="istrActivityID" sfwDataType="string" sfwPrivate="False" sfwValue="istrActivityID" sfwType="Property" />
+  </attributes>
+  <queries />
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods>
+    <method ID="FindBpmReassignWork" sfwMethodType="Load" sfwMode="All">
+      <item ID="SearchAndLoadReassignmentBasket" sfwDataType="ArrayList" sfwItemType="Method" />
+    </method>
+  </methods>
+  <lifecycle />
+  <ExtraFields />
+</entity>

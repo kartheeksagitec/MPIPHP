@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_CODE_VALUE]
+    FROM VARCHAR (4) NULL;
+

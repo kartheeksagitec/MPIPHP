@@ -1,0 +1,178 @@
+﻿<entity ID="entReturnToWorkRequest" sfwView="False" sfwActive="True" sfwMainCDO="icdoReturnToWorkRequest" sfwType="EntityRule" sfwStatus="Review" sfwTableName="SGT_RETURN_TO_WORK_REQUEST" sfwObjectID="busReturnToWorkRequest" sfwDataObjectID="doReturnToWorkRequest" CreateWithClass="True" sfwReadOnlyRule="RTW-ReadOnlyMode">
+  <attributes>
+    <attribute sfwValue="reemployment_notification_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ReemploymentNotificationId" sfwCaption="ID" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonId" sfwCaption="Person Id" />
+    <attribute sfwValue="reemployment_start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ReemploymentStartDate" sfwCaption="Reemployment Start Date" />
+    <attribute sfwValue="employer_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="255" sfwIsNull="True" ID="EmployerName" sfwCaption="Employer Name" />
+    <attribute sfwValue="job_classfication" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="255" sfwIsNull="True" ID="JobClassfication" sfwCaption="Job Classfication" />
+    <attribute sfwValue="eligible_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="EligibleFlag" sfwCaption="Eligible Flag" />
+    <attribute sfwValue="estimated_hours_per_payroll_month" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="5,2" sfwIsNull="True" ID="EstimatedHoursPerPayrollMonth" sfwCaption="Estimated Hours Per Payroll Month" />
+    <attribute sfwValue="notification_form_created_on" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="NotificationFormCreatedOn" sfwCaption="Notification Form Created On" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwPrivate="False" sfwValue="ibusPayee" />
+    <attribute ID="lstPayeeAccount" sfwType="Collection" sfwValue="iclbPayeeAccount" sfwEntity="entPayeeAccount" sfwPrivate="False" />
+    <attribute sfwValue="union_local_number" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UnionLocalNumber" sfwCaption="Union Local Number" />
+    <attribute ID="lstCorTracking" sfwType="Collection" sfwValue="iclbCorTracking" sfwEntity="entCorTracking" sfwPrivate="False" />
+    <attribute ID="lstNotes" sfwType="Collection" sfwValue="iclbNotes" sfwEntity="entNotes" sfwPrivate="False" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="7099" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwValue="source_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="SourceId" sfwCodeID="8000" sfwCaption="Source" />
+    <attribute sfwValue="source_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="SourceValue" sfwCaption="Source" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwType="Description" ID="SourceDescription" sfwCaption="Source" sfwValue="source_description" />
+    <attribute ID="lstReemploymentErrors" sfwType="Collection" sfwValue="iclbReemploymentErrors" sfwEntity="entError" sfwPrivate="False" />
+    <attribute ID="IstrPayeeAccountActive" sfwDataType="string" sfwPrivate="False" sfwValue="istrPayeeAccountActive" sfwType="Property" />
+    <attribute ID="IstrParticipantHoursInPayrollMonth" sfwDataType="string" sfwPrivate="False" sfwValue="istrParticipantHoursInPayrollMonth" sfwType="Property" />
+    <attribute ID="IstrParticipantRetiree" sfwDataType="string" sfwPrivate="False" sfwValue="istrParticipantRetiree" sfwType="Property" />
+    <attribute ID="IsWithinPaymentThreshold" sfwDataType="string" sfwPrivate="False" sfwValue="istrIsWithinPaymentThreshold" sfwType="Property" />
+    <attribute ID="IstrIsEligibleToRTW" sfwDataType="string" sfwPrivate="False" sfwValue="istrIsEligibleToRTW" sfwType="Property" />
+    <attribute ID="IdtPaymentAccountSuspensionDate" sfwDataType="datetime" sfwPrivate="False" sfwValue="idtPaymentAccountSuspensionDate" sfwType="Property" />
+    <attribute sfwValue="request_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RequestTypeId" sfwCodeID="8001" sfwCaption="Request Type" />
+    <attribute sfwValue="request_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="RequestTypeValue" sfwCaption="Request Type" />
+    <attribute sfwType="Description" ID="RequestTypeDescription" sfwCaption="Request Type" sfwValue="request_type_description" />
+    <attribute ID="lstReturnToWorkHistory" sfwType="Collection" sfwEntity="entReturnToWorkRequest" sfwValue="iclbReturnToWorkHistory" sfwPrivate="False" />
+    <attribute ID="IsSecondAuditRequired" sfwDataType="string" sfwPrivate="False" sfwValue="istrIsSecondAuditRequired" sfwType="Property" />
+    <attribute ID="IsAllPayeeAccountApproved" sfwDataType="string" sfwPrivate="False" sfwValue="istrIsAllPayeeAccountApproved" sfwType="Property" />
+    <attribute sfwValue="payment_account_suspension_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="PaymentAccountSuspensionDate" sfwCaption="Payment Account Suspension Date" />
+    <attribute ID="objErtwSharedNotes" sfwType="Object" sfwEntity="entErtwSharedNotes" sfwPrivate="False" sfwValue="ibusErtwSharedNotes" />
+    <attribute ID="lstErtwAuditingNotes" sfwType="Collection" sfwValue="iclbErtwAuditingNotes" sfwEntity="entErtwAuditingNotes" sfwPrivate="False" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SP.MPI_PERSON_ID,&#xA;&#x9; SP.PERSON_ID,&#xA;&#x9; SP.FIRST_NAME,&#xA;&#x9; SP.MIDDLE_NAME, &#xA;&#x9; SP.LAST_NAME,&#xA;&#x9;SRW.REEMPLOYMENT_NOTIFICATION_ID,&#xA;&#x9;SRW.REEMPLOYMENT_START_DATE,&#xA;&#x9;SRW.ESTIMATED_HOURS_PER_PAYROLL_MONTH,&#xA;&#x9;SRW.EMPLOYER_NAME,&#xA;&#x9;(SP.FIRST_NAME + ' ' + SP.LAST_NAME) AS PayeeName,&#xA;&#x9;SRW.SOURCE_VALUE,&#xA;&#x9;SRW.STATUS_VALUE,&#xA;&#x9;SRW.JOB_CLASSFICATION,&#xA;&#x9;SRW.Union_Local_Number,&#xA;&#x9;SRW.EMPLOYER_NAME,&#xA;&#x9;SRW.REQUEST_TYPE_VALUE&#xA;FROM&#xA;&#x9; SGT_RETURN_TO_WORK_REQUEST AS SRW WITH(NOLOCK)  &#xA;&#x9; join SGT_PERSON  AS SP WITH(NOLOCK) &#xA;&#x9; ON SRW.PERSON_ID = SP.PERSON_ID&#xA;&#x9; ORDER BY SRW.REEMPLOYMENT_NOTIFICATION_ID DESC">
+      <parameters />
+    </query>
+    <query ID="GetPersonIdByMpiId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_PERSON WITH(NOLOCK) where MPI_PERSON_ID =@person_mpi_id">
+      <parameters>
+        <parameter ID="@person_mpi_id" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetNotificationIdByMPiPersonID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_returnto_work WITH(NOLOCK) where PERSON_ID =@person_id">
+      <parameters>
+        <parameter ID="@person_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPayeeAccountForReturnToWorkRequest" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPA.PAYEE_ACCOUNT_ID,SPA.BENEFIT_ACCOUNT_TYPE_VALUE,SCVP.DESCRIPTION AS istrBenefitOptionValue &#xD;&#xA;,SP.PLAN_NAME AS istrPlanDescription,SP.PLAN_ID as iintPlanId,&#xD;&#xA;SCVS.DESCRIPTION AS istrStatusDesc,SCVS.CODE_VALUE AS istrStatus,SPA.ACCOUNT_RELATION_VALUE&#xD;&#xA;FROM SGT_PAYEE_BENEFIT_ACCOUNT SPBA &#xD;&#xA;LEFT JOIN SGT_PAYEE_ACCOUNT SPA ON SPA.PAYEE_BENEFIT_ACCOUNT_ID=SPBA.PAYEE_BENEFIT_ACCOUNT_ID &#xD;&#xA;LEFT JOIN SGT_PAYEE_ACCOUNT_STATUS SPAS ON SPAS.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID &#xD;&#xA;LEFT JOIN SGT_PLAN_BENEFIT_XR SPBX ON SPBX.PLAN_BENEFIT_ID=SPA.PLAN_BENEFIT_ID &#xD;&#xA;LEFT JOIN SGS_CODE_VALUE SCVP ON SCVP.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCVP.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE &#xD;&#xA;LEFT JOIN SGT_PLAN SP ON SP.PLAN_ID=SPBX.PLAN_ID &#xD;&#xA;LEFT JOIN SGS_CODE_VALUE SCVS ON SCVS.CODE_ID = SPAS.STATUS_ID AND SCVS.CODE_VALUE = SPAS.STATUS_VALUE &#xD;&#xA;WHERE (SPBA.PERSON_ID =@PERSON_ID OR SPA.PERSON_ID = @PERSON_ID)">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadSoftErrors" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select SM.MESSAGE_ID,SM.DISPLAY_MESSAGE,SM.SEVERITY_ID,sm.SEVERITY_VALUE  from SGT_RETURN_TO_WORK_REQUEST_ERROR SRRE WITH(NOLOCK)&#xD;&#xA;join SGS_MESSAGES SM WITH(NOLOCK) on SM.MESSAGE_ID = SRRE.MESSAGE_ID&#xD;&#xA;where SRRE.REEMPLOYMENT_NOTIFICATION_ID = @Reemployment_Notification_Id">
+      <parameters>
+        <parameter ID="@Reemployment_Notification_Id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="InsertReturnToWorkRequestSoftErrors" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF EXISTS (SELECT * FROM SGT_RETURN_TO_WORK_REQUEST_ERROR WHERE [REEMPLOYMENT_NOTIFICATION_ID] = @Reemployment_Notification_Id AND [MESSAGE_ID] = @Massage_Id)&#xD;&#xA;&#x9;BEGIN&#xD;&#xA;&#x9;&#x9;UPDATE SGT_RETURN_TO_WORK_REQUEST_ERROR SET &#xD;&#xA;&#x9;   [MODIFIED_BY]= @Created_By&#xD;&#xA;&#x9;   ,[MODIFIED_DATE]=GETDATE()&#xD;&#xA;&#x9;END&#xD;&#xA;ELSE&#xD;&#xA;&#x9;BEGIN&#xD;&#xA;&#x9; INSERT INTO [dbo].SGT_RETURN_TO_WORK_REQUEST_ERROR&#xD;&#xA;&#x9;&#x9;&#x9;   ([REEMPLOYMENT_NOTIFICATION_ID]&#xD;&#xA;&#x9;&#x9;&#x9;   ,[REEMPLOYMENT_NOTIFICATION_PERSON_ID]&#xD;&#xA;&#x9;&#x9;&#x9;   ,[MESSAGE_ID]&#xD;&#xA;&#x9;&#x9;&#x9;   ,[CREATED_BY]&#xD;&#xA;&#x9;&#x9;&#x9;   ,[CREATED_DATE]&#xD;&#xA;&#x9;&#x9;&#x9;   ,[MODIFIED_BY]&#xD;&#xA;&#x9;&#x9;&#x9;   ,[MODIFIED_DATE]&#xD;&#xA;&#x9;&#x9;&#x9;   ,[UPDATE_SEQ])&#xD;&#xA;&#x9;&#x9; VALUES&#xD;&#xA;&#x9;&#x9;&#x9;   (@Reemployment_Notification_Id&#xD;&#xA;&#x9;&#x9;&#x9;   ,@Person_Id&#xD;&#xA;&#x9;&#x9;&#x9;   ,@Massage_Id&#xD;&#xA;&#x9;&#x9;&#x9;   ,@Created_By&#xD;&#xA;&#x9;&#x9;&#x9;   ,GETDATE()&#xD;&#xA;&#x9;&#x9;&#x9;   ,@Created_By&#xD;&#xA;&#x9;&#x9;&#x9;   ,GETDATE()&#xD;&#xA;&#x9;&#x9;&#x9;   ,0)&#xD;&#xA;&#x9;END">
+      <parameters>
+        <parameter ID="@Massage_Id" sfwDataType="int" />
+        <parameter ID="@Created_By" sfwDataType="string" />
+        <parameter ID="@Person_Id" sfwDataType="int" />
+        <parameter ID="@Reemployment_Notification_Id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="DeleteReturnToWorkRequest" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF EXISTS (SELECT * FROM SGT_RETURN_TO_WORK_REQUEST_ERROR WHERE [REEMPLOYMENT_NOTIFICATION_ID] = @Reemployment_Notification_Id AND [MESSAGE_ID]=@MassageId)&#xD;&#xA;DELETE FROM SGT_RETURN_TO_WORK_REQUEST_ERROR WHERE [REEMPLOYMENT_NOTIFICATION_ID] = @Reemployment_Notification_Id AND MESSAGE_ID=@MassageId">
+      <parameters>
+        <parameter ID="@MassageId" sfwDataType="int" />
+        <parameter ID="@Reemployment_Notification_Id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadPayeeAccounts" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPA.PAYEE_ACCOUNT_ID,SPA.BENEFIT_ACCOUNT_TYPE_VALUE,SPA.RETIREMENT_TYPE_VALUE,SCVP.DESCRIPTION AS istrBenefitOptionValue &#xD;&#xA;,SP.PLAN_NAME AS istrPlanDescription,SP.PLAN_ID as iintPlanId,spa.BENEFIT_BEGIN_DATE AS idtRTMTDate,&#xD;&#xA;CASE WHEN SBA.BENEFIT_TYPE_VALUE &lt;&gt; 'WDRL' THEN SBA.RETIREMENT_DATE ELSE SBA.WITHDRAWAL_DATE END AS idtRetireMentDate,&#xD;&#xA;SCVS.DESCRIPTION AS istrStatusDesc,SCVS.CODE_VALUE AS istrStatus,SPA.ACCOUNT_RELATION_VALUE,SPA.RETIREE_INCR_FLAG,&#xD;&#xA;SBA.BENEFIT_APPLICATION_ID iintBenefitApplicationID,SPBA.FUNDS_TYPE_VALUE as istrFundType,&#xD;&#xA;SPA.BENEFIT_APPLICATION_DETAIL_ID--PIR 985&#xD;&#xA;,CHILD_SUPPORT_FLAG AS istrChildSupportFlag --PIR 965&#xD;&#xA;,EMERGENCY_ONETIME_PAYMENT_FLAG AS istrCovidFlag --RequestID:99406&#xD;&#xA;, CASE WHEN SBA.WITHDRAWAL_TYPE_VALUE LIKE 'HS%' THEN 'Y' ELSE 'N' END AS istrHardshipWithdrawal&#xD;&#xA;FROM SGT_PAYEE_BENEFIT_ACCOUNT SPBA &#xD;&#xA;LEFT JOIN SGT_PAYEE_ACCOUNT SPA ON SPA.PAYEE_BENEFIT_ACCOUNT_ID=SPBA.PAYEE_BENEFIT_ACCOUNT_ID &#xD;&#xA;LEFT JOIN SGT_PAYEE_ACCOUNT_STATUS SPAS ON SPAS.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID &#xD;&#xA;LEFT JOIN SGT_PLAN_BENEFIT_XR SPBX ON SPBX.PLAN_BENEFIT_ID=SPA.PLAN_BENEFIT_ID &#xD;&#xA;LEFT JOIN SGS_CODE_VALUE SCVP ON SCVP.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCVP.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE &#xD;&#xA;LEFT JOIN SGT_PLAN SP ON SP.PLAN_ID=SPBX.PLAN_ID &#xD;&#xA;LEFT JOIN SGS_CODE_VALUE SCVS ON SCVS.CODE_ID = SPAS.STATUS_ID AND SCVS.CODE_VALUE = SPAS.STATUS_VALUE &#xD;&#xA;LEFT JOIN SGT_BENEFIT_APPLICATION_DETAIL SBAD ON SBAD.BENEFIT_APPLICATION_DETAIL_ID=SPA.BENEFIT_APPLICATION_DETAIL_ID&#xD;&#xA;LEFT JOIN SGT_BENEFIT_APPLICATION SBA ON SBA.BENEFIT_APPLICATION_ID=SBAD.BENEFIT_APPLICATION_ID&#xD;&#xA;WHERE SPAS.STATUS_VALUE in('RECV','SPND') AND SPA.PERSON_ID = @PERSON_ID&#xD;&#xA;AND &#xD;&#xA;(SPAS.PAYEE_ACCOUNT_STATUS_ID &#xD;&#xA;= (SELECT TOP(1) PAYEE_ACCOUNT_STATUS_ID FROM SGT_PAYEE_ACCOUNT_STATUS Q WHERE Q.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;ORDER BY PAYEE_ACCOUNT_STATUS_ID DESC))">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadReturnToWorkHistory" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_RETURN_TO_WORK_REQUEST WITH(NOLOCK) &#xA;WHERE PERSON_ID =@person_id&#xA;AND REEMPLOYMENT_NOTIFICATION_ID != @reemployment_notification_id">
+      <parameters>
+        <parameter ID="@person_id" sfwDataType="int" />
+        <parameter ID="@reemployment_notification_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadPayeeAccountsERTW" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPA.PAYEE_ACCOUNT_ID,SPA.BENEFIT_ACCOUNT_TYPE_VALUE,SPA.RETIREMENT_TYPE_VALUE,SCVP.DESCRIPTION AS istrBenefitOptionValue &#xD;&#xA;,SP.PLAN_NAME AS istrPlanDescription,SP.PLAN_ID as iintPlanId,spa.BENEFIT_BEGIN_DATE AS idtRTMTDate,&#xD;&#xA;CASE WHEN SBA.BENEFIT_TYPE_VALUE &lt;&gt; 'WDRL' THEN SBA.RETIREMENT_DATE ELSE SBA.WITHDRAWAL_DATE END AS idtRetireMentDate,&#xD;&#xA;SCVS.DESCRIPTION AS istrStatusDesc,SCVS.CODE_VALUE AS istrStatus,SPA.ACCOUNT_RELATION_VALUE,SPA.RETIREE_INCR_FLAG,SPA.VERIFIED_FLAG,&#xD;&#xA;SBA.BENEFIT_APPLICATION_ID iintBenefitApplicationID,SPBA.FUNDS_TYPE_VALUE as istrFundType,&#xD;&#xA;SPA.BENEFIT_APPLICATION_DETAIL_ID--PIR 985&#xD;&#xA;,CHILD_SUPPORT_FLAG AS istrChildSupportFlag --PIR 965&#xD;&#xA;,EMERGENCY_ONETIME_PAYMENT_FLAG AS istrCovidFlag --RequestID:99406&#xD;&#xA;, CASE WHEN SBA.WITHDRAWAL_TYPE_VALUE LIKE 'HS%' THEN 'Y' ELSE 'N' END AS istrHardshipWithdrawal&#xD;&#xA;FROM SGT_PAYEE_BENEFIT_ACCOUNT SPBA &#xD;&#xA;LEFT JOIN SGT_PAYEE_ACCOUNT SPA ON SPA.PAYEE_BENEFIT_ACCOUNT_ID=SPBA.PAYEE_BENEFIT_ACCOUNT_ID &#xD;&#xA;LEFT JOIN SGT_PAYEE_ACCOUNT_STATUS SPAS ON SPAS.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID &#xD;&#xA;LEFT JOIN SGT_PLAN_BENEFIT_XR SPBX ON SPBX.PLAN_BENEFIT_ID=SPA.PLAN_BENEFIT_ID &#xD;&#xA;LEFT JOIN SGS_CODE_VALUE SCVP ON SCVP.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCVP.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE &#xD;&#xA;LEFT JOIN SGT_PLAN SP ON SP.PLAN_ID=SPBX.PLAN_ID &#xD;&#xA;LEFT JOIN SGS_CODE_VALUE SCVS ON SCVS.CODE_ID = SPAS.STATUS_ID AND SCVS.CODE_VALUE = SPAS.STATUS_VALUE &#xD;&#xA;LEFT JOIN SGT_BENEFIT_APPLICATION_DETAIL SBAD ON SBAD.BENEFIT_APPLICATION_DETAIL_ID=SPA.BENEFIT_APPLICATION_DETAIL_ID&#xD;&#xA;LEFT JOIN SGT_BENEFIT_APPLICATION SBA ON SBA.BENEFIT_APPLICATION_ID=SBAD.BENEFIT_APPLICATION_ID&#xD;&#xA;WHERE SPAS.STATUS_VALUE not in('CNCL','CMPL') and (SPBA.PERSON_ID = @PERSON_ID OR SPA.PERSON_ID = @PERSON_ID)&#xD;&#xA;AND &#xD;&#xA;(SPAS.PAYEE_ACCOUNT_STATUS_ID &#xD;&#xA;= (SELECT TOP(1) PAYEE_ACCOUNT_STATUS_ID FROM SGT_PAYEE_ACCOUNT_STATUS Q WHERE Q.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;ORDER BY PAYEE_ACCOUNT_STATUS_ID DESC))">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules>
+    <rule ID="IsSaveButtonVisible" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(this.icdoReturnToWorkRequest.request_type_value == &quot;RTWO&quot; &amp;&amp;(this.icdoReturnToWorkRequest.status_value==&quot;REVW&quot; ||  this.icdoReturnToWorkRequest.status_value==&quot;VALD&quot;))&#xA;||&#xA;(this.icdoReturnToWorkRequest.request_type_value == &quot;ERTW&quot;)" />
+    <rule ID="IsResetButtonVisible" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="this.icdoReturnToWorkRequest.status_value==&quot;REVW&quot;" />
+    <rule ID="SubmitButtonVisible" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="IsSubmitButtonVisible()==True" />
+    <rule ID="RTW-ReadOnlyMode" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="IsFormReadOnly()==True" sfwMessageId="7018" sfwMessageParameters="icdoReturnToWorkRequest.request_type_description" />
+    <rule ID="CancelButtonVisible" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="IsCancelButtonVisible() == True" />
+    <rule ID="IsPaymentAccountSuspensionDateVisible" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="IsPaymentAccountSuspensionDateVisible() == True &amp;&amp; IsEndOfReturnToWork() == False" />
+    <rule ID="HideWhenEndOfRTW" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="IsEndOfReturnToWork() == False" />
+    <rule ID="ShowWhenEndOfRTW" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="IsEndOfReturnToWork() == True" />
+  </rules>
+  <initialload>
+    <item ID="IsSaveButtonVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsResetButtonVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="RTW-ReadOnlyMode" sfwMode="All" sfwStatus="Active" />
+    <item ID="SubmitButtonVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="CancelButtonVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsPaymentAccountSuspensionDateVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="HideWhenEndOfRTW" sfwMode="All" sfwStatus="Active" />
+    <item ID="ShowWhenEndOfRTW" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods>
+    <method ID="GenerateCorrespondenceRETR0006" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintReEmploymentNotificationId" sfwDataType="int" />
+        <parameter ID="aintPersonId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="GenerateCorrespondencePAYEE0001AndPAYEE0021" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintReEmploymentNotificationId" sfwDataType="int" />
+        <parameter ID="aintPersonId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="UpdatePaymentAccountToSuspended" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintReEmploymentNotificationId" sfwDataType="int" />
+        <parameter ID="aintPersonId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="UpdateNotificationStatusToProcessed" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintReEmploymentNotificationId" sfwDataType="int" />
+        <parameter ID="aintPersonId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="CancelReEmploymentNotification" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintReEmploymentNotificationId" sfwDataType="int" />
+        <parameter ID="aintPersonId" sfwDataType="int" />
+        <parameter ID="astrCancelReason" sfwDataType="string" />
+      </parameters>
+    </method>
+    <method ID="IsSubmitButtonVisible" sfwReturnType="Boolean">
+      <parameters />
+    </method>
+    <method ID="IsFormReadOnly">
+      <parameters />
+    </method>
+    <method ID="BtnCancelClick" sfwReturnType="ArrayList" />
+    <method ID="IsCancelButtonVisible" sfwReturnType="Boolean" />
+    <method ID="IsEndOfReturnToWork" sfwReturnType="Boolean" />
+    <method ID="AddNotesForERTW" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintReEmploymentNotificationId" sfwDataType="int" />
+        <parameter ID="aintPersonId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="BtnSubmitClick" sfwReturnType="ArrayList" />
+  </objectmethods>
+</entity>

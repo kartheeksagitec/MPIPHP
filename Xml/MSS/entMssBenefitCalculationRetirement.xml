@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entMssBenefitCalculationRetirement" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoBenefitCalculationHeader" sfwObjectID="busMssBenefitCalculationRetirement" sfwParentEntity="entBenefitCalculationRetirement">
+  <rules>
+    <rule ID="Rule-PlanNotSelected" sfwMessage="Plan is required." sfwExpression="(this.icdoBenefitCalculationHeader.iintPlanId == 0)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-HasAltPayee" sfwExpression="(this.CheckAlternatePayeeExists() == True)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="Visible-Plan-MPI-Or-IAP" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-HasAltPayee" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist>
+    <group ID="Step1">
+      <item ID="Rule-PlanNotSelected" sfwMode="All" sfwStatus="Active" />
+    </group>
+    <group ID="Step2" />
+  </groupslist>
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="IintPlanId" sfwValue="icdoBenefitCalculationHeader.iintPlanId" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="BeneficiaryPersonDateOfBirth" sfwValue="icdoBenefitCalculationHeader.beneficiary_person_date_of_birth" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="RetirementDate" sfwValue="icdoBenefitCalculationHeader.retirement_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlanDescription" sfwValue="icdoBenefitCalculationHeader.istrPlanDescription" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecParticipantFullAge" sfwValue="icdoBenefitCalculationHeader.idecParticipantFullAge" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecSurvivorFullAge" sfwValue="icdoBenefitCalculationHeader.idecSurvivorFullAge" />
+    <attribute sfwDataType="int" sfwType="Property" ID="BenefitCalculationHeaderId" sfwValue="icdoBenefitCalculationHeader.benefit_calculation_header_id" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoBenefitCalculationHeader.created_date" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitCalculationDetail" ID="lstBenefitCalculationDetail" sfwValue="iclbBenefitCalculationDetail" />
+  </attributes>
+  <objectmethods>
+    <method ID="GetPlanValues" sfwReturnType="Collection" sfwObjectID="cdoPlan" sfwEntity="entPlan" />
+  </objectmethods>
+</entity>

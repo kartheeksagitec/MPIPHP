@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmDocumentLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvWorkflow" sfwResource="200 " sfwType="Lookup" sfwTitle="Document Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entDocument" sfwGridCollection="busDocumentLookup.iclbDocument">
+  <initialload>
+    <query ID="cdoDocument" sfwQueryRef="entDocument.Lookup" sfwMethodName="LoadDocuments" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDocumentCode" Text="Document Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDocumentCode" sfwDataField="doc_type" sfwQueryID="cdoDocument" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDocumentName" Text="Document Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDocumentName" sfwDataField="document_name" sfwOperator="like" sfwQueryID="cdoDocument" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="capDocumentId" Text="Document ID : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDocumentId" sfwDataField="document_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoDocument" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="StoreSearch" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmDocumentMaintenance" sfwMethodName="btnNew_Click" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmDocumentMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="Aintdocumentid=DocumentId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwNavigationParameter="DocumentId" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="ExportExcel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Document ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DocumentId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Document Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="DocType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Document Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DocumentName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

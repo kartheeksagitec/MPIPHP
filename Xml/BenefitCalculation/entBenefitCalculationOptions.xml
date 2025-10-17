@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entBenefitCalculationOptions" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoBenefitCalculationOptions" sfwObjectID="busBenefitCalculationOptions" sfwTableName="sgt_benefit_calculation_options" sfwView="False" sfwDataObjectID="doBenefitCalculationOptions">
+  <rules>
+    <rule ID="VisisbleRule-IsRetroActiveAmountZero" sfwExpression="(RFunc.GetValue&lt;Decimal&gt;(this, &quot;icdoBenefitCalculationOptions.retroactive_amount&quot;) != 0)" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="IcdoBenefitCalculationOptions" />
+  </delete>
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="LoadBenefitCalculationOptions" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select BCO.*,CV.DESCRIPTION as istrBenefitOptionDescription from SGT_BENEFIT_CALCULATION_OPTIONS BCO&#xD;&#xA;inner join SGT_PLAN_BENEFIT_XR PXR on PXR.PLAN_BENEFIT_ID=BCO.PLAN_BENEFIT_ID&#xD;&#xA;inner join SGS_CODE_VALUE CV on CV.CODE_VALUE=PXR.BENEFIT_OPTION_VALUE &#xD;&#xA;where BCO.BENEFIT_CALCULATION_DETAIL_ID=@BENEFIT_CALCULATION_DETAIL_ID">
+      <parameters>
+        <parameter ID="@BENEFIT_CALCULATION_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitCalculationOptionsBasedOnDetailId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_BENEFIT_CALCULATION_OPTIONS SBCO WITH(NOLOCK)&#xD;&#xA;WHERE SBCO.BENEFIT_CALCULATION_DETAIL_ID = @BENEFIT_CALCULATION_DETAIL_ID">
+      <parameters>
+        <parameter ID="@BENEFIT_CALCULATION_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOptionDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select SBCD.PLAN_ID,SP.PLAN_CODE,SBCO.SURVIVOR_RELATIONSHIP_VALUE,SBCO.ACCOUNT_RELATIONSHIP_VALUE,SBCO.SURVIVOR_AMOUNT,spbx.BENEFIT_OPTION_VALUE&#xD;&#xA; from SGT_BENEFIT_CALCULATION_HEADER SBCH &#xD;&#xA;join SGT_BENEFIT_CALCULATION_DETAIL SBCD ON SBCH.BENEFIT_CALCULATION_HEADER_ID=SBCD.BENEFIT_CALCULATION_HEADER_ID  &#xD;&#xA;JOIN SGT_BENEFIT_CALCULATION_OPTIONS SBCO ON SBCD.BENEFIT_CALCULATION_DETAIL_ID=SBCO.BENEFIT_CALCULATION_DETAIL_ID &#xD;&#xA;JOIN SGT_PLAN SP ON SP.PLAN_ID= SBCD.PLAN_ID&#xD;&#xA;join SGT_PLAN_BENEFIT_XR SPBX on SBCO.PLAN_BENEFIT_ID = SPBX.PLAN_BENEFIT_ID&#xD;&#xA;WHERE SBCH.BENEFIT_CALCULATION_HEADER_ID=@BENEFIT_CALCULATION_HEADER_ID">
+      <parameters>
+        <parameter ID="@BENEFIT_CALCULATION_HEADER_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitCalOptions" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select SPBX.BENEFIT_OPTION_VALUE,SCV.DESCRIPTION AS istrBenefitOptionDescription,SBCO.* from SGT_PLAN_BENEFIT_XR SPBX&#xD;&#xA;JOIN SGT_BENEFIT_CALCULATION_OPTIONS SBCO ON SPBX.PLAN_BENEFIT_ID=SBCO.PLAN_BENEFIT_ID&#xD;&#xA;JOIN SGT_BENEFIT_CALCULATION_DETAIL SBCD ON SBCO.BENEFIT_CALCULATION_DETAIL_ID=SBCD.BENEFIT_CALCULATION_DETAIL_ID&#xD;&#xA;JOIN SGT_BENEFIT_CALCULATION_HEADER SBCH ON SBCD.BENEFIT_CALCULATION_HEADER_ID=SBCH.BENEFIT_CALCULATION_HEADER_ID&#xD;&#xA;join SGS_CODE_VALUE SCV ON SCV.CODE_ID=1504 AND SCV.CODE_VALUE=SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA; WHERE SBCH.BENEFIT_CALCULATION_HEADER_ID=@BENEFIT_CALCULATION_HEADER_ID">
+      <parameters>
+        <parameter ID="@BENEFIT_CALCULATION_HEADER_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="benefit_calculation_option_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitCalculationOptionId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="benefit_calculation_detail_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitCalculationDetailId" sfwIsSequence="False" sfwCaption="Benefit Calculation Detail Id" />
+    <attribute sfwValue="plan_benefit_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PlanBenefitId" sfwIsSequence="False" sfwCaption="Plan Benefit Id" />
+    <attribute sfwValue="benefit_option_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,6" sfwIsNull="True" ID="BenefitOptionFactor" sfwIsSequence="False" sfwCaption="Benefit Option Factor" />
+    <attribute sfwValue="benefit_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="BenefitAmount" sfwIsSequence="False" sfwCaption="Benefit Amount" />
+    <attribute sfwType="Description" ID="AccountRelationshipDescription" sfwCaption="Account Relationship" sfwValue="account_relationship_description" />
+    <attribute sfwValue="account_relationship_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="AccountRelationshipId" sfwCodeID="2003" sfwIsSequence="False" sfwCaption="Account Relationship" />
+    <attribute sfwValue="account_relationship_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="AccountRelationshipValue" sfwIsSequence="False" sfwCaption="Account Relationship" />
+    <attribute sfwType="Description" ID="SurvivorRelationshipDescription" sfwCaption="Survivor Relationship" sfwValue="survivor_relationship_description" />
+    <attribute sfwValue="survivor_relationship_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="SurvivorRelationshipId" sfwCodeID="6000" sfwIsSequence="False" sfwCaption="Survivor Relationship" />
+    <attribute sfwValue="survivor_relationship_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="SurvivorRelationshipValue" sfwIsSequence="False" sfwCaption="Survivor Relationship" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="survivor_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="SurvivorAmount" sfwIsSequence="False" sfwCaption="Survivor Amount" />
+    <attribute sfwValue="ee_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="EeFlag" sfwIsSequence="False" sfwCaption="Ee Flag" />
+    <attribute sfwValue="uvhp_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="UvhpFlag" sfwIsSequence="False" sfwCaption="Uvhp Flag" />
+    <attribute sfwValue="local52_special_acct_bal_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="Local52SpecialAcctBalFlag" sfwIsSequence="False" sfwCaption="Local52 Special Acct Bal Flag" />
+    <attribute sfwValue="local161_special_acct_bal_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="Local161SpecialAcctBalFlag" sfwIsSequence="False" sfwCaption="Local161 Special Acct Bal Flag" />
+    <attribute sfwValue="relative_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="RelativeValue" sfwIsSequence="False" sfwCaption="Relative Value" />
+    <attribute sfwValue="disability_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,6" sfwIsNull="True" ID="DisabilityFactor" sfwIsSequence="False" sfwCaption="Disability Factor" />
+    <attribute sfwValue="disability_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="DisabilityAmount" sfwIsSequence="False" sfwCaption="Disability Amount" />
+    <attribute sfwValue="participant_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="ParticipantAmount" sfwIsSequence="False" sfwCaption="Participant Amount" />
+    <attribute sfwValue="retroactive_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="RetroactiveAmount" sfwIsSequence="False" sfwCaption="Retroactive Amount" />
+    <attribute sfwValue="survivor_percent_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="SurvivorPercentAmount" sfwIsSequence="False" sfwCaption="Survivor Percent Amount" />
+    <attribute sfwValue="overridden_benefit_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="OverriddenBenefitAmount" sfwIsSequence="False" sfwCaption="Overridden Benefit Amount" />
+    <attribute sfwValue="paid_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="PaidAmount" sfwCaption="Paid Amount" />
+    <attribute sfwValue="pop_up_option_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,6" sfwIsNull="True" ID="PopUpOptionFactor" sfwCaption="Pop Up Option Factor" />
+    <attribute sfwValue="pop_up_benefit_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="PopUpBenefitAmount" sfwCaption="Pop Up Benefit Amount" />
+    <attribute sfwValue="pop_up_option_factor_at_ret" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,6" sfwIsNull="True" ID="PopUpOptionFactorAtRet" sfwCaption="Pop Up Option Factor At Ret" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitOptionDescription" sfwValue="icdoBenefitCalculationOptions.istrBenefitOptionDescription" />
+    <attribute sfwDataType="string" sfwType="Property" ID="AccountRelationshipValue1" sfwValue="icdoBenefitCalculationOptions.account_relationship_value" />
+    <attribute sfwDataType="string" sfwType="Property" ID="AccountRelationshipDescription1" sfwValue="icdoBenefitCalculationOptions.account_relationship_description" />
+    <attribute sfwDataType="int" sfwType="Property" ID="BenefitCalculationOptionId1" sfwValue="icdoBenefitCalculationOptions.benefit_calculation_option_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="SurvivorRelationshipValue1" sfwValue="icdoBenefitCalculationOptions.survivor_relationship_value" />
+    <attribute sfwDataType="string" sfwType="Property" ID="SurvivorRelationshipDescription1" sfwValue="icdoBenefitCalculationOptions.survivor_relationship_description" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="SurvivorAmount1" sfwValue="icdoBenefitCalculationOptions.survivor_amount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="SurvivorPercentAmount1" sfwValue="icdoBenefitCalculationOptions.survivor_percent_amount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="BenefitOptionFactor1" sfwValue="icdoBenefitCalculationOptions.benefit_option_factor" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecSurvivorBenefitAmount" sfwValue="icdoBenefitCalculationOptions.idecSurvivorBenefitAmount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="PaidAmount1" sfwValue="icdoBenefitCalculationOptions.paid_amount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecRemainingAmountToBePaid" sfwValue="icdoBenefitCalculationOptions.idecRemainingAmountToBePaid" />
+    <attribute sfwDataType="int" sfwType="Property" ID="PlanBenefitId1" sfwValue="icdoBenefitCalculationOptions.plan_benefit_id" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="BenefitAmount1" sfwValue="icdoBenefitCalculationOptions.benefit_amount" />
+    <attribute sfwDataType="int" sfwType="Property" ID="BenefitCalculationDetailId1" sfwValue="icdoBenefitCalculationOptions.benefit_calculation_detail_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="RelativeValue1" sfwValue="icdoBenefitCalculationOptions.relative_value" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="PopUpOptionFactor1" sfwValue="icdoBenefitCalculationOptions.pop_up_option_factor" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="PopUpBenefitAmount1" sfwValue="icdoBenefitCalculationOptions.pop_up_benefit_amount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecRegularReductionFactor" sfwValue="idecRegularReductionFactor" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="DisabilityFactor1" sfwValue="icdoBenefitCalculationOptions.disability_factor" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="DisabilityAmount1" sfwValue="icdoBenefitCalculationOptions.disability_amount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="ParticipantAmount1" sfwValue="icdoBenefitCalculationOptions.participant_amount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="RetroactiveAmount1" sfwValue="icdoBenefitCalculationOptions.retroactive_amount" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrInitialOne" sfwValue="istrInitialOne" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRetirementType" sfwValue="istrRetirementType" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintParticipantAge" sfwValue="iintParticipantAge" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintSpouseAge" sfwValue="iintSpouseAge" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtEarliestBenefitCommencementDate" sfwValue="idtEarliestBenefitCommencementDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrERFPercentage" sfwValue="istrERFPercentage" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJS50" sfwValue="istrJS50" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJS75" sfwValue="istrJS75" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrFiveYear" sfwValue="istrFiveYear" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLife" sfwValue="istrLife" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJP50" sfwValue="istrJP50" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJP100" sfwValue="istrJP100" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrTenYear" sfwValue="istrTenYear" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrThreeYear" sfwValue="istrThreeYear" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrTwoYear" sfwValue="istrTwoYear" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJS66" sfwValue="istrJS66" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJS100" sfwValue="istrJS100" />
+    <attribute sfwType="Property" ID="IcdoBenefitCalculationOptions" sfwValue="icdoBenefitCalculationOptions" />
+  </attributes>
+</entity>

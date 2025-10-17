@@ -1,0 +1,60 @@
+﻿<entity ID="entBpmCaseConfiguration" sfwView="False" sfwActive="True" sfwMainCDO="icdoBpmCaseConfiguration" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgw_bpm_case_configuration" sfwObjectID="busBpmCaseConfiguration" sfwDataObjectID="doBpmCaseConfiguration">
+  <queries>
+    <query ID="LookUp" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgw_bpm_case_configuration" sfwDataType="EntityTable" sfwQueryType="SelectQuery" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgw_bpm_case_configuration">
+      <parameters />
+    </query>
+    <query ID="GetCaseFiles" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select distinct case_file from SGW_BPM_CASE" sfwPostgre="select distinct case_file from SGW_BPM_CASE">
+      <parameters />
+    </query>
+    <query ID="LoadCaseConfiguration" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT&#xA;&#x9; SBCC.CASE_CONFIGURATION_ID,&#xA;&#x9;SBC.CASE_FILE,&#xA;&#x9;SBCC.ENGINE_VALUE,&#xA;&#x9; SBCC.SOURCE_VALUE,&#xA;  SBCC.PRIORITY_VALUE,&#xA;  SBCC.CREATED_BY,&#xA;  SBCC.CREATED_DATE,&#xA;  SBCC.MODIFIED_BY,&#xA;  SBCC.MODIFIED_DATE,&#xA;  SBCC.UPDATE_SEQ&#xA;FROM&#xA;&#x9; sgw_bpm_case_configuration SBCC  &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE SBC &#xA;&#x9; ON SBCC.CASE_FILE = SBC.CASE_FILE" sfwOracle="SELECT DISTINCT&#xD;&#xA;&#x9; SBCC.CASE_CONFIGURATION_ID,&#xD;&#xA;&#x9;SBC.CASE_FILE,&#xD;&#xA;&#x9;SBCC.ENGINE_VALUE,&#xD;&#xA;  SBCC.SOURCE_VALUE,&#xD;&#xA;  SBCC.PRIORITY_VALUE,&#xD;&#xA;  SBCC.CREATED_BY,&#xD;&#xA;  SBCC.CREATED_DATE,&#xD;&#xA;  SBCC.MODIFIED_BY,&#xD;&#xA;  SBCC.MODIFIED_DATE,&#xD;&#xA;  SBCC.UPDATE_SEQ&#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case_configuration SBCC  &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE SBC &#xD;&#xA;&#x9; ON SBCC.CASE_FILE = SBC.CASE_FILE" sfwPostgre="SELECT DISTINCT&#xA;&#x9; SBCC.CASE_CONFIGURATION_ID,&#xA;&#x9;SBC.CASE_FILE,&#xA;&#x9;SBCC.ENGINE_VALUE,&#xA;&#x9; SBCC.SOURCE_VALUE,&#xA;  SBCC.PRIORITY_VALUE,&#xA;  SBCC.CREATED_BY,&#xA;  SBCC.CREATED_DATE,&#xA;  SBCC.MODIFIED_BY,&#xA;  SBCC.MODIFIED_DATE,&#xA;  SBCC.UPDATE_SEQ&#xA;FROM&#xA;&#x9; sgw_bpm_case_configuration SBCC  &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE SBC &#xA;&#x9; ON SBCC.CASE_FILE = SBC.CASE_FILE">
+      <parameters />
+      <mappedcolumns>
+        <column ID="PROCESS_NAME" sfwEntityField="IstrProcessName" />
+      </mappedcolumns>
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindBpmCaseConfiguration" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="False">
+      <item ID="LoadCaseConfiguration" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+  </methods>
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror>
+    <item ID="Duplicate Configuration" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <constraint />
+  <rules>
+    <rule ID="Duplicate Configuration" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="RFunc.ExecuteQuery&lt;INT32&gt;(&quot;entFramework.GetCountEngineValueForCaseFile&quot;,CaseFile,&#xA;EngineValue,SourceValue,PriorityValue) &gt; 0" sfwMessageId="20007035" />
+  </rules>
+  <ExtraFields />
+  <lifecycle />
+  <attributes>
+    <attribute sfwType="Collection" sfwEntity="entBpmCaseConfiguration" ID="lstBpmCaseConfiguration" sfwValue="iclbBpmCaseConfiguration" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrProcessName" sfwValue="istrProcessName" />
+    <attribute sfwValue="case_configuration_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="NUMBER" sfwIsNull="False" ID="CaseConfigurationId" sfwCaption="ID" />
+    <attribute sfwValue="case_file" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="VARCHAR2" sfwLength="4000" sfwIsNull="True" ID="CaseFile" sfwCaption="Case File" />
+    <attribute sfwValue="engine_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="NUMBER" sfwIsNull="True" ID="EngineId" sfwCodeID="3010" sfwCaption="Engine" />
+    <attribute sfwValue="engine_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="VARCHAR2" sfwLength="4" sfwIsNull="False" ID="EngineValue" sfwCaption="Engine" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="VARCHAR2" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="DATE" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="VARCHAR2" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="DATE" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="NUMBER" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="source_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="NUMBER" sfwIsNull="False" ID="SourceId" sfwCodeID="2021" sfwCaption="Source" />
+    <attribute sfwValue="source_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="VARCHAR2" sfwLength="4" sfwIsNull="True" ID="SourceValue" sfwCaption="Source" />
+    <attribute sfwValue="priority_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="NUMBER" sfwIsNull="True" ID="PriorityId" sfwCodeID="3008" sfwCaption="Priority" />
+    <attribute sfwValue="priority_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="VARCHAR2" sfwLength="4" sfwIsNull="True" ID="PriorityValue" sfwCaption="Priority" />
+    <attribute sfwType="Description" ID="EngineDescription" sfwCaption="Engine" sfwValue="engine_description" />
+    <attribute sfwType="Description" ID="SourceDescription" sfwCaption="Source" sfwValue="source_description" />
+    <attribute sfwType="Description" ID="PriorityDescription" sfwCaption="Priority" sfwValue="priority_description" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadCaseConfiguration" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

@@ -1,0 +1,167 @@
+﻿<form ID="wfmBpmExceptionInfoMaintenance" sfwType="Maintenance" sfwEntity="entBpmExceptionDetails" sfwTitle="Bpm Exception Info" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBpmExceptionDetailsLookup">
+  <initialload>
+    <callmethods sfwMethodName="LoadInfoMethod" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+                <sfwButton sfwMethodName="btnSave_Click" Text="Save" ID="btnSave" sfwNavigationParameter="IstrProcessId;IstrExceptionType" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIintProcessId" Text="Process : " AssociatedControlID="ddlIintProcessId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwMultiSelectDropDownList ID="ddlMultiSelectDropDownList" sfwEntityField="IstrProcessId" sfwLoadType="Query" sfwLoadSource="entBpmExceptionDetails.GetProcessNames" sfwNavigationParameter="USER_ID=IstrUserID" DataTextField="name" DataValueField="process_id" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIstrExceptionType" Text="Exception Type : " AssociatedControlID="ddlIstrExceptionType" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwMultiSelectDropDownList ID="ddlIstrExceptionType" sfwEntityField="IstrExceptionType" sfwLoadType="Query" sfwLoadSource="entBpmExceptionDetails.GetExceptionTypes" sfwNavigationParameter="USER_ID=IstrUserID" DataTextField="exception_type" DataValueField="exception_type" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIintQuickFilter" Text="Quick Filter : " AssociatedControlID="ddlIintQuickFilter" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlIintQuickFilter" sfwEntityField="IintQuickFilter" sfwDefaultValue="4">
+                  <ListItem Text="Select" Value="-1" />
+                  <ListItem Text="Last 4 Hours" Value="4" />
+                  <ListItem Text="Today" Value="24" />
+                  <ListItem Text="This week" Value="168" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIobjPassInfoIstrUserID" sfwEntityField="IstrUserID" CssClass="hideControl" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIdtStartDate" Text="Start Date : " AssociatedControlID="txtIdtStartDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIdtStartDate" sfwEntityField="IdtStartDate" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIdtEndDate" Text="End Date : " AssociatedControlID="txtIdtEndDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIdtEndDate" sfwEntityField="IdtEndDate" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Search." ID="btnExecuteRefreshFromObject" sfwObjectMethod="Search" sfwExecuteMethodType="XmlMethod" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel" sfwCaption="Results">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnOpen_Click" Text="Open Activity Instance" ID="btnOpen" sfwRelatedControl="grvLstResults" sfwActiveForm="wfmBpmActivityInstanceMaintenance" sfwNavigationParameter="aintActivityInstanceId=ActivityInstanceId" />
+                <sfwButton sfwMethodName="btnOpen_Click" Text="Open Exception" ID="btnOpen1" sfwRelatedControl="grvLstResults" sfwActiveForm="wfmExceptionLogInfoMaintenance" sfwNavigationParameter="EXCEPTION_INSTANCE_ID=ExceptionInstanceId" />
+                <sfwButton sfwMethodName="btnExecuteBusinessMethodSelectRows_Click" Text="Resume Activity Instance(s)" ID="btnExecutePassSelectedRows" sfwObjectMethod="ProcessExceptions" sfwExecuteMethodType="ObjectMethod" sfwCustomAttributes="Id" sfwSelection="Many" sfwRelatedControl="grvLstResults" />
+                <sfwButton sfwMethodName="btnOpen_Click" Text="Open Process Instance" ID="btnOpenProcessInstance" sfwRelatedControl="grvLstResults" sfwActiveForm="wfmBPMProcessInstanceMaintenance" sfwNavigationParameter="aintProcessInstanceId=IintProcessInstanceId" />
+                <sfwButton sfwMethodName="btnOpen_Click" Text="Open Case Instance" ID="btnOpenCaseInstance" sfwRelatedControl="grvLstResults" sfwActiveForm="wfmBpmCaseInstanceMaintenance" sfwNavigationParameter="aintCaseInstanceId=IintCaseInstanceId" />
+                <sfwButton ID="btnExecutionPath" sfwMethodName="btnMap_Click" Text="Open Case Map" sfwNavigationParameter="aint_case_instance_id=IintCaseInstanceId" sfwRelatedControl="grvLstResults" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="grvLstResults" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="lstResults">
+                  <Columns>
+                    <TemplateField Visible="False" HeaderText="ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Id" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="IstrCaseName" HeaderText="CaseName">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrCaseName" sfwLinkable="True" sfwRelatedControl="btnExecutionPath" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrProcessName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrActivityName" sfwRelatedControl="btnOpen" sfwLinkable="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Exception Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ExceptionType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Exception Instance Id">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ExceptionInstanceId" sfwLinkable="True" sfwRelatedControl="btnOpen1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Exception Message">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ExceptionMessage" sfwWrap="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Instance Id">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="IintProcessInstanceId" HeaderText="ProcessInstanceId">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IintProcessInstanceId" sfwLinkable="True" sfwRelatedControl="btnOpenProcessInstance" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="IintCaseInstanceId" HeaderText="CaseInstanceId">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IintCaseInstanceId" sfwLinkable="True" sfwRelatedControl="btnOpenCaseInstance" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails>
+    <entityfield ID="lstResults" sfwNewAutoLoad="True" sfwUpdateAutoLoad="True" />
+  </loaddetails>
+</form>

@@ -1,0 +1,1 @@
+WRIC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\NeoSpinMVVM\NeoSpinMVVM.csprojò	CSharp7_3

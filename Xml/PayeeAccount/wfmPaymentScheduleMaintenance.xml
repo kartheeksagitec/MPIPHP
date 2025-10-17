@@ -1,0 +1,220 @@
+﻿<form ID="wfmPaymentScheduleMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="214" sfwType="Maintenance" sfwTitle="Payment Schedule Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entPaymentSchedule">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewPaymentSchedule" />
+    <callmethods sfwMode="Update" sfwMethodName="FindPaymentSchedule" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintPaymentScheduleId=PaymentScheduleId" sfwVisibleRule="VisibleRule-ForButtons" Text="Save" />
+                <sfwButton ID="btnRefresh" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" sfwResource="335" Text="Correspondence" />
+                <sfwButton ID="btnTrialReports" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_RunTrialReports" sfwResource="307" sfwVisibleRule="VisibleRuleForTrialButton" Text="Run Trial Reports" />
+                <sfwButton ID="btnApprove" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_ApproveForFinal" sfwResource="307" sfwVisibleRule="VisibleRuleForApproveButton" Text="Approve For Final" OnClientClick="return confirm('Continuing with this process will change the status of payment schedule to Ready For Final.Also,OPUS will genearte PDF files for all the approved payment directives for the current payment cycle.This Process might take some time. Do You Want To Proceed? Please cancel and run PBV Payee Account Suspension Job if it is not already run.')" />
+                <sfwButton ID="Button" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_RunACHReversalRpt" sfwResource="307" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" Text="Generate Ach Reversal" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="btn_Cancel" sfwResource="307" sfwVisibleRule="VisibleRule-ForButtons" Text="Cancel" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Payment Schedule Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblPaymentScheduleId" ID="capPaymentScheduleId" Text="Payment Schedule ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblPaymentScheduleId" sfwEntityField="PaymentScheduleId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblReqPmtDate" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtPaymentDate" ID="capPaymentDate" Text="Payment Cycle Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPaymentDate" sfwDataFormat="{0:d}" sfwEntityField="PaymentDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="Label" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capScheduleTypeValue" Text="Schedule Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblScheduleTypeDescription" sfwEntityField="ScheduleTypeDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblReqACHDate" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtAchEffectiveDate" ID="capAchEffectiveDate" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" Text="ACH Effective Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAchEffectiveDate" sfwDataFormat="{0:d}" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" sfwEntityField="AchEffectiveDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtRetrimentNoticeDueDate" ID="capRetrimentNoticeDueDate" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" Text="Retirement Notice Due Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRetrimentNoticeDueDate" sfwDataFormat="{0:d}" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" sfwEntityField="RetrimentNoticeDueDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtDocumentDueDate" ID="capDocumentDueDate" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" Text="Document Due Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDocumentDueDate" sfwDataFormat="{0:d}" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" sfwEntityField="DocumentDueDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPaymentSetupCutoffDate" ID="capPaymentSetupCutoffDate" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" Text="Payment Setup Cutoff Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPaymentSetupCutoffDate" sfwDataFormat="{0:d}" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" sfwEntityField="PaymentSetupCutoffDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtCheckFileReleaseDate" ID="capCheckFileReleaseDate" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" Text="Check File Release Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCheckFileReleaseDate" sfwDataFormat="{0:d}" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" sfwEntityField="CheckFileReleaseDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtAbfProcessingDate" ID="capAbfProcessingDate" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" Text="ABF Processing Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAbfProcessingDate" sfwDataFormat="{0:d}" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" sfwEntityField="AbfProcessingDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStatusValue" Text="Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusDescription" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtCheckMailingDate" ID="capCheckMailingDate" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" Text="Check Mailing Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCheckMailingDate" sfwDataFormat="{0:d}" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" sfwEntityField="CheckMailingDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtCheckMessage" ID="capCheckMessage" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" Text="Check Message : " sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlScheduleSubType" ID="lblLabel" sfwVisibleRule="VisibleRuleForScheduleSubTypeDropDown" Text="Schedule Sub Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCheckMessage" sfwVisibleRule="VisibleRuleForScheduleTypeVEND" TextMode="MultiLine" sfwEntityField="CheckMessage" />
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlScheduleSubType" sfwVisibleRule="VisibleRuleForScheduleSubTypeDropDown" sfwLoadType="CodeGroup" sfwLoadSource="7074" sfwEntityField="ScheduleSubTypeValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblProcessDate" ID="capProcessDate" Text="Process Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessDate" sfwDataFormat="{0:d}" sfwEntityField="ProcessDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtNotes" ID="capNotes" Text="Notes : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtNotes" Rows="3" TextMode="MultiLine" Width="300px" sfwEntityField="Notes" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn ColumnSpan="3" />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Payment Schedule Step">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPaymentScheduleStep" sfwEntityField="lstPaymentScheduleStep" sfwGridEntity="entPaymentScheduleStep">
+                  <Columns>
+                    <TemplateField HeaderText="Step Name" ItemStyle.Wrap="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrStepName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Active">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrActiveFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Schedule Step ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PaymentScheduleStepId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Step Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstPaymentScheduleStep" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

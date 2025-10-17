@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entJobHeader" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwReadOnlyRule="IsRecordReadOnly" sfwMainCDO="icdoJobHeader" sfwObjectID="busJobHeader" sfwTableName="sgs_job_header" sfwView="False" sfwDataObjectID="doJobHeader">
+  <rules>
+    <rule ID="CancelJobHeaderVisibilityRule" sfwExpression="!((this.icdoJobHeader.status_value == &quot;PRCD&quot;) || &#xA;(this.icdoJobHeader.status_value == &quot;PRCE&quot;)) &amp;&amp; &#xA;(RFunc.GetValue&lt;String&gt;(this, &quot;ibusJobSchedule.icdoJobSchedule.cancellable_job_flag&quot;) == &quot;Y&quot;)" sfwObjectBased="True" />
+    <rule ID="IsRecordEditable" sfwExpression="((this.icdoJobHeader.status_value == &quot;REVW&quot;) || &#xA;(this.icdoJobHeader.status_value == &quot;VALD&quot;))" sfwObjectBased="True" />
+    <rule ID="IsRecordReadOnly" sfwExpression="!((this.icdoJobHeader.status_value == &quot;REVW&quot;) || &#xA;(this.icdoJobHeader.status_value == &quot;VALD&quot;))" sfwObjectBased="True" />
+    <rule ID="IsStatusSubmitForApproval" sfwExpression="(this.icdoJobHeader.status_value == &quot;SFAP&quot;)" sfwObjectBased="True" />
+    <rule ID="IsStatusValid" sfwExpression="(this.icdoJobHeader.status_value == &quot;VALD&quot;)" sfwObjectBased="True" />
+    <rule ID="IsThereAnyDetailRecordInReviewStatus" sfwMessageId="5001" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entJobDetail.CountOfRecordsInReviewStatus&quot;, this.icdoJobHeader.job_header_id) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="IsThereAnyDetailStepThatHasBeenDuplicated" sfwMessageId="5002" sfwExpression="(this.IsDuplicateStepsPresent() == True)" sfwObjectBased="True" />
+    <rule ID="NoDetailRecordPresentForHeaderId" sfwMessageId="5003" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entJobDetail.CountOfRecordsForHeaderId&quot;, this.icdoJobHeader.job_header_id) &lt;= 0)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="IsRecordEditable" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsRecordReadOnly" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsStatusValid" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsStatusSubmitForApproval" sfwMode="All" sfwStatus="Active" />
+    <item ID="CancelJobHeaderVisibilityRule" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror>
+    <item ID="IsThereAnyDetailRecordInReviewStatus" sfwMode="All" sfwStatus="Active" />
+    <item ID="NoDetailRecordPresentForHeaderId" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsThereAnyDetailStepThatHasBeenDuplicated" sfwMode="All" sfwStatus="Active" />
+  </softerror>
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetNextJob" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select top 1 * from SGS_Job_Header (nolock) Where Status_Value = 'QUED'&#xD;&#xA;and not exists (select 1 from SGS_Job_Header (nolock) where Status_Value = 'PRCS')&#xD;&#xA;order by Job_Header_Id asc">
+      <parameters />
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select JH.Job_Header_Id, JH.Job_Name, JH.Status_Id, JH.Status_Value, JH.Start_Time, JH.End_Time, &#xD;&#xA; JH.Created_By, JH.Created_Date, JH.Modified_By, JH.Modified_Date&#xD;&#xA;from SGS_Job_Header JH &#xD;&#xA;order by JH.Job_Header_Id desc&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="GetExclusionListForScheduling" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select &#xD;&#xA; JOB_SCHEDULE_ID&#xD;&#xA;from &#xD;&#xA; SGS_JOB_HEADER with(nolock) &#xD;&#xA;where STATUS_VALUE in ('QUED','PICK', 'PRCS')&#xD;&#xA;union&#xD;&#xA;select &#xD;&#xA; JOB_SCHEDULE_ID&#xD;&#xA;from&#xD;&#xA; SGS_JOB_SCHEDULE with(nolock)&#xD;&#xA;where JOB_SCHEDULE_ID not IN (SELECT JOB_SCHEDULE_ID FROM SGS_JOB_SCHEDULE_DETAIL with(nolock))">
+      <parameters />
+    </query>
+    <query ID="GetJobsExecutedInTimeFrame" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT [JOB_HEADER_ID]&#xD;&#xA;  FROM [dbo].[SGS_JOB_HEADER] &#xD;&#xA;  where job_schedule_id=@job_schedule_id and start_time&gt;=@fromDateTime and START_TIME&lt;=@toDateTime">
+      <parameters>
+        <parameter ID="@job_schedule_id" sfwDataType="int" />
+        <parameter ID="@fromDateTime" sfwDataType="DateTime" />
+        <parameter ID="@toDateTime" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetProcessLogs" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT PROCESS_LOG_ID&#xD;&#xA;      ,CYCLE_NO&#xD;&#xA;      ,PROCESS_NAME&#xD;&#xA;      ,MESSAGE_TYPE_ID&#xD;&#xA;      ,MESSAGE_TYPE_VALUE&#xD;&#xA;      ,MESSAGE&#xD;&#xA;      ,CREATED_BY&#xD;&#xA;      ,CREATED_DATE&#xD;&#xA;  FROM dbo.SGS_PROCESS_LOG with(nolock) &#xD;&#xA;  where Created_By = @created_by">
+      <parameters>
+        <parameter ID="@created_by" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="job_header_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="JobHeaderId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="job_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="False" ID="JobName" sfwIsSequence="False" sfwCaption="Job Name" />
+    <attribute sfwValue="job_schedule_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="JobScheduleId" sfwIsSequence="False" sfwCaption="Job Schedule Id" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="6018" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="start_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="StartTime" sfwIsSequence="False" sfwCaption="Start Time" />
+    <attribute sfwValue="end_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndTime" sfwIsSequence="False" sfwCaption="End Time" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute ID="objLookupJobDetail" sfwType="Object" sfwEntity="entJobDetail" sfwValue="ibusLookupJobDetail" />
+    <attribute ID="objJobSchedule" sfwType="Object" sfwEntity="entJobSchedule" sfwValue="ibusJobSchedule" />
+    <attribute sfwType="Collection" sfwEntity="entJobDetail" ID="lstJobDetail" sfwValue="iclbJobDetail" />
+    <attribute ID="lstProcessLog" sfwType="Collection" sfwValue="iclcProcessLog" sfwEntity="entProcessLog" />
+  </attributes>
+  <objectmethods>
+    <method ID="btnCancelJob_Click" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

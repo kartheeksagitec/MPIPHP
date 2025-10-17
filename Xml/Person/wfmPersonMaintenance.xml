@@ -1,0 +1,1042 @@
+﻿<form ID="wfmPersonMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="206" sfwType="Maintenance" sfwTitle="Person Maintenance" version="3.5" sfwEntity="entPerson">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewPerson" />
+    <callmethods sfwMode="Update" sfwMethodName="FindPerson" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnNoChangesSave_Click" sfwNavigationParameter="aintpersonid=PersonId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" sfwCopyActivitySessionVariables="True" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" sfwResource="335" />
+                <sfwButton ID="btnReturn" sfwMethodName="btnReturn_Click" Text="Return" CssClass="hideControl" />
+                <sfwButton ID="btnOpenOverview" sfwActiveForm="wfmPersonOverviewMaintenance" sfwMethodName="btnOpen_Click" sfwMode="Update" sfwNavigationParameter="aintpersonid=PersonId" Text="Person Overview" />
+                <sfwButton ID="btnOpenAnnual11" sfwMethodName="btn_OpenPDF" sfwMode="Update" sfwNavigationParameter="aintPersonID=PersonId" sfwResource="308" Text="Generate Annual Statement" OnClientClick="fnOpenPDF(e);" Visible="False" />
+                <sfwLabel ID="lblPersonId1" sfwEntityField="PersonId" CssClass="hideControl" />
+                <sfwButton ID="btnAuditHistory" sfwActiveForm="wfmAuditLogDetailMaintenance" sfwMethodName="btnAuditHistory_Click" sfwNavigationParameter="aintPrimarKey=PersonId;astrFormName=#wfmPersonMaintenance" Text="Audit History" />
+                <sfwButton ID="btnOpen222" sfwMethodName="btnNew_Click" Text="Retirement Wizard" sfwActiveForm="wfmRetirementMaintenance" sfwNavigationParameter="MpiPersonId=lblMpiPersonId" sfwCopyActivitySessionVariables="True" />
+                <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Submit" ID="btnBPMSubmits" sfwObjectMethod="BtnSubmitClick" sfwExecuteMethodType="ObjectMethod" sfwNavigationParameter="aintPersonId=PersonId" sfwExecuteAfterSuccess="btnSubmit" sfwVisibleRule="IsSubmitButtonVisible" />
+                <sfwButton ID="btnSubmit" sfwRefreshUpdatePanels="uppWorkflowNew;uppCenterMiddle" sfwMethodName="btnBpmSubmit_Click" Text="SubmitBPM" CssClass="hideControl" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Other Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblMpiPersonId" ID="capMpiPersonId10" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblMpiPersonId" sfwResource="102" sfwEntityField="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtDateOfBirth" ID="capDateOfBirth" Text="Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDateOfBirth" sfwResource="102" Enabled="False" sfwEntityField="IdtDateofBirth" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblAge" Text="Age : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblAgeValue" sfwResource="102" sfwEntityField="IdecAge" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblPrefix" Text="Pre-fix : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPrefix" sfwResource="102" Enabled="False" sfwLoadType="CodeGroup" sfwLoadSource="6025" sfwEntityField="NamePrefixValue" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtLastName" ID="capLastName" Text="Last Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtLastName" sfwResource="102" Enabled="False" sfwEntityField="LastName" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtFirstName" ID="capFirstName" Text="First Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFirstName" sfwResource="102" Enabled="False" sfwEntityField="FirstName" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtMiddleName" ID="capMiddleName" Text="Middle Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMiddleName" sfwResource="102" Enabled="False" sfwEntityField="MiddleName" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtNameSuffixValue" ID="lblNameSuffix" Text="Name Suffix : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtNameSuffixValue" sfwResource="102" Enabled="False" sfwEntityField="NameSuffix" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSsn" ID="capSsn" Text="SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="classFormatSSN" ID="txtSsn" sfwResource="102" SkinID="classFormatSSN" Enabled="False" sfwEntityField="IstrSSNNonEncrypted" sfwDataFormat="{0:000-##-####}" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+                <sfwLabel ID="lblSsn1" sfwDataFormat="{0:000-##-####}" sfwMode="Update" Visible="False" sfwEntityField="IstrSSNNonEncrypted" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlGenderValue" ID="capGenderValue" Text="Gender : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlGenderValue" sfwResource="102" Enabled="False" sfwLoadType="CodeGroup" sfwLoadSource="6014" sfwEntityField="GenderValue" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlMaritalStatusValue" ID="capMaritalStatusValue" Text="Marital Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlMaritalStatusValue" sfwResource="102" Enabled="False" sfwLoadType="CodeGroup" sfwLoadSource="6015" sfwEntityField="MaritalStatusValue" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateOfDeath" Text="Date Of Death : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateOfDeath1" sfwDataFormat="{0:d}" sfwResource="102" sfwEntityField="DateOfDeath" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblHomePhoneNumber" Text="Home Phone Number :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtHomePhoneNumber" sfwDataFormat="{0:(###)###-####}" Enabled="False" sfwEntityField="HomePhoneNo" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblWorkPhoneNumber" Text="Work Phone Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtWorkPhoneNumber" sfwDataFormat="{0:(###)###-####}" Enabled="False" sfwEntityField="WorkPhoneNo" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblMobilePhoneNumber" Text="Mobile Phone Number :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMobilePhoneNumber" sfwDataFormat="{0:(###)###-####}" Enabled="False" sfwEntityField="CellPhoneNo" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblEmailAddress" Text="Email Address : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEmailAddress" Enabled="False" sfwEntityField="EmailAddress1" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblFax" Text="Fax :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFax" sfwDataFormat="{0:(###)###-####}" sfwResource="102" Enabled="False" sfwEntityField="FaxNo" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCommunicationPreference" Text="Communication Preference :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlCommunicationPreference" sfwResource="102" sfwLoadType="CodeGroup" sfwLoadSource="6027" sfwEntityField="CommunicationPreferenceValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblVIP" sfwResource="209" Text="VIP :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkVIP" sfwDefaultValue="N" Enabled="False" sfwResource="209" sfwEntityField="VipFlag" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" sfwResource="209" Text="Retiree Health Eligibility :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkCheckBox" sfwDefaultValue="N" Enabled="False" sfwResource="209" sfwEntityField="HealthEligibleFlag" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="Retiree Health Effective Date : " sfwReadOnlyRule="Read-Only-Rule-HealthEligible" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox" sfwDataFormat="{0:d}" sfwDefaultValue="N" sfwReadOnlyRule="Read-Only-Rule-HealthEligible" sfwResource="102" sfwEntityField="RetirementHealthDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblAnalystAssigned" sfwResource="209" Text="Analyst Assigned :" AssociatedControlID="ddlAnalystAssigned" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlAnalystAssigned" DataTextField="analystname" DataValueField="analyst_id" sfwResource="102" sfwReadOnlyRule="Read-Only-Rule-AnalystAssigned" sfwLoadType="Method" sfwLoadSource="GetAnalystNames" sfwEntityField="AnalystId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lbMDAge" sfwResource="209" Text="MD option Age :" AssociatedControlID="ddlMDAge" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlMDAge" DataTextField="md_description" DataValueField="md_option_id" sfwResource="102" sfwReadOnlyRule="Read-Only-Rule-MDAge" sfwLoadType="Method" sfwLoadSource="GetMDOption" sfwEntityField="MdAgeOptId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDocumentUploadFlag" sfwResource="209" Text="Allow Document Upload:" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkDocumentUploadFlag" sfwDefaultValue="N" sfwResource="102" sfwEntityField="DocumentUploadFlag" />
+                <sfwLabel ID="lblPersonId" Visible="False" sfwEntityField="PersonId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblAdverseInterest" sfwResource="209" Text="Adverse Interest :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkAdverseInterest" sfwDefaultValue="N" sfwResource="102" sfwReadOnlyRule="Read-Only-Rule-AdverseInterest" sfwEntityField="AdverseInterestFlag" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Person Types">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIblnParticipant" ID="capIblnParticipant" Text="Participant : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIblnParticipant" sfwEntityField="IblnParticipant" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIblnBeneficiary" ID="capIblnBeneficiary" Text="Beneficiary : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIblnBeneficiary" sfwEntityField="IblnBeneficiary" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIblnDependent" ID="capIblnDependent" Text="Dependent : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIblnDependent" sfwEntityField="IblnDependent" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIblnAlternatePayee1" ID="capIblnAlternatePayee1" Text="Alternate Payee : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIblnAlternatePayee1" sfwEntityField="IblnAlternatePayee" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrRetiree" ID="capIstrRetiree" Text="Pension Retiree : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrRetiree" sfwEntityField="IstrRetiree" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlOtherDetails" sfwCaption="Other Details" CssClass="fullWidth">
+          <sfwTable ID="tblOtherDetails" sfwResource="102">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctOtherDetails">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Address" ID="tshAddress">
+                      <sfwTable CssClass="Table" ID="tblNewPage1">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNew" sfwActiveForm="wfmPersonAddressMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintPersonId=lblPersonId1;abln_address_flag=#Y" Text="New" Visible="False" />
+                            <sfwButton ID="btnOpen" sfwActiveForm="wfmPersonAddressMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintaddressid=AddressId;aintMainParticipantAddressId=IaintMainParticipantAddressID;aintPersonid=PersonId;astr_depor_ben=AstrBenOrDep" sfwRelatedControl="grvPersonAddress" Text="Open" />
+                            <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvPersonAddress" sfwResource="310" Text="Delete" Enabled="False" Visible="False" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPersonAddress" sfwSelection="Many" sfwSortExpression="StartDate desc" sfwEntityField="lstPersonAddress" sfwGridEntity="entPersonAddress" SortExpressionUpdated="true">
+                              <Columns>
+                                <TemplateField HeaderText="Address">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="IstrfullAddress" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Address ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AddressId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Mailing">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrMailingAddressType" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Physical">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrPhysicalAddressType" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="IaintMainParticipantAddressID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IaintMainParticipantAddressID" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="AstrBenOrDep" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="AstrBenOrDep" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Beneficiary" ID="tshBeneficiary">
+                      <sfwTable ID="tblNewPage2">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNew1" sfwActiveForm="wfmParticipantBeneficiaryMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintParticipantId=lblPersonId1;astrCheckIfParticipant=lblIblnParticipant;astrCheckIfBen=lblIblnBeneficiary;astrCheckIfAltPayee=lblIblnAlternatePayee1" Text="New" />
+                            <sfwButton ID="btnOpen1" sfwActiveForm="wfmParticipantBeneficiaryMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPrimaryKey=PersonAccountBeneficiaryId;aintbeneficiaryid=PersonRelationshipId;astrCheckIfParticipant=IblnParticipant;astrCheckIfBen=IblnBeneficiary;astrCheckIfAltPayee=IblnAlternatePayee" sfwRelatedControl="grvPersonAccountBeneficiary" Text="Open" sfwActiveFormKey="PersonAccountBeneficiaryId" />
+                            <sfwButton ID="btnDelete1" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvPersonAccountBeneficiary" sfwResource="310" Text="Delete" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPersonAccountBeneficiary" sfwSelection="Many" sfwEntityField="lstPersonAccountBeneficiary" sfwGridEntity="entPersonAccountBeneficiary">
+                              <Columns>
+                                <TemplateField HeaderText="Beneficiary" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen1" sfwEntityField="objPerson.IstrFullName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Beneficiary MPID/Org Id">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrBenMPID" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Beneficiary Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen1" sfwEntityField="IstrBenFullName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Relationship">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objRelationship.RelationshipDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Plan">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrPlan" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="BeneficiaryTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Percentage" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DistPercent" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person Account Beneficiary ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonAccountBeneficiaryId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person Relationship ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonRelationshipId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Beneficiary Of" ID="tshBeneficiaryOf">
+                      <sfwTable ID="tblNewPage222">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNew122" sfwActiveForm="wfmParticipantBeneficiaryMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintParticipantId=lblPersonId1;astrCheckIfParticipant=lblIblnParticipant;astrCheckIfBen=lblIblnBeneficiary;astrCheckIfAltPayee=lblIblnAlternatePayee1" Text="New" Visible="False" />
+                            <sfwButton ID="btnOpen122" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=IstrPersonId" sfwRelatedControl="grvPersonAccountBeneficiaryOf" Text="Open" sfwSelection="Many" />
+                            <sfwButton ID="btnDelete122" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvPersonAccountBeneficiaryOf" sfwResource="310" Text="Delete" Visible="False" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPersonAccountBeneficiaryOf" sfwSelection="Many" sfwEntityField="lstPersonAccountBeneficiaryOf" sfwGridEntity="entPersonAccountBeneficiary">
+                              <Columns>
+                                <TemplateField HeaderText="Participent" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen122" sfwEntityField="objPerson.IstrFullName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Participant MPID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrBenMPID" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Participant Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen122" sfwEntityField="IstrBenFullName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Relationship">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objRelationship.RelationshipDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Plan">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrPlan" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="BeneficiaryTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Percentage" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DistPercent" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person Account Beneficiary ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonAccountBeneficiaryId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person ID" SortExpression="PersonRelationshipId" Visible="False" SortExpressionUpdated="true">
+                                  <ItemTemplate>
+                                    <sfwLabel Visible="False" sfwEntityField="IstrPersonId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Dependent" ID="tshDependent">
+                      <sfwTable ID="tblNewPage3">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNew2" sfwActiveForm="wfmPersonDependentMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintPersonId=lblPersonId1" Text="New" Enabled="False" Visible="False" />
+                            <sfwButton ID="btnOpen2" sfwActiveForm="wfmPersonDependentMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintdependentid=PersonRelationshipId" sfwRelatedControl="grvPersonDependent" Text="Open" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPersonDependent" sfwSelection="Many" sfwSortExpression="RelationshipDescription" sfwEntityField="lstPersonDependent" sfwGridEntity="entPersonDependent" SortExpressionUpdated="true">
+                              <Columns>
+                                <TemplateField HeaderText="Dependent ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonRelationshipId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Dependent MPID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrMpiPersonID" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Dependent Person ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DependentPersonId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Dependent Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen2" sfwEntityField="objPersonDependent.IstrFullName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Relationship">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="RelationshipDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField>
+                                  <ItemTemplate>
+                                    <sfwImageButton ID="btnDeleteDependent" ImageUrl="delete_button.gif" OnClientClick="return confirm('Are you sure you want to delete this record?')" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwNavigationParameter="aintPersonRelationshipId=PersonRelationshipId" sfwObjectMethod="btn_DeleteDependent" sfwRelatedControl="grvPersonDependent" ImageAlign="Right" Visible="False" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshDependentOf" HeaderText="Dependent Of">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnOpenDependentOf" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=PersonId" sfwRelatedControl="grvDependentOf" Text="Open" sfwSelection="Many" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvDependentOf" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="lstDependentOf" sfwGridEntity="entPerson">
+                              <Columns>
+                                <TemplateField HeaderText="MPI Person ID" HeaderStyle.HorizontalAlign="Left" ItemStyle.HorizontalAlign="Left">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="MpiPersonId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person Name" SortExpression="IstrPersonName" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left" SortExpressionUpdated="true">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwRelatedControl="btnOpenDependentOf" sfwLinkable="True" sfwEntityField="IstrFullName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Relationship" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrRelationship" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Contact" ID="tshContact">
+                      <sfwTable ID="tblNewPage4">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNewContact" sfwActiveForm="wfmPersonContactMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintPersonId=lblPersonId1" Text="New" />
+                            <sfwButton ID="btnOpenContact" sfwActiveForm="wfmPersonContactMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersoncontactid=PersonContactId" sfwRelatedControl="grvPersonContact" Text="Open" />
+                            <sfwButton ID="btnDeleteContact" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvPersonContact" sfwResource="310" Text="Delete" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPersonContact" sfwSelection="Many" sfwSortExpression="ContactTypeDescription,EffectiveStartDate desc,ContactName" sfwEntityField="lstPersonContact" sfwGridEntity="entPersonContact" SortExpressionUpdated="true">
+                              <Columns>
+                                <TemplateField HeaderText="Person Contact ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonContactId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Contact Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenContact" sfwEntityField="ContactName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Contact Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ContactTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Effective Start Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EffectiveStartDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Effective End Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EffectiveEndDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Notes" ID="tshNotes">
+                      <sfwTable ID="tblNewPage5">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlNotesDetails" sfwCaption="Note">
+                              <sfwTable CssClass="Table" ID="tblNewPage6">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtNotes" Rows="6" sfwRelatedGrid="grvNotes" TextMode="MultiLine" Width="900px" sfwEntityField="Notes" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwButton ID="btnAddNotes" sfwMethodName="btnGridViewAdd_Click" sfwRelatedControl="grvNotes" Text="Add Notes" sfwToolBarGrid="none" />
+                                    <sfwButton ID="btnClear" sfwMethodName="btnCancel_Click" OnClientClick="ClearNotes" Text="Clear" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvNotes" sfwAllowNew="True" sfwEntityField="lstNotes" sfwGridEntity="entNotes">
+                              <Columns>
+                                <TemplateField HeaderText="Notes">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwWrap="True" Width="500px" sfwEntityField="Notes" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created By">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CreatedBy" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Note ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="NoteId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Bridged Service" ID="tshBridgedService" sfwResource="102">
+                      <sfwTable ID="tblNewPage7">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capTypeOfHours" Text="Type Of Hours : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlTypeOfHours" sfwRelatedGrid="grvPersonBridgeHours" sfwLoadType="CodeGroup" sfwLoadSource="6038" sfwEntityField="BridgeTypeValue" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtBridgeStartDate" ID="capBridgeStartDate" Text="Bridge Start Date : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtBridgeStartDate" sfwDataFormat="{0:d}" sfwRelatedGrid="grvPersonBridgeHours" sfwEntityField="BridgeStartDate" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtBridgeEndDate" ID="capBridgeEndDate" Text="Bridge End Date : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtBridgeEndDate" sfwDataFormat="{0:d}" sfwRelatedGrid="grvPersonBridgeHours" sfwEntityField="BridgeEndDate" />
+                          </sfwColumn>
+                          <sfwColumn CssClass="fullWidth" />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtHoursReported" sfwRelatedGrid="grvPersonBridgeHours" SkinID="textBoxDisplayStyleNone" sfwEntityField="HoursReported" sfwDataFormat="{0:#0.'}" CssClass="textBoxDisplayStyleNone" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPersonBridgeId" sfwRelatedGrid="grvPersonBridgeHours" SkinID="textBoxDisplayStyleNone" sfwEntityField="PersonBridgeId" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnAdd" sfwMethodName="btnGridViewAdd_Click" sfwNavigationParameter="BridgeTypeValue;HoursReported;BridgeStartDate;BridgeEndDate;PersonBridgeId" sfwRelatedControl="grvPersonBridgeHours" Text="Add" sfwToolBarGrid="grvPersonBridgeHours" sfwToolBarGridImage="StaticResources/neoGrid-images/btnNew_Click.png" />
+                            <sfwButton ID="btnUpdate" sfwMethodName="btnGridViewUpdate_Click" sfwNavigationParameter="BridgeTypeValue;HoursReported;BridgeStartDate;BridgeEndDate;PersonBridgeId" sfwRelatedControl="grvPersonBridgeHours" Text="Update" sfwToolBarGrid="grvPersonBridgeHours" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnUpdate_Click.png" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="7" CssClass="setTblWidth">
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPersonBridgeHours" sfwAllowNew="True" sfwSelection="Many" sfwEntityField="lstPersonBridgeHours" sfwGridEntity="entPersonBridgeHours">
+                              <Columns>
+                                <TemplateField HeaderText="Person Bridge ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonBridgeId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Bridge Type">
+                                  <ItemTemplate>
+                                    <sfwLinkButton sfwDataField="icdoPersonBridgeHours.bridge_type_description" sfwMethodName="btnGridViewSelect_Click" sfwRelatedControl="grvPersonBridgeHours" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Hours Reported" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLinkButton sfwActiveForm="wfmPersonBridgeHoursMaintenance" sfwDataFormat="{0:#0.0'}" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonbridgeid=PersonBridgeId" sfwRelatedControl="grvPersonBridgeHours" sfwEntityField="HoursReported" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Bridge Start Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="BridgeStartDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Bridge End Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="BridgeEndDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField>
+                                  <ItemTemplate>
+                                    <sfwImageButton ID="btnDeletePersonBridgedService" ImageUrl="delete_button.gif" sfwMethodName="btnGridViewDelete_Click" sfwRelatedControl="grvPersonBridgeHours" sfwResource="310" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Plan Details" ID="tshNewPage">
+                      <sfwTable ID="tblNewPage8">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPersonAccount" sfwEntityField="lstPersonAccount" sfwGridEntity="entPersonAccount">
+                              <Columns>
+                                <TemplateField HeaderText="Person Account ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonAccountId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Plan ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PlanId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Plan" HeaderStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwLabel Width="150px" sfwEntityField="IstrPlanDesc" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Plan Entry Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Date" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Plan Participation Status" SortExpression="StatusValue" SortExpressionUpdated="true">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="UVHP" ID="tshNewPage1" sfwVisibleRule="Visible-Rule-MPIPP">
+                      <sfwTable ID="tblNewPage9">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNewPersonAccountRetirementContribution" sfwActiveForm="wfmUVHPAmountMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintPersonId=lblPersonId1" Text="New" sfwResource="112" />
+                            <sfwButton ID="btnOpenPersonAccountRetirementContribution" sfwActiveForm="wfmUVHPAmountMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonaccountretirementcontributionid=PersonAccountRetirementContributionId;aintPersonID=PersonId" sfwRelatedControl="grvPersonAccountRetirementContribution" Text="Open" />
+                            <sfwButton ID="btnDeletePersonAccountRetirementContribution" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvPersonAccountRetirementContribution" sfwResource="310" Text="Delete" Visible="False" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPersonAccountRetirementContribution" sfwSelection="Many" sfwEntityField="lstPersonAccountRetirementContribution" sfwGridEntity="entPersonAccountRetirementContribution">
+                              <Columns>
+                                <TemplateField HeaderText="Computational Year">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenPersonAccountRetirementContribution" sfwEntityField="ComputationalYear" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person Account ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwRelatedControl="grvPersonAccountRetirementContribution" sfwEntityField="PersonAccountId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person Account Retirement Contribution ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonAccountRetirementContributionId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="UVHP Amount" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="UvhpAmount" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Suspendible Month" ID="tshSuspendibleMonth">
+                      <sfwTable ID="tblNewPage33">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnNew22" sfwActiveForm="wfmPersonSuspendibleMonthMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintPersonId=lblPersonId1" Text="New" />
+                            <sfwButton ID="btnOpen22" sfwActiveForm="wfmPersonSuspendibleMonthMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonSuspendibleMonthID=PersonSuspendibleMonthId" sfwRelatedControl="grvBusPersonSuspendibleMonth" Text="Open" />
+                            <sfwButton ID="btnDeleteSuspendibleMonth" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvBusPersonSuspendibleMonth" sfwResource="310" Text="Delete" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvBusPersonSuspendibleMonth" sfwSelection="Many" sfwSortExpression="PlanYear" sfwEntityField="lstPersonSuspendibleMonth" sfwGridEntity="entPersonSuspendibleMonth" SortExpressionUpdated="true">
+                              <Columns>
+                                <TemplateField HeaderText="Suspendible Month ID" Visible="False" ItemStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonSuspendibleMonthId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Plan Year" ItemStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen22" sfwEntityField="PlanYear" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Suspendible Month" ItemStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SuspendibleMonthDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status" ItemStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Person ID" Visible="False" ItemStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="PersonId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshPaperLess" HeaderText="Paper Less">
+                      <sfwTable ID="tblTable">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capLabel1" sfwIsCaption="True" Text="Registered Email Address" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtRegisteredEmail" Rows="1" Width="200px" sfwEntityField="RegisteredEmailAddress" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capLabel" sfwIsCaption="True" Text="Is Paper Statement" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwCheckBox ID="chkPaperStatement" sfwDefaultValue="N" sfwResource="102" sfwEntityField="IsPaperStatement" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Save Preference" ID="btnSavePersonCommPref" sfwObjectMethod="SavePersonCommPref" sfwExecuteMethodType="ObjectMethod" sfwResource="102" />
+                          </sfwColumn>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="4">
+                            <sfwGridView AutoGenerateColumns="False" ID="grvPaperStatementFlagHistory" sfwEntityField="lstPersonCommunicationPreferences" sfwGridEntity="entPersonCommunicationPreferences">
+                              <Columns>
+                                <TemplateField HeaderText="Registered Email Address">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="RegisteredEmailAddress" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Is Paper Statement">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IsPaperStatement" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created By">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CreatedBy" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CreatedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Modified By">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ModifiedBy" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Modified Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ModifiedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlSoftError" sfwCaption="Validation Information">
+          <sfwTable CssClass="Table" ID="tblSoftError">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrSoftError" sfwEntityField="InternalErrors" sfwGridEntity="entError">
+                  <Columns>
+                    <TemplateField HeaderText="Message ID">
+                      <ItemTemplate>
+                        <sfwLabel ForeColor="Red" sfwEntityField="MessageId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Display Message">
+                      <ItemTemplate>
+                        <sfwLabel ForeColor="Red" sfwEntityField="DisplayMessage" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstPersonAddress" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstPersonAccountBeneficiary" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstPersonAccountBeneficiaryOf" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstPersonDependent" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstDependentOf" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstPersonContact" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstNotes" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstPersonBridgeHours" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstPersonAccount" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstPersonAccountRetirementContribution" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstPersonSuspendibleMonth" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstPersonCommunicationPreferences" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="InternalErrors" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

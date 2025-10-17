@@ -1,0 +1,41 @@
+﻿<entity ID="entBusinessTransaction" sfwView="False" sfwActive="True" sfwType="EntityRule" sfwObjectID="busBusinessTransaction" sfwStatus="Review">
+  <attributes>
+    <attribute ID="ActionName" sfwDataType="string" sfwValue="ActionName" sfwType="Property" />
+    <attribute ID="SlowCount" sfwDataType="int" sfwValue="SlowCount" sfwType="Property" />
+    <attribute ID="ResponseTime" sfwDataType="int" sfwValue="ResponseTime" sfwType="Property" />
+    <attribute ID="MaxResponseTime" sfwDataType="int" sfwValue="MaxResponseTime" sfwType="Property" />
+    <attribute ID="Calls" sfwDataType="int" sfwValue="Calls" sfwType="Property" />
+    <attribute ID="CallsPerMin" sfwDataType="double" sfwValue="CallsPerMin" sfwType="Property" />
+    <attribute ID="ErrorCount" sfwDataType="int" sfwValue="ErrorCount" sfwType="Property" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="GetSummarByBusinessTransaction" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select sum(time_in_ms) / count(*) ResponseTime, &#xA;       case when charindex('(', action_name) &gt; 0 then left(action_name, charindex('(', action_name)-1) else action_name end + '.' +  &#xA;       (case when isnull(action_target,'') = '' then action_source else action_target end) ActionName,&#xA;&#x9;   max(time_in_ms) MaxResponseTime,&#xA;       count(*) Calls, &#xA;       round(cast(count(*) as float) / case when DateDiff(MINUTE, min(start_time), max(start_time)) = 0 then 1 else DateDiff(MINUTE, min(start_time), max(start_time)) end, 2) CallsPerMin,&#xA;       sum(case when error_flag = 'y' then 1 else 0 end) ErrorCount,&#xA;       sum(case when time_in_ms &gt; b.TRANSACTION_HIGH_LIMIT then 1 else 0 end) SlowCount&#xA;from sgs_act_log_inst_actn,&#xA;     sgs_act_log b&#xA;where web_server_name is not null&#xA;  and start_time between @start_time and @end_time&#xA;group by case when charindex('(', action_name) &gt; 0 then left(action_name, charindex('(', action_name)-1) else action_name end + '.' +  &#xA;     (case when isnull(action_target,'') = '' then action_source else action_target  end)&#xA;order by max(time_in_ms) desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+      <mappedcolumns>
+        <column ID="responsetime" sfwEntityField="ResponseTime" />
+        <column ID="actionname" sfwEntityField="ActionName" />
+        <column ID="maxresponsetime" sfwEntityField="MaxResponseTime" />
+        <column ID="calls" sfwEntityField="Calls" />
+        <column ID="callspermin" sfwEntityField="CallsPerMin" />
+        <column ID="errorcount" sfwEntityField="ErrorCount" />
+        <column ID="slowcount" sfwEntityField="SlowCount" />
+      </mappedcolumns>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+</entity>

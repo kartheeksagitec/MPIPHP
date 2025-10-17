@@ -1,0 +1,48 @@
+﻿<entity ID="entBpmTraceInstActn" sfwView="False" sfwActive="True" sfwMainCDO="icdoBpmTraceInstActn" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgw_bpm_trace_inst_actn" sfwObjectID="busBpmTraceInstActn" sfwDataObjectID="doBpmTraceInstActn" CreateWithClass="True">
+  <attributes>
+    <attribute sfwValue="trace_inst_actn_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="TraceInstActnId" sfwCaption="ID" />
+    <attribute sfwValue="trace_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="TraceInstanceId" sfwCaption="Trace Instance Id" />
+    <attribute sfwValue="start_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="StartTime" sfwCaption="Start Time" />
+    <attribute sfwValue="action_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="200" sfwIsNull="False" ID="ActionType" sfwCaption="Action Type" />
+    <attribute sfwValue="parameter_details" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="8000" sfwIsNull="True" ID="ParameterDetails" sfwCaption="Parameter Details" />
+    <attribute sfwValue="query_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="QueryId" sfwCaption="Query Id" />
+    <attribute sfwValue="query_text" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="8000" sfwIsNull="False" ID="QueryText" sfwCaption="Query Text" />
+    <attribute sfwValue="record_count" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RecordCount" sfwCaption="Query Result" />
+    <attribute sfwValue="transaction_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="guid" sfwDBDataType="uniqueidentifier" sfwIsNull="True" ID="TransactionId" sfwCaption="Transaction Id" />
+    <attribute sfwValue="end_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndTime" sfwCaption="End Time" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="GetActionTypeValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; DISTINCT ACTION_TYPE &#xA;FROM&#xA;&#x9; SGW_BPM_TRACE_INST_ACTN WITH(NOLOCK)" sfwOracle="SELECT DISTINCT ACTION_TYPE FROM SGW_BPM_TRACE_INST_ACTN" sfwPostgre="SELECT&#xD;&#xA;&#x9; DISTINCT ACTION_TYPE &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_TRACE_INST_ACTN">
+      <parameters />
+    </query>
+    <query ID="LoadAllDetailsByTransactionId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_TRACE_INST_ACTN_DTL WITH(NOLOCK)  &#xA;WHERE&#xA;    TRACE_INSTANCE_ID = @TRACE_INSTANCE_ID AND&#xA;&#x9; TRANSACTION_ID = @TRANSACTION_ID" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_TRACE_INST_ACTN_DTL &#xA;WHERE&#xA;    TRACE_INSTANCE_ID = @TRACE_INSTANCE_ID AND&#xA;&#x9; TRANSACTION_ID = @TRANSACTION_ID" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_TRACE_INST_ACTN_DTL &#xA;WHERE&#xA;    TRACE_INSTANCE_ID = @TRACE_INSTANCE_ID AND&#xA;&#x9; TRANSACTION_ID = @TRANSACTION_ID">
+      <parameters>
+        <parameter ID="@TRANSACTION_ID" sfwDataType="uniqueidentifier" />
+        <parameter ID="@TRACE_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods>
+    <method ID="FindTraceInstanceAction" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwLoadQuery="entBpmTraceInstActn.LoadAllDetailsByTransactionId" sfwParameter="@TRANSACTION_ID,@TRACE_INSTANCE_ID">
+      <parameter ID="TRANSACTION_ID" sfwDataType="uniqueidentifier" />
+      <parameter ID="TRACE_INSTANCE_ID" sfwDataType="int" />
+    </method>
+  </methods>
+  <lifecycle />
+  <objectmethods />
+</entity>

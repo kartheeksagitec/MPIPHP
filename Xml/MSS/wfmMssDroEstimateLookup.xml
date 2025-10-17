@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMssDroEstimateLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCalculation" sfwResource="790 " sfwType="Lookup" sfwTitle="Mss Dro Estimate Lookup" version="3.5" sfwEntity="entQdroCalculationHeader" sfwGridCollection="busQdroCalculationLookup.iclbQdroCalculationHeader">
+  <initialload>
+    <query ID="cdoQdroCalculationHeader" sfwQueryRef="entMssBenefitCalculationHeader.QdroCalcHeaderLookup" sfwMethodName="LoadQdroCalculations" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlPlan" ID="capPlanId" Text="Plan Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPlan" sfwDataField="DTL.plan_id" sfwOperator="=" sfwQueryID="cdoQdroCalculationHeader" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtSpPersonId" sfwDataField="HDR.person_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" SkinID="textBoxDisplayStyleNone" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmMssViewDroEstimateMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintqdroheaderid=QdroCalculationHeaderId" sfwRelatedControl="dgrResult" Text="Open" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="One">
+                  <Columns>
+                    <TemplateField HeaderText="Qdro Calculation ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="QdroCalculationHeaderId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPlanDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee Name" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objAlternatePayee.IstrFullName1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

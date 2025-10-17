@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entSystemPaths" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvAdmin" sfwType="BusinessRule" sfwMainCDO="icdoSystemPaths" sfwObjectID="busSystemPaths" sfwTableName="sgs_system_paths" sfwDataObjectID="doSystemPaths">
+  <rules>
+    <rule ID="Path Code is Required" sfwMessageId="5075" sfwExpression="(string.IsNullOrEmpty(this.icdoSystemPaths.path_code))" sfwObjectBased="True" />
+    <rule ID="Path Description is Required" sfwMessageId="5076" sfwExpression="(string.IsNullOrEmpty(this.icdoSystemPaths.path_description))" sfwObjectBased="True" />
+    <rule ID="Path Value is Required" sfwMessageId="5077" sfwExpression="(string.IsNullOrEmpty(this.icdoSystemPaths.path_value))" sfwObjectBased="True" />
+    <rule ID="PathCodeExistsNew" sfwMessageId="5078" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entSystemPaths.PathCodeExistsNew&quot;, this.icdoSystemPaths.path_code) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="PathCodeExistsUpdate" sfwMessageId="5078" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entSystemPaths.PathCodeExistsUpdate&quot;, this.icdoSystemPaths.path_code, this.icdoSystemPaths.path_id) &gt; 0)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="PathCodeExistsNew" sfwMode="New" sfwStatus="Active" />
+    <item ID="PathCodeExistsUpdate" sfwMode="Update" sfwStatus="Active" />
+    <item ID="Path Code is Required" sfwMode="All" sfwStatus="Active" />
+    <item ID="Path Description is Required" sfwMode="All" sfwStatus="Active" />
+    <item ID="Path Value is Required" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_system_paths&#xD;&#xA;order by path_code">
+      <parameters />
+    </query>
+    <query ID="PathCodeExistsNew" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgs_system_paths&#xD;&#xA;where path_code = @path_code">
+      <parameters>
+        <parameter ID="@path_code" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="PathCodeExistsUpdate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgs_system_paths&#xD;&#xA;where path_code = @path_code&#xD;&#xA;and path_id &lt;&gt; @path_id">
+      <parameters>
+        <parameter ID="@path_code" sfwDataType="string" />
+        <parameter ID="@path_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPathByCode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGS_SYSTEM_PATHS WITH(NOLOCK) where PATH_CODE = @PATH_CODE">
+      <parameters>
+        <parameter ID="@PATH_CODE" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwType="Description" ID="PathDescription" sfwCaption="Path" sfwValue="path_description" />
+    <attribute sfwValue="path_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PathId" sfwIsSequence="False" sfwCaption="Path" />
+    <attribute sfwValue="path_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="10" sfwIsNull="True" ID="PathCode" sfwIsSequence="False" sfwCaption="Path Code" />
+    <attribute sfwValue="path_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="PathValue" sfwIsSequence="False" sfwCaption="Path" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="path_description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="PathDescription" sfwCaption="Path Description" />
+  </attributes>
+</entity>

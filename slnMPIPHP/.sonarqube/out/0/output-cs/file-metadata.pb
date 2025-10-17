@@ -1,0 +1,22 @@
+}
+rC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.csutf-8[
+RC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\Properties\AssemblyInfo.csutf-8U
+LC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\WorkflowConstants.csutf-8Y
+PC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\FileDownloadContainer.csutf-8^
+UC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\Exceptions\MPIPHPException.csutf-8w
+nC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\Exceptions\Communication\SendCommunicationException.csutf-8z
+qC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\Exceptions\Communication\InvalidCorTrackingIDException.csutf-8€
+wC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\Exceptions\Communication\InvalidCommunicationStatusException.csutf-8{
+rC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\Exceptions\Communication\GenerateCommunicationException.csutf-8s
+jC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\Exceptions\Communication\CommunicationException.csutf-8z
+qC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\Exceptions\Communication\clsNonDeliverableAddressFound.csutf-8…
+|C:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\Exceptions\Communication\clsCommunicationRecipientNotSetException.csutf-8x
+oC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\Exceptions\Communication\clsAddressNotFoundException.csutf-8]
+TC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\doActivityInstanceHistory.csutf-8V
+MC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\doActivityInstance.csutf-8^
+UC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\cdoActivityInstanceHistory.csutf-8W
+NC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\cdoActivityInstance.csutf-8R
+IC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\busEnumeration.csutf-8O
+FC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\BatchHelper.csutf-8W
+NC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\ApplicationSettings.csutf-8]
+TC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\ActivityInstanceEventArgs.csutf-8

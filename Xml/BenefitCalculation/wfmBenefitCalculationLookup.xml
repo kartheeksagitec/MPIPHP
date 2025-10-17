@@ -1,0 +1,312 @@
+﻿<form ID="wfmBenefitCalculationLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCalculation" sfwResource="507" sfwType="Lookup" sfwTitle="Benefit Calculation Lookup" version="3.5" sfwEntity="entBenefitCalculationHeader" sfwGridCollection="busBenefitCalculationHeaderLookup.iclbBenefitCalculationHeader">
+  <initialload>
+    <query ID="cdoBenefitCalculationHeader" sfwQueryRef="entBenefitCalculationHeader.Lookup" sfwMethodName="LoadBenefitCalculationHeaders" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblReqInfo" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtMpiPersonId" ID="capMpiPersonId" Text="Participant MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMpiPersonId" sfwDataField="sp.mpi_person_id" sfwOperator="like" sfwQueryID="cdoBenefitCalculationHeader" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtMpiPersonId" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSsn" ID="capSsn" Text="SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="classFormatSSN" ID="txtSsn" sfwDataField="sp.ssn" sfwDataFormat="{0:000-##-####}" sfwOperator="like" sfwQueryID="cdoBenefitCalculationHeader" SkinID="classFormatSSN" AllowPartialMask="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtLastName" ID="capLastName" Text="Pariticipant Last Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtLastName" sfwDataField="sp.last_name" sfwOperator="like" sfwQueryID="cdoBenefitCalculationHeader" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtFirstName" ID="capFirstName" Text="Participant First Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFirstName" sfwDataField="sp.first_name" sfwOperator="like" sfwQueryID="cdoBenefitCalculationHeader" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capAlMpiPersonId" Text="Alternate Payee MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAlMpiPersonId" sfwDataField="SP1.mpi_person_id" sfwOperator="like" sfwQueryID="cdoBenefitCalculationHeader" />
+                <sfwImageButton ID="btnRetrieve1" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtAlMpiPersonId" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlPlanId" ID="capPlanId" Text="Plan ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="plan_name" DataValueField="plan_id" ID="ddlPlanId" sfwDataField="DTL.plan_id" sfwOperator="=" sfwQueryID="cdoBenefitCalculationHeader" sfwTwoWayBinding="False" sfwLoadType="Query" sfwLoadSource="entPlan.Lookup" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblReqInfo2" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlBenefitTypeValue" ID="capBenefitTypeValue" Text="Benefit Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlBenefitTypeValue" sfwDataField="HDR.benefit_type_value" sfwOperator="like" sfwQueryID="cdoBenefitCalculationHeader" sfwLoadType="CodeGroup" sfwLoadSource="1502" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlBenefitSubtypeValue" ID="capBenefitSubtypeValue" Text="Retirement Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlBenefitSubtypeValue" sfwDataField="benefit_subtype_value" sfwOperator="like" sfwQueryID="cdoBenefitCalculationHeader" sfwLoadType="CodeGroup" sfwLoadSource="1501" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBenefitOption" Text="Benefit Option : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlBenefitOption" sfwDataField="PBX.benefit_option_value" sfwQueryID="cdoBenefitCalculationHeader" sfwTwoWayBinding="False" sfwLoadType="CodeGroup" sfwLoadSource="1504" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capRetirementDateFrom" Text="Retirement Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRetirementDateFrom" sfwDataField="hdr.retirement_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoBenefitCalculationHeader" sfwRelatedControl="txtRetirementDateTo" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtRetirementDateFrom" ErrorMessage="Retirement Date From must be in mm/dd/yyyy format." ID="valRetirementDateFrom" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capRetirementDateTo" Text="Retirement Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRetirementDateTo" sfwDataField="hdr.retirement_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoBenefitCalculationHeader" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtRetirementDateTo" ErrorMessage="Retirement Date To must be in mm/dd/yyyy format." ID="valRetirementDateTo" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtRetirementDateFrom" ControlToValidate="txtRetirementDateTo" ErrorMessage="Retirement Date To cannot be less than Retirement Date From." ID="valRetirementDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedDateFrom" Text="Calculation Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedDateFrom" sfwDataField="HDR.created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoBenefitCalculationHeader" sfwRelatedControl="txtCreatedDateTo" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtCreatedDateFrom" ErrorMessage="Created Date From must be in mm/dd/yyyy format." ID="valCreatedDateFrom" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedDateTo" Text="Calculation Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedDateTo" sfwDataField="HDR.created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoBenefitCalculationHeader" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtCreatedDateTo" ErrorMessage="Created Date To must be in mm/dd/yyyy format." ID="valCreatedDateTo" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtCreatedDateFrom" ControlToValidate="txtCreatedDateTo" ErrorMessage="Created Date To cannot be less than Created Date From." ID="valCreatedDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtBenefitCalculationHeaderId" ID="capBenefitCalculationHeaderId" Text="Calculation ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtBenefitCalculationHeaderId" sfwDataField="HDR.benefit_calculation_header_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoBenefitCalculationHeader" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlCalculationTypeValue" ID="capCalculationTypeValue" Text="Calculation Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlCalculationTypeValue" sfwDataField="calculation_type_value" sfwOperator="like" sfwQueryID="cdoBenefitCalculationHeader" sfwLoadType="CodeGroup" sfwLoadSource="2001" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtBenefitApplicationId" ID="capBenefitApplicationId" Text="Application ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtBenefitApplicationId" sfwDataField="benefit_application_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoBenefitCalculationHeader" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlStatusValue" ID="capStatusValue" Text="Calculation Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlStatusValue" sfwDataField="HDR.status_value" sfwOperator="like" sfwQueryID="cdoBenefitCalculationHeader" sfwLoadType="CodeGroup" sfwLoadSource="2002" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="DSBL=wfmDisabiltyBenefitCalculationMaintenance;RTMT=wfmBenefitCalculationRetirementMaintenance;DDPR=wfmBenefitCalculationPreRetirementDeathMaintenance;WDRL=wfmBenefitCalculationWithdrawalMaintenance;DDPT=wfmRetirementApplicationMaintenance;QDRO=wfmWithdrawalApplicationMaintenance" sfwCopyActivitySessionVariables="True" sfwMethodName="btnNew_Click" sfwNavigationParameter="astr_person_mpi_id=txtMpiPersonId;astr_benefit_type=ddlBenefitTypeValue;aint_plan_id=ddlPlanId;aint_benefit_application_id=txtBenefitApplicationId;ddlBenefitTypeValue" Text="New" sfwRelatedControl="ddlBenefitTypeValue" sfwObjectField="astr_benefit_type" sfwToolBarGrid="dgrResult" sfwToolBarGridImage="StaticResources/neoGrid-images/btnNew_Click.png" OnClientClick="BenefitCalculationNewButtonClick" ToolTip="Create a new record" />
+                <sfwButton ID="btnOpen" sfwActiveForm="RTMT=wfmBenefitCalculationRetirementMaintenance;DSBL=wfmDisabiltyBenefitCalculationMaintenance;WDRL=wfmBenefitCalculationWithdrawalMaintenance;DDPR=wfmBenefitCalculationPreRetirementDeathMaintenance;DDPT=wfmBenefitCalculationPostRetirementDeathMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintBenefitCalculationId=BenefitCalculationHeaderId;BenefitTypeValue" sfwRelatedControl="dgrResult" Text="Open" Visible="False" sfwEntityField="BenefitTypeValue" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" sfwSelection="Many" Text="Delete" Visible="False" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+                <sfwButton sfwMethodName="btnNew_Click" Text="New" ID="btnBenefitCalculationNew" sfwActiveForm="wfmDisabiltyBenefitCalculationMaintenance" sfwNavigationParameter="astr_person_mpi_id=txtMpiPersonId;astr_benefit_type=ddlBenefitTypeValue;aint_plan_id=ddlPlanId;aint_benefit_application_id=txtBenefitApplicationId" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" PageSize="50" sfwSelection="Many" SkinID="WrapGrid" AllowGrouping="True">
+                  <Columns>
+                    <TemplateField HeaderText="Calculation ID" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="BenefitCalculationHeaderId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Application ID" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitApplicationId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant MPID" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPerson.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Name" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPerson.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objAlternatePayee.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alternate Payee Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objAlternatePayee.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPlanDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Fund">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrFunds" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Calculation Type" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CalculationTypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Type" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitTypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRetirementType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Type" Visible="False" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitTypeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last 4 Digits ofSSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPerson.IstrLast4DigitsofSSN" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Date" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="RetirementDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="SSA Entitlement/Board Approval Date" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="SsaApprovalDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Commencement Date" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="BenefitCommencementDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Awarded On Date" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="AwardedOnDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Calculation Date" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person ID" Visible="False" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPerson.PersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified By" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Approved By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrApprovedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False" sfwShowInExportToExcel="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

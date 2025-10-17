@@ -1,0 +1,1 @@
+wRiC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\EncryptionClassLibrary\EncryptionDecryptionClassLibrary.csprojò	CSharp7_3

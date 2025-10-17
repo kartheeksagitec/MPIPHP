@@ -1,0 +1,25 @@
+﻿CREATE TABLE [dbo].[SGT_BENEFIT_APPLICATION] (
+    [BENEFIT_APPLICATION_ID]    [dbo].[UDT_IDENTITY]   IDENTITY (1, 1) NOT NULL,
+    [PERSON_ID]                 [dbo].[UDT_ID]         NOT NULL,
+    [ORG_ID]                    [dbo].[UDT_ID]         NULL,
+    [BENEFIT_TYPE_ID]           [dbo].[UDT_ID]         NOT NULL,
+    [BENEFIT_TYPE_VALUE]        [dbo].[UDT_CODE_VALUE] NULL,
+    [BENEFIT_SUBTYPE_ID]        [dbo].[UDT_ID]         NOT NULL,
+    [BENEFIT_SUBTYPE_VALUE]     [dbo].[UDT_CODE_VALUE] NULL,
+    [RETIREMENT_DATE]           [dbo].[UDT_DATETIME]   NULL,
+    [MIN_DISTRIBUTION_FLAG]     [dbo].[UDT_FLAG]       NULL,
+    [MIN_DISTRIBUTION_DATE]     [dbo].[UDT_DATETIME]   NULL,
+    [APPLICATION_RECEIVED_DATE] [dbo].[UDT_DATETIME]   NULL,
+    [APPLICATION_STATUS_ID]     [dbo].[UDT_ID]         NOT NULL,
+    [APPLICATION_STATUS_VALUE]  [dbo].[UDT_CODE_VALUE] NULL,
+    [LAST_EMPLOYER]             [dbo].[UDT_NAME]       NULL,
+    [CREATED_BY]                [dbo].[UDT_CREATEDBY]  NOT NULL,
+    [CREATED_DATE]              [dbo].[UDT_DATETIME]   NOT NULL,
+    [MODIFIED_BY]               [dbo].[UDT_MODIFIEDBY] NOT NULL,
+    [MODIFIED_DATE]             [dbo].[UDT_DATETIME]   NOT NULL,
+    [UPDATE_SEQ]                [dbo].[UDT_UPDSEQ]     NOT NULL,
+    [DISABILITY_ONSET_DATE]     [dbo].[UDT_DATETIME]   NULL,
+    [SSD_AWARD_LETTER_DATE]     [dbo].[UDT_DATETIME]   NULL,
+    [TERMINALLY_ILL]            [dbo].[UDT_FLAG]       NULL
+);
+

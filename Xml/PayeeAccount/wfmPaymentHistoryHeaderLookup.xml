@@ -1,0 +1,279 @@
+﻿<form ID="wfmPaymentHistoryHeaderLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="214" sfwType="Lookup" sfwTitle="Payment History Header Lookup" sfwMaxCount="2000" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entPaymentHistoryHeader" sfwGridCollection="busPaymentHistoryHeaderLookup.iclbPaymentHistoryHeader">
+  <initialload>
+    <query ID="cdoPaymentHistoryHeader" sfwQueryRef="entPaymentHistoryHeader.Lookup" sfwMethodName="LoadPaymentHistoryHeaders" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSphhPayeeAccountId" ID="capSphhPayeeAccountId" Text="Payee Account ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSphhPayeeAccountId" sfwDataField="phh.payee_account_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoPaymentHistoryHeader" />
+                <sfwImageButton ID="btnRetrievePayeeAcctID" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPayeeAccountLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtSphhPayeeAccountId" sfwSelectedIndex="PayeeAccountId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSphhPaymentScheduleId" ID="capSphhPaymentScheduleId" Text="Payment Schedule ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSphhPaymentScheduleId" sfwDataField="payment_schedule_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoPaymentHistoryHeader" />
+                <sfwImageButton ID="btnRetrieveSchedule" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPaymentScheduleLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtSphhPaymentScheduleId" sfwSelectedIndex="PaymentScheduleId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSpMpiPersonId" ID="capSpMpiPersonId" Text="Payee MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSpMpiPersonId" sfwDataField="per.mpi_person_id" sfwOperator="like" sfwQueryID="cdoPaymentHistoryHeader" />
+                <sfwImageButton ID="btnRetrievePayee" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtSpMpiPersonId" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSoMpiOrgId" ID="capSoMpiOrgId" Text="Organization MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSoMpiOrgId" sfwDataField="o.mpi_org_id" sfwOperator="like" sfwQueryID="cdoPaymentHistoryHeader" />
+                <sfwImageButton ID="btnRetrieveOrgnization" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmOrganizationLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtSoMpiOrgId" sfwSelectedIndex="MpiOrgId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlPlnPlanId" ID="capPlnPlanId" Text="Plan : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="plan_name" DataValueField="plan_id" ID="ddlPlnPlanId" sfwDataField="p.plan_id" sfwOperator="=" sfwQueryID="cdoPaymentHistoryHeader" sfwLoadType="Query" sfwLoadSource="entPlan.Lookup" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlSphdDistributionStatusValue" ID="capSphdDistributionStatusValue" Text="Payment Distribution Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlSphdDistributionStatusValue" sfwDataField="SPHD.distribution_status_value" sfwOperator="like" sfwQueryID="cdoPaymentHistoryHeader" sfwTwoWayBinding="False" sfwLoadType="CodeGroup" sfwLoadSource="7036" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlPaymentMethodValue" ID="capPaymentMethodValue" Text="Payment Method : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPaymentMethodValue" sfwDataField="SPHD.payment_method_value" sfwOperator="like" sfwQueryID="cdoPaymentHistoryHeader" sfwTwoWayBinding="False" sfwLoadType="CodeGroup" sfwLoadSource="7039" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSphdCheckNumber" ID="capSphdCheckNumber" Text="Check Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSphdCheckNumber" sfwDataField="SPHD.check_number" sfwOperator="like" sfwQueryID="cdoPaymentHistoryHeader" sfwTwoWayBinding="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capSphdshTransactionDate" Text="Payment Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtspsPaymentDateFrom" sfwDataField="phh.payment_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoPaymentHistoryHeader" sfwRelatedControl="txtspsPaymentDateTo" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtspsPaymentDateFrom" ErrorMessage="Payment Date From must be in mm/dd/yyyy format." ID="valpaymentDateFrom" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSphdshTransactionDate1" Text="Payment Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtspsPaymentDateTo" sfwDataField="phh.payment_date1" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoPaymentHistoryHeader" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtspsPaymentDateTo" ErrorMessage="Payment Date To must be in mm/dd/yyyy format." ID="valtTransactionDate1" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtspsPaymentDateFrom" ControlToValidate="txtspsPaymentDateTo" ErrorMessage="Payment Date To cannot be less than Payment Date From." ID="valtTransactionDate1Range" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capTempCheckAchEffectiveDate" Text="Payment Distribution Status Processed From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTempCheckAchEffectiveDateFrom" sfwDataField="SPHD.check_ach_effective_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoPaymentHistoryHeader" sfwRelatedControl="txtCheckAchEffectiveDateTo" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtTempCheckAchEffectiveDateFrom" ErrorMessage="Payment Distribution Status Precessed From must be in mm/dd/yyyy format." ID="cmvProcessedDateFrom" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCheckAchEffectiveDate1" Text="Payment Distribution Status Processed To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCheckAchEffectiveDateTo" sfwDataField="SPHD.check_ach_effective_date1" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoPaymentHistoryHeader" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtCheckAchEffectiveDateTo" ErrorMessage="Payment Distribution Status Precessed To must be in mm/dd/yyyy format." ID="cmvProcessedDateTo" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtTempCheckAchEffectiveDateFrom" ControlToValidate="txtCheckAchEffectiveDateTo" ErrorMessage="Payment Distribution Status Precessed To cannot be less than Payment Distribution Status Precessed From." ID="valProcessedDateTo" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtGrossAmount" ID="capGrossAmount" Text="Gross Amount : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtGrossAmount" sfwDataField="PHD.gross_amount" sfwDataFormat="{0:C}" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoPaymentHistoryHeader" sfwTwoWayBinding="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtNetAmount" ID="capNetAmount" Text="Net Amount : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtNetAmount" sfwDataField="PHD.net_amount" sfwDataFormat="{0:C}" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoPaymentHistoryHeader" sfwTwoWayBinding="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmPaymentHistoryHeaderMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPaymentHistoryHeaderId=PaymentHistoryHeaderId" sfwRelatedControl="dgrResult" Text="Open" Visible="False" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many" SkinID="WrapGrid">
+                  <Columns>
+                    <TemplateField HeaderText="Payment ID">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmPaymentHistoryHeaderMaintenance" sfwDataField="icdoPaymentHistoryHeader.payment_history_header_id" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPaymentHistoryHeaderId=PaymentHistoryHeaderId" sfwRelatedControl="dgrResult" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee Account ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PayeeAccountId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPlanDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Pay Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtPaymentDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPayee.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee Name" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPayee.IstrFullName1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Organization ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objOrganization.MpiOrgId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Organization Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objOrganization.OrgName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Gross Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="GrossAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Fed Tax">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Idecfedraltax" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="State Tax">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Idecstatetax" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Deductions">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="DeductionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Net Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="NetAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Method">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPaymentMethod" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Check Number">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrCheckNumber" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Original Check Number">
+                      <ItemTemplate>
+                        <sfwLinkButton ID="btnOriginalCheckNo" sfwActiveForm="wfmPaymentHistoryHeaderMaintenance" sfwDataField="icdoPaymentHistoryHeader.istrOriginalCheckNumber" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPaymentHistoryHeaderId=IintOriginalHeaderId" sfwRelatedControl="dgrResult" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Distribution Code" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrDistributionCode" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblStatus" sfwEntityField="IstrDistributionCodeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Schedule ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PaymentScheduleId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Type">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblIstrPaymentType" sfwEntityField="IstrPaymentType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Header ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IintOriginalHeaderId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

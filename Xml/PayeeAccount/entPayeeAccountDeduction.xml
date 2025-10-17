@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPayeeAccountDeduction" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPayeeAccountDeduction" sfwObjectID="busPayeeAccountDeduction" sfwTableName="sgt_payee_account_deduction" sfwView="False" sfwDataObjectID="doPayeeAccountDeduction">
+  <rules>
+    <rule ID="VisibleRule-ActiveDeduction" sfwExpression="(this.icdoPayeeAccountDeduction.start_date &gt;= RFunc.CurrentDate())" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-ActiveDeduction" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries />
+  <attributes>
+    <attribute sfwValue="payee_account_deduction_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PayeeAccountDeductionId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="payee_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PayeeAccountId" sfwIsSequence="False" sfwCaption="Payee Account Id" />
+    <attribute sfwValue="start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="StartDate" sfwIsSequence="False" sfwCaption="Start Date" />
+    <attribute sfwValue="end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndDate" sfwIsSequence="False" sfwCaption="End Date" />
+    <attribute sfwType="Description" ID="PaymentOptionDescription" sfwCaption="Payment Option" sfwValue="payment_option_description" />
+    <attribute sfwValue="payment_option_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PaymentOptionId" sfwCodeID="7011" sfwIsSequence="False" sfwCaption="Payment Option" />
+    <attribute sfwValue="payment_option_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="PaymentOptionValue" sfwIsSequence="False" sfwCaption="Payment Option" />
+    <attribute sfwValue="payment_item_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PaymentItemTypeId" sfwIsSequence="False" sfwCaption="Payment Item Type Id" />
+    <attribute sfwValue="payee_account_payment_item_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PayeeAccountPaymentItemTypeId" sfwIsSequence="False" sfwCaption="Payee Account Payment Item Type Id" />
+    <attribute sfwValue="amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Amount" sfwIsSequence="False" sfwCaption="Amount" />
+    <attribute sfwValue="account_number" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="AccountNumber" sfwIsSequence="False" sfwCaption="Account Number" />
+    <attribute sfwValue="payment_history_header_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PaymentHistoryHeaderId" sfwIsSequence="False" sfwCaption="Payment History Header Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwType="Description" ID="DeductionTypeDescription" sfwCaption="Deduction Type" sfwValue="deduction_type_description" />
+    <attribute sfwValue="deduction_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="DeductionTypeId" sfwCodeID="7030" sfwIsSequence="False" sfwCaption="Deduction Type" />
+    <attribute sfwValue="deduction_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="DeductionTypeValue" sfwIsSequence="False" sfwCaption="Deduction Type" />
+    <attribute sfwType="Description" ID="PayToDescription" sfwCaption="Pay To" sfwValue="pay_to_description" />
+    <attribute sfwValue="pay_to_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PayToId" sfwCodeID="7031" sfwIsSequence="False" sfwCaption="Pay To" />
+    <attribute sfwValue="pay_to_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="PayToValue" sfwIsSequence="False" sfwCaption="Pay To" />
+    <attribute sfwValue="other_deduction_type_description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="OtherDeductionTypeDescription" sfwIsSequence="False" sfwCaption="Other Deduction Type Description" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonId" sfwIsSequence="False" sfwCaption="Person Id" />
+    <attribute sfwValue="org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="OrgId" sfwIsSequence="False" sfwCaption="Org Id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrOrgMPID" sfwValue="icdoPayeeAccountDeduction.istrOrgMPID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrOrgName" sfwValue="icdoPayeeAccountDeduction.istrOrgName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPersonMPID" sfwValue="icdoPayeeAccountDeduction.istrPersonMPID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPersonName" sfwValue="icdoPayeeAccountDeduction.istrPersonName" />
+    <attribute sfwValue="vendor_org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="VendorOrgId" sfwCaption="Vendor Org Id" />
+  </attributes>
+</entity>

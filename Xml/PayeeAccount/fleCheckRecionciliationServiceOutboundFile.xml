@@ -1,0 +1,20 @@
+﻿<file ID="fleCheckRecionciliationServiceOutboundFile" sfwType="Outbound" sfwActive="True" sfwStatus="Valid" sfwTitle="Check Recionciliation Service Outbound File" sfwDescription="Check Recionciliation Service Outbound File" sfwProgressCounter="10" sfwFileName="CheckRecionciliationServiceOutboundFile.txt" sfwOutboundObject="MPIPHP.BusinessObjects.PayeeAccount.busCheckRecionciliationServiceOutboundFile" sfwLoadMethod="LoadCheckRecionciliationServiceOutboundFile" sfwCollection="iclbPaymentHistoryDistributionOutboundFileData">
+  <record ID="Detail" sfwRecordType="FixedLength" sfwRecordObject="iclbPaymentHistoryDistributionOutboundFileData">
+    <sfwField sfwDescription="Record Code" sfwLength="02" sfwRemoveDecimal="False" sfwConstant="01" />
+    <sfwField sfwDescription="Account Number" sfwLength="12" sfwObjectField="icdoPaymentHistoryDistribution.account_number" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Check Number" sfwLength="10" sfwObjectField="icdoPaymentHistoryDistribution.check_number" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Check Amount" sfwLength="12" sfwObjectField="icdoPaymentHistoryDistribution.istrNetAmount" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Issue Date" sfwLength="08" sfwObjectField="icdoPaymentHistoryDistribution.check_ach_effective_date" sfwDataFormat="{0:MMddyyyy}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Transaction Code" sfwLength="01" sfwObjectField="icdoPaymentHistoryDistribution.distribution_status_value" />
+    <sfwField sfwDescription="Recipient Name" sfwObjectField="icdoPaymentHistoryDistribution.recipient_name" sfwLength="40" />
+    <sfwField sfwDescription="Filler" sfwObjectField="filler" sfwLength="60" sfwRemoveDecimal="False" />
+  </record>
+  <record ID="Control" sfwRecordType="FixedLength" sfwRecordObject="iclbPaymentHistoryDistributionOutboundFileCountData">
+    <sfwField sfwDescription="Record Code" sfwLength="02" sfwRemoveDecimal="False" sfwConstant="02" />
+    <sfwField sfwDescription="Account Number" sfwLength="12" sfwObjectField="icdoPaymentHistoryDistribution.istrAccountNumber" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Control Count " sfwLength="10" sfwObjectField="icdoPaymentHistoryDistribution.intControlCount" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Control Amount " sfwLength="12" sfwObjectField="icdoPaymentHistoryDistribution.intControlAmount" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="Filler" sfwObjectField="filler" sfwLength="109" sfwRemoveDecimal="False" />
+  </record>
+  <ExtraFields />
+</file>

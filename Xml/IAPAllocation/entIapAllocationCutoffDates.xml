@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entIapAllocationCutoffDates" sfwMainCDO="icdoIapAllocationCutoffDates" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busIapAllocationCutoffDates" sfwTableName="sgt_iap_allocation_cutoff_dates" sfwView="False" sfwDataObjectID="doIapAllocationCutoffDates">
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_iap_allocation_cutoff_dates ">
+      <parameters />
+    </query>
+    <query ID="GetEACutoffFromDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DATEADD(DAY,1,PE.CUTOFFDATE) FROM PILLARS.DBO.PERIOD PE&#xD;&#xA;INNER JOIN PILLARS.DBO.PENSIONYEAR PY ON PY.ENDDATE = PE.QUALIFYINGENDDATE&#xD;&#xA;WHERE PY.PENSIONYEAR = @PENSIONYEAR">
+      <parameters>
+        <parameter ID="@PENSIONYEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetEACutoffToDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT PE.CUTOFFDATE FROM PILLARS.DBO.PERIOD PE&#xD;&#xA;INNER JOIN PILLARS.DBO.PENSIONYEAR PY ON PY.ENDDATE = PE.QUALIFYINGENDDATE&#xD;&#xA;WHERE PY.PENSIONYEAR = @PENSIONYEAR">
+      <parameters>
+        <parameter ID="@PENSIONYEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAdjCutoffFromDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DATEADD(DAY,1,ADJ_CUTOFF_DATE_TO) FROM SGT_IAP_ALLOCATION_CUTOFF_DATES where COMPUTATIONAL_YEAR = @COMPUTATIONAL_YEAR">
+      <parameters>
+        <parameter ID="@COMPUTATIONAL_YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetIAPAllocationCutoffDatesDetail" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT IAP_ALLOCATION_CUTOFF_DATES_ID FROM [DBO].[SGT_IAP_ALLOCATION_CUTOFF_DATES] &#xD;&#xA;WHERE COMPUTATIONAL_YEAR = @COMPUTATIONAL_YEAR">
+      <parameters>
+        <parameter ID="@COMPUTATIONAL_YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="iap_allocation_cutoff_dates_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="IapAllocationCutoffDatesId" sfwCaption="ID" />
+    <attribute sfwValue="computational_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ComputationalYear" sfwCaption="Computational Year" />
+    <attribute sfwValue="first_day" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="FirstDay" sfwCaption="First Day" />
+    <attribute sfwValue="last_day" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="LastDay" sfwCaption="Last Day" />
+    <attribute sfwValue="ea_cutoff_date_from" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EaCutoffDateFrom" sfwCaption="Ea Cutoff Date From" />
+    <attribute sfwValue="ea_cutoff_date_to" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EaCutoffDateTo" sfwCaption="Ea Cutoff Date To" />
+    <attribute sfwValue="adj_cutoff_date_from" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="AdjCutoffDateFrom" sfwCaption="Adj Cutoff Date From" />
+    <attribute sfwValue="adj_cutoff_date_to" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="AdjCutoffDateTo" sfwCaption="Adj Cutoff Date To" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

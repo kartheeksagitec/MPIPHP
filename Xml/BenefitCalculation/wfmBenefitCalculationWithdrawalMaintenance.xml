@@ -1,0 +1,706 @@
+﻿<form ID="wfmBenefitCalculationWithdrawalMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCalculation" sfwResource="503" sfwType="Maintenance" sfwTitle="Benefit Calculation Withdrawal Maintenance" version="3.5" sfwEntity="entBenefitCalculationWithdrawal">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewBenefitCalculationWithdrawal" />
+    <callmethods sfwMode="Update" sfwMethodName="FindBenefitCalculationWithdrawal" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnNoChangesSave_Click" sfwNavigationParameter="aintBenefitCalculationId=BenefitCalculationHeaderId" sfwResource="334" sfwVisibleRule="VisibleRule-NotApproved-NotCancelled-NotFinal" Text="Calculate&amp;Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnExecuteBusinessMethod_Click" sfwObjectMethod="btn_CancelCalculation" sfwResource="334" sfwVisibleRule="VisibleRule-ForCancelledCalculation" Text="Cancel Calculation" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" sfwResource="335" Text="Correspondence" />
+                <sfwButton ID="btnApprove" OnClientClick="AdverseInterestConfirm" sfwMethodName="btnExecuteBusinessMethod_Click" sfwObjectMethod="btn_ApproveCalculation" sfwResource="334" sfwVisibleRule="VisibleRule-Mode-Update-NotApproved-NotCancelled" Text="Approve Calculation" />
+                <sfwButton ID="btnExecuteRefreshFromObject" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btn_RefreshCalculation" sfwResource="334" sfwVisibleRule="VisibleRule-RefreshCalculations" Text="Refresh Calculations" sfwMode="Update" />
+                <sfwButton ID="btnExecuteRefreshFromObject1" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Override Benefit Amount" sfwObjectMethod="OverrideBenefitAmount" sfwResource="334" sfwVisibleRule="VisibleRule-IfChildSupportFlgIsY" />
+                <sfwButton ID="btnLumpSumPayment" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="LumpSumPayment" sfwResource="334" sfwVisibleRule="VisibleRule-LumpSumPayment" Text="Change to Lump Sum" />
+                <sfwButton ID="btnButton" sfwMethodName="btnOpen_Click" sfwObjectID="busBenefitCalculationRetirement" sfwActiveForm="wfmPayeeAccountMaintenance" sfwResource="334" sfwVisibleRule="VisibleRule-PayeeAccountButton" Text="Open Payee Account" sfwNavigationParameter="aintPayeeAccountId=IintPayeeAccountId" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlParticipantDetails" sfwCaption="Participant Details">
+          <sfwTable ID="tblParticipantDetails">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblBenefitCalculationHeaderId" ID="capBenefitCalculationHeaderId" Text="Calculation ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBenefitCalculationHeaderId" sfwEntityField="BenefitCalculationHeaderId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblCalculationTypeDescription" ID="capCalculationTypeDescription" Text="Calculation Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCalculationTypeDescription" sfwEntityField="CalculationTypeDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblStatusDescription" ID="capStatusDescription" Text="Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusDescription" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblMpiPersonId" ID="capMpiPersonId" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblMpiPersonId" sfwEntityField="objPerson.MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="objPerson.IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIdtDateofBirth" ID="capIdtDateofBirth" Text="Date Of Birth :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtDateofBirth" sfwDataFormat="{0:d}" sfwEntityField="objPerson.IdtDateofBirth" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtAge" ID="capAge" Text="Age as of Withdrawal Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAge" sfwDataFormat="{0:##}" sfwVisibleRule="VisibleRule-EstimateCalculations" sfwEntityField="IdecParticipantFullAge" />
+                <sfwLabel ID="lblLabel5" sfwDataFormat="{0:##}" sfwVisibleRule="VisibleRule-FinalCalculations" sfwEntityField="Age" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPaymentDate" ID="capPaymentDate" Text="Payment Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPaymentDate" sfwDataFormat="{0:d}" sfwEntityField="PaymentDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblLumpSumPayment" ID="capLumpSumPayment" Text="Changed To Lump Sum Payment :" sfwVisibleRule="VisibleRule-LumpSumPayment" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLumpSumPayment" sfwVisibleRule="VisibleRule-LumpSumPayment" sfwEntityField="IstrLumpSumPaymentFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="textBoxDisplayStyleNone" ID="lblPersonId" SkinID="textBoxDisplayStyleNone" sfwEntityField="objPerson.PersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel CssClass="textBoxDisplayStyleNone" ID="lblCalculationTypeValue" SkinID="textBoxDisplayStyleNone" sfwEntityField="CalculationTypeValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel CssClass="textBoxDisplayStyleNone" ID="lblBenefitTypeValue" SkinID="textBoxDisplayStyleNone" sfwEntityField="BenefitTypeValue" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwCheckBox ID="chkAdverseInterest" sfwDefaultValue="N" CssClass="hideControl" sfwEntityField="objPerson.AdverseInterestFlag" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlSurvivorDetails" sfwCaption="Survivor Details" sfwVisibleRule="VisibleRule-SurvivorPanel">
+          <sfwTable CssClass="Table" ID="tblNewPage3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtIstrSurvivorMPID" ID="capMPID" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIstrSurvivorMPID" sfwParameters="istrMPIPersonID=txtIstrSurvivorMPID" sfwRetrievalControls="txtBeneficiaryPersonName=istrFullName;txtBeneficiaryPersonDateOfBirth=idtDateofBirth;txtBeneficiaryPersonId=person_id" sfwRetrievalMethod="GetSpouseDetails" sfwVisibleRule="VisibleRule-EstimateCalculations" sfwEntityField="IstrSurvivorMPID" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmBeneficiaryLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtIstrSurvivorMPID" sfwSelectedIndex="MpiPersonId" sfwVisibleRule="VisibleRule-EstimateCalculations" />
+                <sfwLabel ID="lblLabel1" sfwVisibleRule="VisibleRule-FinalCalculations" sfwEntityField="IstrSurvivorMPID" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtBeneficiaryPersonName" ID="capName" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtBeneficiaryPersonName" sfwVisibleRule="VisibleRule-EstimateCalculations" sfwEntityField="BeneficiaryPersonName" />
+                <sfwLabel ID="lblLabel2" sfwVisibleRule="VisibleRule-FinalCalculations" sfwEntityField="BeneficiaryPersonName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtBeneficiaryPersonDateOfBirth" ID="capDateOfBirth" Text="Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtBeneficiaryPersonDateOfBirth" sfwDataFormat="{0:d}" sfwVisibleRule="VisibleRule-EstimateCalculations" sfwEntityField="BeneficiaryPersonDateOfBirth" />
+                <sfwLabel ID="lblLabel3" sfwVisibleRule="VisibleRule-FinalCalculations" sfwEntityField="BeneficiaryPersonDateOfBirth" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIintSurvivorAgeAtRetirement" ID="capAgeAsOfWithdrawalDate" Text="Age as of Withdrawal Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIintSurvivorAgeAtRetirement" sfwDataFormat="{0:##}" sfwEntityField="IdecSurvivorFullAge" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtBeneficiaryPersonId" sfwRetrievalQuery="entPerson.GetPersonDetails" SkinID="textBoxDisplayStyleNone" sfwEntityField="BeneficiaryPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel6" Visible="False" sfwEntityField="IintPayeeAccountId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlWithdrawalDetails" sfwCaption="Withdrawal Details">
+          <sfwTable ID="tblWithdrawalDetails">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtRetirementDate" ID="capRetirementDate" Text="Withdrawal Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRetirementDate" sfwDataFormat="{0:d}" sfwParameters="adtRetrDate=txtRetirementDate" sfwRetrievalControls="txtAge=age" sfwRetrievalMethod="GetAgeOnRetirementDate" sfwVisibleRule="VisibleRule-EstimateCalculations" sfwEntityField="RetirementDate" />
+                <sfwLabel ID="lblLabel4" sfwVisibleRule="VisibleRule-FinalCalculations" sfwEntityField="RetirementDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblCreatedDate1" ID="capCalculationDate" Text="Calculation Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate1" sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblBenefitTypeDescription" ID="capBenefitTypeDescription" Text="Benefit Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBenefitTypeDescription" sfwEntityField="BenefitTypeDescription" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtIdecOverriddenBenefitAmount" ID="capIdecOverriddenBenefitAmount" Text="Overridden Benefit Amount : " sfwVisibleRule="VisibleRule-IfChildSupportFlgIsY" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIdecOverriddenBenefitAmount" sfwDataFormat="{0:C}" sfwVisibleRule="VisibleRule-IfChildSupportFlgIsY" sfwReadOnlyRule="EnableRule-OverrideBenefitAmount" sfwEntityField="IdecOverriddenBenefitAmount" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlOtherInformation" sfwCaption="Withdrawal Calculation Information" sfwVisibleRule="VisibleRule-WithdrawalForAlternatePayee">
+          <sfwTable CssClass="Table" ID="tblNewPage7">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblMessage" Text="Withdrawal Calculation For Alternate Payee" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn HorizontalAlign="Left" />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlIAPBenefits" sfwCaption="Withdrawal Benefits">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn ColumnSpan="3">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvBenefitCalculationDetail" SkinID="WrapGrid" sfwEntityField="lstBenefitCalculationDetail" sfwGridEntity="entBenefitCalculationDetail">
+                  <Columns>
+                    <TemplateField HeaderText="Plan">
+                      <ItemTemplate>
+                        <sfwLinkButton ID="btnLoadChildGrid" sfwDataField="icdoBenefitCalculationDetail.istrPlanDescription" sfwRelatedControl="grvBenefitCalculationDetail" sfwMethodName="btnMasterDetailHeader_Click" sfwObjectMethod="LoadChildGridForBenefitCalculationMaintenances" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Dro Model" sfwVisibleRule="VisibleRule-WithdrawalForAlternatePayee">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DroModelDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Calculation Detail ID" Visible="False" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitCalculationDetailId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan" Visible="False">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwDataField="icdoBenefitCalculationDetail.istrPlanCode" sfwMethodName="btnGridViewSelect_Click" sfwRelatedControl="grvBenefitCalculationDetail" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person Account ID" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center" sfwVisibleRule="VisibleRule-SurvivorPanel">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonAccountId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="IAP Balance Amt" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmIAPAmountDetailsMaintenance" sfwDataField="icdoBenefitCalculationDetail.iap_balance_amount" sfwDataFormat="{0:C}" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintBenefitCalculationHeaderID=BenefitCalculationHeaderId" sfwRelatedControl="grvBenefitCalculationDetail" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 52 Special Account Balance Amt" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Local52SpecialAcctBalAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 52 Special Account QDRO Offset" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center" sfwVisibleRule="VisibleRule-EstimateCalculations">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmQDROOffsetDetailsMaintenance" sfwDataField="icdoBenefitCalculationDetail.l52_spl_acc_qdro_offset" sfwDataFormat="{0:C}" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintParticiapantID=objPerson.PersonId;aintPlanId=PlanId;astrCalculationType=CalculationTypeValue;astrBenefitTypeValue=BenefitTypeValue;astrEEFlag=EeFlag;astrUVHPFlag=UvhpFlag;astrL52SplAccFlag=L52SplAccFlag;astrL161SplAccFlag=L161SplAccFlag" sfwRelatedControl="grvBenefitCalculationDetail" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 161 Special Account Balance Amt" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Local161SpecialAcctBalAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 161 Special Account QDRO Offset" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center" sfwVisibleRule="VisibleRule-EstimateCalculations">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmQDROOffsetDetailsMaintenance" sfwDataField="icdoBenefitCalculationDetail.l161_spl_acc_qdro_offset" sfwDataFormat="{0:C}" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintParticiapantID=objPerson.PersonId;aintPlanId=PlanId;astrCalculationType=CalculationTypeValue;astrBenefitTypeValue=BenefitTypeValue;astrEEFlag=EeFlag;astrUVHPFlag=UvhpFlag;astrL52SplAccFlag=L52SplAccFlag;astrL161SplAccFlag=L161SplAccFlag" sfwRelatedControl="grvBenefitCalculationDetail" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Non Vested EE Contrib Amt" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="NonVestedEeAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Non Vested EE Interest Amt" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="NonVestedEeInterest" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE  Contribution QDRO Offset" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center" sfwVisibleRule="VisibleRule-EstimateCalculations">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmQDROOffsetDetailsMaintenance" sfwDataField="icdoBenefitCalculationDetail.total_ee_contribution_qdro_offset" sfwDataFormat="{0:C}" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintParticiapantID=objPerson.PersonId;aintPlanId=PlanId;astrCalculationType=CalculationTypeValue;astrBenefitTypeValue=BenefitTypeValue;astrEEFlag=EeFlag;astrUVHPFlag=UvhpFlag;astrL52SplAccFlag=L52SplAccFlag;astrL161SplAccFlag=L161SplAccFlag" sfwRelatedControl="grvBenefitCalculationDetail" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Interest QDRO Offset" sfwVisibleRule="VisibleRule-EstimateCalculations">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="TotalEeInterestQdroOffset" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total UVHP Contrib Amt" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="TotalUvhpContributionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total UVHP Interest Amt" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="TotalUvhpInterestAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="UVHP Contribution QDRO Offset" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center" sfwVisibleRule="VisibleRule-EstimateCalculations">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmQDROOffsetDetailsMaintenance" sfwDataField="icdoBenefitCalculationDetail.total_uvhp_contribution_qdro_offset" sfwDataFormat="{0:C}" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintParticiapantID=objPerson.PersonId;aintPlanId=PlanId;astrCalculationType=CalculationTypeValue;astrBenefitTypeValue=BenefitTypeValue;astrEEFlag=EeFlag;astrUVHPFlag=UvhpFlag;astrL52SplAccFlag=L52SplAccFlag;astrL161SplAccFlag=L161SplAccFlag" sfwRelatedControl="grvBenefitCalculationDetail" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="UVHP Interest QDRO Offset" sfwVisibleRule="VisibleRule-EstimateCalculations">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="TotalUvhpInterestQdroOffset" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Offset">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmQDROOffsetDetailsMaintenance" sfwDataField="icdoBenefitCalculationDetail.qdro_offset" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintParticiapantID=objPerson.PersonId;aintPlanId=PlanId;astrCalculationType=CalculationTypeValue;astrBenefitTypeValue=BenefitTypeValue;astrEEFlag=EeFlag;astrUVHPFlag=UvhpFlag;astrL52SplAccFlag=L52SplAccFlag;astrL161SplAccFlag=L161SplAccFlag" sfwRelatedControl="grvBenefitCalculationDetail" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Ee Flag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EeFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="L161 Spl Acc Flag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="L161SplAccFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="L52 Spl Acc Flag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="L52SplAccFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Uvhp Flag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UvhpFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PlanId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn Width="200px">
+                <sfwLabel AssociatedControlID="chkWithdrawEeFlag" ID="capWithdrawEeFlag" Text="EE Contributions and Interest : " Visible="False" sfwIsCaption="True" />
+                <sfwCheckBox ID="chkWithdrawEeFlag" sfwDefaultValue="N" Visible="False" sfwEntityField="WithdrawEeFlag" />
+              </sfwColumn>
+              <sfwColumn Width="200px">
+                <sfwLabel AssociatedControlID="chkWithdrawUvhpFlag" ID="capWithdrawUvhpFlag" Text="UV &amp; HP Contributions and Interest : " Visible="False" sfwIsCaption="True" />
+                <sfwCheckBox ID="chkWithdrawUvhpFlag" sfwDefaultValue="N" Visible="False" sfwEntityField="WithdrawUvhpFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkWithdrawIapFlag" ID="capWithdrawIapFlag" Text="IAP Balance :" Visible="False" sfwIsCaption="True" />
+                <sfwCheckBox ID="chkWithdrawIapFlag" sfwDefaultValue="N" Visible="False" sfwEntityField="WithdrawIapFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkWithdrawL161SplAccFlag" ID="capWithdrawL161SplAccFlag" Text=" L161 Special Account : " Visible="False" sfwIsCaption="True" />
+                <sfwCheckBox ID="chkWithdrawL161SplAccFlag" sfwDefaultValue="N" Visible="False" sfwEntityField="WithdrawL161SplAccFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkWithdrawL52SplAccFlag" ID="capWithdrawL52SplAccFlag" Text="L52 Special Account Flag : " Visible="False" sfwIsCaption="True" />
+                <sfwCheckBox ID="chkWithdrawL52SplAccFlag" sfwDefaultValue="N" Visible="False" sfwEntityField="WithdrawL52SplAccFlag" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlBenefitOptions" sfwCaption="Benefit Options">
+          <sfwTable CssClass="Table" ID="tblNewPage2">
+            <sfwRow>
+              <sfwColumn ColumnSpan="12">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvBenefitCalculationOptions" sfwParentGrid="grvBenefitCalculationDetail" sfwEntityField="lstBenefitCalculationOptions" sfwGridEntity="entBenefitCalculationOptions">
+                  <Columns>
+                    <TemplateField HeaderText="Benefit Option" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrBenefitOptionDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Option Factor" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center" sfwVisibleRule="VisibleRule-BenefitFactorColumn">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:#0.0000}" sfwEntityField="BenefitOptionFactor1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Account Relationship" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AccountRelationshipDescription1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Amt" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="BenefitAmount1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Survivor Relationship" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center" sfwVisibleRule="VisibleRule-SurvivorPanel">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SurvivorRelationshipDescription1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Survivor Benefit Amt" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center" sfwVisibleRule="VisibleRule-SurvivorPanel">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="SurvivorAmount1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Calculation Detail ID" Visible="False" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitCalculationDetailId1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Calculation Option ID" Visible="False" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitCalculationOptionId1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Benefit ID" Visible="False" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PlanBenefitId1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlPacketTracking" sfwCaption="Packet Tracking">
+          <sfwTable ID="tblNewPage8" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn ColumnSpan="2" HorizontalAlign="Center" />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpenBusCorTrackingMaintenance" sfwMethodName="btnOpen_Click" sfwActiveForm="wfmPacketTrackingMaintenance" sfwRelatedControl="grvBusCorTracking" Text="Open Maintenance" sfwNavigationParameter="aintTrackingId=TrackingId" />
+                <sfwButton ID="btnRefreshData" sfwMethodName="btnCancel_Click" Text="Refresh Data" sfwToolBarGrid="grvBusCorTracking" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnRefresh_click.png" ToolTip="Cancel the changes" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="8">
+                <sfwGridView ID="grvBusCorTracking" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="objPerson.lstCorTracking" sfwGridEntity="entCorTracking">
+                  <Columns>
+                    <TemplateField HeaderText="Tracking ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnOpenBusCorTrackingMaintenance" sfwLinkable="True" sfwEntityField="TrackingId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorTemplates.TemplateDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Access Template Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.AccessTemplateName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailed Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.MailedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailed By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.MailedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="objCorPacketContentTracking.ReceivedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Received By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.ReceivedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Packet Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.PacketStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Access Packet Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCorPacketContentTracking.AccessPaketStatus" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Generated By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Generated Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="GeneratedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Other Details">
+          <sfwTable CssClass="Table" ID="tblNewPage5">
+            <sfwRow>
+              <sfwColumn>
+                <sfwPanel ID="pnlNotes" sfwCaption="Notes">
+                  <sfwTable CssClass="Table" ID="tblNewPage6">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtIstrNewNotes" Rows="6" TextMode="MultiLine" Width="900px" sfwEntityField="IstrNewNotes" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwButton ID="btnAddNotes" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="AddWDRLNotes" sfwRelatedControl="grvNotes" sfwResource="334" Text="Add Notes" sfwToolBarGrid="none" />
+                        <sfwButton ID="btnBuClear" sfwMethodName="btnCancel_Click" OnClientClick="ClearNotes" sfwResource="334" Text="Clear" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvNotes" sfwAllowNew="True" sfwEntityField="lstNotes" sfwGridEntity="entNotes">
+                  <Columns>
+                    <TemplateField HeaderText="Notes">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Notes" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Source">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FormDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Note ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NoteId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlSuppressWarning" sfwCaption="Warnings" Visible="False">
+          <sfwTable CssClass="Table" ID="tblNewPage4">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkSuppressWarningsFlag" ID="capSuppressWarningsFlag" Text="Suppress Warnings : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkSuppressWarningsFlag" sfwEntityField="SuppressWarningsFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="10">
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many" sfwEntityField="InternalErrors" sfwGridEntity="entError">
+                  <Columns>
+                    <TemplateField HeaderText="Message ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MessageId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Error / Warning">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DisplayMessage" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Severity">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SeverityDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPerson" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBenefitCalculationDetail" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBenefitCalculationOptions" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objPerson.lstCorTracking" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstNotes" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="InternalErrors" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmRecipientRolloverOrganisationLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="205 " sfwType="Lookup" sfwTitle="Recipient Rollover Organisation Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmRecipientRolloverOrganisationLookup" sfwEntity="entPayeeAccountRolloverDetail" sfwGridCollection="busRecipientRolloverOrganisationLookup.iclbPayeeAccountRolloverDetail">
+  <initialload>
+    <query ID="cdoPayeeAccountRolloverDetail" sfwQueryRef="entPayeeAccountRolloverDetail.Lookup" sfwMethodName="LoadRecipientRolloverOrganisations" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtRolloverOrgId" ID="capRolloverOrgId" Text="MPI Organization ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMpiOrgId" sfwDataField="mpi_org_id" sfwQueryID="cdoPayeeAccountRolloverDetail" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtOrgName" ID="capOrgName" Text="Org Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOrgName" sfwDataField="org_name" sfwQueryID="cdoPayeeAccountRolloverDetail" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlRolloverTypeValue" ID="capRolloverTypeValue" Text="Rollover Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlRolloverTypeValue" sfwDataField="rollover_type_value" sfwOperator="like" sfwQueryID="cdoPayeeAccountRolloverDetail" sfwLoadType="CodeGroup" sfwLoadSource="7041" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlStatusValue" ID="capStatusValue" Text="Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlStatusValue" sfwDataField="spard.status_value" sfwOperator="like" sfwQueryID="cdoPayeeAccountRolloverDetail" sfwLoadType="CodeGroup" sfwLoadSource="7028" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlRolloverOptionValue" ID="capRolloverOptionValue" Text="Rollover Option : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlRolloverOptionValue" sfwDataField="rollover_option_value" sfwOperator="like" sfwQueryID="cdoPayeeAccountRolloverDetail" sfwLoadType="CodeGroup" sfwLoadSource="7007" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtAmountOfTaxable" ID="capAmountOfTaxable" Text="Rollover Amount: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAmountOfTaxable" sfwDataField="amount" sfwOperator="like" sfwQueryID="cdoPayeeAccountRolloverDetail" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtAccountNumber" ID="capAccountNumber" Text="Account Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAccountNumber" sfwDataField="account_number" sfwOperator="like" sfwQueryID="cdoPayeeAccountRolloverDetail" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPayeeAccountId" ID="capPayeeAccountId" Text="Payee Account ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPayeeAccountId" sfwDataField="payee_account_id" sfwQueryID="cdoPayeeAccountRolloverDetail" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtRolloverOrgId" sfwDataField="rollover_org_id" sfwOperator="=" sfwQueryID="cdoPayeeAccountRolloverDetail" SkinID="textBoxDisplayStyleNone" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmRecipientRolloverOrganisationMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintPayeeAccountID=txtPayeeAccountId" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmRecipientRolloverOrganisationMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPayeeAccountRolloverDetailId=PayeeAccountRolloverDetailId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" Visible="False" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="ID" SortExpression="PayeeAccountRolloverDetailId" Visible="False" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PayeeAccountRolloverDetailId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPI Organization ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="IstrOrgMPID" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Organization Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrOrgName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee Account ID" SortExpression="PayeeAccountId" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PayeeAccountId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Rollover Option" SortExpression="RolloverOptionDescription" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RolloverOptionDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Rollover Type" SortExpression="RolloverTypeDescription" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RolloverTypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Percent Of Taxable" SortExpression="PercentOfTaxable" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PercentOfTaxable" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Amount Of Taxable" SortExpression="Amount" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Amount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Account Number" SortExpression="AccountNumber" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AccountNumber" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Send To Participant" SortExpression="SendToParticipant" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SendToParticipant" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Address">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrFullAddress" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status" SortExpression="StatusDescription" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

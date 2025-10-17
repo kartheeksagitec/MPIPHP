@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entBenefitInterestRate" sfwMainCDO="icdoBenefitInterestRate" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBenefitInterestRate" sfwTableName="sgt_benefit_interest_rate" sfwView="False" sfwDataObjectID="doBenefitInterestRate">
+  <queries>
+    <query ID="GetBenefitInterestRate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT SBIR.RATE_OF_INTEREST FROM SGT_BENEFIT_INTEREST_RATE SBIR WITH(NOLOCK)&#xD;&#xA;WHERE SBIR.[YEAR] = CASE WHEN ( SELECT DISTINCT RATE_OF_INTEREST FROM SGT_BENEFIT_INTEREST_RATE BIR WITH(NOLOCK) WHERE BIR.[YEAR] = @YEAR ) IS NULL &#xD;&#xA;      THEN ( SELECT TOP 1 [YEAR] FROM SGT_BENEFIT_INTEREST_RATE WITH(NOLOCK) ORDER BY [YEAR] DESC )&#xD;&#xA;    ELSE @YEAR END">
+      <parameters>
+        <parameter ID="@YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_benefit_interest_rate">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="benefit_interest_rate_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitInterestRateId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="Year" sfwIsSequence="False" sfwCaption="Year" />
+    <attribute sfwValue="rate_of_interest" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,6" sfwIsNull="False" ID="RateOfInterest" sfwIsSequence="False" sfwCaption="Rate Of Interest" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

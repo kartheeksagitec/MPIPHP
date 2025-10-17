@@ -1,0 +1,1 @@
+eRWC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPBusinessTier\MPIPHPBusinessTier.csprojò	CSharp7_3

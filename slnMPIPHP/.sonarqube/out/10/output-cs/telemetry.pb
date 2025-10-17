@@ -1,0 +1,1 @@
+_RQC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPInterface\MPIPHPInterface.csprojò	CSharp7_3

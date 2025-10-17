@@ -1,0 +1,73 @@
+﻿<form ID="wfmProcessDashboardMaintenance" sfwResource="-1" sfwFormObject="busBpmProcessBAM" sfwType="Maintenance" sfwTitle="Process Dashboard Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmDashboardLookup" sfwFormObjectType="FormObject" sfwEntity="entBpmProcessBAM">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewObject" />
+    <callmethods sfwMode="Update" sfwMethodName="Group1" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar_1" sfwGroupCaption="Process Dashboard Details" sfwCaption="Process Dashboard">
+          <sfwTable ID="tblNewPage3" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn Width="70px">
+                <sfwLabel ID="lblProcessName" Text="Process Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="width-160">
+                <sfwDropDownList ID="ddlDropDownList" DataValueField="process_id" DataTextField="process_name" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetProcessesWithVersionNumber" sfwEntityField="IintProcessId" />
+              </sfwColumn>
+              <sfwColumn Width="70px">
+                <sfwLabel ID="lblDateFrom" Text="Date From: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="width-160">
+                <sfwTextBox ID="txtDateFrom" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwEntityField="IdtDateFrom" />
+              </sfwColumn>
+              <sfwColumn Width="70px">
+                <sfwLabel ID="lblDateTo" Text="Date To: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="width-160">
+                <sfwTextBox ID="txtDateTo" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwEntityField="IdtDateTo" />
+              </sfwColumn>
+              <sfwColumn CssClass="full-width">
+                <sfwButton ID="btnExecuteRefreshFromObject" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Load Charts" sfwObjectID="busBpmProcessBAM" sfwObjectMethod="GetBPMProcessBAM" sfwNavigationParameter="aintProcessId=IintProcessId" sfwMessageId="10026" sfwValidateClientJavascript="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="7">
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Process Trend By Process">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ChartName="Process Trend by Process Id" ShowLegend="true" ChartType="Bar" ID="chrProcessTrendByProcessId" Width="400" Height="500" sfwLegendColCount="2" sfwEntityField="lstBpmBAMProcessTrendByProcessId" sfwGridEntity="entBpmBAMProcessTrend">
+                              <Series>
+                                <sfwSeries Name="Completed" XValueMember="IstrProcessName" YValueMembers="IintCompleted" ChartType="Bar" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Process Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrProcessName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; In Progress :&lt;/td&gt;&lt;td&gt;{IintInProgress}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Completed :&lt;/td&gt;&lt;td&gt;{IintCompleted}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                                <sfwSeries Name="In Progress" ChartType="Bar" XValueMember="IstrProcessName" YValueMembers="IintInProgress" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Process Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrProcessName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; In Progress :&lt;/td&gt;&lt;td&gt;{IintInProgress}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Completed :&lt;/td&gt;&lt;td&gt;{IintCompleted}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea ChartAreaName="ProcessTrendByProcessId">
+                                  <Area3DStyle Enable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                            </sfwChart>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstBpmBAMProcessTrendByProcessId" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_MONTHS]
+    FROM NUMERIC (5, 2) NULL;
+

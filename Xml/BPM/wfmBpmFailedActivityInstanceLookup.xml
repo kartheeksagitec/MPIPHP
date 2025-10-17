@@ -1,0 +1,205 @@
+﻿<form ID="wfmBpmFailedActivityInstanceLookup" sfwType="Lookup" sfwEntity="entBpmActivityInstance" sfwTitle="BPM Failed Activity Instance Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBpmFailedActivityInstanceLookup" sfwResource="20007002">
+  <initialload>
+    <query sfwQueryRef="entBpmActivityInstance.FailedActivityInstances" ID="entBpmActivityInstance" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Search Criteria">
+          <sfwTable ID="Criteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctCriteria">
+                  <Tabs>
+                    <sfwTabSheet ID="tshCriteria" HeaderText="Criteria">
+                      <sfwTable ID="tblCriteria">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capProcessId" Text="Process Name : " AssociatedControlID="ddlProcessName" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList DataTextField="name" DataValueField="process_id" ID="ddlProcessId" AutoPostBack="True" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetProcessesForOnlineInitialization" sfwEntityField="ProcessId" sfwDataField="sa.process_id" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="capProcessInstanceId" Text="Process Instance ID : " AssociatedControlID="txtProcessInstanceId" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtProcessInstanceId" sfwDataField="spi.process_instance_id" sfwDataType="Numeric" />
+                            <sfwImageButton ID="btnRetrieveProcessInstanceId" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmBPMProcessInstanceLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtProcessInstanceId" sfwSelectedIndex="ProcessInstanceId" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capPmiPersonId" Text="MPID : " AssociatedControlID="txtPmiPersonId" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtPmiPersonId" sfwDataField="P.MPI_PERSON_ID" sfwQueryID="entBpmActivityInstance" sfwOperator="like" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="capPmiOrgId" Text="Org ID : " AssociatedControlID="txtPmiOrgId" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtPmiOrgId" sfwDataField="pmi.org_id" sfwQueryID="entBpmActivityInstance" sfwDataType="Numeric" />
+                            <sfwImageButton ID="btnRetrieveOrganization" ImageAlign="AbsMiddle" ImageUrl="~/Images/Lookup.jpg" sfwActiveForm="wfmOrganizationLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtPmiOrgId" sfwSelectedIndex="OrgId" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capActivityInstanceId" Text="Activity Instance ID : " AssociatedControlID="txtActivityInstanceId" sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtActivityInstanceId" sfwDataField="sai.activity_instance_id" sfwQueryID="entBpmActivityInstance" sfwDataType="Numeric" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="capCaseInstanceId" sfwIsCaption="True" Text="Case Instance ID : " />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtCaseInstanceId" sfwDataField="pmi.case_instance_id" sfwQueryID="entBpmActivityInstance" sfwDataType="Numeric" />
+                            <sfwImageButton ID="btnRetrieveCaseInstanceId" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmBpmCaseInstanceLookup" sfwMethodName="btnRetrieve_Click" sfwSelectedIndex="CaseInstanceId" sfwRelatedControl="txtCaseInstanceId" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capStartDateFrom" sfwIsCaption="True" Text="Initiated Date From : " />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtStartDateFrom" sfwQueryID="entBpmActivityInstance" sfwDataField="sai.start_date" sfwOperator="between" sfwRelatedControl="txtStartDateTo" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                            <CompareValidator ID="cmvCompareValidator" Text="*" sfwOperator="DataTypeCheck" ControlToValidate="txtDueDateFrom" Type="Date" ErrorMessage="Due DateFrom must be in mm/dd/yyyy format." />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="capStartDateTo" sfwIsCaption="True" Text="Initiated Date To : " />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtStartDateTo" sfwQueryID="entBpmActivityInstance" sfwDataField="sai.start_date" sfwOperator="between" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                            <CompareValidator ID="cmvCompareValidator1" Text="*" sfwOperator="DataTypeCheck" ControlToValidate="txtDueDateFrom" Type="Date" ErrorMessage="Due DateFrom must be in mm/dd/yyyy format." />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn Visible="False">
+                            <sfwLabel sfwIsCaption="True" ID="capModifiedDateFrom" Text="Modified Date From : " />
+                          </sfwColumn>
+                          <sfwColumn Visible="False">
+                            <sfwTextBox ID="txtModifiedDateFrom" sfwQueryID="entBpmActivityInstance" sfwDataField="sai.modified_date" sfwOperator="between" sfwRelatedControl="txtModifiedDateTo" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                            <CompareValidator ID="valModifiedDateFrom" Text="*" sfwOperator="DataTypeCheck" ControlToValidate="txtModifiedDateFrom" Type="Date" ErrorMessage="Modified DateFrom must be in mm/dd/yyyy format." />
+                          </sfwColumn>
+                          <sfwColumn Visible="False">
+                            <sfwLabel sfwIsCaption="True" ID="capModifiedDateTo" Text="Modified Date To : " />
+                          </sfwColumn>
+                          <sfwColumn Visible="False">
+                            <sfwTextBox ID="txtModifiedDateTo" sfwQueryID="entBpmActivityInstance" sfwDataField="sai.modified_date" sfwOperator="between" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                            <CompareValidator ID="valModifiedDateTo" Text="*" Operator="DataTypeCheck" ControlToValidate="txtModifiedDateTo" Type="Date" ErrorMessage="Modified DateFrom must be in mm/dd/yyyy format." />
+                            <CompareValidator ID="valModifiedDateRange" Text="*" Operator="GreaterThanEqual" ControlToValidate="txtModifiedDateTo" ControlToCompare="txtModifiedDateFrom" ErrorMessage="Modified Date To cannot be less than Modified Date From." Type="Date" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel sfwIsCaption="True" ID="capDueDateFrom" Text="Due Date From : " />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtDueDateFrom" sfwQueryID="entBpmActivityInstance" sfwDataField="sai.due_date" sfwOperator="between" sfwRelatedControl="txtDueDateTo" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                            <CompareValidator ID="valDueDateFrom" Text="*" sfwOperator="DataTypeCheck" ControlToValidate="txtDueDateFrom" Type="Date" ErrorMessage="Due DateFrom must be in mm/dd/yyyy format." />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel sfwIsCaption="True" ID="capDueDateTo" Text="Due Date To : " />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtDueDateTo" sfwQueryID="entBpmActivityInstance" sfwDataField="sai.due_date" sfwOperator="between" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                            <CompareValidator ID="valDueDateTo" Text="*" Operator="DataTypeCheck" ControlToValidate="txtDueDateTo" Type="Date" ErrorMessage="Due DateFrom must be in mm/dd/yyyy format." />
+                            <CompareValidator ID="valDueDateRange" Text="*" Operator="GreaterThanEqual" ControlToValidate="txtDueDateTo" ControlToCompare="txtDueDateFrom" ErrorMessage="Due Date To cannot be less than Due Date From." Type="Date" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                            <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnExecuteServerMethodFromLookupClick" sfwMethodName="btnExecuteServerMethodFromLookup_Click" Text="Resume" sfwObjectMethod="ResumeFailedActivityInstance" sfwRelatedControl="dgrResult" sfwExecuteAfterSuccess="btnSearch" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Activity Instance Id">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Id" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmProcessInstance.objBpmProcess.Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmActivity.Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Instance Id" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ProcessInstanceId" sfwDataType="Numeric" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Bpm Process Id" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmActivity.objBpmProcess.BpmProcessId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Initiated Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" sfwDataType="DateTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Case Instance Id">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objCaseInstance.CaseInstanceId" sfwDataType="Numeric" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Version">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmCase.Version" sfwDataType="Numeric" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+</form>

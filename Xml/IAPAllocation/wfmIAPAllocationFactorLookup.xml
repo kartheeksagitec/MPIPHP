@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmIAPAllocationFactorLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvIAPAllocation" sfwResource="210 " sfwType="Lookup" sfwTitle="IAPAllocation Factor Lookup" version="3.5" sfwEntity="entIapAllocationFactor" sfwGridCollection="busIAPAllocationFactorLookup.iclbIapAllocationFactor">
+  <initialload>
+    <query ID="cdoIapAllocationFactor" sfwQueryRef="entIapAllocationFactor.LookUp" sfwMethodName="LoadIAPAllocationFactors" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPlanYear" ID="capPlanYear" Text="Plan Year : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPlanYear" sfwDataField="plan_year" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoIapAllocationFactor" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmIAPAllocationFactorMaintenance" sfwMethodName="btnNew_Click" sfwSecurityLevel="4" Text="New" sfwToolBarGrid="dgrResult" sfwToolBarGridImage="StaticResources/neoGrid-images/btnNew_Click.png" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmIAPAllocationFactorMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintIapAllocationFactorId=IapAllocationFactorId" sfwRelatedControl="dgrResult" sfwSecurityLevel="4" Text="Open" Visible="False" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" Visible="False" />
+                <sfwButton ID="btnExportToExcelClick" sfwMethodName="btnColumnsToExport_Click" Text="Export To Excel" sfwRelatedControl="dgrResult" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Plan Year">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmIAPAllocationFactorMaintenance" sfwDataField="icdoIapAllocationFactor.plan_year" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintIapAllocationFactorId=IapAllocationFactorId" sfwRelatedControl="dgrResult" sfwDataFormat="{0:d}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Quarter 1">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc1Qf1Factor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Quarter 2">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc1Qf2Factor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Quarter 3">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc1Qf3Factor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 1">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc1Qf4Factor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 2">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc2Factor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 2 Inv">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc2InvstFactor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 2 Frft">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc2FrftFactor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 3">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc3Factor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 4%">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc4Factor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 4 Invst">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc4InvstFactor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 4 Frft">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc4FrftFactor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 5 Affil">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc5AfflFactor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 5 Non-Affil Factor">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc5NonafflFactor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 5 Affil &amp; Non Affil">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Alloc5BothFactor" sfwDataFormat="{0:#0.0000000000000}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation Factor ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IapAllocationFactorId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

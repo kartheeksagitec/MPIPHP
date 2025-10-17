@@ -1,0 +1,222 @@
+﻿<form ID="wfmUserPreferencesMaintenance" sfwResource="207" sfwFormObjectType="FormObject" sfwFormObject="busUserPreferences" sfwType="Maintenance" sfwTitle="User Preferences Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmUserPreferencesLookup" sfwEntity="entUserPreferences">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindUserPreferences" />
+    <callmethods sfwMode="Update" sfwMethodName="FindUserPreferences" />
+    <query />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" sfwNavigationParameter="aintPrimaryKey=UserPreferencesId" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton sfwMethodName="btnOpen_Click" Text="System Preferences" ID="btnOpenSystemPreferences" sfwActiveForm="wfmUserPreferencesMaintenance" sfwNavigationParameter="aintPrimaryKey=IintSystemUserPreferenceId" sfwMode="Update" sfwVisibleRule="Visible Rule - System Settings" sfwActiveFormKey="IintSystemUserPreferenceId" sfwOpenInDialog="True" sfwLaunchWindowWidth="60%" />
+                <sfwButton ID="btnExecuteRefreshFromObjectSystemPreferences" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Use System Preferences" sfwObjectMethod="UseSystemPreferences" sfwVisibleRule="Visible Rule - System Settings" sfwRefreshFromObject="True" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="UserPreferences Details" sfwCaption="User Preferences">
+          <sfwTable ID="tblMain" CssClass="Table user-preference-table">
+            <sfwRow>
+              <sfwColumn HorizontalAlign="Left">
+                <sfwLabel ID="capUseTagList" Text="Use Tag List :" AssociatedControlID="chkUseTagList" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox sfwIsSwitch="True" ID="chkUseTagList" sfwEntityField="UseTagList" CssClass="round" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capUseGridCommonFilterbox" Text="Use Grid Common Filterbox :" AssociatedControlID="chkUseGridCommonFilterbox" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox sfwIsSwitch="True" ID="chkUseGridCommonFilterbox" sfwEntityField="UseGridCommonFilterbox" CssClass="round" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capUseGridToolbar" Text="Use Grid Toolbar :" AssociatedControlID="chkUseGridToolbar" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox sfwIsSwitch="True" ID="chkUseGridToolbar" sfwEntityField="UseGridToolbar" CssClass="round" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capUseGridSettings" Text="Use Grid Settings :" AssociatedControlID="chkUseGridSettings" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox sfwIsSwitch="True" ID="chkUseGridSettings" sfwEntityField="UseGridSettings" CssClass="round" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capUseStoreStateButtons" Text="Use Store State Buttons :" AssociatedControlID="chkUseStoreStateButtons" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox sfwIsSwitch="True" ID="chkUseStoreStateButtons" sfwEntityField="UseStoreStateButtons" CssClass="round" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capPageSize" Text="Page Size :" AssociatedControlID="sldPageSize" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwSlider ID="sldPageSize" sfwDataFormat="{0:999}" sfwDataType="Numeric" sfwMaxValue="100" sfwMinValue="0" sfwStepValue="5" sfwEntityField="PageSize" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFilterButton" Text="Grid Filter Button : " AssociatedControlID="chkFilterButton" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox sfwIsSwitch="True" ID="chkCheckBox" sfwEntityField="FilterButton" CssClass="round" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capInitialPage" Text="Initial Page : " AssociatedControlID="ddlInitialPage" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlInitialPageSiteMap" sfwOperator="=" DataTextField="description" DataValueField="code_value" sfwEntityField="InitialPage" sfwCustomAttributes="SortBy=text;SortOrder=asc" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capUseSystemPreferences" Text="Use System Preferences :" AssociatedControlID="chkUseStoreStateButtons" sfwVisibleRule="Visible Rule - System Settings" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox sfwIsSwitch="True" ID="chkUseSystemPreferences" sfwVisibleRule="Visible Rule - System Settings" sfwEntityField="UseSystemPreferences" CssClass="round" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capAuditInformationOnTop" Text="Audit Information On Top : " AssociatedControlID="chkAuditInformationOnTop" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox sfwIsSwitch="True" ID="chkAuditInformationOnTop" sfwEntityField="AuditInformationOnTop" CssClass="round" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capObHoverToolTipForm" Text="On Hover ToolTip Form : " AssociatedControlID="chkObHoverToolTipForm" sfwIsCaption="True" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox sfwIsSwitch="True" ID="chkObHoverToolTipForm" sfwEntityField="OnHoverToolTipForm" CssClass="round" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capUseViewEditForOpenButton" Text="Use View/Edit For Open :" AssociatedControlID="chkUseViewEditForOpenButton" sfwIsCaption="True" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox sfwIsSwitch="True" ID="chkUseViewEditForOpenButton" sfwEntityField="UseViewEditForOpenButton" CssClass="round" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblSysteUserPreferenceId" CssClass="hideControl" sfwEntityField="IintSystemUserPreferenceId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblUserPreferencesId" CssClass="hideControl" sfwEntityField="UserPreferencesId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capUserCssTheme" Text="User Theme:" AssociatedControlID="ddlUserPrefCssTheme" sfwIsCaption="True" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlUserPrefCssTheme" sfwOperator="=" DataTextField="description" DataValueField="code_value" sfwEntityField="UserTheme" sfwCustomAttributes="SortBy=text;SortOrder=desc" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel" sfwCaption="Page State Details">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwPanel ID="pnlNewPanel1" sfwCollapsible="False" sfwVisibleRule="Visible Rule - IsSystemSettings" CssClass="removeBorderFieldSetPanelBar">
+                  <sfwTable ID="tblNewPage1">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capLstrUsers" Text="User(s): " AssociatedControlID="ddlLstrUsers" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwMultiSelectDropDownList ID="ddlLstrUsers" sfwEntityField="lstrUsers" sfwLoadType="Query" sfwNavigationParameter="Application_Name=~ApplicationName" DataTextField="username" DataValueField="username" sfwLoadSource="entUserPrefPageState.GetUserNames" sfwSearch="True" sfwMaxHeight="200" sfwMinWidth="150" sfwMaxWidth="200" sfwSelectionToDisplay="3" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwButton sfwMethodName="btnExecuteBusinessMethod_Click" Text="Delete By User(s)" ID="btnExecuteRefreshData" sfwObjectMethod="DeleteUserPageStateByUser" />
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnExecuteBusinessMethodSelectRows_Click" Text="Delete" ID="btnExecutePassSelectedRows" sfwObjectMethod="DeleteUserPageState" sfwRelatedControl="grvLstUserPrefPageState" sfwToolBarGridImage="~/StaticResources/neoGrid-images/btnDelete_Click.png" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="grvLstUserPrefPageState" sfwEntityField="lstUserPrefPageState" AllowSorting="True" AllowPaging="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField Visible="False" HeaderText="Page State Id">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UserPrefPageStateId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Form Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FormName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UserName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstUserPrefPageState" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

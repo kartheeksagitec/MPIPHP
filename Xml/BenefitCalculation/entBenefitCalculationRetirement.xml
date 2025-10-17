@@ -1,0 +1,222 @@
+﻿<entity ID="entBenefitCalculationRetirement" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwErrorTable="sgt_benefit_calculation_header_error" sfwParentKey="benefit_calculation_header_id" sfwParentKeyValue="icdoBenefitCalculationHeader.benefit_calculation_header_id" sfwMainCDO="icdoBenefitCalculationHeader" sfwStatusColumn="ERROR_STATUS_VALUE" sfwObjectID="busBenefitCalculationRetirement" sfwParentEntity="entBenefitCalculationHeader">
+  <rules>
+    <rule ID="Visible Rule - IsPopUpToLifeConversion" sfwRuleType="Validation" sfwExpression="this.IsPopUpToLifeConversion() == true" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="objCalculation" />
+    <property ID="lstBenefitCalculationDetail" />
+  </delete>
+  <checklist />
+  <initialload>
+    <item ID="Visible-Plan-MPI-Or-IAP" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible-Plan-Local" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-Mode-Update" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-MPI-Or-IAP-Update-Mode" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-NotApproved-NotCancelled" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-MPI-Update-Mode" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-Not-IAP-Update-Mode-Late" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-MPI-Update-Mode-Not-Late" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-Mode-Update-NotApproved-NotCancelled" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-NotApproved-NotCancelled-NotFinal" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-EstimateCalculations" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-FinalCalculations" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-NotIAP-UpdateMode-LateOrMD" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-MPI-UpdateMode-NotLate-NotMD" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-ForCancelledCalculation" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule- ShowMinDistDateLabel" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule - ShowRetirementDateLabel" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-RetirementTypeLate" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-RetirementTypeNotLate" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-Final_Approve_Calculations" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-FinalOrAdjustment" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-MDandAdjustment" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-FinalCalc" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-MD-NotApproved-NotCancelled-NotFinal" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-MD-EstimateCalculations" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-MD-FinalCalculations" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-LumpSumPayment" sfwMode="All" sfwStatus="Active" />
+    <item ID="EnableRule-OverrideBenefitAmount" sfwStatus="Active" sfwMode="All" />
+    <item ID="VisibleRule-PayeeAccountButton" sfwStatus="Active" sfwMode="All" />
+    <item ID="Visible Rule - IsPopUpToLifeConversion" sfwStatus="Active" sfwMode="All" />
+    <item ID="VisibleRule-NotIAP-UpdateMode-LateOrMD-Local" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror>
+    <item ID="Rule-MessageIfDroStatusIsReceived" sfwMode="All" sfwStatus="Active" />
+  </softerror>
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="BenefitCalculationHeaderId" sfwValue="icdoBenefitCalculationHeader.benefit_calculation_header_id" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintPayeeAccountId" sfwValue="icdoBenefitCalculationHeader.iintPayeeAccountId" />
+    <attribute sfwDataType="string" sfwType="Property" ID="StatusDescription" sfwValue="icdoBenefitCalculationHeader.status_description" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CalculationTypeDescription" sfwValue="icdoBenefitCalculationHeader.calculation_type_description" />
+    <attribute sfwDataType="int" sfwType="Property" ID="BenefitApplicationId" sfwValue="icdoBenefitCalculationHeader.benefit_application_id" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecParticipantFullAge" sfwValue="icdoBenefitCalculationHeader.idecParticipantFullAge" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="Age" sfwValue="icdoBenefitCalculationHeader.age" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CalculationTypeValue" sfwValue="icdoBenefitCalculationHeader.calculation_type_value" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLumpSumPaymentFlag" sfwValue="icdoBenefitCalculationHeader.istrLumpSumPaymentFlag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="BenefitTypeValue" sfwValue="icdoBenefitCalculationHeader.benefit_type_value" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorMPID" sfwValue="icdoBenefitCalculationHeader.istrSurvivorMPID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="BeneficiaryPersonName" sfwValue="icdoBenefitCalculationHeader.beneficiary_person_name" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="BeneficiaryPersonDateOfBirth" sfwValue="icdoBenefitCalculationHeader.beneficiary_person_date_of_birth" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecSurvivorFullAge" sfwValue="icdoBenefitCalculationHeader.idecSurvivorFullAge" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMoreInformation" sfwValue="icdoBenefitCalculationHeader.istrMoreInformation" />
+    <attribute sfwDataType="int" sfwType="Property" ID="BeneficiaryPersonId" sfwValue="icdoBenefitCalculationHeader.beneficiary_person_id" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="RetirementDate" sfwValue="icdoBenefitCalculationHeader.retirement_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoBenefitCalculationHeader.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="BenefitTypeDescription" sfwValue="icdoBenefitCalculationHeader.benefit_type_description" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtNormalRetirementDate" sfwValue="icdoBenefitCalculationHeader.idtNormalRetirementDate" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecOverriddenBenefitAmount" sfwValue="icdoBenefitCalculationHeader.idecOverriddenBenefitAmount" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitCalculationDetail" ID="lstBenefitCalculationDetail" sfwValue="iclbBenefitCalculationDetail" />
+    <attribute sfwType="Collection" sfwEntity="entDisabilityRetireeIncrease" ID="lstDisabilityRetireeIncrease" sfwValue="iclbDisabilityRetireeIncrease" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoBenefitCalculationHeader.created_by" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoBenefitCalculationHeader.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoBenefitCalculationHeader.modified_date" />
+    <attribute ID="objBenefitApplication" sfwType="Object" sfwEntity="entBenefitApplication" sfwValue="ibusBenefitApplication" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintPlanId" sfwValue="icdoBenefitCalculationHeader.iintPlanId" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenType" sfwValue="istrBenType" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantIAPLifeAnnuityBenefitAmt" sfwValue="istrParticipantIAPLifeAnnuityBenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantIAPJSurvivor50BenefitAmt" sfwValue="istrParticipantIAPJSurvivor50BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorIAPJSurvivor50BenefitAmt" sfwValue="istrSurvivorIAPJSurvivor50BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantIAPJSurvivor75BenefitAmt" sfwValue="istrParticipantIAPJSurvivor75BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorIAPJSurvivor75BenefitAmt" sfwValue="istrSurvivorIAPJSurvivor75BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantIAPJSurvivor100BenefitAmt" sfwValue="istrParticipantIAPJSurvivor100BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorIAPJSurvivor100BenefitAmt" sfwValue="istrSurvivorIAPJSurvivor100BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantIAPTenYearBenefitAmt" sfwValue="istrParticipantIAPTenYearBenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantLumpSumBenefitAmt" sfwValue="istrParticipantLumpSumBenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantLumpSumBenefitAmount" sfwValue="istrParticipantLumpSumBenefitAmount" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintLumpSumYearByAge" sfwValue="iintLumpSumYearByAge" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlan" sfwValue="istrPlan" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrCurrentLongDate" sfwValue="istrCurrentLongDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRetirementTypeDescription" sfwValue="icdoBenefitCalculationHeader.istrRetirementTypeDescription" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintTotalQYrs" sfwValue="iintTotalQYrs" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecTotalPenHrs" sfwValue="idecTotalPenHrs" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLifeAnnuityRelativeValue" sfwValue="istrLifeAnnuityRelativeValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantLifeAnnuityBenefitAmt" sfwValue="istrParticipantLifeAnnuityBenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantJSurvivor50BenefitAmt" sfwValue="istrParticipantJSurvivor50BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorJSurvivor50BenefitAmt" sfwValue="istrSurvivorJSurvivor50BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJSPop50RelativeValue" sfwValue="istrJSPop50RelativeValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantJPop50BenefitAmt" sfwValue="istrParticipantJPop50BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantIAPJPop50BenefitAmt" sfwValue="istrParticipantIAPJPop50BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorJPop50BenefitAmt" sfwValue="istrSurvivorJPop50BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorIAPJPop50BenefitAmt" sfwValue="istrSurvivorIAPJPop50BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJS75RelativeValue" sfwValue="istrJS75RelativeValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantJSurvivor75BenefitAmt" sfwValue="istrParticipantJSurvivor75BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorJSurvivor75BenefitAmt" sfwValue="istrSurvivorJSurvivor75BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJS100RelativeValue" sfwValue="istrJS100RelativeValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantJSurvivor100BenefitAmt" sfwValue="istrParticipantJSurvivor100BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorJSurvivor100BenefitAmt" sfwValue="istrSurvivorJSurvivor100BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJS100PopRelativeValue" sfwValue="istrJS100PopRelativeValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantJPopup100BenefitAmt" sfwValue="istrParticipantJPopup100BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantIAPJPopup100BenefitAmt" sfwValue="istrParticipantIAPJPopup100BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrTenCertainRelativeValue" sfwValue="istrTenCertainRelativeValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantTenYearBenefitAmt" sfwValue="istrParticipantTenYearBenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorJPopup100BenefitAmt" sfwValue="istrSurvivorJPopup100BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorIAPJPopup100BenefitAmt" sfwValue="istrSurvivorIAPJPopup100BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantLifeAnnuityBenefitAmtForPOPUP" sfwValue="istrParticipantLifeAnnuityBenefitAmtForPOPUP" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantIAPLifeAnnuityBenefitAmtForPOPUP" sfwValue="istrParticipantIAPLifeAnnuityBenefitAmtForPOPUP" />
+    <attribute ID="objBeneficiary" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusBeneficiary" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintLumpSumYear" sfwValue="iintLumpSumYear" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintYear" sfwValue="iintYear" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IntHealthYearCount" sfwValue="intHealthYearCount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IntTotalHours" sfwValue="intTotalHours" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IntHealthHours" sfwValue="intHealthHours" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSingleParticipantTenYearBenefitAmt" sfwValue="istrSingleParticipantTenYearBenefitAmt" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecSpecialYear" sfwValue="idecSpecialYear" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtCrntDate" sfwValue="idtCrntDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrFiveYearRelativeValue" sfwValue="istrFiveYearRelativeValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantFiveYearBenefitAmt" sfwValue="istrParticipantFiveYearBenefitAmt" />
+    <attribute sfwDataType="boolean" sfwType="Property" ID="IblnNoBeneficiaryExists" sfwValue="iblnNoBeneficiaryExists" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipant3YearBenefitAmt" sfwValue="istrParticipant3YearBenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantTwoYearBenefitAmt" sfwValue="istrParticipantTwoYearBenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrTwoCertainRelativeValue" sfwValue="istrTwoCertainRelativeValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantJSurvivor662by3BenefitAmt" sfwValue="istrParticipantJSurvivor66_2by3BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorJSurvivor662by3BenefitAmt" sfwValue="istrSurvivorJSurvivor66_2by3BenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrJS662by3RelativeValue" sfwValue="istrJS66_2by3RelativeValue" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintParticipantAge" sfwValue="iintParticipantAge" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintSpouseAge" sfwValue="iintSpouseAge" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintTotalHealthYrs" sfwValue="iintTotalHealthYrs" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecTotalCreditHrs" sfwValue="idecTotalCreditHrs" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecTotalHealthHrs" sfwValue="idecTotalHealthHrs" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecAcrdBenefitLocal" sfwValue="idecAcrdBenefitLocal" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecEEContriAmt" sfwValue="idecEEContriAmt" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecUVHPContriAmt" sfwValue="idecUVHPContriAmt" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecEEIntAmt" sfwValue="idecEEIntAmt" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecUVHPIntAmt" sfwValue="idecUVHPIntAmt" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecTotalEEAmt" sfwValue="idecTotalEEAmt" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecTotalUVHPAmt" sfwValue="idecTotalUVHPAmt" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecLocal161SPABalanceAmt" sfwValue="idecLocal161SPABalanceAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrQDROffset" sfwValue="istrQDROffset" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtLastWorkingDate" sfwValue="idtLastWorkingDate" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecQDROffsetMPI" sfwValue="idecQDROffsetMPI" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecQDROffsetIAP" sfwValue="idecQDROffsetIAP" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsQDROffsetMPI" sfwValue="istrIsQDROffsetMPI" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsQDROffsetIAP" sfwValue="istrIsQDROffsetIAP" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitCalculationOptions" ID="lstbusBenefitCalculationOptions" sfwValue="iclbbusBenefitCalculationOptions" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecLocal52SPABalanceAmt" sfwValue="idecLocal52SPABalanceAmt" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecIAPBalanceAmt" sfwValue="idecIAPBalanceAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitOptionValue" sfwValue="istrBenefitOptionValue" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecAccntBalance" sfwValue="idecAccntBalance" />
+    <attribute sfwType="Object" sfwEntity="entRetirementApplication" sfwValue="ibusRetirementApplication" ID="objRetirementApplication" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSurvivorFullName" sfwValue="istrSurvivorFullName" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecParticipantLumpSumBenefitAmount" sfwValue="idecParticipantLumpSumBenefitAmount" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantMPIID" sfwValue="istrParticipantMPIID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrCurrentDate" sfwValue="istrCurrentDate" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecParticipantLumpSumBenefitAmt" sfwValue="idecParticipantLumpSumBenefitAmt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlanLocal" sfwValue="istrPlanLocal" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsLocal52" sfwValue="istrIsLocal52" />
+    <attribute sfwType="Object" sfwEntity="entBenefitCalculationRetirement" sfwValue="ibusBenefitCalculationRetirement" ID="objBenefitCalculationRetirement" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrVestedHours" sfwValue="istrVestedHours" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtCutoffEnddate" sfwValue="idtCutoffEnddate" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintPlanYear" sfwValue="iintPlanYear" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMDOptionDueDt" sfwValue="istrMDOptionDueDt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantUVHP" sfwValue="istrParticipantUVHP" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IintIAPAsOfDate" sfwValue="iintIAPAsOfDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrUVHPLIFE" sfwValue="istrUVHPLIFE" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecEmployeeContributionBalance" sfwValue="idecEmployeeContributionBalance" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrEEAsOfDate" sfwValue="istrEEAsOfDate" />
+    <attribute sfwDataType="boolean" sfwType="Property" ID="IblnIsParticipant" sfwValue="iblnIsParticipant" />
+    <attribute ID="objAlternatePayee" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusAlternatePayee" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsUSA" sfwValue="istrIsUSA" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecAcrdBenefitMPI" sfwValue="idecAcrdBenefitMPI" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSixtyDaysPriorDate" sfwValue="istrSixtyDaysPriorDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRetirementDt" sfwValue="istrRetirementDt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPreFix" sfwValue="icdoPerson.istrPreFix" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMinDistriDate" sfwValue="istrMinDistriDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="Istr72MinDistriDate" sfwValue="istr72MinDistriDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMarchDt" sfwValue="istrMarchDt" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenefitOption" sfwValue="istrBenefitOption" />
+    <attribute sfwDataType="string" sfwType="Property" ID="MaritalStatusDescription" sfwValue="icdoPerson.marital_status_description" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsVested" sfwValue="istrIsVested" />
+    <attribute sfwType="Object" sfwEntity="entCalculation" sfwValue="ibusCalculation" ID="objCalculation" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IintSpousePersonId" sfwValue="iintSpousePersonId" />
+    <attribute ID="IstrOrgAddress" sfwDataType="string" sfwPrivate="False" sfwValue="istrOrgAddress" sfwType="Property" />
+    <attribute ID="IstrOrgCity" sfwDataType="string" sfwPrivate="False" sfwValue="istrOrgCity" sfwType="Property" />
+    <attribute ID="IstrOrgState" sfwDataType="string" sfwPrivate="False" sfwValue="istrOrgState" sfwType="Property" />
+    <attribute ID="IntOrgZip" sfwDataType="int" sfwPrivate="False" sfwValue="intOrgZip" sfwType="Property" />
+    <attribute ID="IstrOrgName" sfwDataType="string" sfwPrivate="False" sfwValue="istrOrgName" sfwType="Property" />
+    <attribute ID="IstrOrgMpId" sfwDataType="string" sfwPrivate="False" sfwValue="istrOrgMpId" sfwType="Property" />
+    <attribute ID="IstrOrgAddress2" sfwDataType="string" sfwPrivate="False" sfwValue="istrOrgAddress2" sfwType="Property" />
+    <attribute ID="IstrBenefitOptionValueData" sfwDataType="int" sfwPrivate="False" sfwValue="istrBenefitOptionValueData" sfwType="Property" />
+    <attribute ID="PopUpToLife" sfwDataType="bool" sfwPrivate="False" sfwValue="icdoBenefitCalculationHeader.iblnPopUpToLife" sfwType="Property" />
+	<attribute sfwDataType="boolean" sfwType="Property" ID="IblnIAPFactor" sfwValue="iblnIAPFactor" />
+  </attributes>
+  <objectmethods>
+    <method ID="btn_RefreshCalculation" sfwReturnType="ArrayList" />
+    <method ID="btn_ApproveCalculation" sfwReturnType="ArrayList" />
+    <method ID="btn_CancelCalculation" sfwReturnType="ArrayList" />
+    <method ID="OverrideBenefitAmount" sfwReturnType="ArrayList" />
+    <method ID="LumpSumPayment" sfwReturnType="ArrayList" />
+  </objectmethods>
+  <queries />
+  <methods />
+  <lifecycle />
+  <ExtraFields />
+</entity>

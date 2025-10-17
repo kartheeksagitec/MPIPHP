@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmFilesLookup" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="401 " sfwType="Lookup" sfwTitle="File Type Lookup" sfwMaxCount="100" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Batch Overview=Batch Overview.htm;Create File Type=Create File Type.htm;Update File Type=Update File Type.htm;Delete File Type=Delete File Type.htm" sfwEntity="entFile" sfwGridCollection="busFileLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoFile" sfwQueryRef="entFile.Lookup" sfwMethodName="LoadFiles" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFileID" Text="File ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbFileId" sfwDataField="file_id" sfwQueryID="cdoFile" Width="250px" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDescription" Text="Description : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbDescription" sfwDataField="description" sfwQueryID="cdoFile" Width="250px" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFileType" Text="File Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwRadioButtonList ID="idInboundOutboundFlag" RepeatDirection="Horizontal" sfwDataField="inbound_outbound_flag" sfwQueryID="cdoFile" sfwLoadType="Items">
+                  <ListItem Text="All" Selected="True" />
+                  <ListItem Text="Inbound" Value="I" />
+                  <ListItem Text="Outbound" Value="O" />
+                </sfwRadioButtonList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Result">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmFilesMaintenance" sfwMethodName="btnNew_Click" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmFilesMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintFileId=FileId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwNavigationParameter="FileId" sfwRelatedControl="dgrResult" Text="Delete" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" PageSize="50" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="File ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="FileId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="File Type">
+                      <ItemTemplate>
+                        <sfwRadioButtonList RepeatDirection="Horizontal" sfwTwoWayBinding="False" sfwLoadType="Items" sfwEntityField="InboundOutboundFlag">
+                          <ListItem Text="Inbound" Value="I" />
+                          <ListItem Text="Outbound" Value="O" />
+                        </sfwRadioButtonList>
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FileStatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Delimiter">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DelimitedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Transaction Code Position">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TransactionCodePos" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Transaction Code Value">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TransactionCodeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Layout File">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="XmlLayoutFile" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mailbox Path">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MailboxPathCode" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Staging Path">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StagingPathCode" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Update Seq" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UpdateSeq" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Path Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ProcessPathCode" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Error Path Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ErrorPathCode" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

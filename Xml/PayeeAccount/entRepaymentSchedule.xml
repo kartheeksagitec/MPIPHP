@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entRepaymentSchedule" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoRepaymentSchedule" sfwObjectID="busRepaymentSchedule" sfwTableName="sgt_repayment_schedule" sfwView="False" sfwDataObjectID="doRepaymentSchedule">
+  <rules>
+    <rule ID="ReadonlyRule-NextDueAmount" sfwExpression="(this.icdoRepaymentSchedule.repayment_type_value == &quot;PERC&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-AddButton" sfwExpression="(this.icdoRepaymentSchedule.reimbursement_status_value == &quot;INPR&quot;) || &#xA;(this.icdoRepaymentSchedule.reimbursement_status_value == &quot;PEND&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-SaveButton" sfwExpression="!(this.icdoRepaymentSchedule.reimbursement_status_value == &quot;CNLD&quot;) &amp;&amp; &#xA;!(this.icdoRepaymentSchedule.reimbursement_status_value == &quot;CMPL&quot;)" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="lstReimbursementDetails" sfwMethodName="LoadReimbursementDetails" />
+  </delete>
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-AddButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="ReadonlyRule-NextDueAmount" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-SaveButton" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="LoadReimbursementDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_REIMBURSEMENT_DETAILS WHERE REPAYMENT_SCHEDULE_ID = @REPAYMENT_SCHEDULE_ID">
+      <parameters>
+        <parameter ID="@REPAYMENT_SCHEDULE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CalculateNextAmountDueByPercentage" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select ((SUM(temp.AMOUNT) / 100) * @FLAT_PERCENTAGE) from &#xD;&#xA;(&#xD;&#xA;SELECT SUM(SPAPIT.AMOUNT) as AMOUNT FROM SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE SPAPIT&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE SPIT &#xD;&#xA;ON SPAPIT.PAYMENT_ITEM_TYPE_ID = SPIT.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;WHERE SPAPIT.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID  and SPAPIT.START_DATE &lt;= @PAYMENTDATE AND &#xD;&#xA;(SPAPIT.END_DATE IS NULL OR SPAPIT.END_DATE &gt;= @PAYMENTDATE) AND &#xD;&#xA;( (SPIT.ITEM_TYPE_DIRECTION = 1 AND SPIT.BASE_AMOUNT_FLAG = 'Y')&#xD;&#xA; OR SPIT.ITEM_TYPE_CODE IN ('ITEM21','ITEM22','ITEM48'))&#xD;&#xA;) AS temp ">
+      <parameters>
+        <parameter ID="@FLAT_PERCENTAGE" sfwDataType="decimal" />
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="UpdateRepaymentAndPaymentItemType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA;&#xD;&#xA;DECLARE @PAYMENT_ITEM_TYPE_ID INT&#xD;&#xA;SET @PAYMENT_ITEM_TYPE_ID=(SELECT PAYMENT_ITEM_TYPE_ID &#xD;&#xA;FROM SGT_PAYMENT_ITEM_TYPE WHERE ITEM_TYPE_CODE='ITEM53')&#xD;&#xA;&#xD;&#xA;------------------------------UPDATE SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE FOR FINAL PAYMENT&#xD;&#xA;--GETTING THE RECOVERIES SATISFYING THE CONDITION&#xD;&#xA;SELECT &#xD;&#xA; PAYEE_ACCOUNT_ID ,&#xD;&#xA; @PAYMENT_ITEM_TYPE_ID AS PAYMENT_ITEM_TYPE_ID,&#xD;&#xA; NULL AS ACCOUNT_NUMBER,      &#xD;&#xA; NULL VENDOR_ORG_ID,&#xD;&#xA; AMOUNT,&#xD;&#xA; DATEADD(M,1,@PAYMENTDATE) AS START_DATE,              &#xD;&#xA; NULL AS END_DATE,  &#xD;&#xA; 'OPUS Batch' AS CREATED_BY,&#xD;&#xA; GETDATE() AS CREATED_DATE,&#xD;&#xA; 'OPUS Batch' AS MODIFIED_BY,&#xD;&#xA; GETDATE() AS MODIFIED_DATE,&#xD;&#xA; 0 AS UPDATE_SEQ &#xD;&#xA;INTO #TEMPPAPIT&#xD;&#xA;FROM&#xD;&#xA; (SELECT R.PAYEE_ACCOUNT_ID,SUM(R.NEXT_AMOUNT_DUE - (R.REIMBURSEMENT_AMOUNT - PH.AMOUNT_PAID)) AS AMOUNT&#xD;&#xA; FROM SGT_REPAYMENT_SCHEDULE  R&#xD;&#xA; INNER JOIN   &#xD;&#xA;    (SELECT REPAYMENT_SCHEDULE_ID, SUM(GROSS_AMOUNT) AS AMOUNT_PAID &#xD;&#xA;    FROM SGT_REIMBURSEMENT_DETAILS&#xD;&#xA;    GROUP BY REPAYMENT_SCHEDULE_ID)PH ON R.REPAYMENT_SCHEDULE_ID = PH.REPAYMENT_SCHEDULE_ID&#xD;&#xA; INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHH ON PHH.PAYEE_ACCOUNT_ID=R.PAYEE_ACCOUNT_ID&#xD;&#xA; INNER JOIN TEMP_TABLE_FOR_PAYMENT PAYEE ON PAYEE.PAYEE_ACCOUNT_ID=R.PAYEE_ACCOUNT_ID  &#xD;&#xA; WHERE PHH.PAYMENT_SCHEDULE_ID=@PAYMENTSCHEDULEID &#xD;&#xA;  AND R.PAYMENT_OPTION_VALUE = 'PBEN'&#xD;&#xA;  AND R.REIMBURSEMENT_STATUS_VALUE IN ('PEND','INPR') &#xD;&#xA;  AND (R.REIMBURSEMENT_AMOUNT - PH.AMOUNT_PAID) &lt; R.NEXT_AMOUNT_DUE&#xD;&#xA;  AND ISNULL(PAYEE.REISSUE_ITEM_FLAG,'N')&lt;&gt;'Y'&#xD;&#xA; GROUP BY R.PAYEE_ACCOUNT_ID&#xD;&#xA; )TEMP&#xD;&#xA;  &#xD;&#xA;--CREATING TEMP TABLE WITH UPDATED AMOUNT&#xD;&#xA;SELECT A.PAYEE_ACCOUNT_ID,&#xD;&#xA;  A.PAYMENT_ITEM_TYPE_ID,  &#xD;&#xA;  A.ACCOUNT_NUMBER,&#xD;&#xA;  A.VENDOR_ORG_ID,&#xD;&#xA;  (PAPIT.AMOUNT - A.AMOUNT) AS AMOUNT,  &#xD;&#xA;  A.[START_DATE],&#xD;&#xA;  A.END_DATE,&#xD;&#xA;  A.CREATED_BY,&#xD;&#xA;  A.CREATED_DATE,  &#xD;&#xA;  A.MODIFIED_BY,&#xD;&#xA;  A.MODIFIED_DATE,&#xD;&#xA;  A.UPDATE_SEQ INTO #FINAL&#xD;&#xA;FROM #TEMPPAPIT A&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE PAPIT  &#xD;&#xA; ON PAPIT.PAYMENT_ITEM_TYPE_ID=A.PAYMENT_ITEM_TYPE_ID AND A.PAYEE_ACCOUNT_ID = PAPIT.PAYEE_ACCOUNT_ID AND PAPIT.END_DATE IS NULL&#xD;&#xA; &#xD;&#xA;--END DATING OLD RECORD&#xD;&#xA;UPDATE PAPIT&#xD;&#xA;SET PAPIT.END_DATE=DATEADD(D,-1,DATEADD(M,1,@PAYMENTDATE)),&#xD;&#xA;    PAPIT.MODIFIED_DATE=GETDATE(),    &#xD;&#xA; PAPIT.MODIFIED_BY='OPUS Batch',&#xD;&#xA;    PAPIT.UPDATE_SEQ=PAPIT.UPDATE_SEQ+1&#xD;&#xA;FROM #TEMPPAPIT A&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE PAPIT&#xD;&#xA; ON PAPIT.PAYMENT_ITEM_TYPE_ID=A.PAYMENT_ITEM_TYPE_ID AND A.PAYEE_ACCOUNT_ID = PAPIT.PAYEE_ACCOUNT_ID AND PAPIT.END_DATE IS NULL&#xD;&#xA;&#xD;&#xA;--CREATING NEW RECORDS&#xD;&#xA;INSERT INTO SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE &#xD;&#xA;(PAYEE_ACCOUNT_ID, PAYMENT_ITEM_TYPE_ID, ACCOUNT_NUMBER, VENDOR_ORG_ID,AMOUNT,START_DATE,END_DATE,CREATED_BY, &#xD;&#xA;CREATED_DATE, MODIFIED_BY, MODIFIED_DATE, UPDATE_SEQ)&#xD;&#xA;SELECT * FROM #FINAL WHERE AMOUNT &gt; 0&#xD;&#xA;&#xD;&#xA;DROP TABLE #TEMPPAPIT&#xD;&#xA;DROP TABLE #FINAL&#xD;&#xA;&#xD;&#xA;------------------------------UPDATE SGT_REPAYMENT_SCHEDULE FOR NEXT PAYMENT&#xD;&#xA;UPDATE SRS&#xD;&#xA;SET  SRS.NEXT_AMOUNT_DUE =  (CASE WHEN SRS.NEXT_AMOUNT_DUE &gt; SRS.REIMBURSEMENT_AMOUNT - TOTAL_AMOUNT &#xD;&#xA; THEN SRS.REIMBURSEMENT_AMOUNT - TOTAL_AMOUNT ELSE SRS.NEXT_AMOUNT_DUE END),&#xD;&#xA; SRS.REIMBURSEMENT_STATUS_VALUE = (CASE WHEN TOTAL_AMOUNT &gt;= SRS.REIMBURSEMENT_AMOUNT&#xD;&#xA; THEN 'CMPL' ELSE 'INPR' END),&#xD;&#xA; SRS.REIMBURSEMENT_AMOUNT_PAID = TOTAL_AMOUNT,&#xD;&#xA; SRS.MODIFIED_BY= 'OPUS Batch', SRS.MODIFIED_DATE = getdate(),SRS.UPDATE_SEQ += 1&#xD;&#xA;FROM SGT_REPAYMENT_SCHEDULE SRS &#xD;&#xA;INNER JOIN  SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE  PAPIT WITH(NOLOCK) &#xD;&#xA; ON  SRS.PAYEE_ACCOUNT_ID=PAPIT.PAYEE_ACCOUNT_ID AND PAPIT.PAYMENT_ITEM_TYPE_ID = @PAYMENT_ITEM_TYPE_ID&#xD;&#xA;INNER JOIN (SELECT REPAYMENT_SCHEDULE_ID,SUM(GROSS_AMOUNT) AS TOTAL_AMOUNT&#xD;&#xA;   FROM SGT_REIMBURSEMENT_DETAILS&#xD;&#xA;   GROUP BY REPAYMENT_SCHEDULE_ID) REIM&#xD;&#xA; ON  REIM.REPAYMENT_SCHEDULE_ID = SRS.REPAYMENT_SCHEDULE_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHH&#xD;&#xA; ON  PHH.PAYEE_ACCOUNT_ID = SRS.PAYEE_ACCOUNT_ID AND PHH.PAYMENT_SCHEDULE_ID = @PAYMENTSCHEDULEID&#xD;&#xA;WHERE SRS.PAYMENT_OPTION_VALUE = 'PBEN'&#xD;&#xA; AND SRS.REIMBURSEMENT_STATUS_VALUE IN ('PEND','INPR')&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+        <parameter ID="@PAYMENTSCHEDULEID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CreateReimbursementDetail" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA;INSERT INTO SGT_REIMBURSEMENT_DETAILS&#xD;&#xA;SELECT SRS.REPAYMENT_SCHEDULE_ID,PHH.PAYMENT_DATE,NULL,SRS.NEXT_AMOUNT_DUE,7051,'PNCK','OPUS Batch',GETDATE(),'OPUS Batch',GETDATE(),0,&#xD;&#xA;  SRS.NEXT_AMOUNT_DUE,NULL,NULL&#xD;&#xA;FROM SGT_REPAYMENT_SCHEDULE SRS&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHH ON SRS.PAYEE_ACCOUNT_ID = PHH.PAYEE_ACCOUNT_ID AND PHH.PAYMENT_SCHEDULE_ID = @PAYMENTSCHEDULEID&#xD;&#xA;INNER JOIN TEMP_TABLE_FOR_PAYMENT PAYEE ON PAYEE.PAYEE_ACCOUNT_ID=SRS.PAYEE_ACCOUNT_ID  &#xD;&#xA;WHERE SRS.PAYMENT_OPTION_VALUE = 'PBEN'&#xD;&#xA; AND SRS.REIMBURSEMENT_STATUS_VALUE IN ('PEND','INPR') &#xD;&#xA; AND SRS.NEXT_AMOUNT_DUE &gt; 0&#xD;&#xA; AND ISNULL(PAYEE.REISSUE_ITEM_FLAG,'N')&lt;&gt;'Y'">
+      <parameters>
+        <parameter ID="@PAYMENTSCHEDULEID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitAmount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SUM(SPAPIT.AMOUNT) AS BENEFIT_AMOUNT FROM SGT_PAYEE_ACCOUNT SPA&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE SPAPIT&#xD;&#xA;ON SPAPIT.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE SPIT&#xD;&#xA;ON SPAPIT.PAYMENT_ITEM_TYPE_ID = SPIT.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;WHERE SPIT.ITEM_TYPE_DIRECTION =  1 AND SPA.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID&#xD;&#xA;AND SPAPIT.START_DATE &lt;= @PAYMENTDATE AND &#xD;&#xA;(SPAPIT.END_DATE IS NULL OR SPAPIT.END_DATE &gt;= @PAYMENTDATE)&#xD;&#xA;AND SPIT.ITEM_TYPE_CODE not in (SELECT TO_ITEM_TYPE from SGT_RETRO_ITEM_TYPE)&#xD;&#xA;&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetNetBenefitAmount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SUM(SPAPIT.AMOUNT*SPIT.ITEM_TYPE_DIRECTION) AS BENEFIT_AMOUNT FROM SGT_PAYEE_ACCOUNT SPA&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE SPAPIT&#xD;&#xA;ON SPAPIT.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE SPIT&#xD;&#xA;ON SPAPIT.PAYMENT_ITEM_TYPE_ID = SPIT.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;WHERE SPA.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID&#xD;&#xA;AND SPAPIT.START_DATE &lt;= @PAYMENTDATE AND &#xD;&#xA;(SPAPIT.END_DATE IS NULL OR SPAPIT.END_DATE &gt;= @PAYMENTDATE)&#xD;&#xA;AND SPIT.ITEM_TYPE_CODE &lt;&gt; 'ITEM53'  AND SPIT.PAYMENT_ITEM_TYPE_ID IN (1,2,21,22,7,8) --PIR 1035">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetNextAmountDue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SRS.NEXT_AMOUNT_DUE FROM SGT_REPAYMENT_SCHEDULE SRS&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_RETRO_PAYMENT SPARP&#xD;&#xA;ON SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;WHERE SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = @PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;AND SRS.REIMBURSEMENT_STATUS_VALUE &lt;&gt; 'CMPL'">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_RETRO_PAYMENT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetGrossBenefitFromPercentage" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT ISNULL((SUM(SPAPIT.AMOUNT) / 100) * @FLAT_PERC , 0) AS BENEFIT_AMOUNT FROM SGT_PAYEE_ACCOUNT SPA&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE SPAPIT&#xD;&#xA;ON SPAPIT.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE SPIT&#xD;&#xA;ON SPAPIT.PAYMENT_ITEM_TYPE_ID = SPIT.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;WHERE SPIT.ITEM_TYPE_DIRECTION =  1 &#xD;&#xA;AND SPIT.PAYMENT_ITEM_TYPE_ID IN (1,2,21,22)&#xD;&#xA;AND SPA.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID&#xD;&#xA;AND SPAPIT.START_DATE &lt;= @PAYMENTDATE AND &#xD;&#xA;(SPAPIT.END_DATE IS NULL OR SPAPIT.END_DATE &gt;= @PAYMENTDATE)">
+      <parameters>
+        <parameter ID="@FLAT_PERC" sfwDataType="decimal" />
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetExistingRepaymentSchedule" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SRS.* FROM SGT_REPAYMENT_SCHEDULE SRS&#xD;&#xA;WHERE SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = @PAYEE_ACCOUNT_RETRO_PAYMENT_ID">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_RETRO_PAYMENT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetYear1099RBatchRan" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP(1)YEAR FROM SGT_YEAR_END_PROCESS_REQUEST WHERE YEAR_END_PROCESS_VALUE = 'A99R' AND STATUS_VALUE = 'CMPL'&#xD;&#xA;ORDER BY YEAR DESC">
+      <parameters />
+    </query>
+    <query ID="LoadAllRepaymentSchedules" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_REPAYMENT_SCHEDULE where PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAmountRepaidFromReimbursementDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT SRD.* FROM SGT_REPAYMENT_SCHEDULE SRS&#xD;&#xA;INNER JOIN SGT_REIMBURSEMENT_DETAILS SRD&#xD;&#xA;ON SRS.REPAYMENT_SCHEDULE_ID = SRD.REPAYMENT_SCHEDULE_ID&#xD;&#xA;WHERE SRS.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID AND &#xD;&#xA;SRD.POSTED_DATE &gt;= @EFFECTIVE_START_DATE &#xD;&#xA;AND SRD.POSTED_DATE &lt;= @EFFECTIVE_END_DATE&#xD;&#xA;AND (SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = 0&#xD;&#xA; OR SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID IS NULL)">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@EFFECTIVE_START_DATE" sfwDataType="DateTime" />
+        <parameter ID="@EFFECTIVE_END_DATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetLatestAmountNEstEndDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select NEXT_AMOUNT_DUE,ESTIMATED_END_DATE from SGT_REPAYMENT_SCHEDULE &#xD;&#xA;where PAYEE_ACCOUNT_ID=@PAYEE_ACCOUNT_ID ORDER BY EFFECTIVE_DATE DESC">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPayeeBeneficiaryCount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT ISNULL(COUNT(1),0) AS PAYEEBENEFICIARYCOUNT from  SGT_PERSON_ACCOUNT_BENEFICIARY PAC &#xD;&#xA;  INNER JOIN SGT_RELATIONSHIP SR ON PAC.PERSON_RELATIONSHIP_ID = SR.PERSON_RELATIONSHIP_ID&#xD;&#xA;  INNER JOIN SGT_PERSON_ACCOUNT pc on  pac.PERSON_ACCOUNT_ID  =  PC.PERSON_ACCOUNT_ID&#xD;&#xA;  WHERE SR.BENEFICIARY_PERSON_ID IS NOT NULL AND PAC.BENEFICIARY_TYPE_VALUE = 'PRIM' AND PC.PLAN_ID NOT IN (1,9)&#xD;&#xA;   AND SR.PERSON_ID = @PERSON_ID&#xD;&#xA;   and PC.PLAN_ID = @PLAN_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="repayment_schedule_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RepaymentScheduleId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="payee_account_retro_payment_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PayeeAccountRetroPaymentId" sfwIsSequence="False" sfwCaption="Payee Account Retro Payment Id" />
+    <attribute sfwValue="reimbursement_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="ReimbursementAmount" sfwIsSequence="False" sfwCaption="Reimbursement Amount" />
+    <attribute sfwType="Description" ID="ReimbursementStatusDescription" sfwCaption="Reimbursement Status" sfwValue="reimbursement_status_description" />
+    <attribute sfwValue="reimbursement_status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ReimbursementStatusId" sfwCodeID="7044" sfwIsSequence="False" sfwCaption="Reimbursement Status" />
+    <attribute sfwValue="reimbursement_status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ReimbursementStatusValue" sfwIsSequence="False" sfwCaption="Reimbursement Status" />
+    <attribute sfwType="Description" ID="RepaymentTypeDescription" sfwCaption="Repayment Type" sfwValue="repayment_type_description" />
+    <attribute sfwValue="repayment_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RepaymentTypeId" sfwCodeID="7045" sfwIsSequence="False" sfwCaption="Repayment Type" />
+    <attribute sfwValue="repayment_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="RepaymentTypeValue" sfwIsSequence="False" sfwCaption="Repayment Type" />
+    <attribute sfwType="Description" ID="PaymentOptionDescription" sfwCaption="Payment Option" sfwValue="payment_option_description" />
+    <attribute sfwValue="payment_option_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PaymentOptionId" sfwCodeID="7046" sfwIsSequence="False" sfwCaption="Payment Option" />
+    <attribute sfwValue="payment_option_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="PaymentOptionValue" sfwIsSequence="False" sfwCaption="Payment Option" />
+    <attribute sfwValue="next_amount_due" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="NextAmountDue" sfwIsSequence="False" sfwCaption="Next Amount Due" />
+    <attribute sfwValue="reimbursement_amount_paid" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="ReimbursementAmountPaid" sfwIsSequence="False" sfwCaption="Reimbursement Amount Paid" />
+    <attribute sfwValue="estimated_end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EstimatedEndDate" sfwIsSequence="False" sfwCaption="Estimated End Date" />
+    <attribute sfwValue="payee_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PayeeAccountId" sfwIsSequence="False" sfwCaption="Payee Account Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="flat_percentage" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="FlatPercentage" sfwIsSequence="False" sfwCaption="Flat Percentage" />
+    <attribute sfwValue="effective_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveDate" sfwIsSequence="False" sfwCaption="Effective Date" />
+    <attribute sfwValue="original_reimbursement_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="OriginalReimbursementAmount" sfwIsSequence="False" sfwCaption="Original Reimbursement Amount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecRemainingOverPaymentAmount" sfwValue="icdoRepaymentSchedule.idecRemainingOverPaymentAmount" />
+    <attribute ID="objPayeeAccountRetroPayment" sfwType="Object" sfwEntity="entPayeeAccountRetroPayment" sfwValue="ibusPayeeAccountRetroPayment" />
+    <attribute sfwType="Collection" sfwEntity="entReimbursementDetails" ID="lstReimbursementDetails" sfwValue="iclbReimbursementDetails" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlan" sfwValue="istrPlan" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLastBenefitPaymentDate" sfwValue="istrLastBenefitPaymentDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrEffectiveDate" sfwValue="istrEffectiveDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrFlatPercentage" sfwValue="istrFlatPercentage" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecMonthlyBeneiftAmount" sfwValue="idecMonthlyBeneiftAmount" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrEstimateEndDate" sfwValue="istrEstimateEndDate" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintSuspendibleMonth" sfwValue="iintSuspendibleMonth" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecReimbersmentAmount" sfwValue="idecReimbersmentAmount" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecNextAmtDue" sfwValue="idecNextAmtDue" />
+  </attributes>
+  <objectmethods>
+    <method ID="btn_DeleteReimbursementDetailClick" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintReimbursementDetailID" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="LoadReimbursementDetails" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

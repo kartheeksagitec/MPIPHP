@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entRate" sfwTableName="sgt_rate" sfwView="False" sfwDataObjectID="doRate">
+  <queries>
+    <query ID="LoadNewRateByEffectiveDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select top(1)* from SGT_RATE WITH(NOLOCK) where EMPLOYER_CODE = @EMPLOYER_CODE&#xD;&#xA; and UNION_CODE = @UNION_CODE and EFFECTIVE_DATE &lt;= @EFFECTIVE_DATE&#xD;&#xA;order by EFFECTIVE_DATE desc">
+      <parameters>
+        <parameter ID="@EMPLOYER_CODE" sfwDataType="string" />
+        <parameter ID="@UNION_CODE" sfwDataType="string" />
+        <parameter ID="@EFFECTIVE_DATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="rate_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RateId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwType="Description" ID="RateTypeDescription" sfwCaption="Rate Type" sfwValue="rate_type_description" />
+    <attribute sfwValue="rate_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RateTypeId" sfwCodeID="2006" sfwIsSequence="False" sfwCaption="Rate Type" />
+    <attribute sfwValue="rate_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="RateTypeValue" sfwIsSequence="False" sfwCaption="Rate Type" />
+    <attribute sfwValue="union_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="UnionCode" sfwIsSequence="False" sfwCaption="Union Code" />
+    <attribute sfwValue="employer_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="EmployerCode" sfwIsSequence="False" sfwCaption="Employer Code" />
+    <attribute sfwValue="effective_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveDate" sfwIsSequence="False" sfwCaption="Effective Date" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

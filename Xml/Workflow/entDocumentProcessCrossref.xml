@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entDocumentProcessCrossref" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoDocumentProcessCrossref" sfwObjectID="busDocumentProcessCrossref" sfwTableName="sgt_document_process_crossref" sfwView="False" sfwDataObjectID="doDocumentProcessCrossref">
+  <rules>
+    <rule ID="ActivityProfileIDIsRequired" sfwExpression="(!string.IsNullOrEmpty(this.icdoDocumentProcessCrossref.document_type_action_value)) &amp;&amp; &#xA;(this.icdoDocumentProcessCrossref.document_type_action_value In[&quot;ALIN&quot;, &quot;REIN&quot;]) &amp;&amp; &#xA;(this.icdoDocumentProcessCrossref.process_id == 0)" sfwObjectBased="True" sfwMessage="Process is Required." />
+    <rule ID="CheckCombinationDocumentCodeAndProcessDuplicationInNewMode" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entDocumentProcessCrossref.GetCountOfActivityProfileForDocumentCodeInNewMode&quot;, this.icdoDocumentProcessCrossref.process_id, this.ibusDocument.icdoDocument.doc_type) &gt; 0)" sfwObjectBased="True" sfwMessage="Combination of Document Type And Process Already Exists." />
+    <rule ID="CheckCombinationDocumentCodeAndProcessDuplicationInUpdateMode" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entDocumentProcessCrossref.GetCountOfActivityProfileForDocumentCodeInUpdateMode&quot;, this.icdoDocumentProcessCrossref.process_id, this.icdoDocumentProcessCrossref.document_process_crossref_id, this.ibusDocument.icdoDocument.doc_type) &gt; 0)" sfwObjectBased="True" sfwMessage="Combination of Document Type And Process Already Exists." />
+    <rule ID="DocumentcodeNotEntered" sfwExpression="(string.IsNullOrEmpty(this.istrDocumentType))" sfwObjectBased="True" sfwMessage="Document Type is Required." />
+    <rule ID="ISDocumentMappedToProcessWithAlwaysInitiateMoreThanOnce" sfwExpression="!(string.IsNullOrEmpty(this.istrDocumentType)) &amp;&amp; &#xA;(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entDocumentProcessCrossref.GetCountOfDocumentCodeWithAlwaysInitiateByDocumentId&quot;, this.icdoDocumentProcessCrossref.document_id) &gt; 1)" sfwObjectBased="True" sfwMessage="Document Mapped To Process With Always Initiate More Than Once." />
+    <rule ID="IsValidDocumentCode" sfwExpression="!(string.IsNullOrEmpty(this.istrDocumentType)) &amp;&amp; &#xA;(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entDocumentProcessCrossref.CheckDocumentCodeIsValid&quot;, this.istrDocumentType) == 0)" sfwObjectBased="True" sfwMessage="Document Type is Invalid." />
+    <rule ID="ProcessIsRequired" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="this.icdoDocumentProcessCrossref.process_id == 0" sfwMessage="Process is Required." />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="DocumentcodeNotEntered" sfwMode="All" sfwStatus="Active" />
+    <item ID="ActivityProfileIDIsRequired" sfwMode="All" sfwStatus="Active" />
+    <item ID="ProcessIsRequired" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsValidDocumentCode" sfwMode="All" sfwStatus="Active" />
+    <item ID="CheckCombinationDocumentCodeAndProcessDuplicationInUpdateMode" sfwMode="Update" sfwStatus="Active" />
+    <item ID="CheckCombinationDocumentCodeAndProcessDuplicationInNewMode" sfwMode="New" sfwStatus="Active" />
+    <item ID="ISDocumentMappedToProcessWithAlwaysInitiateMoreThanOnce" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="Looukp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select dpc.*,p.*,d.* FROM sgt_document_process_crossref dpc WITH(NOLOCK)&#xD;&#xA;INNER JOIN SGT_DOCUMENT d WITH(NOLOCK) on dpc.DOCUMENT_ID = d.DOCUMENT_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS p WITH(NOLOCK) on dpc.PROCESS_ID = p.PROCESS_ID&#xD;&#xA;order by dpc.DOCUMENT_PROCESS_CROSSREF_ID desc">
+      <parameters />
+    </query>
+    <query ID="GetCountOfActivityProfileForDocumentCodeInNewMode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgt_document_process_crossref docpro WITH(NOLOCK)&#xD;&#xA;left outer join sgt_document doc WITH(NOLOCK) on docpro.document_id = doc.document_id&#xD;&#xA;where docpro.process_id = @process_id&#xD;&#xA;and doc.doc_type = @doc_type">
+      <parameters>
+        <parameter ID="@process_id" sfwDataType="int" />
+        <parameter ID="@doc_type" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetCountOfActivityProfileForDocumentCodeInUpdateMode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgt_document_process_crossref docpro WITH(NOLOCK)&#xD;&#xA;left outer join sgt_document doc WITH(NOLOCK) on docpro.document_id = doc.document_id&#xD;&#xA;where docpro.process_id = @process_id&#xD;&#xA;and doc.doc_type = @doc_type &#xD;&#xA;and document_process_crossref_id &lt;&gt; @document_process_crossref_id">
+      <parameters>
+        <parameter ID="@process_id" sfwDataType="int" />
+        <parameter ID="@document_process_crossref_id" sfwDataType="int" />
+        <parameter ID="@doc_type" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetCountOfDocumentCodeWithAlwaysInitiateByDocumentId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgt_document_process_crossref WITH(NOLOCK) &#xD;&#xA;where document_id =@document_id&#xD;&#xA;and document_type_action_value = 'ALIN'">
+      <parameters>
+        <parameter ID="@document_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckDocumentCodeIsValid" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgt_document WITH(NOLOCK) where doc_type=@doc_type">
+      <parameters>
+        <parameter ID="@doc_type" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="LoadAlwaysInitiateProcessesForDocument" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_DOCUMENT_PROCESS_CROSSREF WITH(NOLOCK) WHERE DOCUMENT_ID = @documentID AND DOCUMENT_TYPE_ACTION_VALUE = 'ALIN'">
+      <parameters>
+        <parameter ID="@documentID" />
+      </parameters>
+    </query>
+    <query ID="LoadAllDocumentProcessRefByProcess" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_DOCUMENT_PROCESS_CROSSREF WITH(NOLOCK) WHERE PROCESS_ID = @processID">
+      <parameters>
+        <parameter ID="@processID" />
+      </parameters>
+    </query>
+    <query ID="LoadResumeOrInitiateProcessesForDocument" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_DOCUMENT_PROCESS_CROSSREF WITH(NOLOCK) WHERE DOCUMENT_ID = @documentID AND DOCUMENT_TYPE_ACTION_VALUE = 'REIN'">
+      <parameters>
+        <parameter ID="@documentID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="document_process_crossref_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DocumentProcessCrossrefId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="document_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DocumentId" sfwIsSequence="False" sfwCaption="Document Id" />
+    <attribute sfwValue="process_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessId" sfwIsSequence="False" sfwCaption="Process Id" />
+    <attribute sfwType="Description" ID="DocumentTypeActionDescription" sfwCaption="Document Type Action" sfwValue="document_type_action_description" />
+    <attribute sfwValue="document_type_action_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="DocumentTypeActionId" sfwCodeID="24" sfwIsSequence="False" sfwCaption="Document Type Action" />
+    <attribute sfwValue="document_type_action_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="DocumentTypeActionValue" sfwIsSequence="False" sfwCaption="Document Type Action" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="required_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="RequiredFlag" sfwIsSequence="False" sfwCaption="Required Flag" />
+    <attribute ID="objDocument" sfwType="Object" sfwEntity="entDocument" sfwValue="ibusDocument" />
+    <attribute ID="objProcess" sfwType="Object" sfwEntity="entBpmProcess" sfwValue="ibusBpmProcess" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrDocumentType" sfwValue="istrDocumentType" />
+  </attributes>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields />
+</entity>

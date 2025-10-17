@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmCodeMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207 " sfwType="Maintenance" sfwTitle="Code Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Create Code=Create Code.htm;Update Code=Update Code.htm;Delete Code=Delete Code.htm" sfwEntity="entCode">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewCode" />
+    <callmethods sfwMode="Update" sfwMethodName="FindCode" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintCodeId=CodeId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnIdsfwImageButton" sfwActiveForm="wfmAuditMaintenance" sfwMethodName="btnAuditHistory_Click" sfwNavigationParameter="aintPrimaryKey=CodeId;astrFormName=#wfmCodeMaintenance" Text="idsfwImageButton" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Code Information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblcode_id" Text="Code ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblcode_idValue" sfwMode="Update" sfwTwoWayBinding="True" sfwEntityField="CodeId" />
+                <sfwTextBox ID="txbCodeID" sfwMode="New" sfwEntityField="CodeId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDescription" Text="Description :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwTextBox ID="txtCodeDescription" Width="500px" sfwEntityField="Description" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lbldata1_caption" Text="Data1 Caption :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtdata1_caption" sfwEntityField="Data1Caption" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lbldata1_type" Text="Data1 Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="txtdata1_type" sfwLoadType="Items" sfwEntityField="Data1Type">
+                  <ListItem Text="N/A" Selected="True" />
+                  <ListItem Text="Integer" Value="int" />
+                  <ListItem Text="String" Value="str" />
+                  <ListItem Text="Date" Value="date" />
+                  <ListItem Text="Decimal" Value="deci" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lbldata2_caption" Text="Data2 Caption :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtdata2_caption" sfwEntityField="Data2Caption" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lbldata2_type" Text="Data2 Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="txtdata2_type" sfwLoadType="Items" sfwEntityField="Data2Type">
+                  <ListItem Text="N/A" Selected="True" />
+                  <ListItem Text="Integer" Value="int" />
+                  <ListItem Text="String" Value="str" />
+                  <ListItem Text="Date" Value="date" />
+                  <ListItem Text="Decimal" Value="deci" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lbldata3_caption" Text="Data3 Caption :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtdata3_caption" sfwEntityField="Data3Caption" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lbldata3_type" Text="Data3 Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="txtdata3_type" sfwLoadType="Items" sfwEntityField="Data3Type">
+                  <ListItem Text="N/A" Selected="True" />
+                  <ListItem Text="Integer" Value="int" />
+                  <ListItem Text="String" Value="str" />
+                  <ListItem Text="Date" Value="date" />
+                  <ListItem Text="Decimal" Value="deci" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblfirst_lookup_item" Text="First Lookup Item :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtfirst_lookup_item" sfwDefaultValue="All" sfwEntityField="FirstLookupItem" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblfirst_maintenance_item" Text="First Maintenance Item :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtfirst_maintenance_item" sfwEntityField="FirstMaintenanceItem" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblcomments" Text="Comments :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwTextBox ID="txtcomments" Width="500px" sfwEntityField="Comments" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Code Values">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmCodeValueMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintCodeId=lblcode_idValue" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmCodeValueMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintCodeValueId=CodeSerialId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwNavigationParameter="CodeSerialId" sfwRelatedControl="dgrResult" Text="Delete" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many" sfwEntityField="lstCodeValue" sfwGridEntity="entCodeValue">
+                  <Columns>
+                    <TemplateField HeaderText="Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="CodeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Data1">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Data1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Data2">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Data2" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Data3">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Data3" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Comments">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Comments" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Start Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="End Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Sort Order">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CodeValueOrder" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Code Id" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CodeId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CodeSerialId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstCodeValue" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

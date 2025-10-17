@@ -1,0 +1,141 @@
+﻿<form ID="wfmBpmRequestLookup" sfwActive="True" sfwStatus="Review" sfwType="Lookup" sfwTitle="BPM Request Lookup" version="3.5" sfwEntity="entSolBpmRequest" sfwResource="20007007">
+  <initialload>
+    <query ID="cdoBpmRequest" sfwQueryRef="entBpmRequest.GetRequests" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Search Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCCaseFile1" Text=" Case Name : " AssociatedControlID="ddlCCaseFile" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList ID="ddlCCaseFile" sfwDataField="c.name" sfwQueryID="cdoBpmRequest" sfwLoadType="Query" sfwLoadSource="entBpmCase.GetAllDistinctCaseName" DataTextField="description" DataValueField="name" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capVersion1" Text="Version : " AssociatedControlID="ddlVersion1" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList ID="ddlVersion1" sfwDataField="c.case_id" sfwQueryID="cdoBpmRequest" sfwLoadType="Query" sfwLoadSource="entBpmCase.GetAllVersionByCaseName" sfwParameters="name=ddlCCaseFile" DataTextField="version" DataValueField="case_id" sfwParentControl="ddlCCaseFile" sfwDataType="Numeric" sfwOperator="=" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlProcessId" CssClass="LeftAlignedLabel" ID="capProcessId" SkinID="LeftAlignedLabel" Text="Process Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList ID="ddlProcessId" sfwDataField="sr.process_id" DataTextField="description" DataValueField="process_id" sfwOperator="=" sfwQueryID="cdoBpmRequest" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetProcessByCaseId" sfwDataType="Numeric" sfwParameters="CASE_ID=ddlVersion1" sfwParentControl="ddlVersion1" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capPersonId" SkinID="LeftAlignedLabel" Text="MPID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPersonId" sfwDataField="P.MPI_PERSON_ID" sfwOperator="like" sfwQueryID="cdoBpmRequest" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capOrgId" SkinID="LeftAlignedLabel" Text="Organization ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOrgId" sfwDataField="sr.org_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoBpmRequest" />
+                <sfwImageButton ID="btnRetrieveOrg" ImageAlign="AbsMiddle" ImageUrl="~/Images/Lookup.jpg" sfwActiveForm="wfmOrganizationLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtOrgId" sfwSelectedIndex="OrgId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capStatusValue" SkinID="LeftAlignedLabel" Text="Status :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" sfwDataField="sr.status_value" DataTextField="description" DataValueField="code_value" sfwOperator="in" sfwQueryID="cdoBpmRequest" sfwLoadType="CodeGroup" sfwLoadSource="3001" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmBpmRequestMaintenance" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" Text="Open" sfwNavigationParameter="aintPrimaryKey=RequestId;REQUEST_ID=RequestId" ToolTip="Open selected BPM Request record(s)" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" Visible="False" />
+                <sfwButton ID="btnOpenPerson" sfwMethodName="btnOpen_Click" Text="OpenPerson" Visible="False" sfwActiveForm="wfmPersonMaintenance" sfwNavigationParameter="aintpersonid=PersonId" sfwRelatedControl="dgrResult" />
+                <sfwButton ID="btnOpenOrgnization" sfwMethodName="btnOpen_Click" Text="OpenOrg" sfwActiveForm="wfmOrganizationMaintenance" sfwNavigationParameter="aintorgid=OrgId" sfwRelatedControl="dgrResult" Visible="False" />
+                <sfwButton ID="btnExportToExcel" sfwMethodName="btnColumnsToExport_Click" Text="Export To Excel" sfwRelatedControl="dgrResult" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many" AllowEditing="True" sfwTwoWayBinding="True">
+                  <Columns>
+                    <TemplateField HeaderText="Request ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="RequestId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmProcess.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Organization ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="OrgId" sfwRelatedControl="btnOpenOrgnization" sfwLinkable="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Organization Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objOrganization.OrgName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonId" sfwRelatedControl="btnOpenPerson" sfwLinkable="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPerson.MpiPersonId" sfwRelatedControl="btnOpenPerson" sfwLinkable="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPerson.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

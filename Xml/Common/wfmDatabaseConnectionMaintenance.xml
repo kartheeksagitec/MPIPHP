@@ -1,0 +1,87 @@
+﻿<form ID="wfmDatabaseConnectionMaintenance" sfwResource="-1" sfwFormObjectType="FormObject" sfwFormObject="busDatabaseConnections" sfwType="Maintenance" sfwTitle="Database Connection Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmDatabaseConnectionLookup" sfwEntity="entDatabaseConnections">
+  <initialload>
+    <callmethods sfwMode="Update" sfwMethodName="FindDatabaseConnections" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" sfwNavigationParameter="aintPrimaryKey=DatabaseConnectionId" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="DatabaseConnection Details" sfwCaption="Other Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="*" CssClass="ReqInformation" sfwIsCaption="True" SkinID="ReqInformation" />
+                <sfwLabel ID="capConnectionName" Text="Connection Name : " AssociatedControlID="txtConnectionName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtConnectionName" sfwMode="New" sfwEntityField="ConnectionName" />
+                <sfwLabel ID="lblLabel4" sfwMode="Update" sfwEntityField="ConnectionName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="*" CssClass="ReqInformation" sfwIsCaption="True" SkinID="ReqInformation" />
+                <sfwLabel ID="capConnectionType" Text="Connection Type : " AssociatedControlID="txtConnectionType" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtConnectionType" sfwEntityField="ConnectionType" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="*" CssClass="ReqInformation" sfwIsCaption="True" SkinID="ReqInformation" />
+                <sfwLabel ID="capConnectionString" Text="Connection String : " AssociatedControlID="txtConnectionString" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwTextBox ID="txtConnectionString" TextMode="MultiLine" Width="580px" sfwEntityField="ConnectionString" Height="50px" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" Text="*" CssClass="ReqInformation" sfwIsCaption="True" SkinID="ReqInformation" />
+                <sfwLabel ID="capDbfactotyProvider" Text="DB Factory Provider : " AssociatedControlID="txtDbfactotyProvider" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDbfactotyProvider" sfwEntityField="DbfactotyProvider" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capPasswordEncryptedFlag" Text="Password Encrypted Flag : " AssociatedControlID="ddlPasswordEncryptedFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPasswordEncryptedFlag" sfwEntityField="PasswordEncryptedFlag">
+                  <ListItem />
+                  <ListItem Text="No" Value="N" />
+                  <ListItem Text="Yes" Value="Y" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblDatabaseConnectionID" sfwMode="Update" sfwTwoWayBinding="True" sfwEntityField="DatabaseConnectionId" Visible="False" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails />
+</form>

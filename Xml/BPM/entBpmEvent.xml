@@ -1,0 +1,86 @@
+﻿<entity asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="entBpmEvent" sfwMainCDO="icdoBpmEvent" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmEvent" sfwTableName="sgw_bpm_event" sfwView="False">
+  <reference />
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <rulelist />
+  <conditionlist />
+  <compoundconditionlist />
+  <queries>
+    <query ID="LookupQuery" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_EVENT WITH(NOLOCK)" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_EVENT" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_EVENT">
+      <parameters />
+    </query>
+    <query ID="GetAllProcessEventXRForLatestCases" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_EVENT_XR PEXR WITH(NOLOCK) INNER  &#xA;&#x9; JOIN (SELECT&#xA;&#x9; SP.PROCESS_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS SP WITH(NOLOCK) INNER  &#xA;&#x9; JOIN (SELECT&#xA;&#x9; CASE_FILE,&#xA;&#x9;MAX(CASE_ID) CASE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_CASE WITH(NOLOCK) &#xA;GROUP BY   case_file) C&#xA;&#x9; ON SP.CASE_ID = C.CASE_ID) LP&#xA;&#x9; ON PEXR.Process_id = LP.process_id &#xA;WHERE&#xA;&#x9; EVENT_ID = @EVENT_ID" sfwPostgre="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_EVENT_XR PEXR INNER  &#xD;&#xA;&#x9; JOIN (SELECT&#xD;&#xA;&#x9; SP.PROCESS_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS SP  INNER  &#xD;&#xA;&#x9; JOIN (SELECT&#xD;&#xA;&#x9; CASE_FILE,&#xD;&#xA;&#x9;MAX(CASE_ID) CASE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE  &#xD;&#xA;GROUP BY   case_file) C&#xD;&#xA;&#x9; ON SP.CASE_ID = C.CASE_ID) LP&#xD;&#xA;&#x9; ON PEXR.Process_id = LP.process_id &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EVENT_ID = @EVENT_ID">
+      <parameters>
+        <parameter ID="@EVENT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAllProcessEventXR" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_EVENT_XR WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; EVENT_ID = @EVENT_ID" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_EVENT_XR &#xA;WHERE&#xA;&#x9; EVENT_ID = @EVENT_ID">
+      <parameters>
+        <parameter ID="@EVENT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBPMEventCount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_EVENT &#xA;WHERE&#xA;&#x9; DOC_TYPE = @DOC_TYPE " sfwPostgre="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_EVENT &#xA;WHERE&#xA;&#x9; DOC_TYPE = @DOC_TYPE">
+      <parameters>
+        <parameter ID="@DOC_TYPE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetDocClassByDocType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; DOC_CLASS &#xA;FROM&#xA;&#x9; SGW_BPM_EVENT WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; DOC_TYPE = @DOC_TYPE" sfwPostgre="SELECT&#xA;&#x9; DOC_CLASS &#xA;FROM&#xA;&#x9; SGW_BPM_EVENT&#xA;WHERE&#xA;&#x9; DOC_TYPE = @DOC_TYPE">
+      <parameters>
+        <parameter ID="@DOC_TYPE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetActiveEventDescription" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgw_bpm_event where status_value='ACTV'" sfwPostgre="select * from sgw_bpm_event where status_value='ACTV'">
+      <parameters />
+    </query>
+    <query ID="GetBPMEventByDescription" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; event_desc,&#xD;&#xA;&#x9;bpm_event_id &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_event WITH(NOLOCK);" sfwPostgre="SELECT&#xD;&#xA;&#x9; event_desc,&#xD;&#xA;&#x9;bpm_event_id &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_event">
+      <parameters />
+    </query>
+    <query ID="GetPersonOrgIndicator" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; PERSON_ID_REQUIRED_IND,ORG_ID_REQUIRED_IND&#xA;FROM&#xA;&#x9; SGW_BPM_EVENT WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; DOC_TYPE = @DOC_TYPE" sfwPostgre="SELECT&#xA;&#x9; PERSON_ID_REQUIRED_IND,ORG_ID_REQUIRED_IND&#xA;FROM&#xA;&#x9; SGW_BPM_EVENT &#xA;WHERE&#xA;&#x9; DOC_TYPE = @DOC_TYPE">
+      <parameters>
+        <parameter ID="@DOC_TYPE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetAllDocType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; EVENT_DESC,&#xA;&#x9;DOC_TYPE &#xA;FROM&#xA;&#x9; SGW_BPM_EVENT WITH(NOLOCK)  &#xA;ORDER BY   EVENT_DESC" sfwPostgre="SELECT&#xA;&#x9; EVENT_DESC,DOC_TYPE &#xA;FROM&#xA;&#x9; SGW_BPM_EVENT &#xA;&#x9; order by EVENT_DESC" sfwOracle="SELECT&#xA;&#x9; EVENT_DESC,DOC_TYPE &#xA;FROM&#xA;&#x9; SGW_BPM_EVENT &#xA;&#x9; order by EVENT_DESC">
+      <parameters />
+    </query>
+  </queries>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <attributes>
+    <attribute sfwValue="bpm_event_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwIsNull="False" ID="BpmEventId" sfwCaption="ID" />
+    <attribute sfwValue="event_desc" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="100" sfwIsNull="True" ID="EventDesc" sfwCaption="Event Desc" />
+    <attribute sfwValue="event_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="EventTypeId" sfwCodeID="2010" sfwCaption="Event Type" />
+    <attribute sfwValue="event_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" sfwIsNull="True" ID="EventTypeValue" sfwCaption="Event Type" />
+    <attribute sfwValue="rcpt_email_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="70" sfwIsNull="True" ID="RcptEmailId" sfwCaption="Rcpt Email Id" />
+    <attribute sfwValue="rcpt_fax_nu" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="15" sfwIsNull="True" ID="RcptFaxNu" sfwCaption="Rcpt Fax Nu" />
+    <attribute sfwValue="doc_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="True" ID="DocType" sfwCaption="Doc Type" />
+    <attribute sfwValue="screen_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="True" ID="ScreenId" sfwCaption="Screen Id" />
+    <attribute sfwValue="priority_document_ind" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="True" ID="PriorityDocumentInd" sfwCaption="Priority Document Ind" />
+    <attribute sfwValue="ecm_security_template_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="EcmSecurityTemplateId" sfwCaption="Ecm Security Template Id" />
+    <attribute sfwValue="ecm_subscription_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" ID="EcmSubscriptionFlag" sfwCaption="Ecm Subscription Flag" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="2009" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="document_category" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="True" ID="DocumentCategory" sfwCaption="Document Category" />
+    <attribute sfwValue="org_id_required_ind" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="True" ID="OrgIdRequiredInd" sfwCaption="Org Id Required Ind" />
+    <attribute sfwValue="person_id_required_ind" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="True" ID="PersonIdRequiredInd" sfwCaption="Person Id Required Ind" />
+    <attribute sfwValue="doc_class" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="100" sfwIsNull="True" ID="DocClass" sfwCaption="Doc Class" />
+    <attribute sfwType="Description" ID="EventTypeDescription" sfwCaption="Event Type" sfwValue="event_type_description" />
+    <attribute sfwType="Description" ID="PathDescription" sfwCaption="Path" sfwValue="path_description" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+  </attributes>
+  <objectmethods />
+  <ExtraFields />
+  <rules />
+</entity>

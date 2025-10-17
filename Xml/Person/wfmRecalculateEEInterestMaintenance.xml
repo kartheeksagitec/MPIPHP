@@ -1,0 +1,272 @@
+﻿<form ID="wfmRecalculateEEInterestMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="213" sfwType="Maintenance" sfwTitle="Recalculate EE Interest Maintenance" version="3.5" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmwfmRecalculateEEInterestLookup" sfwEntity="entAnnualBenefitSummaryOverview">
+  <initialload>
+    <callmethods sfwMethodName="LoadAndRecalculateEEInterestDetail" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" Visible="False" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" Visible="False" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" Visible="False" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" Visible="False" />
+                <sfwButton ID="btnPostEEInterest" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btn_PostEEInterest" Text="Post EE Interest" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain2" sfwCaption="Person Information">
+          <sfwTable ID="tblPersonInformation">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMpiPersonId" Text="MPI Person ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMpiPersonId" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=PersonId" sfwEntityField="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Last 4 Digits of SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrLast4DigitsofSSN" sfwEntityField="IstrLast4DigitsofSSN" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblDateOfBirth" ID="capDateOfBirth" Text="Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateOfBirth" sfwDataFormat="{0:d}" sfwEntityField="IdtDateofBirth" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIdtForfietureDate" ID="capIdtForfietureDate" Text="Forfieture Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtForfietureDate" sfwDataFormat="{0:d}" sfwEntityField="IdtForfietureDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIdtWithdrawalDate" ID="capIdtWithdrawalDate" Text="Latest Withdrawal Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtWithdrawalDate" sfwDataFormat="{0:d}" sfwEntityField="IdtWithdrawalDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblVestingDate" Text="Vesting Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtVestingDate" sfwDataFormat="{0:d}" sfwEntityField="IdtVestingDate" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox ID="txtPersonId" Visible="False" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Recalculated EE Contribution And Interest">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="setTblWidth">
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="grvBusPersonAccountRetirementContribution" PageSize="15" sfwEntityField="lstEEContributionInterest" sfwGridEntity="entPersonAccountRetirementContribution" CssClass="marg-bottom-10 Table">
+                  <Columns>
+                    <TemplateField HeaderText="Computational Year" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ComputationalYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Contribution Type" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ContributionTypeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Contribution Subtype" SortExpression="ContributionSubtypeValue" ItemStyle.HorizontalAlign="Right" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ContributionSubtypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Contribution Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EeContributionAmount" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Interest Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EeIntAmount" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+                <sfwGridView AllowSorting="True" ID="grvBusPersonAccountRetirementContributionTotal" sfwEntityField="lstTotalEEContributionInterest" sfwGridEntity="entPersonAccountRetirementContribution">
+                  <Columns>
+                    <TemplateField HeaderText="Contribution Type" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ContributionTypeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Contribution Subtype" SortExpression="ContributionSubtypeValue" ItemStyle.HorizontalAlign="Right" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ContributionSubtypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Contribution Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EeContributionAmount" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Interest Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EeIntAmount" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMainOPUS" sfwCaption="OPUS EE Contribution And Interest">
+          <sfwTable CssClass="Table" ID="tblMainOPUS">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="grvBusPersonAccountRetirementContributionOPUS" PageSize="15" sfwEntityField="lstEEContributionInterestOPUS" sfwGridEntity="entPersonAccountRetirementContribution">
+                  <Columns>
+                    <TemplateField HeaderText="Computational Year" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ComputationalYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Contribution Type" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ContributionTypeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Contribution Subtype" SortExpression="ContributionSubtypeValue" ItemStyle.HorizontalAlign="Right" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ContributionSubtypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Contribution Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EeContributionAmount" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Interest Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EeIntAmount" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="5" CssClass="setTblWidth">
+                <sfwGridView AllowSorting="True" ID="grvBusPersonAccountRetirementContributionTotalOPUS" sfwEntityField="lstTotalEEContributionInterestOPUS" sfwGridEntity="entPersonAccountRetirementContribution" CssClass="marg-bottom-10 Table">
+                  <Columns>
+                    <TemplateField HeaderText="Contribution Type" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ContributionTypeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Contribution Subtype" SortExpression="ContributionSubtypeValue" ItemStyle.HorizontalAlign="Right" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ContributionSubtypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Contribution Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EeContributionAmount" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="EE Interest Amount" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EeIntAmount" sfwDataFormat="{0:N2}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstEEContributionInterest" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstTotalEEContributionInterest" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstEEContributionInterestOPUS" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstTotalEEContributionInterestOPUS" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

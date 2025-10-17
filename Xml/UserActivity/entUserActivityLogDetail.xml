@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entUserActivityLogDetail" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoUserActivityLogDetail" sfwObjectID="busUserActivityLogDetail" sfwTableName="sgs_user_activity_log_detail" sfwView="False" sfwDataObjectID="doUserActivityLogDetail">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetSessionDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select *,&#xD;&#xA;(select COUNT(*) from SGS_USER_ACTIVITY_LOG_PARAMETERS UALP where UALP.USER_ACTIVITY_LOG_DETAIL_ID = UALD.USER_ACTIVITY_LOG_DETAIL_ID) as param_count,&#xD;&#xA;(select COUNT(*) from SGS_USER_ACTIVITY_LOG_QUERIES UALQ where UALQ.TRANSACTION_ID = UALD.TRANSACTION_ID) as query_count&#xD;&#xA;from SGS_USER_ACTIVITY_LOG_DETAIL UALD WITH(NOLOCK) &#xD;&#xA;where USER_ACTIVITY_LOG_ID = @USER_ACTIVITY_LOG_ID">
+      <parameters>
+        <parameter ID="@USER_ACTIVITY_LOG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="user_activity_log_detail_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UserActivityLogDetailId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="user_activity_log_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UserActivityLogId" sfwIsSequence="False" sfwCaption="User Activity Log Id" />
+    <attribute sfwValue="action_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="ActionName" sfwIsSequence="False" sfwCaption="Action Name" />
+    <attribute sfwValue="action_location" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="ActionLocation" sfwIsSequence="False" sfwCaption="Action Location" />
+    <attribute sfwValue="target_form" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="TargetForm" sfwIsSequence="False" sfwCaption="Target Form" />
+    <attribute sfwValue="response" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="Response" sfwIsSequence="False" sfwCaption="Response" />
+    <attribute sfwValue="start_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="StartTime" sfwIsSequence="False" sfwCaption="Start Time" />
+    <attribute sfwValue="end_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="EndTime" sfwIsSequence="False" sfwCaption="End Time" />
+    <attribute sfwValue="transaction_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="guid" sfwDBDataType="uniqueidentifier" sfwIsNull="True" ID="TransactionId" sfwIsSequence="False" sfwCaption="Transaction Id" />
+    <attribute sfwValue="action_name_disp" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="ActionNameDisp" sfwIsSequence="False" sfwCaption="Action Name Disp" />
+    <attribute sfwValue="action_location_disp" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="ActionLocationDisp" sfwIsSequence="False" sfwCaption="Action Location Disp" />
+    <attribute sfwValue="target_form_disp" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="TargetFormDisp" sfwIsSequence="False" sfwCaption="Target Form Disp" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintTimeTakenInMS" sfwValue="icdoUserActivityLogDetail.iintTimeTakenInMS" />
+    <attribute sfwDataType="string" sfwType="Property" ID="AuditCount" sfwValue="icdoUserActivityLogDetail.audit_count" />
+    <attribute sfwType="Collection" sfwEntity="entUserActivityLogParameters" ID="lstUserActivityLogParameters" sfwValue="iclbUserActivityLogParameters" />
+    <attribute sfwType="Collection" sfwEntity="entUserActivityLogQueries" ID="lstUserActivityLogQueries" sfwValue="iclbUserActivityLogQueries" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrShortMessage" sfwValue="icdoUserActivityLogDetail.istrShortMessage" />
+    <attribute sfwDataType="int" sfwType="Property" ID="QueryCount" sfwValue="icdoUserActivityLogDetail.query_count" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadUserActivityLogParameterss" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

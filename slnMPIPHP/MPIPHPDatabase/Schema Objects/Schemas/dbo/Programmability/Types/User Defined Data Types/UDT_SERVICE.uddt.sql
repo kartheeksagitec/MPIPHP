@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_SERVICE]
+    FROM NUMERIC (7, 4) NOT NULL;
+

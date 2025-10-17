@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMssRetirementEstimateLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCalculation" sfwResource="790 " sfwType="Lookup" sfwTitle="Mss Retirement Estimate Lookup" version="3.5" sfwEntity="entBenefitCalculationHeader" sfwGridCollection="busBenefitCalculationHeaderLookup.iclbBenefitCalculationHeader">
+  <initialload>
+    <query ID="cdoBenefitCalculationHeader" sfwQueryRef="entMssBenefitCalculationHeader.MssCalcHeaderLookup" sfwMethodName="LoadBenefitCalculationHeaders" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlPlan" ID="capDtlPlanId" Text="Plan Name  : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="code_value" DataValueField="code_id" ID="ddlPlan" sfwDataField="dtl.plan_id" sfwOperator="=" sfwQueryID="cdoBenefitCalculationHeader" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtHdrRetirementDate" ID="capHdrRetirementDate" Text="Retirement Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtHdrRetirementDate" sfwDataField="hdr.retirement_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwQueryID="cdoBenefitCalculationHeader" sfwTwoWayBinding="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedDateFrom" Text="Calculation Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedDateFrom" sfwDataField="HDR.created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoBenefitCalculationHeader" sfwRelatedControl="txtCreatedDateTo" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtCreatedDateFrom" ErrorMessage="Created Date From must be in mm/dd/yyyy format." ID="valCreatedDateFrom" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedDateTo" Text="Calculation Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedDateTo" sfwDataField="HDR.created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoBenefitCalculationHeader" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtCreatedDateTo" ErrorMessage="Created Date To must be in mm/dd/yyyy format." ID="valCreatedDateTo" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtCreatedDateFrom" ControlToValidate="txtCreatedDateTo" ErrorMessage="Created Date To cannot be less than Created Date From." ID="valCreatedDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtSpPersonId" sfwDataField="sp.person_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoBenefitCalculationHeader" SkinID="textBoxDisplayStyleNone" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmMssViewRetirementEstimateMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintBenefitCalculationId=BenefitCalculationHeaderId" sfwRelatedControl="dgrResult" Text="Open" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="One">
+                  <Columns>
+                    <TemplateField HeaderText="Benefit Calculation ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="BenefitCalculationHeaderId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPlanDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="RetirementDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Spouse Date Of Birth" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="BeneficiaryPersonDateOfBirth" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Calculation Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

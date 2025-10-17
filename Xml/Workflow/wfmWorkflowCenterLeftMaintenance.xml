@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmWorkflowCenterLeftMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvWorkflow" sfwResource="200 " sfwType="Maintenance" sfwTitle="Workflow Activity Summary" version="3.5" sfwEntity="entActivityInstance">
+  <initialload>
+    <callmethods sfwMethodName="GetUserActivities" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlWorkflowToolbar" sfwVisibleRule="Pending Activities">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwImageButton ID="btnResume" ImageUrl="Icon_Resume_N.png" sfwMessageId="4067" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshFromObject="True" sfwRefreshUpdatePanels="uppCenterMiddle" sfwSecurityLevel="2" sfwVisibleRule="VisibleResumeButton" SkinID="WorkflowButton" ToolTip="Resume current activity" />
+                <sfwImageButton ID="btnCancel" ImageUrl="Icon_Cancel_N.png" OnClientClick="return confirm('Are you sure you want to terminate workflow?')" sfwMessageId="1535" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshUpdatePanels="uppCenterMiddle" sfwResource="1104" sfwSecurityLevel="2" sfwVisibleRule="VisibleCancelButton" SkinID="WorkflowButton" ToolTip="Terminate the workflow" />
+                <sfwImageButton ID="btnComplete" ImageUrl="Icon_Complete_N.png" sfwMessageId="4070" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshUpdatePanels="uppCenterMiddle" sfwSecurityLevel="2" sfwVisibleRule="VisibleCompleteButton" SkinID="WorkflowButton" ToolTip="Complete current activity and get next activity" />
+                <sfwImageButton ID="btnReturntoAudit" ImageUrl="Icon_Audit_return_N.png" sfwMessageId="4071" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshUpdatePanels="uppCenterMiddle" sfwSecurityLevel="2" sfwVisibleRule="VisibleReturnToAuditButton" SkinID="WorkflowButton" ToolTip="Recheck current activity" />
+                <sfwImageButton ID="btnReturnActivity" ImageUrl="Icon_Return_N.png" sfwMessageId="4072" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshUpdatePanels="uppCenterMiddle" sfwResource="1105" sfwSecurityLevel="2" sfwVisibleRule="VisibleReturnButton" SkinID="WorkflowButton" ToolTip="Rework current activity" />
+                <sfwImageButton ID="btnCenterLeftCheckout" ImageUrl="Icon_TaskDetail_N.png" sfwMessageId="4073" sfwMethodName="btnWorkflowExecuteMethod_Click" sfwRefreshUpdatePanels="uppCenterMiddle" sfwSecurityLevel="2" sfwVisibleRule="PendingActivities" SkinID="WorkflowButton" ToolTip="Launch application screen" OnClientClick="GetLaunchImageViewer" />
+                <sfwImageButton ID="btnOpenProcessInstance" ImageUrl="Icon_LaunchApplicationOpen_N.png" sfwActiveForm="wfmWorkflowMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintactivityinstanceid=ActivityInstanceId" sfwRefreshUpdatePanels="uppCenterMiddle" sfwVisibleRule="PendingActivities" ToolTip="View process instance details" />
+                <sfwImageButton ID="btnMyBasket" ImageUrl="Icon_Basket_N.png" sfwActiveForm="wfmMyBasketMaintenance" sfwMethodName="btnOpen_Click" sfwRefreshUpdatePanels="uppCenterMiddle" ToolTip="View My Basket" />
+                <sfwLabel ID="lblDisplayURL" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel CssClass="ContainerPanelBold" ID="pnlNewPage1" sfwCaption="No Work" sfwVisibleRule="NoPendingActivities">
+          <sfwTable CssClass="Table" ID="tblNewPage3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLiteral" sfwVisibleRule="NoPendingActivities" SkinID="WhiteText" Text="No assigned work items pending" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Workflow Process Information" sfwVisibleRule="PendingActivities">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLiteral ID="ltrCapProcessDescription" Text="Process Name" />
+                <sfwLiteral ID="ltrLiteral1" Text=":" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessDescription" sfwEntityField="objProcessInstance.objProcess.Description" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLiteral ID="ltrCapActivityname" Text="Activity Name" />
+                <sfwLiteral ID="ltrLiteral2" Text=":" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActivityname" sfwEntityField="objActivity.DisplayName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLiteral ID="ltrCapDateInitiated" Text="Initiated" />
+                <sfwLiteral ID="ltrLiteral3" Text=":" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateInitiated" sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLiteral ID="ltrCapIstrFullName" Text="Person Name" />
+                <sfwLiteral ID="ltrLiteral4" Text=":" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="objProcessInstance.objPerson.IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLiteral ID="ltrCapStatus" Text="Status" />
+                <sfwLiteral ID="ltrLiteral6" Text=":" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatus" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblProcessInstanceId" Visible="False" sfwEntityField="objProcessInstance.ProcessInstanceId" />
+                <sfwLabel ID="lblProcessId" Visible="False" sfwEntityField="objProcessInstance.objProcess.ProcessId" />
+                <sfwLabel ID="lblActivityInstanceId1" Visible="False" sfwEntityField="ActivityInstanceId" />
+                <sfwLabel ID="lblssn" sfwEntityField="objProcessInstance.objPerson.Ssn" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwCheckBox ID="chkToggleSuspend" sfwClientVisibility="controllist:pnlSuspension#true:pnlSuspension;" sfwDefaultValue="N" Text="Suspend " />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel CssClass="ContainerPanelBold" GroupingText="Suspension Details For Current Activity" ID="pnlSuspension" sfwCaption="Suspension Details For Current Activity" sfwVisibleRule="PendingActivities">
+          <sfwTable CssClass="Table" ID="tblNewPage4">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblActivityInstanceId" Visible="False" sfwEntityField="ActivityInstanceId" />
+                <sfwButton ID="btnSuspend" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" Text="Suspend Selected Activity" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLiteral ID="ltrLiteral" Text="Suspension End Date :" />
+                <sfwTextBox ID="txtSuspensionEndDate" sfwDataFormat="{0:d}" Width="75px" sfwEntityField="SuspensionEndDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel CssClass="ContainerPanelBold" GroupingText="Pending Activities" ID="pnlAssignedActivities" sfwCaption="Pending Activities">
+          <sfwTable ID="tblNewPage2">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvUserAssignedActivities" PageSize="3" sfwEntityField="lstUserAssignedActivities" sfwGridEntity="entActivityInstance">
+                  <Columns>
+                    <TemplateField HeaderText=" Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objProcess.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity">
+                      <ItemTemplate>
+                        <sfwLinkButton ID="btnCLOpen1" sfwDataField="ibusActivity.icdoActivity.display_name" sfwMethodName="btnWorkflowExecuteMethod_Click" sfwNavigationParameter="aintactivityinstanceid=ActivityInstanceId" sfwObjectMethod="FindActivityInstance" sfwRefreshUpdatePanels="uppCenterMiddle" OnClientClick="GetLaunchImageViewer" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField Visible="False">
+                      <ItemTemplate>
+                        <sfwLinkButton ID="ViewDetailsofActivity" sfwActiveForm="wfmWorkflowMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintactivityinstanceid=ActivityInstanceId" sfwRelatedControl="grvUserAssignedActivities" Text="ViewDetails" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Instance ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="IstrIsActivitySelected" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrIsActivitySelected" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPI_Person_ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblMpiPersonId" sfwEntityField="objProcessInstance.objPerson.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="SSN" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblPersonSsn" sfwDataFormat="{0:000-##-####}" sfwEntityField="objProcessInstance.objPerson.Ssn" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <rowformat sfwEntityField="IstrIsActivitySelected">
+                    <Conditions>
+                      <condition value="Y" cssclass="RowSelectedWF" />
+                    </Conditions>
+                  </rowformat>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel CssClass="ContainerPanelBold" GroupingText="Work Pool " ID="pnlWorkPoolActivities" sfwCaption="Work Pool ">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvRoleAssignedActivities" PageSize="3" sfwEntityField="lstRoleAssignedActivities" sfwGridEntity="entActivityInstance">
+                  <Columns>
+                    <TemplateField HeaderText="Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objProcess.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objActivity.DisplayName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Instance ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField>
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnViewDetails" Text="ViewDetails" sfwIsCaption="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+                <sfwButton ID="btnViewDetails" sfwActiveForm="wfmWorkflowMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintactivityinstanceid=ActivityInstanceId" sfwRelatedControl="grvRoleAssignedActivities" Text="View Details" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objProcessInstance.objProcess" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objActivity" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objProcessInstance.objPerson" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objProcessInstance" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstUserAssignedActivities" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstRoleAssignedActivities" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

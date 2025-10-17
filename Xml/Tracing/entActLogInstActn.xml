@@ -1,0 +1,80 @@
+﻿<entity ID="entActLogInstActn" sfwView="False" sfwActive="True" sfwMainCDO="icdoActLogInstActn" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_act_log_inst_actn" sfwObjectID="busActLogInstActn" Text="Contains online user transactions" >
+  <attributes>
+    <attribute ID="lstInstanceActionStep" sfwType="Collection" sfwEntity="entActLogInstActnStep" sfwValue="iclbActLogInstActnStep" sfwPrivate="False" />
+    <attribute ID="lstInstanceActionQuery" sfwType="Collection" sfwEntity="entActLogInstQuery" sfwValue="iclbActLogInstQuery" sfwPrivate="False" />
+    <attribute ID="lstInstanceActionRule" sfwType="Collection" sfwEntity="entActLogInstRule" sfwValue="iclbActLogInstRule" sfwPrivate="False" />
+    <attribute ID="objActLogInst" sfwType="Object" sfwEntity="entActLogInst" sfwPrivate="False" sfwValue="ibusActLogInst" />
+    <attribute ID="IstrInvalidLogin" sfwDataType="string" sfwPrivate="False" sfwValue="istrInvalidLogin" Text="Is Invalid Login" sfwType="Property" />
+    <attribute ID="WebServerTime" sfwPrivate="False" sfwValue="TimeInMs - TotalAppServerTime" sfwType="Expression" sfwCaption="Webserver Time" />
+    <attribute ID="TotalQueryTime" sfwDataType="int" sfwPrivate="False" sfwValue="iintTotalQueryTime" sfwType="Property" />
+    <attribute ID="TotalAppServerTime" sfwDataType="int" sfwPrivate="False" sfwValue="iintTotalAppServerTime" sfwType="Property" />
+    <attribute sfwValue="act_log_inst_actn_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogInstActnId" sfwCaption="ID" />
+    <attribute sfwValue="act_log_inst_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogInstId" sfwCaption="Act Log Inst Id" />
+    <attribute sfwValue="request_from" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="500" sfwIsNull="True" ID="RequestFrom" sfwCaption="Request From" />
+    <attribute sfwValue="action_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="ActionName" sfwCaption="Action Name" />
+    <attribute sfwValue="action_source" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="ActionSource" sfwCaption="Action Source" />
+    <attribute sfwValue="action_target" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="ActionTarget" sfwCaption="Action Target" />
+    <attribute sfwValue="action_result" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ActionResult" sfwCaption="Action Result" />
+    <attribute sfwValue="start_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="StartTime" sfwCaption="Start Time" />
+    <attribute sfwValue="end_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="EndTime" sfwCaption="End Time" />
+    <attribute sfwValue="transaction_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="guid" sfwDBDataType="uniqueidentifier" sfwIsNull="True" ID="TransactionId" sfwCaption="Transaction Id" />
+    <attribute sfwValue="parameter_details" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ParameterDetails" sfwCaption="Parameter Details" />
+    <attribute sfwValue="additonal_info" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="AdditonalInfo" sfwCaption="Additonal Info" />
+    <attribute sfwValue="time_in_ms" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TimeInMs" sfwCaption="Time In Ms" />
+    <attribute sfwValue="browser_start_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="BrowserStartTime" sfwCaption="Browser Start Time" />
+    <attribute sfwValue="browser_time_in_ms" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BrowserTimeInMs" sfwCaption="Browser Time In Ms" />
+    <attribute sfwValue="error_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="ErrorFlag" sfwCaption="Error Flag" />
+    <attribute sfwValue="web_server_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="WebServerName" sfwCaption="Web Server Name" />
+    <attribute ID="TotalQueriesExecuted" sfwDataType="int" sfwPrivate="False" sfwValue="iintTotalQueriesExecuted" sfwType="Property" />
+    <attribute sfwValue="validation_error_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="ValidationErrorFlag" sfwCaption="Validation Error Flag" />
+  </attributes>
+  <methods>
+    <method ID="LoadActionStep" sfwMethodType="Other" sfwLoadMainObject="False">
+      <item sfwParameter="@transaction_id" ID="lstInstanceActionStep" sfwItemType="Collection" sfwLoadType="Query" sfwLoadSource="entActLogInstActnStep.ByTransactionID" />
+      <parameter ID="@transaction_id" sfwDataType="string" Value="TransactionId" />
+    </method>
+    <method ID="LoadQueries" sfwMethodType="Other">
+      <item ID="lstInstanceActionQuery" sfwParameter="@transaction_id" sfwItemType="Collection" sfwLoadType="Query" sfwLoadSource="entActLogInstQuery.ByTransactionID" />
+      <parameter ID="transaction_id" sfwDataType="string" Value="TransactionId" />
+    </method>
+    <method ID="LoadRules" sfwMethodType="Other">
+      <item ID="lstInstanceActionRule" sfwParameter="@transaction_id" sfwItemType="Collection" sfwLoadType="Query" sfwLoadSource="entActLogInstRule.GetRuleInfo" />
+      <parameter ID="transaction_id" sfwDataType="string" Value="TransactionId" />
+    </method>
+    <method ID="FindActLogInstanceAction" sfwMethodType="Load" sfwMode="Update" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item ID="objActLogInst" sfwItemType="Object" sfwLoadType="ForeignKey" />
+      <item ID="objActLogInst.objActLogApp" sfwItemType="Object" sfwLoadType="ForeignKey" sfwLoadSource="ActLogAppId" />
+      <item ID="lstInstanceActionQuery" sfwParameter="@transaction_id" sfwItemType="Collection" sfwLoadType="Query" sfwLoadSource="entActLogInstQuery.ByTransactionID" />
+      <parameter ID="transaction_id" sfwDataType="string" Value="TransactionId" />
+    </method>
+  </methods>
+  <ExtraFields />
+  <queries>
+    <query ID="BusinessTransaction" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select a.*&#xA;from sgv_act_log_inst_actn a&#xA;order by a.start_time">
+      <parameters />
+    </query>
+    <query ID="ByTransactionID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xA;  from sgs_act_log_inst_actn&#xA;where transaction_id = @transaction_id">
+      <parameters>
+        <parameter ID="@transaction_id" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="UpdateActionByTransactionID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGS_ACT_LOG_INST_ACTN SET BROWSER_TIME_IN_MS = @BROWSER_TIME_IN_MS WHERE TRANSACTION_ID = @TRANSACTION_ID">
+      <parameters>
+        <parameter ID="@BROWSER_TIME_IN_MS" sfwDataType="long" />
+        <parameter ID="@TRANSACTION_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <lifecycle />
+  <objectmethods />
+</entity>

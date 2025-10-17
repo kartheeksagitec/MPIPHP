@@ -1,0 +1,54 @@
+﻿<entity ID="entActLogApp" sfwView="False" sfwActive="True" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_act_log_app" sfwObjectID="busActLogApp" sfwMainCDO="icdoActLogApp" sfwDataObjectID="doActLogApp">
+  <attributes>
+    <attribute ID="lstActLogAppActor" sfwType="Collection" sfwEntity="entActLogAppActor" sfwValue="iclbActLogAppActor" sfwPrivate="False" />
+    <attribute sfwValue="act_log_app_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogAppId" sfwCaption="ID" />
+    <attribute sfwValue="app_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="AppName" sfwCaption="App Name" />
+    <attribute sfwValue="action_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ActionFlag" sfwCaption="Action Flag" />
+    <attribute sfwValue="action_step_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ActionStepFlag" sfwCaption="Action Step Flag" />
+    <attribute sfwValue="action_step_size_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ActionStepSizeFlag" sfwCaption="Action Step Size Flag" />
+    <attribute sfwValue="query_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="QueryFlag" sfwCaption="Query Flag" />
+    <attribute sfwValue="rule_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="RuleFlag" sfwCaption="Rule Flag" />
+    <attribute sfwValue="validation_rule_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ValidationRuleFlag" sfwCaption="Validation Rule Flag" />
+    <attribute sfwValue="browser_time_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="BrowserTimeFlag" sfwCaption="Browser Time Flag" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="allow_users" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="AllowUsers" sfwCaption="Allow Users" />
+    <attribute sfwValue="cookie_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CookieTime" sfwCaption="Cookie Time In Minutes" />
+    <attribute sfwValue="block_ip" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="BlockIp" sfwCaption="Block Ip" />
+  </attributes>
+  <queries>
+    <query ID="LookUp" sfwSql="select * from sgs_act_log_app with(nolock)" sfwDataType="EntityTable" sfwQueryType="SelectQuery" sfwOracle="select * from sgs_act_log_app">
+      <parameters />
+    </query>
+    <query ID="GetByAppName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_act_log, sgs_act_log_app where app_name = @app_name">
+      <parameters>
+        <parameter ID="@app_name" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetApplicationWaitState" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT ALLOW_USERS,COOKIE_TIME FROM SGS_ACT_LOG_APP WHERE APP_NAME = @APP_NAME">
+      <parameters>
+        <parameter ID="@APP_NAME" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindActLogApp" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+    </method>
+  </methods>
+  <ExtraFields />
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <lifecycle />
+  <objectmethods />
+</entity>

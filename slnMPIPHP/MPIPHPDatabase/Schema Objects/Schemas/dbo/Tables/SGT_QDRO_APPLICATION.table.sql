@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[SGT_QDRO_APPLICATION] (
+    [DRO_APPLICATION_ID] [dbo].[UDT_IDENTITY]   IDENTITY (1, 1) NOT NULL,
+    [PERSON_ID]          [dbo].[UDT_DATA]       NULL,
+    [ALTERNATE_PAYEE_ID] [dbo].[UDT_DATA]       NULL,
+    [DRO_MODEL_ID]       [dbo].[UDT_ID]         NOT NULL,
+    [DRO_MODEL_VALUE]    [dbo].[UDT_CODE_VALUE] NULL,
+    [PLAN_ID]            [dbo].[UDT_ID]         NULL,
+    [PERSON_ACCOUNT_ID]  [dbo].[UDT_ID]         NULL,
+    [CASE_NUMBER]        [dbo].[UDT_DATA]       NULL,
+    [DATE_OF_MARRIAGE]   [dbo].[UDT_DATETIME]   NULL,
+    [DATE_OF_DIVORCE]    [dbo].[UDT_DATETIME]   NULL,
+    [RECEIVED_DATE]      [dbo].[UDT_DATETIME]   NULL,
+    [APPROVED_BY_USER]   [dbo].[UDT_CREATEDBY]  NULL,
+    [APPROVED_DATE]      [dbo].[UDT_DATETIME]   NULL,
+    [QUALIFIED_BY_USER]  [dbo].[UDT_CREATEDBY]  NULL,
+    [QUALIFIED_DATE]     [dbo].[UDT_DATETIME]   NULL,
+    [BENEFIT_PERCENTAGE] [dbo].[UDT_PERC]       NULL,
+    [BENEFIT_AMOUNT]     [dbo].[UDT_AMT]        NULL,
+    [DRO_STATUS_ID]      [dbo].[UDT_ID]         NULL,
+    [DRO_STATUS_VALUE]   [dbo].[UDT_CODE_VALUE] NULL,
+    [CREATED_BY]         [dbo].[UDT_CREATEDBY]  NOT NULL,
+    [CREATED_DATE]       [dbo].[UDT_DATETIME]   NOT NULL,
+    [MODIFIED_BY]        [dbo].[UDT_MODIFIEDBY] NOT NULL,
+    [MODIFIED_DATE]      [dbo].[UDT_DATETIME]   NOT NULL,
+    [UPDATE_SEQ]         [dbo].[UDT_UPDSEQ]     NOT NULL
+);
+

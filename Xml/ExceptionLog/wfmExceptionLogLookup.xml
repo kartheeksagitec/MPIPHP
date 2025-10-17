@@ -1,0 +1,127 @@
+﻿<form ID="wfmExceptionLogLookup" sfwResource="207" sfwFormObject="busExceptionLog" sfwType="Lookup" sfwTitle="Exception Log Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmExceptionLogLookup" sfwEntity="entExceptionLog" sfwGridCollection="busLookup.iclbLookupResult">
+  <initialload>
+    <query ID="entExceptionLog" sfwQueryRef="entExceptionLog.LookUp" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capAppdomainName" Text="Application Domain Name : " AssociatedControlID="txtAppdomainName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAppdomainName" sfwQueryID="entExceptionLog" sfwDataField="appdomain_name" sfwOperator="like" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capApplicationName" Text="Application Name : " AssociatedControlID="txtApplicationName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtApplicationName" sfwQueryID="entExceptionLog" sfwDataField="application_name" sfwOperator="like" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capExceptionInstanceId" Text="Exception Instance ID : " AssociatedControlID="txtExceptionInstanceId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtExceptionInstanceId" sfwDataField="exception_instance_id" sfwQueryID="entExceptionLog" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capExceptionLogId" Text="Exception Log ID : " AssociatedControlID="txtExceptionLogId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtExceptionLogId" sfwQueryID="entExceptionLog" sfwDataField="exception_log_id" sfwOperator="=" sfwDataType="Numeric" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capFormName" Text="Form Name : " AssociatedControlID="txtFormName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFormName" sfwQueryID="entExceptionLog" sfwDataField="form_name" sfwOperator="like" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMachineName" Text="Machine Name : " AssociatedControlID="txtMachineName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMachineName" sfwQueryID="entExceptionLog" sfwDataField="machine_name" sfwOperator="like" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capUserId" Text="User ID : " AssociatedControlID="txtUserId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtUserId" sfwQueryID="entExceptionLog" sfwDataField="user_id" sfwOperator="like" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" ImageUrl="~/Image/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Image/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Exception Log ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="ExceptionLogId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Exception Message">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ExceptionMessage" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Appdomain Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AppdomainName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Application Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ApplicationName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Form Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FormName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails />
+</form>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entIapRecalculationCopy" sfwMainCDO="icdoIapRecalculationCopy" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busIapRecalculationCopy" sfwTableName="sgt_iap_recalculation_copy" sfwView="False" sfwDataObjectID="doIapRecalculationCopy">
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_iap_recalculation_copy ">
+      <parameters />
+    </query>
+    <query ID="IAPRecalculateFileCleanUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from [OPUS].[dbo].[SGT_IAP_RECALCULATION_COPY] where RECALC_DATE &lt;= DATEADD(year,-3,GETDATE())">
+      <parameters />
+    </query>
+    <query ID="DeleteIAPRecalculationFile" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" Delete from [OPUS].[dbo].[SGT_IAP_RECALCULATION_COPY] where RECALC_DATE &lt;= DATEADD(year,-3,GETDATE())">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="iap_recalculation_copy_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="IapRecalculationCopyId" sfwCaption="ID" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonId" sfwCaption="Person Id" />
+    <attribute sfwValue="mpi_person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="False" ID="MpiPersonId" sfwCaption="Mpi Person Id" />
+    <attribute sfwValue="file_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="60" sfwIsNull="True" ID="FileName" sfwCaption="File Name" />
+    <attribute sfwValue="recalc_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="RecalcDate" sfwCaption="Recalc Date" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="path_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="PathCode" sfwCaption="Path Code" />
+  </attributes>
+</entity>

@@ -1,0 +1,104 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="wfmCorrespondenceClientEdit.master.cs"
+    Inherits="wfmCorrespondenceClientEdit" %>
+<%@ Register TagPrefix="swc" Namespace="Sagitec.WebControls" Assembly="SagitecWebControls, Version=6.0.0.0, Culture=neutral, PublicKeyToken=2FAFCCD2A44457D5"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title>Generate Correspondence</title>
+    <base target="_self" />
+    <style type="text/css"> .fakehlink {cursor: hand; text-decoration: underline; color: #0066CC; font-weight:normal;} </style>
+</head>
+<body onload="page_load()">
+<script type="text/javascript">
+  function page_load()
+  {
+    OpenDoc();
+  }
+  
+  function SleepSec(naptime) {
+            naptime = naptime * 1000;
+            var sleeping = true;
+            var now = new Date();
+            var alarm;
+            var startingMSeconds = now.getTime();
+            while (sleeping) {
+                alarm = new Date();
+                alarmMSeconds = alarm.getTime();
+                if (alarmMSeconds - startingMSeconds > naptime) { sleeping = false; }
+            }
+        }
+
+        function PrintDoc(str) {
+            try {
+                document.oframe.save();
+                document.oframe.printout();
+                SleepSec(2);
+            }
+            catch (er) {
+                alert(er.description);
+            }
+        }
+  function OpenExistDoc(str) 
+  { 
+     try  
+     {  
+         document.all.oframe.open(str); 
+     } 
+     catch(er)  
+     { 
+        alert(er.description); 
+     } 
+  }
+  
+
+  function CloseDoc()
+  {
+     try 
+     { 
+       document.all.oframe.close();
+     }
+     catch(er) 
+     {
+        alert(er.description);
+     }
+  }
+  
+  function SaveDoc()
+  {
+     try 
+     { 
+       document.all.oframe.save();
+     }
+     catch(er) 
+     {
+       alert(er.description);
+     }
+  }  
+  </script>
+
+    <form id="form1" runat="server">
+        <div>
+            <table cellpadding="2" cellspacing="2">
+                <tr>
+                   <td>
+                     <swc:sfwValidationSummary ID="vlsErrors" Runat="Server"/>
+                   </td>
+                </tr>
+                <tr>
+                    <td width="90%">
+                        <swc:sfwLabel ID="lblMessageID" runat="Server" Font-Bold="True" />
+                        <swc:sfwLabel ID="lblMessage" runat="Server" Font-Bold="True" />
+                    </td>
+                    <td width="10%" style="text-align: right;">
+                        <swc:sfwLabel CssClass="none" ID="lblCurrentPos" runat="Server" Visible="False" />
+                        <swc:sfwLabel CssClass="none" ID="lblOf" Text=" Of " runat="Server" Visible="False" />
+                        <swc:sfwLabel CssClass="none" ID="lblTotalSelected" runat="Server" Visible="False" />
+                    </td>
+                </tr>
+            </table>
+            <asp:ContentPlaceHolder ID="cphCenterMiddle" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

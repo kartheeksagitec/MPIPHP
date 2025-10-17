@@ -1,0 +1,140 @@
+﻿<entity ID="entOrganization" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoOrganization" sfwObjectID="busOrganization" sfwTableName="sgt_organization" sfwView="False" sfwDataObjectID="doOrganization">
+  <rules>
+    <rule ID="RULE_CHECK_FAX_LENGTH" sfwMessageId="1161" sfwExpression="(RFunc.Length(this.icdoOrganization.fax_no) != 10) &amp;&amp; &#xA;!(string.IsNullOrEmpty(this.icdoOrganization.fax_no))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_ORG_NAME_BLANK" sfwMessageId="3000" sfwExpression="(string.IsNullOrEmpty(this.icdoOrganization.org_name))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_ORG_TYPE_BANK" sfwExpression="!(this.icdoOrganization.org_type_value == &quot;BANK&quot;)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_ORG_TYPE_BLANK" sfwMessageId="3001" sfwExpression="(string.IsNullOrEmpty(this.icdoOrganization.org_type_value))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_PHONE_LENGTH" sfwMessageId="1160" sfwExpression="(RFunc.Length(this.icdoOrganization.phone_no) != 10) &amp;&amp; &#xA;!(string.IsNullOrEmpty(this.icdoOrganization.phone_no))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_ROUTING_NUMBER_9_DIGITS" sfwMessageId="6059" sfwExpression="(!string.IsNullOrEmpty(this.icdoOrganization.routing_number)) &amp;&amp; &#xA;(RFunc.Length(this.icdoOrganization.routing_number) != 9)" sfwObjectBased="True" />
+    <rule ID="VISIBLE_ORG_TYPE_NOT_ROLL" sfwExpression="!(this.icdoOrganization.org_type_value == &quot;RLIT&quot;)" sfwObjectBased="True" />
+    <rule ID="VISIBLE_ROUTING_VISIBLE" sfwExpression="(this.icdoOrganization.org_type_value == &quot;BANK&quot;) || &#xA;(this.icdoOrganization.org_type_value == &quot;RLIT&quot;) || &#xA;(this.icdoOrganization.org_type_value == &quot;MTFA&quot;)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_ORG_TYPE_ESTATE_TRUST" sfwExpression="(this.icdoOrganization.org_type_value == &quot;TRST&quot;) || &#xA;(this.icdoOrganization.org_type_value == &quot;EST&quot;)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_ORG_FEDTAXID" sfwRuleType="Validation" sfwExpression="(!RFunc.IsNumeric(this.icdoOrganization.federal_id))" sfwMessageId="6294" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="lstOrgAddress" sfwMethodName="LoadOrgAddresss" />
+  </delete>
+  <checklist />
+  <initialload>
+    <item ID="RULE_CHECK_ORG_TYPE_BANK" sfwMode="All" sfwStatus="Active" />
+    <item ID="VISIBLE_ORG_TYPE_NOT_ROLL" sfwMode="All" sfwStatus="Active" />
+    <item ID="VISIBLE_ROUTING_VISIBLE" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_ORG_TYPE_ESTATE_TRUST" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <item ID="RULE_CHECK_ORG_TYPE_BLANK" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_ORG_NAME_BLANK" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_FAX_LENGTH" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_PHONE_LENGTH" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_ROUTING_NUMBER_9_DIGITS" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_ORG_FEDTAXID" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_Organization WITH(NOLOCK)">
+      <parameters />
+    </query>
+    <query ID="GetOrgDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select ORG_NAME, ORG_ID, ROUTING_NUMBER from SGT_ORGANIZATION WITH(NOLOCK) where MPI_ORG_ID = @MPI_ORG_ID">
+      <parameters>
+        <parameter ID="@MPI_ORG_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetOrgFromOrgID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select ORG_NAME, ORG_ID, ROUTING_NUMBER from SGT_ORGANIZATION WITH(NOLOCK) where ORG_ID = @ORG_ID">
+      <parameters>
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckOrgIsBeneficiary" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) from SGT_ORGANIZATION SO LEFT OUTER JOIN SGT_RELATIONSHIP SR ON SO.ORG_ID=SR.BENEFICIARY_ORG_ID&#xD;&#xA;WHERE SO.ORG_ID=@ORG_ID">
+      <parameters>
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOrgDetailsByOrganizationId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_ORGANIZATION WITH(NOLOCK) WHERE ORG_ID = @ORG_ID">
+      <parameters>
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetValidOrgDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select ORG_NAME, ORG_ID from SGT_ORGANIZATION WITH(NOLOCK) where MPI_ORG_ID = @MPI_ORG_ID AND STATUS_VALUE = 'A'">
+      <parameters>
+        <parameter ID="@MPI_ORG_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetOrgDetailsByRoutingNumber" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT ORG_NAME, ORG_ID, ROUTING_NUMBER FROM SGT_ORGANIZATION WITH(NOLOCK) WHERE ROUTING_NUMBER = @ROUTING_NUMBER">
+      <parameters>
+        <parameter ID="@ROUTING_NUMBER" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetOrgDetailsWithAddress" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SO.ORG_NAME, SO.ORG_ID,&#xD;&#xA;ISNULL('ATTN: ' + SO.CARE_OF,'') AS CO,&#xD;&#xA;SOA.*&#xD;&#xA;FROM SGT_ORGANIZATION SO WITH(NOLOCK)&#xD;&#xA;LEFT OUTER JOIN SGT_ORG_ADDRESS SOA WITH(NOLOCK) ON SOA.ORG_ID = SO.ORG_ID AND SOA.ADDRESS_TYPE_VALUE in ('MAIL','PYAM') &#xD;&#xA;WHERE SO.MPI_ORG_ID = @MPI_ORG_ID&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@MPI_ORG_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetOrganizationsRollover" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_ORGANIZATION WITH(NOLOCK) where ORG_TYPE_VALUE='BANK'">
+      <parameters />
+    </query>
+    <query ID="GetOrgMailingAddress" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT  *&#xD;&#xA;  FROM SGT_ORGANIZATION P &#xD;&#xA;  LEFT OUTER JOIN SGT_ORG_ADDRESS PA1   &#xD;&#xA;  ON  P.ORG_ID  = PA1.ORG_ID  &#xD;&#xA;  AND PA1.START_DATE &lt;= @PAYMENTDATE AND (PA1.END_DATE IS NULL OR PA1.END_DATE &gt;= @PAYMENTDATE)&#xD;&#xA;  where PA1.ADDRESS_TYPE_VALUE IN  ('MAIL','PYAM') and P.ORG_ID=@ORG_ID&#xD;&#xA;                          &#xD;&#xA;                           ">
+      <parameters>
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LooupForReturnMail" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_Organization ORG&#xD;&#xA;LEFT OUTER JOIN SGT_ORG_ADDRESS ADDR&#xD;&#xA;ON ORG.ORG_ID=ADDR.ORG_ID">
+      <parameters />
+    </query>
+    <query ID="GetOrgIdByRoutingNumberAndOrgName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP(1) ORG_ID FROM SGT_ORGANIZATION WHERE ORG_NAME = @ORG_NAME AND ROUTING_NUMBER = @ROUTING_NUMBER &#xD;&#xA;ORDER BY ORG_ID DESC">
+      <parameters>
+        <parameter ID="@ORG_NAME" sfwDataType="string" />
+        <parameter ID="@ROUTING_NUMBER" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetOrgsDetailsByAbaSwiftBankCode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT ORG_NAME, ORG_ID, ABA_SWIFT_BANK_CODE FROM SGT_ORGANIZATION WITH(NOLOCK) WHERE ABA_SWIFT_BANK_CODE = @ABA_SWIFT_BANK_CODE">
+      <parameters>
+        <parameter ID="@ABA_SWIFT_BANK_CODE" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="org_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="OrgId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="mpi_org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="False" ID="MpiOrgId" sfwIsSequence="False" sfwCaption="Mpi Org Id" />
+    <attribute sfwValue="org_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="OrgName" sfwIsSequence="False" sfwCaption="Org Name" />
+    <attribute sfwValue="phone_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="PhoneNo" sfwIsSequence="False" sfwCaption="Phone No" />
+    <attribute sfwValue="fax_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="FaxNo" sfwIsSequence="False" sfwCaption="Fax No" />
+    <attribute sfwValue="email_address" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="70" sfwIsNull="True" ID="EmailAddress" sfwIsSequence="False" sfwCaption="Email Address" />
+    <attribute sfwType="Description" ID="OrgTypeDescription" sfwCaption="Org Type" sfwValue="org_type_description" />
+    <attribute sfwValue="org_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="OrgTypeId" sfwCodeID="201" sfwIsSequence="False" sfwCaption="Org Type" />
+    <attribute sfwValue="org_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="OrgTypeValue" sfwIsSequence="False" sfwCaption="Org Type" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="10" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="routing_number" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="RoutingNumber" sfwIsSequence="False" sfwCaption="Routing Number" />
+    <attribute sfwValue="federal_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="FederalId" sfwIsSequence="False" sfwCaption="Federal Id" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwType="Description" ID="PaymentTypeDescription" sfwCaption="Payment Type" sfwValue="payment_type_description" />
+    <attribute sfwValue="payment_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PaymentTypeId" sfwCodeID="7039" sfwIsSequence="False" sfwCaption="Payment Type" />
+    <attribute sfwValue="payment_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="PaymentTypeValue" sfwIsSequence="False" sfwCaption="Payment Type" />
+    <attribute sfwValue="care_of" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4096" sfwIsNull="True" ID="CareOf" sfwIsSequence="False" sfwCaption="Care Of" />
+    <attribute sfwValue="aba_swift_bank_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="AbaSwiftBankCode" sfwIsSequence="False" sfwCaption="AbaSwiftBankCode" />
+    <attribute sfwType="Collection" sfwEntity="entOrgBank" ID="lstOrgBank" sfwValue="iclbOrgBank" />
+    <attribute ID="objOrgAddress" sfwType="Object" sfwEntity="entOrgAddress" sfwValue="ibusOrgAddress" />
+    <attribute sfwType="Collection" sfwEntity="entOrgAddress" ID="lstOrgAddress" sfwValue="iclbOrgAddress" />
+    <attribute sfwType="Collection" sfwEntity="entNotes" ID="lstNotes" sfwValue="iclbNotes" />
+    <attribute sfwType="Collection" sfwEntity="entReturnedMail" ID="lstReturnedMail" sfwValue="iclbReturnedMail" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSelectedFlag" sfwValue="icdoOrganization.istrSelectedFlag" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadOrgAddresss" sfwReturnType="Void" />
+  </objectmethods>
+  <methods />
+  <lifecycle />
+  <ExtraFields />
+</entity>

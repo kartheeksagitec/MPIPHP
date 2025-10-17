@@ -1,0 +1,103 @@
+﻿<entity ID="entOrgAddress" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoOrgAddress" sfwReadOnlyRule="RULE_READONLY_END_DATE_PRESENT" sfwObjectID="busOrgAddress" sfwTableName="sgt_org_address" sfwView="False" sfwDataObjectID="doOrgAddress">
+  <rules>
+    <rule ID="RULE_CHECK_ADDRESS_LINE1_IS_BLANK" sfwMessageId="1114" sfwExpression="(string.IsNullOrEmpty(this.icdoOrgAddress.addr_line_1))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_CITY_IS_BLANK" sfwMessageId="1116" sfwExpression="(string.IsNullOrEmpty(this.icdoOrgAddress.city))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_COUNTRY_IS_BLANK" sfwMessageId="1115" sfwExpression="(string.IsNullOrEmpty(this.icdoOrgAddress.country_value))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_DUPLICATE_ADDRESS_TYPE" sfwMessageId="1186" sfwMessageParameters="icdoOrgAddress.address_type_description" sfwExpression="(this.CheckDuplicateAddressType() == True)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_NUMERIC_ZIP_4_CODE" sfwMessageId="1156" sfwExpression="(!RFunc.IsNumeric(this.icdoOrgAddress.zip_4_code))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_NUMERIC_ZIPCODE" sfwMessageId="1156" sfwExpression="(!RFunc.IsNumeric(this.icdoOrgAddress.zip_code))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_START_DATE_NULL" sfwMessageId="1123" sfwExpression="(this.icdoOrgAddress.start_date == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="Rule_IF_State_is blank" sfwMessageId="1154" sfwExpression="(this.icdoOrgAddress.country_value == &quot;0001&quot;) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.icdoOrgAddress.state_value))" sfwObjectBased="True" />
+    <rule ID="RULE_READONLY_END_DATE_PRESENT" sfwExpression="((this.icdoOrgAddress.end_date &lt;= RFunc.CurrentDate()) &amp;&amp; &#xA;!(this.icdoOrgAddress.end_date == DateTime.MinValue))" sfwObjectBased="True" />
+    <rule ID="RULE_ZIP_BLANK" sfwMessageId="1171" sfwExpression="(this.icdoOrgAddress.country_value == &quot;0001&quot;) &amp;&amp; &#xA;(RFunc.Length(this.icdoOrgAddress.zip_code) != 5) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.icdoOrgAddress.zip_code))" sfwObjectBased="True" />
+    <rule ID="Rule-CHECK_END_DATE_GREATER_START_DATE" sfwMessageId="1122" sfwExpression="!(this.icdoOrgAddress.end_date == DateTime.MinValue) &amp;&amp; &#xA;(this.icdoOrgAddress.start_date &gt; this.icdoOrgAddress.end_date)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_ZIP_LENGTH" sfwMessageId="1171" sfwExpression="(this.icdoOrgAddress.country_value ==&quot;0001&quot;)&amp;&amp;&#xD;&#xA;(RFunc.Length(this.icdoOrgAddress.zip_code) != 5) &#xD;&#xA;" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_ZIP_LENGTH_FOREIGN" sfwRuleType="Validation" sfwExpression="(this.icdoOrgAddress.country_value !=&quot;0001&quot;)&amp;&amp;&#xD;&#xA;(RFunc.Length(this.icdoOrgAddress.foreign_postal_code) == 0) &#xD;&#xA;" sfwMessageId="6286" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_ENDDATE_NOT_LESS_THAN_YESTERDAY" sfwRuleType="Validation" sfwExpression="(this.icdoOrgAddress.end_date != DateTime.MinValue)&#xD;&#xA; &amp;&amp; (this.icdoOrgAddress.end_date != DateTime.Now.AddDays(-1).Date)" sfwMessageId="1185" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_START_DATE_GREATER_THAN_EQUAL_TODAY" sfwRuleType="Validation" sfwExpression="!(this.icdoOrgAddress.end_date == DateTime.MinValue) &amp;&amp; &#xD;&#xA;(this.icdoOrgAddress.start_date.Date &lt; DateTime.Now.Date)&#xD;&#xA;" sfwMessageId="1186" sfwObjectBased="True" />
+    <rule ID="RULE_ASSIGN_ADDRESS_TYPE_MAIL" sfwRuleType="Validation" sfwExpression="(this.icdoOrgAddress.address_type_value == &quot;MAIL&quot;)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="RULE_READONLY_END_DATE_PRESENT" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_ASSIGN_ADDRESS_TYPE_MAIL" sfwStatus="Active" sfwMode="All" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <item ID="RULE_CHECK_ADDRESS_LINE1_IS_BLANK" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_CITY_IS_BLANK" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_COUNTRY_IS_BLANK" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_START_DATE_NULL" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-CHECK_END_DATE_GREATER_START_DATE" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule_IF_State_is blank" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_ZIP_BLANK" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_NUMERIC_ZIPCODE" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_NUMERIC_ZIP_4_CODE" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_ZIP_LENGTH" sfwStatus="Active" sfwMode="All" />
+    <item ID="RULE_CHECK_ZIP_LENGTH_FOREIGN" sfwStatus="Active" sfwMode="All" />
+    <item ID="RULE_CHECK_ENDDATE_NOT_LESS_THAN_YESTERDAY" sfwStatus="Active" sfwMode="All" />
+    <item ID="RULE_CHECK_DUPLICATE_ADDRESS_TYPE" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <queries>
+    <query ID="GetFullAddress" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA; select * from SGT_ORG_ADDRESS where START_DATE&lt;=GETDATE() AND (END_DATE&gt;=GETDATE() OR END_DATE IS NULL) and org_id = @org_id">
+      <parameters>
+        <parameter ID="@org_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOMahaFullAddress" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT ORG.MPI_ORG_ID as OrgMpId, ORG.ORG_NAME as org_name,ORGADDRESS.ADDR_LINE_1,ORGADDRESS.ADDR_LINE_2,ORGADDRESS.CITY,UPPER(ORGADDRESS.STATE_VALUE) AS STATE_VALUE,ORGADDRESS.ZIP_CODE  FROM SGT_ORGANIZATION ORG&#xD;&#xA;  INNER JOIN SGT_ORG_ADDRESS  ORGADDRESS ON ORG.ORG_ID = ORGADDRESS.ORG_ID&#xD;&#xA;  WHERE ORG.MPI_ORG_ID ='M30368621' and ORGADDRESS.end_date is null">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="org_address_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="OrgAddressId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="OrgId" sfwIsSequence="False" sfwCaption="Org Id" />
+    <attribute sfwType="Description" ID="AddressTypeDescription" sfwCaption="Address Type" sfwValue="address_type_description" />
+    <attribute sfwValue="address_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AddressTypeId" sfwCodeID="6030" sfwIsSequence="False" sfwCaption="Address Type" />
+    <attribute sfwValue="address_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="AddressTypeValue" sfwIsSequence="False" sfwCaption="Address Type" />
+    <attribute sfwValue="addr_line_1" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="60" sfwIsNull="True" ID="AddrLine1" sfwIsSequence="False" sfwCaption="Addr Line 1" />
+    <attribute sfwValue="addr_line_2" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="60" sfwIsNull="True" ID="AddrLine2" sfwIsSequence="False" sfwCaption="Addr Line 2" />
+    <attribute sfwValue="city" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="City" sfwIsSequence="False" sfwCaption="City" />
+    <attribute sfwType="Description" ID="StateDescription" sfwCaption="State" sfwValue="state_description" />
+    <attribute sfwValue="state_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StateId" sfwCodeID="150" sfwIsSequence="False" sfwCaption="State" />
+    <attribute sfwValue="state_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StateValue" sfwIsSequence="False" sfwCaption="State" />
+    <attribute sfwType="Description" ID="CountryDescription" sfwCaption="Country" sfwValue="country_description" />
+    <attribute sfwValue="country_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CountryId" sfwCodeID="151" sfwIsSequence="False" sfwCaption="Country" />
+    <attribute sfwValue="country_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="CountryValue" sfwIsSequence="False" sfwCaption="Country" />
+    <attribute sfwValue="zip_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="5" sfwIsNull="True" ID="ZipCode" sfwIsSequence="False" sfwCaption="Zip Code" />
+    <attribute sfwValue="zip_4_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="Zip4Code" sfwIsSequence="False" sfwCaption="Zip 4 Code" />
+    <attribute sfwValue="start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="StartDate" sfwIsSequence="False" sfwCaption="Start Date" />
+    <attribute sfwValue="end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndDate" sfwIsSequence="False" sfwCaption="End Date" />
+    <attribute sfwValue="primary_addr_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="PrimaryAddrFlag" sfwIsSequence="False" sfwCaption="Primary Addr Flag" />
+    <attribute sfwValue="non_deliverable_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="NonDeliverableFlag" sfwIsSequence="False" sfwCaption="Non Deliverable Flag" />
+    <attribute sfwValue="foreign_province" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="256" sfwIsNull="True" ID="ForeignProvince" sfwIsSequence="False" sfwCaption="Foreign Province" />
+    <attribute sfwValue="foreign_postal_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="256" sfwIsNull="True" ID="ForeignPostalCode" sfwIsSequence="False" sfwCaption="Foreign Postal Code" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="10" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrFullAddress" sfwValue="icdoOrgAddress.istrFullAddress" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IsReturnFlag" sfwValue="IsReturnFlag" />
+  </attributes>
+  <objectmethods>
+    <method ID="GetStateOrProvinceBasedOnCountry" sfwReturnType="Collection" sfwObjectID="cdoCodeValue" sfwEntity="entCodeValue">
+      <parameters>
+        <parameter ID="aintCountryValue" sfwDataType="int" />
+      </parameters>
+    </method>
+  </objectmethods>
+  <methods />
+  <lifecycle />
+  <ExtraFields />
+</entity>

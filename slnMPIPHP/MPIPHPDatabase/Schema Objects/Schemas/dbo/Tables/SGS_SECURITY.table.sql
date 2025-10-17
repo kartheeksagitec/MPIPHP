@@ -1,0 +1,12 @@
+﻿CREATE TABLE [dbo].[SGS_SECURITY] (
+    [ROLE_ID]        [dbo].[UDT_IDENTITY]   NOT NULL,
+    [RESOURCE_ID]    [dbo].[UDT_ID]         NOT NULL,
+    [SECURITY_ID]    [dbo].[UDT_CODE_ID]    NOT NULL,
+    [SECURITY_VALUE] [dbo].[UDT_CODE_ID]    NOT NULL,
+    [CREATED_BY]     [dbo].[UDT_CREATEDBY]  NOT NULL,
+    [CREATED_DATE]   [dbo].[UDT_DATETIME]   NOT NULL,
+    [MODIFIED_BY]    [dbo].[UDT_MODIFIEDBY] NOT NULL,
+    [MODIFIED_DATE]  [dbo].[UDT_DATETIME]   NOT NULL,
+    [UPDATE_SEQ]     [dbo].[UDT_UPDSEQ]     NOT NULL
+);
+

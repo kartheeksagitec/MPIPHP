@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entCode" sfwActive="False" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwType="BusinessRule" sfwMainCDO="icdoCode" DesignStatus="Review" sfwObjectID="busCode" sfwTableName="sgs_code" sfwDataObjectID="doCode">
+  <rules>
+    <rule ID="CodeIDBlank" sfwMessageId="50" sfwExpression="(this.icdoCode.code_id == 0)" sfwObjectBased="True" />
+    <rule ID="CodeIDExists" sfwMessageId="51" sfwExpression="!(this.icdoCode.code_id == 0) &amp;&amp; &#xA;(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entCode.CodeIDExists&quot;, this.icdoCode.code_id) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="ContainsCodeValue" sfwMessageId="41" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entCodeValue.Count&quot;, this.icdoCode.code_id) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="Data1BlankWithDataType" sfwMessageId="71" sfwExpression="(!string.IsNullOrEmpty(this.icdoCode.data1_type)) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.icdoCode.data1_caption))" sfwObjectBased="True" />
+    <rule ID="Data1WithNoDataType" sfwMessageId="72" sfwExpression="(!string.IsNullOrEmpty(this.icdoCode.data1_caption)) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.icdoCode.data1_type))" sfwObjectBased="True" />
+    <rule ID="Data2BlankWithDataType" sfwMessageId="73" sfwExpression="(!string.IsNullOrEmpty(this.icdoCode.data2_type)) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.icdoCode.data2_caption))" sfwObjectBased="True" />
+    <rule ID="Data2WithNoDataType" sfwMessageId="73" sfwExpression="(!string.IsNullOrEmpty(this.icdoCode.data2_caption)) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.icdoCode.data2_type))" sfwObjectBased="True" />
+    <rule ID="Data3BlankWithDataType" sfwMessageId="74" sfwExpression="(string.IsNullOrEmpty(this.icdoCode.data3_caption)) &amp;&amp; &#xA;(!string.IsNullOrEmpty(this.icdoCode.data3_type))" sfwObjectBased="True" />
+    <rule ID="Data3WithNoDataType" sfwMessageId="75" sfwExpression="(!string.IsNullOrEmpty(this.icdoCode.data3_caption)) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.icdoCode.data3_type))" sfwObjectBased="True" />
+    <rule ID="RULE CHECK CODE DESCRIPTION IS NOT BLANK" sfwMessageId="49" sfwExpression="(string.IsNullOrEmpty(this.icdoCode.description))" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="Data1WithNoDataType" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data2WithNoDataType" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data3WithNoDataType" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data1BlankWithDataType" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data2BlankWithDataType" sfwMode="All" sfwStatus="Active" />
+    <item ID="Data3BlankWithDataType" sfwMode="All" sfwStatus="Active" />
+    <item ID="CodeIDBlank" sfwMode="New" sfwStatus="Active" />
+    <item ID="CodeIDExists" sfwMode="New" sfwStatus="Active" />
+    <item ID="RULE CHECK CODE DESCRIPTION IS NOT BLANK" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete>
+    <item ID="ContainsCodeValue" sfwMode="All" sfwStatus="Active" ErrorType="Hard error" PreConditionOperator="All" IsPreCondition="No" CompareObjectDesc="number of records in the sgs_code_value table for a given code" CompareObjectSourceType="ScalarQuery" CompareObjectSource="qryCountCodeValue" CompareObjectDataType="integer" CompareWithSourceType="Constant" CompareWithSource="0" ComparisonOperator="GreaterThan" ErrorCode="33" Active="Yes" />
+  </validatedelete>
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_code&#xD;&#xA; order by code_id&#xD;&#xA;&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="CodeIDExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgs_code &#xD;&#xA;where code_id = @code_id">
+      <parameters>
+        <parameter ID="@code_id" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="code_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="CodeId" sfwIsSequence="False" sfwCaption="Code Id" />
+    <attribute sfwValue="description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="Description" sfwIsSequence="False" sfwCaption="Description" />
+    <attribute sfwValue="data1_caption" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="Data1Caption" sfwIsSequence="False" sfwCaption="Data1 Caption" />
+    <attribute sfwValue="data1_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="Data1Type" sfwIsSequence="False" sfwCaption="Data1 Type" />
+    <attribute sfwValue="data2_caption" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="Data2Caption" sfwIsSequence="False" sfwCaption="Data2 Caption" />
+    <attribute sfwValue="data2_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="Data2Type" sfwIsSequence="False" sfwCaption="Data2 Type" />
+    <attribute sfwValue="data3_caption" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="Data3Caption" sfwIsSequence="False" sfwCaption="Data3 Caption" />
+    <attribute sfwValue="data3_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="Data3Type" sfwIsSequence="False" sfwCaption="Data3 Type" />
+    <attribute sfwValue="first_lookup_item" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="FirstLookupItem" sfwIsSequence="False" sfwCaption="First Lookup Item" />
+    <attribute sfwValue="first_maintenance_item" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="FirstMaintenanceItem" sfwIsSequence="False" sfwCaption="First Maintenance Item" />
+    <attribute sfwValue="comments" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="Comments" sfwIsSequence="False" sfwCaption="Comments" />
+    <attribute sfwValue="legacy_code_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="10" sfwIsNull="True" ID="LegacyCodeId" sfwIsSequence="False" sfwCaption="Legacy Code Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwType="Collection" sfwEntity="entCodeValue" ID="lstCodeValue" sfwValue="iclbCodeValue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="Data1CaptionDisplay" sfwValue="icdoCode.data1_caption_display" />
+    <attribute sfwDataType="string" sfwType="Property" ID="Data2CaptionDisplay" sfwValue="icdoCode.data2_caption_display" />
+    <attribute sfwDataType="string" sfwType="Property" ID="Data3CaptionDisplay" sfwValue="icdoCode.data3_caption_display" />
+  </attributes>
+</entity>

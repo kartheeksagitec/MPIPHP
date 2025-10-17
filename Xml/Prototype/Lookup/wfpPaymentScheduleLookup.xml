@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfpPaymentScheduleLookup" sfwActive="True" sfwStatus="Review" sfwType="Lookup" sfwTitle="Payment Schedule Lookup" version="3.5" sfwEntity="entPrototype">
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="Payment Cycle Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Check Effective Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox1" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="Processed Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox2" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel6" Text="ACH Effective Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox4" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="Schedule Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList" sfwLoadType="Items">
+                  <ListItem Value="BLNK" Selected="True" />
+                  <ListItem Text="Adhoc" Value="ADHC" />
+                  <ListItem Text="Monthly" Value="MNTY" />
+                  <ListItem Text="Weekly" Value="WKLY" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" Text="Status :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList1" sfwLoadType="Items">
+                  <ListItem Value="BLNK" Selected="True" />
+                  <ListItem Text="Cancelled" Value="CNLD" />
+                  <ListItem Text="Failed" Value="FILD" />
+                  <ListItem Text="Pending" Value="PEND" />
+                  <ListItem Text="Processed" Value="PRSD" />
+                  <ListItem Text="Ready for Final" Value="RDFN" />
+                  <ListItem Text="Trial Executed" Value="TREX" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel5" Text="Payment Schedule ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox3" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnPrototypeSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfpPaymentScheduleMaintenance" sfwMethodName="btnNew_Click" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfpPaymentScheduleMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="form_name=#wfpPaymentScheduleLookup;grid_view=#dgrResult;row_index=#Index" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwObjectID="busPrototypeLookup.iclbPrototype" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Payment Schedule ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="Property0" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Cycle Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="ACH Effective Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property2" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Notice Due Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property3" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Documents Due Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property4" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Setup Cutoff Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property5" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Check File Release Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property6" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="ABF Processing Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property7" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Check Mailing Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property8" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Schedule Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property9" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property10" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Processed Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property11" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Data>
+                    <DataRow>
+                      <DataColumn Value="9001" sfwEntityField="Property0" />
+                      <DataColumn Value="07/01/2012" sfwEntityField="Property1" />
+                      <DataColumn Value="06/29/2012" sfwEntityField="Property2" />
+                      <DataColumn Value="04/30/2012" sfwEntityField="Property3" />
+                      <DataColumn Value="05/31/2012" sfwEntityField="Property4" />
+                      <DataColumn Value="06/20/2012" sfwEntityField="Property5" />
+                      <DataColumn Value="06/27/2012" sfwEntityField="Property6" />
+                      <DataColumn Value="06/28/2012" sfwEntityField="Property7" />
+                      <DataColumn Value="06/29/2012" sfwEntityField="Property8" />
+                      <DataColumn Value="Monthly" sfwEntityField="Property9" />
+                      <DataColumn Value="Processed" sfwEntityField="Property10" />
+                      <DataColumn Value="06/28/2012" sfwEntityField="Property11" />
+                    </DataRow>
+                    <DataRow>
+                      <DataColumn Value="9002" sfwEntityField="Property0" />
+                      <DataColumn Value="07/13/2012" sfwEntityField="Property1" />
+                      <DataColumn Value="07/13/2012" sfwEntityField="Property2" />
+                      <DataColumn Value="07/13/2012" sfwEntityField="Property3" />
+                      <DataColumn sfwEntityField="Property4" />
+                      <DataColumn sfwEntityField="Property5" />
+                      <DataColumn sfwEntityField="Property6" />
+                      <DataColumn sfwEntityField="Property7" />
+                      <DataColumn sfwEntityField="Property8" />
+                      <DataColumn Value="Adhoc" sfwEntityField="Property9" />
+                      <DataColumn Value="Processed" sfwEntityField="Property10" />
+                      <DataColumn Value="07/13/2012" sfwEntityField="Property11" />
+                    </DataRow>
+                    <DataRow>
+                      <DataColumn Value="9003" sfwEntityField="Property0" />
+                      <DataColumn Value="08/01/2012" sfwEntityField="Property1" />
+                      <DataColumn Value="07/31/2012" sfwEntityField="Property2" />
+                      <DataColumn Value="05/31/2012" sfwEntityField="Property3" />
+                      <DataColumn Value="06/30/2012" sfwEntityField="Property4" />
+                      <DataColumn Value="07/20/2012" sfwEntityField="Property5" />
+                      <DataColumn Value="07/27/2012" sfwEntityField="Property6" />
+                      <DataColumn Value="07/30/2012" sfwEntityField="Property7" />
+                      <DataColumn Value="07/31/2012" sfwEntityField="Property8" />
+                      <DataColumn Value="Monthly" sfwEntityField="Property9" />
+                      <DataColumn Value="Pending" sfwEntityField="Property10" />
+                      <DataColumn sfwEntityField="Property11" />
+                    </DataRow>
+                  </Data>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmIAPAllocationDetailMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvIAPAllocation" sfwResource="210 " sfwType="Maintenance" sfwTitle="IAPAllocation Detail Maintenance" version="3.5" sfwEntity="entIAPAllocationDetailPersonOverview">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindIAPAllocationDetailPersonOverview" />
+    <callmethods sfwMode="Update" sfwMethodName="FindIAPAllocationDetailPersonOverview" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" />
+                <sfwButton ID="btnAdjustOverPayment" sfwActiveForm="wfmIAPAllocationDetailMaintenance" sfwMethodName="btnExecuteBusinessMethod_Click" sfwObjectMethod="btn_AdjustOverPayment" Text="OverPayment Offset" sfwVisibleRule="Visibility-OverpaymentAdjustmentButton" ForeColor="Red" ToolTip="This participant has an overpayment which can be offset by the IAP/Special Account Balance. Click here to continue." OnClientClick="return confirm('This operation will reduce or eliminate the Overpaid balance. ')" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Person Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="btnMpiPersonId" ID="capMpiPersonId" Text="MPID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMpiPersonId" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=PersonId" sfwEntityField="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrLast4DigitsofSSN" ID="capIstrLast4DigitsofSSN" Text="Last 4Digits of SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrLast4DigitsofSSN" sfwEntityField="IstrLast4DigitsofSSN" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIdtDateofBirth" ID="capIdtDateofBirth" Text="Date of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtDateofBirth" sfwDataFormat="{0:d}" sfwEntityField="IdtDateofBirth" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPersonId" SkinID="textBoxDisplayStyleNone" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtLintPersonAccountId" SkinID="textBoxDisplayStyleNone" sfwEntityField="LintPersonAccountId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlIAPDetails" sfwCaption="IAP Allocation Details">
+          <sfwTable ID="tblIAPDetails">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctIAPDetails">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="IAP" ID="tshNewPage">
+                      <sfwTable CssClass="Table" ID="tblNewPage">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="lblIdecThru79Balance" ID="capIdecThru79Balance" Text="Thru79 Hours : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn CssClass="full-width">
+                            <sfwLabel ID="lblIdecThru79Balance" sfwEntityField="IdecThru79Hours" sfwDataFormat="{0:N2}" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn CssClass="nowrap">
+                            <sfwButton ID="btnRecalculate" sfwActiveForm="wfmRecalculateIAPAllocationDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=PersonId" sfwResource="103" Text="Recalculate IAP Allocations" />
+                            <sfwButton ID="btnOpenIAPAllocationYearlyDetail" sfwActiveForm="wfmIAPAllocationYearlyDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=PersonId;aintPersonAccountId=LintPersonAccountId;adecComputationYear=ComputationalYear" sfwRelatedControl="grvIAPAllocationDetailPersonOverview" Text="Open Yearly Allocation Detail" Visible="False" />
+                            <sfwButton ID="btnExportToExcelClick1" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvIAPAllocationDetailPersonOverview" Text="Export To Excel" />
+                            <sfwButton ID="btnIAPAllocationYearlyPayment" sfwActiveForm="wfmIAPAllocationYearlyDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=PersonId;aintPersonAccountId=LintPersonAccountId;adecComputationYear=ComputationalYear;astrIsPayment=#Y" sfwRelatedControl="grvIAPAllocationDetailPersonOverview" Text="Open Yearly Payment Detail" Visible="False" />
+                          </sfwColumn>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="3">
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvIAPAllocationDetailPersonOverview" PageSize="1000" sfwEntityField="lstIAPAllocationDetailPersonOverview" sfwGridEntity="entIapAllocationDetailCalculation">
+                              <Columns>
+                                <TemplateField HeaderText="Plan Year" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenIAPAllocationYearlyDetail" sfwEntityField="ComputationalYear" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Quarter">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Quarter" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="YTD Hours">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Ytdhours" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="$.305 Hours">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IdecYTDHoursA2" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc1" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc1" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc2" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc2" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc2 Invt" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc2Invt" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc2 Frft" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc2Frft" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc3" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc3" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc4" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc4" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc4 Invt" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc4Invt" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc4 Frft" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc4Frft" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc5 Affl" Visible="False" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc5Affl" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc5 Both" Visible="False" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc5Both" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc5 Nonaffl" Visible="False" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc5Nonaffl" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc5">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc5" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Total Allocation">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Total" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Running Bal.">
+                                  <ItemTemplate>
+                                    <sfwLabel Text="IAPRunningBalance" sfwEntityField="IdecRunningIAPAllocationBalance" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Total Payment">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnIAPAllocationYearlyPayment" sfwEntityField="TotalPayment" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="IAP Account Balance">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IapAccountBalance" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="lblIdtIAPLatestAllocationDate" ID="IdtIAPLatestAllocationDate" Text="Latest IAP Allocation Date : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn CssClass="full-width">
+                            <sfwLabel ID="lblIdtIAPLatestAllocationDate" sfwDataFormat="{0:d}" sfwEntityField="IdtIAPLatestAllocationDate" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="lblIdecIAPAccountBalance" ID="capIdecIAPAccountBalance" Text="IAP Account Balance : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn CssClass="full-width">
+                            <sfwLabel ID="lblIdecIAPAccountBalance" sfwDataFormat="{0:C}" sfwEntityField="IdecIAPAccountBalance" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Local52 Special Account" ID="tshNewPage1">
+                      <sfwTable ID="tblNewPage1" CssClass="widthAutotbl Table">
+                        <sfwRow>
+                          <sfwColumn CssClass="nowrap">
+                            <sfwButton ID="btnL52Recalculate" sfwActiveForm="wfmRecalculateLFiftyTwoAllocationDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=PersonId" sfwResource="103" Text="Recalculate L52 Allocations" />
+                            <sfwButton ID="btnOpenLocal52YearlyDetail" sfwActiveForm="wfmIAPAllocationYearlyDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=PersonId;aintPersonAccountId=LintPersonAccountId;adecComputationYear=ComputationalYear;astrSpecialAccount=#L52" sfwRelatedControl="grvL52SpecialAccountDetailPersonOverview" Text="Open Yearly Allocation Detail" Visible="False" />
+                            <sfwButton ID="btnExportToExcelClick" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvL52SpecialAccountDetailPersonOverview" Text="Export To Excel" />
+                            <sfwButton ID="btnOpenLocal52YearlyPaymentDetail" sfwActiveForm="wfmIAPAllocationYearlyDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=PersonId;aintPersonAccountId=LintPersonAccountId;adecComputationYear=ComputationalYear;astrSpecialAccount=#L52;astrIsPayment=#Y" sfwRelatedControl="grvL52SpecialAccountDetailPersonOverview" Text="Open Yearly Allocation Detail" Visible="False" />
+                          </sfwColumn>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="3">
+                            <sfwGridView AllowSorting="True" AutoGenerateColumns="False" ID="grvL52SpecialAccountDetailPersonOverview" sfwEntityField="lstL52SpecialAccountDetailPersonOverview" sfwGridEntity="entIapAllocationDetailCalculation">
+                              <Columns>
+                                <TemplateField HeaderText="Plan Year" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenLocal52YearlyDetail" sfwEntityField="ComputationalYear" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Quarter">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Quarter" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc1" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc1" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc4" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc4" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Running Bal.">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="L52runningBalance" Text="L52runningBalance" sfwEntityField="IdecRunningIAPAllocationBalance" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Total Payment" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenLocal52YearlyPaymentDetail" sfwEntityField="TotalPayment" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Spl Account Balance" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IapAccountBalance" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="lblIdtL52SplLatestAllocationDate" ID="capIdtL52SplLatestAllocationDate" Text="Latest Local52 Special Account AllocationDate : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn CssClass="full-width">
+                            <sfwLabel ID="lblIdtL52SplLatestAllocationDate" sfwDataFormat="{0:d}" sfwEntityField="IdtL52SplLatestAllocationDate" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="lblIdecL52SplAccountBalance" ID="capIdecL52SplAccountBalance" Text="Local52 Special Account Balance : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn CssClass="full-width">
+                            <sfwLabel ID="lblIdecL52SplAccountBalance" sfwEntityField="IdecL52SplAccountBalance" sfwDataFormat="{0:C}" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Local161 Special Account" ID="tshNewPage2">
+                      <sfwTable ID="tblNewPage2">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnL161Recalculate" sfwActiveForm="wfmRecalculateLOneSixtyOneAllocationDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=PersonId" sfwResource="103" Text="Recalculate L161 Allocations" />
+                            <sfwButton ID="btnOpenLocal161AllocationDetail" sfwActiveForm="wfmIAPAllocationYearlyDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=PersonId;aintPersonAccountId=LintPersonAccountId;adecComputationYear=ComputationalYear;astrSpecialAccount=#L161" sfwRelatedControl="grvL161SpecialAccountDetailPersonOverview" Text="Open Yearly Allocation Detail" Visible="False" />
+                            <sfwButton ID="btnExportToExcelClick2" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvL161SpecialAccountDetailPersonOverview" Text="Export To Excel" />
+                            <sfwButton ID="btnOpenLocal161AllocationYearlyPaymentDetail" sfwActiveForm="wfmIAPAllocationYearlyDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=PersonId;aintPersonAccountId=LintPersonAccountId;adecComputationYear=ComputationalYear;astrSpecialAccount=#L161;astrIsPayment=#Y" sfwRelatedControl="grvL161SpecialAccountDetailPersonOverview" Text="Open Yearly Allocation Detail" Visible="False" />
+                          </sfwColumn>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowSorting="True" AutoGenerateColumns="False" ID="grvL161SpecialAccountDetailPersonOverview" sfwEntityField="lstL161SpecialAccountDetailPersonOverview" sfwGridEntity="entIapAllocationDetailCalculation">
+                              <Columns>
+                                <TemplateField HeaderText="Plan Year" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenLocal161AllocationDetail" sfwEntityField="ComputationalYear" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Quarter">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Quarter" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc1" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc1" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Alloc4" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Alloc4" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Running Bal.">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblLabel" Text="L161RunningBalance" sfwEntityField="IdecRunningIAPAllocationBalance" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Total Payment" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenLocal161AllocationYearlyPaymentDetail" sfwEntityField="TotalPayment" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Spl Account Balance" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IapAccountBalance" sfwDataFormat="{0:N2}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="lblIdtL161SplLatestAllocationDate" ID="capIdtL161SplLatestAllocationDate" Text="Latest Local 161 Special Account AllocationDate : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblIdtL161SplLatestAllocationDate" sfwDataFormat="{0:d}" sfwEntityField="IdtL161SplLatestAllocationDate" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="lblIdecL161SplAccountBalance" ID="capIdecL161SplAccountBalance" Text="Local 161 Special Account Balance : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblIdecL161SplAccountBalance" sfwDataFormat="{0:C}" sfwEntityField="IdecL161SplAccountBalance" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="IAP Recalculation Review" ID="tshNewPage3">
+                      <sfwTable ID="tblNewPage3">
+                        <sfwRow>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn ColumnSpan="5">
+                            <sfwGridView AllowSorting="True" AutoGenerateColumns="False" ID="grvIAPRecalculationReview" sfwEntityField="lstIAPRecalculationCopy" sfwGridEntity="entIapRecalculationCopy">
+                              <Columns>
+                                <TemplateField HeaderText="File Name" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblFileName" sfwEntityField="FileName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Recalculated Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="RecalcDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Pdf File" SortExpression="PathCode" ItemStyle.HorizontalAlign="Center" HeaderStyle.HorizontalAlign="Center" SortExpressionUpdated="true">
+                                  <ItemTemplate>
+                                    <sfwImageButton ID="btnDownload1" sfwMethodName="btn_OpnPDF" sfwNavigationParameter="astr_filename=FileName" sfwObjectMethod="RenderPDF" sfwRelatedControl="grvIAPRecalculationReview" Text="Open File" sfwCheckChanges="False" ImageUrl="btnOpenFile.png" Visible="False" />
+                                    <sfwButton ID="btnOpenPDFReport" sfwMethodName="btnOpen_Click" sfwNavigationParameter="astrFileName=FileName" sfwRelatedControl="grvIAPRecalculationReview" Text="Open File" OnClientClick="fnOpenPDF(e);" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstIAPAllocationDetailPersonOverview" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstL52SpecialAccountDetailPersonOverview" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstL161SpecialAccountDetailPersonOverview" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstIAPRecalculationCopy" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

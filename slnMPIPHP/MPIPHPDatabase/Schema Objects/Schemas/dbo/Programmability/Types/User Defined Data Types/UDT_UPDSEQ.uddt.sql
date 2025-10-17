@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_UPDSEQ]
+    FROM INT NULL;
+

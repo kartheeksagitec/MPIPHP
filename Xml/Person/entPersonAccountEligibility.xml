@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPersonAccountEligibility" sfwMainCDO="icdoPersonAccountEligibility" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busPersonAccountEligibility" sfwTableName="sgt_person_account_eligibility" sfwView="False" sfwDataObjectID="doPersonAccountEligibility">
+  <queries>
+    <query ID="GetEligibilityInfoFromAccountID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_PERSON_ACCOUNT_ELIGIBILITY WITH(NOLOCK) where PERSON_ACCOUNT_ID=@PERSON_ACCOUNT_ID">
+      <parameters>
+        <parameter ID="@PERSON_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPensionCreditsByPlanCode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPAE.PENSION_CREDITS FROM SGT_PERSON_ACCOUNT_ELIGIBILITY SPAE WITH(NOLOCK) &#xD;&#xA;INNER JOIN SGT_PERSON_ACCOUNT SPA WITH(NOLOCK) ON SPA.PERSON_ACCOUNT_ID=SPAE.PERSON_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PLAN P WITH(NOLOCK) ON P.PLAN_ID=SPA.PLAN_ID&#xD;&#xA;WHERE SPAE.PERSON_ACCOUNT_ID=@PERSON_ACCOUNT_ID AND P.PLAN_CODE=@PLAN_CODE">
+      <parameters>
+        <parameter ID="@PERSON_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_CODE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="CheckIfPersonIsVested" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) from SGT_PERSON_ACCOUNT_ELIGIBILITY SPAE INNER JOIN SGT_PERSON_ACCOUNT SPA&#xD;&#xA;ON SPAE.PERSON_ACCOUNT_ID=SPA.PERSON_ACCOUNT_ID WHERE SPA.PERSON_ID=@PERSON_ID AND SPA.PLAN_ID=2&#xD;&#xA;AND (VESTED_DATE IS NOT NULL OR VESTED_DATE &lt;&gt; '')">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetVestingDateOfPersonMPIPP" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPAE.VESTED_DATE FROM SGT_PERSON_ACCOUNT_ELIGIBILITY SPAE INNER JOIN SGT_PERSON_ACCOUNT SPA&#xD;&#xA;ON SPAE.PERSON_ACCOUNT_ID=SPA.PERSON_ACCOUNT_ID WHERE SPA.PERSON_ID=@PERSON_ID&#xD;&#xA; AND SPA.PLAN_ID=2">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPensionCreditsForAllPlans" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT P.PLAN_CODE,SPAE.PENSION_CREDITS FROM SGT_PERSON_ACCOUNT_ELIGIBILITY SPAE&#xD;&#xA;INNER JOIN SGT_PERSON_ACCOUNT SPA WITH(NOLOCK) ON SPA.PERSON_ACCOUNT_ID=SPAE.PERSON_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PLAN P WITH(NOLOCK) ON P.PLAN_ID=SPA.PLAN_ID&#xD;&#xA;INNER JOIN SGT_PERSON SP ON SP.PERSON_ID=SPA.PERSON_ID&#xD;&#xA;WHERE SP.PERSON_ID=@PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetVestedDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SPAE.VESTED_DATE FROM SGT_PERSON_ACCOUNT_ELIGIBILITY SPAE&#xD;&#xA;INNER JOIN SGT_PERSON_ACCOUNT SPA&#xD;&#xA;ON SPAE.PERSON_ACCOUNT_ID = SPA.PERSON_ACCOUNT_ID&#xD;&#xA;WHERE SPA.PERSON_ID = @PERSON_ID AND SPA.PLAN_ID = @PLAN_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetVestedDateForMD" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT &#xD;&#xA; SPAE.VESTED_DATE &#xD;&#xA;FROM &#xD;&#xA; SGT_PERSON_ACCOUNT_ELIGIBILITY SPAE&#xD;&#xA; JOIN SGT_PERSON_ACCOUNT SPA ON SPA.PERSON_ACCOUNT_ID=SPAE.PERSON_ACCOUNT_ID&#xD;&#xA;WHERE&#xD;&#xA; SPA.PERSON_ID = @PERSON_ID AND&#xD;&#xA; SPA.PLAN_ID IN (2, 3, 4, 6, 7, 8) AND &#xD;&#xA; (SPAE.VESTED_DATE IS NOT NULL OR ISNULL(SPAE.VESTED_DATE,'1/1/1900') &gt; ISNULL(SPAE.FORFEITURE_DATE,'1/1/1900'))&#xD;&#xA; AND SPA.STATUS_VALUE IN ('ACTV','INAC') ">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="person_account_eligibility_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonAccountEligibilityId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="person_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonAccountId" sfwIsSequence="False" sfwCaption="Person Account Id" />
+    <attribute sfwValue="vested_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="VestedDate" sfwIsSequence="False" sfwCaption="Vested Date" />
+    <attribute sfwValue="vesting_rule" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="VestingRule" sfwIsSequence="False" sfwCaption="Vesting Rule" />
+    <attribute sfwValue="forfeiture_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ForfeitureDate" sfwIsSequence="False" sfwCaption="Forfeiture Date" />
+    <attribute sfwValue="last_evaluated_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="LastEvaluatedDate" sfwIsSequence="False" sfwCaption="Last Evaluated Date" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="1505" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="pension_credits" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,6" sfwIsNull="True" ID="PensionCredits" sfwIsSequence="False" sfwCaption="Pension Credits" />
+    <attribute sfwValue="local_qualified_years" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="LocalQualifiedYears" sfwCaption="Local Qualified Years" />
+    <attribute sfwValue="local_frozen_hours" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="LocalFrozenHours" sfwCaption="Local Frozen Hours" />
+  </attributes>
+</entity>

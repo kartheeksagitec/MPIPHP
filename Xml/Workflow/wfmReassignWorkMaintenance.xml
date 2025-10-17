@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmReassignWorkMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvWorkflow" sfwResource="200 " sfwType="Maintenance" sfwTitle="Reassign Work Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entReassignWork">
+  <initialload>
+    <callmethods sfwMethodName="SearchAndLoadReassignmentBasket" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Search Criteria">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIstrProcessName" Text="Process Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwDropDownList DataTextField="description" DataValueField="process_id" ID="ddlIintProcessID" sfwLoadType="Query" sfwLoadSource="entProcess.LoadActiveProcesses" sfwEntityField="IintProcessID" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIstrActivityName" Text="Activity : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwDropDownList DataTextField="display_name" DataValueField="activity_id" ID="ddlIintActivityID" sfwLoadType="Query" sfwLoadSource="entActivity.LoadActivityList" sfwEntityField="IintActivityID" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPersonID" Text="Participant MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMPIDPersonId" sfwEntityField="IstrMPID" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtPersonId" sfwSelectedIndex="PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPersonId" SkinID="textBoxDisplayStyleNone" sfwParameters="PERSON_ID=txtPersonId" sfwRetrievalControls="txtMPIDPersonId=mpi_person_id" sfwRetrievalQuery="entPerson.GetPersonMPID" sfwEntityField="IintPersonID" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIintReferenceId" Text="Reference ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtReferenceId" sfwDataType="Numeric" sfwEntityField="IintReferenceID" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblchecked_out_user" Text="User ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="user_id" DataValueField="user_id" ID="ddl_checked_out_user" sfwLoadType="Query" sfwLoadSource="entUser.LOADACTIVEUSER" sfwEntityField="IstrCheckedOutUser" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIdteRequestDateFrom" Text="Request Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRequestDateFrom" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtCreatedDateFrom" />
+                <CompareValidator ControlToValidate="txtRequestDateFrom" ErrorMessage="Request date from must be in mm/dd/yyyy format" ID="cmv" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIdteRequestDateTo" Text="Request Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRequestDateTo" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtCreatedDateTo" />
+                <CompareValidator ControlToValidate="txtRequestDateTo" ErrorMessage="Request date to must be in mm/dd/yyyy format" ID="cmv1" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtRequestDateFrom" ControlToValidate="txtRequestDateTo" ErrorMessage="Request date to cannot be less than Request date from" ID="cmv2" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIintSupervisorRoleId" Text="Supervisor Role Id : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="role_description" DataValueField="role_id" ID="ddlIintSupervisorRoleId" sfwLoadType="Query" sfwLoadSource="entRoles.ListOfRoles" sfwEntityField="IintSupervisorRoleID" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIstrRoleDiscription" Text="Role ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="role_description" DataValueField="role_id" ID="txtIstrRoleDiscription" sfwLoadType="Query" sfwLoadSource="entRoles.ListOfRoles" sfwEntityField="IintRoleID" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearchAndLoad" sfwMessageId="54" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="SearchAndLoadReassignmentBasket" sfwRefreshFromObject="True" Text="Apply Filter" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Reassignment Work Details">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmReassignWorkDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintActivityInstanceID=ActivityInstanceId" sfwRelatedControl="grvRoleAssginedActivities" Text="Open" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvRoleAssginedActivities" PageSize="50" sfwSelection="Many" sfwSortExpression="ActivityInstanceId desc" sfwEntityField="lstReassignmentActivities" sfwGridEntity="entActivityInstance" SortExpressionUpdated="true">
+                  <Columns>
+                    <TemplateField HeaderText="ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objProcess.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity ">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" ToolTip="Checkout" sfwEntityField="objActivity.DisplayName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPI Person ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objPerson.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Initiated">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.PersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objPerson.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User Role">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objActivity.objRoles.RoleDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CheckedOutUser" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstReassignmentActivities" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entMyBasket" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwObjectID="busMyBasket" sfwParentEntity="entMPIPHPBase">
+  <rules>
+    <rule ID="VisibleAssignedTab" sfwExpression="(this.istrMyBasketFilter == &quot;ASWO&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleCompletedTab" sfwExpression="(this.istrMyBasketFilter == &quot;COWO&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleSuspendedTab" sfwExpression="(this.istrMyBasketFilter == &quot;SUWO&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibleWorkPoolTab" sfwExpression="(this.istrMyBasketFilter == &quot;WKPO&quot;)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="VisibleAssignedTab" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleCompletedTab" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleSuspendedTab" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleWorkPoolTab" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="IintProcessID" sfwValue="iintProcessID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMpiPersonID" sfwValue="istrMpiPersonID" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintPersonID" sfwValue="iintPersonID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrOrgCode" sfwValue="istrOrgCode" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintReferenceID" sfwValue="iintReferenceID" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtRequestDateFrom" sfwValue="idtRequestDateFrom" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtRequestDateTo" sfwValue="idtRequestDateTo" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintRoleID" sfwValue="iintRoleID" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSource" sfwValue="istrSource" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLastFourDigitsOfSSN" sfwValue="istrLastFourDigitsOfSSN" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMyBasketFilter" sfwValue="istrMyBasketFilter" />
+    <attribute sfwType="Collection" sfwEntity="entActivityInstance" ID="lstRoleAssignedActivities" sfwValue="iclbRoleAssignedActivities" />
+    <attribute sfwType="Collection" sfwEntity="entActivityInstance" ID="lstUserAssignedActivities" sfwValue="iclbUserAssignedActivities" />
+    <attribute sfwType="Collection" sfwEntity="entActivityInstance" ID="lstUserSuspendedActivities" sfwValue="iclbUserSuspendedActivities" />
+    <attribute sfwType="Collection" sfwEntity="entActivityInstance" ID="lstUserCompletedActivities" sfwValue="iclbUserCompletedActivities" />
+  </attributes>
+  <objectmethods>
+    <method ID="SearchAndLoadMyBasket" sfwReturnType="ArrayList" />
+  </objectmethods>
+</entity>

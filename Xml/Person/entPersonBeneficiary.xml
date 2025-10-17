@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPersonBeneficiary" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoRelationship" sfwObjectID="busPersonBeneficiary" sfwParentEntity="entRelationship">
+  <rules>
+    <rule ID="RULE_CHECK_BEN_DOB_IF_CHILD" sfwMessageId="1152" sfwExpression="(this.icdoRelationship.relationship_value == &quot;CHLD&quot;) &amp;&amp; &#xA;(this.CheckBeneficiaryDOB() == True)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_BENEFICIARY_ALREADY_EXISTS" sfwMessageId="1120" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entRelationship.CheckDuplicateBeneficiary&quot;, this.ibusPerson.icdoPerson.person_id, this.icdoRelationship.beneficiary_person_id, this.icdoRelationship.beneficiary_org_id) == 1)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_BENEFICIARY_ID_IS_BLANK" sfwMessageId="1108" sfwExpression="((string.IsNullOrEmpty(this.istrMpiPersonID)) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.istrMpiOrgID)))" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_BENEFICIARY_UNMARRIED" sfwMessageId="1151" sfwExpression="(this.icdoRelationship.relationship_value == &quot;SPOU&quot;) &amp;&amp; &#xA;(this.CheckBeneficiaryMaritalStatus() == True)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_DUPLICATE_BENEFICIARY_TYPE_PLAN" sfwMessageId="1125" sfwExpression="(this.CheckDuplicateBeneficiaryTypeandPlan() == True)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_DUPLICATE_PLAN" sfwMessageId="1130" sfwExpression="(this.CheckDuplicatePlan() == True)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_PARTCIPANT_ID_SAME_AS_BENEFICIARY_ID" sfwMessageId="1117" sfwExpression="(RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusPerson.icdoPerson.person_id&quot;) == this.icdoRelationship.beneficiary_person_id)" sfwObjectBased="True" />
+    <rule ID="RULE_CHECK_RELATIONSHIP_IS_BLANK" sfwMessageId="1111" sfwExpression="(string.IsNullOrEmpty(this.icdoRelationship.relationship_value))" sfwObjectBased="True" />
+    <rule ID="RULE_READ_ONLY_BENE_TYPE" sfwExpression="!(string.IsNullOrEmpty(this.icdoRelationship.relationship_value))" sfwObjectBased="True" />
+	<rule ID="RULE_READ_ONLY_RELATIONSHIP" sfwExpression="this.istrBenType != &quot;ORG&quot;" />
+	<rule ID="VISIBLE_ADD_NEW_BENEFICIARY" sfwExpression="this.istrBenType == &quot;ORG&quot;" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="RULE_READ_ONLY_BENE_TYPE" sfwMode="All" sfwStatus="Active" />
+	<item ID="RULE_READ_ONLY_RELATIONSHIP" sfwMode="All" sfwStatus="Active" />
+	<item ID="VISIBLE_ADD_NEW_BENEFICIARY" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <item ID="RULE_CHECK_RELATIONSHIP_IS_BLANK" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_PARTCIPANT_ID_SAME_AS_BENEFICIARY_ID" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_DUPLICATE_PLAN" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_BENEFICIARY_ID_IS_BLANK" sfwMode="New" sfwStatus="Active" />
+    <item ID="RULE_CHECK_PARTICIPANT_IS_UNMARRIED" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_BENEFICIARY_UNMARRIED" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_BEN_DOB_IF_CHILD" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE_CHECK_BENEFICIARY_ALREADY_EXISTS" sfwMode="New" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="PersonRelationshipId" sfwValue="icdoRelationship.person_relationship_id" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute sfwDataType="string" sfwType="Property" ID="BeneficiaryFromValue" sfwValue="icdoRelationship.beneficiary_from_value" />
+    <attribute sfwDataType="int" sfwType="Property" ID="BeneficiaryOf" sfwValue="icdoRelationship.beneficiary_of" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrBenType" sfwValue="istrBenType" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMpiPersonID" sfwValue="istrMpiPersonID" />
+    <attribute sfwDataType="int" sfwType="Property" ID="BeneficiaryPersonId" sfwValue="icdoRelationship.beneficiary_person_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMpiOrgID" sfwValue="istrMpiOrgID" />
+    <attribute sfwDataType="int" sfwType="Property" ID="BeneficiaryOrgId" sfwValue="icdoRelationship.beneficiary_org_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="RelationshipValue" sfwValue="icdoRelationship.relationship_value" />
+    <attribute ID="objParticipantBeneficiary" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusParticipantBeneficiary" />
+    <attribute ID="objOrganization" sfwType="Object" sfwEntity="entOrganization" sfwValue="ibusOrganization" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DateOfMarriage" sfwValue="icdoRelationship.date_of_marriage" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountBeneficiary" ID="lstPersonAccountBeneficiary" sfwValue="iclbPersonAccountBeneficiary" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountBeneficiary" ID="lstPersonAccountBeneficiariesAll" sfwValue="iclbPersonAccountBeneficiariesAll" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoRelationship.created_by" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UpdateSeq" sfwValue="icdoRelationship.update_seq" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoRelationship.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoRelationship.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoRelationship.modified_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="RelationshipDescription" sfwValue="icdoRelationship.relationship_description" />
+    <attribute ID="lstBenfErrors" sfwType="Collection" sfwValue="iclbBenfErrors" sfwEntity="entError" sfwPrivate="False" />
+    <attribute ID="lintAPrimaryKey" sfwDataType="long" sfwPrivate="False" sfwValue="iintAPrimaryKey" sfwType="Property" />
+  </attributes>
+  <objectmethods>
+    <method ID="FillBeneficiaryOfDetails" sfwReturnType="Collection" sfwObjectID="cdoPerson" sfwEntity="entIAPAllocationDetailPersonOverview">
+      <parameters>
+        <parameter ID="astrBenFromValue" sfwDataType="String" />
+      </parameters>
+    </method>
+    <method ID="GetRelationshipValues" sfwReturnType="Collection" sfwObjectID="cdoCodeValue" sfwEntity="entCodeValue">
+      <parameters>
+        <parameter ID="astrBenType" sfwDataType="String" />
+      </parameters>
+    </method>
+    <method ID="GetPlanValues" sfwReturnType="Collection" sfwObjectID="cdoPlan" sfwEntity="entPlan">
+      <parameters>
+        <parameter ID="astrPersonType" sfwDataType="String" />
+      </parameters>
+    </method>
+  </objectmethods>
+</entity>

@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_IND]
+    FROM VARCHAR (1) NULL;
+

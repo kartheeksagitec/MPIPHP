@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfpPersonLookup" sfwActive="True" sfwStatus="Valid" sfwType="Lookup" sfwTitle="Person Lookup" version="3.5" sfwEntity="entPrototype">
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblPID" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPID" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLastName" Text="Last Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtLastName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblFirstName" Text="First Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFirstName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblSSN" Text="SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSSN" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDOB" Text="Date of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDOB" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="Date of Death : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Gender :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList" sfwLoadType="CodeGroup" sfwLoadSource="6015" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="Plan :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList1" sfwLoadType="Items">
+                  <ListItem Value="BLNK" Selected="True" />
+                  <ListItem Text="Motion Picture Industry Pension Plan" Value="MPI" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnPrototypeSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfpPerson1Maintenance" sfwMethodName="btnNew_Click" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfpPerson1Maintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="form_name=#wfpPersonLookup;grid_view=#dgrResult;row_index=#Index" sfwRelatedControl="dgrResult" sfwResource="200" Text="Open" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwObjectID="busPrototypeLookup.iclbPrototype" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwResource="200" sfwEntityField="Property0" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="First Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property2" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Middle Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property3" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last 4 Digits of SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property4" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date of Birth">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property5" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date of Death">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property6" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Union Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property7" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person Overview">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfpPersonOverviewMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="prototype_id=#0" Text="Person Overview" sfwEntityField="Property8" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Data>
+                    <DataRow>
+                      <DataColumn Value="M00000001" sfwEntityField="Property0" />
+                      <DataColumn Value="Jane" sfwEntityField="Property1" />
+                      <DataColumn sfwEntityField="Property2" />
+                      <DataColumn Value="Smith" sfwEntityField="Property3" />
+                      <DataColumn Value="4321" sfwEntityField="Property4" />
+                      <DataColumn Value="01/21/1948" sfwEntityField="Property5" />
+                      <DataColumn sfwEntityField="Property6" />
+                      <DataColumn Value="UC123" sfwEntityField="Property7" />
+                      <DataColumn Value="Person Overview" sfwEntityField="Property8" />
+                    </DataRow>
+                    <DataRow>
+                      <DataColumn Value="M01385244      " sfwEntityField="Property0" />
+                      <DataColumn Value="GILLESPIE" sfwEntityField="Property1" />
+                      <DataColumn Value="WAYNE" sfwEntityField="Property2" />
+                      <DataColumn Value="A" sfwEntityField="Property3" />
+                      <DataColumn Value="6954" sfwEntityField="Property4" />
+                      <DataColumn Value="05/09/1952" sfwEntityField="Property5" />
+                      <DataColumn sfwEntityField="Property6" />
+                      <DataColumn Value="56" sfwEntityField="Property7" />
+                      <DataColumn Value="Person Overview" sfwEntityField="Property8" />
+                    </DataRow>
+                  </Data>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

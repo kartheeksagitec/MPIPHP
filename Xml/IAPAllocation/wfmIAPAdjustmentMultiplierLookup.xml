@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmIAPAdjustmentMultiplierLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvIAPAllocation" sfwResource="210 " sfwType="Lookup" sfwTitle="IAP Annunity Adjustment Multiplier Lookup" version="3.5" sfwEntity="entIapAnnunityAdjustmentMultiplier" sfwGridCollection="busIapAnnunityAdjustmentMultiplierLookup.iclbIapAnnunityAdjustmentMultiplier">
+  <initialload>
+    <query ID="cdoIapAnnunityAdjustmentMultiplier" sfwQueryRef="entIapAnnunityAdjustmentMultiplier.LookUp" sfwMethodName="LoadIAPAnnunityAdjustmentMultiplier" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPlanYear" ID="capPlanYear" Text="Plan Year : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPlanYear" sfwDataField="plan_year" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoIapAnnunityAdjustmentMultiplier" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmIAPAdjustmentMultiplierMaintenance" sfwMethodName="btnNew_Click" sfwSecurityLevel="4" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmIAPAdjustmentMultiplierMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aint_iap_AnnunityAdjustment_Multiplier_id=IapAnnunityAdjustmentMultiplierId" sfwRelatedControl="dgrResult" sfwSecurityLevel="4" Text="Open" Visible="False" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" Visible="False" />
+                <sfwButton ID="btnExportToExcelClick" sfwMethodName="btnColumnsToExport_Click" Text="Export To Excel" sfwRelatedControl="dgrResult" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Plan Year">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmIAPAdjustmentMultiplierMaintenance" sfwDataField="icdoIapAnnunityAdjustmentMultiplier.plan_year" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aint_iap_AnnunityAdjustment_Multiplier_id=IapAnnunityAdjustmentMultiplierId" sfwRelatedControl="dgrResult" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Multiplier">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Multiplier" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="id">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IapAnnunityAdjustmentMultiplierId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

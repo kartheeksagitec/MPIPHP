@@ -1,0 +1,71 @@
+﻿<entity ID="entBpmServerSettings" sfwView="False" sfwActive="True" sfwMainCDO="icdoBpmServerSettings" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgw_bpm_server_settings" sfwObjectID="busBpmServerSettings" sfwDataObjectID="doBpmServerSettings">
+  <attributes>
+    <attribute ID="objBpmServiceTimer" sfwType="Object" sfwEntity="entBpmServiceTimer" sfwPrivate="False" sfwValue="ibusBpmServiceTimer" />
+    <attribute ID="objServer" sfwType="Object" sfwEntity="entServers" sfwPrivate="False" sfwValue="ibusServer" />
+    <attribute ID="ServerName" sfwDataType="string" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="ActionMethod" sfwDataType="string" sfwPrivate="False" sfwType="Property" />
+    <attribute sfwValue="id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="Id" sfwCaption="ID" />
+    <attribute sfwValue="server_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ServerId" sfwCaption="Server Id" />
+    <attribute sfwValue="service_timer_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ServiceTimerId" sfwCaption="Service Timer Id" />
+    <attribute sfwValue="interval" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="Interval" sfwCaption="Interval" />
+    <attribute sfwValue="enabled" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="Enabled" sfwCaption="Enabled" />
+    <attribute sfwValue="bpm_tracing_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="BpmTracingFlag" sfwCaption="Bpm Tracing Flag" />
+    <attribute sfwValue="bpm_query_tracing_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="BpmQueryTracingFlag" sfwCaption="Bpm Query Tracing Flag" />
+    <attribute sfwValue="bpm_query_limit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BpmQueryLimit" sfwCaption="Bpm Query Limit" />
+    <attribute sfwValue="bpm_query_limit_alert" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="BpmQueryLimitAlert" sfwCaption="Bpm Query Limit Alert" />
+    <attribute sfwValue="bpm_query_high_limit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BpmQueryHighLimit" sfwCaption="Bpm Query High Limit" />
+    <attribute sfwValue="bpm_query_high_limit_alert" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="BpmQueryHighLimitAlert" sfwCaption="Bpm Query High Limit Alert" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+  <methods>
+    <method ID="LoadServers" sfwMethodType="Load" sfwMode="All">
+      <item ID="objServer.LoadServers" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+    <method ID="FindBpmServerSettings" sfwMethodType="Load" sfwMode="Update">
+      <item ID="FindByPrimaryKey" sfwParameter="aintPrimaryKey" sfwItemType="Method" sfwDataType="Boolean" />
+      <parameter ID="aintPrimaryKey" sfwDataType="long" />
+    </method>
+  </methods>
+  <ExtraFields />
+  <queries>
+    <query ID="GetServiceTimerSettingsByServerName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SS.ID, S.SERVER_NAME, SBST.ACTION_METHOD, SS.* FROM SGW_BPM_SERVER_SETTINGS SS WITH(NOLOCK)&#xA;INNER JOIN SGS_SERVERS S WITH(NOLOCK) ON S.SERVER_ID = SS.SERVER_ID AND S.SERVER_NAME = @SERVER_NAME&#xA;INNER JOIN SGW_BPM_SERVICE_TIMER SBST WITH(NOLOCK) ON SS.SERVICE_TIMER_ID = SBST.SERVICE_TIMER_ID&#xA;ORDER BY SS.ID" sfwOracle="SELECT SS.ID, S.SERVER_NAME, SBST.ACTION_METHOD, SS.* FROM SGW_BPM_SERVER_SETTINGS SS &#xA;INNER JOIN SGS_SERVERS S ON S.SERVER_ID = SS.SERVER_ID AND S.SERVER_NAME = @SERVER_NAME&#xA;INNER JOIN SGW_BPM_SERVICE_TIMER SBST ON SS.SERVICE_TIMER_ID = SBST.SERVICE_TIMER_ID&#xA;ORDER BY SS.ID" sfwPostgre="SELECT SS.ID, S.SERVER_NAME, SBST.ACTION_METHOD, SS.* FROM SGW_BPM_SERVER_SETTINGS SS &#xD;&#xA;INNER JOIN SGS_SERVERS S ON S.SERVER_ID = SS.SERVER_ID AND S.SERVER_NAME = @SERVER_NAME&#xD;&#xA;INNER JOIN SGW_BPM_SERVICE_TIMER SBST ON SS.SERVICE_TIMER_ID = SBST.SERVICE_TIMER_ID&#xD;&#xA;ORDER BY SS.ID">
+      <parameters>
+        <parameter ID="@SERVER_NAME" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetTimerInfo" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SS.SERVER_ID, SBST.*, SBSS.* FROM SGW_BPM_SERVICE_TIMER SBST WITH(NOLOCK)&#xD;&#xA;&#x9;INNER JOIN SGW_BPM_SERVER_SETTINGS SBSS WITH(NOLOCK)&#xD;&#xA;&#x9;ON SBST.SERVICE_TIMER_ID = SBSS.SERVICE_TIMER_ID&#xD;&#xA;&#x9;INNER JOIN SGS_SERVERS SS WITH(NOLOCK)&#xD;&#xA;&#x9;ON SBSS.SERVER_ID = SS.SERVER_ID" sfwOracle="SELECT SS.SERVER_ID, SBST.*, SBSS.* FROM SGW_BPM_SERVICE_TIMER SBST &#xD;&#xA;&#x9;INNER JOIN SGW_BPM_SERVER_SETTINGS SBSS &#xD;&#xA;&#x9;ON SBST.SERVICE_TIMER_ID = SBSS.SERVICE_TIMER_ID&#xD;&#xA;&#x9;INNER JOIN SGS_SERVERS SS &#xD;&#xA;&#x9;ON SBSS.SERVER_ID = SS.SERVER_ID" sfwPostgre="SELECT SS.SERVER_ID, SBST.*, SBSS.* FROM SGW_BPM_SERVICE_TIMER SBST &#xD;&#xA;&#x9;INNER JOIN SGW_BPM_SERVER_SETTINGS SBSS &#xD;&#xA;&#x9;ON SBST.SERVICE_TIMER_ID = SBSS.SERVICE_TIMER_ID&#xD;&#xA;&#x9;INNER JOIN SGS_SERVERS SS &#xD;&#xA;&#x9;ON SBSS.SERVER_ID = SS.SERVER_ID">
+      <parameters />
+    </query>
+    <query ID="GetBpmServerTimerFlags" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SBSS.*, SS.SERVER_ID AS SERVER_ID, SS.SERVER_NAME AS SERVER_NAME&#xD;&#xA;FROM SGW_BPM_SERVICE_TIMER SBST WITH(NOLOCK)&#xD;&#xA;&#x9;INNER JOIN SGW_BPM_SERVER_SETTINGS SBSS   WITH(NOLOCK)&#xD;&#xA;&#x9;ON SBST.SERVICE_TIMER_ID = SBSS.SERVICE_TIMER_ID&#xD;&#xA;&#x9;INNER JOIN SGS_SERVERS SS  WITH(NOLOCK)&#xD;&#xA;&#x9;ON SBSS.SERVER_ID = SS.SERVER_ID" sfwOracle="SELECT SBSS.*, SS.SERVER_ID AS SERVER_ID, SS.SERVER_NAME AS SERVER_NAME&#xD;&#xA;FROM SGW_BPM_SERVICE_TIMER SBST &#xD;&#xA;&#x9;INNER JOIN SGW_BPM_SERVER_SETTINGS SBSS &#xD;&#xA;&#x9;ON SBST.SERVICE_TIMER_ID = SBSS.SERVICE_TIMER_ID&#xD;&#xA;&#x9;INNER JOIN SGS_SERVERS SS &#xD;&#xA;&#x9;ON SBSS.SERVER_ID = SS.SERVER_ID" sfwPostgre="SELECT SBSS.*, SS.SERVER_ID AS SERVER_ID, SS.SERVER_NAME AS SERVER_NAME&#xD;&#xA;FROM SGW_BPM_SERVICE_TIMER SBST &#xD;&#xA;&#x9;INNER JOIN SGW_BPM_SERVER_SETTINGS SBSS &#xD;&#xA;&#x9;ON SBST.SERVICE_TIMER_ID = SBSS.SERVICE_TIMER_ID&#xD;&#xA;&#x9;INNER JOIN SGS_SERVERS SS &#xD;&#xA;&#x9;ON SBSS.SERVER_ID = SS.SERVER_ID">
+      <parameters />
+      <mappedcolumns>
+        <column ID="server_id1" sfwEntityField="ServerId" />
+        <column ID="server_name" sfwEntityField="ServerName" />
+      </mappedcolumns>
+    </query>
+    <query ID="GetAllActionMethods" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SBST.SERVICE_TIMER_ID, SBST.ACTION_METHOD FROM SGW_BPM_SERVER_SETTINGS SS WITH(NOLOCK)&#xA;INNER JOIN SGW_BPM_SERVICE_TIMER SBST WITH(NOLOCK) ON SS.SERVICE_TIMER_ID = SBST.SERVICE_TIMER_ID&#xA;ORDER BY SS.ID" sfwOracle="SELECT SBST.SERVICE_TIMER_ID, SBST.ACTION_METHOD FROM SGW_BPM_SERVER_SETTINGS SS &#xA;INNER JOIN SGW_BPM_SERVICE_TIMER SBST ON SS.SERVICE_TIMER_ID = SBST.SERVICE_TIMER_ID&#xA;ORDER BY SS.ID" sfwPostgre="SELECT SBST.SERVICE_TIMER_ID, SBST.ACTION_METHOD FROM SGW_BPM_SERVER_SETTINGS SS &#xA;INNER JOIN SGW_BPM_SERVICE_TIMER SBST ON SS.SERVICE_TIMER_ID = SBST.SERVICE_TIMER_ID&#xA;ORDER BY SS.ID">
+      <parameters />
+      <mappedcolumns>
+        <column ID="action_method" sfwEntityField="ActionMethod" />
+      </mappedcolumns>
+    </query>
+    <query ID="LoadServerSettings" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgw_bpm_server_settings WITH(NOLOCK)" sfwOracle="select * from sgw_bpm_server_settings" sfwPostgre="select * from sgw_bpm_server_settings">
+      <parameters />
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <lifecycle />
+  <objectmethods />
+</entity>

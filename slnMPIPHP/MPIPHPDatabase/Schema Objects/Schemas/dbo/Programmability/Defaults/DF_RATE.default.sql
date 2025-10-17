@@ -1,0 +1,3 @@
+﻿CREATE DEFAULT [dbo].[DF_RATE]
+    AS '0.000000';
+

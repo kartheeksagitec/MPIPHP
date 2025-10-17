@@ -1,0 +1,408 @@
+﻿<form ID="wfmActLogMaintenance" sfwType="Maintenance" sfwEntity="entActLog" sfwTitle="Tracing Setup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmActLogLookup" sfwResource="207">
+  <initialload>
+    <callmethods sfwMode="Update" sfwMethodName="FindActLogApp" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" sfwMessageId="9" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Application Monitoring Configuration" CssClass="fullWidth setpnlHeaderFont">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshOnline" HeaderText="Online (Screens)">
+                      <sfwTable ID="tblTable" CssClass="tableFontInherit Table">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlOnline" sfwGroupCaption="ActLog Details" sfwCaption="System Configuration">
+                              <sfwTable ID="tblOnline" CssClass="Table">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capAppMonitoringFlag" Text="Monitoring : " AssociatedControlID="chkAppMonitoringFlag" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwCheckBox ID="chkAppMonitoringFlag" sfwEntityField="AppMonitoringFlag" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn>
+                                    <sfwLabel ID="lblActLogId" sfwEntityField="ActLogId" Visible="False" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn ColumnSpan="4" CssClass="None">
+                                    <sfwLabel ID="lblLabel" Font.Bold="True" Text="Note : Below limits are in millisecond" Font.Size="Larger" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capTransactionLimit" Text="Transaction Limit : " AssociatedControlID="txtTransactionLimit" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtTransactionLimit" sfwEntityField="TransactionLimit" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capTransactionLimitAlert" Text="Transaction Limit Alert : " AssociatedControlID="txtTransactionLimitAlert" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtTransactionLimitAlert" sfwEntityField="TransactionLimitAlert" Width="500px" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capTransactionHighLimit" Text="Transaction High Limit : " AssociatedControlID="txtTransactionHighLimit" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtTransactionHighLimit" sfwEntityField="TransactionHighLimit" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capTransactionHighLimitAlert" Text="Transaction High Limit Alert : " AssociatedControlID="txtTransactionHighLimitAlert" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtTransactionHighLimitAlert" sfwEntityField="TransactionHighLimitAlert" Width="500px" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capAppserverLimit" Text="Appserver Limit : " AssociatedControlID="txtAppserverLimit" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtAppserverLimit" sfwEntityField="AppserverLimit" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capAppserverLimitAlert" Text="Appserver Limit Alert : " AssociatedControlID="txtAppserverLimitAlert" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtAppserverLimitAlert" sfwEntityField="AppserverLimitAlert" Width="500px" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capAppserverHighLimit" Text="Appserver High Limit : " AssociatedControlID="txtAppserverHighLimit" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtAppserverHighLimit" sfwEntityField="AppserverHighLimit" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capAppserverHighLimitAlert" Text="Appserver High Limit Alert : " AssociatedControlID="txtAppserverHighLimitAlert" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtAppserverHighLimitAlert" sfwEntityField="AppserverHighLimitAlert" Width="500px" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capQueryLimit" Text="Query Limit : " AssociatedControlID="txtQueryLimit" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtQueryLimit" sfwEntityField="QueryLimit" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capQueryLimitAlert" Text="Query Limit Alert : " AssociatedControlID="txtQueryLimitAlert" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtQueryLimitAlert" sfwEntityField="QueryLimitAlert" Width="500px" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capQueryHighLimit" Text="Query High Limit : " AssociatedControlID="txtQueryHighLimit" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtQueryHighLimit" sfwEntityField="QueryHighLimit" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capQueryHighLimitAlert" Text="Query High Limit Alert : " AssociatedControlID="txtQueryHighLimitAlert" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtQueryHighLimitAlert" sfwEntityField="QueryHighLimitAlert" Width="500px" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capRuleLimit" Text="Rule Limit : " AssociatedControlID="txtRuleLimit" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtRuleLimit" sfwEntityField="RuleLimit" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capRuleLimitAlert" Text="Rule Limit Alert : " AssociatedControlID="txtRuleLimitAlert" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtRuleLimitAlert" sfwEntityField="RuleLimitAlert" Width="500px" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capRuleHighLimit" Text="Rule High Limit : " AssociatedControlID="txtRuleHighLimit" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtRuleHighLimit" sfwEntityField="RuleHighLimit" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capRuleHighLimitAlert" Text="Rule High Limit Alert : " AssociatedControlID="txtRuleHighLimitAlert" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtRuleHighLimitAlert" sfwEntityField="RuleHighLimitAlert" Width="500px" />
+                                  </sfwColumn>
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlNewPanel" sfwCaption="Portal Configuration">
+                              <sfwTable ID="tblNewPage">
+                                <sfwRow>
+                                  <sfwColumn />
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwGridView ID="grvLstActLogApp" AllowPaging="True" AllowSorting="True" sfwEntityField="lstActLogApp" AllowEditing="True" sfwTwoWayBinding="True">
+                                      <Columns>
+                                        <TemplateField HeaderText="ID">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="ActLogAppId" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="App Name">
+                                          <ItemTemplate>
+                                            <sfwTextBox sfwEntityField="AppName" Width="150px" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Allow Users" ItemStyle.HorizontalAlign="Center" Visible="False">
+                                          <ItemTemplate>
+                                            <sfwCheckBox sfwEntityField="AllowUsers" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Cookie Time(Minutes)" ItemStyle.HorizontalAlign="Center">
+                                          <ItemTemplate>
+                                            <sfwTextBox sfwEntityField="CookieTime" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Action Flag" ItemStyle.HorizontalAlign="Center">
+                                          <ItemTemplate>
+                                            <sfwCheckBox sfwEntityField="ActionFlag" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Action Step Flag" ItemStyle.HorizontalAlign="Center">
+                                          <ItemTemplate>
+                                            <sfwCheckBox sfwEntityField="ActionStepFlag" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Query Flag" ItemStyle.HorizontalAlign="Center">
+                                          <ItemTemplate>
+                                            <sfwCheckBox sfwEntityField="QueryFlag" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Rule Flag" ItemStyle.HorizontalAlign="Center">
+                                          <ItemTemplate>
+                                            <sfwCheckBox sfwEntityField="RuleFlag" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Validation Rule Flag" ItemStyle.HorizontalAlign="Center">
+                                          <ItemTemplate>
+                                            <sfwCheckBox sfwEntityField="ValidationRuleFlag" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Users">
+                                          <ItemTemplate>
+                                            <sfwLinkButton Text="Configure" sfwMethodName="btnOpen_Click" sfwActiveForm="wfmActLogAppMaintenance" sfwNavigationParameter="aintPrimaryKey=ActLogAppId" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                      </Columns>
+                                    </sfwGridView>
+                                  </sfwColumn>
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshJobService" HeaderText="Job Service (Batch)">
+                      <sfwTable ID="tblTable1">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlJobService" sfwCaption="System Configuration">
+                              <sfwTable ID="tblJobService">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel Text="Query Limit :" sfwIsCaption="True" ID="capLabel" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwKnob ID="knbQueryLimit1" sfwEntityField="objActLogJob.QueryLimit" sfwStepValue="50" sfwMinValue="0" sfwMaxValue="2000" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLabel Text="Rule Limit :" sfwIsCaption="True" ID="capLabel1" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwKnob ID="knbRuleLimit1" sfwEntityField="objActLogJob.RuleLimit" sfwStepValue="50" sfwMinValue="0" sfwMaxValue="2000" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLabel Text="Alert Email :" sfwIsCaption="True" ID="capLabel2" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtAlertEmailAddress" sfwEntityField="objActLogJob.AlertEmailAddress" Width="450px" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLabel ID="capValidationRuleFlag" Text="Validation Rule Flag : " AssociatedControlID="chkValidationRuleFlag" sfwIsCaption="True" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwCheckBox ID="chkValidationRuleFlag" sfwEntityField="objActLogJob.ValidationRuleFlag" />
+                                  </sfwColumn>
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                  <sfwColumn />
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlNewPanel1" sfwCaption="Job Detail Configuration">
+                              <sfwTable ID="tblNewPage1">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwButton ID="btnAddNewChild" sfwMethodName="btnAddNewChild_Click" Text="Add" sfwRelatedControl="grvLstActJobStep" />
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwGridView ID="grvLstActJobStep" AllowPaging="True" AllowSorting="True" sfwEntityField="objActLogJob.lstActJobStep" AllowEditing="True" sfwTwoWayBinding="True">
+                                      <Columns>
+                                        <TemplateField HeaderText="ID" ItemStyle.HorizontalAlign="Center">
+                                          <ItemTemplate>
+                                            <sfwLabel sfwEntityField="ActLogJobStepId" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField SortExpression="JobScheduleID" HeaderText="Schedule Name">
+                                          <ItemTemplate>
+                                            <sfwCascadingDropDownList ID="ddlJobScheduleID" sfwEntityField="JobScheduleID" sfwLoadType="Query" sfwLoadSource="entJobServiceMonitoring.GetAllJobs" DataTextField="schedule_name" DataValueField="job_schedule_id" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField SortExpression="JobScheduleDetailId" HeaderText="Schedule Step Name">
+                                          <ItemTemplate>
+                                            <sfwCascadingDropDownList ID="ddlJobScheduleDetailID" sfwEntityField="JobScheduleDetailId" sfwParameters="job_schedule_id=ddlJobScheduleID" sfwLoadType="Query" sfwLoadSource="entJobServiceMonitoring.GetByJobScheduleID" sfwParentControl="ddlJobScheduleID" DataTextField="step_name" DataValueField="job_schedule_detail_id" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Job Detail ID" ItemStyle.HorizontalAlign="Center">
+                                          <ItemTemplate>
+                                            <sfwLabel ID="lblJobScheduleDetailID" sfwEntityField="JobScheduleDetailId" sfwTwoWayBinding="True" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Step Limit (Minutes)">
+                                          <ItemTemplate>
+                                            <sfwTextBox sfwEntityField="StepLimit" Width="75px" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField SortExpression="JobMonitoringFlag" HeaderText="Monitoring" ItemStyle.HorizontalAlign="Center">
+                                          <ItemTemplate>
+                                            <sfwCheckBox sfwEntityField="JobMonitoringFlag" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Query Limit (ms)">
+                                          <ItemTemplate>
+                                            <sfwTextBox sfwEntityField="QueryLimit" Width="75px" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Rule Limit (ms)">
+                                          <ItemTemplate>
+                                            <sfwTextBox sfwEntityField="RuleLimit" Width="75px" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Validation Rule Flag">
+                                          <ItemTemplate>
+                                            <sfwCheckBox sfwEntityField="ValidationRuleFlag" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                        <TemplateField HeaderText="Alert Email Address">
+                                          <ItemTemplate>
+                                            <sfwTextBox sfwEntityField="AlertEmailAddress" Width="200px" />
+                                          </ItemTemplate>
+                                        </TemplateField>
+                                      </Columns>
+                                    </sfwGridView>
+                                  </sfwColumn>
+                                </sfwRow>
+                                <sfwRow>
+                                  <sfwColumn>
+                                    
+                                  </sfwColumn>
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn />
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwEntityField="UpdateSeq" sfwTwoWayBinding="True" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails>
+    <entityfield ID="lstActLogApp" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objActLogJob" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objActLogJob.lstActJobStep" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

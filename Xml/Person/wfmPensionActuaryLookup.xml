@@ -1,0 +1,831 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmPensionActuaryLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="215 " sfwType="Lookup" sfwTitle="Pension Actuary Lookup" sfwMaxCount="100" version="3.5" sfwEntity="entDataExtractionBatchInfo" sfwGridCollection="busPensionActuaryLookup.iclbDataExtractionBatchInfo">
+  <initialload>
+    <query ID="cdoDataExtractionBatchInfo" sfwQueryRef="entDataExtractionBatchInfo.LookUp" sfwMethodName="LoadPensionActuarys" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeaderTab" sfwCaption="Search Parameters">
+          <sfwTable ID="tblHeaderTab">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctHeader">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Criteria" ID="tshCriteria">
+                      <sfwTable ID="tblCriteria">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="ddlStatusCodeValue" ID="capStatusCodeValue" Text="Status Code : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlStatusCodeValue" sfwDataField="status_code_value" sfwOperator="like" sfwQueryID="cdoDataExtractionBatchInfo" sfwLoadType="Query" sfwLoadSource="entDataExtractionBatchInfo.PensionActuaryStatusCodes" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtUnionCode" ID="capUnionCode1" Text="Union Code : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtUnionCode" sfwDataField="union_code" sfwOperator="=" sfwQueryID="cdoDataExtractionBatchInfo" sfwTwoWayBinding="False" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel" Text="Year : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList DataTextField="year" DataValueField="year" ID="ddlYear" sfwAddEmptyItem="False" sfwDataField="YEAR" sfwOperator="=" sfwQueryID="cdoDataExtractionBatchInfo" sfwTwoWayBinding="False" sfwLoadType="Query" sfwLoadSource="entDataExtractionBatchInfo.GetAllPlanYears" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                            <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+                            <sfwButton ID="btnExportToExcel" sfwMethodName="btn_ExportTable" sfwRelatedControl="grvExport" sfwTriggerPostBack="True" Text="Export To Excel 1" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Query" ID="tshSql" Visible="False">
+                      <sfwTable ID="tblSql">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwTextBox ID="txbSql" Rows="5" TextMode="MultiLine" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnExecuteQuery" sfwMethodName="btnSearch_Click" sfwRelatedControl="dgrResult" Text="Execute Query" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult">
+                  <Columns>
+                    <TemplateField HeaderText="Person Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person SSN" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPersonSSNNonEncrypted" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person Gender">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonGenderDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person Dob" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtPersonDateofBirth" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BeneficiaryFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BeneficiaryName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary SSN" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrBeneficiarySSNNonEncrypted" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Gender">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BeneficiaryGenderDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Dob" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtBeneficiaryDateofBirth" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status Code Value">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusCodeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Date Of Death">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="ParticipantDateOfDeath" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Qualified Years" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalQfYrEndOfLastCompYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant State">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ParticipantStateDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last Qf Yr Before Bis">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LastQfYrBeforeBis" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Non Eligible Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NonEligibleBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Accrued Benefit For Prior Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AccruedBenefitForPriorYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Accrued Benefit Till Last Comp Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AccruedBenefitTillLastCompYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Ee Contribution Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalEeContributionAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Uvhp Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalUvhpAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Ytd Hours For Last Comp Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="YtdHoursForLastCompYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Hours">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="TotalHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Ee Interest Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalEeInterestAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Uvhp Interest Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalUvhpInterestAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 600 Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local600Flag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 600 Premerger Total Qualified Years">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="Local600PremergerTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 600 Premerger Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local600PremergerBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 666 Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local666Flag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 666 Premerger Total Qualified Years">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="Local666PremergerTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 666 Premerger Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local666PremergerBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 700 Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local700Flag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 700 Premerger Total Qualified Years">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="Local700PremergerTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 700 Premerger Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local700PremergerBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 52 Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local52Flag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 52 Premerger Total Qualified Years">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="Local52PremergerTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 52 Premerger Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local52PremergerBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 161 Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local161Flag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 161 Premerger Total Qualified Years">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="Local161PremergerTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 161 Premerger Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local161PremergerBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Monthly Benefit Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="MonthlyBenefitAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Non Taxable Amt Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="NonTaxableAmtLeft" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Option Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitOptionCodeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Return To Work Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReturnToWorkFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Determination Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DeterminationDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary First Payment Receive Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="BeneficiaryFirstPaymentReceiveDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Pension Stop Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="PensionStopDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Qualified Years At Ret">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalQualifiedYearsAtRet" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Qualified Hours At Ret">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="TotalQualifiedHoursAtRet" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Date Of Death">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="BeneficiaryDateOfDeath" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Lump Amt Taken In Last Comp Yr">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LumpAmtTakenInLastCompYr" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RetirementTypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Prior Year Iap Account Balance Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.prior_year_iap_account_balance_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Current Year Iap Account Balance Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.current_year_iap_account_balance_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation1 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.iap_allocation1_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation2 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.iap_allocation2_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation4 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.iap_allocation4_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation2 Investment Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.iap_allocation2_investment_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation4 Investment Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.iap_allocation4_investment_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation2 Forfieture Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.iap_allocation2_forfieture_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation4 Forfieture Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.iap_allocation4_forfieture_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Late Local52 Special Account Adjustment Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.late_local52_special_account_adjustment_amount" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local52 Special Account Allocation1 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.local52_special_account_allocation1_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local52 Special Account Allocation2 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.local52_special_account_allocation2_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local52 Special Account Allocation4 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.local52_special_account_allocation4_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Prior Year Local52 Special Acc Account Balance Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.prior_year_local52_special_acc_account_balance_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Late Local161 Special Account Adjustment Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.late_local161_special_account_adjustment_amount" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local161 Special Account Allocation1 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.local161_special_account_allocation1_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local161 Special Account Allocation2 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.local161_special_account_allocation2_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local161 Special Account Allocation4 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.local161_special_account_allocation4_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Prior Year Local161 Special Acc Account Balance Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.prior_year_local161_special_acc_account_balance_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Current Payment Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="icdoDataExtractionBatchInfo.current_payment_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Ee Amt Prior Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EeAmtPriorYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Uvhp Amt Prior Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UvhpAmtPriorYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="YEAR" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Union Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UNIONCODE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn Visible="False">
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="grvExport">
+                  <Columns>
+                    <TemplateField HeaderText="Person Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person SSN" SortExpression="PersonSsn" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonSsn" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person Gender" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonGenderValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person Dob">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonDob" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BeneficiaryFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BeneficiaryName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BeneficiarySsn" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Gender" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BeneficiaryGenderValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Dob">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="BeneficiaryDob" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status Code Value">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusCodeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Date Of Death">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="ParticipantDateOfDeath" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Qualified Years" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalQfYrEndOfLastCompYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant State" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ParticipantStateValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last Qf Yr Before Bis">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LastQfYrBeforeBis" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Non Eligible Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NonEligibleBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Accrued Benefit For Prior Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AccruedBenefitForPriorYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Accrued Benefit Till Last Comp Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AccruedBenefitTillLastCompYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Ee Contribution Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalEeContributionAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Uvhp Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalUvhpAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Ytd Hours For Last Comp Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="YtdHoursForLastCompYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Hours">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="TotalHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Ee Interest Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalEeInterestAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Uvhp Interest Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalUvhpInterestAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 600 Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local600Flag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 600 Premerger Total Qualified Years">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="Local600PremergerTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 600 Premerger Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local600PremergerBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 666 Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local666Flag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 666 Premerger Total Qualified Years">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="Local666PremergerTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 666 Premerger Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local666PremergerBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 700 Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local700Flag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 700 Premerger Total Qualified Years">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="Local700PremergerTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 700 Premerger Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local700PremergerBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 52 Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local52Flag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 52 Premerger Total Qualified Years">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="Local52PremergerTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 52 Premerger Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local52PremergerBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 161 Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local161Flag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 161 Premerger Total Qualified Years">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="Local161PremergerTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local 161 Premerger Benefit">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Local161PremergerBenefit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Monthly Benefit Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="MonthlyBenefitAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Non Taxable Amt Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="NonTaxableAmtLeft" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Option Code" SortExpression="BenefitOptionCodeDescription" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitOptionCodeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Return To Work Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReturnToWorkFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Determination Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DeterminationDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary First Payment Receive Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="BeneficiaryFirstPaymentReceiveDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Pension Stop Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="PensionStopDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Qualified Years At Ret">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TotalQualifiedYearsAtRet" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total Qualified Hours At Ret">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:0.00}" sfwEntityField="TotalQualifiedHoursAtRet" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Beneficiary Date Of Death">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="BeneficiaryDateOfDeath" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Lump Amt Taken In Last Comp Yr">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LumpAmtTakenInLastCompYr" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retirement Type" SortExpressionUpdated="true" />
+                    <TemplateField HeaderText="Prior Year Iap Account Balance Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="prior_year_iap_account_balance_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Current Year Iap Account Balance Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwIsCaption="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation1 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iap_allocation1_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation2 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iap_allocation2_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation4 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iap_allocation4_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation2 Investment Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iap_allocation2_investment_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation4 Investment Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iap_allocation4_investment_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation2 Forfieture Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iap_allocation2_forfieture_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Allocation4 Forfieture Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iap_allocation4_forfieture_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Late Local52 Special Account Adjustment Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="late_local52_special_account_adjustment_amount" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local52 Special Account Allocation1 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="local52_special_account_allocation1_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local52 Special Account Allocation2 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="local52_special_account_allocation2_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local52 Special Account Allocation4 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="local52_special_account_allocation4_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Prior Year Local52 Special Acc Account Balance Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="prior_year_local52_special_acc_account_balance_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Late Local161 Special Account Adjustment Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="late_local161_special_account_adjustment_amount" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local161 Special Account Allocation1 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="local161_special_account_allocation1_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local161 Special Account Allocation2 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="local161_special_account_allocation2_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Local161 Special Account Allocation4 Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="local161_special_account_allocation4_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Prior Year Local161 Special Acc Account Balance Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="prior_year_local161_special_acc_account_balance_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Current Payment Amt">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="current_payment_amt" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Ee Amt Prior Year" SortExpressionUpdated="true" />
+                    <TemplateField HeaderText="Uvhp Amt Prior Year" SortExpressionUpdated="true" />
+                    <TemplateField HeaderText="Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="YEAR" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Union Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="UNION_CODE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

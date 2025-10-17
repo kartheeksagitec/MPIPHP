@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptDistributionStatusTransitionReport" sfwActive="True" sfwDescription="Distribution Status Transition Report" sfwStatus="Review" sfwResource="200 " sfwType="Report" sfwReportName="rptDistributionStatusTransitionReport.rdlc" sfwReportCategory="Reports" version="4.0">
+  <initialload>
+    <custommethod sfwMethodName="DistributionStatusTransitionReport" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="Processed From Date : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="FromDate" sfwDataType="DateTime" />
+        <RequiredFieldValidator ControlToValidate="FromDate" ErrorMessage="From Date is Required" ID="rfvFromDate" Text="*" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="Processed To Date : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="ToDate" sfwDataType="DateTime" />
+        <CompareValidator ControlToValidate="ToDate" ErrorMessage="To Date must be in mm/dd/yyyy format." ID="valToDate" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <CompareValidator ControlToCompare="FromDate" ControlToValidate="ToDate" ErrorMessage="To Date cannot be less than From Date." ID="valDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="ToDate" ErrorMessage="To Date is Required" ID="rfvToDate" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn HorizontalAlign="Left">
+        <sfwLabel Text="Plan : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn ColumnSpan="3">
+        <sfwRadioButtonList ID="PLAN_ID" RepeatDirection="Horizontal" sfwLoadType="Items">
+          <ListItem Text="All Pension" Value="2" />
+          <ListItem Text="IAP" Value="1" />
+        </sfwRadioButtonList>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

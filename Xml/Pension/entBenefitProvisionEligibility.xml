@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entBenefitProvisionEligibility" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoBenefitProvisionEligibility" sfwObjectID="busBenefitProvisionEligibility" sfwTableName="sgt_benefit_provision_eligibility" sfwView="False" sfwDataObjectID="doBenefitProvisionEligibility">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_benefit_provision_eligibility WITH(NOLOCK)">
+      <parameters />
+    </query>
+    <query ID="FetchVestingRules" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select be.* from SGT_BENEFIT_PROVISION_ELIGIBILITY as be WITH(NOLOCK)&#xD;&#xA;join SGT_PLAN as p WITH(NOLOCK) on p.PLAN_ID=be.BENEFIT_PROVISION_ID&#xD;&#xA;where be.BENEFIT_ACCOUNT_TYPE_VALUE='VEST' and p.PLAN_CODE=@PLAN_CODE">
+      <parameters>
+        <parameter ID="@PLAN_CODE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="FetchAllEligibilityRules" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT p.PLAN_CODE as istrPlanCode,be.* FROM SGT_BENEFIT_PROVISION_ELIGIBILITY as be WITH(NOLOCK) &#xD;&#xA;join SGT_PLAN as p WITH(NOLOCK) on p.PLAN_ID=be.BENEFIT_PROVISION_ID&#xD;&#xA;WHERE be.BENEFIT_ACCOUNT_TYPE_VALUE!='VEST'">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="benefit_provision_eligibility_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitProvisionEligibilityId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="benefit_provision_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitProvisionId" sfwIsSequence="False" sfwCaption="Benefit Provision Id" />
+    <attribute sfwValue="eligibility_rule_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="EligibilityRuleId" sfwIsSequence="False" sfwCaption="Eligibility Rule Id" />
+    <attribute sfwValue="eligibilty_rule_description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="EligibiltyRuleDescription" sfwIsSequence="False" sfwCaption="Eligibilty Rule Description" />
+    <attribute sfwValue="rule_grouping_operator" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="RuleGroupingOperator" sfwIsSequence="False" sfwCaption="Rule Grouping Operator" />
+    <attribute sfwType="Description" ID="BenefitAccountTypeDescription" sfwCaption="Benefit Account Type" sfwValue="benefit_account_type_description" />
+    <attribute sfwValue="benefit_account_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitAccountTypeId" sfwCodeID="1502" sfwIsSequence="False" sfwCaption="Benefit Account Type" />
+    <attribute sfwValue="benefit_account_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="BenefitAccountTypeValue" sfwIsSequence="False" sfwCaption="Benefit Account Type" />
+    <attribute sfwType="Description" ID="EligibilityTypeDescription" sfwCaption="Eligibility Type" sfwValue="eligibility_type_description" />
+    <attribute sfwValue="eligibility_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="EligibilityTypeId" sfwCodeID="1501" sfwIsSequence="False" sfwCaption="Eligibility Type" />
+    <attribute sfwValue="eligibility_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="EligibilityTypeValue" sfwIsSequence="False" sfwCaption="Eligibility Type" />
+    <attribute sfwValue="effective_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveDate" sfwIsSequence="False" sfwCaption="Effective Date" />
+    <attribute sfwValue="min_age" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="MinAge" sfwIsSequence="False" sfwCaption="Min Age" />
+    <attribute sfwType="Description" ID="MinAgeOperatorDescription" sfwCaption="Min Age Operator" sfwValue="min_age_operator_description" />
+    <attribute sfwValue="min_age_operator_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="MinAgeOperatorId" sfwCodeID="3" sfwIsSequence="False" sfwCaption="Min Age Operator" />
+    <attribute sfwValue="min_age_operator_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="MinAgeOperatorValue" sfwIsSequence="False" sfwCaption="Min Age Operator" />
+    <attribute sfwValue="max_age" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="MaxAge" sfwIsSequence="False" sfwCaption="Max Age" />
+    <attribute sfwType="Description" ID="MaxAgeOperatorDescription" sfwCaption="Max Age Operator" sfwValue="max_age_operator_description" />
+    <attribute sfwValue="max_age_operator_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="MaxAgeOperatorId" sfwCodeID="3" sfwIsSequence="False" sfwCaption="Max Age Operator" />
+    <attribute sfwValue="max_age_operator_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="MaxAgeOperatorValue" sfwIsSequence="False" sfwCaption="Max Age Operator" />
+    <attribute sfwValue="credited_hours" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CreditedHours" sfwIsSequence="False" sfwCaption="Credited Hours" />
+    <attribute sfwValue="qualified_years" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="QualifiedYears" sfwIsSequence="False" sfwCaption="Qualified Years" />
+    <attribute sfwValue="special_years" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="SpecialYears" sfwIsSequence="False" sfwCaption="Special Years" />
+    <attribute sfwValue="vested_years" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="VestedYears" sfwIsSequence="False" sfwCaption="Vested Years" />
+    <attribute sfwValue="anniversary_years" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="AnniversaryYears" sfwIsSequence="False" sfwCaption="Anniversary Years" />
+    <attribute sfwValue="inc_forfieted_period" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IncForfietedPeriod" sfwIsSequence="False" sfwCaption="Inc Forfieted Period" />
+    <attribute sfwValue="inc_withdrawal" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IncWithdrawal" sfwIsSequence="False" sfwCaption="Inc Withdrawal" />
+    <attribute sfwValue="bis_participant" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="BisParticipant" sfwIsSequence="False" sfwCaption="Bis Participant" />
+    <attribute sfwValue="non_affliate_participant" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="NonAffliateParticipant" sfwIsSequence="False" sfwCaption="Non Affliate Participant" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="balance" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Balance" sfwIsSequence="False" sfwCaption="Balance" />
+    <attribute sfwValue="pension_credits" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PensionCredits" sfwIsSequence="False" sfwCaption="Pension Credits" />
+    <attribute sfwValue="retirement_credits" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RetirementCredits" sfwIsSequence="False" sfwCaption="Retirement Credits" />
+    <attribute sfwValue="merger_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="MergerDate" sfwIsSequence="False" sfwCaption="Merger Date" />
+    <attribute sfwValue="retired_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="RetiredFlag" sfwIsSequence="False" sfwCaption="Retired Flag" />
+    <attribute sfwValue="effective_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="EffectiveYear" sfwIsSequence="False" sfwCaption="Effective Year" />
+  </attributes>
+</entity>

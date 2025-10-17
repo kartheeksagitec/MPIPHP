@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_TIME]
+    FROM NUMERIC (4, 2) NULL;
+

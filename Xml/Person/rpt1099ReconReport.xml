@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rpt1099ReconReport" sfwActive="True" sfwDescription="EDD/1099R Recon Report" sfwStatus="Review" sfwResource="505" sfwType="Report" sfwReportName="rpt_1099RReconReport.rdlc" sfwReportCategory="Reports" version="4.0">
+  <initialload>
+    <custommethod sfwMethodName="ReconReportfor1099R" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="Start Date : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="START_DATE" sfwDataFormat="{0:d}" />
+        <RequiredFieldValidator ControlToValidate="START_DATE" ErrorMessage="Start Date is Required" ID="rfvStartDate" Text="*" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="End Date : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="END_DATE" sfwDataFormat="{0:d}" />
+        <CompareValidator ControlToValidate="END_DATE" ErrorMessage="End Date must be in mm/dd/yyyy format." ID="valToDate" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <CompareValidator ControlToCompare="START_DATE" ControlToValidate="END_DATE" ErrorMessage="End Date cannot be less than Start Date." ID="valDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="END_DATE" ErrorMessage="End Date is Required" ID="rfvToDate" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="Plan Identifier : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList ID="PLAN_IDENTIFIER" DataTextField="description" DataValueField="code_value" sfwLoadType="CodeGroup" sfwLoadSource="7074" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="State : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList ID="STATE_CODE" sfwLoadType="Items">
+          <ListItem Text="CA" Value="CA" />
+          <ListItem Text="GA" Value="GA" />
+          <ListItem Text="NC" Value="NC" />
+          <ListItem Text="OR" Value="OR" />
+          <ListItem Text="VA" Value="VA" />
+        </sfwDropDownList>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

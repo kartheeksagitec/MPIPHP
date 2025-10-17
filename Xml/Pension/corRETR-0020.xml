@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="corRETR-0020" sfwActive="True" sfwDescription="Missing Document Request" sfwStatus="Review" sfwRemoteObject="busPerson" sfwType="Correspondence" sfwTemplate="RETR-0020.docx" version="4.0" sfwEntity="entPerson">
+  <sfwFieldBookMarks>
+    <sfwFieldBookMark ID="PlanId" />
+    <sfwFieldBookMark ID="CurrentDate" sfwDataType="String" sfwEntityField="IstrCurrentDate" />
+    <sfwFieldBookMark ID="BenefitType" sfwDataType="String" sfwEntityField="IstrBenefitTypeDescription" />
+  </sfwFieldBookMarks>
+  <sfwQueryBookMarks>
+    <sfwQueryBookMark ID="DueDate" />
+    <sfwQueryBookMark ID="Status" />
+    <sfwQueryBookMark ID="StaffName" />
+    <sfwQueryBookMark ID="Ext" />
+    <sfwQueryBookMark ID="email" />
+  </sfwQueryBookMarks>
+  <sfwQueryForm>
+    <sfwTable>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel AssociatedControlID="txtDueDate" ID="lblDueDate" Text="Due Date :" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwTextBox ID="txtDueDate" sfwDataFormat="{0:d}" sfwQueryID="DueDate" />
+        </sfwColumn>
+      </sfwRow>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel ID="lblStatus" Text="Status :" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwDropDownList ID="ddlStatus" sfwQueryID="Status" sfwLoadType="Items">
+            <ListItem Value="0" Selected="True" />
+            <ListItem Text="Delayed" Value="1" />
+            <ListItem Text="Cancelled" Value="2" />
+            <ListItem Text="Delayed or Cancelled" Value="3" />
+          </sfwDropDownList>
+        </sfwColumn>
+      </sfwRow>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel AssociatedControlID="txtStaffName" ID="lblStaffName" Text="Staff Name :" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwTextBox ID="txtStaffName" sfwQueryID="StaffName" />
+        </sfwColumn>
+      </sfwRow>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel ID="lblExt" Text="Ext :" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwTextBox ID="txtExt" sfwQueryID="Ext" />
+        </sfwColumn>
+      </sfwRow>
+      <sfwRow>
+        <sfwColumn>
+          <sfwLabel AssociatedControlID="txtEmail" ID="lblEmail" Text="Email :" sfwIsCaption="True" />
+        </sfwColumn>
+        <sfwColumn>
+          <sfwTextBox ID="txtEmail" sfwQueryID="email" />
+        </sfwColumn>
+      </sfwRow>
+    </sfwTable>
+  </sfwQueryForm>
+  <sfwTableBookMarks>
+    <sfwTableBookMark ID="DocumentsReceived" sfwEntityField="lstDocumentsReceived" sfwGridEntity="entBenefitApplication">
+      <sfwColumn sfwColumnHeader="Document Name" sfwEntityField="IstrDocument" />
+    </sfwTableBookMark>
+  </sfwTableBookMarks>
+  <sfwAssociatedForms>
+    <sfwAssociatedForm ID="wfmParticipantBeneficiaryMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmBenefitCalculationPreRetirementDeathMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmDisabiltyBenefitCalculationMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmPayeeAccountMaintenance" sfwEntityField="objPayee" />
+    <sfwAssociatedForm ID="wfmQDROApplicationMaintenance" sfwEntityField="objParticipant" />
+    <sfwAssociatedForm ID="wfmPersonMaintenance" sfwEntityField="objBeneficiaryPerson" />
+    <sfwAssociatedForm ID="wfmQDROCalculationMaintenance" sfwEntityField="objParticipant" />
+    <sfwAssociatedForm ID="wfmPayeeAccountBenefitOverpaymentMaintenance" sfwEntityField="objPayeeAccount.objPayee" />
+    <sfwAssociatedForm ID="wfmPaymentHistoryDistributionMaintenance" sfwEntityField="objPaymentHistoryHeader.objPayee" />
+    <sfwAssociatedForm ID="wfmPayeeAccountRetroPaymentMaintenance" sfwEntityField="objPayeeAccount.objPayee" />
+    <sfwAssociatedForm ID="wfmRepaymentScheduleMaintenance" sfwEntityField="objPayeeAccountRetroPayment.objPayeeAccount.objParticipant" />
+    <sfwAssociatedForm ID="wfmBenefitCalculationRetirementMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmBenefitCalculationWithdrawalMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmBenefitCalculationPostRetirementDeathMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmPersonOverviewMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmDeathNotificationMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmRetirementApplicationMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmDisabilityApplicationMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmWithdrawalApplicationMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmDeathPreRetirementMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmPersonDependentMaintenance" sfwEntityField="objPerson" />
+    <sfwAssociatedForm ID="wfmPersonContactMaintenance" sfwEntityField="objPerson" />
+  </sfwAssociatedForms>
+</form>

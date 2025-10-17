@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMssAnnualStatementsMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvMPIPHPMSS" sfwResource="790 " sfwType="Maintenance" sfwTitle="Mss Annual Statements Maintenance" version="3.5" sfwEntity="entMssHome">
+  <initialload>
+    <callmethods sfwMethodName="FindAnnualStatements" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeader" sfwCollapsible="False">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn CssClass="NaviHeadtxt15Size">
+                <sfwLiteral ID="ltrLiteral" Text="Annual Statements" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Generate Annual Statement">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn ColumnSpan="2">
+                <sfwLabel ID="lblShowNoStat" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnDownloadAnnualStatements" sfwMethodName="btn_OpenMssForms" Text="Download" />
+                <sfwButton ID="btnGenerateReport" sfwMethodName="btn_OpenMSSPDF" sfwNavigationParameter="aintpersonid=PersonId;lintCompYear=ComputationalYear" sfwObjectMethod="CreateMSSMemberAnnualStatement" sfwRelatedControl="grvBusAnnualStatementBatchData" sfwSelection="One" Text="Open Report" Visible="False" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="&lt;b&gt;Click on the button to generate annual statement.Report will be opened in PDF.&lt;/b&gt;" sfwIsCaption="True" />
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="grvBusAnnualStatementBatchData" sfwSelection="None" sfwEntityField="lstAnnualStatementBatchData" sfwGridEntity="entAnnualStatementBatchData">
+                  <Columns>
+                    <TemplateField HeaderText="Annual Statement  Batch Data ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AnnualStatementBatchDataId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Computational Year" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnGenerateReport" sfwEntityField="ComputationalYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstAnnualStatementBatchData" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

@@ -1,0 +1,70 @@
+﻿<entity ID="entSolBpmRequest" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoBpmRequest" sfwObjectID="busSolBpmRequest" sfwParentEntity="entBpmRequest">
+  <reference />
+  <conditionlist />
+  <compoundconditionlist />
+  <rulelist />
+  <harderror />
+  <groupslist />
+  <aliaslist />
+  <softerror />
+  <validatedelete />
+  <delete>
+    <property ID="lstBpmRequestParameter" sfwMethodName="LoadBpmRequestParameters" />
+  </delete>
+  <updateablecdo />
+  <initialload>
+    <item ID="Visible Rule - Show Reinitiate Button" sfwStatus="Active" sfwMode="All" />
+    <item ID="Read Only Rule - Status" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible Rule - PersonID and PersonName" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible Rule - OrgID and OrgName" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible Rule - DocType and EcmGuid" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <checklist />
+  <commonproperties />
+  <expressionfields />
+  <logicalrulelist />
+  <rules>
+    <rule ID="Visible Rule - Show Reinitiate Button" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="this.icdoBpmRequest.status_value == &quot;RETR&quot;" />
+    <rule ID="Read Only Rule - Status" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(RFunc.ExecuteQuery&lt;int&gt;(&quot;entUserRoles.GetUserRoleForBPMAdminstrator&quot;, this.iobjPassInfo.iintUserSerialID) &lt; 1) &amp;&amp; (this.icdoBpmRequest.status_value ==&quot;PROC&quot;)" />
+    <rule ID="Visible Rule - PersonID and PersonName" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(this.icdoBpmRequest.person_id&gt;0)" />
+    <rule ID="Visible Rule - OrgID and OrgName" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(this.icdoBpmRequest.org_id&gt;0)" />
+    <rule ID="Visible Rule - DocType and EcmGuid" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="this.icdoBpmRequest.source_value == &quot;INDX&quot;" />
+  </rules>
+  <constraint />
+  <queries>
+    <query ID="GetProcessIdByCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SBP.PROCESS_ID  &#xA;FROM&#xA;&#x9; SGW_BPM_CASE SBC WITH(NOLOCK)  &#xA;&#x9; join SGW_BPM_PROCESS SBP WITH(NOLOCK)&#xA;&#x9; ON SBC.CASE_ID = SBP.CASE_ID &#xA;WHERE&#xA;&#x9; SBC.STATUS_VALUE = 'ACTV' AND&#xA;&#x9; SBC.NAME = @Name">
+      <parameters>
+        <parameter ID="@Name" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <ExtraFields />
+  <methods>
+    <method ID="FindBpmRequest" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item ID="LoadOrganization" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadPerson" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmProcess" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmRequestParameters" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="lstAttachedDocumentsProcessInstances" sfwParameter="@REQUEST_ID" sfwItemType="Collection" sfwLoadType="Query" sfwLoadSource="entSolBpmProcessInstance.LoadProcessInstancesForDocument" />
+      <parameter ID="REQUEST_ID" sfwDataType="int" />
+    </method>
+    <method ID="NewBpmRequest" sfwMethodType="Load" sfwMode="New">
+      <item ID="NewBpmRequest" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="lstBpmRequestParameter" sfwItemType="Collection" sfwLoadType="None" />
+    </method>
+  </methods>
+  <lifecycle />
+  <attributes />
+  <objectmethods>
+    <method ID="InitializeScanDocumentReceivedProcess" sfwReturnType="ArrayList" />
+    <method ID="InitializeProcess" sfwReturnType="ArrayList" />
+    <method ID="ReInitiateRequest" sfwReturnType="ArrayList" />
+    <method ID="LoadOrganization" sfwReturnType="Void" />
+    <method ID="LoadPerson" sfwReturnType="Void" />
+    <method ID="LoadBpmProcess" sfwReturnType="Void" />
+    <method ID="NewBpmRequest" sfwReturnType="Void" />
+    <method ID="LoadRequestParametersForOnlineInitiation" sfwReturnType="ArrayList" />
+    <method ID="LoadProcessInstance" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPayeeAccountBenefitOverpayment" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoPayeeAccountRetroPayment" sfwObjectID="busPayeeAccountBenefitOverpayment">
+  <rules>
+    <rule ID="VisibleRule-ShowNewButton" sfwExpression="!(this.CheckIfRepaymentSchedule() == True)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-PayeeID" sfwExpression="!(RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusPayeeAccount.ibusPayee.icdoPerson.person_id&quot;) == 0)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-OrgID" sfwExpression="(RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusPayeeAccount.ibusPayee.icdoPerson.person_id&quot;) == 0)" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="lstRepaymentSchedule" sfwMethodName="LoadRepaymentSchedule" />
+    <property ID="lstBenefitMonthwiseAdjustmentDetail" />
+    <property ID="lstPayeeAccountRetroPaymentDetail" sfwMethodName="LoadPayeeAccountRetroPaymentDetails" />
+  </delete>
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-OrgID" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-PayeeID" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="PayeeAccountRetroPaymentId" sfwValue="icdoPayeeAccountRetroPayment.payee_account_retro_payment_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IsOverpaymentFlag" sfwValue="icdoPayeeAccountRetroPayment.is_overpayment_flag" />
+    <attribute sfwDataType="int" sfwType="Property" ID="PayeeAccountId" sfwValue="icdoPayeeAccountRetroPayment.payee_account_id" />
+    <attribute ID="objPayeeAccount" sfwType="Object" sfwEntity="entPayeeAccount" sfwValue="ibusPayeeAccount" />
+    <attribute sfwDataType="string" sfwType="Property" ID="RetroPaymentTypeDescription" sfwValue="icdoPayeeAccountRetroPayment.retro_payment_type_description" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="GrossPaymentAmount" sfwValue="icdoPayeeAccountRetroPayment.gross_payment_amount" />
+    <attribute sfwType="Collection" sfwEntity="entRepaymentSchedule" ID="lstRepaymentSchedule" sfwValue="iclbRepaymentSchedule" />
+    <attribute sfwType="Collection" sfwEntity="entRepaymentSchedule" ID="lstPreviousRepaymentSchedule" sfwValue="iclbPreviousRepaymentSchedule" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitMonthwiseAdjustmentDetail" ID="lstBenefitMonthwiseAdjustmentDetail" sfwValue="iclbBenefitMonthwiseAdjustmentDetail" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoPayeeAccountRetroPayment.created_by" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UpdateSeq" sfwValue="icdoPayeeAccountRetroPayment.update_seq" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoPayeeAccountRetroPayment.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoPayeeAccountRetroPayment.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoPayeeAccountRetroPayment.modified_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="EffectiveStartDate" sfwValue="icdoPayeeAccountRetroPayment.effective_start_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="EffectiveEndDate" sfwValue="icdoPayeeAccountRetroPayment.effective_end_date" />
+    <attribute sfwType="Collection" sfwEntity="entPayeeAccountRetroPaymentDetail" ID="lstPayeeAccountRetroPaymentDetail" sfwValue="iclbPayeeAccountRetroPaymentDetail" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadRepaymentSchedule" sfwReturnType="Void" />
+    <method ID="LoadPayeeAccountRetroPaymentDetails" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

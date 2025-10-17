@@ -1,0 +1,1161 @@
+﻿<entity ID="entFramework" sfwView="False" sfwActive="True" sfwMainCDO="icdo" sfwType="EntityRule" sfwStatus="Review">
+	<columns />
+	<methods>
+		<method ID="FindFramework" sfwMethodType="Load" sfwMode="All">
+			<parameter ID="aintPrimaryKey" sfwDataType="Int32" />
+			<item ID="icdo" sfwParameter="aintPrimaryKey" sfwItemType="MainCDO" sfwMethodName="Other" />
+		</method>
+	</methods>
+	<queries>
+    <query ID="GetStuckInstancesforProcessingDebugMode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT &#xD;&#xA;&#x9;top 5 bai.ACTIVITY_INSTANCE_ID,bai.process_instance_id,bai.STATUS_VALUE,bq.QUEUE_ITEM_ID,bq.ACTV_INST_ID_TO_EXEC,bq.TRG_ACTV_ID_TO_INST,bq.STATUS_VALUE&#xD;&#xA;&#x9;FROM SGW_BPM_ACTIVITY_INSTANCE(NOLOCK) BAI&#xD;&#xA;&#x9;INNER JOIN SGW_BPM_PROCESS_INSTANCE (NOLOCK)  BPI ON BAI.PROCESS_INSTANCE_ID = BPI.PROCESS_INSTANCE_ID&#xD;&#xA;&#x9;INNER JOIN sgw_bpm_case_instance (NOLOCK) BCI ON BCI.CASE_INSTANCE_ID = BPI.CASE_INSTANCE_ID &#xD;&#xA;&#x9;inner join sgw_bpm_request with(nolock) REQ ON REQ.REQUEST_ID = BCI.REQUEST_ID AND REQ.MACHINE_NAME = @MACHINE_NAME  &#xD;&#xA;&#x9;INNER JOIN SGW_BPM_PROCESS (NOLOCK)  BP ON BPI.PROCESS_ID = BP.PROCESS_ID  &#xD;&#xA;&#x9;INNER JOIN SGW_BPM_ACTIVITY (NOLOCK) BA ON BAI.ACTIVITY_ID = BA.ACTIVITY_ID&#xD;&#xA;&#x9;left join sgw_bpm_queue(nolock) bq on bq.SRC_PRCS_INST_ID=bai.PROCESS_INSTANCE_ID and (bq.ACTV_INST_ID_TO_EXEC=bai.ACTIVITY_INSTANCE_ID or bq.TRG_ACTV_ID_TO_INST =bai.ACTIVITY_ID)&#xD;&#xA;&#x9;WHERE (   (ba.ACTIVITY_TYPE_VALUE not in ( 'USTK' ,'ITCE') and bai.STATUS_VALUE not in ('SUSP','FAIL'))&#xD;&#xA;&#x9;&#x9;&#x9;or (ba.ACTIVITY_TYPE_VALUE in ( 'USTK') and bai.STATUS_VALUE in ('PROC'))&#xD;&#xA;&#x9;&#x9;&#x9;)&#xD;&#xA;&#x9;AND ACTIVITY_INSTANCE_ID IN&#xD;&#xA;&#x9; &#xD;&#xA;&#x9;(&#xD;&#xA;&#x9;&#x9;&#x9;SELECT MAX(BAI.ACTIVITY_INSTANCE_ID ) ACTIVITY_INSTANCE_ID&#xD;&#xA;&#x9;&#x9;&#x9;FROM SGW_BPM_ACTIVITY_INSTANCE (NOLOCK) BAI&#xD;&#xA;&#x9;&#x9;&#x9;INNER JOIN SGW_BPM_PROCESS_INSTANCE (NOLOCK)  BPI ON BAI.PROCESS_INSTANCE_ID = BPI.PROCESS_INSTANCE_ID &#xD;&#xA;&#x9;&#x9;&#x9;INNER JOIN SGW_BPM_PROCESS (NOLOCK)  BP ON BPI.PROCESS_ID = BP.PROCESS_ID &#xD;&#xA;&#x9;&#x9;&#x9;WHERE &#xD;&#xA;&#x9;&#x9;&#x9;BPI.STATUS_VALUE = 'INPC'&#xD;&#xA;&#x9;&#x9;&#x9;GROUP BY BPI.PROCESS_INSTANCE_ID&#xD;&#xA;&#x9;) &#xD;&#xA;&#xD;&#xA;&#x9;AND   BAI.MODIFIED_DATE &lt; @endDate&#xD;&#xA;&#x9;AND BAI.STATUS_VALUE  &lt;&gt; 'INPC'&#xD;&#xA;&#x9;AND (bq.STATUS_VALUE is null or  bq.STATUS_VALUE &lt;&gt; 'UNPC')&#xD;&#xA; order by  bai.ACTIVITY_INSTANCE_ID">
+      <parameters>
+        <parameter ID="@MACHINE_NAME" sfwDataType="string" />
+        <parameter ID="@endDate" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetUserActivitiesToResumeDebugMode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SAI.ACTIVITY_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE &#x9;AS SAI WITH(NOLOCK)    &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY &#x9;AS SA WITH(NOLOCK)&#xA;&#x9; ON SAI.ACTIVITY_ID = SA.ACTIVITY_ID AND&#xA;&#x9; SA.ACTIVITY_TYPE_VALUE = 'USTK' &#xA;&#x9; INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK)  ON SAI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID&#xA;&#x9; INNER JOIN SGW_BPM_CASE_INSTANCE SCI WITH(NOLOCK)  ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID&#xA;&#x9; INNER JOIN SGW_BPM_REQUEST REQ WITH(NOLOCK)  ON SCI.REQUEST_ID = REQ.REQUEST_ID and REQ.MACHINE_NAME = @MACHINE_NAME&#xA;WHERE&#xA;&#x9; SAI.STATUS_VALUE  = 'SUSP' AND&#xA;&#x9;  SAI.SUSPENSION_END_DATE &lt; =  @NOW">
+      <parameters>
+        <parameter ID="@MACHINE_NAME" sfwDataType="string" />
+        <parameter ID="@NOW" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetElapsedTimersDebugMode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE top (5) TAI&#xD;&#xA;SET PROCESSING_FLAG = 'Y' OUTPUT INSERTED.* &#xD;&#xA;FROM &#xD;&#xA;SGW_BPM_TMER_ACTY_INST_DETAILS TAI WITH(NOLOCK) &#xD;&#xA;INNER JOIN SGW_BPM_ACTIVITY_INSTANCE &#x9;AS SAI WITH(NOLOCK)    ON TAI.ACTIVITY_INSTANCE_ID = SAI.ACTIVITY_INSTANCE_ID&#xD;&#xA;&#x9;INNER JOIN SGW_BPM_ACTIVITY &#x9;AS SA WITH(NOLOCK) ON SAI.ACTIVITY_ID = SA.ACTIVITY_ID &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK)  ON SAI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID&#xD;&#xA;&#x9; INNER JOIN SGW_BPM_CASE_INSTANCE SCI WITH(NOLOCK)  ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID&#xD;&#xA;&#x9; INNER JOIN SGW_BPM_REQUEST REQ WITH(NOLOCK)  ON SCI.REQUEST_ID = REQ.REQUEST_ID and REQ.MACHINE_NAME = @MACHINE_NAME&#xD;&#xA;&#x9; WHERE TAI.END_DATE_TIME &lt; @NOW">
+      <parameters>
+        <parameter ID="@MACHINE_NAME" sfwDataType="string" />
+        <parameter ID="@NOW" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+
+    <query ID="GetGroupsFromFileDtl" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select header_group_value, count(*) as group_count &#xD;&#xA;  from sgs_file_dtl WITH(NOLOCK) where file_hdr_id = @file_hdr_id&#xD;&#xA; group by header_group_value &#xD;&#xA; order by header_group_value" sfwOracle="select header_group_value, count(*) as group_count &#xD;&#xA;  from sgs_file_dtl &#xD;&#xA; where file_hdr_id = @file_hdr_id&#xD;&#xA; group by header_group_value &#xD;&#xA; order by header_group_value">
+			<parameters>
+				<parameter ID="@file_hdr_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetDetailIDsForProcessing" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select file_dtl_id &#xD;&#xA;  from sgs_file_dtl WITH(NOLOCK)&#xD;&#xA;  where file_hdr_id = @file_hdr_id and status_value = 'UNPC' &#xD;&#xA;  order by line_no" sfwOracle="select file_dtl_id &#xD;&#xA;  from sgs_file_dtl &#xD;&#xA;  where file_hdr_id = @file_hdr_id&#xD;&#xA;    and status_value = 'UNPC' &#xD;&#xA;  order by line_no">
+			<parameters>
+				<parameter ID="@file_hdr_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetFileDtlByLineNo" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_file_dtl WITH(NOLOCK)&#xD;&#xA; where file_hdr_id = @file_hdr_id and line_no = @line_no" sfwOracle="select * &#xD;&#xA;  from sgs_file_dtl &#xD;&#xA; where file_hdr_id = @file_hdr_id&#xD;&#xA;   and line_no = @line_no">
+			<parameters>
+				<parameter ID="@file_hdr_id" sfwDataType="int" />
+				<parameter ID="@line_no" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetFileHdrForProcessing" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_file_hdr WITH(NOLOCK)&#xD;&#xA; where status_value = 'UPLD' &#xD;&#xA;   and file_id = @file_id" sfwOracle="select * &#xD;&#xA;  from sgs_file_hdr &#xD;&#xA; where status_value = 'UPLD' &#xD;&#xA;   and file_id = @file_id">
+			<parameters>
+				<parameter ID="@file_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetFileDtlByFileHdrId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT FILE_DTL_ID,FILE_HDR_ID, STATUS_VALUE, UPDATE_SEQ FROM SGS_FILE_DTL WITH(NOLOCK) WHERE FILE_HDR_ID = @FILE_HDR_ID" sfwOracle="SELECT&#xA;&#x9; FILE_DTL_ID,&#xA;&#x9;FILE_HDR_ID,&#xA;&#x9;STATUS_VALUE,&#xA;&#x9;UPDATE_SEQ &#xA;FROM&#xA;&#x9; SGS_FILE_DTL &#xA;WHERE&#xA;&#x9; FILE_HDR_ID = @FILE_HDR_ID">
+			<parameters>
+				<parameter ID="@FILE_HDR_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetDetailsForGroup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * &#xA;  FROM sgs_file_dtl WITH(NOLOCK)&#xA; where file_hdr_id = @file_hdr_id&#xA;   and header_group_value = @header_group_value&#xA; order by line_no" sfwOracle="SELECT * &#xA;  FROM sgs_file_dtl&#xA; where file_hdr_id = @file_hdr_id&#xA;   and header_group_value = @header_group_value&#xA; order by line_no">
+			<parameters>
+				<parameter ID="@file_hdr_id" sfwDataType="int" />
+				<parameter ID="@header_group_value" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetUnprocessedDetailsForHeader" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select *&#xA;  from sgs_file_dtl WITH(NOLOCK)&#xA; where file_hdr_id = @file_hdr_id   &#xA;   and status_value = 'UNPC' &#xA;order by line_no" sfwOracle="select *&#xA;  from sgs_file_dtl &#xA; where file_hdr_id = @file_hdr_id   &#xA;   and status_value = 'UNPC' &#xA;order by line_no">
+			<parameters>
+				<parameter ID="@file_hdr_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetFileHdrForUpload" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA;  from sgs_file_hdr WITH(NOLOCK)&#xD;&#xA; where status_value = 'UNPC' &#xD;&#xA;   and file_id = @file_id" sfwOracle="select * &#xD;&#xA;  from sgs_file_hdr &#xD;&#xA; where status_value = 'UNPC' &#xD;&#xA;   and file_id = @file_id">
+			<parameters>
+				<parameter ID="@file_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetIgnoreFileDetailsByFileHdrId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select line_no &#xD;&#xA;  from sgs_file_dtl WITH(NOLOCK)&#xD;&#xA; where file_hdr_id = @file_hdr_id&#xD;&#xA;   and status_value = 'IGNR'&#xD;&#xA; order by line_no" sfwOracle="select line_no &#xD;&#xA;  from sgs_file_dtl &#xD;&#xA; where file_hdr_id = @file_hdr_id&#xD;&#xA;   and status_value = 'IGNR'&#xD;&#xA; order by line_no">
+			<parameters>
+				<parameter ID="@file_hdr_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetIgnoreFileDetailsCountByFileHdrId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) &#xD;&#xA;  from sgs_file_dtl WITH(NOLOCK)&#xD;&#xA; where file_hdr_id = @file_hdr_id&#xD;&#xA;   and status_value = 'IGNR'" sfwOracle="select count(*) &#xD;&#xA;  from sgs_file_dtl &#xD;&#xA; where file_hdr_id = @file_hdr_id&#xD;&#xA;   and status_value = 'IGNR'">
+			<parameters>
+				<parameter ID="@file_hdr_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetOutgoingSequenceflowsForDivergingInclusiveGateway" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT&#xD;&#xA;&#x9; ELEMENT_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INST_EXEC_PATH WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;&#x9; ELEMENT_TYPE_VALUE = 'SEQF' AND&#xD;&#xA;&#x9; PARENT_ACTIVITY_INSTANCE_ID = @PARENT_ACTIVITY_INSTANCE_ID" sfwOracle="SELECT&#xD;&#xA;&#x9; ELEMENT_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INST_EXEC_PATH  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ELEMENT_TYPE_VALUE = 'SEQF' AND&#xD;&#xA;&#x9; PARENT_ACTIVITY_INSTANCE_ID = @PARENT_ACTIVITY_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@PARENT_ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetIncomingSequenceflowsForConvergingInclusiveGateway" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; ELEMENT_ID &#xD;&#xA;FROM SGW_BPM_CASE_INST_EXEC_PATH &#xD;&#xA;WHERE ELEMENT_TYPE_VALUE = 'SEQF' AND STATUS_VALUE = 'UNUD' AND CASE_INSTANCE_ID = @CASE_INSTANCE_ID&#xD;&#xA;&#x9; AND ELEMENT_ID IN (select * from Split(@IDS,',')) AND INITIATED_ACTIVITY_INSTANCE_ID = @INITIATED_ACTIVITY_INSTANCE_ID" sfwOracle="SELECT ELEMENT_ID &#xD;&#xA;FROM SGW_BPM_CASE_INST_EXEC_PATH  &#xD;&#xA;WHERE ELEMENT_TYPE_VALUE = 'SEQF' AND STATUS_VALUE = 'UNUD' AND CASE_INSTANCE_ID = @CASE_INSTANCE_ID&#xD;&#xA;&#x9; AND INITIATED_ACTIVITY_INSTANCE_ID = @INITIATED_ACTIVITY_INSTANCE_ID&#xD;&#xA;     AND ELEMENT_ID IN &#xD;&#xA;     (&#xD;&#xA;        select regexp_substr(@IDS,'[^,]+', 1, level) from dual&#xD;&#xA;        connect by regexp_substr(@IDS, '[^,]+', 1, level) is not null&#xD;&#xA;     )">
+			<parameters>
+				<parameter ID="@CASE_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@IDS" sfwDataType="string" />
+				<parameter ID="@INITIATED_ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="LoadProcessInstanceAttachments" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;   EV.EVENT_DESC,&#xD;&#xA; spia.* &#xD;&#xA;FROM&#xD;&#xA;  SGW_BPM_PRCS_INST_ATTACHMENTS SPIA WITH(NOLOCK)  &#xD;&#xA; INNER &#xD;&#xA;  JOIN SGW_BPM_EVENT EV WITH(NOLOCK)&#xD;&#xA;  ON SPIA.DOC_TYPE = ev.DOC_TYPE &#xD;&#xA;WHERE&#xD;&#xA;  SPIA.BPM_PROCESS_INSTANCE_ID  = @PROCESS_INSTANCE_ID" sfwOracle="SELECT&#xD;&#xA;   EV.EVENT_DESC,&#xD;&#xA; spia.* &#xD;&#xA;FROM&#xD;&#xA;  SGW_BPM_PRCS_INST_ATTACHMENTS SPIA  &#xD;&#xA; INNER &#xD;&#xA;  JOIN SGW_BPM_EVENT EV&#xD;&#xA;  ON SPIA.DOC_TYPE = ev.DOC_TYPE &#xD;&#xA;WHERE&#xD;&#xA;  SPIA.BPM_PROCESS_INSTANCE_ID  = @PROCESS_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="LoadActivityInstanceEligibleUsers" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;  * &#xD;&#xA;FROM  SGW_BPM_ACTIVITY_INST_USERS WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;  ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID" sfwOracle="SELECT&#xD;&#xA;  * &#xD;&#xA;FROM SGW_BPM_ACTIVITY_INST_USERS &#xD;&#xA;WHERE ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUserDetailsIfActive" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT * FROM SGS_USER WITH(NOLOCK) WHERE USER_ID=@USER_ID and USER_STATUS_VALUE ='A'&#xD;&#xA;" sfwOracle="SELECT * FROM SGS_USER WHERE USER_ID=@USER_ID and USER_STATUS_VALUE ='A'">
+			<parameters>
+				<parameter ID="@USER_ID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetLatestEffectiveCaseDetailsByCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; top 1 * &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case &#xD;&#xA;WHERE&#xD;&#xA;&#x9; NAME = @NAME AND&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt; =  CONVERT(date,&#xD;&#xA;&#x9;@Today) AND STATUS_VALUE='ACTV' &#xD;&#xA;ORDER BY  EFFECTIVE_DATE desc,&#xD;&#xA;&#x9;case_id desc" sfwOracle="SELECT&#xD;&#xA;&#x9;  * &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case &#xD;&#xA;WHERE&#xD;&#xA;&#x9; NAME = @NAME AND&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt; = @Today AND STATUS_VALUE='ACTV' &#xD;&#xA;ORDER BY  EFFECTIVE_DATE desc,&#xD;&#xA;&#x9;case_id desc&#xD;&#xA;&#x9;fetch first row only">
+			<parameters>
+				<parameter ID="@NAME" sfwDataType="string" />
+				<parameter ID="@Today" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="GetLatestVersionOfCaseByCaseId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; top 1 CASE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; NAME = (SELECT&#xD;&#xA;&#x9; NAME &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CASE_ID = @CASE_ID) AND&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt; =  CONVERT(date,&#xD;&#xA;&#x9;@Today) AND STATUS_VALUE = 'ACTV' &#xD;&#xA;ORDER BY  EFFECTIVE_DATE desc,&#xD;&#xA;&#x9;case_id desc" sfwOracle="SELECT&#xD;&#xA;&#x9;CASE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; NAME = (SELECT&#xD;&#xA;&#x9; NAME &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CASE_ID = @CASE_ID) AND&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt; =  @Today AND STATUS_VALUE = 'ACTV' &#xD;&#xA;ORDER BY  EFFECTIVE_DATE desc,&#xD;&#xA;&#x9;case_id desc&#xD;&#xA;&#x9;fetch first row only">
+			<parameters>
+				<parameter ID="@CASE_ID" sfwDataType="int" />
+				<parameter ID="@Today" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="CaseInstancesByCaseIdGrouppedByStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; CV.DESCRIPTION,&#xD;&#xA;&#x9;count(*) &#x9;AS &quot;NoOfCases&quot; &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK) &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGS_CODE_VALUE CV WITH(NOLOCK)&#xD;&#xA;&#x9; ON CI.STATUS_ID = CV.CODE_ID AND&#xD;&#xA;&#x9;  CI.STATUS_VALUE = CV.CODE_VALUE &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CI.CASE_ID = @CASE_ID &#xD;&#xA;GROUP&#x9; BY  CV.DESCRIPTION" sfwOracle="SELECT&#xD;&#xA;&#x9; CV.DESCRIPTION,&#xD;&#xA;&#x9;count(*) &#x9;AS &quot;NoOfCases&quot; &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGS_CODE_VALUE CV &#xD;&#xA;&#x9; ON CI.STATUS_ID = CV.CODE_ID AND&#xD;&#xA;&#x9;  CI.STATUS_VALUE = CV.CODE_VALUE &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CI.CASE_ID = @CASE_ID &#xD;&#xA;GROUP&#x9; BY  CV.DESCRIPTION">
+			<parameters>
+				<parameter ID="@CASE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetCaseByFileName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_CASE WITH(NOLOCK)  &#xA;WHERE&#xA;&#x9; CASE_FILE = @CASE_FILE&#xA;AND CASE_ID != @CASE_ID" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_CASE &#xA;WHERE&#xA;&#x9; CASE_FILE = @CASE_FILE&#xA;AND CASE_ID != @CASE_ID">
+			<parameters>
+				<parameter ID="@CASE_FILE" sfwDataType="string" />
+				<parameter ID="@CASE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetCaseVersionByCaseFileName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; TOP 1 CASE_ID,&#xD;&#xA;&#x9;VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CASE_FILE = @CASE_FILE &#xD;&#xA;ORDER&#x9; BY      VERSION DESC" sfwOracle="SELECT&#xD;&#xA;&#x9; CASE_ID,&#xD;&#xA;&#x9;VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CASE_FILE = @CASE_FILE &#xD;&#xA;ORDER&#x9; BY      VERSION DESC&#xD;&#xA;fetch first row only">
+			<parameters>
+				<parameter ID="@CASE_FILE" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetActivityIdsHavingEscalationsByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; distinct activity_id &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ESCALATION WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;&#x9; PROCESS_ID = @PROCESS_ID" sfwOracle="SELECT&#xD;&#xA;&#x9; distinct activity_id &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ESCALATION &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PROCESS_ID = @PROCESS_ID">
+			<parameters>
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetCaseInstanceIdFromProcessInstance" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; case_instance_id &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;&#x9; PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID" sfwOracle="SELECT&#xD;&#xA;&#x9; case_instance_id &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetCaseInstanceIdFromActivityInstance" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT    case_instance_id   FROM    sgw_bpm_activity_instance a WITH(NOLOCK) ,   sgw_bpm_process_instance b WITH(NOLOCK)   WHERE    a.process_instance_id = b.process_instance_id AND&#xA;&#x9;    a.activity_instance_id = @activity_instance_id" sfwOracle="SELECT&#xA;&#x9;    case_instance_id   &#xA;FROM&#xA;&#x9;    sgw_bpm_activity_instance a ,&#xA;&#x9;  sgw_bpm_process_instance b   &#xA;WHERE&#xA;&#x9;    a.process_instance_id = b.process_instance_id AND&#xA;&#x9;    a.activity_instance_id = @activity_instance_id">
+			<parameters>
+				<parameter ID="@activity_instance_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetParameterValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;  PARAMETER_VALUE &#xD;&#xA;FROM&#xD;&#xA;  SGW_BPM_CASE_INST_PARAMETER WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;  CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND&#xD;&#xA;  PARAMETER_NAME = @PARAMETER_NAME" sfwOracle="SELECT&#xD;&#xA;  PARAMETER_VALUE &#xD;&#xA;FROM&#xD;&#xA;  SGW_BPM_CASE_INST_PARAMETER &#xD;&#xA;WHERE&#xD;&#xA;  CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND&#xD;&#xA;  PARAMETER_NAME = @PARAMETER_NAME">
+			<parameters>
+				<parameter ID="@CASE_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@PARAMETER_NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetUnusedExecutionElementByGuid" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INST_EXEC_PATH WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND&#xD;&#xA;&#x9; ELEMENT_ID = @ELEMENT_ID AND INITIATED_ACTIVITY_INSTANCE_ID = @INITIATED_ACTIVITY_INSTANCE_ID &#xD;&#xA;&#x9; AND STATUS_VALUE = 'UNUD'" sfwOracle="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INST_EXEC_PATH &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND&#xD;&#xA;&#x9; ELEMENT_ID = @ELEMENT_ID AND INITIATED_ACTIVITY_INSTANCE_ID = @INITIATED_ACTIVITY_INSTANCE_ID &#xD;&#xA;&#x9; AND STATUS_VALUE = 'UNUD'">
+			<parameters>
+				<parameter ID="@CASE_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@ELEMENT_ID" sfwDataType="string" />
+				<parameter ID="@INITIATED_ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetAllProcessEventXR" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_EVENT_XR WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EVENT_ID = @EVENT_ID" sfwOracle="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_EVENT_XR &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EVENT_ID = @EVENT_ID">
+			<parameters>
+				<parameter ID="@EVENT_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="LoadBpmProcessInstanceHistory" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;  SBAIH.ACTIVITY_INSTANCE_HISTORY_ID,&#xD;&#xA; SBAIH.ACTIVITY_INSTANCE_ID,&#xD;&#xA; SBA.NAME  AS ACTIVITY_NAME,&#xD;&#xA; SCV.DESCRIPTION  AS STATUS_DESCRIPTION,&#xD;&#xA; SBAIH.START_TIME,&#xD;&#xA; SBAIH.END_TIME,&#xD;&#xA; SBAIH.ACTION_USER_ID,&#xD;&#xA; SBAIH.COMMENTS &#xD;&#xA;FROM&#xD;&#xA;  SGW_BPM_ACTIVITY_INST_HISTORY SBAIH WITH(NOLOCK)  INNER  &#xD;&#xA;  JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI WITH(NOLOCK) &#xD;&#xA;  ON SBAIH.ACTIVITY_INSTANCE_ID = SBAI.ACTIVITY_INSTANCE_ID INNER  &#xD;&#xA;  JOIN SGW_BPM_PROCESS_INSTANCE SBPI WITH(NOLOCK) &#xD;&#xA;  ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID INNER  &#xD;&#xA;  JOIN SGW_BPM_ACTIVITY SBA WITH(NOLOCK) &#xD;&#xA;  ON SBAI.ACTIVITY_ID = SBA.ACTIVITY_ID INNER  &#xD;&#xA;  JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) &#xD;&#xA;  ON SBAIH.STATUS_ID = SCV.CODE_ID AND&#xD;&#xA;  SBAIH.STATUS_VALUE = SCV.CODE_VALUE INNER  &#xD;&#xA;  JOIN SGW_BPM_PROCESS SBP WITH(NOLOCK) &#xD;&#xA;  ON SBPI.PROCESS_ID = SBP.PROCESS_ID &#xD;&#xA;WHERE&#xD;&#xA;  SBPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID &#xD;&#xA;ORDER  BY   SBAIH.CREATED_DATE DESC" sfwOracle="SELECT&#xD;&#xA;  SBAIH.ACTIVITY_INSTANCE_HISTORY_ID,&#xD;&#xA; SBAIH.ACTIVITY_INSTANCE_ID,&#xD;&#xA; SBA.NAME  AS ACTIVITY_NAME,&#xD;&#xA; SCV.DESCRIPTION  AS STATUS_DESCRIPTION,&#xD;&#xA; SBAIH.START_TIME,&#xD;&#xA; SBAIH.END_TIME,&#xD;&#xA; SBAIH.ACTION_USER_ID,&#xD;&#xA; SBAIH.COMMENTS &#xD;&#xA;FROM&#xD;&#xA;  SGW_BPM_ACTIVITY_INST_HISTORY SBAIH  INNER  &#xD;&#xA;  JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI &#xD;&#xA;  ON SBAIH.ACTIVITY_INSTANCE_ID = SBAI.ACTIVITY_INSTANCE_ID INNER  &#xD;&#xA;  JOIN SGW_BPM_PROCESS_INSTANCE SBPI &#xD;&#xA;  ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID INNER  &#xD;&#xA;  JOIN SGW_BPM_ACTIVITY SBA &#xD;&#xA;  ON SBAI.ACTIVITY_ID = SBA.ACTIVITY_ID INNER  &#xD;&#xA;  JOIN SGS_CODE_VALUE SCV&#xD;&#xA;  ON SBAIH.STATUS_ID = SCV.CODE_ID AND&#xD;&#xA;  SBAIH.STATUS_VALUE = SCV.CODE_VALUE INNER  &#xD;&#xA;  JOIN SGW_BPM_PROCESS SBP &#xD;&#xA;  ON SBPI.PROCESS_ID = SBP.PROCESS_ID &#xD;&#xA;WHERE&#xD;&#xA;  SBPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID &#xD;&#xA;ORDER  BY   SBAIH.CREATED_DATE DESC">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="CountActiveProcessForOrgByProcessIdAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI WITH(NOLOCK)  &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK) &#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')" sfwOracle="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI  &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI  &#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+			<parameters>
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@ORG_ID" sfwDataType="int" />
+				<parameter ID="@REFERENCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUnprocessedRequestForOrgByProcessIdAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_REQUEST WITH(NOLOCK)  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; REQUEST_ID &lt;&gt; @REQUEST_ID AND&#xD;&#xA;&#x9; ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; STATUS_VALUE IN ('UNPC',&#xD;&#xA;&#x9;'PICK')" sfwOracle="SELECT&#xD;&#xA;&#x9; COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_REQUEST  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; REQUEST_ID &lt;&gt; @REQUEST_ID AND&#xD;&#xA;&#x9; ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; STATUS_VALUE IN ('UNPC',&#xD;&#xA;&#x9;'PICK')">
+			<parameters>
+				<parameter ID="@REQUEST_ID" sfwDataType="int" />
+				<parameter ID="@ORG_ID" sfwDataType="int" />
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@REFERENCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="CountActiveProcessForPersonByProcessIdAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI WITH(NOLOCK)    INNER    &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)   &#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')" sfwOracle="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI     INNER    &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI    &#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+			<parameters>
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+				<parameter ID="@REFERENCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUnprocessRequestForPersonByProcessIdAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_REQUEST WITH(NOLOCK)  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; REQUEST_ID &lt;&gt; @REQUEST_ID AND&#xD;&#xA;&#x9; PERSON_ID = @PERSON_ID  AND&#xD;&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; REFERENCE_ID = @REFERENCE_ID  AND&#xD;&#xA;&#x9; STATUS_VALUE IN ('UNPC',&#xD;&#xA;&#x9;'PICK')" sfwOracle="SELECT&#xD;&#xA;&#x9; COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_REQUEST  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; REQUEST_ID &lt;&gt; @REQUEST_ID AND&#xD;&#xA;&#x9; PERSON_ID = @PERSON_ID  AND&#xD;&#xA;&#x9; PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; REFERENCE_ID = @REFERENCE_ID  AND&#xD;&#xA;&#x9; STATUS_VALUE IN ('UNPC',&#xD;&#xA;&#x9;'PICK')">
+			<parameters>
+				<parameter ID="@REQUEST_ID" sfwDataType="int" />
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@REFERENCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="CountActiveProcessForReferenceIdByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;count(*) &#xD;&#xA;FROM&#xD;&#xA;               SGW_BPM_PROCESS_INSTANCE PRI  WITH(NOLOCK)  INNER     &#xD;&#xA;                JOIN SGW_BPM_CASE_INSTANCE CI   WITH(NOLOCK)&#xD;&#xA;                ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;               CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;               PRI.PROCESS_ID IN (SELECT&#xD;&#xA;               process_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_process    p2   &#xD;&#xA;WHERE&#xD;&#xA;               case_id in( SELECT&#xD;&#xA;               c2.case_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c2   INNER    &#xD;&#xA;                JOIN (SELECT&#xD;&#xA;               case_file &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c1   INNER    &#xD;&#xA;                JOIN sgw_bpm_process p1  &#xD;&#xA;                ON p1.CASE_ID = c1.CASE_ID &#xD;&#xA;WHERE&#xD;&#xA;               p1.PROCESS_ID = @PROCESS_ID&#xD;&#xA;               )details&#xD;&#xA;               ON details.CASE_FILE = c2.CASE_FILE )) AND&#xD;&#xA;               PRI.STATUS_VALUE IN ('INPC','UNPC')" sfwOracle="SELECT&#xD;&#xA;               count(*) &#xD;&#xA;FROM&#xD;&#xA;               SGW_BPM_PROCESS_INSTANCE PRI    INNER     &#xD;&#xA;                JOIN SGW_BPM_CASE_INSTANCE CI   &#xD;&#xA;                ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;               CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;               PRI.PROCESS_ID IN (SELECT&#xD;&#xA;               process_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_process    p2   &#xD;&#xA;WHERE&#xD;&#xA;               case_id in( SELECT&#xD;&#xA;               c2.case_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c2   INNER    &#xD;&#xA;                JOIN (SELECT&#xD;&#xA;               case_file &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c1   INNER    &#xD;&#xA;                JOIN sgw_bpm_process p1  &#xD;&#xA;                ON p1.CASE_ID = c1.CASE_ID &#xD;&#xA;WHERE&#xD;&#xA;               p1.PROCESS_ID = @PROCESS_ID&#xD;&#xA;               )details&#xD;&#xA;               ON details.CASE_FILE = c2.CASE_FILE )) AND&#xD;&#xA;               PRI.STATUS_VALUE IN ('INPC','UNPC')">
+			<parameters>
+				<parameter ID="@REFERENCE_ID" sfwDataType="int" />
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUnprocessRequestForReferenceIdByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_BPM_REQUEST WITH(NOLOCK)&#xD;&#xA;WHERE REFERENCE_ID = @REFERENCE_ID&#xD;&#xA;  AND PROCESS_ID IN (SELECT&#xD;&#xA;               process_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_process  p2   WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;               case_id in ( SELECT&#xD;&#xA;               c2.case_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c2 WITH(NOLOCK) INNER    &#xD;&#xA;                JOIN (SELECT&#xD;&#xA;               case_file &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c1 WITH(NOLOCK)  INNER    &#xD;&#xA;                JOIN sgw_bpm_process p1 WITH(NOLOCK)&#xD;&#xA;                ON p1.CASE_ID = c1.CASE_ID &#xD;&#xA;WHERE&#xD;&#xA;               p1.PROCESS_ID = @PROCESS_ID) details&#xD;&#xA;               ON details.CASE_FILE = c2.CASE_FILE ))&#xD;&#xA;  AND STATUS_VALUE IN ('UNPC','PICK') AND REQUEST_ID &lt;&gt; @REQUEST_ID" sfwOracle="SELECT COUNT(*) FROM SGW_BPM_REQUEST &#xD;&#xA;WHERE REFERENCE_ID = @REFERENCE_ID&#xD;&#xA;  AND PROCESS_ID IN (SELECT&#xD;&#xA;               process_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_process  p2   &#xD;&#xA;WHERE&#xD;&#xA;               case_id in ( SELECT&#xD;&#xA;               c2.case_id &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c2  INNER    &#xD;&#xA;                JOIN (SELECT&#xD;&#xA;               case_file &#xD;&#xA;FROM&#xD;&#xA;               sgw_bpm_case c1   INNER    &#xD;&#xA;                JOIN sgw_bpm_process p1 &#xD;&#xA;                ON p1.CASE_ID = c1.CASE_ID &#xD;&#xA;WHERE&#xD;&#xA;               p1.PROCESS_ID = @PROCESS_ID) details&#xD;&#xA;               ON details.CASE_FILE = c2.CASE_FILE ))&#xD;&#xA;  AND STATUS_VALUE IN ('UNPC','PICK') AND REQUEST_ID &lt;&gt; @REQUEST_ID">
+			<parameters>
+				<parameter ID="@REFERENCE_ID" sfwDataType="long" />
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@REQUEST_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetMaxActivityInstanceHistoryByBpmActivityInstance" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;  * &#xD;&#xA;FROM&#xD;&#xA;  SGW_BPM_ACTIVITY_INST_HISTORY WITH(NOLOCK)  &#xD;&#xA;WHERE&#xD;&#xA;  ACTIVITY_INSTANCE_HISTORY_ID IN  (SELECT&#xD;&#xA;  MAX(ACTIVITY_INSTANCE_HISTORY_ID)   &#xD;&#xA;FROM&#xD;&#xA;  SGW_BPM_ACTIVITY_INST_HISTORY    WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;  ACTIVITY_INSTANCE_ID = @ACTIVITYINSTANCEID)" sfwOracle="SELECT&#xD;&#xA;  * &#xD;&#xA;FROM&#xD;&#xA;  SGW_BPM_ACTIVITY_INST_HISTORY  &#xD;&#xA;WHERE&#xD;&#xA;  ACTIVITY_INSTANCE_HISTORY_ID IN  (SELECT&#xD;&#xA;  MAX(ACTIVITY_INSTANCE_HISTORY_ID)   &#xD;&#xA;FROM&#xD;&#xA;  SGW_BPM_ACTIVITY_INST_HISTORY    &#xD;&#xA;WHERE&#xD;&#xA;  ACTIVITY_INSTANCE_ID = @ACTIVITYINSTANCEID)">
+			<parameters>
+				<parameter ID="@ACTIVITYINSTANCEID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUserNameFromUserSerialId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select USER_ID, EMAIL_ADDRESS from SGS_USER WITH(NOLOCK) WHERE USER_SERIAL_ID = @USER_SERIAL_ID" sfwOracle="select USER_ID, EMAIL_ADDRESS from SGS_USER WHERE USER_SERIAL_ID = @USER_SERIAL_ID">
+			<parameters>
+				<parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetRoleDescriptionByRoleId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; ROLE_DESCRIPTION &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_ROLES WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ROLE_ID = @ROLE_ID" sfwOracle="SELECT&#xD;&#xA;&#x9; ROLE_DESCRIPTION &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_ROLES &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ROLE_ID = @ROLE_ID">
+			<parameters>
+				<parameter ID="@ROLE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUserEmailIdsForRole" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; USER_SERIAL_ID,&#xD;&#xA;&#x9;EMAIL_ADDRESS &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;&#x9; USER_SERIAL_ID IN (SELECT&#xD;&#xA;&#x9; USER_SERIAL_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER_ROLES WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;&#x9; ROLE_ID = @ROLE_ID)" sfwOracle="SELECT&#xD;&#xA;&#x9; USER_SERIAL_ID,&#xD;&#xA;&#x9;EMAIL_ADDRESS &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER &#xD;&#xA;WHERE&#xD;&#xA;&#x9; USER_SERIAL_ID IN (SELECT&#xD;&#xA;&#x9; USER_SERIAL_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER_ROLES &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ROLE_ID = @ROLE_ID)">
+			<parameters>
+				<parameter ID="@ROLE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetNLevelSupervisourByUserId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="WITH OrgPath &#xD;&#xA;(&#xD;&#xA;&#x9;USER_SERIAL_ID, SUPERVISOR_ID, EMAIL_ADDRESS, SupervisorLevel&#xD;&#xA;) &#xD;&#xA;AS &#xD;&#xA;(&#xD;&#xA;&#x9;SELECT SGS_USER.USER_SERIAL_ID,SGS_USER.SUPERVISOR_ID,SGS_USER.EMAIL_ADDRESS, 0 &#xD;&#xA;&#x9;FROM SGS_USER WHERE USER_ID = @USER_ID &#xD;&#xA;&#x9;UNION ALL &#xD;&#xA;&#x9;SELECT U.USER_SERIAL_ID,U.SUPERVISOR_ID,U.EMAIL_ADDRESS, SupervisorLevel + 1 &#xD;&#xA;&#x9;FROM SGS_USER AS U &#xD;&#xA;&#x9;&#x9;JOIN OrgPath ON U.USER_SERIAL_ID = OrgPath.SUPERVISOR_ID&#xD;&#xA;) &#xD;&#xA;SELECT SupervisorLevel, U2.USER_SERIAL_ID,U2.user_id, U2.SUPERVISOR_ID, U2.EMAIL_ADDRESS &#xD;&#xA;FROM SGS_USER AS U2 &#xD;&#xA;JOIN OrgPath ON U2.USER_SERIAL_ID = OrgPath.USER_SERIAL_ID &#xD;&#xA;WHERE SupervisorLevel = @SupervisorLevel ORDER BY SupervisorLevel OPTION (MAXRECURSION 32767);" sfwOracle="WITH OrgPath &#xD;&#xA;(&#xD;&#xA;&#x9;USER_SERIAL_ID, SUPERVISOR_ID, EMAIL_ADDRESS, SupervisorLevel&#xD;&#xA;) &#xD;&#xA;AS &#xD;&#xA;(&#xD;&#xA;&#x9;SELECT SGS_USER.USER_SERIAL_ID,SGS_USER.SUPERVISOR_ID,SGS_USER.EMAIL_ADDRESS, 0 &#xD;&#xA;&#x9;FROM SGS_USER WHERE USER_ID = @USER_ID &#xD;&#xA;&#x9;UNION ALL &#xD;&#xA;&#x9;SELECT U.USER_SERIAL_ID,U.SUPERVISOR_ID,U.EMAIL_ADDRESS, SupervisorLevel + 1 &#xD;&#xA;&#x9;FROM SGS_USER U &#xD;&#xA;&#x9;&#x9;JOIN OrgPath ON U.USER_SERIAL_ID = OrgPath.SUPERVISOR_ID&#xD;&#xA;) &#xD;&#xA;SELECT SupervisorLevel, U2.USER_SERIAL_ID,U2.user_id, U2.SUPERVISOR_ID, U2.EMAIL_ADDRESS &#xD;&#xA;FROM SGS_USER U2 &#xD;&#xA;JOIN OrgPath ON U2.USER_SERIAL_ID = OrgPath.USER_SERIAL_ID &#xD;&#xA;WHERE SupervisorLevel = @SupervisorLevel --ORDER BY SupervisorLevel OPTION (MAXRECURSION 32767)">
+			<parameters>
+				<parameter ID="@USER_ID" sfwDataType="string" />
+				<parameter ID="@SupervisorLevel" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUserDetailsByUserSerialId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;  USER_SERIAL_ID,&#xD;&#xA; USER_ID,&#xD;&#xA; EMAIL_ADDRESS&#xD;&#xA;FROM&#xD;&#xA;  SGS_USER WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;  USER_SERIAL_ID = @user_serial_id" sfwOracle="SELECT&#xD;&#xA;  USER_SERIAL_ID,&#xD;&#xA; USER_ID,&#xD;&#xA; EMAIL_ADDRESS&#xD;&#xA;FROM&#xD;&#xA;  SGS_USER &#xD;&#xA;WHERE&#xD;&#xA;  USER_SERIAL_ID = @user_serial_id">
+			<parameters>
+				<parameter ID="@user_serial_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetInProgressProcessInstancesByPersonIdAndProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; BPI.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE BPI WITH(NOLOCK)   INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE BCI WITH(NOLOCK) &#xD;&#xA;&#x9; ON BPI.CASE_INSTANCE_ID = BCI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; BPI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; BPI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC') AND&#xD;&#xA;&#x9;   BCI.STATUS_VALUE = 'INPC' AND&#xD;&#xA;&#x9;  BCI.PERSON_ID &gt; 0 AND&#xD;&#xA;&#x9; BCI.PERSON_ID = @PERSON_ID" sfwOracle="SELECT&#xD;&#xA;&#x9; BPI.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE BPI   INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE BCI &#xD;&#xA;&#x9; ON BPI.CASE_INSTANCE_ID = BCI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; BPI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; BPI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC') AND&#xD;&#xA;&#x9;   BCI.STATUS_VALUE = 'INPC' AND&#xD;&#xA;&#x9;  BCI.PERSON_ID &gt; 0 AND&#xD;&#xA;&#x9; BCI.PERSON_ID = @PERSON_ID">
+			<parameters>
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetActiveOrSuspendedActivitiesByProcessIdAndActivityNameAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; SAI.ACTIVITY_INSTANCE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SAI WITH(NOLOCK)&#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE  SPI WITH(NOLOCK)&#xD;&#xA;&#x9; ON SAI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY  SA WITH(NOLOCK)&#xD;&#xA;&#x9; ON SA.ACTIVITY_ID = SAI.ACTIVITY_ID AND&#xD;&#xA;&#x9; SA.PROCESS_ID = @PROCESS_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; SPI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; SAI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; SA.NAME = @ACTIVITY_NAME AND&#xD;&#xA;&#x9; SAI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'SUSP')" sfwOracle="SELECT&#xD;&#xA;&#x9; SAI.ACTIVITY_INSTANCE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SAI&#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE  SPI&#xD;&#xA;&#x9; ON SAI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY  SA &#xD;&#xA;&#x9; ON SA.ACTIVITY_ID = SAI.ACTIVITY_ID AND&#xD;&#xA;&#x9; SA.PROCESS_ID = @PROCESS_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; SPI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; SAI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; SA.NAME = @ACTIVITY_NAME AND&#xD;&#xA;&#x9; SAI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'SUSP')">
+			<parameters>
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@REFERENCE_ID" sfwDataType="int" />
+				<parameter ID="@ACTIVITY_NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetInProgressActivityInstanceForInclusiveOrParallelGatewayWithLock" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.ACTIVITY_INSTANCE_ID, AI.ACTIVITY_ID, AI.END_DATE FROM SGW_BPM_ACTIVITY_INSTANCE AI INNER JOIN SGW_BPM_PROCESS_INSTANCE PI WITH(XLOCK,ROWLOCK) ON AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID WHERE PI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID" sfwOracle="SELECT&#xA;&#x9; AI.ACTIVITY_INSTANCE_ID,&#xA;&#x9;AI.ACTIVITY_ID,&#xA;&#x9;AI.END_DATE &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE AI &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE PI&#xA;&#x9; ON AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID WHERE&#xA;&#x9; PI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID FOR UPDATE">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetInclusiveOrParallelGatewayActivityInstanceWithLock" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(XLOCK,ROWLOCK) WHERE AI.ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID" sfwOracle="SELECT * FROM SGW_BPM_ACTIVITY_INSTANCE AI WHERE AI.ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID FOR UPDATE">
+			<parameters>
+				<parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="EligibleUsersForReAssignment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT distinct U.[USER_ID],U.[USER_SERIAL_ID] from SGS_USER AS U WITH(NOLOCK) WHERE U.USER_STATUS_VALUE = 'A'" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID from SGS_USER U WHERE U.USER_STATUS_VALUE = 'A'">
+			<parameters />
+		</query>
+		<query ID="EligibleUsersForReAssignmentWithRole" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT distinct U.[USER_ID],U.[USER_SERIAL_ID] from SGS_USER AS U WITH(NOLOCK) INNER JOIN SGS_USER_ROLES AS UR WITH(NOLOCK) ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID WHERE U.USER_STATUS_VALUE = 'A' AND ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt;=CONVERT(DATETIME,CONVERT(CHAR,@CURRENT_DATE,103),103))) AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;=CONVERT(DATETIME,CONVERT(CHAR,@CURRENT_DATE,103),103)))" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID from SGS_USER U  &#xD;&#xA; INNER JOIN SGS_USER_ROLES  UR ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xD;&#xA; WHERE U.USER_STATUS_VALUE = 'A' &#xD;&#xA; AND ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt;=@CURRENT_DATE))&#xD;&#xA; AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;= @CURRENT_DATE))">
+			<parameters />
+		</query>
+    <query ID="UserTaskByLoad" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; distinct U.[USER_ID],&#xA;&#x9;U.[USER_SERIAL_ID],&#xA;&#x9;(case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end) AS Activities  &#xA;FROM&#xA;&#x9; SGS_USER AS U WITH(NOLOCK) &#xA;&#x9; LEFT OUTER JOIN  (SELECT&#xA;&#x9; CHECKED_OUT_USER,&#xA;&#x9;count(*) AS ASSIGNED_ACTIVITIES &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE AS AI WITH(NOLOCK) &#xA;&#x9; inner join sgw_bpm_process_instance spi1 with(nolock) on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xA;     inner join sgw_bpm_case_instance sci1 with(nolock) on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'&#xA;WHERE&#xA;&#x9; AI.STATUS_VALUE NOT IN ('PROC',&#xA;&#x9;'CANC',&#xA;&#x9;'SUSP',&#xA;&#x9;'APPR',&#xA;&#x9;'REJT') &#xA;GROUP BY  CHECKED_OUT_USER) AS AID&#xA;&#x9; ON U.USER_ID = AID.CHECKED_OUT_USER &#xA;WHERE&#xA;&#x9; U.USER_STATUS_VALUE = 'A'" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID, (case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end) Activities  &#xD;&#xA; from SGS_USER U  &#xD;&#xA; left outer join (SELECT CHECKED_OUT_USER, count(*)ASSIGNED_ACTIVITIES from SGW_BPM_ACTIVITY_INSTANCE AI &#xD;&#xA; inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xD;&#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'&#xD;&#xA;                    where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') &#xD;&#xA;                    group by CHECKED_OUT_USER) AID&#xD;&#xA;                    on U.USER_ID = AID.CHECKED_OUT_USER &#xD;&#xA;                    WHERE U.USER_STATUS_VALUE = 'A'" sfwPostgre="SELECT&#xD;&#xA;&#x9; distinct U.USER_ID,&#xD;&#xA;&#x9;U.USER_SERIAL_ID,&#xD;&#xA;&#x9;(case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end) AS Activities  &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER AS U &#xD;&#xA;&#x9; LEFT OUTER JOIN  (SELECT&#xD;&#xA;&#x9; CHECKED_OUT_USER,&#xD;&#xA;&#x9;count(*) AS ASSIGNED_ACTIVITIES &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE AS AI &#xD;&#xA;&#x9; inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xD;&#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'&#xD;&#xA;WHERE&#xD;&#xA;&#x9; AI.STATUS_VALUE NOT IN ('PROC',&#xD;&#xA;&#x9;'CANC',&#xD;&#xA;&#x9;'SUSP',&#xD;&#xA;&#x9;'APPR',&#xD;&#xA;&#x9;'REJT') &#xD;&#xA;GROUP BY  CHECKED_OUT_USER) AS AID&#xD;&#xA;&#x9; ON U.USER_ID = AID.CHECKED_OUT_USER &#xD;&#xA;WHERE&#xD;&#xA;&#x9; U.USER_STATUS_VALUE = 'A'">
+      <parameters />
+    </query>
+    <query ID="UserTaskByLoadWithRole" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; distinct U.[USER_ID],&#xA;&#x9;U.[USER_SERIAL_ID],&#xA;&#x9;(case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end) Activities &#xA;FROM&#xA;&#x9; SGS_USER U &#xA;&#x9;INNER &#xA;&#x9; JOIN SGS_USER_ROLES UR&#xA;&#x9; ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xA;&#x9; LEFT OUTER JOIN  (SELECT&#xA;&#x9; CHECKED_OUT_USER,&#xA;&#x9;count(*)  ASSIGNED_ACTIVITIES &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE  AS AI WITH(NOLOCK)   &#xA;&#x9; inner join sgw_bpm_process_instance spi1 with(nolock) on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xA; inner join sgw_bpm_case_instance sci1 with(nolock) on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'&#xA;WHERE&#xA;&#x9; AI.STATUS_VALUE NOT IN ('PROC',&#xA;&#x9;'CANC',&#xA;&#x9;'SUSP',&#xA;&#x9;'APPR',&#xA;&#x9;'REJT') &#xA;GROUP BY  CHECKED_OUT_USER) AID&#xA;&#x9; ON U.USER_ID = AID.CHECKED_OUT_USER  &#xA;WHERE&#xA;&#x9; U.USER_STATUS_VALUE = 'A'  AND&#xA;&#x9; ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt; = CONVERT(DATETIME,&#xA;&#x9;CONVERT(CHAR,&#xA;&#x9;@CURRENT_DATE,&#xA;&#x9;103),&#xA;&#x9;103))) AND&#xA;&#x9; ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt; = CONVERT(DATETIME,&#xA;&#x9;CONVERT(CHAR,&#xA;&#x9;@CURRENT_DATE,&#xA;&#x9;103),&#xA;&#x9;103)))" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID,&#xA;(case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end) Activities &#xA;from SGS_USER U &#xA;INNER JOIN SGS_USER_ROLES UR &#xA;ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xA;left outer join (SELECT CHECKED_OUT_USER, count(*)  ASSIGNED_ACTIVITIES &#xA;                    from SGW_BPM_ACTIVITY_INSTANCE  AI &#xA;                    inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'&#xA;                    where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP')&#xA;                    group by CHECKED_OUT_USER) AID &#xA;            on U.USER_ID = AID.CHECKED_OUT_USER &#xA;    WHERE U.USER_STATUS_VALUE = 'A' &#xA;    AND ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt;=@CURRENT_DATE))&#xA;    AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;=@CURRENT_DATE))" sfwPostgre="SELECT distinct U.USER_ID,U.USER_SERIAL_ID,&#xD;&#xA;(case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end) Activities &#xD;&#xA;from SGS_USER U &#xD;&#xA;INNER JOIN SGS_USER_ROLES UR &#xD;&#xA;ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xD;&#xA;left outer join (SELECT CHECKED_OUT_USER, count(*)  ASSIGNED_ACTIVITIES &#xD;&#xA;                    from SGW_BPM_ACTIVITY_INSTANCE  AI &#xD;&#xA;                    inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xD;&#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'&#xD;&#xA;                    where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP')&#xD;&#xA;                    group by CHECKED_OUT_USER) AID &#xD;&#xA;            on U.USER_ID = AID.CHECKED_OUT_USER &#xD;&#xA;    WHERE U.USER_STATUS_VALUE = 'A' &#xD;&#xA;    AND ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt;=@CURRENT_DATE))&#xD;&#xA;    AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;=@CURRENT_DATE))">
+      <parameters />
+    </query>
+		<query ID="UserTaskEveryone" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT distinct U.[USER_ID],U.[USER_SERIAL_ID] from SGS_USER AS U WITH(NOLOCK) WHERE U.USER_STATUS_VALUE = 'A'" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID from SGS_USER U  WHERE U.USER_STATUS_VALUE = 'A'">
+			<parameters />
+		</query>
+		<query ID="UserTaskEveryoneWithRole" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="   SELECT distinct U.[USER_ID],U.[USER_SERIAL_ID] from SGS_USER AS U WITH(NOLOCK) INNER JOIN SGS_USER_ROLES AS UR WITH(NOLOCK) ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID  WHERE U.USER_STATUS_VALUE = 'A' AND ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt;=CONVERT(DATETIME,CONVERT(CHAR,@CURRENT_DATE,103),103))) AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;=CONVERT(DATETIME,CONVERT(CHAR,@CURRENT_DATE,103),103)))" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID from SGS_USER U &#xA;   INNER JOIN SGS_USER_ROLES UR &#xA;   ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID  &#xA;   WHERE U.USER_STATUS_VALUE = 'A' &#xA;   AND ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt;=@CURRENT_DATE)) &#xA;   AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;=@CURRENT_DATE))">
+			<parameters />
+		</query>
+    <query ID="UserTaskSequential" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; distinct U.[USER_ID],&#xA;&#x9;U.[USER_SERIAL_ID] &#xA;FROM&#xA;&#x9; SGS_USER AS U WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; U.USER_STATUS_VALUE = 'A'" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID from SGS_USER  U WHERE U.USER_STATUS_VALUE = 'A'" sfwPostgre="SELECT&#xD;&#xA;&#x9; distinct U.USER_ID,&#xD;&#xA;&#x9;U.USER_SERIAL_ID&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER AS U &#xD;&#xA;WHERE&#xD;&#xA;&#x9; U.USER_STATUS_VALUE = 'A'">
+      <parameters />
+    </query>
+    <query ID="UserTaskSequentialWithRole" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; distinct U.[USER_ID],&#xA;&#x9;U.[USER_SERIAL_ID] &#xA;FROM&#xA;&#x9; SGS_USER AS U WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGS_USER_ROLES AS UR WITH(NOLOCK)&#xA;&#x9; ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xA;WHERE&#xA;&#x9; U.USER_STATUS_VALUE = 'A' AND&#xA;&#x9; ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt; =  CONVERT(DATETIME,&#xA;&#x9;CONVERT(CHAR,&#xA;&#x9;@CURRENT_DATE,&#xA;&#x9;103),&#xA;&#x9;103))) AND&#xA;&#x9; ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt; =  CONVERT(DATETIME,&#xA;&#x9;CONVERT(CHAR,&#xA;&#x9;@CURRENT_DATE,&#xA;&#x9;103),&#xA;&#x9;103)))" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID&#xA;from SGS_USER  U &#xA;INNER JOIN SGS_USER_ROLES UR&#xA;ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xA;WHERE U.USER_STATUS_VALUE = 'A' &#xA;AND ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt;= @CURRENT_DATE)) &#xA;AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;= @CURRENT_DATE))" sfwPostgre="SELECT distinct U.USER_ID,U.USER_SERIAL_ID&#xD;&#xA;from SGS_USER  U &#xD;&#xA;INNER JOIN SGS_USER_ROLES UR&#xD;&#xA;ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xD;&#xA;WHERE U.USER_STATUS_VALUE = 'A' &#xD;&#xA;AND ((UR.EFFECTIVE_START_DATE IS NULL) OR (UR.EFFECTIVE_START_DATE &lt;= @CURRENT_DATE)) &#xD;&#xA;AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;= @CURRENT_DATE))">
+      <parameters>
+        <parameter ID="@CURRENT_DATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+		<query ID="GetInProgressProcessInstancesByOrgIdAndProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; BPI.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE BPI WITH(NOLOCK)   INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE BCI WITH(NOLOCK) &#xD;&#xA;&#x9; ON BPI.CASE_INSTANCE_ID = BCI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; BPI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; BPI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC') AND&#xD;&#xA;&#x9;   BCI.STATUS_VALUE = 'INPC' AND&#xD;&#xA;&#x9;  BCI.ORG_ID &gt; 0 AND&#xD;&#xA;&#x9; BCI.ORG_ID = @ORG_ID" sfwOracle="SELECT&#xD;&#xA;&#x9; BPI.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE BPI    INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE BCI  &#xD;&#xA;&#x9; ON BPI.CASE_INSTANCE_ID = BCI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; BPI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; BPI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC') AND&#xD;&#xA;&#x9;   BCI.STATUS_VALUE = 'INPC' AND&#xD;&#xA;&#x9;  BCI.ORG_ID &gt; 0 AND&#xD;&#xA;&#x9; BCI.ORG_ID = @ORG_ID">
+			<parameters>
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@ORG_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="UserTaskByLoadFinalQuery" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM ( {0} ) AS Details ORDER BY Activities" sfwOracle="SELECT * FROM ( {0} )  Details ORDER BY Activities">
+			<parameters />
+		</query>
+		<query ID="CountActiveProcessForOrgByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI WITH(NOLOCK) &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)&#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')" sfwOracle="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI&#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+			<parameters>
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@ORG_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="DequeueItem" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGW_BPM_QUEUE SET STATUS_VALUE='PICK' OUTPUT INSERTED.* where QUEUE_ITEM_ID = (select TOP 1 QUEUE_ITEM_ID from SGW_BPM_QUEUE WITH (UPDLOCK, READPAST) WHERE STATUS_VALUE='UNPC' order by ISNULL(PRIORITY_CODE_VALUE,'NORM') asc, QUEUE_ITEM_ID asc)" sfwOracle="SELECT * FROM Table(Sagitec.fnGetNextQueueItem)">
+			<parameters />
+		</query>
+		<query ID="DequeueItemByMachineName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGW_BPM_QUEUE SET STATUS_VALUE='PICK' OUTPUT INSERTED.* WHERE QUEUE_ITEM_ID = (SELECT TOP 1 QUEUE_ITEM_ID FROM SGW_BPM_QUEUE WITH (UPDLOCK, READPAST) WHERE MACHINE_NAME =@MACHINE_NAME AND&#xA;&#x9; STATUS_VALUE='UNPC' ORDER BY ISNULL(PRIORITY_CODE_VALUE,'NORM') asc, QUEUE_ITEM_ID asc)" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; Table(Sagitec.fnGetNextQueueItem('DequeueItemByMachineName',&#xA;&#x9;@MACHINE_NAME))">
+			<parameters>
+				<parameter ID="@MACHINE_NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="UserTaskSequentialFinalQuery" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM ( {0} )  AS DETAILS" sfwOracle="SELECT * FROM ( {0} ) DETAILS WHERE ROWNUM &gt;= 1">
+			<parameters />
+		</query>
+		<query ID="GetCasesHavingInFlightInstanceByCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT BC.* FROM SGW_BPM_CASE BC WITH(NOLOCK) INNER JOIN SGW_BPM_CASE_INSTANCE BCI WITH(NOLOCK) ON BC.CASE_ID = BCI.CASE_ID AND BCI.STATUS_VALUE = 'INPC' AND BC.NAME = @NAME AND BC.CASE_ID &lt;&gt; @EFFECTIVE_CASE_ID" sfwOracle="SELECT&#xA;&#x9; BC.* &#xA;FROM&#xA;&#x9; SGW_BPM_CASE BC INNER JOIN SGW_BPM_CASE_INSTANCE BCI ON BC.CASE_ID = BCI.CASE_ID AND BCI.STATUS_VALUE = 'INPC' AND BC.NAME = @NAME AND BC.CASE_ID &lt;&gt; @EFFECTIVE_CASE_ID">
+			<parameters>
+				<parameter ID="@NAME" sfwDataType="string" />
+				<parameter ID="@EFFECTIVE_CASE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="CheckForSupervisour" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(1) FROM SGS_USER CHECKED_OUT_USER WITH(NOLOCK) INNER JOIN SGS_USER SUPERVISOUR WITH(NOLOCK) ON CHECKED_OUT_USER.SUPERVISOR_ID = SUPERVISOUR.USER_SERIAL_ID WHERE CHECKED_OUT_USER.USER_ID = @CHECKED_OUT_USER_ID AND SUPERVISOUR.USER_ID = @SUPERVISOUR_USER_ID" sfwOracle="SELECT&#xA;&#x9; COUNT(1) &#xA;FROM&#xA;&#x9; SGS_USER CHECKED_OUT_USER &#xA;&#x9;INNER &#xA;&#x9; JOIN SGS_USER SUPERVISOUR&#xA;&#x9; ON CHECKED_OUT_USER.SUPERVISOR_ID = SUPERVISOUR.USER_SERIAL_ID &#xA;WHERE&#xA;&#x9; CHECKED_OUT_USER.USER_ID = @CHECKED_OUT_USER_ID AND&#xA;&#x9; SUPERVISOUR.USER_ID = @SUPERVISOUR_USER_ID">
+			<parameters>
+				<parameter ID="@CHECKED_OUT_USER_ID" sfwDataType="string" />
+				<parameter ID="@SUPERVISOUR_USER_ID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetAccessibleProcessesByUserId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct P.DESCRIPTION, P.PROCESS_ID &#xA;FROM SGW_BPM_PROCESS P   &#xA;&#x9;INNER JOIN &#xA;&#x9;(&#xA;&#x9;&#x9;SELECT sgw_bpm_case.CASE_ID, sgw_bpm_case.RESOURCE_ID, CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xA;&#x9;&#x9;FROM sgw_bpm_case     &#xA;&#x9;&#x9;left join &#xA;&#x9;&#x9;(&#xA;&#x9;&#x9;&#x9;SELECT * FROM &#xA;&#x9;&#x9;&#x9;(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT case_id, CASE WHEN (ROW_NUMBER() OVER(PARTITION BY name  ORDER BY   case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xA;&#x9;&#x9;&#x9;&#x9;FROM sgw_bpm_case  &#xA;&#x9;&#x9;&#x9;&#x9;WHERE EFFECTIVE_DATE &lt; =  dbo.UDF_GET_SYSTEM_DATE('N') AND STATUS_VALUE = 'ACTV'&#xA;&#x9;&#x9;&#x9;) AS C &#xA;&#x9;&#x9;WHERE ACTIVE_VERSION  = 'Y'&#xA;&#x9;&#x9;) AS ACTIVE_BPM_CASE&#xA;&#x9;ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID&#xA;)AS BPM_CASE ON P.CASE_ID = BPM_CASE.CASE_ID &#xA;LEFT OUTER JOIN  &#xA;(&#xA;&#x9;SELECT distinct d.resource_id, a.USER_ID  &#xA;&#x9;FROM sgs_user a , sgs_user_roles b ,sgs_resources d  , sgs_security e   &#xA;&#x9;WHERE a.user_serial_id = b.user_serial_id    AND b.role_id = e.role_id    AND e.resource_id = d.resource_id    &#xA;&#x9;&#x9;AND ((b.effective_start_DATE is null) or (b.effective_start_date &lt; =  convert(dateTime, convert(char, dbo.UDF_GET_SYSTEM_DATE('N'), 103), 103)))   &#xA;&#x9;&#x9;AND ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =  convert(dateTime, convert(char, dbo.UDF_GET_SYSTEM_DATE('N'), 103), 103))) AND d.RESOURCE_TYPE_VALUE = 'BPM'&#xA;) RES&#xA;ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID &#xA;WHERE (user_id is null or user_id = @user_id) AND ONLINE_IND = 'Y' AND CURRENT_VERSION = 'Y'&#xA; and ( isnull(RES.RESOURCE_ID, 0) &gt; 0 or isnull (BPM_CASE.RESOURCE_ID,-1) = -1)   &#xA;ORDER BY   DESCRIPTION desc" sfwOracle="SELECT distinct P.DESCRIPTION, P.PROCESS_ID &#xD;&#xA;FROM SGW_BPM_PROCESS P   &#xD;&#xA;&#x9;INNER JOIN &#xD;&#xA;&#x9;(&#xD;&#xA;&#x9;&#x9;SELECT sgw_bpm_case.CASE_ID, sgw_bpm_case.RESOURCE_ID, CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xD;&#xA;&#x9;&#x9;FROM sgw_bpm_case     &#xD;&#xA;&#x9;&#x9;left join &#xD;&#xA;&#x9;&#x9;(&#xD;&#xA;&#x9;&#x9;&#x9;SELECT * FROM &#xD;&#xA;&#x9;&#x9;&#x9;(&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;SELECT case_id, CASE WHEN (ROW_NUMBER() OVER(PARTITION BY name  ORDER BY   case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;FROM sgw_bpm_case  &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;WHERE EFFECTIVE_DATE &lt; =  (SELECT UDF_GET_SYSTEM_DATE('N') FROM DUAL) AND STATUS_VALUE = 'ACTV'&#xD;&#xA;&#x9;&#x9;&#x9;)  C WHERE ACTIVE_VERSION  = 'Y'&#xD;&#xA;&#x9;&#x9;) ACTIVE_BPM_CASE&#xD;&#xA;&#x9;ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID&#xD;&#xA;) BPM_CASE ON P.CASE_ID = BPM_CASE.CASE_ID &#xD;&#xA;LEFT OUTER JOIN  &#xD;&#xA;(&#xD;&#xA;&#x9;SELECT distinct d.resource_id, a.USER_ID  &#xD;&#xA;&#x9;FROM sgs_user a , sgs_user_roles b ,sgs_resources d  , sgs_security e   &#xD;&#xA;&#x9;WHERE a.user_serial_id = b.user_serial_id    AND b.role_id = e.role_id    AND e.resource_id = d.resource_id    &#xD;&#xA;&#x9;&#x9;AND ((b.effective_start_DATE is null) or (b.effective_start_date &lt; =  TO_DATE(TO_CHAR(UDF_GET_SYSTEM_DATE('N'), 'MM-DD-YYY'), 'MM-DD-YYYY')))   &#xD;&#xA;&#x9;&#x9;AND ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =  TO_DATE(TO_CHAR(UDF_GET_SYSTEM_DATE('N'), 'MM-DD-YYY'), 'MM-DD-YYYY'))) &#xD;&#xA;        AND d.RESOURCE_TYPE_VALUE = 'BPM'&#xD;&#xA;) RES&#xD;&#xA;ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID &#xD;&#xA;WHERE (user_id is null or user_id = @user_id) AND ONLINE_IND = 'Y' AND CURRENT_VERSION = 'Y'&#xD;&#xA; and ( NVL(RES.RESOURCE_ID, 0) &gt; 0 or NVL (BPM_CASE.RESOURCE_ID,-1) = -1)   &#xD;&#xA;ORDER BY   DESCRIPTION desc">
+			<parameters>
+				<parameter ID="@user_id" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetAccessableCaseByUserId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct BPM_CASE.DESCRIPTION, BPM_CASE.NAME  &#xA;FROM&#xA;(&#xA;&#x9;SELECT sgw_bpm_case.CASE_ID, sgw_bpm_case.CASE_FILE, sgw_bpm_case.NAME, sgw_bpm_case.DESCRIPTION, sgw_bpm_case.VERSION, sgw_bpm_case.STATUS_VALUE, sgw_bpm_case.STATUS_ID&#xA;&#x9;&#x9;, sgw_bpm_case.RESOURCE_ID, CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xA;&#x9;FROM sgw_bpm_case &#xA;&#x9;&#x9;left join &#xA;&#x9;&#x9;(&#xA;&#x9;&#x9;&#x9;SELECT *  &#xA;&#x9;&#x9;&#x9;FROM&#xA;&#x9;&#x9;&#x9;(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT case_id, CASE WHEN (ROW_NUMBER() OVER(PARTITION BY name  ORDER BY   case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xA;&#x9;&#x9;&#x9;&#x9;FROM sgw_bpm_case  &#xA;&#x9;&#x9;&#x9;&#x9;WHERE EFFECTIVE_DATE &lt; =  dbo.UDF_GET_SYSTEM_DATE('Y') AND STATUS_VALUE = 'ACTV'&#xA;&#x9;&#x9;&#x9;) AS C &#xA;&#x9;&#x9;&#x9;WHERE ACTIVE_VERSION  = 'Y'&#xA;&#x9;&#x9;) AS ACTIVE_BPM_CASE ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID&#xA;)AS BPM_CASE &#xA;LEFT OUTER JOIN  &#xA;&#x9;(&#xA;&#x9;&#x9;SELECT distinct d.resource_id, a.USER_ID  &#xA;&#x9;&#x9;FROM sgs_user a , sgs_user_roles b , Sgs_resources d , sgs_security e    &#xA;&#x9;&#x9;WHERE a.user_serial_id = b.user_serial_id    AND b.role_id = e.role_id    AND e.resource_id = d.resource_id    &#xA;&#x9;&#x9;&#x9;AND ((b.effective_start_DATE is null) or (b.effective_start_date &lt; =  convert(dateTime, convert(char, dbo.UDF_GET_SYSTEM_DATE('Y'), 103), 103)))   &#xA;&#x9;&#x9;&#x9;AND ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =  convert(dateTime, convert(char, dbo.UDF_GET_SYSTEM_DATE('Y'), 103), 103))) &#xA;&#x9;&#x9;&#x9;AND d.RESOURCE_TYPE_VALUE = 'BPM'&#xA;&#x9;) RES ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID &#xA;WHERE (user_id is null or user_id = @user_id) &#xA;ORDER BY   DESCRIPTION,&#xA;NAME desc" sfwOracle="SELECT distinct BPM_CASE.DESCRIPTION, BPM_CASE.NAME  &#xD;&#xA;FROM&#xD;&#xA;(&#xD;&#xA;&#x9;SELECT sgw_bpm_case.CASE_ID, sgw_bpm_case.CASE_FILE, sgw_bpm_case.NAME, sgw_bpm_case.DESCRIPTION, sgw_bpm_case.VERSION, sgw_bpm_case.STATUS_VALUE, sgw_bpm_case.STATUS_ID&#xD;&#xA;&#x9;&#x9;, sgw_bpm_case.RESOURCE_ID, CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xD;&#xA;&#x9;FROM sgw_bpm_case &#xD;&#xA;&#x9;&#x9;left join &#xD;&#xA;&#x9;&#x9;(&#xD;&#xA;&#x9;&#x9;&#x9;SELECT *  &#xD;&#xA;&#x9;&#x9;&#x9;FROM&#xD;&#xA;&#x9;&#x9;&#x9;(&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;SELECT case_id, CASE WHEN (ROW_NUMBER() OVER(PARTITION BY name  ORDER BY   case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;FROM sgw_bpm_case  &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;WHERE EFFECTIVE_DATE &lt; =  (SELECT UDF_GET_SYSTEM_DATE('Y') FROM DUAL) AND STATUS_VALUE = 'ACTV'&#xD;&#xA;&#x9;&#x9;&#x9;)  C &#xD;&#xA;&#x9;&#x9;&#x9;WHERE ACTIVE_VERSION  = 'Y'&#xD;&#xA;&#x9;&#x9;)  ACTIVE_BPM_CASE ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID&#xD;&#xA;) BPM_CASE &#xD;&#xA;LEFT OUTER JOIN  &#xD;&#xA;&#x9;(&#xD;&#xA;&#x9;&#x9;SELECT distinct d.resource_id, a.USER_ID  &#xD;&#xA;&#x9;&#x9;FROM sgs_user a , sgs_user_roles b,Sgs_resources d , sgs_security e    &#xD;&#xA;&#x9;&#x9;WHERE a.user_serial_id = b.user_serial_id    AND b.role_id = e.role_id    AND e.resource_id = d.resource_id    &#xD;&#xA;&#x9;&#x9;&#x9;AND ((b.effective_start_DATE is null) or (b.effective_start_date &lt; =  TO_DATE(TO_CHAR(UDF_GET_SYSTEM_DATE('Y'), 'MM-DD-YYY'), 'MM-DD-YYYY')))&#xD;&#xA;&#x9;&#x9;&#x9;AND ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =  TO_DATE(TO_CHAR(UDF_GET_SYSTEM_DATE('Y'), 'MM-DD-YYY'), 'MM-DD-YYYY')))&#xD;&#xA;&#x9;&#x9;&#x9;AND d.RESOURCE_TYPE_VALUE = 'BPM'&#xD;&#xA;&#x9;) RES ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID &#xD;&#xA;WHERE (user_id is null or user_id = @user_id) &#xD;&#xA;ORDER BY   DESCRIPTION, NAME desc">
+			<parameters>
+				<parameter ID="@user_id" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetAccessableCaseWithVersionByUserId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct (BPM_CASE.DESCRIPTION + '(Ver.' + CONVERT(VARCHAR, VERSION) + ')') DESCRIPTION , BPM_CASE.NAME, BPM_CASE.CASE_ID, BPM_CASE.VERSION &#xA;FROM&#xA;(&#xA;&#x9;SELECT sgw_bpm_case.CASE_ID, sgw_bpm_case.CASE_FILE, sgw_bpm_case.NAME, sgw_bpm_case.DESCRIPTION,sgw_bpm_case.VERSION, sgw_bpm_case.STATUS_VALUE, sgw_bpm_case.STATUS_ID, sgw_bpm_case.RESOURCE_ID&#xA;&#x9;&#x9;, CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xA;&#x9;FROM sgw_bpm_case &#xA;&#x9;left join &#xA;&#x9;(&#xA;&#x9;&#x9;SELECT * &#xA;&#x9;&#x9;FROM&#xA;&#x9;&#x9;&#x9;(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT case_id, CASE WHEN (ROW_NUMBER() OVER(PARTITION BY name  ORDER BY   case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xA;&#x9;&#x9;&#x9;&#x9;FROM sgw_bpm_case  &#xA;&#x9;&#x9;&#x9;&#x9;WHERE EFFECTIVE_DATE &lt; =  dbo.UDF_GET_SYSTEM_DATE('Y') AND STATUS_VALUE = 'ACTV'&#xA;&#x9;&#x9;&#x9;) C  &#xA;&#x9;&#x9;WHERE ACTIVE_VERSION  = 'Y'&#xA;&#x9;)  ACTIVE_BPM_CASE ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID)AS BPM_CASE &#xA;&#x9;LEFT OUTER JOIN  &#xA;&#x9;(&#xA;&#x9;&#x9;SELECT distinct d.resource_id, a.USER_ID  &#xA;&#x9;&#x9;FROM sgs_user a , sgs_user_roles b , sgs_resources d ,sgs_security e    &#xA;&#x9;&#x9;WHERE a.user_serial_id = b.user_serial_id    AND b.role_id = e.role_id    AND e.resource_id = d.resource_id    &#xA;&#x9;&#x9;AND ((b.effective_start_DATE is null) or (b.effective_start_date &lt; =  convert(dateTime, convert(char, dbo.UDF_GET_SYSTEM_DATE('Y'), 103), 103)))   &#xA;&#x9;&#x9;AND ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =  convert(dateTime, convert(char, dbo.UDF_GET_SYSTEM_DATE('Y'), 103), 103))) &#xA;&#x9;&#x9;AND d.RESOURCE_TYPE_VALUE = 'BPM'&#xA;&#x9;) RES ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID &#xA;WHERE (user_id is null or user_id = @user_id) &#xA;ORDER BY   DESCRIPTION, NAME, version" sfwOracle="SELECT distinct (BPM_CASE.DESCRIPTION || '(Ver.' || CAST(VERSION AS VARCHAR(10)) || ')') DESCRIPTION , BPM_CASE.NAME, BPM_CASE.CASE_ID, BPM_CASE.VERSION &#xD;&#xA;FROM&#xD;&#xA;(&#xD;&#xA;&#x9;SELECT sgw_bpm_case.CASE_ID, sgw_bpm_case.CASE_FILE, sgw_bpm_case.NAME, sgw_bpm_case.DESCRIPTION,sgw_bpm_case.VERSION, sgw_bpm_case.STATUS_VALUE, sgw_bpm_case.STATUS_ID, sgw_bpm_case.RESOURCE_ID&#xD;&#xA;&#x9;&#x9;, CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xD;&#xA;&#x9;FROM sgw_bpm_case &#xD;&#xA;&#x9;left join &#xD;&#xA;&#x9;(&#xD;&#xA;&#x9;&#x9;SELECT * &#xD;&#xA;&#x9;&#x9;FROM&#xD;&#xA;&#x9;&#x9;&#x9;(&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;SELECT case_id, CASE WHEN (ROW_NUMBER() OVER(PARTITION BY name  ORDER BY   case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;FROM sgw_bpm_case  &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;WHERE EFFECTIVE_DATE &lt; =  UDF_GET_SYSTEM_DATE('Y') AND STATUS_VALUE = 'ACTV'&#xD;&#xA;&#x9;&#x9;&#x9;) C  &#xD;&#xA;&#x9;&#x9;WHERE ACTIVE_VERSION  = 'Y'&#xD;&#xA;&#x9;)  ACTIVE_BPM_CASE ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID&#xD;&#xA;)BPM_CASE &#xD;&#xA;LEFT OUTER JOIN  &#xD;&#xA;(&#xD;&#xA;    SELECT distinct d.resource_id, a.USER_ID  &#xD;&#xA;    FROM sgs_user a , sgs_user_roles b , sgs_resources d ,sgs_security e    &#xD;&#xA;    WHERE a.user_serial_id = b.user_serial_id    AND b.role_id = e.role_id    AND e.resource_id = d.resource_id    &#xD;&#xA;    AND ((b.effective_start_DATE is null) or (b.effective_start_date &lt; =  TO_DATE(TO_CHAR(UDF_GET_SYSTEM_DATE('Y'), 'MM-DD-YYY'), 'MM-DD-YYYY')))&#xD;&#xA;    AND ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =  TO_DATE(TO_CHAR(UDF_GET_SYSTEM_DATE('Y'), 'MM-DD-YYY'), 'MM-DD-YYYY')))&#xD;&#xA;    AND d.RESOURCE_TYPE_VALUE = 'BPM'&#xD;&#xA;) RES ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID &#xD;&#xA;WHERE (user_id is null or user_id = @user_id) &#xD;&#xA;ORDER BY   DESCRIPTION, NAME, version">
+			<parameters>
+				<parameter ID="@user_id" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="BpmResource" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_RESOURCES WITH(NOLOCK) WHERE RESOURCE_TYPE_VALUE = 'BPM'" sfwOracle="SELECT * FROM SGS_RESOURCES  WHERE RESOURCE_TYPE_VALUE = 'BPM'">
+			<parameters />
+		</query>
+		<query ID="GetEngineDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COALESCE(SBCC.ENGINE_VALUE,'') ENGINE_VALUE&#xA;FROM&#xA;&#x9; SGW_BPM_CASE_CONFIGURATION SBCC   WITH(NOLOCK)&#xA;WHERE&#xA;&#x9; SBCC.CASE_FILE like @CASE_FILE AND (SBCC.SOURCE_VALUE = @SOURCE_VALUE OR SBCC.SOURCE_VALUE IS NULL)&#xA;&#x9; AND (SBCC.PRIORITY_VALUE = @PRIORITY_VALUE OR SBCC.PRIORITY_VALUE IS NULL)" sfwOracle="SELECT&#xA;&#x9; COALESCE(SBCC.ENGINE_VALUE,'') ENGINE_VALUE&#xA;FROM&#xA;&#x9; SGW_BPM_CASE_CONFIGURATION SBCC   &#xA;WHERE&#xA;&#x9; SBCC.CASE_FILE like @CASE_FILE  AND (SBCC.SOURCE_VALUE = @SOURCE_VALUE OR SBCC.SOURCE_VALUE IS NULL)&#xA;&#x9; AND (SBCC.PRIORITY_VALUE = @PRIORITY_VALUE OR SBCC.PRIORITY_VALUE IS NULL)">
+			<parameters>
+				<parameter ID="@CASE_FILE" sfwDataType="string" />
+				<parameter ID="@SOURCE_VALUE" sfwDataType="string" />
+				<parameter ID="@PRIORITY_VALUE" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="DequeueItemByServerName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGW_BPM_QUEUE SET STATUS_VALUE='PICK' OUTPUT INSERTED.* WHERE QUEUE_ITEM_ID = (SELECT&#xA;&#x9; TOP 1 QUEUE_ITEM_ID &#xA;FROM&#xA;&#x9; SGW_BPM_QUEUE WITH (UPDLOCK,&#xA;&#x9;READPAST) &#xA;WHERE&#xA;&#x9; STATUS_VALUE = 'UNPC' AND&#xA;&#x9; ENGINE_VALUE IN (SELECT&#xA;&#x9; ENGINE_VALUE &#xA;FROM&#xA;&#x9; SGS_SERVER_CONFIGURATION SSC    &#xA;&#x9;INNER &#xA;&#x9; JOIN SGS_SERVERS SS  &#xA;&#x9; ON SSC.SERVER_ID = SS.SERVER_ID &#xA;WHERE&#xA;&#x9; SS.SERVER_NAME  = @SERVER_NAME)&#xA;ORDER BY   COALESCE(PRIORITY_CODE_VALUE,&#xA;&#x9;'NORM') ASC,&#xA;&#x9;QUEUE_ITEM_ID ASC)" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; Table(Sagitec.fnGetNextQueueItem('DequeueItemByServerName',&#xA;&#x9;'',&#xA;&#x9;@SERVER_NAME))">
+			<parameters>
+				<parameter ID="@SERVER_NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="DequeueItemEngineValues" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGW_BPM_QUEUE SET STATUS_VALUE='PICK' OUTPUT INSERTED.* WHERE QUEUE_ITEM_ID = (SELECT TOP 1 QUEUE_ITEM_ID FROM SGW_BPM_QUEUE WITH (UPDLOCK, READPAST) WHERE STATUS_VALUE='UNPC' AND ENGINE_VALUE = 'DFLT'ORDER BY  ISNULL(PRIORITY_CODE_VALUE,'NORM') ASC,QUEUE_ITEM_ID ASC)" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; Table(Sagitec.fnGetNextQueueItem('DequeueItemByServerName'))">
+			<parameters />
+		</query>
+		<query ID="GetCountEngineValueForServer" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGS_SERVER_CONFIGURATION WITH(NOLOCK) WHERE SERVER_ID = @SERVER_ID AND ENGINE_VALUE = @ENGINE_VALUE" sfwOracle="SELECT COUNT(*) FROM SGS_SERVER_CONFIGURATION WHERE SERVER_ID = @SERVER_ID AND ENGINE_VALUE = @ENGINE_VALUE">
+			<parameters>
+				<parameter ID="@SERVER_ID" sfwDataType="int" />
+				<parameter ID="@ENGINE_VALUE" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetCountEngineValueForCaseFile" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_BPM_CASE_CONFIGURATION WITH(NOLOCK) WHERE CASE_FILE = @CASE_FILE&#xD;&#xA;AND ENGINE_VALUE = @ENGINE_VALUE AND SOURCE_VALUE = @SOURCE_VALUE AND PRIORITY_VALUE = @PRIORITY_VALUE" sfwOracle="SELECT COUNT(*) FROM SGW_BPM_CASE_CONFIGURATION WHERE CASE_FILE = @CASE_FILE&#xD;&#xA;AND ENGINE_VALUE = @ENGINE_VALUE AND SOURCE_VALUE = @SOURCE_VALUE AND PRIORITY_VALUE = @PRIORITY_VALUE">
+			<parameters>
+				<parameter ID="@CASE_FILE" sfwDataType="string" />
+				<parameter ID="@ENGINE_VALUE" sfwDataType="string" />
+				<parameter ID="@SOURCE_VALUE" sfwDataType="string" />
+				<parameter ID="@PRIORITY_VALUE" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="AddUpdateUserConnectionIdForSignalr" sfwQueryType="NonQuery" sfwDataType="int" sfwSql="MERGE SGS_SIGNALR_CONNECTIONS T&#xD;&#xA;USING (SELECT TOP 1 * FROM (SELECT * FROM SGS_SIGNALR_CONNECTIONS WHERE USERID=@USERID AND CLIENTADDRESS = @CLIENTADDRESS UNION(SELECT null,null,null)) AS S1 order by USERID desc) AS S &#xD;&#xA;ON (T.USERID = S.USERID AND T.CLIENTADDRESS = S.CLIENTADDRESS)&#xD;&#xA;WHEN MATCHED THEN &#xD;&#xA;UPDATE SET CONNECTIONID = @CONNECTIONID&#xD;&#xA;WHEN NOT MATCHED THEN &#xD;&#xA;INSERT (USERID,CLIENTADDRESS,CONNECTIONID) VALUES (@USERID,@CLIENTADDRESS,@CONNECTIONID)">
+			<parameters>
+				<parameter ID="@USERID" sfwDataType="string" />
+				<parameter ID="@CLIENTADDRESS" sfwDataType="string" />
+				<parameter ID="@CONNECTIONID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetSignalrConnectionIdByUserName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT CONNECTIONID FROM SGS_SIGNALR_CONNECTIONS WITH(NOLOCK) WHERE USERID=@USERID" sfwOracle="SELECT CONNECTIONID FROM SGS_SIGNALR_CONNECTIONS WHERE USERID=@USERID">
+			<parameters>
+				<parameter ID="@USERID" sfwDataType="string" />
+				<parameter ID="@CLIENTADDRESS" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="DeleteSignalRDetailsByUserNameAndConnectionId" sfwQueryType="NonQuery" sfwDataType="int" sfwSql="DELETE FROM SGS_SIGNALR_CONNECTIONS WHERE CONNECTIONID = @CONNECTIONID AND USERID = @USERID" sfwOracle="DELETE FROM SGS_SIGNALR_CONNECTIONS WHERE CONNECTIONID = @CONNECTIONID AND USERID = @USERID">
+			<parameters>
+				<parameter ID="@CONNECTIONID" sfwDataType="string" />
+				<parameter ID="@USERID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="IsFirstUserTaskActivity" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_BPM_ACTIVITY_INSTANCE SBAI WITH(NOLOCK)&#xD;&#xA;INNER JOIN SGW_BPM_ACTIVITY SBA WITH(NOLOCK)&#xD;&#xA;ON SBAI.ACTIVITY_ID = SBA.ACTIVITY_ID AND SBA.ACTIVITY_TYPE_VALUE = 'USTK'  &#xD;&#xA;INNER JOIN SGW_BPM_PROCESS_INSTANCE SBPI WITH(NOLOCK)&#xD;&#xA;ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID WHERE SBPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID" sfwOracle="SELECT COUNT(*) FROM SGW_BPM_ACTIVITY_INSTANCE SBAI &#xD;&#xA;INNER JOIN SGW_BPM_ACTIVITY SBA &#xD;&#xA;ON SBAI.ACTIVITY_ID = SBA.ACTIVITY_ID AND SBA.ACTIVITY_TYPE_VALUE = 'USTK'  &#xD;&#xA;INNER JOIN SGW_BPM_PROCESS_INSTANCE SBPI &#xD;&#xA;ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID WHERE SBPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetCompletedActivityInstanceChecklist" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT&#x9;AIC.ACTIVITY_CHECKLIST_ID, &#xD;&#xA;&#x9;&#x9;AIC.REQUIRED_FLAG,&#xD;&#xA;&#x9;&#x9;AIC.COMPLETED_DATE,&#xD;&#xA;&#x9;&#x9;AIC.COMPLETED_IND, &#xD;&#xA;&#x9;&#x9;AI.ACTIVITY_ID&#xD;&#xA;FROM SGW_BPM_ACTY_INST_CHECKLIST AIC WITH(NOLOCK)&#xD;&#xA;&#x9;INNER JOIN SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK)&#xD;&#xA;&#x9;&#x9;&#x9;ON AI.ACTIVITY_INSTANCE_ID = AIC.ACTIVITY_INSTANCE_ID &#xD;&#xA;&#x9;&#x9;&#x9;AND AI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID&#xD;&#xA;WHERE AIC.ACTIVITY_CHECKLIST_ID = @ACTIVITY_CHECKLIST_ID&#xD;&#xA;AND AI.ACTIVITY_ID = @ACTIVITY_ID&#xD;&#xA;AND coalesce(AIC.COMPLETED_DATE,'') != '' &#xD;&#xA;AND coalesce(AIC.COMPLETED_IND,'') != ''" sfwOracle="SELECT&#xA;&#x9; DISTINCT AIC.ACTIVITY_CHECKLIST_ID,&#xA;&#x9;AIC.REQUIRED_FLAG,&#xA;&#x9;AIC.COMPLETED_DATE,&#xA;&#x9;AIC.COMPLETED_IND,&#xA;&#x9; AI.ACTIVITY_ID &#xA;FROM&#xA;&#x9; SGW_BPM_ACTY_INST_CHECKLIST AIC &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE AI&#xA;&#x9; ON AI.ACTIVITY_INSTANCE_ID = AIC.ACTIVITY_INSTANCE_ID AND&#xA;&#x9; AI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID &#xA;WHERE&#xA;&#x9; AIC.ACTIVITY_CHECKLIST_ID = @ACTIVITY_CHECKLIST_ID AND&#xA;&#x9; AI.ACTIVITY_ID = @ACTIVITY_ID AND&#xA;&#x9;     (AIC.COMPLETED_DATE IS NOT NULL AND&#xA;&#x9; coalesce(AIC.COMPLETED_IND,&#xA;&#x9;'') ! =  '')">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@ACTIVITY_CHECKLIST_ID" sfwDataType="int" />
+				<parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetActivityChecklist" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; dbo.SGW_BPM_ACTIVITY_CHECKLIST WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; ACTIVITY_ID = @ACTIVITY_ID AND DELETED_IND is null" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_CHECKLIST &#xA;WHERE&#xA;&#x9; ACTIVITY_ID = @ACTIVITY_ID AND DELETED_IND is null">
+			<parameters>
+				<parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetRecordsReadyForUpdateCheckList" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; sbaic.ACTIVITY_INST_CHECKLIST_ID &#xA;FROM&#xA;&#x9; SGW_BPM_ACTY_INST_CHECKLIST sbaic WITH(NOLOCK)&#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY_CHECKLIST sbac  WITH(NOLOCK)&#xA;&#x9; ON sbac.ACTIVITY_CHECKLIST_ID = sbaic.ACTIVITY_CHECKLIST_ID &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE sbai  WITH(NOLOCK)&#xA;&#x9; ON sbai.ACTIVITY_ID = sbac.ACTIVITY_ID AND&#xA;&#x9;  sbai.ACTIVITY_INSTANCE_ID = sbaic.ACTIVITY_INSTANCE_ID &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_EVENT sbe  WITH(NOLOCK)&#xA;&#x9; ON sbe.BPM_EVENT_ID = sbac.BPM_EVENT_ID &#xA;WHERE&#xA;&#x9; sbe.BPM_EVENT_ID = @BPM_EVENT_ID  &#xA;&#x9;  AND &#xA;&#x9;  (sbaic.COMPLETED_IND IS NULL OR sbaic.COMPLETED_IND = 'N')" sfwOracle="SELECT&#xD;&#xA;&#x9; sbaic.ACTIVITY_INST_CHECKLIST_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTY_INST_CHECKLIST sbaic &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY_CHECKLIST sbac&#xD;&#xA;&#x9; ON sbac.ACTIVITY_CHECKLIST_ID = sbaic.ACTIVITY_CHECKLIST_ID &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE sbai &#xD;&#xA;&#x9; ON sbai.ACTIVITY_ID = sbac.ACTIVITY_ID AND&#xD;&#xA;&#x9;  sbai.ACTIVITY_INSTANCE_ID = sbaic.ACTIVITY_INSTANCE_ID &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_EVENT sbe &#xD;&#xA;&#x9; ON sbe.BPM_EVENT_ID = sbac.BPM_EVENT_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; sbe.BPM_EVENT_ID = @BPM_EVENT_ID  &#xD;&#xA;&#x9;  AND &#xD;&#xA;&#x9;  (sbaic.COMPLETED_IND IS NULL OR sbaic.COMPLETED_IND = 'N')">
+			<parameters>
+				<parameter ID="@BPM_EVENT_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+    <query ID="UserTaskByLoadWithMaxCount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct U.USER_ID,U.USER_SERIAL_ID, &#xA; (case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end)  Activities  ,&#xA; (case when ACount.ASSIGNED_ACTIVITY_COUNT IS NULL then 0 else ACount.ASSIGNED_ACTIVITY_COUNT end)  ASSIGNED_ACTIVITY_COUNT&#xA; from SGS_USER U  WITH(NOLOCK)&#xA; left outer join (SELECT CHECKED_OUT_USER, count(*) as ASSIGNED_ACTIVITIES from SGW_BPM_ACTIVITY_INSTANCE  AI WITH(NOLOCK)  &#xA; inner join sgw_bpm_process_instance spi1 with(nolock) on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC' &#xA; inner join sgw_bpm_case_instance sci1 with(nolock) on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'  &#xA; where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER) AID on U.USER_ID = AID.CHECKED_OUT_USER &#xA; left outer join (SELECT CHECKED_OUT_USER, count(AI.CHECKED_OUT_USER) ASSIGNED_ACTIVITY_COUNT from SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK)&#xA; INNER JOIN SGW_BPM_ACTIVITY SBA WITH(NOLOCK) ON AI.ACTIVITY_ID = SBA.ACTIVITY_ID AND SBA.ACTIVITY_ID = @ACTIVITY_ID where STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER) ACount on U.USER_ID = ACount.CHECKED_OUT_USER &#xA; WHERE U.USER_STATUS_VALUE = 'A'" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID, &#xA; (case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end)  Activities  ,&#xA; (case when ACount.ASSIGNED_ACTIVITY_COUNT IS NULL then 0 else ACount.ASSIGNED_ACTIVITY_COUNT end)  ASSIGNED_ACTIVITY_COUNT&#xA; from SGS_USER U  &#xA; left outer join (SELECT CHECKED_OUT_USER, count(*) as ASSIGNED_ACTIVITIES from SGW_BPM_ACTIVITY_INSTANCE  AI &#xA; inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC' &#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'  &#xA; where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER) AID on U.USER_ID = AID.CHECKED_OUT_USER &#xA; left outer join (SELECT CHECKED_OUT_USER, count(AI.CHECKED_OUT_USER) ASSIGNED_ACTIVITY_COUNT from SGW_BPM_ACTIVITY_INSTANCE AI &#xA; INNER JOIN SGW_BPM_ACTIVITY SBA ON AI.ACTIVITY_ID = SBA.ACTIVITY_ID AND SBA.ACTIVITY_ID = @ACTIVITY_ID where STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER) ACount on U.USER_ID = ACount.CHECKED_OUT_USER &#xA; WHERE U.USER_STATUS_VALUE = 'A'" sfwPostgre="SELECT distinct U.USER_ID,U.USER_SERIAL_ID, &#xD;&#xA; (case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end)  Activities  ,&#xD;&#xA; (case when ACount.ASSIGNED_ACTIVITY_COUNT IS NULL then 0 else ACount.ASSIGNED_ACTIVITY_COUNT end)  ASSIGNED_ACTIVITY_COUNT&#xD;&#xA; from SGS_USER U  &#xD;&#xA; left outer join (SELECT CHECKED_OUT_USER, count(*) as ASSIGNED_ACTIVITIES from SGW_BPM_ACTIVITY_INSTANCE  AI &#xD;&#xA; inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC' &#xD;&#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'  &#xD;&#xA; where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER) AID on U.USER_ID = AID.CHECKED_OUT_USER &#xD;&#xA; left outer join (SELECT CHECKED_OUT_USER, count(AI.CHECKED_OUT_USER) ASSIGNED_ACTIVITY_COUNT from SGW_BPM_ACTIVITY_INSTANCE AI &#xD;&#xA; INNER JOIN SGW_BPM_ACTIVITY SBA  ON AI.ACTIVITY_ID = SBA.ACTIVITY_ID AND SBA.ACTIVITY_ID = @ACTIVITY_ID where STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER) ACount on U.USER_ID = ACount.CHECKED_OUT_USER &#xD;&#xA; WHERE U.USER_STATUS_VALUE = 'A'">
+      <parameters>
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="UserTaskByLoadWithRoleAndMaxCount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct U.[USER_ID],U.[USER_SERIAL_ID], &#xA;(case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end)  Activities ,&#xA; (case when ACount.ASSIGNED_ACTIVITY_COUNT IS NULL then 0 else ACount.ASSIGNED_ACTIVITY_COUNT  end)  ASSIGNED_ACTIVITY_COUNT&#xA; from SGS_USER  U  INNER JOIN SGS_USER_ROLES  UR  ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xA; left outer join (SELECT CHECKED_OUT_USER, count(*)  ASSIGNED_ACTIVITIES from SGW_BPM_ACTIVITY_INSTANCE  AI  with(nolock) &#xA; inner join sgw_bpm_process_instance spi1 with(nolock) on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC' &#xA; inner join sgw_bpm_case_instance sci1 with(nolock) on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'  &#xA; where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER)  AID on U.USER_ID = AID.CHECKED_OUT_USER &#xA;  left outer join (SELECT CHECKED_OUT_USER, count(AI.CHECKED_OUT_USER)  ASSIGNED_ACTIVITY_COUNT from SGW_BPM_ACTIVITY_INSTANCE  AI  &#xA; INNER JOIN SGW_BPM_ACTIVITY SBA ON AI.ACTIVITY_ID = SBA.ACTIVITY_ID AND SBA.ACTIVITY_ID = @ACTIVITY_ID where STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER)  ACount on U.USER_ID = ACount.CHECKED_OUT_USER &#xA; WHERE U.USER_STATUS_VALUE = 'A' AND ((UR.EFFECTIVE_START_DATE IS NULL) OR &#xA; (UR.EFFECTIVE_START_DATE &lt;=CONVERT(DATETIME,CONVERT(CHAR,@CURRENT_DATE,103),103))) &#xA; AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;=CONVERT(DATETIME,CONVERT(CHAR,@CURRENT_DATE,103),103)))" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID, &#xD;&#xA;(case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end)  Activities ,&#xD;&#xA; (case when ACount.ASSIGNED_ACTIVITY_COUNT IS NULL then 0 else ACount.ASSIGNED_ACTIVITY_COUNT  end)  ASSIGNED_ACTIVITY_COUNT&#xD;&#xA; from SGS_USER  U  INNER JOIN SGS_USER_ROLES  UR  ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xD;&#xA; left outer join (SELECT CHECKED_OUT_USER, count(*)  ASSIGNED_ACTIVITIES from SGW_BPM_ACTIVITY_INSTANCE  AI  &#xD;&#xA; inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC' &#xD;&#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC' &#xD;&#xA; where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER)  AID on U.USER_ID = AID.CHECKED_OUT_USER &#xD;&#xA;  left outer join (SELECT CHECKED_OUT_USER, count(AI.CHECKED_OUT_USER)  ASSIGNED_ACTIVITY_COUNT from SGW_BPM_ACTIVITY_INSTANCE  AI  &#xD;&#xA; INNER JOIN SGW_BPM_ACTIVITY SBA ON AI.ACTIVITY_ID = SBA.ACTIVITY_ID AND SBA.ACTIVITY_ID = @ACTIVITY_ID where STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER)  ACount on U.USER_ID = ACount.CHECKED_OUT_USER &#xD;&#xA; WHERE U.USER_STATUS_VALUE = 'A' AND ((UR.EFFECTIVE_START_DATE IS NULL) OR &#xD;&#xA; (UR.EFFECTIVE_START_DATE &lt;=@CURRENT_DATE)) &#xD;&#xA; AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;=@CURRENT_DATE))" sfwPostgre="SELECT distinct U.USER_ID,U.USER_SERIAL_ID, &#xD;&#xA;(case when AID.ASSIGNED_ACTIVITIES IS NULL then 0 else AID.ASSIGNED_ACTIVITIES  end)  Activities ,&#xD;&#xA; (case when ACount.ASSIGNED_ACTIVITY_COUNT IS NULL then 0 else ACount.ASSIGNED_ACTIVITY_COUNT  end)  ASSIGNED_ACTIVITY_COUNT&#xD;&#xA; from SGS_USER  U  INNER JOIN SGS_USER_ROLES  UR  ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xD;&#xA; left outer join (SELECT CHECKED_OUT_USER, count(*)  ASSIGNED_ACTIVITIES from SGW_BPM_ACTIVITY_INSTANCE  AI  &#xD;&#xA; inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC' &#xD;&#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'  &#xD;&#xA; where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER)  AID on U.USER_ID = AID.CHECKED_OUT_USER &#xD;&#xA;  left outer join (SELECT CHECKED_OUT_USER, count(AI.CHECKED_OUT_USER)  ASSIGNED_ACTIVITY_COUNT from SGW_BPM_ACTIVITY_INSTANCE  AI  &#xD;&#xA; INNER JOIN SGW_BPM_ACTIVITY SBA ON AI.ACTIVITY_ID = SBA.ACTIVITY_ID AND SBA.ACTIVITY_ID = @ACTIVITY_ID where STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER)  ACount on U.USER_ID = ACount.CHECKED_OUT_USER &#xD;&#xA; WHERE U.USER_STATUS_VALUE = 'A' AND ((UR.EFFECTIVE_START_DATE IS NULL) OR &#xD;&#xA; (UR.EFFECTIVE_START_DATE &lt;=@CURRENT_DATE)) &#xD;&#xA; AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;=@CURRENT_DATE))">
+      <parameters>
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+        <parameter ID="@CURRENT_DATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+		<query ID="GetActivityLogFlags" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select 2, act_log_app_id, action_flag, action_step_flag, query_flag, rule_flag, validation_rule_flag, action_step_size_flag, browser_time_flag&#xA;  from sgs_act_log_app with(nolock)&#xA; where app_name = @app_name&#xA; union &#xA;select 1, a.act_log_app_id, a.action_flag, a.action_step_flag, a.query_flag, a.rule_flag, a.validation_rule_flag,b.action_step_size_flag, b.browser_time_flag&#xA;  from sgs_act_log_app_actor a with(nolock), sgs_act_log_app b with(nolock)&#xA; where a.act_log_app_id = b.act_log_app_id&#xA;   and app_name = @app_name&#xA;   and actor_name = @user_name&#xA; order by 1" sfwOracle="select 2, act_log_app_id, action_flag, action_step_flag, query_flag, rule_flag,validation_rule_flag,action_step_size_flag, browser_time_flag&#xA;  from sgs_act_log_app&#xA; where app_name = @app_name&#xA; union all&#xA;select 1, a.act_log_app_id, a.action_flag, a.action_step_flag, a.query_flag, a.rule_flag,a.validation_rule_flag,b.action_step_size_flag, b.browser_time_flag&#xA;  from sgs_act_log_app_actor a, sgs_act_log_app b&#xA; where a.act_log_app_id = b.act_log_app_id&#xA;   and app_name = @app_name&#xA;   and actor_name = @user_name&#xA; order by 1">
+			<parameters>
+				<parameter ID="@app_name" sfwDataType="string" />
+				<parameter ID="@user_name" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetActivityIdsHavingCheckListsByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;DISTINCT SBAC.ACTIVITY_ID &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_CHECKLIST SBAC WITH(NOLOCK) &#xA;&#x9; INNER JOIN SGW_BPM_ACTIVITY SBA WITH(NOLOCK)&#xA;&#x9; ON SBAC.ACTIVITY_ID = SBA.ACTIVITY_ID&#xA;&#x9; INNER JOIN SGW_BPM_PROCESS SBP WITH(NOLOCK)&#xA;&#x9; ON SBA.PROCESS_ID = SBP.PROCESS_ID&#xA;WHERE&#xA;&#x9; SBP.PROCESS_ID = @PROCESS_ID" sfwOracle="SELECT&#xA;&#x9;DISTINCT SBAC.ACTIVITY_ID &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_CHECKLIST SBAC &#xA;&#x9; INNER JOIN SGW_BPM_ACTIVITY SBA &#xA;&#x9; ON SBAC.ACTIVITY_ID = SBA.ACTIVITY_ID&#xA;&#x9; INNER JOIN SGW_BPM_PROCESS SBP&#xA;&#x9; ON SBA.PROCESS_ID = SBP.PROCESS_ID&#xA;WHERE&#xA;&#x9; SBP.PROCESS_ID = @PROCESS_ID">
+			<parameters>
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUnprocessedRequestsToExecuteOnCurrentDateInDebugMode" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE TOP (5) SGW_BPM_REQUEST WITH (UPDLOCK, READPAST) SET STATUS_VALUE='PICK' OUTPUT INSERTED.* WHERE STATUS_VALUE='UNPC' AND MACHINE_NAME = @MACHINE_NAME" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; Table(SAGITEC.fnGetUnpcReuqests(@MACHINE_NAME))">
+			<parameters>
+				<parameter ID="@MACHINE_NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetUnprocessedRequestsToExecuteOnCurrentDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE TOP (5) SGW_BPM_REQUEST WITH (UPDLOCK, READPAST) SET STATUS_VALUE='PICK' OUTPUT INSERTED.* WHERE STATUS_VALUE='UNPC'" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; Table(SAGITEC.fnGetUnpcReuqests)">
+			<parameters />
+		</query>
+		<query ID="LoadActivityInstanceByProcessEventAndPerson" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT  SAI.*&#xA;FROM SGW_BPM_ACTIVITY_INSTANCE SAI WITH(NOLOCK)&#xA;INNER JOIN SGW_BPM_PROCESS_INSTANCE  SPI WITH(NOLOCK) ON SAI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_CASE_INSTANCE  SCI WITH(NOLOCK) ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_PROCESS SP WITH(NOLOCK) ON SPI.PROCESS_ID = SP.PROCESS_ID &#xA;LEFT JOIN SGT_PERSON P WITH(NOLOCK) ON P.PERSON_ID = SCI.PERSON_ID&#xA;INNER JOIN SGW_BPM_EVENT SE WITH(NOLOCK) ON SE.DOC_TYPE = @DOC_TYPE&#xA;INNER JOIN SGW_BPM_ACTIVITY SA WITH(NOLOCK) ON SA.ACTIVITY_ID = SAI.ACTIVITY_ID AND SA.ACTIVITY_TYPE_VALUE in ('IMCE','USTK') &#xA;AND ISNULL(SE.DOC_CLASS,'') = ISNULL(@DOC_CLASS,'')&#xA;AND SCI.PERSON_ID = @PERSON_ID&#xA;AND SPI.STATUS_VALUE = 'INPC'&#xA;AND SP.PROCESS_ID = @PROCESS_ID&#xA;AND SAI.ACTIVITY_ID = @ACTIVITY_ID &#xA;WHERE SAI.STATUS_VALUE NOT IN ('CANC','PROC','FAIL','RWRK','RCHK', 'INPC', 'APPR', 'REJT') and (Sai.ACTIVITY_ID=@ACTIVITY_ID or @ACTIVITY_ID = 0)" sfwOracle="SELECT  SAI.*&#xA;FROM SGW_BPM_ACTIVITY_INSTANCE SAI&#xA;INNER JOIN SGW_BPM_PROCESS_INSTANCE  SPI ON SAI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_CASE_INSTANCE  SCI  ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_PROCESS SP  ON SPI.PROCESS_ID = SP.PROCESS_ID &#xA;LEFT JOIN SGT_PERSON P ON P.PERSON_ID = SCI.PERSON_ID&#xA;INNER JOIN SGW_BPM_EVENT SE ON SE.DOC_TYPE = @DOC_TYPE&#xA;JOIN SGW_BPM_ACTIVITY SA&#xA;ON SA.ACTIVITY_ID           = SAI.ACTIVITY_ID&#xA;AND SA.ACTIVITY_TYPE_VALUE IN ( 'IMCE','USTK' ) &#xA;AND NVL(SE.DOC_CLASS,'') = NVL(@DOC_CLASS,'')&#xA;AND SCI.PERSON_ID = @PERSON_ID&#xA;AND SPI.STATUS_VALUE = 'INPC'&#xA;AND SP.PROCESS_ID = @PROCESS_ID&#xA;AND SAI.ACTIVITY_ID = @ACTIVITY_ID &#xA;WHERE SAI.STATUS_VALUE NOT IN ('CANC','PROC','FAIL','RWRK','RCHK', 'INPC', 'APPR', 'REJT')&#xA;AND ( Sai.ACTIVITY_ID       = @ACTIVITY_ID&#xA;OR @ACTIVITY_ID            = 0 )">
+			<parameters>
+				<parameter ID="@DOC_TYPE" sfwDataType="string" />
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+				<parameter ID="@DOC_CLASS" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="LoadActivityInstanceByProcessEventAndOrg" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT  SAI.*&#xA;FROM SGW_BPM_ACTIVITY_INSTANCE SAI WITH(NOLOCK)&#xA;INNER JOIN SGW_BPM_PROCESS_INSTANCE  SPI WITH(NOLOCK)  ON SAI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_CASE_INSTANCE  SCI WITH(NOLOCK)  ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_PROCESS  SP WITH(NOLOCK) ON SPI.PROCESS_ID = SP.PROCESS_ID &#xA;LEFT JOIN SGT_ORGANIZATION O WITH(NOLOCK) ON O.ORG_ID = SCI.ORG_ID&#xA;INNER JOIN SGW_BPM_EVENT SE WITH(NOLOCK) ON SE.DOC_TYPE = @DOC_TYPE&#xA;INNER JOIN SGW_BPM_ACTIVITY SA WITH(NOLOCK) ON SA.ACTIVITY_ID = SAI.ACTIVITY_ID AND SA.ACTIVITY_TYPE_VALUE in ('IMCE','USTK')&#xA;AND ISNULL(SE.DOC_CLASS,'') = ISNULL(@DOC_CLASS,'')&#xA;AND SCI.ORG_ID = @ORG_ID&#xA;AND SPI.STATUS_VALUE = 'INPC'&#xA;AND SP.PROCESS_ID = @PROCESS_ID&#xA;AND SAI.ACTIVITY_ID = @ACTIVITY_ID&#xA;WHERE SAI.STATUS_VALUE NOT IN ('CANC','PROC','FAIL','RWRK','RCHK', 'INPC', 'APPR', 'REJT') and (Sai.ACTIVITY_ID=@ACTIVITY_ID or @ACTIVITY_ID = 0)" sfwOracle="SELECT  SAI.*&#xA;FROM SGW_BPM_ACTIVITY_INSTANCE SAI&#xA;INNER JOIN SGW_BPM_PROCESS_INSTANCE  SPI  ON SAI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_CASE_INSTANCE  SCI  ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_PROCESS  SP  ON SPI.PROCESS_ID = SP.PROCESS_ID &#xA;LEFT JOIN SGT_ORGANIZATION O  ON O.ORG_ID = SCI.ORG_ID&#xA;INNER JOIN SGW_BPM_EVENT SE  ON SE.DOC_TYPE = @DOC_TYPE&#xA;JOIN SGW_BPM_ACTIVITY SA&#xA;ON SA.ACTIVITY_ID           = SAI.ACTIVITY_ID&#xA;AND SA.ACTIVITY_TYPE_VALUE IN ( 'IMCE','USTK' )&#xA;AND NVL(SE.DOC_CLASS,'') = NVL(@DOC_CLASS,'')&#xA;AND SCI.ORG_ID = @ORG_ID&#xA;AND SPI.STATUS_VALUE = 'INPC'&#xA;AND SP.PROCESS_ID = @PROCESS_ID&#xA;AND SAI.ACTIVITY_ID = @ACTIVITY_ID&#xA;WHERE SAI.STATUS_VALUE NOT IN ('CANC','PROC','FAIL','RWRK','RCHK', 'INPC', 'APPR', 'REJT')&#xA;AND ( Sai.ACTIVITY_ID       = @ACTIVITY_ID&#xA;OR @ACTIVITY_ID            = 0 )">
+			<parameters>
+				<parameter ID="@DOC_TYPE" sfwDataType="string" />
+				<parameter ID="@ORG_ID" sfwDataType="int" />
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+				<parameter ID="@DOC_CLASS" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="LoadActivityInstanceByProcessEventAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT  SAI.*&#xA;FROM SGW_BPM_ACTIVITY_INSTANCE SAI WITH(NOLOCK)&#xA;INNER JOIN SGW_BPM_PROCESS_INSTANCE  SPI WITH(NOLOCK) ON SAI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_CASE_INSTANCE  SCI WITH(NOLOCK) ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_PROCESS  SP WITH(NOLOCK) ON SPI.PROCESS_ID = SP.PROCESS_ID &#xA;LEFT JOIN SGT_PERSON P WITH(NOLOCK) ON P.PERSON_ID = SCI.PERSON_ID&#xA;INNER JOIN SGW_BPM_EVENT SE WITH(NOLOCK) ON SE.DOC_TYPE = @DOC_TYPE&#xA;INNER JOIN SGW_BPM_ACTIVITY SA WITH(NOLOCK) ON SA.ACTIVITY_ID = SAI.ACTIVITY_ID AND SA.ACTIVITY_TYPE_VALUE in ('IMCE','USTK')&#xA;AND ISNULL(SE.DOC_CLASS,'') = ISNULL(@DOC_CLASS,'')&#xA;AND SCI.REFERENCE_ID = @REFERENCE_ID&#xA;AND SPI.STATUS_VALUE = 'INPC'&#xA;AND SP.PROCESS_ID = @PROCESS_ID&#xA;AND SAI.ACTIVITY_ID = @ACTIVITY_ID&#xA;WHERE SAI.STATUS_VALUE NOT IN ('CANC','PROC','FAIL','RWRK','RCHK', 'INPC', 'APPR', 'REJT') and (Sai.ACTIVITY_ID=@ACTIVITY_ID or @ACTIVITY_ID = 0)" sfwOracle="SELECT  SAI.*&#xA;FROM SGW_BPM_ACTIVITY_INSTANCE SAI &#xA;INNER JOIN SGW_BPM_PROCESS_INSTANCE  SPI  ON SAI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_CASE_INSTANCE  SCI  ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;INNER JOIN SGW_BPM_PROCESS  SP  ON SPI.PROCESS_ID = SP.PROCESS_ID &#xA;LEFT JOIN SGT_PERSON P  ON P.PERSON_ID = SCI.PERSON_ID&#xA;INNER JOIN SGW_BPM_EVENT SE  ON SE.DOC_TYPE = @DOC_TYPE&#xA;JOIN SGW_BPM_ACTIVITY SA&#xA;ON SA.ACTIVITY_ID           = SAI.ACTIVITY_ID&#xA;AND SA.ACTIVITY_TYPE_VALUE IN ( 'IMCE','USTK' ) &#xA;AND NVL(SE.DOC_CLASS,'') = NVL(@DOC_CLASS,'')&#xA;AND SCI.REFERENCE_ID = @REFERENCE_ID&#xA;AND SPI.STATUS_VALUE = 'INPC'&#xA;AND SP.PROCESS_ID = @PROCESS_ID&#xA;AND SAI.ACTIVITY_ID = @ACTIVITY_ID&#xA;WHERE SAI.STATUS_VALUE NOT IN ('CANC','PROC','FAIL','RWRK','RCHK', 'INPC', 'APPR', 'REJT')&#xA;AND ( Sai.ACTIVITY_ID       = @ACTIVITY_ID&#xA;OR @ACTIVITY_ID            = 0 )">
+			<parameters>
+				<parameter ID="@DOC_TYPE" sfwDataType="string" />
+				<parameter ID="@REFERENCE_ID" sfwDataType="int" />
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+				<parameter ID="@DOC_CLASS" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetInProcessCaseInstanceIdByProcessIdPersonIdOrgIdReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SPI.CASE_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE SPI  WITH(NOLOCK)&#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE SCI WITH(NOLOCK)&#xA;&#x9; ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; SPI.PROCESS_ID = @process_id AND&#xA;&#x9; SPI.STATUS_VALUE = 'INPC' AND&#xA;&#x9; SCI.PERSON_ID = @person_id AND&#xA;&#x9; SCI.ORG_ID = @org_id AND&#xA;&#x9; SCI.reference_id = @reference_id" sfwOracle="SELECT&#xA;&#x9; SPI.CASE_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE SPI  &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE SCI&#xA;&#x9; ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; SPI.PROCESS_ID = @process_id AND&#xA;&#x9; SPI.STATUS_VALUE = 'INPC' AND&#xA;&#x9; SCI.PERSON_ID = @person_id AND&#xA;&#x9; SCI.ORG_ID = @org_id AND&#xA;&#x9; SCI.reference_id = @reference_id">
+			<parameters>
+				<parameter ID="@process_id" sfwDataType="int" />
+				<parameter ID="@person_id" sfwDataType="int" />
+				<parameter ID="@org_id" sfwDataType="int" />
+				<parameter ID="@reference_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetInProcessCaseInstanceIdByProcessIdPersonIdOrgId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SPI.CASE_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK)&#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE SCI WITH(NOLOCK)&#xA;&#x9; ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; SPI.PROCESS_ID = @process_id AND&#xA;&#x9; SPI.STATUS_VALUE = 'INPC' AND&#xA;&#x9; SCI.PERSON_ID = @person_id AND&#xA;&#x9; SCI.ORG_ID = @org_id" sfwOracle="SELECT&#xA;&#x9; SPI.CASE_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE SPI &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE SCI&#xA;&#x9; ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; SPI.PROCESS_ID = @process_id AND&#xA;&#x9; SPI.STATUS_VALUE = 'INPC' AND&#xA;&#x9; SCI.PERSON_ID = @person_id AND&#xA;&#x9; SCI.ORG_ID = @org_id">
+			<parameters>
+				<parameter ID="@process_id" sfwDataType="int" />
+				<parameter ID="@person_id" sfwDataType="int" />
+				<parameter ID="@org_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUserActivitiesToResume" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SAI.ACTIVITY_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE &#x9;AS SAI WITH(NOLOCK)    &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY &#x9;AS SA WITH(NOLOCK)&#xA;&#x9; ON SAI.ACTIVITY_ID = SA.ACTIVITY_ID AND&#xA;&#x9; SA.ACTIVITY_TYPE_VALUE = 'USTK' &#xA;WHERE&#xA;&#x9; SAI.STATUS_VALUE  = 'SUSP' AND&#xA;&#x9;  SAI.SUSPENSION_END_DATE &lt; =  @NOW" sfwOracle="SELECT&#xA;&#x9; SAI.ACTIVITY_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SAI    &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY  SA&#xA;&#x9; ON SAI.ACTIVITY_ID = SA.ACTIVITY_ID AND&#xA;&#x9; SA.ACTIVITY_TYPE_VALUE = 'USTK' &#xA;WHERE&#xA;&#x9; SAI.STATUS_VALUE  = 'SUSP' AND&#xA;&#x9;  SAI.SUSPENSION_END_DATE &lt; =  @NOW">
+			<parameters>
+				<parameter ID="@NOW" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="GetSuspendedActivityToResume" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SAI.ACTIVITY_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SAI  WITH(NOLOCK)     &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY &#x9; SA WITH(NOLOCK)  &#xA;&#x9; ON SAI.ACTIVITY_ID = SA.ACTIVITY_ID AND&#xA;&#x9; SA.ACTIVITY_TYPE_VALUE = 'IMCE'&#xA;&#x9;  INNER JOIN SGW_BPM_PROCESS_INSTANCE  SBPI WITH(NOLOCK)  &#xA;&#x9;  ON SBPI.PROCESS_INSTANCE_ID = SAI.PROCESS_INSTANCE_ID&#xA;&#x9;  INNER JOIN SGW_BPM_CE_INSTANCE  SBCI WITH(NOLOCK)  &#xA;&#x9;  ON SBCI.CE_INSTANCE_ID = SBPI.CE_INSTANCE_ID&#xA;&#x9;  INNER JOIN SGW_BPM_REQUEST  SBR WITH(NOLOCK)  &#xA;&#x9;  ON SBCI.REQUEST_ID = SBR.REQUEST_ID AND SBR.PERSON_ID = @PERSON_ID&#xA;WHERE&#xA;&#x9; SAI.STATUS_VALUE  = 'SUSP'" sfwOracle="SELECT&#xA;&#x9; SAI.ACTIVITY_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SAI     &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY &#x9; SA &#xA;&#x9; ON SAI.ACTIVITY_ID = SA.ACTIVITY_ID AND&#xA;&#x9; SA.ACTIVITY_TYPE_VALUE = 'IMCE'&#xA;&#x9;  INNER JOIN SGW_BPM_PROCESS_INSTANCE  SBPI &#xA;&#x9;  ON SBPI.PROCESS_INSTANCE_ID = SAI.PROCESS_INSTANCE_ID&#xA;&#x9;  INNER JOIN SGW_BPM_CE_INSTANCE  SBCI &#xA;&#x9;  ON SBCI.CE_INSTANCE_ID = SBPI.CE_INSTANCE_ID&#xA;&#x9;  INNER JOIN SGW_BPM_REQUEST  SBR &#xA;&#x9;  ON SBCI.REQUEST_ID = SBR.REQUEST_ID AND SBR.PERSON_ID = @PERSON_ID&#xA;WHERE&#xA;&#x9; SAI.STATUS_VALUE  = 'SUSP'">
+			<parameters>
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetAllXmlHeaderDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGS_XML_DEPLOYMENT_DETAIL WITH(NOLOCK) " sfwOracle="SELECT * FROM SGS_XML_DEPLOYMENT_DETAIL ">
+			<parameters />
+		</query>
+		<query ID="GetAllXmlHeaderDetailsExcludingPrototype" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGS_XML_DEPLOYMENT_DETAIL WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; XML_DOCUMENT_NAME NOT LIKE 'WFP%' &#xA;ORDER BY  1" sfwOracle="SELECT * FROM SGS_XML_DEPLOYMENT_DETAIL WHERE XML_DOCUMENT_NAME NOT LIKE 'WFP%' ORDER BY 1">
+			<parameters />
+		</query>
+		<query ID="GetLatestXmlHeader" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP 1 * FROM SGS_XML_DEPLOYMENT_HEADER ORDER BY 1 DESC" sfwOracle="SELECT * FROM SGS_XML_DEPLOYMENT_HEADER WHERE ROWNUM = 1 ORDER BY 1 DESC">
+			<parameters />
+		</query>
+		<query ID="GetCodeValueWithModifedDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT A.CODE_ID, (SELECT MAX(MODIFIED_DATE) FROM SGS_CODE_VALUE B WITH(NOLOCK) WHERE B.CODE_ID=A.CODE_ID) AS MODIFIED_DATE FROM SGS_CODE A WITH(NOLOCK)" sfwOracle="SELECT A.CODE_ID, (SELECT MAX(MODIFIED_DATE) FROM SGS_CODE_VALUE B WHERE B.CODE_ID=A.CODE_ID) AS MODIFIED_DATE FROM SGS_CODE A">
+			<parameters />
+		</query>
+		<query ID="GetFileDtlIdsForFileHeader" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;MIN(FILE_DTL_ID) START_FILE_DTL_ID,&#xD;&#xA;MAX(FILE_DTL_ID) END_FILE_DTL_ID&#xD;&#xA;FROM SGS_FILE_DTL WITH(NOLOCK)&#xD;&#xA;WHERE FILE_HDR_ID = @FILE_HDR_ID" sfwOracle="SELECT&#xD;&#xA;MIN(FILE_DTL_ID) START_FILE_DTL_ID,&#xD;&#xA;MAX(FILE_DTL_ID) END_FILE_DTL_ID&#xD;&#xA;FROM SGS_FILE_DTL &#xD;&#xA;WHERE FILE_HDR_ID = @FILE_HDR_ID">
+			<parameters>
+				<parameter ID="@FILE_HDR_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetAllProcessEventXrForRunningInstances" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT SBPEXR.* FROM SGW_BPM_PROCESS_EVENT_XR SBPEXR WITH(NOLOCK)&#xD;&#xA;INNER JOIN SGW_BPM_EVENT SBE WITH(NOLOCK)&#xD;&#xA;ON SBPEXR.EVENT_ID = SBE.BPM_EVENT_ID AND SBE.BPM_EVENT_ID = @BPM_EVENT_ID&#xD;&#xA;INNER  JOIN SGW_BPM_PROCESS SBP WITH(NOLOCK)&#xD;&#xA;ON SBPEXR.PROCESS_ID = SBP.PROCESS_ID&#xD;&#xA;INNER JOIN SGW_BPM_CASE SBC WITH(NOLOCK)&#xD;&#xA;ON SBP.CASE_ID = SBC.CASE_ID&#xD;&#xA;INNER JOIN SGW_BPM_CASE_INSTANCE SBCI WITH(NOLOCK)&#xD;&#xA;ON SBC.CASE_ID = SBCI.CASE_ID WHERE SBCI.STATUS_VALUE IN ('INPC')" sfwOracle="SELECT DISTINCT SBPEXR.* FROM SGW_BPM_PROCESS_EVENT_XR SBPEXR&#xD;&#xA;INNER JOIN SGW_BPM_EVENT SBE &#xD;&#xA;ON SBPEXR.EVENT_ID = SBE.BPM_EVENT_ID AND SBE.BPM_EVENT_ID = @BPM_EVENT_ID&#xD;&#xA;INNER  JOIN SGW_BPM_PROCESS SBP &#xD;&#xA;ON SBPEXR.PROCESS_ID = SBP.PROCESS_ID&#xD;&#xA;INNER JOIN SGW_BPM_CASE SBC &#xD;&#xA;ON SBP.CASE_ID = SBC.CASE_ID&#xD;&#xA;INNER JOIN SGW_BPM_CASE_INSTANCE SBCI&#xD;&#xA;ON SBC.CASE_ID = SBCI.CASE_ID WHERE SBCI.STATUS_VALUE IN ('INPC')">
+			<parameters>
+				<parameter ID="@BPM_EVENT_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetElapsedTimers" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE TOP (5) SGW_BPM_TMER_ACTY_INST_DETAILS WITH (UPDLOCK, READPAST) SET PROCESSING_FLAG = 'Y' OUTPUT INSERTED.* WHERE END_DATE_TIME &lt; @NOW AND (PROCESSING_FLAG IS NULL OR PROCESSING_FLAG &lt;&gt; 'Y')" sfwOracle="select * from Table(SAGITEC.fnGetElapsedTimers(@NOW))">
+			<parameters>
+				<parameter ID="@NOW" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="GetActivityEscalationsToSend" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE TOP (5) EI SET EI.PROCESSING_FLAG ='Y' OUTPUT INSERTED.* &#xD;&#xA; FROM SGW_BPM_ESCALATION_INSTANCE EI WITH (UPDLOCK, READPAST)&#xD;&#xA;  INNER JOIN SGW_BPM_ACTIVITY_INSTANCE AI ON EI.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID &#xD;&#xA;  INNER JOIN SGW_BPM_ESCALATION SBE WITH(UPDLOCK, READPAST) ON EI.ESCALATION_ID = SBE.ESCALATION_ID &#xD;&#xA;  WHERE (EI.ESCLATION_DATE_TIME &lt; @NOW AND&#xD;&#xA;   EI.STATUS_VALUE = 'ACTV' AND (EI.PROCESSING_FLAG IS NULL OR EI.PROCESSING_FLAG &lt;&gt; 'Y')&#xD;&#xA;  AND (AI.STATUS_VALUE IN ('INPC','UNPC','RESU') &#xD;&#xA;          AND (SBE.LAPSE_TYPE_VALUE in( 'LTBE','LTAE','LTOE')  AND CHECKED_OUT_USER IS NOT NULL)&#xD;&#xA;          OR  (SBE.LAPSE_TYPE_VALUE = 'LTNA' and CHECKED_OUT_USER IS NULL))&#xD;&#xA;   OR (SBE.LAPSE_TYPE_VALUE = 'LTSA' and AI.STATUS_VALUE = 'SUSP'))" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; Table(SAGITEC.fnGetActivityEscalationsToSend(@NOW))">
+			<parameters>
+				<parameter ID="@NOW" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="GetProcessEscalationsToSent" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE TOP (5) PEI SET PEI.PROCESSING_FLAG ='Y' OUTPUT INSERTED.* FROM SGW_BPM_PRCS_ESC_INSTANCE PEI WITH (UPDLOCK, READPAST) INNER JOIN SGW_BPM_PROCESS_INSTANCE BPI ON PEI.PROCESS_INSTANCE_ID = BPI.PROCESS_INSTANCE_ID &#xA;WHERE&#xA;&#x9; (PEI.ESCALATION_DATE_TIME &lt; @NOW AND&#xA;&#x9; PEI.STATUS_VALUE = 'ACTV' AND&#xA;&#x9; (PEI.PROCESSING_FLAG IS NULL OR PEI.PROCESSING_FLAG &lt;&gt; 'Y')) AND&#xA;&#x9; BPI.STATUS_VALUE IN ('INPC')" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; Table(SAGITEC.fnGetProcessEscalationsToSent(@NOW))">
+			<parameters>
+				<parameter ID="@NOW" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="GetUnprocessedRequestForOrgByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_BPM_REQUEST WITH(NOLOCK)&#xA;WHERE  ORG_ID = @ORG_ID AND PROCESS_ID = @PROCESS_ID&#xA;AND STATUS_VALUE IN ('UNPC') AND REQUEST_ID &lt;&gt; @REQUEST_ID" sfwOracle="SELECT COUNT(*) FROM SGW_BPM_REQUEST&#xA;WHERE  ORG_ID = @ORG_ID AND PROCESS_ID = @PROCESS_ID&#xA;AND STATUS_VALUE IN ('UNPC') AND REQUEST_ID &lt;&gt; @REQUEST_ID">
+			<parameters>
+				<parameter ID="@ORG_ID" sfwDataType="int" />
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@REQUEST_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="CountActiveProcessForPersonByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; count(*) &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC')" sfwOracle="SELECT&#xA;&#x9; count(*) &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI  &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC')">
+			<parameters>
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUnprocessRequestForPersonByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_BPM_REQUEST WITH(NOLOCK) &#xA;WHERE PERSON_ID = @PERSON_ID&#xA;  AND PROCESS_ID = @PROCESS_ID&#xA;  AND STATUS_VALUE IN ('UNPC') AND REQUEST_ID &lt;&gt; @REQUEST_ID" sfwOracle="SELECT COUNT(*) FROM SGW_BPM_REQUEST &#xA;WHERE PERSON_ID = @PERSON_ID&#xA;  AND PROCESS_ID = @PROCESS_ID&#xA;  AND STATUS_VALUE IN ('UNPC') AND REQUEST_ID &lt;&gt; @REQUEST_ID">
+			<parameters>
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+				<parameter ID="@PROCESS_ID" sfwDataType="int" />
+				<parameter ID="@REQUEST_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetRoleIdFromRoleDescription" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT isnull((SELECT ROLE_ID FROM SGS_ROLES WHERE ROLE_DESCRIPTION LIKE @ROLE_DESC), 0) AS ROLE_ID" sfwOracle="SELECT nvl((SELECT ROLE_ID FROM SGS_ROLES WHERE ROLE_DESCRIPTION LIKE @ROLE_DESC), 0) AS ROLE_ID FROM dual">
+			<parameters>
+				<parameter ID="@ROLE_DESC" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetNeoTrackRuleMapping" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select * from SGS_NEOTRACK_RULE_MAPPING WITH(NOLOCK) where  NEOTRACK_ID=@NEOTRACKID" sfwOracle="Select * from SGS_NEOTRACK_RULE_MAPPING where  NEOTRACK_ID=@NEOTRACKID">
+			<parameters>
+				<parameter ID="@NEOTRACKID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetTestExecutionData" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select * from SGA_SCENARIO_TEST WITH(NOLOCK) where  TEST_ID= @TEST_ID" sfwOracle="Select * from SGA_SCENARIO_TEST where  TEST_ID= @TEST_ID">
+			<parameters>
+				<parameter ID="@TEST_ID" />
+			</parameters>
+		</query>
+		<query ID="CheckObjectInSQL" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="EXEC CheckObjectInSQL @SESSION_USER_KEY" sfwOracle="SELECT SESSION_STORE_SERIAL_ID,update_seq FROM SGS_SESSION_STORE WHERE SESSION_USER_KEY=@SESSION_USER_KEY">
+			<parameters>
+				<parameter ID="@SESSION_USER_KEY" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="DeleteQueueItem" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DELETE FROM SGW_BPM_QUEUE WITH(READPAST) WHERE QUEUE_ITEM_ID = @QUEUE_ITEM_ID" sfwOracle="DELETE FROM SGW_BPM_QUEUE WHERE QUEUE_ITEM_ID = @QUEUE_ITEM_ID">
+			<parameters>
+				<parameter ID="@QUEUE_ITEM_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUserRoles" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT ROLE_ID FROM SGS_USER_ROLES WITH(NOLOCK) WHERE USER_SERIAL_ID = @USER_SERIAL_ID" sfwOracle="SELECT ROLE_ID FROM SGS_USER_ROLES WHERE USER_SERIAL_ID = @USER_SERIAL_ID">
+			<parameters>
+				<parameter ID="@user_serial_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="InsertSessionStoreWithoutIdentity" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwOracle="INSERT INTO SGS_SESSION_STORE (SESSION_STORE_SERIAL_ID,SESSION_USER_KEY, SESSION_ID, WINDOW_NAME, FORM_ID, PRIMARY_KEY, DATE_CREATED, RULE_RESULT, ACTIVITY_INSTANCE_ID, GRID_HASH, UPDATE_SEQ) VALUES (@SESSION_STORE_SERIAL_ID,@SESSION_USER_KEY, @SESSION_ID, @WINDOW_NAME, @FORM_ID, @PRIMARY_KEY, @DATE_CREATED, @RULE_RESULT, @ACTIVITY_INSTANCE_ID, @GRID_HASH, @UPDATE_SEQ)">
+			<parameters>
+				<parameter ID="@SESSION_STORE_SERIAL_ID" sfwDataType="int" />
+				<parameter ID="@SESSION_USER_KEY" sfwDataType="string" />
+				<parameter ID="@SESSION_ID" sfwDataType="string" />
+				<parameter ID="@WINDOW_NAME" sfwDataType="string" />
+				<parameter ID="@FORM_ID" sfwDataType="string" />
+				<parameter ID="@PRIMARY_KEY" sfwDataType="int" />
+				<parameter ID="@DATE_CREATED" sfwDataType="DateTime" />
+				<parameter ID="@RULE_RESULT" sfwDataType="Binary" />
+				<parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@GRID_HASH" sfwDataType="Binary" />
+				<parameter ID="@UPDATE_SEQ" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="InsertSessionStore" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwOracle="INSERT INTO SGS_SESSION_STORE (SESSION_USER_KEY, SESSION_ID, WINDOW_NAME, FORM_ID, PRIMARY_KEY, DATE_CREATED, RULE_RESULT, ACTIVITY_INSTANCE_ID, GRID_HASH, UPDATE_SEQ) VALUES (@SESSION_USER_KEY, @SESSION_ID, @WINDOW_NAME, @FORM_ID, @PRIMARY_KEY, @DATE_CREATED, @RULE_RESULT, @ACTIVITY_INSTANCE_ID, @GRID_HASH, @UPDATE_SEQ)&#xA;RETURNING SESSION_STORE_SERIAL_ID INTO @SESSION_STORE_SERIAL_ID" sfwSql="EXEC  @SESSION_STORE_SERIAL_ID = InsertSessionStore  @SESSION_USER_KEY, @SESSION_ID, @WINDOW_NAME, @FORM_ID, @PRIMARY_KEY, @DATE_CREATED, @RULE_RESULT, @ACTIVITY_INSTANCE_ID, @GRID_HASH, @UPDATE_SEQ ">
+			<parameters>
+				<parameter ID="@SESSION_STORE_SERIAL" sfwDataType="int" />
+				<parameter ID="@SESSION_USER_KEY" sfwDataType="int" />
+				<parameter ID="@SESSION_ID" sfwDataType="string" />
+				<parameter ID="@WINDOW_NAME" sfwDataType="string" />
+				<parameter ID="@FORM_ID" sfwDataType="string" />
+				<parameter ID="@PRIMARY_KEY" sfwDataType="int" />
+				<parameter ID="@DATE_CREATED" sfwDataType="DateTime" />
+				<parameter ID="@RULE_RESULT" sfwDataType="Binary" />
+				<parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@GRID_HASH" sfwDataType="Binary" />
+				<parameter ID="@UPDATE_SEQ" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="UpdateSessionStore" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwOracle="UPDATE SGS_SESSION_STORE SET ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID, GRID_HASH = @GRID_HASH, RULE_RESULT = @RULE_RESULT, DATE_CREATED = @DATE_CREATED, BUS_OBJECT= @BUS_OBJECT, UPDATE_SEQ = @UPDATE_SEQ WHERE SESSION_STORE_SERIAL_ID = @SESSION_STORE_SERIAL_ID" sfwSql=" EXEC UpdateSessionStore @ACTIVITY_INSTANCE_ID,  @GRID_HASH,  @RULE_RESULT, @DATE_CREATED, @BUS_OBJECT , @SESSION_STORE_SERIAL_ID, @UPDATE_SEQ">
+			<parameters>
+				<parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@GRID_HASH" sfwDataType="Binary" />
+				<parameter ID="@RULE_RESULT" sfwDataType="Binary" />
+				<parameter ID="@DATE_CREATED" sfwDataType="DateTime" />
+				<parameter ID="@BUS_OBJECT" sfwDataType="Binary" />
+				<parameter ID="@SESSION_STORE_SERIAL_ID" sfwDataType="int" />
+				<parameter ID="@UPDATE_SEQ" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="UpdateSessionData" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" EXEC  UpdateSessionData @SESSION_OBJECT ,@DATE_CREATED ,@SESSION_ID" sfwOracle="UPDATE SGS_SESSION_DATA SET SESSION_OBJECT = @SESSION_OBJECT, DATE_CREATED = @DATE_CREATED WHERE SESSION_ID = @SESSION_ID">
+			<parameters>
+				<parameter ID="@SESSION_OBJECT" sfwDataType="Binary" />
+				<parameter ID="@DATE_CREATED" sfwDataType="DateTime" />
+				<parameter ID="@SESSION_ID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="InsertSessionData" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="INSERT INTO SGS_SESSION_DATA (SESSION_ID,SESSION_OBJECT, DATE_CREATED) VALUES (@SESSION_ID,@SESSION_OBJECT, @DATE_CREATED)">
+			<parameters>
+				<parameter ID="@SESSION_OBJECT" sfwDataType="Binary" />
+				<parameter ID="@DATE_CREATED" sfwDataType="DateTime" />
+				<parameter ID="@SESSION_ID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetSessionObject" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="EXEC GetSessionObject @SESSION_ID" sfwOracle="Select SESSION_OBJECT from SGS_SESSION_DATA where SESSION_ID=@SESSION_ID">
+			<parameters>
+				<parameter ID="@SESSION_ID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetBusObjectFromSessionStore" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="EXEC GetBusObjectFromSessionStore @SESSION_USER_KEY" sfwOracle="Select BUS_OBJECT from SGS_SESSION_STORE where SESSION_USER_KEY=@SESSION_USER_KEY">
+			<parameters>
+				<parameter ID="@SESSION_USER_KEY" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetSessionDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="EXEC GetSessionDetails @SESSION_STORE_SERIAL_ID" sfwOracle="Select SESSION_ID,FORM_ID,BUS_OBJECT from SGS_SESSION_STORE where SESSION_STORE_SERIAL_ID = @SESSION_STORE_SERIAL_ID">
+			<parameters>
+				<parameter ID="@SESSION_STORE_SERIAL_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetDetailsFromSessionStore" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="EXEC GetDetailsFromSessionStore @SESSION_STORE_SERIAL_ID" sfwOracle="Select PRIMARY_KEY, SESSION_ID, FORM_ID, GRID_HASH from SGS_SESSION_STORE where SESSION_STORE_SERIAL_ID = @SESSION_STORE_SERIAL_ID">
+			<parameters>
+				<parameter ID="@SESSION_STORE_SERIAL_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetActivityRuleFromSessionStore" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="EXEC GetActivityRuleFromSessionStore  @SESSION_STORE_SERIAL_ID " sfwOracle="Select ACTIVITY_INSTANCE_ID, RULE_RESULT,CASE WHEN BUS_OBJECT IS NULL THEN 'FALSE' ELSE 'TRUE' END as BUS_OBJECT from SGS_SESSION_STORE where SESSION_STORE_SERIAL_ID = @SESSION_STORE_SERIAL_ID">
+			<parameters>
+				<parameter ID="@SESSION_STORE_SERIAL_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="UpdtActLogInsEndTime" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGS_ACT_LOG_INST SET END_TIME = @END_TIME WHERE ACT_LOG_INST_ID = @ACT_LOG_INST_ID" sfwOracle="UPDATE SGS_ACT_LOG_INST SET END_TIME = @END_TIME WHERE ACT_LOG_INST_ID = @ACT_LOG_INST_ID">
+			<parameters>
+				<parameter ID="@END_TIME" sfwDataType="DateTime" />
+				<parameter ID="@ACT_LOG_INST_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="UpdtActLogInsBrowserTime" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGS_ACT_LOG_INST SET IS_BROWSERCLOSE = @IS_BROWSERCLOSE, BROWSERCLOSE_TIME = @BROWSERCLOSE_TIME, END_TIME = @END_TIME  WHERE ACT_LOG_INST_ID = @ACT_LOG_INST_ID">
+			<parameters>
+				<parameter ID="@IS_BROWSERCLOSE" sfwDataType="string" />
+				<parameter ID="@BROWSERCLOSE_TIME" sfwDataType="DateTime" />
+				<parameter ID="@ACT_LOG_INST_ID" sfwDataType="int" />
+				<parameter ID="@END_TIME" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="UpdtActLogInsBrowserCloseTime" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGS_ACT_LOG_INST SET END_TIME = BROWSERCLOSE_TIME WHERE END_TIME IS NULL AND BROWSERCLOSE_TIME IS NOT NULL AND IS_BROWSERCLOSE = 'Y' AND BROWSERCLOSE_TIME &lt; @BROWSERCLOSE_TIME" sfwOracle="UPDATE SGS_ACT_LOG_INST SET END_TIME = BROWSERCLOSE_TIME &#xA;WHERE&#xA;&#x9; END_TIME IS NULL AND&#xA;&#x9; BROWSERCLOSE_TIME IS NOT NULL AND&#xA;&#x9; IS_BROWSERCLOSE = 'Y' AND&#xA;&#x9; BROWSERCLOSE_TIME &lt; @BROWSERCLOSE_TIME">
+			<parameters>
+				<parameter ID="@BROWSERCLOSE_TIME" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="InsertRequestException" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="INSERT INTO SGS_REQUEST_EXCEPTION (REQUEST_NAME, REQUEST_DETAILS, REQUEST_OBJECT, ERROR_MESSAGE, STACK_TRACE, REFERENCE_ID, STATUS_ID, STATUS_VALUE, CREATED_BY, CREATED_DATE, MODIFIED_BY, MODIFIED_DATE, UPDATE_SEQ) VALUES(@REQUEST_NAME, @REQUEST_DETAILS, @REQUEST_OBJECT, @ERROR_MESSAGE, @STACK_TRACE, @REFERENCE_ID, @STATUS_ID, @STATUS_VALUE, @CREATED_BY, @CREATED_DATE, @MODIFIED_BY, @MODIFIED_DATE, @UPDATE_SEQ)" sfwOracle="INSERT INTO SGS_REQUEST_EXCEPTION (REQUEST_EXCEPTION_ID, REQUEST_NAME, REQUEST_DETAILS, REQUEST_OBJECT, ERROR_MESSAGE, STACK_TRACE, REFERENCE_ID, STATUS_ID, STATUS_VALUE, CREATED_BY, CREATED_DATE, MODIFIED_BY, MODIFIED_DATE, UPDATE_SEQ) VALUES(@REQUEST_EXCEPTION_ID, @REQUEST_NAME, @REQUEST_DETAILS, @REQUEST_OBJECT, @ERROR_MESSAGE, @STACK_TRACE, @REFERENCE_ID, @STATUS_ID, @STATUS_VALUE, @CREATED_BY, @CREATED_DATE, @MODIFIED_BY, @MODIFIED_DATE, @UPDATE_SEQ)">
+			<parameters>
+				<parameter ID="@REQUEST_EXCEPTION_ID" sfwDataType="int" />
+				<parameter ID="@REQUEST_NAME" sfwDataType="string" />
+				<parameter ID="@REQUEST_DETAILS" sfwDataType="string" />
+				<parameter ID="@REQUEST_OBJECT" sfwDataType="Binary" />
+				<parameter ID="@ERROR_MESSAGE" sfwDataType="string" />
+				<parameter ID="@STACK_TRACE" sfwDataType="string" />
+				<parameter ID="@REFERENCE_ID" sfwDataType="long" />
+				<parameter ID="@STATUS_ID" sfwDataType="int" />
+				<parameter ID="@STATUS_VALUE" sfwDataType="string" />
+				<parameter ID="@CREATED_BY" sfwDataType="string" />
+				<parameter ID="@CREATED_DATE" sfwDataType="DateTime" />
+				<parameter ID="@MODIFIED_BY" sfwDataType="string" />
+				<parameter ID="@MODIFIED_DATE" sfwDataType="DateTime" />
+				<parameter ID="@UPDATE_SEQ" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUserPreferences" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_USER_PREFERENCES WITH(NOLOCK) WHERE USER_NAME = @USER_NAME AND APPLICATION_NAME = @APPLICATION_NAME" sfwOracle="SELECT * FROM SGS_USER_PREFERENCES WHERE USER_NAME = @USER_NAME AND APPLICATION_NAME = @APPLICATION_NAME">
+			<parameters>
+				<parameter ID="@USER_NAME" sfwDataType="string" />
+				<parameter ID="@APPLICATION_NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetRuleResult" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_RULES_EXECUTION WHERE BUSINESS_OBJECT = @BUSINESS_OBJECT AND PRIMARY_KEY = @PRIMARY_KEY AND RULE_NAME = ISNULL(@RULE_NAME, RULE_NAME) ORDER BY EXECUTION_ID DESC OFFSET 0 ROWS FETCH NEXT 1 ROWS ONLY" sfwOracle="SELECT * FROM (SELECT * FROM SGS_RULES_EXECUTION WHERE BUSINESS_OBJECT = @BUSINESS_OBJECT AND PRIMARY_KEY = @PRIMARY_KEY ORDER BY EXECUTION_ID DESC) WHERE ROWNUM &lt;= 1">
+			<parameters>
+				<parameter ID="@BUSINESS_OBJECT" sfwDataType="string" />
+				<parameter ID="@PRIMARY_KEY" sfwDataType="int" />
+				<parameter ID="@RULE_NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="InsertUserDashboard" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="INSERT INTO SGS_USER_DASHBOARD_SETTING (USER_SERIAL_ID, USER_SETTING_DATA,DATE_CREATED,DATE_MODIFIED) VALUES (@USER_SERIAL_ID, @USER_SETTING_DATA, @DATE_CREATED, @DATE_MODIFIED)" sfwOracle="INSERT INTO SGS_USER_DASHBOARD_SETTING (USER_SERIAL_ID,&#xA;&#x9;USER_SETTING_DATA,&#xA;&#x9;DATE_CREATED,&#xA;&#x9;DATE_MODIFIED) VALUES (@USER_SERIAL_ID,&#xA;&#x9;@USER_SETTING_DATA,&#xA;&#x9;@DATE_CREATED,&#xA;&#x9;@DATE_MODIFIED)">
+			<parameters>
+				<parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+				<parameter ID="@USER_SETTING_DATA" sfwDataType="string" />
+				<parameter ID="@DATE_CREATED" sfwDataType="DateTime" />
+				<parameter ID="@DATE_MODIFIED" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="GetUserDashboardCount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGS_USER_DASHBOARD_SETTING WITH(NOLOCK) WHERE USER_SERIAL_ID = @USER_SERIAL_ID" sfwOracle="SELECT COUNT(*) FROM SGS_USER_DASHBOARD_SETTING WHERE USER_SERIAL_ID = @USER_SERIAL_ID">
+			<parameters>
+				<parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="UpdateUserDashboard" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGS_USER_DASHBOARD_SETTING set USER_SETTING_DATA=@USER_SETTING_DATA,DATE_MODIFIED=@DATE_MODIFIED WHERE USER_SERIAL_ID= @USER_SERIAL_ID">
+			<parameters>
+				<parameter ID="@USER_SETTING_DATA" sfwDataType="string" />
+				<parameter ID="@DATE_MODIFIED" sfwDataType="DateTime" />
+				<parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUserDashboardData" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_USER_DASHBOARD_SETTING WITH(NOLOCK) WHERE USER_SERIAL_ID = @USER_SERIAL_ID" sfwOracle="SELECT * FROM SGS_USER_DASHBOARD_SETTING WHERE USER_SERIAL_ID = @USER_SERIAL_ID">
+			<parameters>
+				<parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetMessage" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_MESSAGES WITH(NOLOCK) WHERE MESSAGE_ID = @MESSAGE_ID" sfwOracle="SELECT * FROM SGS_MESSAGES WHERE MESSAGE_ID = @MESSAGE_ID">
+			<parameters>
+				<parameter ID="@MESSAGE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetFWKMessage" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_FWK_MESSAGES WITH(NOLOCK) WHERE MESSAGE_ID = @MESSAGE_ID" sfwOracle="SELECT * FROM SGS_FWK_MESSAGES WHERE MESSAGE_ID = @MESSAGE_ID">
+			<parameters>
+				<parameter ID="@MESSAGE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetCodeValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_CODE_VALUE WITH(NOLOCK) WHERE CODE_ID = @CODE_ID ORDER BY CODE_VALUE_ORDER, DESCRIPTION" sfwOracle="SELECT * FROM SGS_CODE_VALUE WHERE CODE_ID = @CODE_ID ORDER BY CODE_VALUE_ORDER, DESCRIPTION">
+			<parameters>
+				<parameter ID="@CODE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="InsertProcessLog" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="INSERT INTO SGS_PROCESS_LOG(CYCLE_NO, PROCESS_NAME, MESSAGE_TYPE_ID, MESSAGE_TYPE_VALUE, MESSAGE, JOB_HEADER_ID, CREATED_BY, CREATED_DATE) VALUES (@CYCLE_NO, @PROCESS_NAME, 28, @MESSAGE_TYPE_VALUE, @MESSAGE, @JOB_HEADER_ID, @CREATED_BY, @CREATED_DATE)" sfwOracle="INSERT INTO SGS_PROCESS_LOG(CYCLE_NO,&#xA;&#x9;PROCESS_NAME,&#xA;&#x9;MESSAGE_TYPE_ID,&#xA;&#x9;MESSAGE_TYPE_VALUE,&#xA;&#x9;MESSAGE,&#xA;&#x9;JOB_HEADER_ID,&#xA;&#x9;CREATED_BY,&#xA;&#x9;CREATED_DATE) VALUES (@CYCLE_NO,&#xA;&#x9;@PROCESS_NAME,&#xA;&#x9;28,&#xA;&#x9;@MESSAGE_TYPE_VALUE,&#xA;&#x9;@MESSAGE,&#xA;&#x9;@JOB_HEADER_ID,&#xA;&#x9;@CREATED_BY,&#xA;&#x9;@CREATED_DATE)">
+			<parameters>
+				<parameter ID="@CYCLE_NO" sfwDataType="int" />
+				<parameter ID="@PROCESS_NAME" sfwDataType="string" />
+				<parameter ID="@MESSAGE_TYPE_VALUE" sfwDataType="string" />
+				<parameter ID="@MESSAGE" sfwDataType="string" />
+				<parameter ID="@JOB_HEADER_ID" sfwDataType="int" />
+				<parameter ID="@CREATED_BY" sfwDataType="string" />
+				<parameter ID="@CREATED_DATE" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="DeleteUserDefaults" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DELETE FROM SGS_USER_DEFAULTS WHERE USER_SERIAL_ID = @USER_SERIAL_ID AND FORM_NAME = @FORM_NAME AND GROUP_CONTROL_ID = @GROUP_CONTROL_ID AND DEFAULT_SET_ID = @DEFAULT_SET_ID" sfwOracle="DELETE &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER_DEFAULTS &#xD;&#xA;WHERE&#xD;&#xA;&#x9; USER_SERIAL_ID = @USER_SERIAL_ID AND&#xD;&#xA;&#x9; FORM_NAME = @FORM_NAME AND&#xD;&#xA;&#x9; GROUP_CONTROL_ID = @GROUP_CONTROL_ID AND&#xD;&#xA;&#x9; DEFAULT_SET_ID = @DEFAULT_SET_ID">
+			<parameters>
+				<parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+				<parameter ID="@FORM_NAME" sfwDataType="string" />
+				<parameter ID="@GROUP_CONTROL_ID" sfwDataType="string" />
+				<parameter ID="@DEFAULT_SET_ID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="InsertUserPrefPgState" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="INSERT INTO SGS_USER_PREF_PAGE_STATE(USER_NAME, APPLICATION_NAME, FORM_NAME, PAGE_STATE_DATA) VALUES (@USER_NAME, @APPLICATION_NAME, @FORM_NAME, @PAGE_STATE_DATA);  SET @USER_PREF_PAGE_STATE_ID = SCOPE_IDENTITY()" sfwOracle="INSERT INTO SGS_USER_PREF_PAGE_STATE(USER_PREF_PAGE_STATE_ID, USER_NAME, APPLICATION_NAME, FORM_NAME, PAGE_STATE_DATA) VALUES (@USER_PREF_PAGE_STATE_ID, @USER_NAME, @APPLICATION_NAME, @FORM_NAME, @PAGE_STATE_DATA)">
+			<parameters>
+				<parameter ID="@USER_PREF_PAGE_STATE_ID" sfwDataType="int" />
+				<parameter ID="@USER_NAME" sfwDataType="string" />
+				<parameter ID="@APPLICATION_NAME" sfwDataType="string" />
+				<parameter ID="@FORM_NAME" sfwDataType="string" />
+				<parameter ID="@PAGE_STATE_DATA" sfwDataType="Binary" />
+			</parameters>
+		</query>
+		<query ID="InsertUserPrefPgStateWithIndentity" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwOracle="INSERT INTO SGS_USER_PREF_PAGE_STATE(USER_PREF_PAGE_STATE_ID, USER_NAME, APPLICATION_NAME, FORM_NAME, PAGE_STATE_DATA) VALUES (@USER_PREF_PAGE_STATE_ID, @USER_NAME, @APPLICATION_NAME, @FORM_NAME, @PAGE_STATE_DATA)  RETURNING USER_PREF_PAGE_STATE_ID INTO @USER_PREF_PAGE_STATE_ID">
+			<parameters>
+				<parameter ID="@USER_PREF_PAGE_STATE_ID" sfwDataType="int" />
+				<parameter ID="@USER_NAME" sfwDataType="string" />
+				<parameter ID="@APPLICATION_NAME" sfwDataType="string" />
+				<parameter ID="@FORM_NAME" sfwDataType="string" />
+				<parameter ID="@PAGE_STATE_DATA" sfwDataType="Binary" />
+			</parameters>
+		</query>
+		<query ID="UpdateUserPrefPgState" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGS_USER_PREF_PAGE_STATE SET PAGE_STATE_DATA = @PAGE_STATE_DATA WHERE USER_PREF_PAGE_STATE_ID = @USER_PREF_PAGE_STATE_ID">
+			<parameters>
+				<parameter ID="@PAGE_STATE_DATA" sfwDataType="Binary" />
+				<parameter ID="@USER_PREF_PAGE_STATE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetUserPrefPgState" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT USER_PREF_PAGE_STATE_ID FROM SGS_USER_PREF_PAGE_STATE WITH(NOLOCK) WHERE USER_NAME = @USER_NAME AND APPLICATION_NAME = @APPLICATION_NAME AND FORM_NAME = @FORM_NAME" sfwOracle="SELECT USER_PREF_PAGE_STATE_ID FROM SGS_USER_PREF_PAGE_STATE WHERE USER_NAME = @USER_NAME AND APPLICATION_NAME = @APPLICATION_NAME AND FORM_NAME = @FORM_NAME">
+			<parameters>
+				<parameter ID="@USER_NAME" sfwDataType="string" />
+				<parameter ID="@APPLICATION_NAME" sfwDataType="string" />
+				<parameter ID="@FORM_NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetCodeValueData" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_CODE_VALUE WITH(NOLOCK) WHERE CODE_ID = @CODE_ID" sfwOracle="SELECT * FROM SGS_CODE_VALUE WHERE CODE_ID = @CODE_ID">
+			<parameters>
+				<parameter ID="@CODE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetToolTipMessages" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SFM.MESSAGE_ID, SFM.MESSAGE_KEY, ISNULL((CASE WHEN @LANGUAGE_ID IS NOT NULL THEN (SELECT SMR.TRANSLATION_TEXT FROM SGS_MULTILINGUAL_RESOURCE SMR WITH(NOLOCK) WHERE SMR.RESOURCE_TYPE_VALUE = 'FWFM' AND SFM.MESSAGE_ID = SMR.RESOURCE_VALUE_ID AND SMR.LANGUAGE_ID = @LANGUAGE_ID) ELSE (SFM.DISPLAY_MESSAGE) END),SFM.DISPLAY_MESSAGE) AS DISPLAY_MESSAGE FROM SGS_FWK_MESSAGES SFM WITH(NOLOCK) WHERE SFM.CATEGORY_VALUE = 'TLTP'" sfwOracle="SELECT SFM.MESSAGE_ID, SFM.MESSAGE_KEY, &#xD;&#xA;COALESCE((CASE WHEN @LANGUAGE_ID IS NOT NULL THEN &#xD;&#xA;(SELECT SMR.TRANSLATION_TEXT FROM SGS_MULTILINGUAL_RESOURCE SMR &#xD;&#xA;WHERE SMR.RESOURCE_TYPE_VALUE = 'FWFM' &#xD;&#xA;AND SFM.MESSAGE_ID = SMR.RESOURCE_VALUE_ID &#xD;&#xA;AND SMR.LANGUAGE_ID = @LANGUAGE_ID)&#xD;&#xA;ELSE (SFM.DISPLAY_MESSAGE) END),SFM.DISPLAY_MESSAGE) AS DISPLAY_MESSAGE &#xD;&#xA;FROM SGS_FWK_MESSAGES SFM WHERE SFM.CATEGORY_VALUE = 'TLTP'">
+			<parameters>
+				<parameter ID="@LANGUAGE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetQuestionSet" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGQ_QUESTION_SET WITH(NOLOCK) WHERE QUESTION_SET_ID = @QUESTIONSET_ID" sfwOracle="SELECT * FROM SGQ_QUESTION_SET WHERE QUESTION_SET_ID = @QUESTIONSET_ID">
+			<parameters>
+				<parameter ID="@QUESTIONSET_ID" sfwDataType="long" />
+			</parameters>
+		</query>
+		<query ID="GetQuestionSetQuestions" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGQ_QUESTION_SET_QUESTIONS WITH(NOLOCK) WHERE QUESTION_SET_ID = @QUESTIONSET_ID" sfwOracle="SELECT * FROM SGQ_QUESTION_SET_QUESTIONS WHERE QUESTION_SET_ID = @QUESTIONSET_ID">
+			<parameters>
+				<parameter ID="@QUESTIONSET_ID" sfwDataType="long" />
+			</parameters>
+		</query>
+		<query ID="GetQuestion" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGQ_QUESTION WITH(NOLOCK) WHERE QUESTION_ID = @QUESTION_ID" sfwOracle="SELECT * FROM SGQ_QUESTION WHERE QUESTION_ID = @QUESTION_ID">
+			<parameters>
+				<parameter ID="@QUESTION_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetCodeValueForQuestion" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DESCRIPTION FROM SGS_CODE_VALUE WITH(NOLOCK) WHERE CODE_ID = @ANSWER_ID AND CODE_VALUE = @ANSWER_VALUE" sfwOracle="SELECT DESCRIPTION FROM SGS_CODE_VALUE WHERE CODE_ID = @ANSWER_ID AND CODE_VALUE = @ANSWER_VALUE">
+			<parameters>
+				<parameter ID="@ANSWER_ID" sfwDataType="int" />
+				<parameter ID="@ANSWER_VALUE" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetQuestionSetId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT QUESTION_SET_ID FROM SGQ_QUESTION_SET WITH(NOLOCK)" sfwOracle="SELECT QUESTION_SET_ID FROM SGQ_QUESTION_SET">
+			<parameters />
+		</query>
+		<query ID="CheckQueueItemsForParallelOrInclusiveGateway" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT QUEUE_ITEM_ID FROM SGW_BPM_QUEUE WITH(XLOCK,ROWLOCK) WHERE SRC_PRCS_INST_ID = @PROCESS_INSTANCE_ID AND TRG_ACTV_ID_TO_INST = @ACTIVITY_ID" sfwOracle="SELECT QUEUE_ITEM_ID FROM &#xD;&#xA;SGW_BPM_QUEUE WHERE SRC_PRCS_INST_ID = @PROCESS_INSTANCE_ID AND TRG_ACTV_ID_TO_INST = @ACTIVITY_ID FOR UPDATE">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+    <query ID="UserTaskSequentialWithMaxCount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct U.[USER_ID], U.[USER_SERIAL_ID], (case when ACount.ASSIGNED_ACTIVITY_COUNT IS NULL then 0 else ACount.ASSIGNED_ACTIVITY_COUNT end) AS ASSIGNED_ACTIVITY_COUNT &#xA;FROM&#xA;&#x9; SGS_USER AS U WITH(NOLOCK)  &#xA;&#x9; LEFT OUTER JOIN  (SELECT CHECKED_OUT_USER, count(AI.CHECKED_OUT_USER) AS ASSIGNED_ACTIVITY_COUNT FROM SGW_BPM_ACTIVITY_INSTANCE AS AI WITH(NOLOCK) &#xA;&#x9; inner join sgw_bpm_process_instance spi1 with(nolock) on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xA; inner join sgw_bpm_case_instance sci1 with(nolock) on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC' &#xA;&#x9; INNER JOIN SGW_BPM_ACTIVITY SBA ON AI.ACTIVITY_ID = SBA.ACTIVITY_ID AND&#xA;&#x9; SBA.ACTIVITY_ID = @ACTIVITY_ID &#xA;WHERE&#xA;&#x9; AI.STATUS_VALUE NOT IN ('PROC',&#xA;&#x9;'CANC',&#xA;&#x9;'SUSP',&#xA;&#x9;'APPR',&#xA;&#x9;'REJT') &#xA;GROUP BY  CHECKED_OUT_USER) AS ACount&#xA;&#x9; ON U.USER_ID = ACount.CHECKED_OUT_USER  &#xA;WHERE&#xA;&#x9; U.USER_STATUS_VALUE = 'A'" sfwOracle="SELECT&#xA;&#x9; distinct U.USER_ID,&#xA;&#x9;U.USER_SERIAL_ID,&#xA;&#x9; (case when ACount.ASSIGNED_ACTIVITY_COUNT IS NULL then 0 else ACount.ASSIGNED_ACTIVITY_COUNT end) AS ASSIGNED_ACTIVITY_COUNT &#xA;FROM&#xA;&#x9; SGS_USER  U  &#xA;&#x9; LEFT OUTER JOIN  (SELECT&#xA;&#x9; CHECKED_OUT_USER,&#xA;&#x9;count(AI.CHECKED_OUT_USER) AS ASSIGNED_ACTIVITY_COUNT &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE  AI &#xA;&#x9; inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC' &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY SBA&#xA;&#x9; ON AI.ACTIVITY_ID = SBA.ACTIVITY_ID AND&#xA;&#x9; SBA.ACTIVITY_ID = @ACTIVITY_ID &#xA;WHERE&#xA;&#x9; AI.STATUS_VALUE NOT IN ('PROC',&#xA;&#x9;'CANC',&#xA;&#x9;'SUSP',&#xA;&#x9;'APPR',&#xA;&#x9;'REJT') &#xA;GROUP BY  CHECKED_OUT_USER)  ACount&#xA;&#x9; ON U.USER_ID = ACount.CHECKED_OUT_USER  &#xA;WHERE&#xA;&#x9; U.USER_STATUS_VALUE = 'A'" sfwPostgre="SELECT&#xA;&#x9; DISTINCT u.user_id,&#xA;&#x9;u.user_serial_id,&#xA;&#x9;(CASE WHEN acount.assigned_activity_count IS NULL THEN 0 ELSE acount.assigned_activity_count END) AS ASsigned_activity_count &#xA;FROM&#xA;&#x9; dbo.sgs_user AS u &#xA;&#x9; LEFT OUTER JOIN  (SELECT&#xA;&#x9; checked_out_user,&#xA;&#x9;COUNT(ai.checked_out_user) AS ASsigned_activity_count &#xA;FROM&#xA;&#x9; dbo.sgw_bpm_activity_instance AS ai &#xA;&#x9; inner join sgw_bpm_process_instance spi1 on ai.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'&#xA;&#x9;INNER &#xA;&#x9; JOIN dbo.sgw_bpm_activity AS sba&#xA;&#x9; ON ai.activity_id = sba.activity_id AND&#xA;&#x9; sba.activity_id = @ACTIVITY_ID  &#xA;WHERE&#xA;&#x9; ai.status_value NOT IN ('PROC',&#xA;&#x9;'CANC',&#xA;&#x9;'SUSP',&#xA;&#x9;'APPR',&#xA;&#x9;'REJT') &#xA;GROUP BY  checked_out_user) AS acount&#xA;&#x9; ON u.user_id = acount.checked_out_user::VARCHAR &#xA;WHERE&#xA;&#x9; u.user_status_value = 'A'">
+      <parameters>
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="UserTaskSequentialWithRoleAndMaxCount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT distinct U.[USER_ID],U.[USER_SERIAL_ID], (case when ACount.ASSIGNED_ACTIVITY_COUNT IS NULL then 0 else ACount.ASSIGNED_ACTIVITY_COUNT  end) as ASSIGNED_ACTIVITY_COUNT&#xA; from SGS_USER AS U WITH(NOLOCK) INNER JOIN SGS_USER_ROLES AS UR WITH(NOLOCK) ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xA;  left outer join (SELECT CHECKED_OUT_USER, count(AI.CHECKED_OUT_USER) as ASSIGNED_ACTIVITY_COUNT from SGW_BPM_ACTIVITY_INSTANCE as AI WITH(NOLOCK) &#xA;  inner join sgw_bpm_process_instance spi1 with(nolock) on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC' &#xA; inner join sgw_bpm_case_instance sci1 with(nolock) on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC' &#xA; INNER JOIN SGW_BPM_ACTIVITY SBA ON AI.ACTIVITY_ID = SBA.ACTIVITY_ID AND SBA.ACTIVITY_ID = @ACTIVITY_ID where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'SUSP', 'APPR', 'REJT') group by CHECKED_OUT_USER) as ACount on U.USER_ID = ACount.CHECKED_OUT_USER &#xA; WHERE U.USER_STATUS_VALUE = 'A' AND ((UR.EFFECTIVE_START_DATE IS NULL) OR &#xA; (UR.EFFECTIVE_START_DATE &lt;=CONVERT(DATETIME,CONVERT(CHAR,@CURRENT_DATE,103),103))) &#xA; AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;=CONVERT(DATETIME,CONVERT(CHAR,@CURRENT_DATE,103),103)))" sfwOracle="SELECT distinct U.USER_ID,U.USER_SERIAL_ID, &#xD;&#xA;(case when AID.SIGNED_ACTIVITIES IS NULL then 0 else AID.SIGNED_ACTIVITIES  end)  Activities ,&#xD;&#xA; (case when ACount.ASSIGNED_ACTIVITY_COUNT IS NULL then 0 else ACount.ASSIGNED_ACTIVITY_COUNT  end)  ASSIGNED_ACTIVITY_COUNT&#xD;&#xA; from SGS_USER  U  INNER JOIN SGS_USER_ROLES  UR  ON U.USER_SERIAL_ID = UR.USER_SERIAL_ID &#xD;&#xA; left outer join (SELECT CHECKED_OUT_USER, count(*)  SIGNED_ACTIVITIES from SGW_BPM_ACTIVITY_INSTANCE  AI &#xD;&#xA; inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC' &#xD;&#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC' &#xD;&#xA; where AI.STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER)  AID on U.USER_ID = AID.CHECKED_OUT_USER &#xD;&#xA;  left outer join (SELECT CHECKED_OUT_USER, count(AI.CHECKED_OUT_USER)  ASSIGNED_ACTIVITY_COUNT from SGW_BPM_ACTIVITY_INSTANCE  AI  &#xD;&#xA; INNER JOIN SGW_BPM_ACTIVITY SBA ON AI.ACTIVITY_ID = SBA.ACTIVITY_ID AND SBA.ACTIVITY_ID = @ACTIVITY_ID where STATUS_VALUE NOT IN ('PROC', 'CANC', 'APPR', 'REJT', 'SUSP') group by CHECKED_OUT_USER)  ACount on U.USER_ID = ACount.CHECKED_OUT_USER &#xD;&#xA; WHERE U.USER_STATUS_VALUE = 'A' AND ((UR.EFFECTIVE_START_DATE IS NULL) OR &#xD;&#xA; (UR.EFFECTIVE_START_DATE &lt;=@CURRENT_DATE))&#xD;&#xA; AND ((UR.EFFECTIVE_END_DATE IS NULL) OR (UR.EFFECTIVE_END_DATE &gt;=@CURRENT_DATE))" sfwPostgre="SELECT&#xA;&#x9; DISTINCT u.user_id,&#xA;&#x9;u.user_serial_id,&#xA;&#x9;(CASE WHEN acount.assigned_activity_count IS NULL THEN 0 ELSE acount.assigned_activity_count END) AS ASsigned_activity_count &#xA;FROM&#xA;&#x9; dbo.sgs_user AS u &#xA;&#x9;INNER &#xA;&#x9; JOIN dbo.sgs_user_roles AS ur&#xA;&#x9; ON u.user_serial_id = ur.user_serial_id &#xA;&#x9; LEFT OUTER JOIN  (SELECT&#xA;&#x9; checked_out_user,&#xA;&#x9;COUNT(ai.checked_out_user) AS ASsigned_activity_count &#xA;FROM&#xA;&#x9; dbo.sgw_bpm_activity_instance AS ai &#xA;&#x9; inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC' &#xA; inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC' &#xA;&#x9;INNER &#xA;&#x9; JOIN dbo.sgw_bpm_activity AS sba&#xA;&#x9; ON ai.activity_id = sba.activity_id AND&#xA;&#x9; sba.activity_id = @ACTIVITY_ID  &#xA;WHERE&#xA;&#x9; ai.status_value NOT IN ('PROC',&#xA;&#x9;'CANC',&#xA;&#x9;'SUSP',&#xA;&#x9;'APPR',&#xA;&#x9;'REJT') &#xA;GROUP BY  checked_out_user) AS acount&#xA;&#x9; ON u.user_id = acount.checked_out_user::VARCHAR &#xA;WHERE&#xA;&#x9; u.user_status_value = 'A' AND&#xA;&#x9; ((ur.effective_start_date IS NULL) OR (DATE(ur.effective_start_date) &lt; =  DATE(@CURRENT_DATE))) AND&#xA;&#x9; ((ur.effective_end_date IS NULL) OR (DATE(ur.effective_end_date) &gt; =  DATE(@CURRENT_DATE)))">
+      <parameters>
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+        <parameter ID="@CURRENT_DATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="UserTaskSequentialLastAssignedUserByActivityId" sfwQueryType="ScalarQuery" sfwDataType="string" sfwSql="SELECT&#xA;&#x9; TOP 1 CHECKED_OUT_USER &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) &#xA;&#x9; inner join sgw_bpm_process_instance spi1 with(nolock) on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xA;     inner join sgw_bpm_case_instance sci1 with(nolock) on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC' &#xA;WHERE&#xA;&#x9; ACTIVITY_ID = @ACTIVITY_ID AND&#xA;&#x9; CHECKED_OUT_USER IS NOT NULL &#xA;ORDER BY  AI.CREATED_DATE DESC" sfwOracle="SELECT CHECKED_OUT_USER &#xA;FROM&#xA;SGW_BPM_ACTIVITY_INSTANCE AI &#xA;inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC'&#xA;     inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC' &#xA;WHERE&#xA;ACTIVITY_ID = @ACTIVITY_ID AND&#xA;CHECKED_OUT_USER IS NOT NULL &#xA;ORDER BY  AI.CREATED_DATE DESC&#xA;FETCH FIRST ROW ONLY" sfwPostgre="SELECT&#xA;&#x9; checked_out_user &#xA;FROM&#xA;&#x9; dbo.sgw_bpm_activity_instance AI&#xA;&#x9; inner join sgw_bpm_process_instance spi1 on AI.process_instance_id = spi1.process_instance_id and spi1.status_value='INPC' &#xA;     inner join sgw_bpm_case_instance sci1 on sci1.case_instance_id = spi1.case_instance_id and sci1.status_value='INPC'  &#xA;WHERE&#xA;&#x9; activity_id = @ACTIVITY_ID  AND&#xA;&#x9; checked_out_user IS NOT NULL &#xA;ORDER BY  AI.created_date DESC NULLS FIRST LIMIT 1">
+      <parameters>
+        <parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+		<query ID="GetBpmTraceFlags" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP 1 * FROM SGW_BPM_TRACING WITH(NOLOCK) ORDER BY 1 DESC" sfwOracle="SELECT * FROM SGW_BPM_TRACING WHERE ROWNUM = 1 ORDER BY 1 DESC">
+			<parameters />
+		</query>
+		<query ID="GetBpmServerTimerFlags" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;SBST.ACTION_METHOD,&#xD;&#xA;               ISNULL(SS.INTERVAL,&#xD;&#xA;               SBST.INTERVAL) AS INTERVAL,&#xD;&#xA;               ISNULL(SS.ENABLED,&#xD;&#xA;               SBST.ENABLED) ENABLED,&#xD;&#xA;               ISNULL(SS.BPM_TRACING_FLAG,&#xD;&#xA;               SBST.BPM_TRACING_FLAG) BPM_TRACING_FLAG,&#xD;&#xA;               ISNULL(SS.BPM_QUERY_TRACING_FLAG,&#xD;&#xA;               SBST.BPM_QUERY_TRACING_FLAG) BPM_QUERY_TRACING_FLAG,&#xD;&#xA;               ISNULL(SS.BPM_QUERY_LIMIT,&#xD;&#xA;               SBST.BPM_QUERY_LIMIT) BPM_QUERY_LIMIT,&#xD;&#xA;               ISNULL(SS.BPM_QUERY_LIMIT_ALERT,&#xD;&#xA;               SBST.BPM_QUERY_LIMIT_ALERT) BPM_QUERY_LIMIT_ALERT,&#xD;&#xA;               ISNULL(SS.BPM_QUERY_HIGH_LIMIT,&#xD;&#xA;               SBST.BPM_QUERY_HIGH_LIMIT) BPM_QUERY_HIGH_LIMIT,&#xD;&#xA;               ISNULL(SS.BPM_QUERY_HIGH_LIMIT_ALERT,&#xD;&#xA;               SBST.BPM_QUERY_HIGH_LIMIT_ALERT) BPM_QUERY_HIGH_LIMIT_ALERT  &#xD;&#xA;FROM&#xD;&#xA;               SGW_BPM_SERVICE_TIMER SBST WITH(NOLOCK) OUTER APPLY ( SELECT&#xD;&#xA;               SBSS.* &#xD;&#xA;FROM&#xD;&#xA;               SGW_BPM_SERVER_SETTINGS SBSS WITH(NOLOCK) &#xD;&#xA;               INNER &#xD;&#xA;                JOIN SGS_SERVERS s WITH(NOLOCK)&#xD;&#xA;               ON SBSS.SERVER_ID = s.SERVER_ID  &#xD;&#xA;WHERE&#xD;&#xA;               SERVER_NAME = @SERVER_NAME AND&#xD;&#xA;               SERVICE_TIMER_ID = SBST.SERVICE_TIMER_ID)  ss" sfwOracle="SELECT&#xD;&#xA;SBST.ACTION_METHOD,&#xD;&#xA;               COALESCE(SS.INTERVAL,&#xD;&#xA;               SBST.INTERVAL) AS INTERVAL,&#xD;&#xA;               COALESCE(SS.ENABLED,&#xD;&#xA;               SBST.ENABLED) ENABLED,&#xD;&#xA;               COALESCE(SS.BPM_TRACING_FLAG,&#xD;&#xA;               SBST.BPM_TRACING_FLAG) BPM_TRACING_FLAG,&#xD;&#xA;               COALESCE(SS.BPM_QUERY_TRACING_FLAG,&#xD;&#xA;               SBST.BPM_QUERY_TRACING_FLAG) BPM_QUERY_TRACING_FLAG,&#xD;&#xA;               COALESCE(SS.BPM_QUERY_LIMIT,&#xD;&#xA;               SBST.BPM_QUERY_LIMIT) BPM_QUERY_LIMIT,&#xD;&#xA;               COALESCE(SS.BPM_QUERY_LIMIT_ALERT,&#xD;&#xA;               SBST.BPM_QUERY_LIMIT_ALERT) BPM_QUERY_LIMIT_ALERT,&#xD;&#xA;               COALESCE(SS.BPM_QUERY_HIGH_LIMIT,&#xD;&#xA;               SBST.BPM_QUERY_HIGH_LIMIT) BPM_QUERY_HIGH_LIMIT,&#xD;&#xA;               COALESCE(SS.BPM_QUERY_HIGH_LIMIT_ALERT,&#xD;&#xA;               SBST.BPM_QUERY_HIGH_LIMIT_ALERT) BPM_QUERY_HIGH_LIMIT_ALERT  &#xD;&#xA;FROM&#xD;&#xA;               SGW_BPM_SERVICE_TIMER SBST  OUTER APPLY ( SELECT&#xD;&#xA;               SBSS.* &#xD;&#xA;FROM&#xD;&#xA;               SGW_BPM_SERVER_SETTINGS SBSS  &#xD;&#xA;               INNER &#xD;&#xA;                JOIN SGS_SERVERS s &#xD;&#xA;               ON SBSS.SERVER_ID = s.SERVER_ID  &#xD;&#xA;WHERE&#xD;&#xA;               SERVER_NAME = @SERVER_NAME AND&#xD;&#xA;               SERVICE_TIMER_ID = SBST.SERVICE_TIMER_ID)  SS">
+			<parameters>
+				<parameter ID="@SERVER_NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetCountBpmTraceFlags" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_BPM_CASE_CONFIG_TRACING WITH(NOLOCK) WHERE CASE_FILE = @CASE_FILE" sfwOracle="SELECT COUNT(*) FROM SGW_BPM_CASE_CONFIG_TRACING WHERE CASE_FILE = @CASE_FILE">
+			<parameters>
+				<parameter ID="@CASE_FILE" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetCaseTracingFlag" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT CASE_FILE, BPM_TRACING_FLAG FROM SGW_BPM_CASE_CONFIG_TRACING WITH(NOLOCK)&#xD;&#xA;WHERE CASE_FILE LIKE @CASE_FILE" sfwOracle="SELECT CASE_FILE, BPM_TRACING_FLAG FROM SGW_BPM_CASE_CONFIG_TRACING&#xD;&#xA;WHERE CASE_FILE LIKE @CASE_FILE">
+			<parameters>
+				<parameter ID="@CASE_FILE" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetTraceInstActnOnGUID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT ISNULL(TRACE_INST_ACTN_ID, 0) FROM SGW_BPM_TRACE_INST_ACTN WHERE TRANSACTION_ID = @TRANSACTION_ID" sfwOracle="SELECT NVL(TRACE_INST_ACTN_ID, 0) FROM SGW_BPM_TRACE_INST_ACTN WHERE TRANSACTION_ID = @TRANSACTION_ID">
+			<parameters>
+				<parameter ID="@TRANSACTION_ID" sfwDataType="guid" />
+			</parameters>
+		</query>
+		<query ID="GetTraceInstActnDtlOnGUID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP 1 ISNULL(TRACE_INST_ACTN_DTL_ID, 0) FROM SGW_BPM_TRACE_INST_ACTN_DTL WHERE TRANSACTION_ID = @TRANSACTION_ID ORDER BY 1 DESC" sfwOracle="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; (SELECT&#xA;&#x9; NVL(TRACE_INST_ACTN_DTL_ID,&#xA;&#x9;0) &#xA;FROM&#xA;&#x9; SGW_BPM_TRACE_INST_ACTN_DTL &#xA;WHERE&#xA;&#x9; TRANSACTION_ID = @TRANSACTION_ID &#xA;ORDER BY  1 DESC) &#xA;WHERE&#xA;&#x9; rownum &lt; =  1">
+			<parameters>
+				<parameter ID="@TRANSACTION_ID" sfwDataType="guid" />
+			</parameters>
+		</query>
+		<query ID="GetEngineDetailsWithPriority" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COALESCE(SBCC.ENGINE_VALUE,'') ENGINE_VALUE&#xA;FROM&#xA;&#x9; SGW_BPM_CASE_CONFIGURATION SBCC   WITH(NOLOCK)&#xA;WHERE&#xA;&#x9; SBCC.CASE_FILE like @CASE_FILE   AND (SBCC.SOURCE_VALUE = @SOURCE_VALUE OR SBCC.SOURCE_VALUE IS NULL)&#xA;   AND SBCC.PRIORITY_VALUE = @PRIORITY_VALUE" sfwOracle="SELECT&#xD;&#xA;&#x9; COALESCE(SBCC.ENGINE_VALUE,'') ENGINE_VALUE&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_CONFIGURATION SBCC   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; SBCC.CASE_FILE like @CASE_FILE  AND (SBCC.SOURCE_VALUE = @SOURCE_VALUE OR SBCC.SOURCE_VALUE IS NULL)&#xD;&#xA;   AND SBCC.PRIORITY_VALUE = @PRIORITY_VALUE">
+			<parameters>
+				<parameter ID="@CASE_FILE" sfwDataType="string" />
+				<parameter ID="@PRIORITY_VALUE" sfwDataType="string" />
+				<parameter ID="@SOURCE_VALUE" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="CountActiveProcessForOrgByCaseNameAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK) &#x9; &#xD;&#xA;&#x9; &#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE C WITH(NOLOCK) &#xD;&#xA;&#x9; ON CI.CASE_ID = C.CASE_ID AND NAME = @CASE_NAME&#xD;&#xA;WHERE&#x9;&#xD;&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; CI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')" sfwOracle="SELECT&#xD;&#xA;&#x9; COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI &#xD;&#xA;&#x9; &#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE C &#xD;&#xA;&#x9; ON CI.CASE_ID = C.CASE_ID AND NAME = @CASE_NAME&#xD;&#xA;WHERE&#x9;&#xD;&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; CI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+			<parameters>
+				<parameter ID="@CASE_NAME" sfwDataType="string" />
+				<parameter ID="@ORG_ID" sfwDataType="int" />
+				<parameter ID="@REFERENCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="CountActiveProcessForOrgByCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9;  COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)&#xD;&#xA;&#x9; INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE C WITH(NOLOCK) &#xD;&#xA;&#x9; ON CI.CASE_ID = C.CASE_ID AND NAME = @CASE_NAME&#xD;&#xA;WHERE&#x9; &#xD;&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; CI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')" sfwOracle="SELECT&#xD;&#xA;&#x9;  COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI&#xD;&#xA;&#x9; INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE C&#xD;&#xA;&#x9; ON CI.CASE_ID = C.CASE_ID AND NAME = @CASE_NAME&#xD;&#xA;WHERE&#x9; &#xD;&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; CI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+			<parameters>
+				<parameter ID="@CASE_NAME" sfwDataType="string" />
+				<parameter ID="@ORG_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="CountActiveProcessForPersonByCaseNameAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)   &#xD;&#xA;&#x9; INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE C WITH(NOLOCK) &#xD;&#xA;&#x9;  ON CI.CASE_ID = C.CASE_ID AND NAME = @CASE_NAME&#xD;&#xA;WHERE&#xD;&#xA;&#x9; &#xD;&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; CI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')" sfwOracle="SELECT&#xD;&#xA;&#x9; COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI&#xD;&#xA;&#x9; INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE C&#xD;&#xA;&#x9;  ON CI.CASE_ID = C.CASE_ID AND NAME = @CASE_NAME&#xD;&#xA;WHERE&#xD;&#xA;&#x9; &#xD;&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; CI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+			<parameters>
+				<parameter ID="@CASE_NAME" sfwDataType="string" />
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+				<parameter ID="@REFERENCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="CountActiveProcessForPersonByCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)   &#xA;&#x9; INNER &#xA;&#x9; JOIN SGW_BPM_CASE C WITH(NOLOCK) &#xA;&#x9;  ON CI.CASE_ID = C.CASE_ID AND NAME = @CASE_NAME&#xA;WHERE&#x9; &#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xA;&#x9; CI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC')" sfwOracle="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI&#xA;&#x9; INNER &#xA;&#x9; JOIN SGW_BPM_CASE C&#xA;&#x9;  ON CI.CASE_ID = C.CASE_ID AND NAME = @CASE_NAME&#xA;WHERE&#x9; &#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xA;&#x9; CI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC')">
+			<parameters>
+				<parameter ID="@CASE_NAME" sfwDataType="string" />
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetAllEvents" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGW_BPM_EVENT WITH(NOLOCK)" sfwOracle="SELECT * FROM SGW_BPM_EVENT">
+			<parameters />
+		</query>
+		<query ID="GetUsersBySkillId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT USER_SERIAL_ID, SKILL_VALUE FROM SGS_USER WITH(NOLOCK) WHERE SKILL_ID = @SKILL_ID and SKILL_VALUE IS NOT NULL" sfwOracle="SELECT USER_SERIAL_ID, SKILL_VALUE FROM SGS_USER WHERE SKILL_ID = @SKILL_ID and SKILL_VALUE IS NOT NULL">
+			<parameters>
+				<parameter ID="@SKILL_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="DeleteCheckList" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(sbac.GROUP_ID) &#xA;FROM&#xA;&#x9; SGW_BPM_ACTV_CHKL_GROUP sbacg &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY_CHECKLIST sbac&#xA;&#x9; ON sbacg.GROUP_ID  = sbac.GROUP_ID &#xA;WHERE&#xA;&#x9; sbac.GROUP_ID = @Group_id" sfwOracle="SELECT&#xA;&#x9; COUNT(sbac.GROUP_ID) &#xA;FROM&#xA;&#x9; SGW_BPM_ACTV_CHKL_GROUP sbacg &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY_CHECKLIST sbac&#xA;&#x9; ON sbacg.GROUP_ID  = sbac.GROUP_ID &#xA;WHERE&#xA;&#x9; sbac.GROUP_ID = @Group_id">
+			<parameters>
+				<parameter ID="@Group_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="CheckBpmQueueItemExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select QUEUE_ITEM_ID from SGW_BPM_QUEUE where ACTV_INST_ID_TO_EXEC=@ACTV_INST_ID_TO_EXEC;" sfwOracle="SELECT QUEUE_ITEM_ID&#xD;&#xA;FROM SGW_BPM_QUEUE&#xD;&#xA;WHERE ACTV_INST_ID_TO_EXEC = @ACTV_INST_ID_TO_EXEC">
+			<parameters>
+				<parameter ID="@ACTV_INST_ID_TO_EXEC;" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="MarkQueueItemAsUnprocessed" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="update sgw_bpm_queue set STATUS_VALUE='UNPC' where QUEUE_ITEM_ID=@QUEUE_ITEM_ID" sfwOracle="UPDATE sgw_bpm_queue&#xD;&#xA;SET STATUS_VALUE    = 'UNPC'&#xD;&#xA;WHERE QUEUE_ITEM_ID = @QUEUE_ITEM_ID">
+			<parameters>
+				<parameter ID="@QUEUE_ITEM_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetStuckInstancesforProcessing" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT &#xD;&#xA;&#x9;top 5 bai.ACTIVITY_INSTANCE_ID,bai.process_instance_id,bai.STATUS_VALUE,bq.QUEUE_ITEM_ID,bq.ACTV_INST_ID_TO_EXEC,bq.TRG_ACTV_ID_TO_INST,bq.STATUS_VALUE&#xD;&#xA;&#x9;FROM SGW_BPM_ACTIVITY_INSTANCE(NOLOCK) BAI&#xD;&#xA;&#x9;INNER JOIN SGW_BPM_PROCESS_INSTANCE (NOLOCK)  BPI ON BAI.PROCESS_INSTANCE_ID = BPI.PROCESS_INSTANCE_ID&#xD;&#xA;&#x9;INNER JOIN sgw_bpm_case_instance (NOLOCK) BCI ON BCI.CASE_INSTANCE_ID = BPI.CASE_INSTANCE_ID &#xD;&#xA;&#x9;INNER JOIN SGW_BPM_PROCESS (NOLOCK)  BP ON BPI.PROCESS_ID = BP.PROCESS_ID  &#xD;&#xA;&#x9;INNER JOIN SGW_BPM_ACTIVITY (NOLOCK) BA ON BAI.ACTIVITY_ID = BA.ACTIVITY_ID&#xD;&#xA;&#x9;left join sgw_bpm_queue(nolock) bq on bq.SRC_PRCS_INST_ID=bai.PROCESS_INSTANCE_ID and (bq.ACTV_INST_ID_TO_EXEC=bai.ACTIVITY_INSTANCE_ID or bq.TRG_ACTV_ID_TO_INST =bai.ACTIVITY_ID)&#xD;&#xA;&#x9;WHERE (   (ba.ACTIVITY_TYPE_VALUE not in ( 'USTK' ,'ITCE') and bai.STATUS_VALUE not in ('SUSP','FAIL'))&#xD;&#xA;&#x9;&#x9;&#x9;or (ba.ACTIVITY_TYPE_VALUE in ( 'USTK') and bai.STATUS_VALUE in ('PROC'))&#xD;&#xA;&#x9;&#x9;&#x9;)&#xD;&#xA;&#x9;AND ACTIVITY_INSTANCE_ID IN&#xD;&#xA;&#x9; &#xD;&#xA;&#x9;(&#xD;&#xA;&#x9;&#x9;&#x9;SELECT MAX(BAI.ACTIVITY_INSTANCE_ID ) ACTIVITY_INSTANCE_ID&#xD;&#xA;&#x9;&#x9;&#x9;FROM SGW_BPM_ACTIVITY_INSTANCE (NOLOCK) BAI&#xD;&#xA;&#x9;&#x9;&#x9;INNER JOIN SGW_BPM_PROCESS_INSTANCE (NOLOCK)  BPI ON BAI.PROCESS_INSTANCE_ID = BPI.PROCESS_INSTANCE_ID &#xD;&#xA;&#x9;&#x9;&#x9;INNER JOIN SGW_BPM_PROCESS (NOLOCK)  BP ON BPI.PROCESS_ID = BP.PROCESS_ID &#xD;&#xA;&#x9;&#x9;&#x9;WHERE &#xD;&#xA;&#x9;&#x9;&#x9;BPI.STATUS_VALUE = 'INPC'&#xD;&#xA;&#x9;&#x9;&#x9;GROUP BY BPI.PROCESS_INSTANCE_ID&#xD;&#xA;&#x9;) &#xD;&#xA;&#xD;&#xA;&#x9;AND   BAI.MODIFIED_DATE &lt; @endDate&#xD;&#xA;&#x9;AND BAI.STATUS_VALUE  &lt;&gt; 'INPC'&#xD;&#xA;&#x9;AND (bq.STATUS_VALUE is null or  bq.STATUS_VALUE &lt;&gt; 'UNPC')&#xD;&#xA; order by  bai.ACTIVITY_INSTANCE_ID" sfwOracle="SELECT bai.ACTIVITY_INSTANCE_ID ,&#xD;&#xA;    bai.process_instance_id ,&#xD;&#xA;    bai.STATUS_VALUE ,&#xD;&#xA;    bq.QUEUE_ITEM_ID ,&#xD;&#xA;    bq.ACTV_INST_ID_TO_EXEC ,&#xD;&#xA;    bq.TRG_ACTV_ID_TO_INST ,&#xD;&#xA;    bq.STATUS_VALUE&#xD;&#xA;  FROM SGW_BPM_ACTIVITY_INSTANCE BAI&#xD;&#xA;  JOIN SGW_BPM_PROCESS_INSTANCE BPI&#xD;&#xA;  ON BAI.PROCESS_INSTANCE_ID = BPI.PROCESS_INSTANCE_ID&#xD;&#xA;  JOIN sgw_bpm_case_instance BCI&#xD;&#xA;  ON BCI.CASE_INSTANCE_ID = BPI.CASE_INSTANCE_ID&#xD;&#xA;  JOIN SGW_BPM_PROCESS BP&#xD;&#xA;  ON BPI.PROCESS_ID = BP.PROCESS_ID&#xD;&#xA;  JOIN SGW_BPM_ACTIVITY BA&#xD;&#xA;  ON BAI.ACTIVITY_ID = BA.ACTIVITY_ID&#xD;&#xA;  LEFT JOIN sgw_bpm_queue bq&#xD;&#xA;  ON bq.SRC_PRCS_INST_ID                = bai.PROCESS_INSTANCE_ID&#xD;&#xA;  AND ( bq.ACTV_INST_ID_TO_EXEC         = bai.ACTIVITY_INSTANCE_ID&#xD;&#xA;  OR bq.TRG_ACTV_ID_TO_INST             = bai.ACTIVITY_ID )&#xD;&#xA;  WHERE ( ( ba.ACTIVITY_TYPE_VALUE NOT IN ( 'USTK','ITCE' )&#xD;&#xA;  AND bai.STATUS_VALUE NOT             IN ( 'SUSP','FAIL' ) )&#xD;&#xA;  OR ( ba.ACTIVITY_TYPE_VALUE          IN ( 'USTK' )&#xD;&#xA;  AND bai.STATUS_VALUE                 IN ( 'PROC' ) ) )&#xD;&#xA;  AND ACTIVITY_INSTANCE_ID             IN&#xD;&#xA;    (SELECT MAX(BAI.ACTIVITY_INSTANCE_ID) ACTIVITY_INSTANCE_ID&#xD;&#xA;    FROM SGW_BPM_ACTIVITY_INSTANCE BAI&#xD;&#xA;    JOIN SGW_BPM_PROCESS_INSTANCE BPI&#xD;&#xA;    ON BAI.PROCESS_INSTANCE_ID = BPI.PROCESS_INSTANCE_ID&#xD;&#xA;    JOIN SGW_BPM_PROCESS BP&#xD;&#xA;    ON BPI.PROCESS_ID      = BP.PROCESS_ID&#xD;&#xA;    WHERE BPI.STATUS_VALUE = 'INPC'&#xD;&#xA;    GROUP BY BPI.PROCESS_INSTANCE_ID&#xD;&#xA;    )&#xD;&#xA;  AND BAI.MODIFIED_DATE  &lt; @endDate&#xD;&#xA;  AND BAI.STATUS_VALUE  &lt;&gt; 'INPC'&#xD;&#xA;  AND ( bq.STATUS_VALUE IS NULL&#xD;&#xA;  OR bq.STATUS_VALUE    &lt;&gt; 'UNPC' )&#xD;&#xA;  AND ROWNUM &lt;= 5&#xD;&#xA;  ORDER BY bai.ACTIVITY_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@endDate" sfwDataType="DateTime" />
+			</parameters>
+		</query>
+		<query ID="GetNonCompletedChecklistInstances" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AIC.* FROM SGW_BPM_ACTY_INST_CHECKLIST AIC WITH(NOLOCK) &#xD;&#xA;INNER JOIN SGW_BPM_ACTIVITY_CHECKLIST AC WITH(NOLOCK)&#xD;&#xA;ON AIC.ACTIVITY_CHECKLIST_ID = AC.ACTIVITY_CHECKLIST_ID &#xD;&#xA;WHERE&#xD;&#xA;    AC.BPM_EVENT_ID = @BPM_EVENT_ID AND&#xD;&#xA;    AIC.ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID AND&#xD;&#xA;    ISNULL(COMPLETED_IND,'N') = 'N'" sfwOracle="SELECT AIC.* FROM SGW_BPM_ACTY_INST_CHECKLIST AIC  &#xD;&#xA;INNER JOIN SGW_BPM_ACTIVITY_CHECKLIST AC &#xD;&#xA;ON AIC.ACTIVITY_CHECKLIST_ID = AC.ACTIVITY_CHECKLIST_ID &#xD;&#xA;WHERE&#xD;&#xA; AC.BPM_EVENT_ID = @BPM_EVENT_ID AND&#xD;&#xA; AIC.ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID&#xD;&#xA; AND (AIC.COMPLETED_IND IS NULL OR AIC.COMPLETED_IND='N')">
+			<parameters>
+				<parameter ID="@BPM_EVENT_ID" />
+				<parameter ID="@ACTIVITY_INSTANCE_ID" />
+			</parameters>
+		</query>
+		<query ID="GetProcessEscalationMessage" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP 1 ESCALATION_MESSAGE &#xD;&#xA;FROM SGW_BPM_PROCESS_ESC_MESSAGES WITH(NOLOCK)&#xD;&#xA;WHERE ESCALATION_TYPE_VALUE = @ESCALATION_TYPE_VALUE&#xD;&#xA;ORDER BY 1 DESC" sfwOracle="SELECT * FROM (SELECT ESCALATION_MESSAGE &#xD;&#xA;FROM SGW_BPM_PROCESS_ESC_MESSAGES&#xD;&#xA;WHERE ESCALATION_TYPE_VALUE = @ESCALATION_TYPE_VALUE&#xD;&#xA;ORDER BY 1 DESC) WHERE rownum &lt;= 1">
+			<parameters>
+				<parameter ID="@ESCALATION_TYPE_VALUE" />
+			</parameters>
+		</query>
+		<query ID="GetActivityEscalationMessage" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP 1 ESCALATION_MESSAGE &#xD;&#xA;FROM SGW_BPM_ACTIVITY_ESC_MESSAGES WITH(NOLOCK)&#xD;&#xA;WHERE ESCALATION_TYPE_VALUE = @ESCALATION_TYPE_VALUE&#xD;&#xA;ORDER BY 1 DESC" sfwOracle="SELECT * FROM (SELECT ESCALATION_MESSAGE &#xD;&#xA;FROM SGW_BPM_ACTIVITY_ESC_MESSAGES&#xD;&#xA;WHERE ESCALATION_TYPE_VALUE = @ESCALATION_TYPE_VALUE&#xD;&#xA;ORDER BY 1 DESC) WHERE rownum &lt;= 1">
+			<parameters>
+				<parameter ID="@ESCALATION_TYPE_VALUE" />
+			</parameters>
+		</query>
+		<query ID="GetActivityChecklistWithRequiredFlag" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT BPM_EVENT_ID FROM SGW_BPM_ACTIVITY_CHECKLIST WITH(NOLOCK) WHERE ACTIVITY_ID=@ACTIVITY_ID AND DELETED_IND IS NULL AND REQUIRED_FLAG='Y'">
+			<parameters>
+				<parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetProcessEventXR" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT EVENT_ID FROM SGW_BPM_PROCESS_EVENT_XR WITH(NOLOCK)&#xD;&#xA;WHERE ACTIVITY_ID=@ACTIVITY_ID">
+			<parameters>
+				<parameter ID="@ACTIVITY_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetCaptchaTextFromDB" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="EXEC SelectRuleResultFromSessionStoreForCaptcha @SESSION_USER_KEY" sfwOracle="SELECT RULE_RESULT FROM SGS_SESSION_STORE WHERE SESSION_STORE_SERIAL_ID = @SESSION_STORE_SERIAL_ID">
+			<parameters>
+				<parameter ID="@SESSION_STORE_SERIAL_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="UpdateCaptchaTextInDB" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="EXEC UpdateRuleResultInSessionStoreForCaptcha @RULE_RESULT, @SESSION_USER_KEY" sfwOracle="UPDATE SGS_SESSION_STORE SET RULE_RESULT = @RULE_RESULT WHERE SESSION_STORE_SERIAL_ID = @SESSION_STORE_SERIAL_ID">
+			<parameters>
+				<parameter ID="@RULE_RESULT" />
+				<parameter ID="@SESSION_STORE_SERIAL_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetCodeValuesForMapParameters" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select code_value, description from sgs_code_value where code_id = @code_id" sfwOracle="select code_value, description from sgs_code_value where code_id = @code_id">
+			<parameters>
+				<parameter ID="@code_id" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetActiveCaseDetailsByCaseName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case &#xD;&#xA;WHERE&#xD;&#xA;&#x9; NAME = @NAME AND STATUS_VALUE='ACTV' &#xD;&#xA;ORDER BY  VERSION desc, EFFECTIVE_DATE desc" sfwOracle="SELECT&#xD;&#xA;&#x9;  * &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case &#xD;&#xA;WHERE&#xD;&#xA;&#x9; NAME = @NAME  AND STATUS_VALUE='ACTV' &#xD;&#xA;ORDER BY  VERSION desc, EFFECTIVE_DATE desc">
+			<parameters>
+				<parameter ID="@NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="DeleteActivityInstanceUsers" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DELETE FROM SGW_BPM_ACTIVITY_INST_USERS WHERE ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetBpmExceptionDetailToProcess" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE TOP (1) SGW_BPM_EXCEPTION_DETAILS WITH (UPDLOCK, READPAST) &#xD;&#xA;SET STATUS_VALUE='PICK'&#xD;&#xA;OUTPUT INSERTED.*&#xD;&#xA;WHERE (STATUS_VALUE IS NULL OR STATUS_VALUE = 'UNPC' AND NEXT_RETRY &lt; GETDATE())" sfwPostgre="UPDATE sgw_bpm_exception_details&#xD;&#xA;SET STATUS_VALUE = 'PICK'&#xD;&#xA;FROM (SELECT *&#xD;&#xA;FROM SGW_BPM_EXCEPTION_DETAILS WHERE STATUS_VALUE IS NULL OR STATUS_VALUE = 'UNPC' AND NEXT_RETRY &lt; CURRENT_DATE LIMIT 1 ) AS subquery&#xD;&#xA;WHERE SGW_BPM_EXCEPTION_DETAILS.id=subquery.id returning subquery.*;" sfwOracle="select * from Table(SAGITEC.fnGetBpmExceptionDetails)">
+			<parameters />
+		</query>
+		<query ID="GetCountOfExeptionDetailsByActivityInstanceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(1) FROM SGW_BPM_EXCEPTION_DETAILS WITH(NOLOCK) WHERE ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID" sfwOracle="SELECT COUNT(1)&#xD;&#xA;FROM SGW_BPM_EXCEPTION_DETAILS&#xD;&#xA;WHERE ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID;" sfwPostgre="SELECT COUNT(1)&#xD;&#xA;FROM sgw_bpm_exception_details&#xD;&#xA;WHERE ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID;">
+			<parameters>
+				<parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetPreviousActivityInstanceDueDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.DUE_DATE FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND AI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID and A.BPM_ACTIVITY_ID = @BPM_ACTIVITY_ID WHERE AI.STATUS_VALUE IN ('PROC','APPR','REJT') ORDER BY ACTIVITY_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@BPM_ACTIVITY_ID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetLatestInclusiveGatewayActivityInstance" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.* FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND AI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID and A.BPM_ACTIVITY_ID = @BPM_ACTIVITY_ID AND A.PARENT_ACTIVITY_ID = @PARENT_ACTIVITY_ID AND A.ACTIVITY_TYPE_VALUE = 'INGW' ORDER BY AI.ACTIVITY_INSTANCE_ID DESC">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@BPM_ACTIVITY_ID" sfwDataType="string" />
+				<parameter ID="@PARENT_ACTIVITY_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetLatestInclusiveGatewayActivityInstanceWithoutParentId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.* FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND AI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID and A.BPM_ACTIVITY_ID = @BPM_ACTIVITY_ID AND A.ACTIVITY_TYPE_VALUE = 'INGW' ORDER BY AI.ACTIVITY_INSTANCE_ID DESC">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@BPM_ACTIVITY_ID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetPreviousActivityInstanceCheckedOutUser" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.CHECKED_OUT_USER FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND AI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID and A.BPM_ACTIVITY_ID = @BPM_ACTIVITY_ID AND A.PARENT_ACTIVITY_ID = @PARENT_ACTIVITY_ID WHERE AI.STATUS_VALUE IN ('PROC','APPR','REJT') ORDER BY ACTIVITY_INSTANCE_ID DESC">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@BPM_ACTIVITY_ID" sfwDataType="string" />
+				<parameter ID="@PARENT_ACTIVITY_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetPreviousActivityInstanceCheckedOutUserWithoutParentId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.CHECKED_OUT_USER FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND AI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID and A.BPM_ACTIVITY_ID = @BPM_ACTIVITY_ID WHERE AI.STATUS_VALUE IN ('PROC','APPR','REJT') ORDER BY ACTIVITY_INSTANCE_ID DESC">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@BPM_ACTIVITY_ID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetPreviousActivityInstancesByBpmActivityIdAndParentActivityId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.* FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND AI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID and A.BPM_ACTIVITY_ID = @BPM_ACTIVITY_ID AND A.PARENT_ACTIVITY_ID = @PARENT_ACTIVITY_ID WHERE AI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@BPM_ACTIVITY_ID" sfwDataType="string" />
+				<parameter ID="@PARENT_ACTIVITY_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetPreviousActivityInstancesByBpmActivityIdAndParentActivityIdWithoutParentId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.* FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND AI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID and A.BPM_ACTIVITY_ID = @BPM_ACTIVITY_ID WHERE AI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@BPM_ACTIVITY_ID" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetUnProcessedParentActivityInstance" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.* FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND AI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID AND A.ACTIVITY_ID = @PARENT_ACTIVITY_ID WHERE AI.STATUS_VALUE != 'PROC'">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@PARENT_ACTIVITY_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetParentActivityInstance" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.* FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND AI.PROCESS_INSTANCE_ID = SPI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID AND A.ACTIVITY_ID = @PARENT_ACTIVITY_ID">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@PARENT_ACTIVITY_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetConvergingGatewayInstance" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.* FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = AI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID AND A.BPM_ACTIVITY_ID = @BPM_ACTIVITY_ID AND A.PARENT_ACTIVITY_ID = @PARENT_ACTIVITY_ID WHERE AI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND  AI.ACTIVITY_INSTANCE_ID > @DIVIRGING_GATEWAY_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@BPM_ACTIVITY_ID" sfwDataType="string" />
+				<parameter ID="@PARENT_ACTIVITY_ID" sfwDataType="int" />
+				<parameter ID="@DIVIRGING_GATEWAY_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetConvergingGatewayInstanceWithoutParentId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AI.* FROM SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) INNER JOIN SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) ON SPI.PROCESS_INSTANCE_ID = AI.PROCESS_INSTANCE_ID INNER JOIN SGW_BPM_ACTIVITY A WITH(NOLOCK) ON AI.ACTIVITY_ID = A.ACTIVITY_ID AND A.BPM_ACTIVITY_ID = @BPM_ACTIVITY_ID WHERE AI.PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND AI.ACTIVITY_INSTANCE_ID > @DIVIRGING_GATEWAY_INSTANCE_ID">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@BPM_ACTIVITY_ID" sfwDataType="string" />
+				<parameter ID="@DIVIRGING_GATEWAY_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="CheckCaseInstanceParameter" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT CASE_INSTANCE_PARAMETER_ID,PARAMETER_NAME,UPDATE_SEQ from SGW_BPM_CASE_INST_PARAMETER CP WITH(NOLOCK) WHERE CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND PARAMETER_NAME = @PARAMETER_NAME">
+			<parameters>
+				<parameter ID="@CASE_INSTANCE_ID" sfwDataType="int" />
+				<parameter ID="@PARAMETER_NAME" sfwDataType="string" />
+			</parameters>
+		</query>
+		<query ID="GetUnprocessedActivityInstances" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * from SGW_BPM_ACTIVITY_INSTANCE WITH(NOLOCK) WHERE PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID AND STATUS_VALUE NOT IN('PROC','APPR','REJT')">
+			<parameters>
+				<parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="UpdateBpmTraceInstActionEndTime" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="UPDATE SGW_BPM_TRACE_INST_ACTN SET END_TIME = @END_TIME where TRACE_INST_ACTN_ID = @TRACE_INST_ACTN_ID and END_TIME &lt; @END_TIME">
+			<parameters>
+				<parameter ID="@TRACE_INST_ACTN_ID" sfwDataType="int" />
+				<parameter ID="@END_TIME" sfwDataType="datetime" />
+			</parameters>
+		</query>
+		<query ID="UpdateChecklistAndAttachments" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT AIC.* FROM SGW_BPM_ACTY_INST_CHECKLIST AIC  &#xD;&#xA;INNER JOIN SGW_BPM_ACTIVITY_CHECKLIST AC &#xD;&#xA;ON AIC.ACTIVITY_CHECKLIST_ID = AC.ACTIVITY_CHECKLIST_ID &#xD;&#xA;WHERE&#xD;&#xA; AC.BPM_EVENT_ID = @BPM_EVENT_ID&#xD;&#xA; AND AIC.ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID&#xD;&#xA; AND (AIC.COMPLETED_IND IS NULL OR AIC.COMPLETED_IND='N')" sfwOracle="SELECT AIC.* FROM SGW_BPM_ACTY_INST_CHECKLIST AIC  &#xD;&#xA;INNER JOIN SGW_BPM_ACTIVITY_CHECKLIST AC &#xD;&#xA;ON AIC.ACTIVITY_CHECKLIST_ID = AC.ACTIVITY_CHECKLIST_ID &#xD;&#xA;WHERE&#xD;&#xA; AC.BPM_EVENT_ID = @BPM_EVENT_ID&#xD;&#xA; AND AIC.ACTIVITY_INSTANCE_ID = @ACTIVITY_INSTANCE_ID&#xD;&#xA; AND (AIC.COMPLETED_IND IS NULL OR AIC.COMPLETED_IND='N')">
+			<parameters>
+				<parameter ID="@BPM_EVENT_ID" sfwDataType="int" />
+				<parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetChecklistRelatedDetailsByReferenceID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT SBPI.PROCESS_INSTANCE_ID, SBPI.CASE_INSTANCE_ID, SBAI.ACTIVITY_INSTANCE_ID FROM SGW_BPM_REQUEST SBR&#xD;&#xA;JOIN SGW_BPM_CASE_INSTANCE SBCI ON SBR.CASE_INSTANCE_ID = SBCI.CASE_INSTANCE_ID&#xD;&#xA;JOIN SGW_BPM_PROCESS_INSTANCE SBPI ON SBPI.CASE_INSTANCE_ID = SBCI.CASE_INSTANCE_ID AND SBPI.STATUS_VALUE ='INPC'&#xD;&#xA;JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID &#xD;&#xA;WHERE &#xD;&#xA;SBCI.STATUS_VALUE ='INPC' AND&#xD;&#xA;SBR.PERSON_ID = @PERSON_ID AND SBR.REFERENCE_ID = @REFERENCE_ID" sfwOracle="SELECT DISTINCT SBPI.PROCESS_INSTANCE_ID, SBPI.CASE_INSTANCE_ID, SBAI.ACTIVITY_INSTANCE_ID FROM SGW_BPM_REQUEST SBR&#xD;&#xA;JOIN SGW_BPM_CASE_INSTANCE SBCI ON SBR.CASE_INSTANCE_ID = SBCI.CASE_INSTANCE_ID&#xD;&#xA;JOIN SGW_BPM_PROCESS_INSTANCE SBPI ON SBPI.CASE_INSTANCE_ID = SBCI.CASE_INSTANCE_ID AND SBPI.STATUS_VALUE ='INPC'&#xD;&#xA;JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID &#xD;&#xA;WHERE &#xD;&#xA;SBCI.STATUS_VALUE ='INPC' AND&#xD;&#xA;SBR.PERSON_ID = @PERSON_ID AND SBR.REFERENCE_ID = @REFERENCE_ID">
+			<parameters>
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+				<parameter ID="@REFERENCE_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		<query ID="GetChecklistRelatedDetailsByPersonID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT SBPI.PROCESS_INSTANCE_ID, SBPI.CASE_INSTANCE_ID, SBAI.ACTIVITY_INSTANCE_ID FROM SGW_BPM_REQUEST SBR&#xD;&#xA;JOIN SGW_BPM_CASE_INSTANCE SBCI ON SBR.CASE_INSTANCE_ID = SBCI.CASE_INSTANCE_ID&#xD;&#xA;JOIN SGW_BPM_PROCESS_INSTANCE SBPI ON SBPI.CASE_INSTANCE_ID = SBCI.CASE_INSTANCE_ID AND SBPI.STATUS_VALUE ='INPC'&#xD;&#xA;JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID &#xD;&#xA;WHERE &#xD;&#xA;SBCI.STATUS_VALUE ='INPC' AND&#xD;&#xA;SBR.PERSON_ID = @PERSON_ID" sfwOracle="SELECT DISTINCT SBPI.PROCESS_INSTANCE_ID, SBPI.CASE_INSTANCE_ID, SBAI.ACTIVITY_INSTANCE_ID FROM SGW_BPM_REQUEST SBR&#xD;&#xA;JOIN SGW_BPM_CASE_INSTANCE SBCI ON SBR.CASE_INSTANCE_ID = SBCI.CASE_INSTANCE_ID&#xD;&#xA;JOIN SGW_BPM_PROCESS_INSTANCE SBPI ON SBPI.CASE_INSTANCE_ID = SBCI.CASE_INSTANCE_ID AND SBPI.STATUS_VALUE ='INPC'&#xD;&#xA;JOIN SGW_BPM_ACTIVITY_INSTANCE SBAI ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID &#xD;&#xA;WHERE &#xD;&#xA;SBCI.STATUS_VALUE ='INPC' AND&#xD;&#xA;SBR.PERSON_ID = @PERSON_ID">
+			<parameters>
+				<parameter ID="@PERSON_ID" sfwDataType="int" />
+			</parameters>
+		</query>
+		 <query ID="GetCaseDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT sbc.CASE_ID,sbc.DESCRIPTION,sbc.Name,sbp.NAME FROM SGW_BPM_CASE sbc WITH(NOLOCK) ,SGW_BPM_PROCESS sbp&#xD;&#xA;WHERE sbc.STATUS_VALUE = 'ACTV' and sbc.Case_Id &gt; 0 &#xD;&#xA;and sbc.CASE_ID=sbp.CASE_ID&#xD;&#xA;and sbc.NAME=@casename">
+      <parameters>
+        <parameter ID="@casename" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetProcessIdFromCaseId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select Process_id from sgw_bpm_process where case_id=@case_id">
+      <parameters>
+        <parameter ID="@case_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckDuplicateInstanceIsRunning" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9;CI.CASE_INSTANCE_ID&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)   &#xD;&#xA;&#x9; INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE C WITH(NOLOCK) &#xD;&#xA;&#x9;  ON CI.CASE_ID = C.CASE_ID AND NAME = @CASE_NAME&#xD;&#xA;WHERE&#xD;&#xA;&#x9; &#xD;&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; CI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+      <parameters>
+        <parameter ID="@CASE_NAME" sfwDataType="string" />
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@REFERENCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CheckCancelActivityDuplicateInstanceIsRunning" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9;CI.CASE_INSTANCE_ID&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)   &#xD;&#xA;&#x9; INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE C WITH(NOLOCK) &#xD;&#xA;&#x9;  ON CI.CASE_ID = C.CASE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; &#xD;&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xD;&#xA;&#x9; CI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+	<commonproperties />
+	<checklist />
+	<initialload />
+	<delete />
+	<validatedelete />
+	<softerror />
+	<groupslist />
+	<harderror />
+	<constraint />
+	<rules />
+	<expressions />
+	<lifecycle />
+	<attributes />
+	<objectmethods />
+	<ExtraFields />
+</entity>

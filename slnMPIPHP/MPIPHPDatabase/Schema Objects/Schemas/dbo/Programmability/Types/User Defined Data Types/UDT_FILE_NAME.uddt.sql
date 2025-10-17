@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_FILE_NAME]
+    FROM VARCHAR (255) NULL;
+

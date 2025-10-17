@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entIapAllocationFactor" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwParentKey="iap_allocation_factor_id" sfwParentKeyValue="icdoIapAllocationFactor.iap_allocation_factor_id" sfwMainCDO="icdoIapAllocationFactor" sfwObjectID="busIapAllocationFactor" sfwTableName="sgt_iap_allocation_factor" sfwView="False" sfwDataObjectID="doIapAllocationFactor">
+  <rules>
+    <rule ID="RuleIfIAPAlloc1FactorModified" sfwMessageId="6002" sfwExpression="(!(this.idecOldQ1Alloc1Factor == 0) &amp;&amp; &#xA;(this.idecOldQ1Alloc1Factor != this.icdoIapAllocationFactor.alloc1_qf1_factor)) || &#xA;(!(this.idecOldQ2Alloc1Factor == 0) &amp;&amp; &#xA;(this.idecOldQ2Alloc1Factor != this.icdoIapAllocationFactor.alloc1_qf2_factor)) || &#xA;(!(this.idecOldQ3Alloc1Factor == 0) &amp;&amp; &#xA;(this.idecOldQ3Alloc1Factor == this.icdoIapAllocationFactor.alloc1_qf3_factor))" sfwObjectBased="True" />
+    <rule ID="RuleIfIAPAllocationExists" sfwMessageId="6001" sfwExpression="(this.IsIAPAllocationFactorAlreadyExistsForTheYear() == True)" sfwObjectBased="True" />
+    <rule ID="RuleIfHistoricFactorsModified" sfwMessageId="6003" sfwExpression="(this.IsHistoricFactorsUpdated() == True)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="RuleIfIAPAllocationExists" sfwMode="All" sfwStatus="Active" />
+    <item ID="RuleIfIAPAlloc1FactorModified" sfwMode="All" sfwStatus="Active" />
+    <item ID="RuleIfHistoricFactorsModified" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_IAP_ALLOCATION_FACTOR(NOLOCK)">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="iap_allocation_factor_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="IapAllocationFactorId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="plan_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="4,0" sfwIsNull="False" ID="PlanYear" sfwIsSequence="False" sfwCaption="Plan Year" />
+    <attribute sfwValue="alloc1_qf1_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc1Qf1Factor" sfwIsSequence="False" sfwCaption="Alloc1 Qf1 Factor" />
+    <attribute sfwValue="alloc1_qf2_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc1Qf2Factor" sfwIsSequence="False" sfwCaption="Alloc1 Qf2 Factor" />
+    <attribute sfwValue="alloc1_qf3_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc1Qf3Factor" sfwIsSequence="False" sfwCaption="Alloc1 Qf3 Factor" />
+    <attribute sfwValue="alloc1_qf4_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc1Qf4Factor" sfwIsSequence="False" sfwCaption="Alloc1 Qf4 Factor" />
+    <attribute sfwValue="alloc2_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc2Factor" sfwIsSequence="False" sfwCaption="Alloc2 Factor" />
+    <attribute sfwValue="alloc2_invst_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc2InvstFactor" sfwIsSequence="False" sfwCaption="Alloc2 Invst Factor" />
+    <attribute sfwValue="alloc2_frft_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc2FrftFactor" sfwIsSequence="False" sfwCaption="Alloc2 Frft Factor" />
+    <attribute sfwValue="alloc3_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc3Factor" sfwIsSequence="False" sfwCaption="Alloc3 Factor" />
+    <attribute sfwValue="alloc4_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc4Factor" sfwIsSequence="False" sfwCaption="Alloc4 Factor" />
+    <attribute sfwValue="alloc4_invst_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc4InvstFactor" sfwIsSequence="False" sfwCaption="Alloc4 Invst Factor" />
+    <attribute sfwValue="alloc4_frft_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc4FrftFactor" sfwIsSequence="False" sfwCaption="Alloc4 Frft Factor" />
+    <attribute sfwValue="alloc5_affl_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc5AfflFactor" sfwIsSequence="False" sfwCaption="Alloc5 Affl Factor" />
+    <attribute sfwValue="alloc5_nonaffl_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc5NonafflFactor" sfwIsSequence="False" sfwCaption="Alloc5 Nonaffl Factor" />
+    <attribute sfwValue="alloc5_both_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="Alloc5BothFactor" sfwIsSequence="False" sfwCaption="Alloc5 Both Factor" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

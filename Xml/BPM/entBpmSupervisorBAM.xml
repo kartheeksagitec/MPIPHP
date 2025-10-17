@@ -1,0 +1,57 @@
+﻿<entity ID="entBpmSupervisorBAM" Text="Supervisor Dashboard" sfwObjectID="busBpmSupervisorBAM" sfwObjectType="NeoSpin.BusinessObjects.busBpmSupervisorBAM, NeoSpinBusinessObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" sfwView="False">
+  <queries>
+    <query ID="GetUserAssignedActivitiesByUserId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; ACTIVITY_INSTANCE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK)&#xD;&#xA;WHERE&#xD;&#xA;&#x9; CHECKED_OUT_USER = @CHECKED_OUT_USER AND&#xD;&#xA;&#x9; AI.STATUS_VALUE IN ('INPC','RESU')" sfwPostgre="SELECT&#xD;&#xA;&#x9; ACTIVITY_INSTANCE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE AI &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CHECKED_OUT_USER = @CHECKED_OUT_USER AND&#xD;&#xA;&#x9; AI.STATUS_VALUE IN ('INPC','RESU')">
+      <parameters />
+    </query>
+    <query ID="GetDashboardStatisticsPerActivityByUserId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; SUM(CASE WHEN SBAI.DUE_DATE &gt; @NOW THEN 1 ELSE 0 END) &#x9;AS OnTime,&#xD;&#xA;&#x9;SUM(CASE WHEN SBAI.DUE_DATE &lt; @NOW THEN 1 ELSE 0 end) &#x9;AS OverDue,&#xD;&#xA;&#x9;SBA.NAME &#x9;AS ACTIVITY_NAME ,&#xD;&#xA;&#x9;LEFT(SBA.NAME, 25) + '...'  + ' (Ver.' + CONVERT(VARCHAR,SBC.VERSION) + ')'  AS SHORT_ACTIVITY_NAME&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SBAI WITH(NOLOCK) &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_ACTIVITY SBA WITH(NOLOCK) ON SBAI.ACTIVITY_ID = SBA.ACTIVITY_ID &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_PROCESS_INSTANCE AS SBPI WITH(NOLOCK) ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID&#xD;&#xA;&#x9; INNER JOIN SGW_BPM_PROCESS AS SBP WITH(NOLOCK) ON SBPI.PROCESS_ID = SBP.PROCESS_ID &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_CASE SBC WITH(NOLOCK) ON SBP.CASE_ID = SBC.CASE_ID&#x9; &#xD;&#xA;&#x9; &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CHECKED_OUT_USER = @USER_ID&#xD;&#xA;&#x9; AND CONVERT(DATETIME,CONVERT(CHAR,SBAI.CREATED_DATE,103),103) BETWEEN  @DATE_FROM AND @DATE_TO AND&#xD;&#xA;&#x9; SBAI.STATUS_VALUE IN ('INPC','RESU') &#xD;&#xA;GROUP&#x9; BY   SBA.NAME, SBC.VERSION" sfwOracle="SELECT&#xD;&#xA;&#x9; SUM(CASE WHEN (TO_CHAR(SBAI.DUE_DATE)) &gt; @NOW THEN 1 ELSE 0 END) &#x9;AS OnTime,&#xD;&#xA;&#x9;SUM(CASE WHEN (TO_CHAR(SBAI.DUE_DATE)) &lt; @NOW THEN 1 ELSE 0 end) &#x9;AS OverDue,&#xD;&#xA;&#x9;SBA.NAME &#x9;AS ACTIVITY_NAME ,&#xD;&#xA;&#x9;substr(SBA.NAME, 20) || '...'  || ' (Ver.' || to_number(SBC.VERSION) || ')'  AS SHORT_ACTIVITY_NAME&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SBAI  &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_ACTIVITY SBA  ON SBAI.ACTIVITY_ID = SBA.ACTIVITY_ID &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_PROCESS_INSTANCE  SBPI  ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID&#xD;&#xA;&#x9; INNER JOIN SGW_BPM_PROCESS  SBP  ON SBPI.PROCESS_ID = SBP.PROCESS_ID &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_CASE SBC  ON SBP.CASE_ID = SBC.CASE_ID&#x9; &#xD;&#xA;&#x9; &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CHECKED_OUT_USER = @USER_ID&#xD;&#xA;&#x9; AND TO_DATE(TO_CHAR(SBAI.CREATED_DATE)) BETWEEN  @DATE_FROM AND @DATE_TO AND&#xD;&#xA;&#x9; SBAI.STATUS_VALUE IN ('INPC','RESU') &#xD;&#xA;GROUP&#x9; BY   SBA.NAME, SBC.VERSION" sfwPostgre="SELECT&#xD;&#xA;SUM(CASE WHEN sbai.due_date &gt; now() THEN 1 ELSE 0 END) AS&#xD;&#xA;ONtime,&#xD;&#xA;SUM(CASE WHEN sbai.due_date &lt; now() THEN 1 ELSE 0 END) AS overdue,&#xD;&#xA;sba.name AS activity_name,&#xD;&#xA;LEFT(sba.name,&#xD;&#xA;20) || '...' || ' (Ver.' || CAST (sbc.version AS VARCHAR(30)) || ')' AS short_activity_name&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SBAI  &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_ACTIVITY SBA  ON SBAI.ACTIVITY_ID = SBA.ACTIVITY_ID &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_PROCESS_INSTANCE  SBPI  ON SBAI.PROCESS_INSTANCE_ID = SBPI.PROCESS_INSTANCE_ID&#xD;&#xA;&#x9; INNER JOIN SGW_BPM_PROCESS  SBP  ON SBPI.PROCESS_ID = SBP.PROCESS_ID &#xD;&#xA;&#x9; INNER JOIN SGW_BPM_CASE SBC  ON SBP.CASE_ID = SBC.CASE_ID&#x9; &#xD;&#xA;&#x9; &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CHECKED_OUT_USER = 'rahul.mane'&#xD;&#xA;&#x9; AND SBAI.CREATED_DATE BETWEEN  @DATE_FROM AND @DATE_TO AND&#xD;&#xA;&#x9; SBAI.STATUS_VALUE IN ('INPC','RESU') &#xD;&#xA;GROUP&#x9; BY   SBA.NAME, SBC.VERSION">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+        <parameter ID="@NOW" sfwDataType="DateTime" />
+        <parameter ID="@DATE_FROM" sfwDataType="DateTime" />
+        <parameter ID="@DATE_TO" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetCountOfActivitiesForSupervisor" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DECLARE @USER_SERIAL_ID AS INT = (SELECT USER_SERIAL_ID FROM SGS_USER WHERE USER_ID = @USER_ID)&#xD;&#xA;&#xD;&#xA;SELECT TOP 5&#xD;&#xA;&#x9; COUNT(*) AS ACTVCOUNT,&#xD;&#xA;&#x9;ISNULL(  user1.user_id,'UnAssigned') as CHECKED_OUT_USER&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SBAI WITH(NOLOCK) INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY SA WITH(NOLOCK)&#xD;&#xA;&#x9; ON SBAI.ACTIVITY_ID = SA.ACTIVITY_ID  &#xD;&#xA;&#x9; inner join sgs_user user1 on user1.user_id=sbai.CHECKED_OUT_USER and user1.USER_ID=@USER_ID&#xD;&#xA;&#x9;&#xD;&#xA;WHERE&#x9; &#xD;&#xA;&#x9; SBAI.STATUS_VALUE IN ('INPC','RESU')  AND CONVERT(DATETIME,CONVERT(CHAR,SBAI.START_DATE,103),103) BETWEEN  @DATE_FROM AND @DATE_TO &#xD;&#xA;&#x9; AND  CHECKED_OUT_USER = @USER_ID&#xD;&#xA;GROUP&#x9; BY   user1.user_id" sfwOracle="SELECT&#xA;&#x9; COUNT(*) AS ACTVCOUNT,&#xA;&#x9;COALESCE(SBAI.CHECKED_OUT_USER,&#xA;&#x9;'UnAssigned') AS CHECKED_OUT_USER &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SBAI INNER   &#xA;&#x9; JOIN SGW_BPM_ACTIVITY SA&#xA;&#x9; ON SBAI.ACTIVITY_ID = SA.ACTIVITY_ID  &#xA;WHERE&#xA;&#x9;  SBAI.STATUS_VALUE IN ('INPC','RESU')  AND&#xA;&#x9; TO_DATE(TO_CHAR(SBAI.START_DATE)) BETWEEN  @DATE_FROM AND&#xA;&#x9; @DATE_TO  AND&#xA;&#x9; (CHECKED_OUT_USER IN (SELECT&#xA;&#x9; USER_ID &#xA;FROM&#xA;&#x9; SGS_USER &#xA;WHERE&#xA;&#x9; SUPERVISOR_ID = 9) OR CHECKED_OUT_USER = @USER_ID) &#xA;GROUP BY    SBAI.CHECKED_OUT_USER fetch next 5 rows&#xA;&#x9; ONly" sfwPostgre="SELECT&#xD;&#xA;&#x9; COUNT(*) AS ACTVCOUNT,&#xD;&#xA;&#x9;COALESCE(SBAI.CHECKED_OUT_USER,&#xD;&#xA;&#x9;'UnAssigned') AS CHECKED_OUT_USER &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE SBAI INNER   &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY SA&#xD;&#xA;&#x9; ON SBAI.ACTIVITY_ID = SA.ACTIVITY_ID  &#xD;&#xA;WHERE&#xD;&#xA;&#x9;  SBAI.STATUS_VALUE IN ('INPC','RESU')  AND&#xD;&#xA;&#x9; SBAI.START_DATE BETWEEN  @DATE_FROM AND&#xD;&#xA;&#x9; @DATE_TO  AND&#xD;&#xA;&#x9; (CHECKED_OUT_USER IN (SELECT&#xD;&#xA;&#x9; USER_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER &#xD;&#xA;WHERE&#xD;&#xA;&#x9; SUPERVISOR_ID = 9) OR CHECKED_OUT_USER = @USER_ID) &#xD;&#xA;GROUP BY    SBAI.CHECKED_OUT_USER fetch next 5 rows&#xD;&#xA;&#x9; ONly">
+      <parameters>
+        <parameter ID="@DATE_FROM" sfwDataType="DateTime" />
+        <parameter ID="@DATE_TO" sfwDataType="DateTime" />
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint>
+    <item sfwObjectBased="True" sfwFieldName="IdtDateFrom" sfwDataType="datetime" sfwDisplayName="Date From is greater than Date To" sfwOperator="LessThanEqual" sfwRelatedField="IdtDateTo" />
+  </constraint>
+  <rules />
+  <ExtraFields />
+  <methods>
+    <method sfwMethodType="Load" ID="Group1" sfwMode="All">
+      <item ID="LoadDashboardData" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+  </methods>
+  <lifecycle />
+  <attributes>
+    <attribute ID="ActivityInstanceId" sfwType="Column" sfwValue="activity_instance_id" sfwIsNull="False" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSelectedUserId" sfwValue="istrSelectedUserId" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateFrom" sfwValue="idtDateFrom" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateTo" sfwValue="idtDateTo" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrUserId" sfwValue="istrUserId" />
+    <attribute sfwType="Collection" sfwEntity="entBpmDashboardStatistics" ID="lstChartSelectedUserDashboardStatistics" sfwValue="iclbChartSelectedUserDashboardStatistics" />
+    <attribute sfwType="Collection" sfwEntity="entBpmDashboardStatistics" ID="lstViewSelectedUserDashboardStatistics" sfwValue="iclbViewSelectedUserDashboardStatistics" />
+    <attribute sfwType="Collection" sfwEntity="entBpmUserWorkStatistics" ID="lstChartUserWorkStatistics" sfwValue="iclbChartUserWorkStatistics" />
+    <attribute sfwType="Collection" sfwEntity="entBpmUserWorkStatistics" ID="lstViewUserWorkStatistics" sfwValue="iclbViewUserWorkStatistics" />
+    <attribute sfwType="Collection" sfwEntity="entBpmActivityCount" ID="lstChartUserActivity" sfwValue="iclbChartUserActivity" />
+    <attribute sfwType="Collection" sfwEntity="entBpmActivityCount" ID="lstViewUserActivity" sfwValue="iclbViewUserActivity" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadDashboardData" sfwReturnType="ArrayList" />
+  </objectmethods>
+</entity>

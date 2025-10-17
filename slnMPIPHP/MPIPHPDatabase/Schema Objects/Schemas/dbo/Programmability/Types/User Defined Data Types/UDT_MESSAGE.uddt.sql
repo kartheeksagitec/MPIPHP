@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_MESSAGE]
+    FROM VARCHAR (200) NULL;
+

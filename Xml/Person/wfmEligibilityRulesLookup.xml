@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmEligibilityRulesLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvEligibilityRules" sfwResource="200 " sfwType="Lookup" sfwTitle="Eligibility Rules Lookup" version="3.5" sfwEntity="entBenefitProvisionEligibility" sfwGridCollection="busBenefitProvisionEligibilityLookup.iclbBenefitProvisionEligibility">
+  <initialload>
+    <query ID="cdoBenefitProvisionEligibility" sfwQueryRef="entBenefitProvisionEligibility.Lookup" sfwMethodName="LoadBenefitProvisionEligibilitys" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtBenefitProvisionEligibilityId" ID="capBenefitProvisionEligibilityId" Text="Benefit Provision Eligibility ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtBenefitProvisionEligibilityId" sfwDataField="benefit_provision_eligibility_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoBenefitProvisionEligibility" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtBenefitProvisionId" ID="capBenefitProvisionId" Text="Benefit Provision ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtBenefitProvisionId" sfwDataField="benefit_provision_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoBenefitProvisionEligibility" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmEligibilityRulesMaintenance" sfwMethodName="btnNew_Click" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmEligibilityRulesMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintbenefitprovisioneligibilityid=BenefitProvisionEligibilityId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Benefit Provision Eligibility ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitProvisionEligibilityId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Provision ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BenefitProvisionId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Eligibility Rule ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EligibilityRuleId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Eligibilty Rule">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EligibiltyRuleDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

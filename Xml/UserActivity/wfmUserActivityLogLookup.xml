@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmUserActivityLogLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvUserActivity" sfwResource="207 " sfwType="Lookup" sfwTitle="Access Trace" version="3.5" sfwEntity="entUserActivityLog" sfwGridCollection="busUserActivityLogLookup.iclbUserActivityLog">
+  <initialload>
+    <query ID="cdoUserActivityLog" sfwQueryRef="entUserActivityLog.LookUp" sfwMethodName="LoadUserActivityLogs" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtUserId" ID="capUserId" Text="User ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtUserId" sfwDataField="logged_user_id" sfwOperator="like" sfwQueryID="cdoUserActivityLog" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtIpAddress" ID="capIpAddress" Text="Ip Address : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIpAddress" sfwDataField="ip_address" sfwOperator="like" sfwQueryID="cdoUserActivityLog" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capLoginTimeFrom" Text="Login Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtLoginTimeFrom" sfwDataField="login_time" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoUserActivityLog" sfwRelatedControl="txtLoginTimeTo" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtLoginTimeFrom" ErrorMessage="Login Time From must be in mm/dd/yyyy format." ID="valLoginTimeFrom" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capLoginTimeTo" Text="Login Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtLoginTimeTo" sfwDataField="login_time" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoUserActivityLog" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtLoginTimeTo" ErrorMessage="Login Time To must be in mm/dd/yyyy format." ID="valLoginTimeTo" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtLoginTimeFrom" ControlToValidate="txtLoginTimeTo" ErrorMessage="Login Time To cannot be less than Login Time From." ID="valLoginTimeRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedTimeFrom" Text="Time From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedTimeFrom" sfwDataField="convert(varchar(10), login_time, 108) " sfwDataFormat="{0:HH:mm:ss}" sfwOperator="between" sfwQueryID="cdoUserActivityLog" sfwRelatedControl="txtCreatedTimeTo" ToolTip="Process Log Start Time (e.g hh:mm)" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedTimeTo" Text="Time To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedTimeTo" sfwDataField="convert(varchar(10), login_time, 108) " sfwDataFormat="{0:HH:mm:ss}" sfwOperator="between" sfwQueryID="cdoUserActivityLog" ToolTip="Process Log End Time (e.g hh:mm)" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnExportToExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvUserActivityLog" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmUserActivityLogMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintUserActivityLogId=UserActivityLogId;aintUserActivityLogDetailId=#0" sfwRelatedControl="grvUserActivityLog" Text="Open" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvUserActivityLog" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Logged User ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LoggedUserId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UserId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Session ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="SessionId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Login Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:G}" sfwEntityField="LoginTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Logoff Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:G}" sfwEntityField="LogoffTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Ip Address">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IpAddress" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mac Address">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MacAddress" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User Activity Log ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UserActivityLogId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Count">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityCount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

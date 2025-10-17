@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmSystemPathLookup" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207" sfwType="Lookup" sfwTitle="System Paths  Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Create System Path=Create System Path.htm;Update System Path=Update System Path.htm;Delete System Path=Delete System Path.htm" sfwEntity="entSystemPaths" sfwGridCollection="busSystemPathsLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoSystemPaths" sfwQueryRef="entSystemPaths.LookUp" sfwMethodName="LoadPaths" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPathCode" Text="Path Code :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtuser_id" sfwDataField="path_code" sfwQueryID="cdoSystemPaths" Width="270px" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPath" Text="Path :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtlast_name" sfwDataField="path_value" sfwQueryID="cdoSystemPaths" Width="270px" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capPathDescription" Text="Path Description :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtfirst_name" sfwDataField="path_description" sfwQueryID="cdoSystemPaths" Width="270px" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearchCriteriaRequired_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Result">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmSystemPathMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="path_code=txtuser_id;path_value=txtlast_name" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmSystemPathMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPathId=PathId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwNavigationParameter="PathId" sfwRelatedControl="dgrResult" Text="Delete" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Path ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="PathId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Path Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PathCode" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Path">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PathValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Path Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PathDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

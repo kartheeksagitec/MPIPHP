@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmRecalculateIAPAllocationDetailMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvIAPAllocation" sfwTitle="Recalculate IAPAllocation Detail Maintenance" sfwType="Maintenance" sfwResource="200" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entIAPAllocationDetailPersonOverview">
+  <initialload>
+    <callmethods sfwMethodName="LoadAndRecalculateIAPAllocationDetail" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnPostAllocations" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btn_PostAllocations" Text="Post Allocations" sfwResource="103" />
+                <sfwButton ID="btnRefreshAllocations" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btn_RefreshAllocations" Text="Refresh Allocations" />
+                <sfwButton ID="btnCancel" sfwActiveForm="wfmIAPAllocationDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=PersonId" sfwObjectMethod="btnReturn_Click" Text="Cancel" sfwResource="310" sfwSecurityLevel="2" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlPersonDetail" sfwCaption="Person Details">
+          <sfwTable ID="tblNewPage" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="btnMpiPersonId" ID="capMpiPersonId" Text="MPID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMpiPersonId" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=PersonId" sfwEntityField="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrLast4DigitsofSSN" ID="capIstrLast4DigitsofSSN" Text="Last 4Digits of SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrLast4DigitsofSSN" sfwEntityField="IstrLast4DigitsofSSN" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIdtDateofBirth" ID="capIdtDateofBirth" Text="Date of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtDateofBirth" sfwDataFormat="{0:d}" sfwEntityField="IdtDateofBirth" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPersonId" SkinID="textBoxDisplayStyleNone" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtLintPersonAccountId" SkinID="textBoxDisplayStyleNone" sfwEntityField="LintPersonAccountId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlT79" sfwCaption="Other Details">
+          <sfwTable ID="tblT79Page" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn VerticalAlign="Middle" HorizontalAlign="Left">
+                <sfwLabel AssociatedControlID="txtIdecThru79Hours" ID="capIdecThru79Hours" Text="Thru79 Hours : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Middle" HorizontalAlign="Left">
+                <sfwTextBox ID="txtIdecThru79Hours" sfwReadOnlyRule="Enable-T79Textbox" Wrap="False" sfwDataType="Decimal" sfwEntityField="IdecThru79Hours" sfwDataFormat="{0:N2}" />
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Middle" HorizontalAlign="Left">
+                <sfwButton ID="btnApproveThru79Hours" Text="Approve" sfwObjectMethod="btn_ApproveThru79Hours" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwVisibleRule="Visibility-T79ApproveButton" sfwEntityField="IdecThru79Hours" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblRecalculateRule1" Text="Recalculate with Rule 1 : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="idRecalculateRule1" sfwEntityField="objPersonAccount.RecalculateRule1Flag" sfwDefaultValue="N" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Recalculate IAP Allocation Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn ColumnSpan="20">
+                <sfwGridView AllowSorting="True" AutoGenerateColumns="False" ID="grvIAPAllocationDetailPersonOverview" PageSize="100" sfwTwoWayBinding="True" AllowEditing="True" sfwEntityField="lstIAPAllocationDetailPersonOverview" sfwGridEntity="entIapAllocationDetailCalculation">
+                  <Columns>
+                    <TemplateField HeaderText="Source">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrSource" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="SSN" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrSSN" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Year" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ComputationalYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="YTD Hours">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Ytdhours" sfwDataFormat="{0:N1}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="$.305 Hours">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IdecYTDHoursA2" sfwDataFormat="{0:N1}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 1" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 2" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc2" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 2 Invt" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc2Invt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 2 Frft" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc2Frft" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 3" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc3" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 4" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc4" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 4 Invt" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc4Invt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 4 Frft" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc4Frft" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Compute Alloc 5" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwDefaultValue="N" sfwVisibleRule="VisibleRule-Alloc5CheckBox" sfwEntityField="IstrCalculateAlloc5" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 5" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc5" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="             Total" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IdecTotal" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="10">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvTotalIAPAllocationDetailPersonOverview" sfwAllowNew="True" sfwTwoWayBinding="True" AllowEditing="True" sfwEntityField="lstTotalIAPAllocationDetailPersonOverview" sfwGridEntity="entIapAllocationDetailCalculation">
+                  <Columns>
+                    <TemplateField HeaderText="Source">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrSource" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 1" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 2" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc2" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 2 Invt" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc2Invt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 2 Frft" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc2Frft" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 3" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc3" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 4" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc4" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 4 Invt" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc4Invt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 4 Frft" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc4Frft" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation 5" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="Alloc5" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Total" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IdecTotal" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Overridden Total">
+                      <ItemTemplate>
+                        <sfwTextBox sfwDataFormat="{0:C}" sfwEntityField="IdecOverrideTotal" ID="txtOverridenTotal_grvTotalIAPAllocationDetailPersonOverview" sfwVisibleRule="VisibleRule-textbox" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel CssClass="textBoxDisplayStyleNone" ID="lblPersonId" SkinID="textBoxDisplayStyleNone" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPersonAccount" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstIAPAllocationDetailPersonOverview" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstTotalIAPAllocationDetailPersonOverview" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

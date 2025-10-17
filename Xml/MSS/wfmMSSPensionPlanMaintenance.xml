@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMSSPensionPlanMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvMPIPHPMSS" sfwResource="790" sfwType="Maintenance" sfwTitle="Pension Plan Maintenance" version="3.5" sfwEntity="entPersonOverview">
+  <initialload>
+    <callmethods sfwMethodName="FindPersonPlan" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeading" sfwCollapsible="False">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn CssClass="NaviHeadtxt15Size">
+                <sfwLiteral ID="ltrLiteral" Text="Plan Summary" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Plan Details">
+          <sfwTable ID="tblPlanDetails">
+            <sfwRow>
+              <sfwColumn ColumnSpan="6">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvIclcdoPersonAccountOverview" sfwObjectID="busPersonOverview.iclcdoPersonAccountOverview" sfwEntityField="lstPersonOverviewAccount">
+                  <Columns>
+                    <TemplateField HeaderText="Plan" SortExpression="istrplan" ItemStyle.VerticalAlign="Top" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="istrplan" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Status" SortExpression="status_description" ItemStyle.HorizontalAlign="Left" HeaderStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="status_description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Pension Hours" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblistrTotalHours" sfwDataField="istrTotalHours" sfwDataFormat="{0:#,0.0;(0:#,0.0)}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Qualified Years" SortExpression="istrTotalQualifiedYears" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="istrTotalQualifiedYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Pension Credit" HeaderStyle.HorizontalAlign="Right" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblistrPensionCredit" sfwDataField="istrPensionCredit" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Vested" SortExpression="istrVested" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="istrVested" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Vested Date" SortExpression="dtVestedDate" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="dtVestedDate" sfwDataFormat="{0:d}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Health Hours" HeaderStyle.HorizontalAlign="Right" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblistrHealthHours" sfwDataField="istrHealthHoursPO" sfwDataFormat="{0:#,0.0;(0:#,0.0)}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Health Years" SortExpression="istrTotalVestedYears" HeaderStyle.HorizontalAlign="Center" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="istrTotalHealthYearsPO" ID="lbliintTotalHealthYears" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Monthly benefit" HeaderStyle.HorizontalAlign="Right" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblTotalAccruedBenefit" sfwDataField="idecTotalAccruedBenefit" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="IAP Balance (Sp. Acct)" HeaderStyle.HorizontalAlign="Right" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblSpeclAccount" sfwDataField="idecSpecialAccountBalance" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Allocation As Of Yr End" HeaderStyle.HorizontalAlign="Right" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblistrAllocationEndYear" sfwDataField="istrAllocationEndYear" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Summary Plan Description" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwImageButton sfwMethodName="btn_OpenMssForms" sfwNavigationParameter="istrPlanCode" SkinID="PDF_ICON" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlActiveIncrease" sfwCaption="Active Increase" sfwVisibleRule="Visible-Rule-ActiveIncreaseMessageMSS-Temporary">
+          <sfwTable ID="tblNewPage" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn ColumnSpan="6" CssClass="AlignLeftForMss">
+                <sfwLabel ID="lblLabel" sfwWrap="True" Text="&lt;i&gt;The Accrued Benefit estimate provided now includes the 10% pension increase approved by the MPI Board of Directors. Per terms of the Trust Agreement, Credited Hours from the most recent break in service (if any) through the 2016 Computation Year are subject to the new rate. Credited Hours in 2017 reflect the previous rate (before the increase).&lt;/i&gt;" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

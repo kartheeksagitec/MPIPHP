@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_RATE]
+    FROM NUMERIC (7, 6) NULL;
+

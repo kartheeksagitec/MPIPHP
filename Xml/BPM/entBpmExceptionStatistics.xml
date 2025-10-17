@@ -1,0 +1,52 @@
+﻿<entity ID="entBpmExceptionStatistics" Text="Supervisor Dashboard" sfwObjectID="busBpmExceptionStatistics" sfwView="False">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint />
+  <rules />
+  <ExtraFields>
+    <ExtraField ID="Runway" Value="Neobase" />
+  </ExtraFields>
+  <lifecycle />
+  <attributes>
+    <attribute ID="NoOfExceptions" sfwDataType="int" sfwPrivate="False" sfwValue="iintNoOfExceptions" sfwType="Property" />
+    <attribute ID="ProcessName" sfwDataType="string" sfwPrivate="False" sfwValue="istrProcessName" sfwType="Property" />
+    <attribute ID="ExceptionType" sfwDataType="string" sfwPrivate="False" sfwValue="istrExceptionType" sfwType="Property" />
+    <attribute ID="Status" sfwDataType="string" sfwPrivate="False" sfwValue="istrStatus" sfwType="Property" />
+    <attribute ID="ProcessId" sfwDataType="string" sfwPrivate="False" sfwValue="istrProcessId" sfwType="Property" />
+  </attributes>
+  <queries>
+    <query ID="DefaultStatistics" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select Count(ID) NoOfExceptions, P.NAME,P.PROCESS_ID,EX.EXCEPTION_TYPE from SGW_BPM_EXCEPTION_DETAILS  EX WITH(NOLOCK) &#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK) WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+      <mappedcolumns>
+        <column ID="noofexceptions" sfwEntityField="NoOfExceptions" />
+        <column ID="name" sfwEntityField="ProcessName" />
+        <column ID="exception_type" sfwEntityField="ExceptionType" />
+      </mappedcolumns>
+    </query>
+    <query ID="ByProcessName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select Count(ID) NoOfExceptions, P.NAME,P.PROCESS_ID from SGW_BPM_EXCEPTION_DETAILS  EX WITH(NOLOCK) &#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK) WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="ByExceptionType" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select Count(ID) NoOfExceptions, EX.EXCEPTION_TYPE from SGW_BPM_EXCEPTION_DETAILS  EX WITH(NOLOCK) &#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK) WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="ByStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select Count(ID) NoOfExceptions, EX.STATUS_VALUE from SGW_BPM_EXCEPTION_DETAILS  EX WITH(NOLOCK) &#xD;&#xA;CROSS APPLY OPENJSON('[&quot;' + replace(EX.roles,',','&quot;,&quot;') +'&quot;]', '$') RoleInfo&#xD;&#xA;inner join SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK) ON EX.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xD;&#xA;inner join SGW_BPM_PROCESS_INSTANCE PI WITH(NOLOCK) on AI.PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID&#xD;&#xA;INNER JOIN SGW_BPM_PROCESS P WITH(NOLOCK) on PI.PROCESS_ID = P.PROCESS_ID&#xD;&#xA;INNER JOIN SGS_ROLES R WITH(NOLOCK) ON RoleInfo.value = r.ROLE_ID&#xD;&#xA;INNER JOIN SGS_USER_ROLES UR WITH(NOLOCK) ON UR.ROLE_ID = R.ROLE_ID&#xD;&#xA;INNER JOIN (SELECT USER_SERIAL_ID from SGS_USER WITH(NOLOCK) WHERE USER_ID=@USER_ID) USR ON USR.USER_SERIAL_ID = UR.USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <methods />
+  <objectmethods />
+</entity>

@@ -1,0 +1,357 @@
+﻿<form ID="wfmActLogInstanceActionMaintenance" sfwType="Maintenance" sfwEntity="entActLogInstActn" sfwTitle="Business Transaction Details" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmActivityLogInstanceActionLookup">
+  <initialload>
+    <callmethods sfwMode="Update" sfwMethodName="FindActLogInstanceAction" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="ActivityLogInstanceAction Details" sfwCaption="Business Transaction ">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capAppName" Text="Application : " AssociatedControlID="lblAppName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblAppName" sfwEntityField="objActLogInst.objActLogApp.AppName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActorName" Text="User ID : " AssociatedControlID="lblActorName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActorName" sfwEntityField="objActLogInst.ActorName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActLogUid" Text="Session ID : " AssociatedControlID="btnActLogUid" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnActLogUid" sfwMethodName="btnOpen_Click" Text="Open" sfwEntityField="objActLogInst.ActLogUid" sfwActiveForm="wfmActLogInstanceMaintenance" sfwNavigationParameter="aintPrimaryKey=ActLogInstId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActionName" Text="Transaction : " AssociatedControlID="lblActionName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActionName" sfwEntityField="ActionName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActionSource" Text="Navigation From : " AssociatedControlID="lblActionSource" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActionSource" sfwEntityField="ActionSource" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActionTarget" Text="Navigation To : " AssociatedControlID="lblActionTarget" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActionTarget" sfwEntityField="ActionTarget" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capTimeInMs" Text="Response Time (ms) : " AssociatedControlID="lblTimeInMs" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblTimeInMs" sfwEntityField="TimeInMs" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStartTime" Text="Start Time : " AssociatedControlID="lblStartTime" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStartTime" sfwEntityField="StartTime" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel Text="Webserver Time (ms) :" sfwIsCaption="True" ID="capLabel2" AssociatedControlID="lblTimeInMsTotalAppServerTime" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblTimeInMsTotalAppServerTime" sfwEntityField="WebServerTime" sfwTwoWayBinding="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capEndTime" Text="End Time : " AssociatedControlID="lblEndTime" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEndTime" sfwEntityField="EndTime" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel Text="App. Server Time (ms) :" sfwIsCaption="True" ID="capLabel" AssociatedControlID="lblIintTotalAppServerTime" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIintTotalAppServerTime" sfwEntityField="TotalAppServerTime" sfwTwoWayBinding="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Transaction Id :" sfwIsCaption="True" ID="capLabel3" AssociatedControlID="lblTransactionId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblTransactionId" sfwEntityField="TransactionId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel Text="Database Time (ms) :" sfwIsCaption="True" ID="capLabel1" AssociatedControlID="lblIintTotalQueryTime" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIintTotalQueryTime" sfwEntityField="TotalQueryTime" sfwTwoWayBinding="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Total Queries :" sfwIsCaption="True" ID="capLabel4" AssociatedControlID="lblIintTotalQueriesExecuted" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIintTotalQueriesExecuted" sfwEntityField="TotalQueriesExecuted" sfwTwoWayBinding="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel Text="ID :" sfwIsCaption="True" ID="lblLabel" AssociatedControlID="lblActLogInstActnId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActLogInstActnId" sfwEntityField="ActLogInstActnId" />
+                <sfwLabel ID="lblActLogInstId" sfwEntityField="ActLogInstId" Visible="False" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActionResult" Text="Display Message : " AssociatedControlID="lblActionResult" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3" Width="85%">
+                <sfwLabel ID="lblActionResult" sfwEntityField="ActionResult" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capParameterDetails" Text="Parameter Details : " AssociatedControlID="jdataParameterDetails1" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwJSONData ID="jdataParameterDetails1" sfwEntityField="ParameterDetails" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlInstanceActionDetails" sfwCaption="Business Transaction Details" CssClass="fullWidth">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctInstanceActionDetails">
+                  <Tabs>
+                    <sfwTabSheet ID="tshInstanceActionQuery" HeaderText="Queries Executed">
+                      <sfwTable ID="tblActionQuery">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwDialogPanel ID="pnlQueryParameters" sfwCaption="Query Parameters" Width="200px">
+                              <sfwTable ID="tblNewPage1">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwJSONData ID="jsdQueryParameters" sfwEntityField="ParameterDetails" sfwColumnCount="1" />
+                                  </sfwColumn>
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwDialogPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnOpenPopupDialogClick" sfwMethodName="btnOpenPopupDialog_Click" Text="OpenPopupDialog_Click" sfwRelatedControl="grvLstInstanceActionQuery" sfwRelatedDialogPanel="pnlQueryParameters" Visible="False" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvLstInstanceActionQuery" sfwEntityField="lstInstanceActionQuery" AllowSorting="True" sfwCommonFilterBox="True" AllowPaging="True">
+                              <Columns>
+                                <TemplateField HeaderText="Query">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblTextBox" sfwEntityField="Query" sfwTwoWayBinding="True" sfwDisplayLength="100" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TimeInMs" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="ParameterDetails" HeaderText="Parameters " ItemStyle.HorizontalAlign="Center">
+                                  <ItemTemplate>
+                                    <sfwLabel ID="lblParamDetails" sfwLinkable="True" Text="..." sfwRelatedControl="btnOpenPopupDialogClick" sfwVisibleRule="Visible Rule - Show Parameter" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Result">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Result" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StartTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EndTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Query Id">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="QueryId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActLogInstQueryId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshInstanceActionStep" HeaderText="App. Server Calls">
+                      <sfwTable ID="tblActionStep">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwDialogPanel ID="pnlServerCallParams" sfwCaption="Parameter Details">
+                              <sfwTable ID="tblNewPage2">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwJSONData ID="jdataParameterDetails" sfwEntityField="ParameterDetails" />
+                                  </sfwColumn>
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwDialogPanel>
+                            <sfwButton ID="btnOpenPopupDialogStepParam" sfwMethodName="btnOpenPopupDialog_Click" Text="OpenPopupDialog_Click" sfwRelatedControl="grvLstInstanceActionStep" sfwRelatedDialogPanel="pnlServerCallParams" Visible="False" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvLstInstanceActionStep" sfwEntityField="lstInstanceActionStep" AllowSorting="True" AllowPaging="True">
+                              <Columns>
+                                <TemplateField HeaderText="Call">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StepName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TimeInMs" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Parameter Details">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwRelatedControl="btnOpenPopupDialogStepParam" sfwLinkable="True" Text="..." sfwVisibleRule="Visible Rule - Show Parameters" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StartTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EndTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Total Queries Executed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TotalQueriesExecuted" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Total Queries Time In Ms">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TotalQueriesTimeInMs" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Return Size">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ReturnSize" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Error Message">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ErrorMessage" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActLogInstActnStepId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshInstanceActionRule" HeaderText="Rules Executed">
+                      <sfwTable ID="tblActionRule">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvLstInstanceActionRule" sfwEntityField="lstInstanceActionRule" AllowSorting="True" AllowPaging="True" sfwLoadWhenRequired="True" sfwXMLLoadMethod="LoadRules">
+                              <Columns>
+                                <TemplateField HeaderText="Rule Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="RuleName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Time In Ms">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TimeInMs" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Result">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Result" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StartTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EndTime" sfwDataFormat="{0:D HH:mm:ss.fff}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActLogInstRuleId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails>
+    <entityfield ID="objActLogInst.objActLogApp" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objActLogInst" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstInstanceActionQuery" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstInstanceActionStep" sfwUpdateAutoLoad="True" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

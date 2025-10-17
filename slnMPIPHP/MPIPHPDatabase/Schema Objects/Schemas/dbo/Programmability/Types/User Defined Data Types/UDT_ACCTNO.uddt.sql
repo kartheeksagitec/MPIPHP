@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_ACCTNO]
+    FROM VARCHAR (20) NULL;
+

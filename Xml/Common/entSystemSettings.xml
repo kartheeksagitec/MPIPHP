@@ -1,0 +1,43 @@
+﻿<entity ID="entSystemSettings" sfwView="False" sfwActive="True" sfwMainCDO="icdoSystemSettings" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_system_settings" sfwObjectID="busSystemSettings" sfwDataObjectID="doSystemSettings">
+  <queries>
+    <query ID="LookUp" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgs_system_settings" sfwDataType="EntityTable" sfwQueryType="SelectQuery">
+      <parameters />
+      <mappedcolumns />
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindSystemSettings" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item ID="icdoSystemSettings" sfwParameter="aintPrimaryKey" sfwItemType="MainCDO" sfwMethodName="Other" />
+    </method>
+  </methods>
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror>
+    <item ID="Rule - Setting Name Is Required" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Setting Type Is Required" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Setting Value Is Required" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <constraint />
+  <rules>
+    <rule ID="Rule - Setting Name Is Required" sfwRuleType="Validation" sfwExpression="string.IsNullOrEmpty(this.icdoSystemSettings.setting_name)" sfwObjectBased="True" sfwMessage="Setting Name is Required." />
+    <rule ID="Rule - Setting Type Is Required" sfwRuleType="Validation" sfwExpression="string.IsNullOrEmpty(this.icdoSystemSettings.setting_type)" sfwObjectBased="True" sfwMessage="Setting Type Is Required." />
+    <rule ID="Rule - Setting Value Is Required" sfwRuleType="Validation" sfwExpression="string.IsNullOrEmpty(this.icdoSystemSettings.setting_value)" sfwObjectBased="True" sfwMessage="Setting Value Is Required." />
+  </rules>
+  <ExtraFields />
+  <lifecycle />
+  <attributes>
+    <attribute sfwValue="system_setting_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="SystemSettingId" sfwCaption="ID" />
+    <attribute sfwValue="setting_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="SettingName" sfwCaption="Setting Name" />
+    <attribute sfwValue="setting_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="SettingType" sfwCaption="Setting Type" />
+    <attribute sfwValue="setting_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="SettingValue" sfwCaption="Setting Value" />
+    <attribute sfwValue="encrypted_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="char" sfwLength="1" sfwIsNull="True" ID="EncryptedFlag" sfwCaption="Encrypted Flag" />
+    <attribute sfwValue="refreshable" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="Refreshable" sfwCaption="Refreshable" />
+  </attributes>
+  <objectmethods />
+</entity>

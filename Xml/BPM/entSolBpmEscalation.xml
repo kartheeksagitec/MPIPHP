@@ -1,0 +1,42 @@
+﻿<entity ID="entSolBpmEscalation" sfwMainCDO="icdoBpmEscalation" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busSolBpmEscalation" sfwParentEntity="entBpmEscalation">
+  <queries />
+  <attributes />
+  <validatedelete />
+  <delete />
+  <methods />
+  <constraint />
+  <rules>
+    <rule ID="Rule - Check if Escalation With Same Name Exists - New Mode" sfwRuleType="Validation" sfwExpression="!(this.icdoBpmEscalation.escalation_name == null || this.icdoBpmEscalation.escalation_name == &quot;&quot;)&#xD;&#xA;&amp;&amp;&#xD;&#xA;(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entBpmEscalation.CheckIfEscalationWithNameExists&quot;, this.icdoBpmEscalation.escalation_name)  &gt; 0)" sfwMessageId="20007024" sfwObjectBased="True" />
+    <rule ID="Rule - Case Not Selected" sfwRuleType="Validation" sfwExpression="(this.icdoBpmEscalation.case_id == 0)" sfwMessageId="20007017" sfwObjectBased="True" sfwBRID="FS007-ACT0019-UI0002-BR0002" />
+    <rule ID="Rule - Activity Not Selected" sfwRuleType="Validation" sfwExpression="(this.icdoBpmEscalation.activity_id == 0)" sfwMessageId="20007018" sfwObjectBased="True" sfwBRID="FS007-ACT0019-UI0002-BR0002" />
+    <rule ID="Rule - Lapse Minutes Not Entered" sfwRuleType="Validation" sfwExpression="((this.icdoBpmEscalation.lapse_type_value == &quot;LTBE&quot; || this.icdoBpmEscalation.lapse_type_value == &quot;LTAE&quot; || this.icdoBpmEscalation.lapse_type_value == &quot;LTNA&quot;)&#xD;&#xA;&amp;&amp; (this.icdoBpmEscalation.lapse_time_in_minutes == 0))" sfwMessageId="20007019" sfwObjectBased="True" sfwBRID="FS007-ACT0019-UI0002-BR0002" />
+    <rule ID="Rule - Recur Time Not Entered" sfwRuleType="Validation" sfwExpression="((this.icdoBpmEscalation.recur_type_value == &quot;RTET&quot;) &amp;&amp; (this.icdoBpmEscalation.recur_time_in_days == 0 &amp;&amp; this.icdoBpmEscalation.recur_time_in_hours == 0 &amp;&amp; this.icdoBpmEscalation.recur_time_in_minutes == 0)) &#xA;&amp;&amp;(this.icdoBpmEscalation.lapse_type_value ==&quot;LTBE&quot; || this.icdoBpmEscalation.lapse_type_value == &quot;LTAE&quot;)" sfwMessageId="20007020" sfwObjectBased="True" />
+    <rule ID="Rule - Escalation Name Not Entered" sfwRuleType="Validation" sfwExpression="(this.icdoBpmEscalation.escalation_name == null || this.icdoBpmEscalation.escalation_name == &quot;&quot;)" sfwMessageId="20007021" sfwObjectBased="True" sfwBRID="FS007-ACT0019-UI0002-BR0002" />
+    <rule ID="Rule - Process Not Selected" sfwRuleType="Validation" sfwExpression="(this.icdoBpmEscalation.process_id == 0)" sfwMessageId="20007022" sfwObjectBased="True" sfwBRID="FS007-ACT0019-UI0002-BR0002" />
+    <rule ID="Rule - Check If Atleast One Recipient Selected" sfwRuleType="Validation" sfwExpression="(!this.HasOneRecipient()) &amp;&amp; this.icdoBpmEscalation.lapse_type_value != &quot;LTNA&quot; &amp;&amp; this.icdoBpmEscalation.lapse_type_value!=&quot;LTSA&quot;" sfwMessageId="20007029" sfwObjectBased="True" sfwBRID="FS007-ACT0019-UI0002-BR0014" />
+    <rule ID="Rule - Check if Escalation With Same Name Exists - Update Mode" sfwRuleType="Validation" sfwExpression="!(this.icdoBpmEscalation.escalation_name == null || this.icdoBpmEscalation.escalation_name == &quot;&quot;)&#xD;&#xA;&amp;&amp;&#xD;&#xA;(&#xD;&#xA;(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entBpmEscalation.CheckIfEscalationWithNameExists&quot;, this.icdoBpmEscalation.escalation_name)  &gt; 0) &amp;&amp; &#xD;&#xA;(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entBpmEscalation.CheckIfEscalationWithNameExists&quot;, this.icdoBpmEscalation.escalation_name)  != this.icdoBpmEscalation.escalation_id)&#xD;&#xA;)" sfwMessageId="20007024" sfwObjectBased="True" sfwBRID="FS007-ACT0019-UI0002-BR0003" />
+    <rule ID="Rule - Is Escalation Lapse Time Valid" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="this.icdoBpmEscalation.lapse_time_in_minutes &lt; 0" sfwMessageId="20007025" sfwBRID="FS007-ACT0019-UI0002-BR0004" />
+    <rule ID="Rule - Is Escalation Recur Time Valid" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(this.icdoBpmEscalation.recur_type_value == &quot;RTET&quot;) &amp;&amp; (this.icdoBpmEscalation.recur_time_in_days &lt; 0 &#xD;&#xA;|| this.icdoBpmEscalation.recur_time_in_hours &lt; 0 || this.icdoBpmEscalation.recur_time_in_minutes &lt; 0) &#xD;&#xA;" sfwMessageId="20007026" />
+    <rule ID="Rule - Is User ID Entered when Un-Assigned Activity Selected" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="this.icdoBpmEscalation.lapse_type_value == &quot;LTNA&quot; &amp;&amp; this.iclbBpmEscalationAdditionalRecipient.Count == 0" sfwBRID="FS007-ACT0019-UI0002-BR0013" sfwMessageId="20007027" />
+  </rules>
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="Rule - Case Not Selected" sfwStatus="Active" sfwMode="New" />
+    <item ID="Rule - Activity Not Selected" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Lapse Minutes Not Entered" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Recur Time Not Entered" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Escalation Name Not Entered" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Check if Escalation With Same Name Exists - New Mode" sfwStatus="Active" sfwMode="New" />
+    <item ID="Rule - Check If Atleast One Recipient Selected" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Check if Escalation With Same Name Exists - Update Mode" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Process Not Selected" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Is Escalation Lapse Time Valid" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Is Escalation Recur Time Valid" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Is User ID Entered when Un-Assigned Activity Selected" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <groupslist />
+  <checklist />
+  <lifecycle />
+  <objectmethods />
+</entity>

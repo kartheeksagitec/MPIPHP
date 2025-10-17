@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entMssQdroCalculationHeader" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoQdroCalculationHeader" sfwObjectID="busMssQdroCalculationHeader" sfwParentEntity="entQdroCalculationHeader">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="ShowRetTypeColumn" sfwMode="All" sfwStatus="Active" />
+    <item ID="ShowRetTypeDisabiltyColumn" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="IintPlanId" sfwValue="icdoQdroCalculationHeader.iintPlanId" />
+    <attribute sfwDataType="int" sfwType="Property" ID="QdroCalculationHeaderId" sfwValue="icdoQdroCalculationHeader.qdro_calculation_header_id" />
+    <attribute sfwDataType="int" sfwType="Property" ID="AlternatePayeeId" sfwValue="icdoQdroCalculationHeader.alternate_payee_id" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoQdroCalculationHeader.created_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DateOfMarriage" sfwValue="icdoQdroCalculationHeader.date_of_marriage" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DateOfSeperation" sfwValue="icdoQdroCalculationHeader.date_of_seperation" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="BenefitComencementDate" sfwValue="icdoQdroCalculationHeader.benefit_comencement_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="QdroCommencementDate" sfwValue="icdoQdroCalculationHeader.qdro_commencement_date" />
+    <attribute ID="objAlternatePayee" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusAlternatePayee" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintAltPayeeAgeAtRetirement" sfwValue="icdoQdroCalculationHeader.iintAltPayeeAgeAtRetirement" />
+    <attribute sfwType="Collection" sfwEntity="entQdroCalculationDetail" ID="lstQdroCalculationDetail" sfwValue="iclbQdroCalculationDetail" />
+  </attributes>
+  <objectmethods>
+    <method ID="GetPlanValues" sfwReturnType="Collection" sfwObjectID="cdoPlan" sfwEntity="entPlan" />
+    <method ID="GetAlternatePayees" sfwReturnType="Collection" sfwObjectID="cdoPerson" sfwEntity="entIAPAllocationDetailPersonOverview">
+      <parameters>
+        <parameter ID="aintplanid" sfwDataType="int" />
+      </parameters>
+    </method>
+  </objectmethods>
+</entity>

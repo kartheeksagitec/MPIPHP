@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmSSNMergeMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="301" sfwType="Maintenance" sfwTitle="SSN Merge Maintenance" version="3.5" sfwDefaultButtonID="btnSearch" sfwEntity="entSSNMerge">
+  <initialload>
+    <session>
+      <field ID="mpi_person_id" sfwEntityField="MpiPersonId" />
+    </session>
+    <callmethods sfwMethodName="FindSSNMergeData" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmSSNMergeDemograhicsAndBenefitsMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="astrOldMpiId=MpiPersonId;astrNewMpiId=lintNewMergedMPIID" sfwRelatedControl="grvOldPersonToBeMerged" sfwSelection="Many" Text="Merge" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlParticipantDetails" sfwCaption="Participant Details">
+          <sfwTable ID="tblParticipantDetails">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMpiPersonId" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrNewMergedMPIID" sfwEntityField="IstrNewMergedMPIID" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSsn" Text="SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrSSNNonEncrypted" sfwDataFormat="{0:000-##-####}" sfwEntityField="IstrSSNNonEncrypted" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblNamePrefixDescription" ID="capNamePrefixDescription" Text="Prefix : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblNamePrefixDescription" sfwEntityField="NamePrefixDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblFirstName" ID="capFirstName" Text="First Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblFirstName" sfwEntityField="FirstName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblLastName" ID="capLastName" Text="Last Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLastName" sfwEntityField="LastName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblNameSuffix" ID="capNameSuffix" Text="Suffix : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblNameSuffix" sfwEntityField="NameSuffix" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIdtDateofBirth" ID="capIdtDateofBirth" Text="Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtDateofBirth" sfwDataFormat="{0:d}" sfwEntityField="IdtDateofBirth" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblGenderDescription" ID="capGenderDescription" Text="Gender : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblGenderDescription" sfwEntityField="GenderDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblDateOfDeath" ID="capDateOfDeath" Text="Date Of Death : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateOfDeath" sfwDataFormat="{0:d}" sfwEntityField="DateOfDeath" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrPersonType" ID="capIstrPersonType" Text="Person Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrPersonType" sfwEntityField="IstrPersonType" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblUnionCode" ID="capUnionCode" Text="Union Code : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblUnionCode" sfwEntityField="UnionCode" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrEmployerName" ID="capIstrEmployerName" Text="Employer: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrEmployerName" sfwEntityField="IstrEmployerName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrPersonAddress" ID="capIstrPersonAddress" Text="Address : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrPersonAddress" sfwEntityField="IstrPersonAddress" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Participant's Payee Account Details">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpenPayeeAcct" sfwActiveForm="wfmPayeeAccountMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPayeeAccountId=PayeeAccountId" Visible="False" sfwRelatedControl="grvPayeeAccounts" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="9">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPayeeAccounts" sfwEntityField="lstPayeeAccounts" sfwGridEntity="entPayeeAccount">
+                  <Columns>
+                    <TemplateField HeaderText="Payee Account ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenPayeeAcct" sfwEntityField="PayeeAccountId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnOpenPayeeAcct" sfwEntityField="IintPlanId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPlanDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee Account Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrStatusDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlPossibleDuplicates" sfwCaption="Possible Duplicates">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn CssClass="captionTd alignLeft">
+                <sfwLabel AssociatedControlID="txtIstrMPID" ID="capMpiPersonId1" Text="MPID : " sfwIsCaption="True" />
+                <sfwTextBox ID="txtIstrMPID" sfwEntityField="IstrMPID" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtIstrMPID" sfwSelectedIndex="MpiPersonId" />
+                <sfwButton ID="btnSearch" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwNavigationParameter="astrMPID=IstrMPID" sfwObjectMethod="btn_SearchWithMPID" Text="Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="9">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvOldPersonToBeMerged" sfwEntityField="lstOldPersonToBeMerged" sfwGridEntity="entPerson">
+                  <Columns>
+                    <TemplateField HeaderText="MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText=" SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrSSNNonEncrypted" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Prefix">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NamePrefixDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LastName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="First Name" SortExpression="IstrPersonName" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FirstName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Suffix">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NameSuffix" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Of Birth">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtDateofBirth" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Of Death">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DateOfDeath" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Gender">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="GenderDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="PersonType">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPersonType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Union Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UnionCode" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Employer">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrEmployerName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Address">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrParticipantAddress" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="lintNewMergedMPIID" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlPossibleDuplicatesPA" sfwCaption="Possible Duplicates Payee Account Details:">
+          <sfwTable CssClass="Table" ID="tblNewPage11">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpenPayeeAccount2" sfwActiveForm="wfmPayeeAccountMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPayeeAccountId=PayeeAccountId" sfwRelatedControl="grvBusPayeeAccount" Visible="False" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="9">
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="grvBusPayeeAccount" sfwEntityField="lstPayeeAccountsForPossibleDuplicates" sfwGridEntity="entPayeeAccount">
+                  <Columns>
+                    <TemplateField HeaderText="Payee Account ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenPayeeAccount2" sfwEntityField="PayeeAccountId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPID" SortExpression="PersonId" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnOpenMPID" sfwEntityField="IstrMPID" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan ID" SortExpression="IintPlanId" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IintPlanId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPlanDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee Account Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrStatusDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstPayeeAccounts" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstOldPersonToBeMerged" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstPayeeAccountsForPossibleDuplicates" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

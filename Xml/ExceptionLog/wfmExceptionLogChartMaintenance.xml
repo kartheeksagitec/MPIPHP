@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmExceptionLogChartMaintenance" sfwResource="-1" sfwFormObjectType="FormObject" sfwFormObject="busExceptionLog" sfwType="Maintenance" sfwTitle="Errors By AppDomain" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmExceptionLogChartLookup" sfwEntity="entExceptionLog">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewObject" />
+    <callmethods sfwMode="Update" sfwMethodName="FindExceptionLogByAppDomain" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="ExceptionLogChart Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIdtFromDate" Text="FromDate : " AssociatedControlID="txtIdtFromDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIdtFromDate" sfwDataFormat="{0:d}" sfwEntityField="IdtFromDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIdtToDate" Text="ToDate : " AssociatedControlID="txtIdtToDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIdtToDate" sfwDataFormat="{0:d}" sfwEntityField="IdtToDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnExecuteRefreshFromObject" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Search" sfwObjectMethod="LoadErrorsByAppDomain" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="4">
+                <sfwChart ID="chrAppDomainChart" ChartType="Pie" Width="500px" Height="500px" ShowMarker="False" sfwEntityField="lstErrorsByAppDomain" sfwGridEntity="entChartKeyValue">
+                  <Series>
+                    <sfwSeries XValueMember="Key" YValueMembers="Value" Name="ByAppDomain" IsValueShownAsLabel="True" ChartType="Pie" />
+                  </Series>
+                  <ChartAreas>
+                    <sfwChartArea ChartAreaName="AppDomainPieChart">
+                      <Area3DStyle Enable3D="False" />
+                    </sfwChartArea>
+                  </ChartAreas>
+                </sfwChart>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstErrorsByAppDomain" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

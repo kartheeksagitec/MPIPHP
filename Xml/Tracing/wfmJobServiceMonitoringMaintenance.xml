@@ -1,0 +1,630 @@
+﻿<form ID="wfmJobServiceMonitoringMaintenance" sfwType="Maintenance" sfwEntity="entJobServiceMonitoring" sfwTitle="Job Service Monitoring" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwResource="207">
+  <initialload>
+    <callmethods sfwMode="Update" sfwMethodName="LoadJobService" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Search Parameters">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFromDate" Text="From Date : " AssociatedControlID="txtFromDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFromDate" sfwEntityField="FromDate" sfwDataFormat="{0:G}" Width="180px" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capToDate" Text="To Date : " AssociatedControlID="txtToDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtToDate" sfwEntityField="ToDate" sfwDataFormat="{0:G}" Width="180px" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Search" ID="btnSearch" sfwObjectMethod="rulInitializeJobServiceMonitoring" sfwExecuteMethodType="Rule" sfwCustomAttributes="style=margin-left:20px !important" sfwMessageId="54" />
+                <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpen" sfwActiveForm="wfmPersonMaintenance" sfwRelatedControl="tshMonitoredJobs" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlLastMinutes" sfwEntityField="LastMinutes" sfwRelatedControl="btnSearch" AutoPostBack="True" Visible="False">
+                  <ListItem Value="0" />
+                  <ListItem Text="Last 15 minutes" Value="15" />
+                  <ListItem Text="Last 30 minutes" Value="30" />
+                  <ListItem Text="Last 45 minutes" Value="45" />
+                  <ListItem Text="Last one hours" Value="60" />
+                  <ListItem Text="Last two hours" Value="120" />
+                  <ListItem Text="Last four hours" Value="240" />
+                  <ListItem Text="Last eight hours" Value="480" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlLastDays" sfwEntityField="LastDays" sfwRelatedControl="btnSearch" AutoPostBack="True" Visible="False">
+                  <ListItem Value="0" />
+                  <ListItem Text="Current day" Value="1" />
+                  <ListItem Text="Last two days" Value="2" />
+                  <ListItem Text="Last three days" Value="3" />
+                  <ListItem Text="Last four days" Value="4" />
+                  <ListItem Text="Last five days" Value="5" />
+                  <ListItem Text="Last ten days" Value="10" />
+                  <ListItem Text="Last twenty days" Value="20" />
+                  <ListItem Text="Last thrity days" Value="30" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel1" sfwCaption="Summary Information">
+          <sfwTable ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn VerticalAlign="Top" Width="50%">
+                <sfwPanel ID="pnlJobSummary" sfwCollapsible="False" sfwCaption="Job Detail Summary">
+                  <sfwTable ID="tblNewPage2">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capAllCount" Text="Jobs Executed : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblAllCount" sfwEntityField="AllCount" sfwShowZero="True" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capSlowCount" Text="Slow Jobs : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblSlowCount" sfwEntityField="SlowCount" sfwShowZero="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capMonitoredCount" Text="Jobs Traced  : " AssociatedControlID="lblMonitoredCount" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblMonitoredCount" sfwEntityField="MonitoredCount" sfwShowZero="True" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capSlowQueryCount" Text="Slow Queries : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblSlowQueryCount" sfwEntityField="SlowQueryCount" sfwShowZero="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capMonitoredQueryCount" Text="Traced Job Queries : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblMonitoredQueryCount" sfwEntityField="MonitoredQueryCount" sfwShowZero="True" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capSlowRuleCount" Text="Slow Rules : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblSlowRuleCount" sfwEntityField="SlowRuleCount" sfwShowZero="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capMonitoredRuleCount" Text="Traced Rules : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblMonitoredRuleCount" sfwEntityField="MonitoredRuleCount" sfwShowZero="True" />
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Top" Width="50%">
+                <sfwPanel ID="pnlJobStatus" sfwCaption="Counts by Status" sfwCollapsible="False">
+                  <sfwTable ID="tblNewPage3">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.JobServiceStatus" ID="grvJobServiceStatus" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True">
+                          <Columns>
+                            <TemplateField HeaderText="Status">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="status_description" />
+                              </ItemTemplate>
+                            </TemplateField>
+                            <TemplateField SortExpression="count" HeaderText="Count">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="count" />
+                              </ItemTemplate>
+                            </TemplateField>
+                          </Columns>
+                          <Parameters>
+                            <parameter ID="@start_time" sfwDataType="datetime" sfwEntityField="FromDate" />
+                            <parameter ID="@end_time" sfwDataType="datetime" sfwEntityField="ToDate" />
+                          </Parameters>
+                        </sfwGridView>
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel" sfwCaption="Job Service Details">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Jobs in Error">
+                      <sfwTable ID="tblTable7">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.JobServiceError" ID="grvJobsInError" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwDataKeyNames="job_detail_id">
+                              <Columns>
+                                <TemplateField HeaderText="Job Detail ID">
+                                  <ItemTemplate>
+                                    <sfwLinkButton sfwMethodName="btnOpen_Click" sfwEntityField="job_detail_id" sfwActiveForm="wfmJobDetailTraceMaintenance" sfwNavigationParameter="job_detail_id" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="schedule_name" HeaderText="Schedule Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="schedule_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Job Header ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="job_header_id" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="start_time" sfwDataFormat="{0:G}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Time">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="end_time" sfwDataFormat="{0:G}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="queries_executed" HeaderText="Queries Executed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="queries_executed" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="query_time_in_min" HeaderText="Query Time (min)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="query_time_in_min" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="rule_time_in_min" HeaderText="Rule Time (min)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="rule_time_in_min" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="rules_executed" HeaderText="Rules Executed">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="rules_executed" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@start_time" sfwEntityField="FromDate" />
+                                <parameter ID="@end_time" sfwEntityField="ToDate" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshAllJobs" HeaderText="Jobs Executed">
+                      <sfwTable ID="tblTable">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.GetAllJobDetails" ID="grvAllJobs" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwLoadWhenRequired="True">
+                              <Columns>
+                                <TemplateField SortExpression="job_schedule_detail_id" HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLinkButton ID="btnAllJobInstance" sfwMethodName="btnOpen_Click" sfwEntityField="job_schedule_detail_id" sfwActiveForm="wfmJobScheduleInstancesMaintenance" sfwNavigationParameter="JobScheduleDetailID=job_schedule_detail_id;FromDate;ToDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Job Schedule Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="jsc.schedule_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Job Step Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="jsd.step_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Number Of Runs" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="number_of_runs" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Response Time (min)" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="response_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Max Time (min)" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="max_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Database Time (min)" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="database_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Rule Time (min)" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="rule_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@start_time" sfwEntityField="FromDate" />
+                                <parameter ID="@end_time" sfwEntityField="ToDate" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshSlowJobs" HeaderText="Slow Jobs">
+                      <sfwTable ID="tblTable4">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.JobDetailSlow" ID="grvSlowJobs" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwLoadWhenRequired="True">
+                              <Columns>
+                                <TemplateField HeaderText="Schedule ID">
+                                  <ItemTemplate>
+                                    <sfwLinkButton sfwMethodName="btnOpen_Click" sfwEntityField="job_schedule_detail_id" sfwActiveForm="wfmJobScheduleInstancesMaintenance" sfwNavigationParameter="JobScheduleDetailID=job_schedule_detail_id;FromDate;ToDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Schedule Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="schedule_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Step Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="step_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="calls" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Response Time (min)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="response_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Max Time (min)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="max_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="database_time" HeaderText="Database Time (min) ">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="database_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="rule_time" HeaderText="Rule Time (min)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="rule_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@start_time" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@end_time" sfwDataType="datetime" sfwEntityField="ToDate" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshMonitoredJobs" HeaderText="Jobs Traced">
+                      <sfwTable ID="tblTable1">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.MonitoredJobDetail" ID="grvMonitoredJobs" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwLoadWhenRequired="True">
+                              <Columns>
+                                <TemplateField SortExpression="job_schedule_detail_id" HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLinkButton sfwMethodName="btnOpen_Click" sfwEntityField="job_schedule_detail_id" sfwActiveForm="wfmJobScheduleInstancesMaintenance" sfwNavigationParameter="JobScheduleDetailID=job_schedule_detail_id;FromDate;ToDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Schedule Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="schedule_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Step Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="step_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Number Of Runs" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="number_of_runs" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Response Time (min)" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="response_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Max Time (min)" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="max_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Slow Count" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="slow_count" sfwShowZero="True" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@start_time" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@end_time" sfwDataType="datetime" sfwEntityField="ToDate" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshSlowQueries" HeaderText="Slow Queries">
+                      <sfwTable ID="tblTable2">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.JobDetailSlowQuery" ID="grvSlowQueries" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwLoadWhenRequired="True">
+                              <Columns>
+                                <TemplateField HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLinkButton sfwMethodName="btnOpen_Click" sfwEntityField="job_schedule_detail_id" sfwActiveForm="wfmJobSlowQueryMaintenance" sfwNavigationParameter="JobScheduleDetailID=job_schedule_detail_id;FromDate;ToDate;QueryHash=query_hash" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="schedule_name" HeaderText="Schedule Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="schedule_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="step_name" HeaderText="Step Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="step_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Query">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="query" sfwDisplayLength="150" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="calls" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Response Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="response_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Max Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="max_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="query_hash" HeaderText="Query Hash" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="query_hash" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="total_time" HeaderText="Total Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="total_time" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@start_time" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@end_time" sfwDataType="datetime" sfwEntityField="ToDate" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshMoniteredQueries" HeaderText="Traced Job Queries">
+                      <sfwTable ID="tblTable5">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.JobDetailMonitoredQuery" ID="grvMonitoredQueries" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwLoadWhenRequired="True">
+                              <Columns>
+                                <TemplateField HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLinkButton sfwMethodName="btnOpen_Click" sfwEntityField="job_schedule_detail_id" sfwActiveForm="wfmJobTracedQueryMaintenance" sfwNavigationParameter="JobScheduleDetailID=job_schedule_detail_id;FromDate;ToDate;QueryHash=query_hash" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="schedule_name" HeaderText="Schedule Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="schedule_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="step_name" HeaderText="Step Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="step_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Query">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="query" sfwDisplayLength="150" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="calls" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Response Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="response_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Max Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="max_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="query_hash" HeaderText="Query Hash" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="query_hash" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="total_time" HeaderText="Total Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="total_time" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@start_time" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@end_time" sfwDataType="datetime" sfwEntityField="ToDate" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshSlowRules" HeaderText="Slow Rules">
+                      <sfwTable ID="tblTable3">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.JobDetailSlowRule" ID="grvSlowRules" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwLoadWhenRequired="True">
+                              <Columns>
+                                <TemplateField HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLinkButton sfwMethodName="btnOpen_Click" sfwEntityField="job_schedule_detail_id" sfwActiveForm="wfmJobSlowRuleMaintenance" sfwNavigationParameter="JobScheduleDetailID=job_schedule_detail_id;FromDate;ToDate;RuleID=rule_id" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="schedule_name" HeaderText="Schedule Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="schedule_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="step_name" HeaderText="Step Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="step_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Rule ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="rule_id" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="calls" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Response Time (ms)" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="response_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Max Time (ms)" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="response_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="total_time" HeaderText="Total Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="total_time" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@start_time" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@end_time" sfwDataType="datetime" sfwEntityField="ToDate" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshMoniteredRules" HeaderText="Traced Job Rules">
+                      <sfwTable ID="tblTable6">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.JobDetailMonitoredRule" ID="grvMonitoredRules" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwTwoWayBinding="True" sfwLoadWhenRequired="True">
+                              <Columns>
+                                <TemplateField HeaderText="ID">
+                                  <ItemTemplate>
+                                    <sfwLinkButton sfwMethodName="btnOpen_Click" sfwEntityField="job_schedule_detail_id" sfwActiveForm="wfmJobTracedRuleMaintenance" sfwNavigationParameter="JobScheduleDetailID=job_schedule_detail_id;FromDate;ToDate;RuleID=rule_id" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="schedule_name" HeaderText="Schedule Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="schedule_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="step_name" HeaderText="Step Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="step_name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="rule_id" HeaderText="Rule ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="rule_id" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="calls" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Response Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="response_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Max Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="max_time" sfwDataFormat="{0:#0.00}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="total_time" HeaderText="Total Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="total_time" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@start_time" sfwDataType="datetime" sfwEntityField="FromDate" />
+                                <parameter ID="@end_time" sfwDataType="datetime" sfwEntityField="ToDate" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails />
+</form>

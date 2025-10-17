@@ -1,0 +1,104 @@
+﻿<form ID="wfmExcessRefundLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="205" sfwType="Lookup" sfwTitle="Excess Refund Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entExcessRefund" sfwGridCollection="busExcessRefundLookup.iclbExcessRefund">
+  <initialload>
+    <query ID="cdoExcessRefund" sfwQueryRef="entExcessRefund.Lookup" sfwMethodName="LoadExcessRefunds" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPayeeAccountId" ID="capPayeeAccountId" Text="Payee Account ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPayeeAccountId" sfwDataField="ser.payee_account_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoExcessRefund" />
+                <sfwImageButton ID="btnRetrievePayeeAccountId" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPayeeAccountLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtPayeeAccountId" sfwSelectedIndex="PayeeAccountId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSpMpiPersonId" ID="capSpMpiPersonId" Text="Payee MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSpMpiPersonId" sfwDataField="sp.mpi_person_id" sfwOperator="like" sfwQueryID="cdoExcessRefund" sfwTwoWayBinding="False" />
+                <sfwImageButton ID="btnRetrieveMpiPersonID" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtSpMpiPersonId" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtTaxYear" ID="capTaxYear" Text="Tax Year : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTaxYear" sfwDataField="ser.tax_year" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoExcessRefund" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult">
+                  <Columns>
+                    <TemplateField HeaderText="Excess Refund ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ExcessRefundId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee Account ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PayeeAccountId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPayee.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPayee.IstrFullName1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Refund Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="RefundAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

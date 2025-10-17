@@ -1,0 +1,228 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Sagitec.Common;
+using Sagitec.WebClient;
+using MPIPHP.BusinessObjects;
+using System.Collections;
+using System.Data;
+using Sagitec.Interface;
+using System.Configuration;
+using gov.nd.appstest.secure;
+using Sagitec.BusinessObjects;
+using Sagitec.WebControls;
+
+
+/// <summary>
+/// Summary description for csLoginWSSHelper
+/// </summary>
+public static class csLoginWSSHelper
+{
+    
+    public static utlUserInfo SetSessionVariables(string astrNDPERSLoginId, string astrLastName, string astrFirstName,
+        string astrUserType, string astrUserID, int astrUserSerialId, string astrColorScheme, string astrEmailID, bool ablnIsPrimaryAuthAgent = false)
+    {
+        utlUserInfo lobjUserInfo = new utlUserInfo();
+        lobjUserInfo.istrUserId = astrUserID;
+        lobjUserInfo.iintUserSerialId = astrUserSerialId;
+        lobjUserInfo.istrUserType = astrUserType;
+        lobjUserInfo.istrLastName = astrLastName;
+        lobjUserInfo.istrFirstName = astrFirstName;
+        lobjUserInfo.istrEmailId = astrEmailID;
+        lobjUserInfo.istrColorScheme = astrColorScheme;
+        
+        HttpContext.Current.Session["UserInfoObject"] = lobjUserInfo;
+        HttpContext.Current.Session["UserID"] = lobjUserInfo.istrUserId;
+        HttpContext.Current.Session["UserSerialID"] = lobjUserInfo.iintUserSerialId;
+        HttpContext.Current.Session["UserName"] = lobjUserInfo.istrLastName + ", " + lobjUserInfo.istrFirstName;
+        HttpContext.Current.Session["ColorScheme"] = lobjUserInfo.istrColorScheme;
+        HttpContext.Current.Session["UserType"] = lobjUserInfo.istrUserType;
+        HttpContext.Current.Session["NDPERSLoginID"] = astrNDPERSLoginId;
+        HttpContext.Current.Session["IsPAG"] = ablnIsPrimaryAuthAgent;
+        return lobjUserInfo;
+    }
+
+    public static void SetUserSecurityForMember(int aintPersonID, IBusinessTier asrvBusinessTier)
+    {
+        Hashtable lhstParam = new Hashtable();
+        lhstParam.Add("aintPersonID", aintPersonID);
+        DataTable ldtSecurity = (DataTable)asrvBusinessTier.ExecuteMethod("GetSecurityForMember", lhstParam, false, new Dictionary<string,object>());
+        HttpContext.Current.Session["UserSecurity"] = ldtSecurity;
+    }
+
+    public static void SetUserSecurityForContact(int aintOrgID, int aintContactID, IBusinessTier asrvBusinessTier)
+    {
+        Hashtable lhstParam = new Hashtable();
+        lhstParam = new Hashtable();
+        lhstParam.Add("aintOrgID", aintOrgID);
+        lhstParam.Add("aintContactID", aintContactID);
+        DataTable ldtSecurity = (DataTable)asrvBusinessTier.ExecuteMethod("GetSecurityForContact", lhstParam, false, new Dictionary<string, object>());
+        HttpContext.Current.Session["UserSecurity"] = ldtSecurity;
+    }
+    //For MSS Layout Change
+    public static string GetLaunchURLforMemberPortal(int aintPersonID, IBusinessTier asrvBusinessTier, string astrProfileEmailID = null, bool ablnIsExternalUser = false)
+    {        
+        ArrayList larrSelectedRows = new ArrayList();
+        Hashtable lhstSelectedRows = new Hashtable();
+        lhstSelectedRows.Add("person_id", aintPersonID);
+        lhstSelectedRows.Add("profile_email_id", astrProfileEmailID);
+        lhstSelectedRows.Add("is_external_user", ablnIsExternalUser);
+        larrSelectedRows.Add(lhstSelectedRows);
+        Dictionary<string, object> ldctParams = new Dictionary<string, object>();
+        Hashtable lhstParam = new Hashtable();
+        lhstParam.Add("aintPersonId", Convert.ToInt32(aintPersonID));
+
+        Hashtable lhstPersonID = new Hashtable();
+        lhstPersonID.Add("aintPersonId", Convert.ToInt32(aintPersonID));
+        HttpContext.Current.Session["MSSAccessValue"] = Convert.ToString(asrvBusinessTier.ExecuteMethod("GetMSSAccessValue", lhstPersonID, false, ldctParams));
+        if ((bool)asrvBusinessTier.ExecuteMethod("IsPersonRetiredOrWithdrawnPlan", lhstParam, false,ldctParams) || 
+            (bool)asrvBusinessTier.ExecuteMethod("IsRetiree", lhstParam, false, ldctParams) ||
+            (bool)asrvBusinessTier.ExecuteMethod("IsInsurancePlanRetirees", lhstParam, false, ldctParams)) // PROD PIR 8861
+        {
+            /*if (Convert.ToString(HttpContext.Current.Session["MSSAccessValue"]) == busConstant.OrganizationLimitedAccess)
+            {
+                HttpContext.Current.Session["wfmMSSAnnualStatementMaintenancePageMode"] = utlPageMode.Update;
+                HttpContext.Current.Session["wfmMSSAnnualStatementMaintenanceSelectedRows"] = larrSelectedRows;
+                HttpContext.Current.Session["wfmMSSAnnualStatementMaintenanceSelectedIndex"] = 0;
+                return "wfmDefault.aspx?FormID=wfmMSSAnnualStatementMaintenance";
+            }*/
+            HttpContext.Current.Session["wfmMSSRetireeHomeMaintenancePageMode"] = utlPageMode.Update;
+            HttpContext.Current.Session["wfmMSSRetireeHomeMaintenanceSelectedRows"] = larrSelectedRows;
+            HttpContext.Current.Session["wfmMSSRetireeHomeMaintenanceSelectedIndex"] = 0;
+            return "wfmDefault.aspx?FormID=wfmMSSRetireeHomeMaintenance";
+        }
+        
+        if (Convert.ToString(HttpContext.Current.Session["MSSAccessValue"]) == busConstant.OrganizationLimitedAccess ||
+            Convert.ToString(HttpContext.Current.Session["MSSAccessValue"]) == string.Empty)
+        {
+            HttpContext.Current.Session["wfmMSSHomeLimitedPageMode"] = utlPageMode.Update;
+            HttpContext.Current.Session["wfmMSSHomeLimitedSelectedRows"] = larrSelectedRows;
+            HttpContext.Current.Session["wfmMSSHomeLimitedSelectedIndex"] = 0;
+            return "wfmDefault.aspx?FormID=wfmMSSHomeLimited";
+        }
+        HttpContext.Current.Session["wfmMSSActiveMemberHomeMaintenancePageMode"] = utlPageMode.Update;
+        HttpContext.Current.Session["wfmMSSActiveMemberHomeMaintenanceSelectedRows"] = larrSelectedRows;
+        HttpContext.Current.Session["wfmMSSActiveMemberHomeMaintenanceSelectedIndex"] = 0;
+        return "wfmDefault.aspx?FormID=wfmMSSActiveMemberHomeMaintenance";
+    }
+
+    public static string GetLaunchURLforEmployerPortal(int aintOrgID, int aintContactID, IBusinessTier asrvBusinessTier)
+    {
+        Hashtable lhstOrgID = new Hashtable(); // PIR 9773
+        lhstOrgID.Add("aintOrgId", Convert.ToInt32(aintOrgID));
+        Dictionary<string, object> ldctParams = new Dictionary<string, object>();
+        HttpContext.Current.Session["MSSAccessValue"] = Convert.ToString(asrvBusinessTier.ExecuteMethod("GetESSAccessValue", lhstOrgID, false, ldctParams));   
+
+        ArrayList larrSelectedRows = new ArrayList();
+        Hashtable lhstSelectedRows = new Hashtable();
+        string lstrProfileEmail = null;
+        bool lblnIsExternalUser = false;
+        if (HttpContext.Current.Session["NDPERSEmailID"] != null)
+        {
+            lstrProfileEmail = HttpContext.Current.Session["NDPERSEmailID"].ToString();
+            lblnIsExternalUser = true;
+        }
+        lhstSelectedRows.Add("aint_org_id", aintOrgID);
+        lhstSelectedRows.Add("aint_contact_id", aintContactID);
+        lhstSelectedRows.Add("astr_profile_email_id", lstrProfileEmail);
+        lhstSelectedRows.Add("abln_is_external_user", lblnIsExternalUser);
+        larrSelectedRows.Add(lhstSelectedRows);
+        HttpContext.Current.Session["wfmESSHomeMaintenancePageMode"] = utlPageMode.Update;
+        HttpContext.Current.Session["wfmESSHomeMaintenanceSelectedRows"] = larrSelectedRows;
+        HttpContext.Current.Session["wfmESSHomeMaintenanceSelectedIndex"] = 0;
+        return "wfmDefault.aspx?FormID=wfmESSHomeMaintenance";
+    }
+
+    public static string SetSessionAndLaunchEmployerPortalHome(int aintOrgID, int aintContactID, IBusinessTier asrvBusinessTier)
+    {
+        Hashtable lhstParam = new Hashtable();
+        lhstParam.Add("aintContactID", aintContactID);
+
+        Dictionary<string, object> ldctParams = new Dictionary<string, object>();
+        busContact lobjContact = (busContact)asrvBusinessTier.ExecuteMethod("LoadContact", lhstParam, false, ldctParams);
+
+        lhstParam = new Hashtable();
+        lhstParam.Add("aintOrgID", aintOrgID);
+        busOrganization lobjOrganization = (busOrganization)asrvBusinessTier.ExecuteMethod("LoadOrganization", lhstParam, false,ldctParams);
+
+        bool lblnIsPrimaryAuthAgent = false;
+        lhstParam = new Hashtable();
+        lhstParam.Add("aintOrgID", aintOrgID);
+        lhstParam.Add("aintContactID", aintContactID);
+        lblnIsPrimaryAuthAgent = (bool)asrvBusinessTier.ExecuteMethod("IsPrimaryAuthAgent", lhstParam, false, ldctParams);
+
+        int lintUserSerialID = 0;
+        if (HttpContext.Current.Session["UserSerialID"] != null)
+            lintUserSerialID = Convert.ToInt32(HttpContext.Current.Session["UserSerialID"]);
+
+        
+        ldctParams[utlConstants.istrConstUserSerialID] = lintUserSerialID;
+
+        string lstrUserID = string.Empty;
+        //Setting the Audit Trail
+        if (HttpContext.Current.Session["UserType"] != null)
+        {
+            if (HttpContext.Current.Session["UserType"].ToString() == busConstant.UserTypeInternal)
+            {
+                lstrUserID = (string)HttpContext.Current.Session["UserID"] ?? string.Empty;
+
+                ldctParams[utlConstants.istrConstUserID] = lstrUserID;
+                ldctParams[utlConstants.istrConstFormName] = "wfmLoginEI.aspx";
+                asrvBusinessTier.StoreProcessLog(lstrUserID + " - Internal User successfully logged in to WSS Employer Portal", ldctParams);
+            }
+            else
+            {
+                lstrUserID = (string)lobjOrganization.icdoOrganization.org_code + "_" + aintContactID ?? string.Empty;
+                ldctParams[utlConstants.istrConstUserID] = lstrUserID;
+                ldctParams[utlConstants.istrConstFormName] = "wfmLoginEE.aspx";
+                asrvBusinessTier.StoreProcessLog(lstrUserID + " - External User successfully logged in to WSS Employer Portal", ldctParams);
+            }
+        }
+
+        csLoginWSSHelper.SetSessionVariables(lobjContact.icdoContact.ndpers_login_id,
+                                                            lobjContact.icdoContact.last_name,
+                                                            lobjContact.icdoContact.first_name,
+                                                            (string)HttpContext.Current.Session["UserType"] ?? string.Empty,
+                                                            lstrUserID,
+                                                            lintUserSerialID,
+                                                            (string)HttpContext.Current.Session["ColorScheme"] ?? string.Empty,
+                                                            lobjContact.icdoContact.email_address, lblnIsPrimaryAuthAgent);
+        //Setting the User Security for Contact
+        csLoginWSSHelper.SetUserSecurityForContact(aintOrgID, aintContactID, asrvBusinessTier);
+
+        //Launching the Portal
+        return csLoginWSSHelper.GetLaunchURLforEmployerPortal(aintOrgID, aintContactID, asrvBusinessTier);
+    }
+
+    public static void AddUserToSecureWayGroup(IBusinessTier asrvBusinessTier)
+    {
+        //Adding User into SecureWay Group
+        Hashtable lhstParams = new Hashtable();
+        lhstParams.Add("astrKey", null);
+        lhstParams.Add("astrValue", ConfigurationManager.AppSettings["SecureWayGroup"]);
+        string lstrSecureWayGroup = (string)asrvBusinessTier.ExecuteMethod("SagitecDecrypt", lhstParams, false, new Dictionary<string,object>());
+
+        lhstParams = new Hashtable();
+        lhstParams.Add("astrKey", null);
+        lhstParams.Add("astrValue", ConfigurationManager.AppSettings["SecureWayUser"]);
+        string lstrSecureWayUser = (string)asrvBusinessTier.ExecuteMethod("SagitecDecrypt", lhstParams, false, new Dictionary<string,object>());
+
+        lhstParams = new Hashtable();
+        lhstParams.Add("astrKey", null);
+        lhstParams.Add("astrValue", ConfigurationManager.AppSettings["SecureWayPassword"]);
+        string lstrSecureWayPassword = (string)asrvBusinessTier.ExecuteMethod("SagitecDecrypt", lhstParams, false, new Dictionary<string, object>());
+
+        LdapService ldapService = new LdapService();
+        ldapService.Url = ConfigurationManager.AppSettings[ConfigurationManager.AppSettings["ServerEnvironment"].ToString() + "NDLdapWS"];
+        ldapService.addUserToGroup(HttpContext.Current.Session["NDPERSLoginID"].ToString(), lstrSecureWayGroup, lstrSecureWayUser, lstrSecureWayPassword);
+    }
+
+    public static string GetSecureWayGroupName(IBusinessTier asrvBusinessTier)
+    {
+        Hashtable lhstParams = new Hashtable();
+        lhstParams.Add("astrKey", null);
+        lhstParams.Add("astrValue", ConfigurationManager.AppSettings["SecureWayGroup"]);
+        return (string)asrvBusinessTier.ExecuteMethod("SagitecDecrypt", lhstParams, false, new Dictionary<string, object>());
+    }
+}

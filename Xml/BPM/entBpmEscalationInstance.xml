@@ -1,0 +1,57 @@
+﻿<entity ID="entBpmEscalationInstance" sfwMainCDO="icdoBpmEscalationInstance" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmEscalationInstance" sfwTableName="sgw_bpm_escalation_instance" sfwView="False" sfwDataObjectID="doBpmEscalationInstance">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete>
+    <property ID="lstBpmEscalationMessage" sfwMethodName="LoadBpmEscalationMessages" />
+    <property ID="IobjMainCDO" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint />
+  <rules />
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgw_bpm_escalation_instance " sfwPostgre="select * from sgw_bpm_escalation_instance">
+      <parameters />
+    </query>
+    <query ID="GetNLevelSupervisourByUserId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="WITH OrgPath (USER_SERIAL_ID, SUPERVISOR_ID, EMAIL_ADDRESS, SupervisorLevel) AS (SELECT SGS_USER.USER_SERIAL_ID,SGS_USER.SUPERVISOR_ID,SGS_USER.EMAIL_ADDRESS, 0 FROM SGS_USER WITH(NOLOCK) WHERE USER_ID = @USER_ID UNION ALL SELECT U.USER_SERIAL_ID,U.SUPERVISOR_ID,U.EMAIL_ADDRESS, SupervisorLevel + 1 FROM SGS_USER AS U WITH(NOLOCK)JOIN OrgPath ON U.USER_SERIAL_ID = OrgPath.SUPERVISOR_ID) SELECT SupervisorLevel, U2.USER_SERIAL_ID,U2.user_id, U2.SUPERVISOR_ID, U2.EMAIL_ADDRESS FROM SGS_USER AS U2 WITH(NOLOCK) JOIN OrgPath WITH(NOLOCK) ON U2.USER_SERIAL_ID = OrgPath.USER_SERIAL_ID WHERE SupervisorLevel = @SupervisorLevel ORDER BY SupervisorLevel OPTION (MAXRECURSION 32767);" sfwOracle="WITH OrgPath (USER_SERIAL_ID, SUPERVISOR_ID, EMAIL_ADDRESS, SupervisorLevel)&#xD;&#xA;AS &#xD;&#xA;(&#xD;&#xA;&#xD;&#xA;SELECT SGS_USER.USER_SERIAL_ID,SGS_USER.SUPERVISOR_ID,SGS_USER.EMAIL_ADDRESS, 0 FROM SGS_USER WHERE USER_ID = @USER_ID&#xD;&#xA;UNION ALL &#xD;&#xA;SELECT U.USER_SERIAL_ID,U.SUPERVISOR_ID,U.EMAIL_ADDRESS, SupervisorLevel + 1 &#xD;&#xA;&#x9;FROM SGS_USER  U &#xD;&#xA;&#x9;JOIN OrgPath ON U.USER_SERIAL_ID = OrgPath.SUPERVISOR_ID&#xD;&#xA;)&#xD;&#xA;SELECT SupervisorLevel, U2.USER_SERIAL_ID,U2.user_id, U2.SUPERVISOR_ID, U2.EMAIL_ADDRESS &#xD;&#xA;FROM SGS_USER  U2 &#xD;&#xA;JOIN OrgPath ON U2.USER_SERIAL_ID = OrgPath.USER_SERIAL_ID &#xD;&#xA;WHERE SupervisorLevel = @SupervisorLevel&#xD;&#xA;ORDER BY SupervisorLevel --OPTION (MAXRECURSION 32767)" sfwPostgre="WITH RECURSIVE OrgPath (USER_SERIAL_ID,&#xA;&#x9;SUPERVISOR_ID,&#xA;&#x9;EMAIL_ADDRESS,&#xA;&#x9;SupervisorLevel) AS (SELECT&#xA;&#x9; SGS_USER.USER_SERIAL_ID,&#xA;&#x9;SGS_USER.SUPERVISOR_ID,&#xA;&#x9;SGS_USER.EMAIL_ADDRESS,&#xA;&#x9;0 &#xA;FROM&#xA;&#x9; SGS_USER &#xA;WHERE&#xA;&#x9; USER_ID = @USER_ID UNION ALL SELECT&#xA;&#x9; U.USER_SERIAL_ID,&#xA;&#x9;U.SUPERVISOR_ID,&#xA;&#x9;U.EMAIL_ADDRESS,&#xA;&#x9;SupervisorLevel + 1 &#xA;FROM&#xA;&#x9; SGS_USER AS U &#xA;&#x9; JOIN OrgPath&#xA;&#x9; ON U.USER_SERIAL_ID = OrgPath.SUPERVISOR_ID) SELECT&#xA;&#x9; SupervisorLevel,&#xA;&#x9;U2.USER_SERIAL_ID,&#xA;&#x9;U2.user_id,&#xA;&#x9;U2.SUPERVISOR_ID,&#xA;&#x9;U2.EMAIL_ADDRESS &#xA;FROM&#xA;&#x9; SGS_USER AS U2 &#xA;&#x9; JOIN OrgPath&#xA;&#x9; ON U2.USER_SERIAL_ID = OrgPath.USER_SERIAL_ID &#xA;WHERE&#xA;&#x9; SupervisorLevel = @SupervisorLevel &#xA;ORDER BY  SupervisorLevel">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+        <parameter ID="@SupervisorLevel" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetEscalationsToSend" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; EI.* &#xA;FROM&#xA;&#x9; SGW_BPM_ESCALATION_INSTANCE EI WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE AI WITH(NOLOCK)&#xA;&#x9; ON EI.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID &#xA;WHERE&#xA;&#x9; (EI.ESCLATION_DATE_TIME &lt; GETDATE() AND&#xA;&#x9; EI.STATUS_VALUE = 'ACTV') AND&#xA;&#x9; AI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC')" sfwOracle="SELECT EI.*&#xA;FROM SGW_BPM_ESCALATION_INSTANCE EI&#xA;INNER JOIN SGW_BPM_ACTIVITY_INSTANCE AI&#xA;ON EI.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID&#xA;WHERE (EI.ESCLATION_DATE_TIME &lt; (SELECT UDF_GET_SYSTEM_DATE('Y')FROM DUAL) AND EI.STATUS_VALUE = 'ACTV') AND AI.STATUS_VALUE IN ('INPC','UNPC')" sfwPostgre="SELECT&#xD;&#xA;&#x9; EI.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ESCALATION_INSTANCE EI &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE AI &#xD;&#xA;&#x9; ON EI.ACTIVITY_INSTANCE_ID = AI.ACTIVITY_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; (EI.ESCLATION_DATE_TIME &lt; now() AND&#xD;&#xA;&#x9; EI.STATUS_VALUE = 'ACTV') AND&#xD;&#xA;&#x9; AI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute ID="EscalationName" sfwDataType="string" sfwPrivate="False" sfwValue="ibusBpmEscalation.icdoBpmEscalation.escalation_name" sfwType="Property" />
+    <attribute sfwType="Collection" sfwEntity="entBpmEscalationMessage" ID="lstBpmEscalationMessage" sfwValue="iclbBpmEscalationMessage" />
+    <attribute sfwType="Property" ID="IobjMainCDO" sfwValue="iobjMainCDO" />
+    <attribute ID="objBpmEscalation" sfwType="Object" sfwEntity="entBpmEscalation" sfwPrivate="False" sfwValue="ibusBpmEscalation" />
+    <attribute sfwValue="escalation_instance_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="EscalationInstanceId" sfwCaption="ID" />
+    <attribute sfwValue="escalation_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="EscalationId" sfwCaption="Escalation Id" />
+    <attribute sfwValue="activity_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActivityInstanceId" sfwCaption="Activity Instance Id" />
+    <attribute sfwValue="esclation_date_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="EsclationDateTime" sfwCaption="Esclation Date Time" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="6414" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwValue="processing_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="ProcessingFlag" sfwCaption="Processing Flag" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute ID="NotifyAdditionalRole" sfwDataType="string" sfwPrivate="False" sfwValue="NotifyAdditionalRole" sfwType="Property" />
+    <attribute ID="NotifyAdditionalRoleById" sfwDataType="int" sfwPrivate="False" sfwValue="NotifyAdditionalRoleById" sfwType="Property" />
+    <attribute ID="NotifyProcessOwner" sfwDataType="bool" sfwPrivate="False" sfwValue="NotifyProcessOwner" sfwType="Property" />
+  </attributes>
+  <methods />
+  <lifecycle />
+  <objectmethods>
+    <method ID="LoadBpmEscalationMessages" sfwReturnType="Void" />
+  </objectmethods>
+  <ExtraFields />
+</entity>

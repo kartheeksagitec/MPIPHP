@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmCorTemplatesLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCorrespondence" sfwResource="400 " sfwType="Lookup" sfwTitle="Correspondence Template Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Create Correspondence Template=Create Correspondence Template.htm;Update Correspondence Template=Update Correspondence Template.htm;Delete Correspondence Template=Delete Correspondence Template.htm" sfwEntity="entCorTemplates" sfwGridCollection="busCorTemplatesLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoCorTemplates" sfwQueryRef="entCorTemplates.Lookup" sfwMethodName="LoadCorrTemplates" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capTemplateName" Text="Template Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbSSN" sfwDataField="template_name" sfwQueryID="cdoCorTemplates" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblSSN" Text="Template Desc :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTemplateDesc" sfwDataField="template_desc" sfwQueryID="cdoCorTemplates" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLast_name" Text="Template Group :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="txbLastName" sfwDataField="template_group_value" sfwQueryID="cdoCorTemplates" sfwLoadType="CodeGroup" sfwLoadSource="19" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capAssociatedForms" Text="Associated Forms :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAssociatedForms" sfwDataField="associated_forms" sfwQueryID="cdoCorTemplates" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Result">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmCorTemplatesMaintenance" sfwMethodName="btnNew_Click" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmCorTemplatesMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="ainttemplateid=TemplateId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwNavigationParameter="TemplateId" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnEditTemplate" sfwMethodName="btnOpenTemplate_Click" sfwNavigationParameter="TemplateName=TemplateName" sfwRelatedControl="dgrResult" Text="EditTemplate" Visible="False" />
+                <sfwButton sfwMethodName="btnOpenDoc_Click" Text="Open Document" ID="btnOpenDocument" sfwRelatedControl="dgrResult" sfwNavigationParameter="TemplateName=TemplateName;TrackingId=TrackingId;LastGeneratedCorr=TemplateName;" CssClass="hideControl" />
+                <sfwButton ID="btnExportToExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" sfwSelection="Many" Text="Export To Excel" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwEntityField="TemplateId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenDocument" sfwEntityField="TemplateName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="TemplateDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Group">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TemplateGroupDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Destination">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DestinationDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Active">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrActiveFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Batch">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrBatchFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Online">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrOnlineFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Associated Forms" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AssociatedForms" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

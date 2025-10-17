@@ -1,0 +1,187 @@
+﻿<form xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="wfmBpmEventMaintenance"  sfwType="Maintenance" sfwTitle="BPM Event Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBpmEventLookup" sfwFormObjectType="RemoteObject" sfwEntity="entSolBpmEvent">
+  <initialload />
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar" EnableViewState="False">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" sfwNavigationParameter="aintPrimaryKey=BpmEventId" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="Bpm Event Details" sfwCaption="Bpm Event Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capBpmEventId" Text="BPM Event ID : " AssociatedControlID="lblBpmEventId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblBpmEventId" sfwEntityField="BpmEventId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capPriorityDocumentInd" Text="Priority Document : " AssociatedControlID="chkPriorityDocumentInd" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkPriorityDocumentInd" Visible="False" sfwEntityField="PriorityDocumentInd" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capEventDesc" Text="Event Description : " AssociatedControlID="txtEventDesc" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEventDesc" sfwEntityField="EventDesc" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capDocType" Text="Document Type : " AssociatedControlID="txtDocType" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDocType" sfwEntityField="DocType" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capEventTypeValue" Text="Event Type : " AssociatedControlID="ddlEventTypeValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlEventTypeValue" sfwEntityField="EventTypeValue" sfwLoadType="CodeGroup" sfwLoadSource="2010" DataTextField="description" DataValueField="code_value" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capLabel" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capDocClass" Text="Document Class : " AssociatedControlID="txtDocClass" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDocClass" sfwEntityField="DocClass" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capStatusValue" Text="Status : " AssociatedControlID="ddlStatusValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" sfwEntityField="StatusValue" sfwLoadType="CodeGroup" sfwLoadSource="2009" DataTextField="description" DataValueField="code_value" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPersonIdRequiredInd" Text="Person Id Required Indicator : " AssociatedControlID="chkPersonIdRequiredInd" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkPersonIdRequiredInd" sfwEntityField="PersonIdRequiredInd" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capOrgIdRequiredInd" Text="Org Id Required Indicator  : " AssociatedControlID="chkOrgIdRequiredInd" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkOrgIdRequiredInd" sfwEntityField="OrgIdRequiredInd" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel" sfwCaption="Process Details">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpen" sfwRelatedControl="grvGridView" sfwActiveForm="wfmBPMProcessMaintenance" sfwNavigationParameter="aintProcessId=process_id" sfwSelection="Many" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="New and Update" sfwBaseQuery="entSolBpmProcessInstance.LoadProcessActionForEvent" ID="grvGridView" AllowPaging="True" AllowSorting="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Process">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="name" sfwRelatedControl="btnOpen" sfwLinkable="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="activity" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Action">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="action_description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="process_id" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Parameters>
+                    <parameter ID="@BPM_EVENT_ID" sfwDataType="int" sfwEntityField="BpmEventId" />
+                  </Parameters>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwDataFormat="{0:G}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwDataFormat="{0:G}" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails />
+</form>

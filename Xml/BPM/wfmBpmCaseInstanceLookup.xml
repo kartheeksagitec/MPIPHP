@@ -1,0 +1,176 @@
+﻿<form ID="wfmBpmCaseInstanceLookup" sfwType="Lookup" sfwTitle="BPM Case Instance Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBpmCaseInstanceLookup" sfwEntity="entSolBpmCaseInstance" sfwRemoteObject="srvBPMN" sfwGridCollection="iclbBpmCaseInstance" sfwResource="20007010">
+  <initialload>
+    <query ID="cdoBpmCaseInstance" sfwQueryRef="entBpmCaseInstance.CaseInstanceLookup" sfwMethodName="LoadBpmCaseInstances" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Search Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPersonId" Text="MPID  : " AssociatedControlID="txtMpiPersonId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMpiPersonId" sfwDataField="c.mpi_person_id" sfwOperator="like" sfwQueryID="cdoBpmCaseInstance" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capOrgCode" Text="Organization ID : " AssociatedControlID="txtOrgId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOrgId" sfwQueryID="cdoBpmCaseInstance" sfwDataField="b.org_id" sfwOperator="=" sfwDataType="Numeric" />
+                <sfwImageButton ID="btnRetrieveOrg" ImageAlign="AbsMiddle" ImageUrl="~/Images/Lookup.jpg" sfwActiveForm="wfmOrganizationLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtOrgId" sfwSelectedIndex="OrgId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatus" Text="Status : " AssociatedControlID="txtCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" sfwQueryID="cdoBpmCaseInstance" sfwLoadType="CodeGroup" sfwDataField="b.status_value" sfwLoadSource="2004" DataTextField="description" DataValueField="code_value" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCaseName" Text="Case Name : " AssociatedControlID="txtCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCaseName" sfwQueryID="cdoBpmCaseInstance" sfwDataField="name" sfwOperator="=" sfwAutoQuery="entBpmCaseInstance.GetCaseName" sfwAutoColumns="name,name,like,String" sfwAutoFillMapping="txtCaseName=name" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCaseId" Text="Case ID : " AssociatedControlID="txtCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCaseId" sfwQueryID="cdoBpmCaseInstance" sfwDataField="b.case_id" sfwOperator="=" sfwDataType="Numeric" MaxLength="10" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capRequestId" Text="Request ID : " AssociatedControlID="txtRequestId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRequestId" sfwQueryID="cdoBpmCaseInstance" sfwDataField="b.request_id" sfwOperator="=" sfwDataType="Numeric" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capBCaseInstanceId" Text="Case Instance ID : " AssociatedControlID="txtBCaseInstanceId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtBCaseInstanceId" sfwDataField="b.case_instance_id" sfwQueryID="cdoBpmCaseInstance" sfwDataType="Numeric" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capPriorityCodeValue" Text="Priority : " AssociatedControlID="ddlPriorityCodeValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPriorityCodeValue" sfwDataField="priority_code_value" sfwQueryID="cdoBpmCaseInstance" sfwLoadType="CodeGroup" sfwOperator="=" sfwLoadSource="3008" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capInitiatedDateFrom" Text="Initiated Date From : " AssociatedControlID="txtCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtInitiatedDateFrom" sfwQueryID="cdoBpmCaseInstance" sfwDataField="b.created_date" sfwOperator="between" sfwRelatedControl="txtInitiatedDateTo" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                <CompareValidator ID="valInitiatedDateFrom" Text="*" sfwOperator="DataTypeCheck" ControlToValidate="txtBCreatedDateFrom" Type="Date" ErrorMessage="Initiated Date From must be in mm/dd/yyyy format." />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capInitiatedDateTo" Text="Initiated Date To : " AssociatedControlID="txtCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtInitiatedDateTo" sfwQueryID="cdoBpmCaseInstance" sfwDataField="b.created_date" sfwOperator="between" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                <CompareValidator ID="valInitiatedDateTo" Text="*" Operator="DataTypeCheck" ControlToValidate="txtBCreatedDateTo" Type="Date" ErrorMessage="Initiated Date To must be in mm/dd/yyyy format." />
+                <CompareValidator ID="valInitiatedDateRange" Text="*" Operator="GreaterThanEqual" ControlToValidate="txtInitiatedDateTo" ControlToCompare="txtInitiatedDateFrom" ErrorMessage="Initiated Date From cannot be greater than Initiated Date To." Type="Date" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" ImageUrl="~/Images/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" sfwActiveForm="wfmBpmCaseInstanceMaintenance" Text="Open Case Instance" sfwNavigationParameter="aintPrimaryKey=CaseInstanceId;aintCaseInstanceId=CaseInstanceId" ToolTip="Open selected BPM Case Instance record(s)" />
+                <sfwButton ID="btnOpenCase" ImageUrl="~/Images/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" sfwActiveForm="wfmBPMCaseMaintenance" Text="Open Case" sfwNavigationParameter="aintCaseId=CaseId" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Images/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+                <sfwButton ID="btnButton" sfwMethodName="btnDelete_Click" Text="Delete" sfwRelatedControl="dgrResult" sfwRefreshUpdatePanels="uppWorkflowNew" Visible="False" />
+                <sfwButton ID="btnExecutionPath" sfwMethodName="btnMap_Click" Text="Execution Path" sfwNavigationParameter="aint_case_instance_id=CaseInstanceId" sfwRelatedControl="dgrResult" SkinID="hideControl" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwSortExpression="CaseInstanceId desc" SortExpressionUpdated="true">
+                  <Columns>
+                    <TemplateField HeaderText="Case Instance ID" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="CaseInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Case ID" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenCase" sfwEntityField="CaseId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Case Name" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwRelatedControl="btnExecutionPath" sfwLinkable="True" sfwEntityField="objBpmCase.Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Request ID" Visible="False" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RequestId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person Name" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPerson.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Organization Name" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objOrganization.OrgName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrDisplayStatus" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Effective Date" ItemStyle.HorizontalAlign="Left" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmCase.EffectiveDate" sfwDataFormat="{0:d}" Visible="False" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Priority Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PriorityCodeValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails />
+</form>

@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmUserRoleMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207 " sfwType="Maintenance" sfwTitle="User Role Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Assign Roles=Assign Roles.htm;Create New Roles=Create New Roles.htm;Delete Role=Delete Role.htm;Modify Roles=Modify Roles.htm;Create New User=Create New User.htm;Modify User=Modify User.htm;Delete User=Delete User.htm;Security Overview=Security Overview.htm" sfwEntity="entUserRoles">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewUserRoles" />
+    <callmethods sfwMode="Update" sfwMethodName="FindUserRoles" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintUserSerialId=UserSerialId;aintRoleId=RoleId" Text="Save" />
+                <sfwButton ID="btnSaveNew" sfwMethodName="btnSaveNew_Click" sfwMode="New" sfwNavigationParameter="user_serial_id=UserSerialId;role_id=RoleId" Text="SaveNew" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="User Role">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capUserID" Text="User ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="txtuser_id" sfwEntityField="objUser.UserId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="txtuser_serial_id" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UserSerialId" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFirstName" Text="First Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="txtfirst_name" sfwEntityField="objUser.FirstName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capLastName" Text="Last Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="txtlast_name" sfwEntityField="objUser.LastName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capRole" Text="Role :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="role_description" DataValueField="role_id" ID="txtrolevalue" sfwMode="New" sfwLoadType="Query" sfwLoadSource="entRoles.Lookup" sfwEntityField="RoleId" />
+                <sfwLabel sfwMode="Update" ID="lblRoleDescription" sfwEntityField="RoleDescription" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capEffectiveStartDate" Text="Effective Start Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEffectiveStartDate" sfwDataFormat="{0:d}" sfwEntityField="EffectiveStartDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capEffectiveEndDate" Text="Effective End Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEffectiveEndDate" sfwDataFormat="{0:d}" sfwEntityField="EffectiveEndDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objUser" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

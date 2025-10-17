@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptWorkFlowMetricsReport" sfwActive="False" sfwDescription="WorkFlow Metrics Report" sfwStatus="Review" sfwType="Report" sfwReportName="rptWorkFlowMetrics.rpt" sfwReportCategory="701" version="4.0">
+  <initialload>
+    <query sfwQueryRef="entActivityInstance.rptWorkFlowMetrics" ID="cdoActivityInstance" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel ID="capIdteRequestDateFrom" Text="Date From : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="startTime" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+        <RequiredFieldValidator ControlToValidate="startTime" ErrorMessage="Date From is Required" Text="*" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel ID="capIdteRequestDateTo" Text="Date To : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="endTime" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+        <RequiredFieldValidator ControlToValidate="endTime" ErrorMessage="Date To is Required" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel ID="capIstrProcessName" Text="Process Name : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList DataTextField="description" DataValueField="process_id" ID="typeId" sfwLoadType="Query" sfwLoadSource="entProcess.LoadActiveProcesses" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel ID="capActivityTypeId" Text="Activity List: " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList DataTextField="display_name" DataValueField="activity_id" ID="qualifiedName" sfwLoadType="Query" sfwLoadSource="entActivity.LoadActivityList" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel ID="capUserID" Text="User ID : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList DataTextField="user_id" DataValueField="user_id" ID="userID" sfwLoadType="Query" sfwLoadSource="entUser.LOADACTIVEUSER" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel ID="capStatus" Text="Status : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList ID="status" sfwLoadType="CodeGroup" sfwLoadSource="20" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel ID="capPersonID" Text="PERSLink ID : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="personID" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel ID="lblOrgID" Text="Org Code ID : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="orgID" />
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

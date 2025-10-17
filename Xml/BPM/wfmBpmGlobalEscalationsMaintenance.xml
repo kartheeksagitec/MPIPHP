@@ -1,0 +1,169 @@
+﻿<form ID="wfmBpmGlobalEscalationsMaintenance" sfwType="Maintenance" sfwEntity="entBpmGlobalEscalations" sfwTitle="BPM Global Escalations Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBpmGlobalEscalationsLookup" sfwResource="20007025">
+  <initialload>
+    <callmethods sfwMethodName="OpenForm" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Global Activity Escalations">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnAdd1" sfwMethodName="btnGridViewAdd_Click" Text="Add" sfwRelatedControl="grvLstBpmGlobalActivityEscalations" />
+                <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpen" sfwRelatedControl="grvLstBpmGlobalActivityEscalations" sfwActiveForm="wfmBpmEscalationMaintenance" sfwNavigationParameter="aintEscalationId=EscalationId" CssClass="hideControl" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnGridViewDelete_Click" Text="Delete" sfwRelatedControl="grvLstBpmGlobalActivityEscalations" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="grvLstBpmGlobalActivityEscalations" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="lstBpmGlobalActivityEscalations" AllowEditing="True" sfwTwoWayBinding="True" sfwAllowNew="True">
+                  <Columns>
+                    <TemplateField HeaderText="ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EscalationId" sfwLinkable="True" sfwRelatedControl="btnOpen" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="EscalationName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Current Assignee">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="SendToCurrentAssignee" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Notify Process Owner">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="NotifyProcessOwner" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Lapse Type">
+                      <ItemTemplate>
+                        <sfwDropDownList sfwLoadType="CodeGroup" sfwEntityField="LapseTypeValue" sfwLoadSource="6412" DataTextField="description" DataValueField="code_value" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Minutes">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="LapseTimeInMinutes" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Recur Type">
+                      <ItemTemplate>
+                        <sfwDropDownList sfwLoadType="CodeGroup" sfwEntityField="RecurTypeValue" sfwLoadSource="6413" DataTextField="description" DataValueField="code_value" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Days1" ItemStyle.Width="100px">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="RecurTimeInDays" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Hours" ItemStyle.Width="100px">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="RecurTimeInHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Minutes" ItemStyle.Width="100px">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="RecurTimeInMinutes" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel" sfwCaption="Global Process Escalations">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnAdd" sfwMethodName="btnGridViewAdd_Click" Text="Add" sfwRelatedControl="grvLstBpmGlobalProcessEscalations" />
+                <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpen1" sfwRelatedControl="grvLstBpmGlobalProcessEscalations" sfwActiveForm="wfmBpmProcessEscalationMaintenance" sfwNavigationParameter="aintProcessEscalationId=ProcessEscalationId" CssClass="hideControl" />
+                <sfwButton ID="btnDelete1" sfwMethodName="btnDelete_Click" Text="Delete" sfwRelatedControl="grvLstBpmGlobalProcessEscalations" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView sfwEntityField="lstBpmGlobalProcessEscalations" ID="grvLstBpmGlobalProcessEscalations" AllowPaging="True" AllowSorting="True" sfwSelection="Many" AllowEditing="True" sfwTwoWayBinding="True" sfwAllowNew="True">
+                  <Columns>
+                    <TemplateField HeaderText="ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ProcessEscalationId" sfwLinkable="True" sfwRelatedControl="btnOpen1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="ProcessEscalationName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Notify Process Owner">
+                      <ItemTemplate>
+                        <sfwCheckBox sfwEntityField="NotifyProcessOwner" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Lapse Type">
+                      <ItemTemplate>
+                        <sfwDropDownList sfwLoadType="CodeGroup" sfwEntityField="LapseTypeValue" sfwLoadSource="3006" DataTextField="description" DataValueField="code_value" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Minutes">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="LapseTimeInMinutes" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Recur Type">
+                      <ItemTemplate>
+                        <sfwDropDownList sfwLoadType="CodeGroup" sfwEntityField="RecurTypeValue" sfwLoadSource="6413" DataTextField="description" DataValueField="code_value" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Days">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="RecurTimeInDays" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Hours">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="RecurTimeInHours" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Minutes">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="RecurTimeInMinutes" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails>
+    <entityfield ID="lstBpmGlobalActivityEscalations" sfwNewAutoLoad="True" sfwUpdateAutoLoad="True" />
+    <entityfield ID="lstBpmGlobalProcessEscalations" sfwNewAutoLoad="True" sfwUpdateAutoLoad="True" />
+  </loaddetails>
+</form>

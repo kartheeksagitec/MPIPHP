@@ -1,0 +1,124 @@
+﻿<form ID="wfmSystemSettingsLookup" sfwFormObject="busSystemSettings" sfwType="Lookup" sfwTitle="System Settings Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmSystemSettingsLookup" sfwEntity="entSystemSettings" sfwGridCollection="busLookup.iclbLookupResult" sfwResource="207">
+  <initialload>
+    <query sfwQueryRef="entSystemSettings.LookUp" ID="entSystemSettings" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capSystemSettingId" Text="System Setting ID : " AssociatedControlID="txtSystemSettingId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSystemSettingId" sfwQueryID="entSystemSettings" sfwDataField="system_setting_id" sfwOperator="=" sfwDataType="Numeric" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSettingName" Text="Setting Name : " AssociatedControlID="txtSettingName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSettingName" sfwQueryID="entSystemSettings" sfwDataField="setting_name" sfwOperator="like" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capSettingType" Text="Setting Type : " AssociatedControlID="txtSettingType" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSettingType" sfwQueryID="entSystemSettings" sfwDataField="setting_type" sfwOperator="like" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSettingValue" Text="Setting Value :  " AssociatedControlID="txtSettingValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSettingValue" sfwDataField="setting_value" sfwOperator="=" sfwQueryID="entSystemSettings" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capEncryptedFlag" Text="Encrypted Flag : " AssociatedControlID="ddlEncryptedFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlEncryptedFlag" sfwQueryID="entSystemSettings" sfwDataField="encrypted_flag">
+                  <ListItem Text="All" />
+                  <ListItem Text="Yes" Value="Y" />
+                  <ListItem Text="No" Value="N" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwMethodName="btnNew_Click" sfwOperateOn="tblCriteria" sfwActiveForm="wfmSystemSettingsMaintenance" Text="New" />
+                <sfwButton ID="btnOpen" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" Text="Open" sfwActiveForm="wfmSystemSettingsMaintenance" sfwNavigationParameter="aintPrimaryKey=SystemSettingId" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many" AllowFiltering="True" AllowGrouping="True">
+                  <Columns>
+                    <TemplateField HeaderText="System Setting ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="SystemSettingId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Setting Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SettingName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Setting Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SettingType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Setting Value">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SettingValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Encrypted Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EncryptedFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Refreshable">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Refreshable" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails />
+</form>

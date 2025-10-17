@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmYearEndProcessRequestLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="215 " sfwType="Lookup" sfwTitle="Year End Process Request Lookup" version="3.5" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmYearEndProcessRequestLookup" sfwEntity="entYearEndProcessRequest" sfwGridCollection="busYearEndProcessRequestLookup.iclbYearEndProcessRequest">
+  <initialload>
+    <query ID="cdoYearEndProcessRequest" sfwQueryRef="entYearEndProcessRequest.YearEndProcessRequestLookup" sfwMethodName="LoadYearEndProcessRequests" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtYearEndProcessRequestId" ID="capYearEndProcessRequestId" Text="Year End Process Request ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtYearEndProcessRequestId" sfwDataField="year_end_process_request_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoYearEndProcessRequest" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtYear" ID="capYear" Text="Year : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtYear" sfwDataField="year" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoYearEndProcessRequest" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlYearEndProcessValue" ID="capYearEndProcessValue" Text="Year End Process : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlYearEndProcessValue" sfwDataField="year_end_process_value" sfwOperator="like" sfwQueryID="cdoYearEndProcessRequest" sfwLoadType="CodeGroup" sfwLoadSource="7055" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmYearEndProcessRequestMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="astrYearEndProcessValue=ddlYearEndProcessValue" Text="New" sfwToolBarGrid="dgrResult" sfwToolBarGridImage="StaticResources/neoGrid-images/btnNew_Click.png" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmYearEndProcessRequestMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintyearendprocessrequestid=YearEndProcessRequestId" sfwRelatedControl="dgrResult" Text="Open" Visible="False" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Year End Process Request ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="YearEndProcessRequestId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Year">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Year" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Year End Process">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="YearEndProcessDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StatusDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

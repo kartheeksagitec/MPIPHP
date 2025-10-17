@@ -1,0 +1,123 @@
+﻿<form ID="wfmBPMActivityMaintenance" sfwResource="20007001" sfwRemoteObject="srvCommon" sfwType="Maintenance" sfwTitle="BPMN Activity Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBPMActivityLookup" sfwEntity="entBpmActivity">
+  <initialload>
+    <callmethods sfwMethodName="FindBPMActivity" sfwMode="New" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" sfwNavigationParameter="aintActivityId=ActivityId" />
+                <sfwButton ID="btnButton" sfwMethodName="btnCancel_Click" Text="Reset" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="BPMActivity Details" sfwCaption="Activity Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="Process Name" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDescription" sfwEntityField="objBpmProcess.Name" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSlaHours" Text="Sla Hours : " AssociatedControlID="txtSlaHours" sfwIsCaption="True" sfwVisibleRule="Visibel Rule- Display SLA if User Task is present" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSlaHours" sfwEntityField="SlaHours" sfwVisibleRule="Visibel Rule- Display SLA if User Task is present" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capSlaMinutes" Text="Sla Minutes : " AssociatedControlID="txtSlaMinutes" sfwIsCaption="True" sfwVisibleRule="Visibel Rule- Display SLA if User Task is present" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSlaMinutes" sfwEntityField="SlaMinutes" sfwVisibleRule="Visibel Rule- Display SLA if User Task is present" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSlaDays" Text="Sla Days : " AssociatedControlID="txtSlaDays" sfwIsCaption="True" sfwVisibleRule="Visibel Rule- Display SLA if User Task is present" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSlaDays" sfwEntityField="SlaDays" sfwVisibleRule="Visibel Rule- Display SLA if User Task is present" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Activity Name" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblName" sfwEntityField="Name" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="Activity Description" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" sfwEntityField="ActivityTypeDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="Role Name" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlRoleId" DataTextField="role_description" DataValueField="role_id" Visible="False" sfwLoadType="Query" sfwLoadSource="entBpmActivity.Lookup" sfwEntityField="RoleId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblActivityId" Visible="False" sfwEntityField="ActivityId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessId" Visible="False" sfwEntityField="objBpmProcess.ProcessId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwDataFormat="{0:G}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwDataFormat="{0:G}" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objBpmProcess" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

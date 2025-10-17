@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_NOTES]
+    FROM VARCHAR (2000) NULL;
+

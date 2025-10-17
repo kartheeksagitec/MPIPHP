@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entBenefitProvisionUvhpFactor" sfwTableName="sgt_benefit_provision_uvhp_factor" sfwView="False" sfwDataObjectID="doBenefitProvisionUvhpFactor">
+  <queries>
+    <query ID="GetEEUVHPFactor" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select BENEFIT_OPTION_FACTOR from SGT_BENEFIT_PROVISION_UVHP_FACTOR &#xD;&#xA;where PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID and &#xD;&#xA;PARTICIPANT_AGE = @PARTICIPANT_AGE and &#xD;&#xA;SPOUSE_AGE = @SPOUSE_AGE">
+      <parameters>
+        <parameter ID="@PLAN_BENEFIT_ID" sfwDataType="int" />
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+        <parameter ID="@SPOUSE_AGE" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUVHPFactorForLife" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select BENEFIT_OPTION_FACTOR from SGT_BENEFIT_PROVISION_UVHP_FACTOR &#xD;&#xA;where PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID and &#xD;&#xA;PARTICIPANT_AGE = @PARTICIPANT_AGE &#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PLAN_BENEFIT_ID" sfwDataType="int" />
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUVHP10LAFactors" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select EARLY_REDUCTION_FACTOR from SGT_QDRO_FACTOR &#xD;&#xA;where BENEFIT_OPTION_VALUE = '10LA' and &#xD;&#xA;AGE = @PARTICIPANT_AGE ">
+      <parameters>
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="benefit_provision_uvhp_factor_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitProvisionUvhpFactorId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="plan_benefit_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PlanBenefitId" sfwIsSequence="False" sfwCaption="Plan Benefit Id" />
+    <attribute sfwValue="participant_age" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="ParticipantAge" sfwIsSequence="False" sfwCaption="Participant Age" />
+    <attribute sfwValue="spouse_age" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="SpouseAge" sfwIsSequence="False" sfwCaption="Spouse Age" />
+    <attribute sfwValue="benefit_option_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="BenefitOptionFactor" sfwIsSequence="False" sfwCaption="Benefit Option Factor" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

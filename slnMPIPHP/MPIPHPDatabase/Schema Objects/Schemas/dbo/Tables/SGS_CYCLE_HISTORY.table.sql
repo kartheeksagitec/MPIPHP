@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[SGS_CYCLE_HISTORY] (
+    [CYCLE_NO]   [dbo].[UDT_INT]      NOT NULL,
+    [START_TIME] [dbo].[UDT_DATETIME] NOT NULL,
+    [END_TIME]   [dbo].[UDT_DATETIME] NOT NULL
+);
+

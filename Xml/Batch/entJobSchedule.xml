@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entJobSchedule" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwErrorTable="sgs_job_schedule_error" sfwParentKey="job_schedule_id" sfwParentKeyValue="icdoJobSchedule.job_schedule_id" sfwMainCDO="icdoJobSchedule" sfwStatusColumn="status_value" sfwObjectID="busJobSchedule" sfwTableName="sgs_job_schedule" sfwView="False" sfwDataObjectID="doJobSchedule">
+  <rules>
+    <rule ID="BatchScheduleNameRequired" sfwMessage="Batch schedule name is required" sfwExpression="(string.IsNullOrEmpty(this.icdoJobSchedule.schedule_name))" sfwObjectBased="True" />
+    <rule ID="DoesFrequencySubdayIntervalHaveValidValues" sfwMessageId="5009" sfwExpression="(this.DoesFrequencySubdayIntervalHaveValidValues() == False)" sfwObjectBased="True" />
+    <rule ID="EndDateIsNullWhenEndDateShouldbeEntered" sfwMessageId="5007" sfwExpression="(this.icdoJobSchedule.end_date == DateTime.MinValue) &amp;&amp; &#xA;(this.icdoJobSchedule.lstrEndDatePresent == &quot;ENDDATEPOPULATED&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.frequency_type_value != &quot;64&quot;)" sfwObjectBased="True" />
+    <rule ID="FrequencyIntervalNotSelectedForWeeklyFreqType" sfwMessageId="5008" sfwExpression="(this.icdoJobSchedule.frequency_type_value == &quot;8&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.UI_Freq_Interval_For_Weekly_Frequency == 0)" sfwObjectBased="True" />
+    <rule ID="IsCountofDetailScheduleRecordLessThanOrEqualToZero" sfwMessageId="5006" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entJobScheduleDetail.CountOfRecordsForHeaderId&quot;, this.icdoJobSchedule.job_schedule_id) &lt;= 0)" sfwObjectBased="True" />
+    <rule ID="IsEndDateGreaterThanStartDate" sfwMessage="End Date should be after Start Date" sfwExpression="(this.icdoJobSchedule.lstrEndDatePresent == &quot;ENDDATEPOPULATED&quot;) &amp;&amp; &#xA;!(this.icdoJobSchedule.end_date &gt; this.icdoJobSchedule.start_date)" sfwObjectBased="True" />
+    <rule ID="IsFrequencyTypeDaily" sfwExpression="(this.icdoJobSchedule.frequency_type_value == &quot;4&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.status_value != &quot;ADHC&quot;)" sfwObjectBased="True" />
+    <rule ID="IsFrequencyTypeImmediate" sfwExpression="(this.icdoJobSchedule.frequency_type_value == &quot;64&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.status_value != &quot;ADHC&quot;)" sfwObjectBased="True" />
+    <rule ID="IsFrequencyTypeMonthly" sfwExpression="(this.icdoJobSchedule.frequency_type_value == &quot;16&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.status_value != &quot;ADHC&quot;)" sfwObjectBased="True" />
+    <rule ID="IsFrequencyTypeMonthlyRelative" sfwExpression="(this.icdoJobSchedule.frequency_type_value == &quot;32&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.status_value != &quot;ADHC&quot;)" sfwObjectBased="True" />
+    <rule ID="IsFrequencyTypeNotImmediate" sfwExpression="!(this.icdoJobSchedule.frequency_type_value == &quot;64&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.status_value != &quot;ADHC&quot;)" sfwObjectBased="True" />
+    <rule ID="IsFrequencyTypeWeekly" sfwExpression="(this.icdoJobSchedule.frequency_type_value == &quot;8&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.status_value != &quot;ADHC&quot;)" sfwObjectBased="True" />
+    <rule ID="IsStartDateLessThanTodaysDate" sfwMessageId="5010" sfwExpression="!(this.icdoJobSchedule.start_date &gt;= RFunc.CurrentDate()) &amp;&amp; &#xA;(this.icdoJobSchedule.frequency_type_value != &quot;64&quot;)" sfwObjectBased="True" />
+    <rule ID="IsStatusSubmitForApproval" sfwExpression="(this.icdoJobSchedule.status_value == &quot;SFAP&quot;)" sfwObjectBased="True" />
+    <rule ID="IsStatusValid" sfwExpression="(this.icdoJobSchedule.status_value == &quot;VALD&quot;)" sfwObjectBased="True" />
+    <rule ID="IsThereAnyDetailRecordInReviewStatus" sfwMessageId="5001" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entJobScheduleDetail.CountOfDetailRecordInReviewStatus&quot;, this.icdoJobSchedule.job_schedule_id) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="IsThereAnyDetailStepThatHasBeenDuplicated" sfwMessageId="5002" sfwExpression="(this.IsDuplicateStepsPresent() == True)" sfwObjectBased="True" />
+    <rule ID="OccuranceIsEveryAndEndTimeNotEntered" sfwMessageId="5011" sfwExpression="(this.icdoJobSchedule.lstrSubdayFrequency == &quot;EVERY&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.end_time == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="OccuranceIsEveryAndStartTimeNotEntered" sfwMessageId="5106" sfwExpression="(this.icdoJobSchedule.lstrSubdayFrequency == &quot;EVERY&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.StartTime_For_Every == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="OccuranceIsOnceAndStartTimeNotEntered" sfwMessageId="5013" sfwExpression="(this.icdoJobSchedule.lstrSubdayFrequency == &quot;ONCE&quot;) &amp;&amp; &#xA;(this.icdoJobSchedule.StartTime_For_Once == DateTime.MinValue) &amp;&amp; &#xA;(this.icdoJobSchedule.frequency_type_value != &quot;64&quot;)" sfwObjectBased="True" />
+    <rule ID="StartDateIsNull" sfwMessageId="5014" sfwExpression="(this.icdoJobSchedule.start_date == DateTime.MinValue) &amp;&amp; &#xA;(this.icdoJobSchedule.frequency_type_value != &quot;64&quot;)" sfwObjectBased="True" />
+    <rule ID="VisibilityOfRunImmediateButton" sfwExpression="(this.icdoJobSchedule.active_flag == &quot;Y&quot;)" sfwObjectBased="True" />
+    <rule ID="ShowSuppressHardErrorCheckBox" sfwExpression="(this.icdoJobSchedule.job_schedule_id == 54)" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="lstJobScheduleDetail" sfwMethodName="LoadJobScheduleDetailsForDelete" />
+    <property ID="SoftErrors" sfwMethodName="LoadErrors" />
+  </delete>
+  <checklist />
+  <initialload>
+    <item ID="IsFrequencyTypeWeekly" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsFrequencyTypeDaily" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsFrequencyTypeMonthly" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsFrequencyTypeMonthlyRelative" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsStatusValid" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsStatusSubmitForApproval" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsFrequencyTypeImmediate" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsFrequencyTypeNotImmediate" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibilityOfRunImmediateButton" sfwMode="All" sfwStatus="Active" />
+    <item ID="BatchScheduleNameRequired" sfwMode="All" sfwStatus="Active" />
+    <item ID="DoesFrequencySubdayIntervalHaveValidValues" sfwMode="All" sfwStatus="Active" />
+    <item ID="ShowSuppressHardErrorCheckBox" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror>
+    <item ID="IsThereAnyDetailRecordInReviewStatus" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsCountofDetailScheduleRecordLessThanOrEqualToZero" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsThereAnyDetailStepThatHasBeenDuplicated" sfwMode="All" sfwStatus="Active" />
+    <item ID="DoesFrequencySubdayIntervalHaveValidValues" sfwMode="All" sfwStatus="Active" />
+  </softerror>
+  <harderror>
+    <item ID="EndDateIsNullWhenEndDateShouldbeEntered" sfwMode="All" sfwStatus="Active" />
+    <item ID="StartDateIsNull" sfwMode="All" sfwStatus="Active" />
+    <item ID="OccuranceIsEveryAndStartTimeNotEntered" sfwMode="All" sfwStatus="Active" />
+    <item ID="OccuranceIsEveryAndEndTimeNotEntered" sfwMode="All" sfwStatus="Active" />
+    <item ID="FrequencyIntervalNotSelectedForWeeklyFreqType" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsStartDateLessThanTodaysDate" sfwMode="New" sfwStatus="Active" />
+    <item ID="BatchScheduleNameRequired" sfwMode="All" sfwStatus="Active" />
+    <item ID="DoesFrequencySubdayIntervalHaveValidValues" sfwMode="All" sfwStatus="Active" />
+    <item ID="IsEndDateGreaterThanStartDate" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_job_schedule (nolock)">
+      <parameters />
+    </query>
+    <query ID="GetJobScheduleForStepNo" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Select Top 1 JS.* From SGS_Job_Schedule JS (nolock) &#xD;&#xA; Join SGS_Job_Schedule_Detail JSD (nolock)&#xD;&#xA;  on (JSD.Job_Schedule_Id = JS.Job_Schedule_Id)&#xD;&#xA;Where&#xD;&#xA; JS.Status_Value = @Status_Value &#xD;&#xA; and Frequency_Type_Value = @Frequency_Type_Value &#xD;&#xA; and JSD.Step_No = @Step_No&#xD;&#xA; and Not Exists &#xD;&#xA;  (Select 1 from SGS_Job_Schedule_Detail where Job_Schedule_Id = JS.Job_Schedule_Id and Step_No &lt;&gt; @Step_No)&#xD;&#xA;Order by JS.Job_Schedule_Id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@Status_Value" sfwDataType="string" />
+        <parameter ID="@Frequency_Type_Value" sfwDataType="int" />
+        <parameter ID="@Step_No" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetActiveSchedules" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_JOB_SCHEDULE WHERE ACTIVE_FLAG='Y' AND STATUS_VALUE IN ('ONSE','ONDE','ADHC') ORDER BY LOGICAL_ID, PRIORITY_VALUE ASC">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="job_schedule_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="JobScheduleId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="schedule_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="False" ID="ScheduleName" sfwIsSequence="False" sfwCaption="Schedule Name" />
+    <attribute sfwValue="active_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ActiveFlag" sfwIsSequence="False" sfwCaption="Active Flag" />
+    <attribute sfwType="Description" ID="FrequencyTypeDescription" sfwCaption="Frequency Type" sfwValue="frequency_type_description" />
+    <attribute sfwValue="frequency_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="FrequencyTypeId" sfwCodeID="6017" sfwIsSequence="False" sfwCaption="Frequency Type" />
+    <attribute sfwValue="frequency_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="FrequencyTypeValue" sfwIsSequence="False" sfwCaption="Frequency Type" />
+    <attribute sfwValue="frequency_interval" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="FrequencyInterval" sfwIsSequence="False" sfwCaption="Frequency Interval" />
+    <attribute sfwValue="freq_subday_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="FreqSubdayType" sfwIsSequence="False" sfwCaption="Freq Subday Type" />
+    <attribute sfwValue="freq_subday_interval" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="FreqSubdayInterval" sfwIsSequence="False" sfwCaption="Freq Subday Interval" />
+    <attribute sfwValue="freq_relative_interval" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="FreqRelativeInterval" sfwIsSequence="False" sfwCaption="Freq Relative Interval" />
+    <attribute sfwValue="freq_recurance_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="FreqRecuranceFactor" sfwIsSequence="False" sfwCaption="Freq Recurance Factor" />
+    <attribute sfwValue="start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="StartDate" sfwIsSequence="False" sfwCaption="Start Date" />
+    <attribute sfwValue="end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndDate" sfwIsSequence="False" sfwCaption="End Date" />
+    <attribute sfwValue="start_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="StartTime" sfwIsSequence="False" sfwCaption="Start Time" />
+    <attribute sfwValue="end_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndTime" sfwIsSequence="False" sfwCaption="End Time" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="6040" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwType="Description" ID="PriorityDescription" sfwCaption="Priority" sfwValue="priority_description" />
+    <attribute sfwValue="priority_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PriorityId" sfwCodeID="6019" sfwIsSequence="False" sfwCaption="Priority" />
+    <attribute sfwValue="priority_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="PriorityValue" sfwIsSequence="False" sfwCaption="Priority" />
+    <attribute sfwValue="cancel_procedure_notes" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="CancelProcedureNotes" sfwIsSequence="False" sfwCaption="Cancel Procedure Notes" />
+    <attribute sfwValue="restart_procedure_notes" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="RestartProcedureNotes" sfwIsSequence="False" sfwCaption="Restart Procedure Notes" />
+    <attribute sfwValue="batch_status_email_recipient_groups" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="BatchStatusEmailRecipientGroups" sfwIsSequence="False" sfwCaption="Batch Status Email Recipient Groups" />
+    <attribute sfwValue="batch_error_email_recipient_groups" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="BatchErrorEmailRecipientGroups" sfwIsSequence="False" sfwCaption="Batch Error Email Recipient Groups" />
+    <attribute sfwValue="execute_on_org_holiday_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="ExecuteOnOrgHolidayFlag" sfwIsSequence="False" sfwCaption="Execute On Org Holiday Flag" />
+    <attribute sfwValue="schedule_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="ScheduleCode" sfwIsSequence="False" sfwCaption="Schedule Code" />
+    <attribute sfwValue="cancellable_job_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="CancellableJobFlag" sfwIsSequence="False" sfwCaption="Cancellable Job Flag" />
+    <attribute sfwValue="is_annual_statement_generated_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsAnnualStatementGeneratedFlag" sfwCaption="Is Annual Statement Generated Flag" />
+    <attribute sfwValue="logical_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="LogicalId" sfwCaption="Logical Id" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UIFreqIntervalForDailyFrequency" sfwValue="icdoJobSchedule.UI_Freq_Interval_For_Daily_Frequency" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UIFreqRecFactorWeekly" sfwValue="icdoJobSchedule.UI_Freq_Rec_Factor_Weekly" />
+    <attribute sfwDataType="int" sfwType="Property" ID="Monday" sfwValue="icdoJobSchedule.Monday" />
+    <attribute sfwDataType="int" sfwType="Property" ID="Wednesday" sfwValue="icdoJobSchedule.Wednesday" />
+    <attribute sfwDataType="int" sfwType="Property" ID="Friday" sfwValue="icdoJobSchedule.Friday" />
+    <attribute sfwDataType="int" sfwType="Property" ID="Saturday" sfwValue="icdoJobSchedule.Saturday" />
+    <attribute sfwDataType="int" sfwType="Property" ID="Tuesday" sfwValue="icdoJobSchedule.Tuesday" />
+    <attribute sfwDataType="int" sfwType="Property" ID="Thursday" sfwValue="icdoJobSchedule.Thursday" />
+    <attribute sfwDataType="int" sfwType="Property" ID="Sunday" sfwValue="icdoJobSchedule.Sunday" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UIFreqIntervalForMonthlyFrequency" sfwValue="icdoJobSchedule.UI_Freq_Interval_For_Monthly_Frequency" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UIFreqRecFactorMonthly" sfwValue="icdoJobSchedule.UI_Freq_Rec_Factor_Monthly" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UIFreqIntervalForMonthlyRelativeFrequency" sfwValue="icdoJobSchedule.UI_Freq_Interval_For_Monthly_Relative_Frequency" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UIFreqRecFactorMonthlyRelative" sfwValue="icdoJobSchedule.UI_Freq_Rec_Factor_Monthly_Relative" />
+    <attribute sfwDataType="string" sfwType="Property" ID="LstrSubdayFrequency" sfwValue="icdoJobSchedule.lstrSubdayFrequency" />
+    <attribute sfwDataType="string" sfwType="Property" ID="StartTimeForOnceUI" sfwValue="icdoJobSchedule.StartTimeForOnceUI" />
+    <attribute sfwDataType="int" sfwType="Property" ID="FreqSubDayTypeOnScreen" sfwValue="icdoJobSchedule.Freq_SubDay_Type_On_Screen" />
+    <attribute sfwDataType="string" sfwType="Property" ID="StartTimeForEveryUI" sfwValue="icdoJobSchedule.StartTimeForEveryUI" />
+    <attribute sfwDataType="string" sfwType="Property" ID="EndTimeForUI" sfwValue="icdoJobSchedule.EndTimeForUI" />
+    <attribute sfwDataType="string" sfwType="Property" ID="LstrEndDatePresent" sfwValue="icdoJobSchedule.lstrEndDatePresent" />
+    <attribute sfwType="Collection" sfwEntity="entJobScheduleDetail" ID="lstJobScheduleDetail" sfwValue="iclbJobScheduleDetail" />
+    <attribute sfwType="Collection" sfwEntity="entJobHeader" ID="lstJobHeader" sfwValue="iclbJobHeader" />
+    <attribute sfwType="Property" ID="SoftErrors" sfwValue="ibusSoftErrors" />
+    <attribute ID="lstJobScheduleParametersChildGrid" sfwType="Collection" sfwValue="iclbJobScheduleParametersChildGrid" sfwEntity="entJobScheduleParams" sfwPrivate="False" />
+  </attributes>
+  <objectmethods>
+    <method ID="btn_SubmitForApproval_Click" sfwReturnType="Void" />
+    <method ID="btn_Approve_Click" sfwReturnType="Void" />
+    <method ID="btn_RunImmediate_Click" sfwReturnType="ArrayList" />
+    <method ID="btnMoveJobScheduleUp" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintJobScheduleDetailId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="btnMoveJobScheduleDown" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintJobScheduleDetailId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="LoadJobScheduleDetailsForDelete" sfwReturnType="Void" />
+    <method ID="LoadErrors" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

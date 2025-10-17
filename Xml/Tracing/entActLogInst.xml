@@ -1,0 +1,56 @@
+﻿<entity ID="entActLogInst" sfwView="False" sfwActive="True" sfwMainCDO="icdoActLogInst" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_act_log_inst" sfwObjectID="busActLogInst" sfwDataObjectID="doActLogInst">
+  <attributes>
+    <attribute ID="objActLogApp" sfwPrivate="False" sfwEntity="entActLogApp" sfwValue="ibusActLogApp" sfwType="Object" />
+    <attribute ID="lstActLogInstActn" sfwPrivate="False" sfwEntity="entActLogInstActn" sfwValue="iclbActLogInstActn" sfwType="Collection" />
+    <attribute ID="lstActLogThresholdActn" sfwPrivate="False" sfwEntity="entActLogThresholdActn" sfwValue="iclbActLogThresholdActn" sfwType="Collection" />
+    <attribute ID="lstActLogThresholdQuery" sfwPrivate="False" sfwEntity="entActLogThresholdQuery" sfwValue="iclbActLogThresholdQuery" sfwType="Collection" />
+    <attribute ID="ActionCount" sfwDataType="int" sfwPrivate="False" sfwValue="iintActionCount" sfwType="Property" sfwCaption="Action Count" />
+    <attribute sfwValue="act_log_inst_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogInstId" sfwCaption="ID" />
+    <attribute sfwValue="act_log_app_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogAppId" sfwCaption="Act Log App Id" />
+    <attribute sfwValue="actor_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="ActorName" sfwCaption="Actor Name" />
+    <attribute sfwValue="machine_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="MachineName" sfwCaption="Machine Name" />
+    <attribute sfwValue="act_log_initial_uid" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="ActLogInitialUid" sfwCaption="Act Log Initial Uid" />
+    <attribute sfwValue="act_log_uid" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="ActLogUid" sfwCaption="Act Log Uid" />
+    <attribute sfwValue="start_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="StartTime" sfwCaption="Start Time" />
+    <attribute sfwValue="end_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndTime" sfwCaption="End Time" />
+    <attribute sfwValue="window_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="WindowName" sfwCaption="Window Name" />
+    <attribute sfwValue="invalid_login_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="InvalidLoginFlag" sfwCaption="Invalid Login Flag" />
+    <attribute sfwValue="ip_address" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="IpAddress" sfwCaption="Ip Address" />
+    <attribute sfwValue="mac_address" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="MacAddress" sfwCaption="Mac Address" />
+    <attribute sfwValue="os_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="OsName" sfwCaption="Os Name" />
+    <attribute sfwValue="browser_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="BrowserName" sfwCaption="Browser Name" />
+    <attribute sfwValue="is_mobile_device" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsMobileDevice" sfwCaption="Is Mobile Device" />
+    <attribute sfwValue="extra_details" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ExtraDetails" sfwCaption="Extra Details" />
+    <attribute sfwValue="is_browserclose" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsBrowserclose" sfwCaption="Is Browserclose" />
+    <attribute sfwValue="browserclose_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="BrowsercloseTime" sfwCaption="Browserclose Time" />
+    <attribute sfwValue="ref_act_log_inst_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RefActLogInstId" sfwCaption="Ref Act Log Inst Id" />
+  </attributes>
+  <methods>
+    <method ID="FindActLogInst" sfwMethodType="Load" sfwMode="All" sfwLoadMainCDO="True" sfwParameter="aintPrimaryKey" sfwLoadMainObject="True">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item sfwParameter="iintActionCount" ID="ActionCount" sfwDataType="int" sfwItemType="Property" />
+      <parameter ID="iintActionCount" sfwDataType="int" />
+    </method>
+  </methods>
+  <ExtraFields />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select a.* , b.app_name, (select count(*) from sgs_act_log_inst_actn c where c.act_log_inst_id = a.act_log_inst_id) as action_count&#xA;  from sgs_act_log_inst a,&#xA;       sgs_act_log_app b&#xA; where a.act_log_app_id = b.act_log_app_id&#xA;order by 1 desc">
+      <parameters />
+      <mappedcolumns>
+        <column ID="app_name" sfwEntityField="objActLogApp.AppName" />
+        <column ID="action_count" sfwEntityField="ActionCount" />
+      </mappedcolumns>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <lifecycle />
+  <objectmethods />
+</entity>

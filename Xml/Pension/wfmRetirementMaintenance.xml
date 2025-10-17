@@ -1,0 +1,238 @@
+﻿<form ID="wfmRetirementMaintenance" sfwType="Maintenance" sfwRemoteObject="srvPerson" sfwEntity="entRetirementWizard" sfwTitle="Retirement Wizard Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmRetirementWizardLookup">
+  <initialload>
+    <custommethod sfwMethodName="NewRetirementWizard" sfwReturnType="MPIPHP.BusinessObjects.busRetirementWizard" sfwMode="New">
+      <parameter ID="MpiPersonId" sfwField="MpiPersonId" />
+    </custommethod>
+    <custommethod sfwMethodName="FindRetirementWizard" sfwReturnType="MPIPHP.BusinessObjects.busRetirementWizard" sfwMode="Update">
+      <parameter ID="aintbenefitapplicationid" sfwField="aintbenefitapplicationid" />
+    </custommethod>
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlPersonInformation" sfwCaption="Person Information">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblMpiPersonId" ID="capMpiPersonId" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblMpiPersonId" sfwEntityField="objPerson.MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblDateOfBirth" ID="capDateOfBirth" Text="Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateOfBirth" sfwDataFormat="{0:d}" sfwEntityField="objPerson.IdtDateofBirth" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="objPerson.IstrFullName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrLast4DigitsofSSN" ID="capIstrLast4DigitsofSSN" Text="Last 4 Digits of SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrLast4DigitsofSSN" sfwEntityField="objPerson.IstrLast4DigitsofSSN" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlBenefitElection" sfwCaption="Benefit Election">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTable ID="tblOnline" CssClass="Table">
+                  <sfwRow>
+                    <sfwColumn>
+                      <sfwLabel ID="lblLabell" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                      <sfwLabel AssociatedControlID="ddlIintPlanID" ID="capIintPlanID" Text="Eligible Plan : " sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwCascadingDropDownList DataTextField="plan_name" DataValueField="plan_id" ID="ddlIintPlanID" sfwLoadType="Query" sfwLoadSource="entPerson.GetPlanByPersonId" sfwEntityField="IintEligiblePlanId" sfwParameters="Person_ID=lblPersonId" />
+                    </sfwColumn>
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn />
+                    <sfwColumn />
+                    <sfwColumn />
+                    <sfwColumn />
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn>
+                      <sfwLabel ID="lblLabel" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                      <sfwLabel AssociatedControlID="txtApplicationReceivedDate" ID="capApplicationReceivedDate" Text="Application Received Date : " sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwTextBox ID="txtApplicationReceivedDate" sfwDataFormat="{0:d}" sfwEntityField="ApplicationReceivedDate" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwLabel ID="lblLabel1" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                      <sfwLabel AssociatedControlID="txtRetirementDate" ID="capRetirementDate" Text="Retirement Date : " sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwTextBox ID="txtRetirementDate" sfwDataFormat="{0:d}" sfwEntityField="RetirementDate" />
+                      <sfwLabel ID="lblRetirementDate" sfwDataFormat="{0:d}" CssClass="WhiteText" SkinID="WhiteText" Visible="False" sfwEntityField="RetirementDate" />
+                    </sfwColumn>
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn />
+                    <sfwColumn />
+                    <sfwColumn />
+                    <sfwColumn />
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn>
+                      <sfwLabel ID="capEligiblePlan" Text="Plan : " AssociatedControlID="txtEligiblePlan" sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwTextBox ID="txtEligiblePlan" sfwEntityField="IstrPlanDescription" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwLabel ID="capBenefitOption" Text="Benefit Option : " AssociatedControlID="ddlBenefitOpt" sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwCascadingDropDownList ID="ddlBenefitOpt" DataTextField="benefit_option_description" DataValueField="benefit_option_value" sfwParameters="aintPlan_Id=ddlIintPlanID" sfwLoadType="Method" sfwLoadSource="GetBenefitOptionsforPlan" sfwEntityField="IstrBenefitOptionValue" sfwParentControl="ddlIintPlanID" />
+                    </sfwColumn>
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn>
+                      <sfwLabel ID="lblJointAnnunantName" Text="Joint Annunant Name : " sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwCascadingDropDownList DataTextField="istrFullName" DataValueField="person_id" ID="ddlJointAnnunantName" sfwParameters="aintPlan_Id=ddlIintPlanID;istrMPI_ID=lblMpiPersonId" sfwLoadType="Method" sfwLoadSource="GetBeneficariesOfParticipant" sfwEntityField="IintJointAnnuiant" sfwParentControl="ddlIintPlanID" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwLabel ID="capSpouseConsent" Text="Spouse Consent : " AssociatedControlID="chkSpouseConsent" sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwCheckBox ID="chkSpouseConsent" sfwEntityField="IstrSpouseConsent" sfwDefaultValue="N" />
+                    </sfwColumn>
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn />
+                    <sfwColumn />
+                    <sfwColumn />
+                    <sfwColumn />
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn>
+                      <sfwLabel ID="capEligibleIAPPlan" Text="Plan : " AssociatedControlID="txtEligibleIAPPlan" sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwTextBox ID="txtEligibleIAPPlan" sfwEntityField="IstrIAPPlanDescription" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwLabel ID="capIAPBenefitOption" Text="Benefit Option : " AssociatedControlID="ddlIAPBenefitOpt" sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwCascadingDropDownList ID="ddlIAPBenefitOpt" DataTextField="benefit_option_description" DataValueField="benefit_option_value" sfwParameters="aintPlan_Id=ddlIintPlanID;istrBOptionValue=ddlBenefitOpt" sfwLoadType="Method" sfwLoadSource="GetWizardBenefitOptionsforPlan" sfwEntityField="IstrIAPBenefitOptionValue" sfwParentControl="ddlBenefitOpt" OnClientChange="SetVisibilityOnDdlIAPBenefitOpt" />
+                    </sfwColumn>
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn>
+                      <sfwLabel ID="lblIAPJointAnnunantName" Text="Joint Annunant Name : " AssociatedControlID="ddlIAPJointAnnunantName" sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwCascadingDropDownList DataTextField="istrFullName" DataValueField="person_id" ID="ddlIAPJointAnnunantName" sfwParameters="aintPlan_Id=ddlIAPIintPlanID;istrMPI_ID=lblMpiPersonId" sfwLoadType="Method" sfwLoadSource="GetBeneficariesOfParticipant" sfwEntityField="IintIAPJointAnnuiant" sfwParentControl="ddlIAPIintPlanID" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwLabel ID="capIAPSpouseConsent" Text="Spouse Consent : " AssociatedControlID="chkIAPSpouseConsent" sfwIsCaption="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwCheckBox ID="chkIAPSpouseConsent" sfwEntityField="IstrIAPSpouseConsent" sfwDefaultValue="N" />
+                    </sfwColumn>
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn />
+                    <sfwColumn />
+                    <sfwColumn />
+                    <sfwColumn />
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn>
+                      <sfwLabel ID="lblBenefitApplicationID" sfwEntityField="BenefitApplicationId" Visible="false" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwCascadingDropDownList DataTextField="plan_name" DataValueField="plan_id" ID="ddlIAPIintPlanID" sfwLoadType="Query" sfwLoadSource="entPerson.GetPlanByPersonId" sfwEntityField="IintIAPEligiblePlanId" sfwParameters="Person_ID=lblPersonId" sfwDefaultValue="1" sfwClientVisibility="controllist:capIAPBenefitOption,ddlIAPBenefitOpt,lblIAPJointAnnunantName,ddlIAPJointAnnunantName#default:capIAPBenefitOption,ddlIAPBenefitOpt,lblIAPJointAnnunantName,ddlIAPJointAnnunantName;" sfwParentControl="ddlIAPBenefitOpt" CssClass="hideControl" SetFirstChildAsDefault="True" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpen" sfwActiveForm="wfmPayeeAccountFedralWthHoldingWMaintenance" sfwNavigationParameter="aintPayeeAccountId=IPayeeAccountId" sfwUserLogParameters="BenefitApplicationPersonId" Visible="false" CssClass="hidControl" sfwCopyActivitySessionVariables="True" />
+                    </sfwColumn>
+                  </sfwRow>
+                  <sfwRow>
+                    <sfwColumn>
+                      <sfwLabel ID="lblPersonId" sfwEntityField="BenefitApplicationPersonId" CssClass="hideControl" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwLabel ID="lblPayeeAccountIdRetirementWizard" sfwEntityField="IPayeeAccountId" CssClass="hideControl" />
+                    </sfwColumn>
+                    <sfwColumn>
+                      <sfwButton sfwMethodName="btnOpen_Click" Text="Open" ID="btnOpenPACHDW" sfwActiveForm="wfmPayeeAccountACHDetailsWMaintenance" sfwNavigationParameter="aintPayeeAccountId=IPayeeAccountId" CssClass="hideControl" sfwCopyActivitySessionVariables="True" />
+                    </sfwColumn>
+                    <sfwColumn HorizontalAlign="Right">
+                      <sfwButton ID="btnSaveWizard" sfwMethodName="btnNoChangesSave_Click" sfwNavigationParameter="aintbenefitapplicationid=BenefitApplicationId" OnClientClick="OnContinueClick" sfwVisibleRule="VisibleRule-DisplaySaveButton" Text="Continue" sfwExecuteAfterSuccess="btnOpenPACHDW" sfwCopyActivitySessionVariables="True" />
+                    </sfwColumn>
+                  </sfwRow>
+                </sfwTable>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow />
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwEntityField="UpdateSeq" sfwTwoWayBinding="True" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails>
+    <entityfield ID="objPerson" sfwUpdateAutoLoad="True" sfwNewAutoLoad="True" />
+  </loaddetails>
+</form>

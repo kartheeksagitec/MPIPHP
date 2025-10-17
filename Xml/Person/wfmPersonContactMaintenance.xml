@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmPersonContactMaintenance" sfwUseSessionStoreObjForCor="True" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvPerson" sfwResource="206" sfwType="Maintenance" sfwTitle="Person Contact Maintenance" version="3.5" sfwEntity="entPersonContact">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewPersonContact" />
+    <callmethods sfwMode="Update" sfwMethodName="FindPersonContact" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintpersoncontactid=PersonContactId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnApproved" sfwMethodName="btnExecuteBusinessMethod_Click" sfwMode="Update" sfwObjectMethod="ApproveContact" sfwResource="308" sfwVisibleRule="VISIBLE_APPROVE_BUTTON" Text="Approve" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" sfwResource="335" />
+                <sfwLabel ID="lblPersonContactId" Visible="False" sfwEntityField="PersonContactId" />
+                <sfwButton ID="btnSaveReadOnly" sfwMethodName="btnSaveIgnoreReadOnly_Click" sfwMode="Update" sfwResource="308" sfwValidateHardErrors="True" sfwVisibleRule="VISIBLE_END_DATE_BUtton" Text="Save End Date" OnClientClick="OnSaveEndDateClick" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlPersonInformation" sfwCaption="Person Information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="btnMpiPersonId" ID="capMpiPersonId" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMpiPersonId" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=objPerson.PersonId" sfwEntityField="objPerson.MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblDateOfBirth" ID="capDateOfBirth" Text="Date Of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateOfBirth" sfwDataFormat="{0:d}" sfwEntityField="objPerson.IdtDateofBirth" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="objPerson.IstrFullName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrLast4DigitsofSSN" ID="capIstrLast4DigitsofSSN" Text="Last 4 Digits of SSN :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrLast4DigitsofSSN" sfwEntityField="objPerson.IstrLast4DigitsofSSN" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPersonId" SkinID="textBoxDisplayStyleNone" sfwEntityField="objPerson.PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Contact Information" sfwResource="102">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblContactTypeValue" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlContactTypeValue" ID="capContactTypeValue" Text="Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlContactTypeValue" sfwClientVisibility="controllist:pnlContactAddress,capContactName,chkCorrespondenceAddrFlag,capCorrespondenceAddrFlag,chkPensionContactFlag,chkHealthContactFlag,capHippaContactFlag,capPensionContactFlag,ddlAttorneyFor,lblAttorneyFor,lblAttrnForReq,capHealthContactFlag#GRDN:pnlContactAddress,capContactName,chkCorrespondenceAddrFlag,capCorrespondenceAddrFlag;ALTR:capContactName,chkPensionContactFlag,chkHealthContactFlag,capHippaContactFlag,capPensionContactFlag;ATRN:ddlAttorneyFor,lblAttorneyFor,capContactName,pnlContactAddress,lblAttrnForReq;CORT:capContactName,pnlContactAddress;POAP:chkCorrespondenceAddrFlag,capCorrespondenceAddrFlag,pnlContactAddress,chkPensionContactFlag,chkHealthContactFlag,capContactName,capHealthContactFlag,capPensionContactFlag;COAP:chkCorrespondenceAddrFlag,capCorrespondenceAddrFlag,pnlContactAddress,chkPensionContactFlag,chkHealthContactFlag,capContactName,capHealthContactFlag,capPensionContactFlag;FMIN:pnlContactAddress,capContactName,chkCorrespondenceAddrFlag,capCorrespondenceAddrFlag;default:chkPensionContactFlag,chkHealthContactFlag,capContactName,capHealthContactFlag,capPensionContactFlag;" sfwLoadType="CodeGroup" sfwLoadSource="6023" sfwEntityField="ContactTypeValue" OnClientChange="OnContactTypeChange" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkPensionContactFlag" ID="capPensionContactFlag" Text="Pension Contact: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkPensionContactFlag" sfwEntityField="PensionContactFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkHealthContactFlag" ID="capHealthContactFlag" Text="Health Contact : " sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="chkHealthContactFlag" ID="capHippaContactFlag" Text="HIPAA Contact :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkHealthContactFlag" sfwEntityField="HealthContactFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblContactName" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtContactName" ID="capContactName" Text="Contact Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtContactName" sfwEntityField="ContactName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtContactPhoneNo" ID="capContactPhoneNo" Text="Phone Number :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtContactPhoneNo" sfwDataFormat="{0:(###)###-####}" sfwEntityField="ContactPhoneNo" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtEmailAddress" ID="capEmailAddress" Text="Email Address : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEmailAddress" sfwEntityField="EmailAddress" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblReqInfo" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtEffectiveStartDate" ID="capEffectiveStartDate" Text="Effective Start Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEffectiveStartDate" sfwDataFormat="{0:d}" sfwEntityField="EffectiveStartDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtEffectiveEndDate" ID="capEffectiveEndDate" Text="Effective End Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEffectiveEndDate" sfwDataFormat="{0:d}" sfwIgnoreReadOnly="True" sfwEntityField="EffectiveEndDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblAttrnForReq" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="lblAttorneyFor" Text="Attorney For : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlAttorneyFor" sfwLoadType="CodeGroup" sfwLoadSource="6032" sfwEntityField="AttorneyForValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblStatusValue" ID="capStatusValue" Text="Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusValue" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlContactAddress" sfwCaption="Contact Address Information" sfwResource="102">
+          <sfwTable CssClass="Table" ID="tblNewPage2">
+            <sfwRow>
+              <sfwColumn HorizontalAlign="Left">
+                <sfwCheckBox ID="chkAddrSameAsPerson" sfwDefaultValue="N" sfwEntityField="AddrSameAsPerson" sfwCustomAttributes="onclick=OnContactTypeChangeFunction()" />
+                <sfwLabel AssociatedControlID="chkAddrSameAsPerson" ID="capAddrSameAsPerson" Text="Same As Participant's" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwCheckBox Checked="True" ID="chkCorrespondenceAddrFlag" sfwDefaultValue="N" sfwEntityField="CorrespondenceAddrFlag" />
+                <sfwLabel AssociatedControlID="chkCorrespondenceAddrFlag" ID="capCorrespondenceAddrFlag" Text="Correspondence Address" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwPanel ID="pnlAddress" sfwCollapsible="False">
+                  <sfwTable CssClass="Table" ID="tblNewPage3">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                        <sfwLabel AssociatedControlID="ddlAddrCountryValue" ID="capAddrCountryValue" Text="Country : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCascadingDropDownList ID="ddlAddrCountryValue" sfwClientVisibility="controllist:capAddrStateValue,capForeignProvince,ddlAddrStateValue,txtForeignProvince,lblZipReq,capAddrZipCode,capForeignPostalCode,txtAddrZipCode,txtAddrZip4Code,txtForeignPostalCode,lblStateReq#0001:capAddrStateValue,ddlAddrStateValue,capAddrZipCode,txtAddrZipCode,txtAddrZip4Code,lblZipReq,lblStateReq;0011:capForeignPostalCode,txtForeignPostalCode,ddlAddrStateValue,capForeignProvince;0036:capForeignProvince,ddlAddrStateValue,txtForeignPostalCode,capForeignPostalCode;0133:capForeignPostalCode,txtForeignPostalCode,capForeignProvince,ddlAddrStateValue;0147:capForeignProvince,txtForeignPostalCode,capForeignPostalCode,ddlAddrStateValue;default:capForeignProvince,txtForeignProvince,capForeignPostalCode,txtForeignPostalCode;" sfwDefaultValue="0001" sfwLoadType="CodeGroup" sfwLoadSource="151" sfwEntityField="AddrCountryValue" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel1" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                        <sfwLabel AssociatedControlID="txtAddrLine1" ID="capAddrLine1" Text="Address Line 1 : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtAddrLine1" Width="500px" sfwEntityField="AddrLine1" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="txtAddrLine2" ID="capAddrLine2" Text="Address Line 2 : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtAddrLine2" Width="500px" sfwEntityField="AddrLine2" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel2" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                        <sfwLabel AssociatedControlID="txtAddrCity" ID="capAddrCity" Text="City : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtAddrCity" sfwEntityField="AddrCity" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="txtCounty" ID="capCounty" Text="County : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtCounty" sfwEntityField="County" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblStateReq" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                        <sfwLabel AssociatedControlID="ddlAddrStateValue" ID="capAddrStateValue" Text="State : " sfwIsCaption="True" />
+                        <sfwLabel AssociatedControlID="txtForeignProvince" ID="capForeignProvince" Text="Foreign Province : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCascadingDropDownList DataTextField="description" DataValueField="code_value" ID="ddlAddrStateValue" sfwParameters="aintCountryValue=ddlAddrCountryValue" sfwParentControl="ddlAddrCountryValue" sfwLoadType="Method" sfwLoadSource="GetStateOrProvinceBasedOnCountry" sfwEntityField="AddrStateValue" />
+                        <sfwTextBox ID="txtForeignProvince" sfwEntityField="ForeignProvince" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblZipReq" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                        <sfwLabel AssociatedControlID="txtAddrZipCode" ID="capAddrZipCode" Text="Address Zip Code : " sfwIsCaption="True" />
+                        <sfwLabel AssociatedControlID="txtForeignPostalCode" ID="capForeignPostalCode" Text="Foreign Postal Code : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtAddrZipCode" sfwEntityField="AddrZipCode" />
+                        <sfwTextBox ID="txtAddrZip4Code" sfwEntityField="AddrZip4Code" CssClass="marg-left-10" />
+                        <sfwTextBox ID="txtForeignPostalCode" sfwEntityField="ForeignPostalCode" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+                <sfwPanel ID="pnlAddSamsAsPerson" sfwCollapsible="False">
+                  <sfwTable CssClass="Table" ID="tblNewPage4">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="lblAddrCountryDescription1" ID="capAddrCountryDescription" Text="Addr Country : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblAddrCountryDescription1" sfwEntityField="AddrCountryDescription1" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="lblAddrLine1" ID="capAddrLine11" Text="Addr Line 1 : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblAddrLine1" sfwEntityField="AddrLine11" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="lblAddrLine2" ID="capAddrLine21" Text="Addr Line 2 : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblAddrLine2" sfwEntityField="AddrLine21" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="lblAddrCity" ID="capAddrCity1" Text="Addr City : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblAddrCity" sfwEntityField="AddrCity1" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capCounty1" Text="County : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblCounty1" sfwEntityField="County1" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="lblAddrStateDescription1" ID="capAddrStateDescription" Text="Addr State : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblAddrStateDescription1" sfwEntityField="AddrStateDescription1" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="lblAddrZipCode" ID="capAddrZipCode1" Text="Addr Zip Code : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblAddrZipCode" sfwEntityField="AddrZipCode1" />
+                        <sfwLabel ID="lblLabel3" sfwIsCaption="True" />
+                        <sfwLabel ID="lblAddrZip4Code11" sfwEntityField="AddrZip4Code1" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="lblForeignProvince" ID="capForeignProvince1" Text="Foreign Province : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblForeignProvince" sfwEntityField="ForeignProvince1" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel AssociatedControlID="lblForeignPostalCode" ID="capForeignPostalCode1" Text="Foreign Postal Code : " sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblForeignPostalCode" sfwEntityField="ForeignPostalCode1" />
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage1" sfwCaption="Validation Information">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many" sfwEntityField="InternalErrors" sfwGridEntity="entError">
+                  <Columns>
+                    <TemplateField HeaderText="Message ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MessageId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Error / Warning">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DisplayMessage" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Severity">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SeverityDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPerson" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="InternalErrors" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPayeeAccountRetroPayment" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPayeeAccountRetroPayment" sfwObjectID="busPayeeAccountRetroPayment" sfwTableName="sgt_payee_account_retro_payment" sfwView="False" sfwDataObjectID="doPayeeAccountRetroPayment">
+  <rules>
+    <rule ID="VisibleRule-PayeeID" sfwExpression="!(RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusPayeeAccount.icdoPayeeAccount.person_id&quot;) == 0)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-OrgID" sfwExpression="(RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusPayeeAccount.icdoPayeeAccount.person_id&quot;) == 0)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-OrgID" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-PayeeID" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="LoadRepaymentSchedule" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_REPAYMENT_SCHEDULE WHERE PAYEE_ACCOUNT_RETRO_PAYMENT_ID = @PAYEE_ACCOUNT_RETRO_PAYMENT_ID">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_RETRO_PAYMENT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadBenefitMonthwiseAdjustmentDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_BENEFIT_MONTHWISE_ADJUSTMENT_DETAIL WHERE PAYEE_ACCOUNT_RETRO_PAYMENT_ID = @PAYEE_ACCOUNT_RETRO_PAYMENT_ID">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_RETRO_PAYMENT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="UpdatRetroWithPayment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA;&#xD;&#xA;UPDATE A SET PAYMENT_HISTORY_HEADER_ID = B.PAYMENT_HISTORY_HEADER_ID,A.MODIFIED_DATE = GETDATE(),A.MODIFIED_BY = 'OPUS Batch',A.UPDATE_SEQ = A.UPDATE_SEQ+1&#xD;&#xA;FROM SGT_PAYEE_ACCOUNT_RETRO_PAYMENT A&#xD;&#xA;INNER JOIN &#xD;&#xA;(&#xD;&#xA;SELECT &#xD;&#xA; PA.PAYEE_ACCOUNT_ID,PHD.PAYMENT_HISTORY_HEADER_ID,RETRO.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA; FROM TEMP_TABLE_FOR_PAYMENT PA WITH(NOLOCK)  &#xD;&#xA;  INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHD WITH(NOLOCK)  &#xD;&#xA;   ON PHD.PAYEE_ACCOUNT_ID = PA.PAYEE_ACCOUNT_ID &#xD;&#xA;   AND isnull(PHD.ORG_ID,0) = isnull(PA.ORG_ID,0) and ISNULL(PHD.PERSON_ID,0) = ISNULL(PA.PERSON_ID,0)&#xD;&#xA;  &#xD;&#xA;  INNER JOIN&#xD;&#xA;    (&#xD;&#xA;     SELECT  PAYEE_ACCOUNT_ID ,PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;     FROM SGT_PAYEE_ACCOUNT_RETRO_PAYMENT WITH(NOLOCK) &#xD;&#xA;     WHERE &#xD;&#xA;        PAYMENT_OPTION_VALUE = @PAYMENTOPTION&#xD;&#xA;       AND (PAYMENT_HISTORY_HEADER_ID IS  NULL)&#xD;&#xA;        AND ISNULL(IS_OVERPAYMENT_FLAG,'N') &lt;&gt; 'Y'&#xD;&#xA;                         AND START_DATE &lt;&gt; ISNULL(END_DATE,'99991231') &#xD;&#xA;         AND (END_DATE IS NULL OR END_DATE &gt;= @PAYMENTDATE)              &#xD;&#xA;    ) AS RETRO&#xD;&#xA;   ON RETRO.PAYEE_ACCOUNT_ID = PA.PAYEE_ACCOUNT_ID&#xD;&#xA; &#xD;&#xA;  AND PHD.PAYMENT_SCHEDULE_ID = @PAYMENTSCHEDULEID&#xD;&#xA; ) B&#xD;&#xA;ON A.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = B.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;UPDATE PPIT SET END_DATE=@PAYMENTDATE,&#xD;&#xA; MODIFIED_BY='OPUS Batch',  &#xD;&#xA;        MODIFIED_DATE = GETDATE(),&#xD;&#xA;        UPDATE_SEQ = UPDATE_SEQ+1&#xD;&#xA;FROM SGT_PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE PPIT&#xD;&#xA;WHERE PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE_ID IN&#xD;&#xA;(&#xD;&#xA;SELECT PAYEE_ACCOUNT_PAYMENT_ITEM_TYPE_ID FROM SGT_PAYEE_ACCOUNT_RETRO_PAYMENT PARP&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_RETRO_PAYMENT_DETAIL PARD &#xD;&#xA;ON PARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID=PARD.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHD &#xD;&#xA;ON PHD.PAYMENT_HISTORY_HEADER_ID=PARP.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;WHERE PHD.PAYMENT_SCHEDULE_ID=@PAYMENTSCHEDULEID&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+        <parameter ID="@PAYMENTOPTION" sfwDataType="string" />
+        <parameter ID="@PAYMENTSCHEDULEID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitMonthwiseAdjustmentDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_BENEFIT_MONTHWISE_ADJUSTMENT_DETAIL WHERE PAYEE_ACCOUNT_RETRO_PAYMENT_ID = @PAYEE_ACCOUNT_RETRO_PAYMENT_ID order by PAYMENT_DATE asc">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_RETRO_PAYMENT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetReimbursementAmountPaidForBenefitAdjustment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SRD.*&#xD;&#xA;--SUM(AMOUNT_PAID) AS AMOUNT_PAID,SRS.REPAYMENT_SCHEDULE_ID,SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID,&#xD;&#xA;--SRS.REIMBURSEMENT_AMOUNT,SRS.REIMBURSEMENT_STATUS_VALUE &#xD;&#xA;FROM SGT_REIMBURSEMENT_DETAILS SRD&#xD;&#xA;INNER JOIN SGT_REPAYMENT_SCHEDULE SRS&#xD;&#xA;ON SRS.REPAYMENT_SCHEDULE_ID = SRD.REPAYMENT_SCHEDULE_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_RETRO_PAYMENT SPARP&#xD;&#xA;ON SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;LEFT OUTER JOIN SGT_PAYMENT_HISTORY_HEADER SPHH ON SPHH.PAYEE_ACCOUNT_ID = SRS.PAYEE_ACCOUNT_ID --AND SPHH.PAYMENT_DATE = SRD.POSTED_DATE --PIR 883 --PIR 581&#xD;&#xA;AND YEAR(SPHH.PAYMENT_DATE) = YEAR(SRD.POSTED_DATE) AND  MONTH(SPHH.PAYMENT_DATE) = MONTH(SRD.POSTED_DATE) --PIR 581&#xD;&#xA;LEFT OUTER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION SPHD ON SPHD.PAYMENT_HISTORY_HEADER_ID = SPHH.PAYMENT_HISTORY_HEADER_ID --PIR 883&#xD;&#xA;WHERE SPARP.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID &#xD;&#xA;AND SRS.REIMBURSEMENT_STATUS_VALUE IN ('CMPL','INPR','PEND')&#xD;&#xA;AND ((SRD.PAYMENT_OPTION_VALUE = 'PNCK' AND SPHD.PAYMENT_HISTORY_DISTRIBUTION_ID IS NOT NULL AND SPHD.DISTRIBUTION_STATUS_VALUE NOT IN ('CNLD','CDRE','RCMD')) --PIR 883 --PIR 581&#xD;&#xA;OR (SRD.PAYMENT_OPTION_VALUE = 'CHEK')) --PIR 581 Mailed Issue on Wed 8/5/2015&#xD;&#xA;--AND SPARP.RETRO_PAYMENT_TYPE_VALUE IN ('BADJ','REEP') -- // PROD PIR 581&#xD;&#xA;--GROUP BY SRS.REPAYMENT_SCHEDULE_ID,SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID,&#xD;&#xA;--SRS.REIMBURSEMENT_AMOUNT,SRS.REIMBURSEMENT_STATUS_VALUE">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetActiveRetroForBenefitAdjustment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP(1) * FROM SGT_PAYEE_ACCOUNT_RETRO_PAYMENT&#xD;&#xA;WHERE START_DATE &lt;= @PAYMENTDATE AND (END_DATE IS NULL OR END_DATE &gt;= @PAYMENTDATE)&#xD;&#xA;AND IS_OVERPAYMENT_FLAG &lt;&gt; 'Y' AND &#xD;&#xA;--RETRO_PAYMENT_TYPE_VALUE IN ('BADJ','REEP') AND &#xD;&#xA;PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="LoadPreviousRepaymentSchedule" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SRS.* FROM SGT_REPAYMENT_SCHEDULE SRS INNER JOIN SGT_PAYEE_ACCOUNT_RETRO_PAYMENT SPARP&#xD;&#xA;ON SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;WHERE SPARP.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID AND&#xD;&#xA; SPARP.RETRO_PAYMENT_TYPE_VALUE IN ('BADJ','REEP') AND REIMBURSEMENT_STATUS_VALUE = 'CMPL'">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetReinbursementAmntPaidForReemployment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SRD.*&#xD;&#xA;--SUM(AMOUNT_PAID) AS AMOUNT_PAID,SRS.REPAYMENT_SCHEDULE_ID,SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID,&#xD;&#xA;--SRS.REIMBURSEMENT_AMOUNT,SRS.REIMBURSEMENT_STATUS_VALUE&#xD;&#xA; FROM SGT_REIMBURSEMENT_DETAILS SRD&#xD;&#xA;INNER JOIN SGT_REPAYMENT_SCHEDULE SRS&#xD;&#xA;ON SRS.REPAYMENT_SCHEDULE_ID = SRD.REPAYMENT_SCHEDULE_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT_RETRO_PAYMENT SPARP&#xD;&#xA;ON SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;LEFT OUTER JOIN SGT_PAYMENT_HISTORY_HEADER SPHH ON SPHH.PAYEE_ACCOUNT_ID = SRS.PAYEE_ACCOUNT_ID --AND SPHH.PAYMENT_DATE = SRD.POSTED_DATE --PIR 883 PIR 581&#xD;&#xA;AND YEAR(SPHH.PAYMENT_DATE) = YEAR(SRD.POSTED_DATE) AND  MONTH(SPHH.PAYMENT_DATE) = MONTH(SRD.POSTED_DATE) --PIR 581&#xD;&#xA;LEFT OUTER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION SPHD ON SPHD.PAYMENT_HISTORY_HEADER_ID = SPHH.PAYMENT_HISTORY_HEADER_ID --PIR 883&#xD;&#xA;WHERE SPARP.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID &#xD;&#xA;AND SRS.REIMBURSEMENT_STATUS_VALUE IN ('CMPL','INPR','PEND') --AND SPARP.RETRO_PAYMENT_TYPE_VALUE IN ('REEP') --PIR 581&#xD;&#xA;AND SPARP.EFFECTIVE_START_DATE &lt;= @EFFECTIVE_START_DATE AND SPARP.EFFECTIVE_END_DATE &gt;= @EFFECTIVE_END_DATE&#xD;&#xA;AND ((SRD.PAYMENT_OPTION_VALUE = 'PNCK' AND SPHD.PAYMENT_HISTORY_DISTRIBUTION_ID IS NOT NULL AND SPHD.DISTRIBUTION_STATUS_VALUE NOT IN ('CNLD','CDRE','RCMD')) --PIR 883 -- PIR 581&#xD;&#xA;OR (SRD.PAYMENT_OPTION_VALUE = 'CHEK')) --PIR 581 Mailed Issue on Wed 8/5/2015&#xD;&#xA;--GROUP BY SRS.REPAYMENT_SCHEDULE_ID,SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID,&#xD;&#xA;--SRS.REIMBURSEMENT_AMOUNT,SRS.REIMBURSEMENT_STATUS_VALUE">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@EFFECTIVE_START_DATE" sfwDataType="DateTime" />
+        <parameter ID="@EFFECTIVE_END_DATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetActiveRetroForReemployment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA;SELECT TOP(1) PAYEE_ACCOUNT_RETRO_PAYMENT_ID , 0 TAXABLE_AMOUNT,0 NON_TAXABLE_AMOUNT, 'Y' AS IS_ACTIVE FROM SGT_PAYEE_ACCOUNT_RETRO_PAYMENT&#xD;&#xA;WHERE START_DATE &lt;= @PAYMENTDATE AND (END_DATE IS NULL OR END_DATE &gt;= @PAYMENTDATE)&#xD;&#xA;AND EFFECTIVE_START_DATE &lt;= @EFFECTIVE_START_DATE AND &#xD;&#xA;EFFECTIVE_END_DATE &gt;= @EFFECTIVE_END_DATE&#xD;&#xA;AND IS_OVERPAYMENT_FLAG &lt;&gt; 'Y' AND &#xD;&#xA;RETRO_PAYMENT_TYPE_VALUE IN ('REEP') AND PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID&#xD;&#xA;GROUP BY PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;UNION&#xD;&#xA;SELECT NULL AS PAYEE_ACCOUNT_RETRO_PAYMENT_ID,SUM(A.TAXABLE_AMOUNT) AS TAXABLE_AMOUNT,SUM(A.NON_TAXABLE_AMOUNT) AS NON_TAXABLE_AMOUNT,'N' AS IS_ACTIVE&#xD;&#xA;FROM&#xD;&#xA;(&#xD;&#xA; SELECT NULL AS PAYEE_ACCOUNT_RETRO_PAYMENT_ID,SUM(SPARPD.AMOUNT) AS TAXABLE_AMOUNT,0 AS NON_TAXABLE_AMOUNT,&#xD;&#xA; 'N' AS IS_ACTIVE&#xD;&#xA; FROM SGT_PAYEE_ACCOUNT_RETRO_PAYMENT SPARP INNER JOIN SGT_PAYEE_ACCOUNT_RETRO_PAYMENT_DETAIL SPARPD&#xD;&#xA; ON SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = SPARPD.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA; INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT ON PIT.PAYMENT_ITEM_TYPE_ID = SPARPD.PAYMENT_ITEM_TYPE_ID&#xD;&#xA; WHERE PIT.TAXABLE_ITEM_FLAG = 'Y' &#xD;&#xA; AND END_DATE IS NOT NULL AND END_DATE &lt; @PAYMENTDATE&#xD;&#xA;AND SPARP.EFFECTIVE_START_DATE &lt;= @EFFECTIVE_START_DATE AND &#xD;&#xA;SPARP.EFFECTIVE_END_DATE &gt;= @EFFECTIVE_END_DATE&#xD;&#xA;AND SPARP.IS_OVERPAYMENT_FLAG &lt;&gt; 'Y' AND &#xD;&#xA;SPARP.RETRO_PAYMENT_TYPE_VALUE IN ('REEP') AND SPARP.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID&#xD;&#xA;GROUP BY SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;UNION &#xD;&#xA;SELECT NULL AS PAYEE_ACCOUNT_RETRO_PAYMENT_ID,0 AS TAXABLE_AMOUNT,SUM(SPARPD.AMOUNT) AS NON_TAXABLE_AMOUNT,&#xD;&#xA; 'N' AS IS_ACTIVE&#xD;&#xA; FROM SGT_PAYEE_ACCOUNT_RETRO_PAYMENT SPARP INNER JOIN SGT_PAYEE_ACCOUNT_RETRO_PAYMENT_DETAIL SPARPD&#xD;&#xA; ON SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID = SPARPD.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA; INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT ON PIT.PAYMENT_ITEM_TYPE_ID = SPARPD.PAYMENT_ITEM_TYPE_ID&#xD;&#xA; WHERE (PIT.TAXABLE_ITEM_FLAG &lt;&gt; 'Y' OR PIT.TAXABLE_ITEM_FLAG IS NULL) AND &#xD;&#xA; SPARP.END_DATE IS NOT NULL AND SPARP.END_DATE &lt; @PAYMENTDATE&#xD;&#xA;AND SPARP.EFFECTIVE_START_DATE &lt;= @EFFECTIVE_START_DATE AND &#xD;&#xA;SPARP.EFFECTIVE_END_DATE &gt;= @EFFECTIVE_END_DATE&#xD;&#xA;AND SPARP.IS_OVERPAYMENT_FLAG &lt;&gt; 'Y' AND &#xD;&#xA;SPARP.RETRO_PAYMENT_TYPE_VALUE IN ('REEP') AND SPARP.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID&#xD;&#xA;) AS A&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PAYMENTDATE" sfwDataType="DateTime" />
+        <parameter ID="@EFFECTIVE_START_DATE" sfwDataType="DateTime" />
+        <parameter ID="@EFFECTIVE_END_DATE" sfwDataType="DateTime" />
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetRetroDetailsforBenefitAdjustment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SRS.REPAYMENT_SCHEDULE_ID as REPAYMENT_SCHEDULE_ID,SRS.REIMBURSEMENT_STATUS_VALUE ,&#xD;&#xA;SPARP.RETRO_PAYMENT_TYPE_VALUE ,SRD.REIMBURSEMENT_DETAILS_ID ,SPARP.IS_OVERPAYMENT_FLAG ,* &#xD;&#xA;FROM SGT_PAYEE_ACCOUNT_RETRO_PAYMENT SPARP WITH (NOLOCK)&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT SPA WITH (NOLOCK) ON SPA.PAYEE_ACCOUNT_ID = SPARP.PAYEE_ACCOUNT_ID&#xD;&#xA;left outer join SGT_REPAYMENT_SCHEDULE SRS ON SPARP.PAYEE_ACCOUNT_RETRO_PAYMENT_ID=SRS.PAYEE_ACCOUNT_RETRO_PAYMENT_ID&#xD;&#xA;left outer join SGT_REIMBURSEMENT_DETAILS SRD on SRS.REPAYMENT_SCHEDULE_ID=SRD.REPAYMENT_SCHEDULE_ID&#xD;&#xA;WHERE SPA.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID&#xD;&#xA;AND SPARP.START_DATE = @EFFECTIVE_START_DATE &#xD;&#xA;AND SPARP.END_DATE =  @EFFECTIVE_END_DATE&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@EFFECTIVE_START_DATE" sfwDataType="DateTime" />
+        <parameter ID="@EFFECTIVE_END_DATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="CheckRetireeIncreasePayment" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGT_PAYMENT_HISTORY_HEADER PHH&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT SPA ON PHH.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PERSON SP ON SP.PERSON_ID = SPA.PERSON_ID&#xD;&#xA;WHERE SPA.RETIREE_INCR_FLAG = 'Y' AND SPA.PERSON_ID = @PERSON_ID&#xD;&#xA;AND YEAR(SPA.BENEFIT_BEGIN_DATE) = @YEAR">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="payee_account_retro_payment_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PayeeAccountRetroPaymentId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="payee_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PayeeAccountId" sfwIsSequence="False" sfwCaption="Payee Account Id" />
+    <attribute sfwType="Description" ID="RetroPaymentTypeDescription" sfwCaption="Retro Payment Type" sfwValue="retro_payment_type_description" />
+    <attribute sfwValue="retro_payment_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RetroPaymentTypeId" sfwCodeID="7026" sfwIsSequence="False" sfwCaption="Retro Payment Type" />
+    <attribute sfwValue="retro_payment_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="RetroPaymentTypeValue" sfwIsSequence="False" sfwCaption="Retro Payment Type" />
+    <attribute sfwValue="effective_start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveStartDate" sfwIsSequence="False" sfwCaption="Effective Start Date" />
+    <attribute sfwValue="effective_end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveEndDate" sfwIsSequence="False" sfwCaption="Effective End Date" />
+    <attribute sfwValue="start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="StartDate" sfwIsSequence="False" sfwCaption="Start Date" />
+    <attribute sfwValue="end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndDate" sfwIsSequence="False" sfwCaption="End Date" />
+    <attribute sfwType="Description" ID="PaymentOptionDescription" sfwCaption="Payment Option" sfwValue="payment_option_description" />
+    <attribute sfwValue="payment_option_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PaymentOptionId" sfwCodeID="7011" sfwIsSequence="False" sfwCaption="Payment Option" />
+    <attribute sfwValue="payment_option_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="PaymentOptionValue" sfwIsSequence="False" sfwCaption="Payment Option" />
+    <attribute sfwValue="gross_payment_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="GrossPaymentAmount" sfwIsSequence="False" sfwCaption="Gross Payment Amount" />
+    <attribute sfwValue="net_payment_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="NetPaymentAmount" sfwIsSequence="False" sfwCaption="Net Payment Amount" />
+    <attribute sfwValue="approved_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="ApprovedFlag" sfwIsSequence="False" sfwCaption="Approved Flag" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="is_overpayment_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsOverpaymentFlag" sfwIsSequence="False" sfwCaption="Is Overpayment Flag" />
+    <attribute sfwValue="payment_history_header_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PaymentHistoryHeaderId" sfwIsSequence="False" sfwCaption="Payment History Header Id" />
+    <attribute ID="objPayeeAccount" sfwType="Object" sfwEntity="entPayeeAccount" sfwValue="ibusPayeeAccount" />
+    <attribute sfwType="Collection" sfwEntity="entPayeeAccountRetroPaymentDetail" ID="lstPayeeAccountRetroPaymentDetail" sfwValue="iclbPayeeAccountRetroPaymentDetail" />
+    <attribute sfwType="Collection" sfwEntity="entBenefitMonthwiseAdjustmentDetail" ID="lstBenefitMonthwiseAdjustmentDetail" sfwValue="iclbBenefitMonthwiseAdjustmentDetail" />
+  </attributes>
+</entity>

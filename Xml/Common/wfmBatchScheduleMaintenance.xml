@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmBatchScheduleMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="401 " sfwType="Maintenance" sfwTitle="Batch Schedule Maintenance" version="3.5" sfwHelpFile="Batch Overview=Batch Overview.htm;Create Batch Step=Create Batch Step.htm;Update Batch Step=Update Batch Step.htm;Delete Batch Step=Delete Batch Step.htm" sfwEntity="entBatchSchedule">
+  <initialload>
+    <callmethods sfwMethodName="FindBatchSchedule" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintBatchScheduleId=BatchScheduleId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Relative Path Details ">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStepName" Text="Step Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStepName" Width="500px" sfwEntityField="StepName" />
+                <RequiredFieldValidator ControlToValidate="txtStepName" ErrorMessage="Step Name is required" ID="rfvStepName" Text="*" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capOrderNo" Text="Order No : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOrderNo" Visible="False" sfwEntityField="OrderNo" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStepNo" Text="Step Number :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStepNo" MaxLength="4" sfwEntityField="StepNo" />
+                <RequiredFieldValidator ControlToValidate="txtStepNo" ErrorMessage="Step No. is required" ID="rfvStepNo" Text="*" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capBatchScheduleID" Text="Batch Schedule ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtBatchScheduleId" sfwMode="New" sfwEntityField="BatchScheduleId" />
+                <RequiredFieldValidator ControlToValidate="txtBatchScheduleId" ErrorMessage="Batch Schedule ID is required." ID="rfvBatchScheduleID" Text="*" />
+                <sfwLabel ID="lblBatchScheduleId" sfwMode="Update" sfwEntityField="BatchScheduleId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capParameters" Text="Parameters :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbPathValue" Width="500px" sfwEntityField="StepParameters" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActive" Text="Active : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="idActiveFlag" sfwEntityField="ActiveFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFrequencyInDays" Text="Frequency In Days :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFrqInDays" MaxLength="2" sfwDefaultValue="0" sfwEntityField="FrequencyInDays" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capFrequencyInMonths" Text="Frequency In Months : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFreqInMonths" MaxLength="2" sfwDefaultValue="0" sfwEntityField="FrequencyInMonths" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capNextRunDate" Text="Next Run Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtNextRunDate" sfwDataFormat="{0:d}" sfwEntityField="NextRunDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capRequiresTransaction" Text="Requires Transaction : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="idRequiresTransactionFlag" sfwDefaultValue="Y" sfwEntityField="RequiresTransactionFlag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCutoffStart" Text=" Cutoff Start :" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCutoffStart" Visible="False" sfwEntityField="CutoffStart" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCutoffEnd" Text=" Cutoff End :" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCutoffEnd" Visible="False" sfwEntityField="CutoffEnd" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capEmailNotification" Text=" Email Notification :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="2">
+                <sfwTextBox ID="txtEmailNotification" Width="500px" sfwEntityField="EmailNotification" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capBatchScheduleI" Text="Batch Schedule ID : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn HorizontalAlign="Right" />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

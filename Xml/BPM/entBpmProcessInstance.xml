@@ -1,0 +1,127 @@
+﻿<entity asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="entBpmProcessInstance" sfwMainCDO="icdoBpmProcessInstance" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmProcessInstance" sfwTableName="sgw_bpm_process_instance" sfwView="False">
+  <reference />
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete>
+    <property ID="lstBpmProcessEscalationInstance" sfwMethodName="LoadBpmProcessEscalationInstances" />
+    <property ID="lstBpmProcessInstanceHistory" sfwMethodName="LoadBpmProcessInstanceHistory" />
+    <property ID="lstBpmActivityInstance" sfwMethodName="LoadBpmActivityInstances" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <rulelist />
+  <conditionlist />
+  <compoundconditionlist />
+  <constraint />
+  <rules />
+  <queries>
+    <query ID="CountActiveProcessForPersonByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; count(*) &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC')" sfwPostgre="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI &#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xD;&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountActiveProcessForOrgByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; count(*) &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC')" sfwPostgre="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI &#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+      <parameters>
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9;&#x9; SBPI.PROCESS_INSTANCE_ID,&#xD;&#xA;&#x9;&#x9;SBP.NAME,&#xD;&#xA;&#x9;&#x9;SBR.REQUEST_ID,&#xD;&#xA;&#x9;&#x9;SO.ORG_ID,&#xD;&#xA;&#x9;&#x9;SO.ORG_NAME,&#xD;&#xA;&#x9;&#x9;SPR.PERSON_ID,&#xD;&#xA;&#x9;&#x9;SPR.FIRST_NAME,&#xD;&#xA;&#x9;&#x9;SPR.LAST_NAME,&#xD;&#xA;&#x9;&#x9;SPR.MPI_PERSON_ID,&#xD;&#xA;&#x9;&#x9;SBPI.STATUS_VALUE,&#xD;&#xA;&#x9;&#x9;SBR.SOURCE_VALUE ,&#xD;&#xA;&#x9;&#x9;SBPI.CREATED_DATE,&#xD;&#xA;&#x9;&#x9;SBAI.CHECKED_OUT_USER&#xD;&#xA;&#x9;FROM&#xD;&#xA;&#x9;&#x9; SGW_BPM_PROCESS_INSTANCE SBPI    INNER        &#xD;&#xA;&#x9;&#x9; JOIN SGW_BPM_PROCESS SBP   &#xD;&#xA;&#x9;&#x9; ON SBPI.PROCESS_ID = SBP.PROCESS_ID&#xD;&#xA;&#x9;&#x9; outer apply&#xD;&#xA;&#x9;&#x9; (&#xD;&#xA;&#x9;&#x9;&#x9;select top 1 SBAII.CHECKED_OUT_USER from SGW_BPM_ACTIVITY_INSTANCE SBAII&#xD;&#xA;&#x9;&#x9;&#x9;Where SBPI.PROCESS_INSTANCE_ID = SBAII.PROCESS_INSTANCE_ID AND SBAII.status_value in ('SUSP','INPC','RESU')&#xD;&#xA;&#x9;&#x9;&#x9;order by ACTIVITY_INSTANCE_ID&#xD;&#xA;&#x9;&#x9; ) SBAI&#xD;&#xA;&#x9;&#x9;  &#xD;&#xA;&#x9;&#x9;  INNER JOIN SGW_BPM_case_instance SBCI   &#xD;&#xA;&#x9;&#x9; ON SBCI.CASE_INSTANCE_ID = SBPI.CASE_INSTANCE_ID LEFT        &#xD;&#xA;&#x9;&#x9; JOIN SGT_ORGANIZATION SO   &#xD;&#xA;&#x9;&#x9; ON SO.ORG_ID = SBCI.ORG_ID LEFT        &#xD;&#xA;&#x9;&#x9; JOIN SGT_PERSON SPR &#xD;&#xA;&#x9;&#x9; ON SPR.PERSON_ID = SBCI.PERSON_ID LEFT        &#xD;&#xA;&#x9;&#x9; JOIN SGW_BPM_REQUEST SBR &#xD;&#xA;&#x9;&#x9; ON SBR.REQUEST_ID = SBCI.REQUEST_ID &#xD;&#xA;&#x9;&#x9; order by 1 desc" sfwPostgre="SELECT&#xD;&#xA;&#x9;&#x9; SBPI.PROCESS_INSTANCE_ID,&#xD;&#xA;&#x9;&#x9;SBP.NAME,&#xD;&#xA;&#x9;&#x9;SBR.REQUEST_ID,&#xD;&#xA;&#x9;&#x9;SO.ORG_ID,&#xD;&#xA;&#x9;&#x9;SO.ORG_NAME,&#xD;&#xA;&#x9;&#x9;SPR.PERSON_ID,&#xD;&#xA;&#x9;&#x9;SPR.FIRST_NAME,&#xD;&#xA;&#x9;&#x9;SPR.LAST_NAME,&#xD;&#xA;&#x9;&#x9;SBPI.STATUS_VALUE,&#xD;&#xA;&#x9;&#x9;SBR.SOURCE_VALUE ,&#xD;&#xA;  &#x9;  SBPI.CREATED_DATE,&#xD;&#xA;&#x9;&#x9;SBAI.CHECKED_OUT_USER&#xD;&#xA;&#x9;FROM&#xD;&#xA;&#x9;&#x9; SGW_BPM_PROCESS_INSTANCE SBPI    INNER        &#xD;&#xA;&#x9;&#x9; JOIN SGW_BPM_PROCESS SBP   &#xD;&#xA;&#x9;&#x9; ON SBPI.PROCESS_ID = SBP.PROCESS_ID INNER        &#xD;&#xA;&#x9;&#x9; JOIN SGW_BPM_case_instance SBCI   &#xD;&#xA;&#x9;&#x9; ON SBCI.CASE_INSTANCE_ID = SBPI.CASE_INSTANCE_ID LEFT        &#xD;&#xA;&#x9;&#x9; JOIN SGT_ORGANIZATION SO   &#xD;&#xA;&#x9;&#x9; ON SO.ORG_ID = SBCI.ORG_ID LEFT        &#xD;&#xA;&#x9;&#x9; JOIN SGT_PERSON SPR &#xD;&#xA;&#x9;&#x9; ON SPR.PERSON_ID = SBCI.PERSON_ID LEFT        &#xD;&#xA;&#x9;&#x9; JOIN SGW_BPM_REQUEST SBR &#xD;&#xA;&#x9;&#x9; ON SBR.REQUEST_ID = SBCI.REQUEST_ID&#xD;&#xA;    &#x9;left join lateral&#xD;&#xA;     &#x9;(&#xD;&#xA;     &#x9;&#x9; select SBAII.CHECKED_OUT_USER from SGW_BPM_ACTIVITY_INSTANCE SBAII&#xD;&#xA;     &#x9;&#x9; Where SBPI.PROCESS_INSTANCE_ID = SBAII.PROCESS_INSTANCE_ID AND SBAII.status_value='INPC'&#xD;&#xA;&#x9;&#x9;&#x9;order by ACTIVITY_INSTANCE_ID&#xD;&#xA;      &#x9;&#x9;fetch next 1 row only&#xD;&#xA;    &#x9; )SBAI&#xD;&#xA;&#x9; ON true&#xD;&#xA;     order by 1 desc" sfwOracle="SELECT&#xD;&#xA;&#x9;&#x9; SBPI.PROCESS_INSTANCE_ID,&#xD;&#xA;&#x9;&#x9;SBP.NAME,&#xD;&#xA;&#x9;&#x9;SBR.REQUEST_ID,&#xD;&#xA;&#x9;&#x9;SO.ORG_ID,&#xD;&#xA;&#x9;&#x9;SO.ORG_NAME,&#xD;&#xA;&#x9;&#x9;SPR.PERSON_ID,&#xD;&#xA;&#x9;&#x9;SPR.FIRST_NAME,&#xD;&#xA;&#x9;&#x9;SPR.LAST_NAME,&#xD;&#xA;&#x9;&#x9;SBPI.STATUS_VALUE,&#xD;&#xA;&#x9;&#x9;SBR.SOURCE_VALUE ,&#xD;&#xA;    SBPI.CREATED_DATE,&#xD;&#xA;&#x9;&#x9;SBAI.CHECKED_OUT_USER&#xD;&#xA;&#x9;FROM&#xD;&#xA;&#x9;&#x9; SGW_BPM_PROCESS_INSTANCE SBPI    INNER        &#xD;&#xA;&#x9;&#x9; JOIN SGW_BPM_PROCESS SBP   &#xD;&#xA;&#x9;&#x9; ON SBPI.PROCESS_ID = SBP.PROCESS_ID INNER        &#xD;&#xA;&#x9;&#x9; JOIN SGW_BPM_case_instance SBCI   &#xD;&#xA;&#x9;&#x9; ON SBCI.CASE_INSTANCE_ID = SBPI.CASE_INSTANCE_ID LEFT        &#xD;&#xA;&#x9;&#x9; JOIN SGT_ORGANIZATION SO   &#xD;&#xA;&#x9;&#x9; ON SO.ORG_ID = SBCI.ORG_ID LEFT        &#xD;&#xA;&#x9;&#x9; JOIN SGT_PERSON SPR &#xD;&#xA;&#x9;&#x9; ON SPR.PERSON_ID = SBCI.PERSON_ID LEFT        &#xD;&#xA;&#x9;&#x9; JOIN SGW_BPM_REQUEST SBR &#xD;&#xA;&#x9;&#x9; ON SBR.REQUEST_ID = SBCI.REQUEST_ID&#xD;&#xA;     outer apply&#xD;&#xA;     (&#xD;&#xA;       select SBAII.CHECKED_OUT_USER from SGW_BPM_ACTIVITY_INSTANCE SBAII&#xD;&#xA;       Where SBPI.PROCESS_INSTANCE_ID = SBAII.PROCESS_INSTANCE_ID AND SBAII.status_value in ('SUSP','INPC','RESU')&#xD;&#xA;&#x9;&#x9;&#x9;order by ACTIVITY_INSTANCE_ID&#xD;&#xA;      fetch next 1 row only&#xD;&#xA;     )SBAI&#xD;&#xA;     order by 1 desc">
+      <parameters />
+      <mappedcolumns>
+        <column ID="org_id" sfwEntityField="objOrganization.OrgId" />
+        <column ID="org_name" sfwEntityField="objOrganization.OrgName" />
+        <column ID="person_id" sfwEntityField="objPerson.PersonId" />
+        <column ID="first_name" sfwEntityField="objPerson.FirstName" />
+        <column ID="last_name" sfwEntityField="objPerson.LastName" />
+        <column ID="request_id" sfwEntityField="objRequest.RequestId" />
+        <column ID="name" sfwEntityField="objBpmProcess.Name" />
+        <column ID="source_value" sfwEntityField="objRequest.SourceValue" />
+      </mappedcolumns>
+    </query>
+    <query ID="GetCaseInstanceIdFromProcessInstance" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; case_instance_id &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID" sfwPostgre="SELECT&#xA;&#x9; case_instance_id &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE&#xA;WHERE&#xA;&#x9; PROCESS_INSTANCE_ID = @PROCESS_INSTANCE_ID">
+      <parameters>
+        <parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetInProcessCaseInstanceIdByProcessIdPersonIdOrgId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SPI.CASE_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE SCI WITH(NOLOCK)&#xA;&#x9; ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; SPI.PROCESS_ID = @process_id AND&#xA;&#x9; SPI.STATUS_VALUE = 'INPC' AND&#xA;&#x9; SCI.PERSON_ID = @person_id AND&#xA;&#x9; SCI.ORG_ID = @org_id" sfwPostgre="SELECT&#xA;&#x9; SPI.CASE_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE SPI  &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE SCI &#xA;&#x9; ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; SPI.PROCESS_ID = @process_id AND&#xA;&#x9; SPI.STATUS_VALUE = 'INPC' AND&#xA;&#x9; SCI.PERSON_ID = @person_id AND&#xA;&#x9; SCI.ORG_ID = @org_id">
+      <parameters>
+        <parameter ID="@process_id" sfwDataType="int" />
+        <parameter ID="@person_id" sfwDataType="int" />
+        <parameter ID="@org_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetInProcessCaseInstanceIdByProcessIdPersonIdOrgIdReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SPI.CASE_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE SPI WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE SCI WITH(NOLOCK)&#xA;&#x9; ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; SPI.PROCESS_ID = @process_id AND&#xA;&#x9; SPI.STATUS_VALUE = 'INPC' AND&#xA;&#x9; SCI.PERSON_ID = @person_id AND&#xA;&#x9; SCI.ORG_ID = @org_id AND&#xA;&#x9; SCI.reference_id = @reference_id" sfwPostgre="SELECT&#xD;&#xA;&#x9; SPI.CASE_INSTANCE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE SPI &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE SCI &#xD;&#xA;&#x9; ON SCI.CASE_INSTANCE_ID = SPI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; SPI.PROCESS_ID = @process_id AND&#xD;&#xA;&#x9; SPI.STATUS_VALUE = 'INPC' AND&#xD;&#xA;&#x9; SCI.PERSON_ID = @person_id AND&#xD;&#xA;&#x9; SCI.ORG_ID = @org_id AND&#xD;&#xA;&#x9; SCI.reference_id = @reference_id">
+      <parameters>
+        <parameter ID="@process_id" sfwDataType="int" />
+        <parameter ID="@person_id" sfwDataType="int" />
+        <parameter ID="@org_id" sfwDataType="int" />
+        <parameter ID="@reference_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountActiveProcessForReferenceIdByProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;               count(*) &#xA;FROM&#xA;&#x9;               SGW_BPM_PROCESS_INSTANCE PRI WITH(NOLOCK)    INNER                        &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)                  &#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9;               CI.REFERENCE_ID = @REFERENCE_ID AND&#xA;&#x9;               PRI.PROCESS_ID IN (SELECT&#xA;&#x9;               process_id &#xA;FROM&#xA;&#x9;               sgw_bpm_process          p2 WITH(NOLOCK)   &#xA;WHERE&#xA;&#x9;               case_id in( SELECT&#xA;&#x9;               c2.case_id &#xA;FROM&#xA;&#x9;               sgw_bpm_case c2 WITH(NOLOCK)   INNER                       &#xA;&#x9; JOIN (SELECT&#xA;&#x9;               case_file &#xA;FROM&#xA;&#x9;               sgw_bpm_case c1 WITH(NOLOCK)   INNER                       &#xA;&#x9; JOIN sgw_bpm_process p1 WITH(NOLOCK)                 &#xA;&#x9; ON p1.CASE_ID = c1.CASE_ID &#xA;WHERE&#xA;&#x9;               p1.PROCESS_ID = @PROCESS_ID)             details              &#xA;&#x9; ON details.CASE_FILE = c2.CASE_FILE )) AND&#xA;&#x9;               PRI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC')" sfwPostgre="SELECT&#xD;&#xA;&#x9;               count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9;               SGW_BPM_PROCESS_INSTANCE PRI     INNER                       &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI                   &#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9;               CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9;               PRI.PROCESS_ID IN (SELECT&#xD;&#xA;&#x9;               process_id &#xD;&#xA;FROM&#xD;&#xA;&#x9;               sgw_bpm_process          p2 &#xD;&#xA;WHERE&#xD;&#xA;&#x9;               case_id in( SELECT&#xD;&#xA;&#x9;               c2.case_id &#xD;&#xA;FROM&#xD;&#xA;&#x9;               sgw_bpm_case c2    INNER                      &#xD;&#xA;&#x9; JOIN (SELECT&#xD;&#xA;&#x9;               case_file &#xD;&#xA;FROM&#xD;&#xA;&#x9;               sgw_bpm_case c1    INNER                      &#xD;&#xA;&#x9; JOIN sgw_bpm_process p1                &#xD;&#xA;&#x9; ON p1.CASE_ID = c1.CASE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9;               p1.PROCESS_ID = @PROCESS_ID)             details              &#xD;&#xA;&#x9; ON details.CASE_FILE = c2.CASE_FILE )) AND&#xD;&#xA;&#x9;               PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+      <parameters>
+        <parameter ID="@REFERENCE_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountActiveProcessForOrgByProcessIdAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; count(*) &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI WITH(NOLOCK)  INNER  &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK) &#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC')" sfwPostgre="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI   INNER  &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI &#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; CI.ORG_ID = @ORG_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND&#xD;&#xA;&#x9; PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+        <parameter ID="@REFERENCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountActiveProcessForPersonByProcessIdAndReferenceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; count(*) &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI WITH(NOLOCK)   INNER    &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI WITH(NOLOCK)  &#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND PRI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC')" sfwPostgre="SELECT&#xD;&#xA;&#x9; count(*) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE PRI   INNER    &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE CI &#xD;&#xA;&#x9; ON PRI.CASE_INSTANCE_ID = CI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PRI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; CI.PERSON_ID = @PERSON_ID AND&#xD;&#xA;&#x9; CI.REFERENCE_ID = @REFERENCE_ID AND PRI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC')">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@REFERENCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetCheckedOutUserList" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; distinct CHECKED_OUT_USER &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE &#xA;WHERE&#xA;&#x9; CHECKED_OUT_USER is not null AND&#xA;&#x9; status_value in ('SUSP', 'INPC', 'RESU')" sfwPostgre="SELECT&#xA;&#x9; distinct CHECKED_OUT_USER &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY_INSTANCE &#xA;WHERE&#xA;&#x9; CHECKED_OUT_USER is not null AND&#xA;&#x9; status_value = 'INPC'">
+      <parameters />
+    </query>
+  </queries>
+  <ExtraFields />
+  <methods />
+  <lifecycle />
+  <attributes>
+    <attribute sfwValue="process_instance_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessInstanceId" sfwCaption="ID" />
+    <attribute sfwValue="case_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="CaseInstanceId" sfwCaption="Case Instance Id" />
+    <attribute sfwValue="process_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessId" sfwCaption="Process Id" />
+    <attribute sfwValue="end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndDate" sfwCaption="End Date" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="2004" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="due_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="DueDate" sfwCaption="Due Date" />
+    <attribute sfwValue="sla_days" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="SlaDays" sfwCaption="Sla Days" />
+    <attribute sfwValue="sla_hours" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="SlaHours" sfwCaption="Sla Hours" />
+    <attribute sfwValue="sla_minutes" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="SlaMinutes" sfwCaption="Sla Minutes" />
+    <attribute sfwValue="notification_message" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="NotificationMessage" sfwCaption="Notification Message" />
+    <attribute ID="objBpmCaseInstance" sfwType="Object" sfwEntity="entBpmCaseInstance" sfwValue="ibusBpmCaseInstance" />
+    <attribute ID="objBpmProcess" sfwType="Object" sfwEntity="entBpmProcess" sfwValue="ibusBpmProcess" />
+    <attribute sfwType="Collection" sfwEntity="entBpmProcessEscalationInstance" ID="lstBpmProcessEscalationInstance" sfwValue="iclbBpmProcessEscalationInstance" />
+    <attribute sfwType="Collection" sfwEntity="entBpmActivityInstanceHistory" ID="lstBpmProcessInstanceHistory" sfwValue="iclbBpmProcessInstanceHistory" />
+    <attribute sfwType="Collection" sfwEntity="entBpmActivityInstance" ID="lstBpmActivityInstance" sfwValue="iclbBpmActivityInstance" />
+    <attribute ID="objOrganization" sfwType="Object" sfwEntity="entOrganization" sfwValue="ibusOrganization" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute ID="objRequest" sfwType="Object" sfwEntity="entBpmRequest" sfwValue="ibusRequest" />
+    <attribute sfwValue="process_owner_role" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ProcessOwnerRole" sfwCaption="Process Owner Role" />
+    <attribute ID="ProcessOwnerRoleDescription" sfwPrivate="False" sfwValue="ProcessOwnerRole &gt; 0 ? RFunc.ExecuteQuery&lt;string&gt;&#xA;(&quot;entFramework.GetRoleDescriptionByRoleId&quot;,ProcessOwnerRole):&quot;&quot;" sfwType="Expression" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadBpmProcessEscalationInstances" sfwReturnType="Void" />
+    <method ID="LoadBpmProcessInstanceHistory" sfwReturnType="Void" />
+    <method ID="LoadBpmActivityInstances" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

@@ -1,0 +1,100 @@
+i
+VC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\NeoSpinBPMEngine\Properties\AssemblyInfo.csj
+r—
+OC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\NeoSpinBPMEngine\ProjectInstaller.cs 8j
+%&)*+,12r!	
+!"#'-./345‚#/™
+FC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\NeoSpinBPMEngine\Program.cs 8j &r+	
+ !"#$%&'()*+,-.012x‚ "#$)*-Ð
+MC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\NeoSpinBPMEngine\NeoSpinService.cs 	8j^ +,-./567;<=>FGHIQRST\]^_`aijklmnqrstxyz{|}~€‚ƒ„…†‡ˆŽ“š¢¨©ª«¬­rb	!$%'()012389?@ACDJKLNOUVWYZbcdfgopuv‰Š‹Œ’”•—˜™›œžŸ £¥¦®¯°±³´x‚0!$%'(238ACLNWYdfu‹’”•—˜™›œŸ£¥°æ
+LC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\NeoSpinBPMEngine\NeoSpinServer.csQ 8jý%&'*-03789:=>?BCDIJKLPQRWXY_`abcdefghijklmnopqrstz{|€„‡Š‹Ž’“”•˜¢£¤¥©®¯°¶º½ÁÂÃÆÇÈÉÏÐÑÔÕÖ×ÜÝÞßàáâãäåæçèéìïðñòóôõøþƒŽ“¥¦§¨©ª³´µÂÃÄÅÆÇ÷øùú‡ˆ‰Š’“”•–—˜™rù	
+ #()+.145;@EGSTUVZ[uvwx}~‚ƒ…ˆŒ–—™šœŸ ¡¦§¨ª«¬±²³´·¸»¼¾¿ÄÅËÌÒÓÙÚêëíö÷ùúüýÿ„…†‡ˆŠ‹Œ‘’”•—˜™š›œžŸ ¡¢£«¬­®¯±²¶·¸¹º»¼½¾¿ÀÈÉÊËÌÎÏÐÑÒÓÔÕÖ×ØÙÚÜÝÞßàáâãäåæçèêëìíîïðñòóôõüþÿ€‚ƒ„…‹ŒŽš›œŸ ¡¢£¦§x‚ŽUVZwx~ˆŒ™šœŸ ¡¦§¨ª«³´·¸»¼¾ËÙùúÿ„ˆŠ”•™¡­¯±¸»¼½ÊÌÎÒÖ×áâãíîïüþ€‚ƒ‹ŒŽœŸ¡å
+MC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\NeoSpinBPMEngine\frmBPMNService.csF 8jÌ!#%'-/0235689;<=>@ABDEFGIJKLNOPQSTUVXYZ[\^_`rstuvwyz|}ƒ…†‡ˆ‰‹Ž’”–—™›œŸ¡¥§©«®¯²³´µ¶·¸¹»¼½¿ÀÂÄÆÈÊÌÎÑÒÕÖ×ØÙÚÜÝßàáâãåçéëíîïðòóôö÷øúüýƒ…‡Š‹Ž‘’“•–—˜šœž ¡¢£¥§¨¬®°²µ¶¹º»¼½¾ÀÁÂÃÅÇÉËÌÍÎÐÒÓ×ÙÛÝàáäåæçèëðñòóô÷ÿ‚‰Š‹Œ“”•–—š¡¢£¤¥¨«¯°±²³¶¹ÁÂÃÄÆÇÈÉÊÍÎÏÐÑÓÔÖ×ÙÚÛÞßàãäåæçêëìíîñòôõö÷ûüýþÿ‚„…‡ˆŠŒ‘’“”•—˜šžŸ ¢¤§©«¬­¯±¶·¸¹º¼½¿ÀÂÃÅÇÊËÌÎÏÑÒÔØÙÚÜÞáãåæçéëðñòóôö÷ùúûýþ€‚„†ˆ‰ŠŒŽ’”•—™šœžŸ ¡£¥§©«¬°²´µ¶¸º¼½¾ÀÇÈÉÊÍÎÏÐÒÔÕÖÚÛÜÝßâãåæçéëíîðòóõö÷øúüý‚ƒ„…†‡ˆ‰‹’“”–˜š›œž¤¥§¨ª«­®¯±³µ¶·¹¾ÀÁÃÅÆÇÈÉÊÌÍÏÑÓÔ×ØÚÜÝßáâãåæçéêìîñòôõ÷ùúüþÿ€„…‡ˆŠŒŽ‘“–œžŸ ¢£¤¦¨ª¬®¯°±²³´¶¸º»¼½ÁÃÅÇÉÊËÌÍÎÏÐÑÓÔÕÖßàáâãåæçèéëíîïóôõö÷ùúýþÿ€ƒ„‡ˆ‰Š‹Œ‘’“•—š›œž ¢¦§¨©ª«¬®¯±²´¶·¹»¼¿ÁÃÅÇÉÌÎÐ×ØÙÚÛÜÝßàâäæêëìíïðñòóôöøúü€		‚	ƒ	…	‡	‰	‹	Œ	Ž		‘	“	•	–	›	ž	Ÿ	 	¡	¢	¤	¥	§	¨	ª	«	®	°	±	³	¶	·	¸	¹	º	¼	½	¾	À	Á	Â	Ã	Ä	Å	È	Ê	Ë	Ì	Í	Î	Ñ	Ò	Ô	Ø	Ù	Ú	Û	Ü	ß	ã	ä	å	æ	è	é	ë	ì	í	î	ð	ñ	ò	ó	õ	ö	÷	ù	ú	û	ý	þ	ÿ	
+‚
+ƒ
+…
+†
+‡
+‰
+Š
+‹
+
+Ž
+
+‘
+’
+“
+•
+–
+—
+™
+š
+›
+
+ž
+¡
+¢
+£
+¥
+¦
+¨
+ª
+¬
+­
+®
+±
+²
+³
+µ
+¶
+·
+¹
+»
+¼
+À
+Á
+Â
+Ã
+Å
+Ç
+È
+É
+Ê
+Í
+Ï
+Ð
+Ñ
+Ò
+Õ
+×
+Ø
+Ù
+Ú
+Ý
+ß
+à
+á
+â
+å
+ç
+è
+é
+ê
+í
+ï
+ð
+ó
+õ
+ù
+ú
+û
+ü
+þ
+ÿ
+‚ƒ…†ˆŠ‹“”–—™›žŸ ¡¹º»ÅÆÇÙÚÛˆ‰Š‹‘“•˜š›œŸ ¡£¤¦§¨©«¬®¯³´µ¶¸º¼¾ÀÃÅÆÇÈËÍÎÐÑÕÖ×ØÚÜÞàâåçèéìîïñòö÷øùûýÿƒ†ˆ‰Š’“–˜š›œžŸ ¡£¤¦¨ª«¬®°±²r­	
+,aghijkléêìíîõöøùúûüýþ„…†‡Ž‘˜™›œžŸ¦§©ª¬­´µ·¸º»¼áâèÝ	Þ	à	á	¢£¤¥¦§¨ª«¬­®¯°±²³´µ¶·¼½¾¿ÀÁÂÃÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ÜÝÞßàáâãäåæçèéêëìíîïðñòõö÷øùúûüýþ€‚ƒ„…†‡º»x‚‰ijkìíøùúüý„…†›œž©ª¬·¸º»à	¦§¨ª«¬­®¯°´µ¾¿ÀÁÂÊËÌÍÏÐÔÕÞßàáâåæèéëïð÷øùûü‚„…
+QC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\NeoSpinBPMEngine\ExtendedBPMService.csF 8j3456Zvwxy|}‰¡rº	
+ !"#$%&'()*+,-./0189:;<=?BCDEFGHIJKLMNOPQSUVWXY[\]^_`abcdfghjklmnopqstz{~‚ƒ…†‡Š‹ŒŽ‘“”•–—˜™š›žŸ¢£¤¥¦§¨©ª«¬­®°²³x‚S!"$%'(*+-.89;=?HMNWX[\`cflmqs~ƒ…‡‹ŒŽ‘“•™›Ÿ£¤¥¦§¨©«g
+TC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\NeoSpinBPMEngine\..\GlobalAssemblyInfo.csjr
+	
+

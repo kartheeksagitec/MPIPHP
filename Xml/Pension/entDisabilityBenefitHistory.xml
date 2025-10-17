@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entDisabilityBenefitHistory" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoDisabilityBenefitHistory" sfwObjectID="busDisabilityBenefitHistory" sfwTableName="sgt_disability_benefit_history" sfwView="False" sfwDataObjectID="doDisabilityBenefitHistory">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetDisBenHistoryDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DBH.* from SGT_DISABILITY_BENEFIT_HISTORY DBH  &#xD;&#xA;WHERE DBH.BENEFIT_APPLICATION_ID=@BENEFIT_APPLICATION_ID&#xD;&#xA;ORDER BY DISABILITY_CONT_LETTER_DATE&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@BENEFIT_APPLICATION_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetLatestDisabilityCertification" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT TOP (1) DISABILITY_CONT_LETTER_DATE FROM SGT_DISABILITY_BENEFIT_HISTORY &#xD;&#xA;WHERE RECEIVED = 'Y' &#xD;&#xA;AND BENEFIT_APPLICATION_ID = @BENEFIT_APPLICATION_ID &#xD;&#xA;ORDER BY DISABILITY_CONT_LETTER_DATE DESC&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@BENEFIT_APPLICATION_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="disability_benefit_history_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DisabilityBenefitHistoryId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="benefit_application_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitApplicationId" sfwIsSequence="False" sfwCaption="Benefit Application Id" />
+    <attribute sfwValue="disability_cont_letter_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="DisabilityContLetterDate" sfwIsSequence="False" sfwCaption="Disability Cont Letter Date" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="plan_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PlanId" sfwIsSequence="False" sfwCaption="Plan Id" />
+    <attribute sfwValue="received" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="Received" sfwIsSequence="False" sfwCaption="Received" sfwDefaultValue="N" />
+    <attribute sfwValue="sent" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="Sent" sfwIsSequence="False" sfwCaption="Sent" sfwDefaultValue="N" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlanName" sfwValue="icdoDisabilityBenefitHistory.istrPlanName" />
+  </attributes>
+</entity>

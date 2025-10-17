@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_AGE]
+    FROM NUMERIC (3) NULL;
+

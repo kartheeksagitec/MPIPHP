@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMssHistoryHeaderLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvMPIPHPMSS" sfwResource="790" sfwType="Lookup" sfwTitle="Payment History" version="3.5" sfwEntity="entPaymentHistoryHeader" sfwGridCollection="busMssHistoryHeaderLookup.iclbPaymentHistoryHeader">
+  <initialload>
+    <query ID="cdoPaymentHistoryHeader" sfwQueryRef="entMssBenefitCalculationHeader.MssPaymentHistoryHeaderLookup" sfwMethodName="LoadHistoryHeaders" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeading" sfwCollapsible="False">
+          <sfwTable ID="tblHeader">
+            <sfwRow>
+              <sfwColumn CssClass="NaviHeadtxt15Size">
+                <sfwLiteral ID="ltrLiteral" Text="Payment History" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Search Payment History">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlPhhPlanId" ID="capPhhPlanId" Text="Plan : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPhhPlanId" sfwDataField="phh.plan_id" sfwOperator="=" sfwQueryID="cdoPaymentHistoryHeader" sfwTwoWayBinding="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="Benefit Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="code_value" DataValueField="description" ID="ddlDropDownList" sfwDataField="phd.benefit_account_type_value" sfwOperator="=" sfwQueryID="cdoPaymentHistoryHeader" sfwTwoWayBinding="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPhdPlanYear" Text="Plan Year : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="three_year" DataValueField="three_year" ID="ddlPhdPlanYear" sfwDataField="plan_year" sfwOperator="=" sfwLoadType="Query" sfwLoadSource="entMssBenefitCalculationHeader.GetLastThreeYearDetails" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtPerMpiPersonId" sfwDataField="per.mpi_person_id" sfwOperator="like" sfwQueryID="cdoPaymentHistoryHeader" sfwTwoWayBinding="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult">
+                  <Columns>
+                    <TemplateField HeaderText="Payee Name" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPayee.IstrFullName1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPlanDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Benefit Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrBenefitType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtPaymentDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Gross Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="GrossAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Deduction Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="DeductionAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Federal Tax">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Idecfedraltax" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="State Tax">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Idecstatetax" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Net Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="NetAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retro Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="RetroAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Method">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPaymentMethod" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Check Number">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrCheckNumber" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Distribution Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrDistributionCodeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Type ">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPaymentType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment History Header ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PaymentHistoryHeaderId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Fund Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrFundsType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Bank Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrBankName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_KEY]
+    FROM VARCHAR (50) NULL;
+

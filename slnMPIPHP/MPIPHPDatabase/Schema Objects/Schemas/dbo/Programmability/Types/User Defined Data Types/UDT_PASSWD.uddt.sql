@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_PASSWD]
+    FROM VARCHAR (20) NOT NULL;
+

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entMSSPlan" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoPersonAccount" sfwObjectID="busMSSPlan" sfwParentEntity="entPersonAccount">
+  <rules>
+    <rule ID="VisibleRule-IAPBalanceExists" sfwExpression="(this.iblnShowDirectDepositFrom == True)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-IsNonRetiree" sfwExpression="!(this.iblnIsRetireeUnderPlan == True) &amp;&amp; &#xA;((this.icdoPersonAccount.plan_id == 1) || &#xA;(this.icdoPersonAccount.plan_id == 2))" sfwObjectBased="True" />
+    <rule ID="VisibleRule-IsRetireeUnderIAP" sfwExpression="(this.iblnIsRetireeUnderPlan == True) &amp;&amp; &#xA;(this.icdoPersonAccount.plan_id == 1)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-IsRetireeUnderMPI" sfwExpression="(this.iblnIsRetireeUnderPlan == True) &amp;&amp; &#xA;!(this.icdoPersonAccount.plan_id == 1)" sfwObjectBased="True" />
+    <rule ID="VisibleRule-ReemployedPart" sfwExpression="(this.istrReemployedAsOfDate == &quot;Yes&quot;)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-ReemployedPart" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-IsRetireeUnderMPI" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-IsNonRetiree" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-IAPBalanceExists" sfwMode="All" sfwStatus="Active" />
+    <item ID="VisibleRule-IsRetireeUnderIAP" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <attributes>
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlanDesc" sfwValue="icdoPersonAccount.istrPlanDesc" />
+    <attribute sfwDataType="string" sfwType="Property" ID="StatusDescription" sfwValue="icdoPersonAccount.status_description" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="StartDate" sfwValue="icdoPersonAccount.start_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtReemployedAsOfDate" sfwValue="idtReemployedAsOfDate" />
+    <attribute sfwType="Collection" sfwEntity="entPersonAccountBeneficiary" ID="lstBeneficiaryPlans" sfwValue="iclbBeneficiaryPlans" />
+  </attributes>
+</entity>

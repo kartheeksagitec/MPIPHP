@@ -1,0 +1,89 @@
+﻿<entity ID="entUserTimeoff" sfwView="False" sfwActive="True" sfwMainCDO="icdoUserTimeoff" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgw_user_timeoff" sfwObjectID="busUserTimeoff" sfwDataObjectID="doUserTimeoff" CreateWithClass="True">
+  <attributes>
+    <attribute ID="UserFirstLastName" sfwDataType="string" sfwPrivate="False" sfwValue="istrUserFullName" sfwType="Property" />
+    <attribute ID="UserName" sfwDataType="string" sfwPrivate="False" sfwValue="istrUserName" sfwType="Property" />
+    <attribute sfwValue="user_timeoff_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UserTimeoffId" sfwCaption="User Timeoff ID" />
+    <attribute sfwValue="user_serial_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UserSerialId" sfwCaption="User Serial Id" />
+    <attribute sfwValue="start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="date" sfwIsNull="False" ID="StartDate" sfwCaption="Start Date" />
+    <attribute sfwValue="end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="date" sfwIsNull="False" ID="EndDate" sfwCaption="End Date" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCaption="Status Id" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="StatusValue" sfwCaption="Status Value" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+  <queries>
+    <query ID="LookUp" sfwSql="SELECT * FROM (&#xA;SELECT&#xA;&#x9; sut.USER_SERIAL_ID, sut.USER_TIMEOFF_ID, sut.START_DATE, sut.end_DATE, sut.STATUS_VALUE,&#xA;&#x9;CONCAT(su.LAST_NAME,', ', su.FIRST_NAME) as user_id&#xA;FROM&#xA;&#x9; sgw_user_timeoff SUT WITH(NOLOCK) &#xA;&#x9;INNER JOIN sgs_user SU WITH(NOLOCK)&#xA;&#x9; ON SU.user_serial_id = SUT.user_serial_id ) AS USER_TIME_OFF_LOOKUP" sfwDataType="EntityTable" sfwQueryType="SelectQuery" sfwOracle="SELECT * FROM (&#xD;&#xA;SELECT&#xD;&#xA;&#x9; sut.USER_SERIAL_ID, sut.USER_TIMEOFF_ID, sut.START_DATE, sut.end_DATE, sut.STATUS_VALUE,&#xD;&#xA;&#x9;(su.LAST_NAME||', '|| su.FIRST_NAME)  user_id&#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_user_timeoff SUT&#xD;&#xA;&#x9;INNER JOIN sgs_user SU&#xD;&#xA;&#x9; ON SU.user_serial_id = SUT.user_serial_id ) USER_TIME_OFF_LOOKUP" sfwPostgre="SELECT * FROM (&#xD;&#xA;SELECT&#xD;&#xA;&#x9; sut.USER_SERIAL_ID, sut.USER_TIMEOFF_ID, sut.START_DATE, sut.end_DATE, sut.STATUS_VALUE,&#xD;&#xA;&#x9;CONCAT(su.LAST_NAME,', ', su.FIRST_NAME) as user_id&#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_user_timeoff SUT &#xD;&#xA;&#x9;INNER JOIN sgs_user SU &#xD;&#xA;&#x9; ON SU.user_serial_id = SUT.user_serial_id ) AS USER_TIME_OFF_LOOKUP">
+      <parameters />
+      <mappedcolumns>
+        <column ID="user_id" sfwEntityField="UserName" />
+      </mappedcolumns>
+    </query>
+    <query ID="CheckReassignUserAvailable" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(1) &#xA;FROM&#xA;&#x9; SGW_USER_TIMEOFF SUT WITH (NOLOCK) &#xA;&#x9;INNER JOIN SGS_USER SU  WITH (NOLOCK)&#xA;&#x9; ON SU.USER_SERIAL_ID = SUT.USER_SERIAL_ID &#xA;WHERE&#xA;&#x9;   CAST((SELECT&#xA;&#x9; [dbo].[UDF_GETAPPLICATIONDATE]()) AS DATE) BETWEEN SUT.START_DATE AND&#xA;&#x9; SUT.END_DATE AND&#xA;&#x9; SU.USER_ID = @USER_ID  AND&#xA;&#x9; STATUS_VALUE = 'ACTV'" sfwOracle="SELECT&#xA;&#x9; COUNT(1) &#xA;FROM&#xA;&#x9; SGW_USER_TIMEOFF SUT &#xA;&#x9;INNER JOIN SGS_USER SU &#xA;&#x9; ON SU.USER_SERIAL_ID = SUT.USER_SERIAL_ID &#xA;WHERE&#xA;&#x9;   CAST((SELECT trunc(UDF_GET_SYSTEM_DATE('Y')) FROM DUAL) AS DATE) BETWEEN to_date(SUT.START_DATE) AND&#xA;&#x9; to_date(SUT.END_DATE) AND&#xA;&#x9; SU.USER_ID = @USER_ID  AND&#xA;&#x9; STATUS_VALUE = 'ACTV'" sfwPostgre="SELECT&#xD;&#xA;&#x9; COUNT(1) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_USER_TIMEOFF SUT &#xD;&#xA;&#x9;INNER JOIN SGS_USER SU  &#xD;&#xA;&#x9; ON SU.USER_SERIAL_ID = SUT.USER_SERIAL_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9;   CAST((SELECT&#xD;&#xA;&#x9; dbo.UDF_GET_SYSTEM_DATE('Y')) AS DATE) BETWEEN SUT.START_DATE AND&#xD;&#xA;&#x9; SUT.END_DATE AND&#xD;&#xA;&#x9; SU.USER_ID = @USER_ID  AND&#xD;&#xA;&#x9; STATUS_VALUE = 'ACTV'">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetUserAvailableCountByUserId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(1) &#xA;FROM&#xA;&#x9; SGW_USER_TIMEOFF SUT WITH (NOLOCK) &#xA;&#x9;INNER JOIN SGS_USER SU  WITH (NOLOCK)&#xA;&#x9; ON SU.USER_SERIAL_ID = SUT.USER_SERIAL_ID &#xA;WHERE&#xA;&#x9;   CAST((SELECT&#xA;&#x9; [dbo].[UDF_GETAPPLICATIONDATE]()) AS DATE) BETWEEN SUT.START_DATE AND&#xA;&#x9; SUT.END_DATE AND&#xA;&#x9; SU.USER_ID = @USER_ID  AND&#xA;&#x9; STATUS_VALUE = 'ACTV'" sfwOracle="SELECT&#xA;&#x9; COUNT(1) &#xA;FROM&#xA;&#x9; SGW_USER_TIMEOFF SUT &#xA;&#x9;INNER JOIN SGS_USER SU &#xA;&#x9; ON SU.USER_SERIAL_ID = SUT.USER_SERIAL_ID &#xA;WHERE&#xA;&#x9;   CAST((SELECT trunc(UDF_GET_SYSTEM_DATE('Y')) FROM DUAL) AS DATE) BETWEEN to_date(SUT.START_DATE) AND&#xA;&#x9; to_date(SUT.END_DATE) AND&#xA;&#x9; SU.USER_ID = @USER_ID  AND&#xA;&#x9; STATUS_VALUE = 'ACTV'" sfwPostgre="SELECT&#xD;&#xA;&#x9; COUNT(1) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_USER_TIMEOFF SUT &#xD;&#xA;&#x9;INNER JOIN SGS_USER SU  &#xD;&#xA;&#x9; ON SU.USER_SERIAL_ID = SUT.USER_SERIAL_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9;   CAST((SELECT&#xD;&#xA;&#x9; dbo.UDF_GET_SYSTEM_DATE('Y')) AS DATE) BETWEEN SUT.START_DATE AND&#xD;&#xA;&#x9; SUT.END_DATE AND&#xD;&#xA;&#x9; SU.USER_ID = @USER_ID  AND&#xD;&#xA;&#x9; STATUS_VALUE = 'ACTV'">
+      <parameters>
+        <parameter ID="@USER_ID" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetUserAvailableCountByUserSerialId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(1) &#xA;FROM&#xA;&#x9; SGW_USER_TIMEOFF SUT WITH (NOLOCK) &#xA;&#x9;INNER JOIN SGS_USER SU  WITH (NOLOCK)&#xA;&#x9; ON SU.USER_SERIAL_ID = SUT.USER_SERIAL_ID &#xA;WHERE&#xA;&#x9;   CAST((SELECT&#xA;&#x9; [dbo].[UDF_GETAPPLICATIONDATE]()) AS DATE) BETWEEN SUT.START_DATE AND&#xA;&#x9; SUT.END_DATE AND&#xA;&#x9; SU.USER_SERIAL_ID = @UserSerialId  AND&#xA;&#x9; STATUS_VALUE = 'ACTV'" sfwOracle="SELECT&#xA;&#x9; COUNT(1) &#xA;FROM&#xA;&#x9; SGW_USER_TIMEOFF SUT&#xA;&#x9;INNER JOIN SGS_USER SU &#xA;&#x9; ON SU.USER_SERIAL_ID = SUT.USER_SERIAL_ID &#xA;WHERE&#xA;&#x9;   CAST((SELECT trunc(UDF_GET_SYSTEM_DATE('Y')) FROM DUAL) AS DATE) BETWEEN to_date(SUT.START_DATE) AND&#xA;&#x9; to_date(SUT.END_DATE) AND&#xA;&#x9; SU.USER_SERIAL_ID = @UserSerialId  AND&#xA;&#x9; STATUS_VALUE = 'ACTV'" sfwPostgre="SELECT&#xD;&#xA;&#x9; COUNT(1) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_USER_TIMEOFF SUT &#xD;&#xA;&#x9;INNER JOIN SGS_USER SU  &#xD;&#xA;&#x9; ON SU.USER_SERIAL_ID = SUT.USER_SERIAL_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9;   CAST((SELECT&#xD;&#xA;&#x9; dbo.UDF_GET_SYSTEM_DATE('Y')) AS DATE) BETWEEN SUT.START_DATE AND&#xD;&#xA;&#x9; SUT.END_DATE AND&#xD;&#xA;&#x9; SU.USER_SERIAL_ID = @UserSerialId  AND&#xD;&#xA;&#x9; STATUS_VALUE = 'ACTV'">
+      <parameters>
+        <parameter ID="@UserSerialId" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOverlappingTimeoffRecords" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_USER_TIMEOFF WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; USER_SERIAL_ID = @USER_SERIAL_ID AND&#xA;&#x9; ((@INP_START_DATE &lt;=  START_DATE AND @INP_END_DATE &gt;=  START_DATE) OR &#xA;&#x9; (@INP_START_DATE &lt;=  END_DATE AND @INP_END_DATE &gt;=  END_DATE) OR &#xA;&#x9; (@INP_START_DATE &gt;=  START_DATE AND @INP_END_DATE &lt;=  END_DATE)) AND&#xA;&#x9; STATUS_VALUE &lt;&gt; 'VOID'" sfwOracle="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_USER_TIMEOFF&#xD;&#xA;WHERE&#xD;&#xA;&#x9; USER_SERIAL_ID = @USER_SERIAL_ID AND&#xD;&#xA;&#x9; ((@INP_START_DATE &lt;= cast(TO_DATE(START_DATE,'DD/MM/YYYY') as varchar(30))  AND @INP_END_DATE &gt;= cast(TO_DATE(START_DATE,'DD/MM/YYYY')as varchar(30))) OR &#xD;&#xA;&#x9; (@INP_START_DATE &lt;=  cast(TO_DATE(END_DATE,'DD/MM/YYYY') as varchar(30)) AND @INP_END_DATE &gt;= cast(TO_DATE(END_DATE,'DD/MM/YYYY')as varchar(30))) OR &#xD;&#xA;&#x9; (@INP_START_DATE &gt;=  cast(TO_DATE(START_DATE,'DD/MM/YYYY') as varchar(30)) AND @INP_END_DATE &lt;=  cast(TO_DATE(END_DATE,'DD/MM/YYYY')as varchar(30)))) AND&#xD;&#xA;&#x9; STATUS_VALUE &lt;&gt; 'VOID'" sfwPostgre="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_USER_TIMEOFF &#xD;&#xA;WHERE&#xD;&#xA;&#x9; USER_SERIAL_ID = @USER_SERIAL_ID AND&#xD;&#xA;&#x9; ((@INP_START_DATE &lt;=  START_DATE AND @INP_END_DATE &gt;=  START_DATE) OR &#xD;&#xA;&#x9; (@INP_START_DATE &lt;=  END_DATE AND @INP_END_DATE &gt;=  END_DATE) OR &#xD;&#xA;&#x9; (@INP_START_DATE &gt;=  START_DATE AND @INP_END_DATE &lt;=  END_DATE)) AND&#xD;&#xA;&#x9; STATUS_VALUE &lt;&gt; 'VOID'">
+      <parameters>
+        <parameter ID="@INP_START_DATE" sfwDataType="DateTime" />
+        <parameter ID="@INP_END_DATE" sfwDataType="DateTime" />
+        <parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUserName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select CONCAT(LAST_NAME,', ', FIRST_NAME) as user_id from sgs_user where user_serial_id = @user_serial_id" sfwOracle="SELECT&#xA;&#x9; LAST_NAME || ',&#xA;&#x9;' || FIRST_NAME AS USER_ID &#xA;FROM&#xA;&#x9; SGS_USER &#xA;WHERE&#xA;&#x9; USER_SERIAL_ID = @user_serial_id" sfwPostgre="SELECT&#xD;&#xA;&#x9; LAST_NAME || ',' || FIRST_NAME AS USER_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGS_USER &#xD;&#xA;WHERE&#xD;&#xA;&#x9; USER_SERIAL_ID = @user_serial_id">
+      <parameters>
+        <parameter ID="@user_serial_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="UpdateRecord" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="update sgw_user_timeoff set status_value = 'VOID' &#xA;WHERE&#xA;&#x9; user_timeoff_id = @user_timeoff_id" sfwPostgre="update sgw_user_timeoff set status_value = 'VOID' &#xA;WHERE&#xA;&#x9; user_timeoff_id = @user_timeoff_id">
+      <parameters>
+        <parameter ID="@user_timeoff_id" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules>
+    <rule ID="Rule - User Name Is Required" sfwRuleType="Validation" sfwExpression="(this.icdoUserTimeoff.user_serial_id==0)" sfwObjectBased="True" sfwBRID="FS007-ACT0027-UI0001-BR0001" sfwMessageId="20007001" />
+    <rule ID="Rule - Start Date Is Required" sfwRuleType="Validation" sfwExpression="(this.icdoUserTimeoff.start_date == DateTime.MinValue)" sfwObjectBased="True" sfwMessageId="20007002" sfwBRID="FS007-ACT0027-UI0001-BR0002" />
+    <rule ID="Rule - End Date Is Required" sfwRuleType="Validation" sfwExpression="(this.icdoUserTimeoff.end_date == DateTime.MinValue)" sfwObjectBased="True" sfwMessageId="20007003" sfwBRID="FS007-ACT0027-UI0001-BR0003" />
+    <rule ID="Rule - Start Date Can Not Be Less Than Today Date" sfwRuleType="Validation" sfwExpression="(this.icdoUserTimeoff.start_date != DateTime.MinValue) &amp;&amp; &#xA;(this.icdoUserTimeoff.start_date &lt; RFunc.CurrentDate())" sfwObjectBased="True" sfwMessageId="20007004" sfwBRID="FS007-ACT0027-UI0001-BR0004" />
+    <rule ID="Rule - Start Date cannot be greater than End Date" sfwRuleType="Validation" sfwExpression="(this.icdoUserTimeoff.end_date != DateTime.MinValue)  &amp;&amp; (this.icdoUserTimeoff.end_date &lt; this.icdoUserTimeoff.start_date)" sfwObjectBased="True" sfwMessageId="20007005" sfwBRID="FS007-ACT0027-UI0001-BR0005" />
+    <rule ID="Visible Rule - Void Button Display" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(this.icdoUserTimeoff.status_value==&quot;ACTV&quot;)" sfwBRID="FS007-ACT0027-UI0001-BR0006" />
+    <rule ID="Rule - Check Overlapping Timeoffs" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entUserTimeoff.GetOverlappingTimeoffRecords&quot;, this.icdoUserTimeoff.Start_Date, this.icdoUserTimeoff.End_Date, this.icdoUserTimeoff.user_serial_id) &gt; 0" sfwMessageId="20007033" />
+    <rule ID="Rule - Status Value is Required" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(string.IsNullOrEmpty(this.icdoUserTimeoff.status_value))" sfwMessageId="20007011" />
+  </rules>
+  <initialload>
+    <item ID="Visible Rule - Void Button Display" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <item ID="Rule - User Name Is Required" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Start Date Is Required" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Start Date Can Not Be Less Than Today Date" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Start Date cannot be greater than End Date" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - End Date Is Required" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Check Overlapping Timeoffs" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - Status Value is Required" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields />
+  <validatedelete />
+</entity>

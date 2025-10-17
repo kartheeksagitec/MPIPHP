@@ -1,0 +1,498 @@
+﻿<form ID="wfmBPMSolActivityMaintenance" sfwType="Maintenance" sfwTitle="BPM Activity Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBPMActivityLookup" sfwEntity="entSolBpmActivity">
+  <initialload>
+    <callmethods sfwMethodName="FindBpmActivity" />
+    <query />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" sfwNavigationParameter="aintActivityId=ActivityId" />
+                <sfwButton ID="btnButton" sfwMethodName="btnCancel_Click" Text="Reset" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="BPMActivity Details" sfwCaption="Activity Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="Process Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDescription" sfwEntityField="objBpmProcess.Name" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Activity Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblName" sfwEntityField="Name" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="Activity Description :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" sfwEntityField="ActivityTypeDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capSlaDays" Text="SLA Days : " AssociatedControlID="txtSlaDays" sfwIsCaption="True" sfwVisibleRule="Visible Rule - Is Activity Type User Task" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSlaDays" sfwEntityField="SlaDays" sfwVisibleRule="Visible Rule - Is Activity Type User Task" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSlaHours" Text="SLA Hours : " AssociatedControlID="txtSlaHours" sfwIsCaption="True" sfwVisibleRule="Visible Rule - Is Activity Type User Task" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSlaHours" sfwEntityField="SlaHours" sfwVisibleRule="Visible Rule - Is Activity Type User Task" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capSlaMinutes" Text="SLA Minutes : " AssociatedControlID="txtSlaMinutes" sfwIsCaption="True" sfwVisibleRule="Visible Rule - Is Activity Type User Task" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSlaMinutes" sfwEntityField="SlaMinutes" sfwVisibleRule="Visible Rule - Is Activity Type User Task" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblActivityId" Visible="False" sfwEntityField="ActivityId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessId" Visible="False" sfwEntityField="objBpmProcess.ProcessId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="Role Name :" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblRoleId" Visible="False" sfwEntityField="objRoles.RoleDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblActivityType" Visible="False" sfwEntityField="ActivityTypeValue" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlActivityChecklist" sfwCaption="Activity Checklist" sfwVisibleRule="Visible Rule - Is Activity Type User Task" Visible="False">
+          <sfwTable>
+            <sfwRow>
+              <sfwColumn ColumnSpan="2">
+                <sfwButton ID="btnAdd" sfwMethodName="btnAddNewChild_Click" sfwRelatedControl="grvBpmActivityChecklist" Text="Add New" />
+                <sfwButton ID="btnDeleteChecklist" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvBpmActivityChecklist" Text="Delete" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="2">
+                <sfwGridView ID="grvBpmActivityChecklist" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwTwoWayBinding="True" sfwAllowNew="True" AllowEditing="True" sfwEntityField="lstBpmActivityChecklist" sfwGridEntity="entBpmActivityChecklist">
+                  <Columns>
+                    <TemplateField HeaderText="Checklist ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblProcess" sfwEntityField="ActivityChecklistId" Visible="False" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Checklist Description">
+                      <ItemTemplate>
+                        <sfwTextBox ID="txtChecklistDesc" Width="500px" TextMode="MultiLine" sfwEntityField="Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Associated Event">
+                      <ItemTemplate>
+                        <sfwDropDownList ID="ddlBPMEventId" DataTextField="event_desc" DataValueField="bpm_event_id" sfwLoadType="Query" sfwLoadSource="entBpmEvent.LookupQuery" sfwEntityField="BpmEventId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Required">
+                      <ItemTemplate>
+                        <sfwCheckBox ID="chkDropDownList" sfwDefaultValue="N" sfwEntityField="RequiredFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel3" sfwCaption="BPM checklist">
+          <sfwTable ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwDialogPanel ID="Checklist_Dialog12" sfwCaption="Add/Edit CheckList " Visible="False">
+                  <sfwTable ID="tblNewPage2">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capGroupName" Text="Group Name : " AssociatedControlID="txtGroupName" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwDropDownList ID="ddlGroupName" sfwEntityField="GroupId" sfwLoadType="Query" sfwLoadSource="entBpmActvChklGroup.GetGroupsByActivityId" sfwNavigationParameter="activity_id=ActivityId" DataTextField="group_name" DataValueField="group_id" SelectedIndex="1" sfwRetrievalQuery="entBpmActvChklGroup.GetGroupByGroupId" sfwParameters="group_id=ddlGroupName" sfwRetrievalControls="txtMinReqFields=min_req_fields" sfwMode="Update" />
+                        <sfwDropDownList ID="ddlActvChklGroup" sfwIsComboBox="True" sfwEntityField="objBpmActvChklGroup.GroupName" sfwLoadType="Query" sfwRetrievalMethod="GetGroupData" sfwLoadSource="entBpmActvChklGroup.GetGroupsByActivityId" sfwNavigationParameter="activity_id=ActivityId" DataTextField="group_name" DataValueField="group_id" sfwParameters="id=ddlDropDownList" sfwRetrievalControls="txtMinReqFields=icdoBpmActvChklGroup.min_req_fie lds;lblGroupId=icdoBpmActvChklGroup.group_id" sfwMode="New" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capMinReqFields" Text="Min Req Fields : " AssociatedControlID="txtMinReqFields" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtMinReqFields" sfwEntityField="objBpmActvChklGroup.MinReqFields" sfwDataFormat="{0:999999999}" sfwDataType="Numeric" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capDescription" Text="Description : " AssociatedControlID="txtDescription" sfwIsCaption="True" Visible="False" />
+                      </sfwColumn>
+                      <sfwColumn ColumnSpan="3">
+                        <sfwTextBox ID="txtDescription" sfwEntityField="Description" Width="500px" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capBpmEventId" Text="Bpm Event Id : " AssociatedControlID="ddlBpmEventId" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCascadingDropDownList ID="ddlBpmEventId" sfwEntityField="BpmEventId" sfwLoadType="Query" sfwLoadSource="entBpmEvent.GetBPMEventByDescription" DataTextField="event_desc" DataValueField="bpm_event_id" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capRequiredFlag" Text="Required Flag : " AssociatedControlID="chkRequiredFlag" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCheckBox ID="chkRequiredFlag" sfwEntityField="RequiredFlag" />
+                        <sfwTextBox ID="txtActivityId" sfwEntityField="ActivityId" CssClass="HideControl" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwButton ID="btnFinishPopupDialogClick" sfwMethodName="btnFinishPopupDialogSave_Click" Text="Save" sfwRelatedControl="grvLstBpmActivityChecklist" sfwRelatedDialogPanel="Checklist_Dialog" sfwExecuteAfterSuccess="btnButton" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                  </sfwTable>
+                </sfwDialogPanel>
+                <sfwDialogPanel ID="Checklist_Dialog" sfwCaption="Add/Edit CheckList ">
+                  <sfwTable ID="tblTable">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capLabel" Text="Group Name : " AssociatedControlID="txtGroupName" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwDropDownList ID="ddlDropDownList12" sfwEntityField="GroupId" sfwLoadType="Query" sfwLoadSource="entBpmActvChklGroup.GetGroupsByActivityId" sfwNavigationParameter="activity_id=ActivityId" DataTextField="group_name" DataValueField="group_id" SelectedIndex="1" sfwRetrievalQuery="entBpmActvChklGroup.GetGroupByGroupId" sfwParameters="group_id=ddlGroupName" sfwRetrievalControls="txtMinReqFields=min_req_fields" sfwMode="Update" sfwIsComboBox="True" />
+                        <sfwDropDownList ID="ddlDropDownList2" sfwIsComboBox="True" sfwEntityField="objBpmActvChklGroup.GroupName" sfwLoadType="Query" sfwRetrievalMethod="GetGroupData" sfwLoadSource="entBpmActvChklGroup.GetGroupsByActivityId" sfwNavigationParameter="activity_id=ActivityId" DataTextField="group_name" DataValueField="group_id" sfwParameters="id=ddlDropDownList" sfwRetrievalControls="txtMinReqFields=icdoBpmActvChklGroup.min_req_fie lds;lblGroupId=icdoBpmActvChklGroup.group_id" sfwMode="New" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capLabel1" Text="Min Req Fields : " AssociatedControlID="txtMinReqFields" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtTextBox" sfwEntityField="objBpmActvChklGroup.MinReqFields" sfwDataFormat="{0:999999999}" sfwDataType="Numeric" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capLabel2" Text="Description : " AssociatedControlID="txtDescription" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn ColumnSpan="3">
+                        <sfwTextBox ID="txtTextBox1" sfwEntityField="Description" Width="500px" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capLabel3" Text="Bpm Event Id : " AssociatedControlID="ddlBpmEventId" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCascadingDropDownList ID="ddlCascadingDropDownList" sfwEntityField="BpmEventId" sfwLoadType="Query" sfwLoadSource="entBpmEvent.GetBPMEventByDescription" DataTextField="event_desc" DataValueField="bpm_event_id" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capLabel4" Text="Required Flag : " AssociatedControlID="chkRequiredFlag" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwCheckBox ID="chkCheckBox" sfwEntityField="RequiredFlag" />
+                        <sfwTextBox ID="txtTextBox2" sfwEntityField="ActivityId" CssClass="HideControl" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwButton ID="btnButton1" sfwMethodName="btnFinishPopupDialogSave_Click" Text="Save" sfwRelatedControl="grvLstBpmActivityChecklist" sfwRelatedDialogPanel="Checklist_Dialog" sfwExecuteAfterSuccess="btnButton" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                  </sfwTable>
+                </sfwDialogPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNewPopupDialogClick" sfwMethodName="btnNewPopupDialog_Click" Text="New" sfwRelatedControl="grvLstBpmActivityChecklist" sfwRelatedDialogPanel="Checklist_Dialog" />
+                <sfwButton ID="btnOpenPopupDialogClick" sfwMethodName="btnOpenPopupDialog_Click" Text="Open" sfwRelatedControl="grvLstBpmActivityChecklist" sfwRelatedDialogPanel="Checklist_Dialog" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" Text="Delete" sfwRelatedControl="grvLstBpmActivityChecklist" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="grvLstBpmActivityChecklist" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="lstBpmActivityChecklist" sfwDataKeyNames="ActivityChecklistId" sfwGroupExpression="GroupMinReq">
+                  <Columns>
+                    <TemplateField HeaderText="ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityChecklistId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Description">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Required Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RequiredFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Event Desc">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmEvent.EventDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Group" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmActvChklGroup.GroupName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Min Req Fields" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmActvChklGroup.MinReqFields" sfwShowZero="True" />
+                      </ItemTemplate>
+                      <FooterTemplate>
+                        <sfwLabel sfwText="Min Req Fields:{0}" sfwFooterType="Min" />
+                      </FooterTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="GroupMinReq" HeaderText="Group Name" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="GroupMinReq" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlRejectionReason" sfwCaption="Rejection Reason" sfwVisibleRule="Visible Rule - Is Activity Type User Task">
+          <sfwTable ID="tblNewPage4" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblCapIstrRejectionReason" Text="Rejection Reasons  :      " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlIstrRejectionReason" DataTextField="description" DataValueField="code_value" sfwLoadType="Query" sfwLoadSource="entBpmActivityRejection.GetAllRejectionReasons" sfwEntityField="IstrRejectionReason" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnExecuteBusinessMethodSelectRows_Click" Text="Add Rejection Reason" ID="btnExecutePassSelectedRows" sfwObjectMethod="AddBPMActivityRejectionReason" sfwExecuteMethodType="ObjectMethod" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnDelete1" sfwMethodName="btnGridViewDelete_Click" Text="Delete" sfwRelatedControl="grvbusSolBPMActivityRejection" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="3">
+                <sfwGridView ID="grvbusSolBPMActivityRejection" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwSelection="Many" sfwTwoWayBinding="True" sfwEntityField="lstBpmActivityRejection" sfwGridEntity="entBpmActivityRejection">
+                  <Columns>
+                    <TemplateField HeaderText="BPM Activity Rejection ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BpmActivityRejectionId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Rejection Reasons">
+                      <ItemTemplate>
+                        <sfwLabel sfwWrap="True" sfwEntityField="RejectionReasonDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlExceptionReason" sfwCaption="Exception Reason" sfwVisibleRule="Visible Rule - Is Activity Type User Task">
+          <sfwTable ID="tblException" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblCapIstrExceptionReason" Text="Exception Reasons  :   " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlIstrExceptionReason" DataTextField="description" DataValueField="code_value" sfwLoadType="Query" sfwLoadSource="entBpmActivityRejection.GetAllExceptionReasons" sfwEntityField="IstrExceptionReason" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnAddExceptionReason" sfwMethodName="btnExecuteBusinessMethodSelectRows_Click" Text="Add Exception Reason" sfwExecuteMethodType="ObjectMethod" sfwObjectMethod="AddBPMActivityExceptionReason" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnDelete2" sfwMethodName="btnGridViewDelete_Click" Text="Delete" sfwRelatedControl="grvbusSolBPMActivityExceptionRejection" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="3">
+                <sfwGridView ID="grvbusSolBPMActivityExceptionRejection" AllowPaging="True" AllowSorting="True" AllowEditing="True" sfwSelection="Many" sfwTwoWayBinding="True" sfwEntityField="lstBpmActivityException" sfwGridEntity="entBpmActivityRejection">
+                  <Columns>
+                    <TemplateField HeaderText="BPM Activity exception ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BpmActivityRejectionId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Exception Reason">
+                      <ItemTemplate>
+                        <sfwLabel sfwWrap="True" sfwEntityField="RejectionReasonDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMissingInformation" sfwCaption="Missing Information" sfwVisibleRule="Visible Rule - Is Activity Type User Task">
+          <sfwTable ID="tblNewPage3" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn ColumnSpan="2">
+                <sfwLabel ID="capIstrMissingInformation" Text="Missing Information  :   " AssociatedControlID="ddlIstrMissingInformation" sfwIsCaption="True" />
+                <sfwDropDownList ID="ddlIstrMissingInformation" DataTextField="description" DataValueField="code_value" sfwLoadType="Query" sfwLoadSource="entBpmActivityRejection.GetAllMissingInformation" sfwEntityField="IstrMissingInformation" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton sfwMethodName="btnExecuteBusinessMethodSelectRows_Click" Text="Add Missing Information" ID="btnExecutePassSelectedRows1" sfwObjectMethod="AddBPMActivityMissingInformation" sfwExecuteMethodType="ObjectMethod" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnDelete3" sfwMethodName="btnGridViewDelete_Click" Text="Delete" sfwRelatedControl="grvbusSolBPMActivityMissingInformation" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="3">
+                <sfwGridView ID="grvbusSolBPMActivityMissingInformation" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="lstBpmActivityMissingInformation" sfwGridEntity="entBpmActivityRejection">
+                  <Columns>
+                    <TemplateField HeaderText="BPM Activity missing information ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BpmActivityRejectionId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Missing Information">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RejectionReasonDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information" Visible="False">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwDataFormat="{0:G}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwDataFormat="{0:G}" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objBpmProcess" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objRoles" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmActivityChecklist" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objBpmActvChklGroup" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmActivityRejection" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmActivityException" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmActivityMissingInformation" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

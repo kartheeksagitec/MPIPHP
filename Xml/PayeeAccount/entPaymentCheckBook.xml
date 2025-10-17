@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPaymentCheckBook" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPaymentCheckBook" sfwObjectID="busPaymentCheckBook" sfwTableName="sgt_payment_check_book" sfwView="False" sfwDataObjectID="doPaymentCheckBook">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetAvailableCheck" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="Declare @SCHEDULE_TYPE VARCHAR(4)&#xD;&#xA;SELECT TOP 1 &#xD;&#xA;    @SCHEDULE_TYPE= SCHEDULE_TYPE_VALUE     &#xD;&#xA; FROM SGT_PAYMENT_SCHEDULE WITH(NOLOCK) &#xD;&#xA; WHERE PAYMENT_SCHEDULE_ID  = @PAYMENTSCHEDULEID&#xD;&#xA; ORDER BY PAYMENT_DATE DESC&#xD;&#xA;IF @SCHEDULE_TYPE IN ('MTLY','ADHM')&#xD;&#xA;SET @SCHEDULE_TYPE='PENC'&#xD;&#xA;ELSE &#xD;&#xA;SET @SCHEDULE_TYPE='IAPC'&#xD;&#xA;&#xD;&#xA;SELECT isnull(CAST(MAX_CHECK_NUMBER AS INT) - CAST(LAST_CHECK_NUMBER as int),0) AS no_of_checks_available&#xD;&#xA;FROM SGT_PAYMENT_CHECK_BOOK &#xD;&#xA;WHERE CHECK_TYPE_VALUE=@SCHEDULE_TYPE  AND EFFECTIVE_DATE=(SELECT MAX(EFFECTIVE_DATE)&#xD;&#xA;      FROM SGT_PAYMENT_CHECK_BOOK&#xD;&#xA;       WHERE EFFECTIVE_DATE&lt;=@paymentdate&#xD;&#xA;       AND  CHECK_TYPE_VALUE=@SCHEDULE_TYPE) &#xD;&#xA;       AND &#xD;&#xA;     CHECK_TYPE_VALUE=@SCHEDULE_TYPE">
+      <parameters>
+        <parameter ID="@paymentdate" sfwDataType="DateTime" />
+        <parameter ID="@PAYMENTSCHEDULEID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_PAYMENT_CHECK_BOOK&#xD;&#xA;">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="check_book_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="CheckBookId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwType="Description" ID="CheckTypeDescription" sfwCaption="Check Type" sfwValue="check_type_description" />
+    <attribute sfwValue="check_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CheckTypeId" sfwCodeID="7050" sfwIsSequence="False" sfwCaption="Check Type" />
+    <attribute sfwValue="check_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="CheckTypeValue" sfwIsSequence="False" sfwCaption="Check Type" />
+    <attribute sfwValue="effective_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveDate" sfwIsSequence="False" sfwCaption="Effective Date" />
+    <attribute sfwValue="first_check_number" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="FirstCheckNumber" sfwIsSequence="False" sfwCaption="First Check Number" />
+    <attribute sfwValue="max_check_number" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="MaxCheckNumber" sfwIsSequence="False" sfwCaption="Max Check Number" />
+    <attribute sfwValue="last_check_number" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="LastCheckNumber" sfwIsSequence="False" sfwCaption="Last Check Number" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

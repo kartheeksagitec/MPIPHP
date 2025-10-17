@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entResources" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvAdmin" sfwType="BusinessRule" sfwMainCDO="icdoResources" sfwObjectID="busResources" sfwTableName="sgs_resources" sfwDataObjectID="doResources">
+  <rules>
+    <rule ID="NoResourceID" sfwMessageId="5068" sfwExpression="(this.icdoResources.resource_id == 0)" sfwObjectBased="True" />
+    <rule ID="Resource already exists" sfwMessageId="5069" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entResources.Count&quot;, this.icdoResources.resource_id) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="RuleCheckIfResourceDescriptionNotBlank" sfwMessageId="6001" sfwExpression="(!(string.IsNullOrEmpty(this.icdoResources.resource_description)) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.icdoResources.resource_type_value)))" sfwObjectBased="True" />
+    <rule ID="RuleCheckIfResourceTypeNotBlank" sfwMessageId="6002" sfwExpression="((string.IsNullOrEmpty(this.icdoResources.resource_description)) &amp;&amp; &#xA;!(string.IsNullOrEmpty(this.icdoResources.resource_type_value)))" sfwObjectBased="True" />
+    <rule ID="RuleCombinationCheck" sfwMessageId="6000" sfwExpression="((string.IsNullOrEmpty(this.icdoResources.resource_description)) &amp;&amp; &#xA;(string.IsNullOrEmpty(this.icdoResources.resource_type_value)))" sfwObjectBased="True" />
+  </rules>
+  <delete>
+    <property ID="lstSecurity" sfwMethodName="LoadSecurity" />
+  </delete>
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="Resource already exists" sfwMode="New" sfwStatus="Active" />
+    <item ID="RuleCombinationCheck" sfwMode="All" sfwStatus="Active" />
+    <item ID="RuleCheckIfResourceTypeNotBlank" sfwMode="All" sfwStatus="Active" />
+    <item ID="RuleCheckIfResourceDescriptionNotBlank" sfwMode="All" sfwStatus="Active" />
+    <item ID="NoResourceID" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="ResourceList" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select resource_id, resource_description &#xD;&#xA;  from sgs_resources &#xD;&#xA; order by resource_description&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xD;&#xA; from sgs_resources &#xD;&#xA;order by resource_description">
+      <parameters />
+    </query>
+    <query ID="Count" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*)&#xD;&#xA;  from sgs_resources&#xD;&#xA; where resource_id = @resource_id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@resource_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="UnassignedResourcesByRoles" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="   SELECT SGS_RESOURCES.RESOURCE_ID, RESOURCE_DESCRIPTION FROM SGS_RESOURCES &#xD;&#xA;  WHERE RESOURCE_ID NOT IN(SELECT RESOURCE_ID FROM SGS_SECURITY WHERE ROLE_ID = @ROLE_ID) &#xD;&#xA;">
+      <parameters>
+        <parameter ID="@ROLE_ID" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="resource_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ResourceId" sfwIsSequence="False" sfwCaption="Resource Id" />
+    <attribute sfwType="Description" ID="ResourceTypeDescription" sfwCaption="Resource Type" sfwValue="resource_type_description" />
+    <attribute sfwValue="resource_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ResourceTypeId" sfwCodeID="12" sfwIsSequence="False" sfwCaption="Resource Type" />
+    <attribute sfwValue="resource_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ResourceTypeValue" sfwIsSequence="False" sfwCaption="Resource Type" />
+    <attribute sfwValue="resource_description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="ResourceDescription" sfwIsSequence="False" sfwCaption="Resource Description" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IntRoleId" sfwValue="intRoleId" />
+    <attribute sfwType="Collection" sfwEntity="entSecurity" ID="lstSecurity" sfwValue="iclbSecurity" />
+    <attribute sfwType="Collection" sfwEntity="entResourcesScreen" ID="lstResourcesScreen" sfwValue="iclbResourcesScreen" />
+    <attribute sfwType="Collection" sfwEntity="entUser" ID="lstUser" sfwValue="iclbUser" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadUnassignedRolesByResource" sfwReturnType="Collection" sfwObjectID="cdoRoles" sfwEntity="entRoles" />
+    <method ID="AddRoleforResource" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintRoleId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="LoadSecurity" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

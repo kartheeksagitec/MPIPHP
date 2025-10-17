@@ -1,0 +1,48 @@
+﻿<entity ID="entBpmProcessInstanceRestrictNotifyXr" sfwView="False" sfwActive="True" sfwMainCDO="icdoBpmProcessInstanceRestrictNotifyXr" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgw_bpm_prcs_inst_rsrt_noty_xr" sfwObjectID="busBpmProcessInstanceRestrictNotifyXr" sfwObjectType="Sagitec.Bpm.busBpmProcessInstanceRestrictNotifyXr, SagitecBpm, Version=5.0.0.0, Culture=neutral, PublicKeyToken=df17fdb7b963e064" sfwDataObjectID="doBpmPrcsInstRsrtNotyXr">
+  <queries>
+    <query ID="LookUp" sfwSql="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PRCS_INST_RSRT_NOTY_XR WITH(NOLOCK)" sfwDataType="EntityTable" sfwQueryType="SelectQuery" sfwPostgre="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PRCS_INST_RSRT_NOTY_XR">
+      <parameters />
+    </query>
+    <query ID="GetCountOfInProgressParentProcessInstancesByCaseInstanceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; count(1) &#xA;FROM&#xA;&#x9; SGW_BPM_PRCS_INST_RSRT_NOTY_XR PIRNXR WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN  (SELECT&#xA;&#x9; process_instance_id &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE BPI WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE BCI WITH(NOLOCK)&#xA;&#x9; ON BPI.CASE_INSTANCE_ID = BCI.CASE_INSTANCE_ID AND&#xA;&#x9; BCI.CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND&#xA;&#x9; BCI.STATUS_VALUE = 'RETR' AND&#xA;&#x9; BPI.STATUS_VALUE = 'RETR') DPI&#xA;&#x9; ON PIRNXR.DEPENDENT_PROCESS_INSTANCE_ID = DPI.PROCESS_INSTANCE_ID &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE PPI WITH(NOLOCK)&#xA;&#x9; ON PIRNXR.PARENT_PROCESS_INSTANCE_ID = PPI.PROCESS_INSTANCE_ID &#xA;WHERE&#xA;&#x9; PPI.STATUS_VALUE NOT IN  ('TERM',&#xA;&#x9;'PROC')" sfwPostgre="SELECT&#xD;&#xA;&#x9; count(1) &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PRCS_INST_RSRT_NOTY_XR PIRNXR &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN  (SELECT&#xD;&#xA;&#x9; process_instance_id &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE BPI &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE BCI &#xD;&#xA;&#x9; ON BPI.CASE_INSTANCE_ID = BCI.CASE_INSTANCE_ID AND&#xD;&#xA;&#x9; BCI.CASE_INSTANCE_ID = @CASE_INSTANCE_ID AND&#xD;&#xA;&#x9; BCI.STATUS_VALUE = 'RETR' AND&#xD;&#xA;&#x9; BPI.STATUS_VALUE = 'RETR') DPI&#xD;&#xA;&#x9; ON PIRNXR.DEPENDENT_PROCESS_INSTANCE_ID = DPI.PROCESS_INSTANCE_ID &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE PPI &#xD;&#xA;&#x9; ON PIRNXR.PARENT_PROCESS_INSTANCE_ID = PPI.PROCESS_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PPI.STATUS_VALUE NOT IN  ('TERM',&#xD;&#xA;&#x9;'PROC')">
+      <parameters>
+        <parameter ID="@CASE_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAllBpmProcessInstanceRestrictNotifyMessagesForUser" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;  A.PROCESS_INSTANCE_ID,&#xA;&#x9;  A.CHECKED_OUT_USER,&#xA;&#x9;  P.NOTIFICATION_MESSAGE,&#xA;&#x9;  R.DEPENDENT_PROCESS_INSTANCE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE P WITH(NOLOCK)     INNER                         &#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE A WITH(NOLOCK)                    &#xA;&#x9; ON P.PROCESS_INSTANCE_ID = A.PROCESS_INSTANCE_ID INNER                         &#xA;&#x9; JOIN SGW_BPM_PRCS_INST_RSRT_NOTY_XR R WITH(NOLOCK)                    &#xA;&#x9; ON R.DEPENDENT_PROCESS_INSTANCE_ID = P.PROCESS_INSTANCE_ID &#xA;WHERE&#xA;&#x9; A.CHECKED_OUT_USER = @CHECKED_OUT_USER AND&#xA;&#x9; A.STATUS_VALUE = 'INPC'" sfwPostgre="SELECT&#xD;&#xA;&#x9;  A.PROCESS_INSTANCE_ID,&#xD;&#xA;&#x9;  A.CHECKED_OUT_USER,&#xD;&#xA;&#x9;  P.NOTIFICATION_MESSAGE,&#xD;&#xA;&#x9;  R.DEPENDENT_PROCESS_INSTANCE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE P     INNER                         &#xD;&#xA;&#x9; JOIN SGW_BPM_ACTIVITY_INSTANCE A                    &#xD;&#xA;&#x9; ON P.PROCESS_INSTANCE_ID = A.PROCESS_INSTANCE_ID INNER                         &#xD;&#xA;&#x9; JOIN SGW_BPM_PRCS_INST_RSRT_NOTY_XR R                    &#xD;&#xA;&#x9; ON R.DEPENDENT_PROCESS_INSTANCE_ID = P.PROCESS_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; A.CHECKED_OUT_USER = @CHECKED_OUT_USER AND&#xD;&#xA;&#x9; A.STATUS_VALUE = 'INPC'">
+      <parameters>
+        <parameter ID="@CHECKED_OUT_USER" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindBpmProcessInstanceRestrictNotifyXr" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+    </method>
+  </methods>
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint />
+  <rules />
+  <ExtraFields />
+  <lifecycle />
+  <attributes>
+    <attribute ID="istrNotification_Message" sfwDataType="string" sfwPrivate="False" sfwType="Property" sfwValue="istrNotificationMessages" />
+    <attribute sfwValue="prcs_inst_restrict_notify_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PrcsInstRestrictNotifyId" sfwCaption="ID" />
+    <attribute sfwValue="parent_process_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ParentProcessInstanceId" sfwCaption="Parent Process Instance Id" />
+    <attribute sfwValue="dependent_process_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="DependentProcessInstanceId" sfwCaption="Dependent Process Instance Id" />
+    <attribute sfwValue="restrict_notify_code_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RestrictNotifyCodeId" sfwCodeID="2034" sfwCaption="Restrict Notify Code Id" />
+    <attribute sfwValue="restrict_notify_code_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="RestrictNotifyCodeValue" sfwCaption="Restrict Notify Code Value" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+  <objectmethods />
+</entity>

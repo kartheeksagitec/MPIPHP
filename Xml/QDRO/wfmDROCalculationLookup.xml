@@ -1,0 +1,246 @@
+﻿<form ID="wfmDROCalculationLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCalculation" sfwResource="504" sfwType="Lookup" sfwTitle="QDRO Calculation Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entQdroCalculationHeader" sfwGridCollection="busQdroCalculationLookup.iclbQdroCalculationHeader">
+  <initialload>
+    <query ID="cdoQdroCalculationHeader" sfwQueryRef="entQdroCalculationHeader.Lookup" sfwMethodName="LoadQdroCalculations" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlHeaderTab" sfwCaption="Search Parameters">
+          <sfwTable ID="tblHeaderTab">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctHeader">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Criteria" ID="tshCriteria">
+                      <sfwTable ID="tblCriteria">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel1" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                            <sfwLabel AssociatedControlID="txtPersonMPIId" ID="capPersonId" Text="Participant MPID : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtPersonMPIId" sfwDataField="sp.mpi_person_id" sfwOperator="like" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" />
+                            <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtPersonMPIId" sfwSelectedIndex="MpiPersonId" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel2" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                            <sfwLabel AssociatedControlID="txtAltPayeeMPIId" ID="capAlternatePayeeId" Text="Alternate Payee MPID : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtAltPayeeMPIId" sfwDataField="sp1.mpi_person_id" sfwOperator="like" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" />
+                            <sfwImageButton ID="btnRetrieve1" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtAltPayeeMPIId" sfwSelectedIndex="MpiPersonId" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capQdroModelValue" Text="QDRO Model : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlDroModelValue" sfwDataField="qdro_model_value" sfwOperator="like" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" sfwLoadType="CodeGroup" sfwLoadSource="6004" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="ddlStatusValue" ID="capStatusValue" Text="QDRO Calculation Status : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlStatusValue" sfwDataField="hdr.status_value" sfwOperator="like" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" sfwLoadType="CodeGroup" sfwLoadSource="2002" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel ID="capCreatedDateFrom" Text="Determination Date From: " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtCreatedDateFrom" sfwDataField="qdro_commencement_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoQdroCalculationHeader" sfwRelatedControl="txtCreatedDateTo" sfwTwoWayBinding="False" />
+                            <CompareValidator ControlToValidate="txtCreatedDateFrom" ErrorMessage="Created Date From must be in mm/dd/yyyy format." ID="valCreatedDateFrom" Operator="DataTypeCheck" Text="*" Type="Date" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="capCreatedDateTo" Text="Determination Date To: " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtCreatedDateTo" sfwDataField="qdro_commencement_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" />
+                            <CompareValidator ControlToValidate="txtCreatedDateTo" ErrorMessage="Created Date To must be in mm/dd/yyyy format." ID="valCreatedDateTo" Operator="DataTypeCheck" Text="*" Type="Date" />
+                            <CompareValidator ControlToCompare="txtCreatedDateFrom" ControlToValidate="txtCreatedDateTo" ErrorMessage="Created Date To cannot be less than Created Date From." ID="valCreatedDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="ddlCalculationTypeValue" ID="capCalculationTypeValue" Text="QDRO Calculation Type : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList ID="ddlCalculationTypeValue" sfwDataField="calculation_type_value" sfwOperator="like" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" sfwLoadType="CodeGroup" sfwLoadSource="2001" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel ID="lblLabel" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                            <sfwLabel AssociatedControlID="ddlPlanId" ID="capPlanId" Text="Plan : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwDropDownList DataTextField="plan_name" DataValueField="plan_id" ID="ddlPlanId" sfwDataField="DTL.plan_id" sfwOperator="=" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" sfwLoadType="Query" sfwLoadSource="entPlan.Lookup" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtQdroApplicationId" ID="capQdroApplicationId" Text="QDRO Application ID : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtQdroApplicationId" sfwDataField="qdro_application_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" />
+                            <sfwImageButton ID="btnRetrieve2" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmQDROApplicationLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtQdroApplicationId" sfwSelectedIndex="DroApplicationId" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtQdroCalculationHeaderId" ID="capQdroCalculationHeaderId" Text="QDRO Calculation ID : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtQdroCalculationHeaderId" sfwDataField="hdr.qdro_calculation_header_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwLabel AssociatedControlID="txtSdaCaseNumber" ID="capSdaCaseNumber" Text="Case Number : " sfwIsCaption="True" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtSdaCaseNumber" sfwDataField="sda.case_number" sfwOperator="like" sfwQueryID="cdoQdroCalculationHeader" sfwTwoWayBinding="False" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                            <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Query" ID="tshSql" Visible="False">
+                      <sfwTable ID="tblSql">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwTextBox ID="txbSql" Rows="5" TextMode="MultiLine" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnExecuteQuery" sfwMethodName="btnSearch_Click" sfwRelatedControl="dgrResult" Text="Execute Query" />
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmQDROCalculationMaintenance" sfwCopyActivitySessionVariables="True" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintQdroApplicationId=txtQdroApplicationId;aintPlanId=ddlPlanId;astr_person_mpi_id=txtPersonMPIId;astr_alt_payee_id=txtAltPayeeMPIId;astrqdro_model_value=ddlDroModelValue" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmQDROCalculationMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintQdroFileDetails=lintPrimaryKey;aintQdroCalculationHeaderId=QdroCalculationHeaderId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="QDRO Calculation ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="QdroCalculationHeaderId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant MPID" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objParticipant.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objParticipant.IstrFullName1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alt Payee MPID" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objAlternatePayee.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Alt Payee Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objAlternatePayee.IstrFullName1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPlanDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Model">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="QDROModelDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Marriage Date" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DateOfMarriage" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Seperation Date" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DateOfSeperation" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Determination Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="QdroCommencementDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Calc Status" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Calculation Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CalculationTypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Case Number">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CASENUMBER" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Qualified Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="QUALIFIEDDATE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="QDRO Recieved Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="RECEIVEDDATE" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

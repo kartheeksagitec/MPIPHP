@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_DATE]
+    FROM DATETIME NULL;
+

@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmMessageLookup" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207" sfwType="Lookup" sfwTitle="Message Lookup" sfwMaxCount="50" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Create Message=Create Message.htm;Update Message=Update Message.htm;Delete Message=Delete Message.htm" sfwEntity="entMessages" sfwGridCollection="busMessagesLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoMessages" sfwQueryRef="entMessages.Lookup" sfwMethodName="LoadMessages" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMessageId" Text="Message ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMessageId" sfwDataField="message_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoMessages" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblMessageId" Text="Message ID From :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMessageIdFrom" sfwDataField="message_id" sfwDataType="Numeric" sfwOperator="between" sfwQueryID="cdoMessages" sfwRelatedControl="txtMessageIdTo" />
+                <CompareValidator ControlToValidate="txtMessageIdFrom" ErrorMessage="Message ID From must be an Integer value." ID="valMessageIdFrom" Operator="DataTypeCheck" Text="*" Type="Integer" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capMessageIdTo" Text="Message ID To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMessageIdTo" sfwDataField="message_id" sfwDataType="Numeric" sfwQueryID="cdoMessages" sfwOperator="between" />
+                <CompareValidator ControlToValidate="txtMessageIdTo" ErrorMessage="Message ID To must be an Integer value." ID="valMessageIdTo" Operator="DataTypeCheck" Text="*" Type="Integer" />
+                <CompareValidator ControlToCompare="txtMessageIdFrom" ControlToValidate="txtMessageIdTo" ErrorMessage="Message ID To cannot be less than Message ID From." ID="valMessageIdRange" Operator="GreaterThanEqual" Text="*" Type="Integer" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblMessage" Text="Message :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtdescription" sfwDataField="display_message" sfwQueryID="cdoMessages" Width="300px" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capEmployerInstructions" Text="External User Only : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="txtEmployerInstructions" sfwDataField="employer_instructions" sfwOperator="&gt;" sfwQueryID="cdoMessages" sfwValueChecked="!" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearchCriteriaRequired_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Result">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmMessageMaintenance" sfwMethodName="btnNew_Click" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmMessageMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintMessageId=MessageId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwNavigationParameter="MessageId" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" PageSize="100" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Message ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="MessageId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Display Message">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DisplayMessage" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Severity">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="SeverityDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified By" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified Date" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Update Seq" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="UpdateSeq" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

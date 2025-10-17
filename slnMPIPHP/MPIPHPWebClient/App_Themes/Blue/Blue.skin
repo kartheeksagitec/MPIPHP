@@ -1,0 +1,69 @@
+<%@ Register TagPrefix="swc" Namespace="Sagitec.WebControls" Assembly="SagitecWebControls, Version=6.0.0.0, Culture=neutral, PublicKeyToken=2FAFCCD2A44457D5"%>
+<%-- Palette
+
+     #444444 = black
+     #FFFFFF = white
+
+     #EEEEEE = light grey
+     #CCCCCC = medium grey 
+
+     #0000FF = blue
+     #000066 = navy
+     #696969 = charcoal
+     #444444 = charcoal w/ blue and purple tint
+     #E7E5DB = cream
+     #6464FE = (highlight color) - blue and purple tint
+     #F8F7F4 = (alternating rows)- very light brown     --%>
+<swc:sfwPanel runat="server" Width="100%" />
+<swc:sfwWizardProgress runat="server" Width="100%" />
+<swc:sfwTable runat="server" GridLines="None" CellPadding="1" CssClass="Table" /><%-- CssClass="table" added 8/4/11 --%>
+<swc:sfwLabel SkinID="ReqInformation" runat="server" ForeColor="OrangeRed" Font-Size="9px" Font-Names="Verdana" /> <%-- for required fields "*" --%>
+<swc:sfwLabel SkinID="AlignLeft" runat="server" CssClass="AlignLeft" />
+<swc:sfwLabel SkinID="RightAlign" runat="server"  CssClass="AlignRight" /> <%-- for labels that are right aligned --%>
+<swc:sfwTextBox runat="server" CssClass="textboxbg" /> <%-- for all textboxes, if need other css then specify SkinID attribute of textbox control --%>
+<swc:sfwButton runat="server" CssClass="buttonbg"/> <%-- for all buttons, if need other css then specify SkinID attribute of button control --%>
+<swc:sfwButton SkinID="ServerSideRefresh" runat="server" CssClass="btnServerSideRefresh"/>
+<swc:sfwDropDownList runat="server" CssClass="textboxbg" />
+<swc:sfwImageButton runat="server" CssClass="Imagebutton" />
+<swc:sfwImageButton SkinID="WorkflowButton" runat="server" CssClass="WorkflowButton" />
+<swc:sfwLinkButton SkinID="btnReturnTxt" runat="server" Font-Size="11px" Font-Weight="bold" />
+<asp:Image runat="server" SkinID="Space" ImageUrl="Image/spacerL.gif" AlternateText="Space"/>
+<asp:Image runat="server" SkinID="PanelImageLeft"  ImageUrl="Image/spacerL.gif" Width="12px" /> <%-- for all tables having sfwGroupCaption, required by framework --%>
+<asp:Image runat="server" SkinID="PanelImageRight"  ImageUrl="Image/spacerL.gif" Width="32px"  /> <%-- for all tables having sfwGroupCaption, required by framework --%>
+<asp:Image runat="server" SkinID="Loading" ImageUrl="Image/loading.gif" />
+<swc:sfwImageButton runat="server" SkinID="btnMPPrint" ImageUrl="Image/Top_Head_Icon_Print_N.png" CssClass="headerRtBtn"/>
+<swc:sfwImageButton runat="server" SkinID="btnReturn" ImageUrl="Image/Top_Head_Icon_Previous_N.png" CssClass="headerRtBtn"/>
+<swc:sfwImageButton runat="server" SkinID="btnSignoff" ImageUrl="Image/Top_Head_Icon_Logoff_N.png" CssClass="headerRtBtn"/>
+<swc:sfwImageButton runat="server" SkinID="btnMPRefresh" ImageUrl="Image/Top_Head_Icon_Reresh_N.png" CssClass="headerRtBtn"/>
+<swc:sfwImageButton runat="server" SkinID="lnkUserPreferencesStoreState" ImageUrl="Image/Top_Head_Icon_Storestate_N.png" CssClass="headerRtBtn"/>
+<asp:Menu runat="server" Orientation="Horizontal" DynamicHorizontalOffset="3" StaticMenuItemStyle-CssClass="mainmenu"  
+        StaticSubMenuIndent="0px" StaticDisplayLevels="1" StaticEnableDefaultPopOutImage="true" StaticPopOutImageUrl="">
+        <StaticMenuItemStyle HorizontalPadding="5px" />
+        <DynamicMenuStyle CssClass="submenu" />
+		<DynamicSelectedStyle CssClass="submenuvisit"/>
+        <DynamicMenuItemStyle CssClass="submenuitem" />
+        <DynamicHoverStyle CssClass="submenuover" />
+        <StaticHoverStyle CssClass="menuover" />
+</asp:Menu>
+
+<swc:sfwGridView runat="server"  CellPadding="5" HeaderStyle-Height="10px" GridLines="None">
+    <AlternatingRowStyle CssClass="grideven"></AlternatingRowStyle>
+    <FooterStyle       ></FooterStyle>
+    <EditRowStyle      ForeColor="#444444" Font-Bold="True" BorderWidth="1pt" BorderStyle="Solid" ></EditRowStyle>
+    <HeaderStyle       CssClass="gridhead" ></HeaderStyle>
+    <RowStyle          CssClass="gridodd"></RowStyle>
+    <PagerSettings     Position="Top" Mode="Numeric"></PagerSettings>
+    <PagerStyle        CssClass="gridnormal" HorizontalAlign="Left" ></PagerStyle>
+	<SelectedRowStyle  CssClass="gridselected"></SelectedRowStyle>
+</swc:sfwGridView>
+
+<swc:sfwGridView SkinID="WrapGrid" runat="server"  CellPadding="5" HeaderStyle-Height="10px" GridLines="None">
+    <AlternatingRowStyle CssClass="gridevenWrap"></AlternatingRowStyle>
+    <FooterStyle       ></FooterStyle>
+    <EditRowStyle      ForeColor="#444444" Font-Bold="True" BorderWidth="1pt" BorderStyle="Solid" ></EditRowStyle>
+    <HeaderStyle       CssClass="gridheadWrap" ></HeaderStyle>
+    <RowStyle          CssClass="gridoddWrap"></RowStyle>
+    <PagerSettings     Position="Top" Mode="Numeric"></PagerSettings>
+    <PagerStyle        CssClass="gridnormalWrap" HorizontalAlign="Left" ></PagerStyle>
+	<SelectedRowStyle  CssClass="gridselectedWrap"></SelectedRowStyle>
+</swc:sfwGridView>

@@ -1,0 +1,42 @@
+﻿<entity ID="entBpmActvChklGroup" sfwView="False" sfwActive="True" sfwMainCDO="icdoBpmActvChklGroup" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgw_bpm_actv_chkl_group" Text="Group table for bpm checklist" sfwObjectID="busBpmActvChklGroup" sfwDataObjectID="doBpmActvChklGroup" CreateWithClass="True">
+  <attributes>
+    <attribute sfwValue="group_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="GroupId" sfwCaption="ID" />
+    <attribute sfwValue="activity_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActivityId" sfwCaption="Activity Id" />
+    <attribute sfwValue="group_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="False" ID="GroupName" sfwCaption="Group Name" />
+    <attribute sfwValue="min_req_fields" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="MinReqFields" sfwCaption="Min Req Fields" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="GetGroupsByActivityId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; group_name,&#xA;&#x9;group_id &#xA;FROM&#xA;&#x9; sgw_bpm_actv_chkl_group WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; activity_id = @activity_id" sfwOracle="SELECT&#xA;&#x9; group_name,&#xA;&#x9;group_id &#xA;FROM&#xA;&#x9; sgw_bpm_actv_chkl_group &#xA;WHERE&#xA;&#x9; activity_id = @activity_id" sfwPostgre="SELECT&#xA;&#x9; group_name,&#xA;&#x9;group_id &#xA;FROM&#xA;&#x9; sgw_bpm_actv_chkl_group&#xA;WHERE&#xA;&#x9; activity_id = @activity_id">
+      <parameters>
+        <parameter ID="@activity_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetGroupByGroupId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; group_name,&#xA;&#x9;group_id ,&#xA;&#x9;min_req_fields&#xA;&#xA;FROM&#xA;&#x9; sgw_bpm_actv_chkl_group WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; group_id = @group_id" sfwOracle="SELECT&#xA;&#x9; group_name,&#xA;&#x9;group_id ,&#xA;&#x9;min_req_fields&#xA;&#xA;FROM&#xA;&#x9; sgw_bpm_actv_chkl_group  &#xA;WHERE&#xA;&#x9; group_id = @group_id" sfwPostgre="SELECT&#xA;&#x9; group_name,&#xA;&#x9;group_id ,&#xA;&#x9;min_req_fields&#xA;&#xA;FROM&#xA;&#x9; sgw_bpm_actv_chkl_group &#xA;WHERE&#xA;&#x9; group_id = @group_id">
+      <parameters>
+        <parameter ID="@group_id" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules>
+    <rule ID="DisableMinReqFields" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="GroupId&gt;0" />
+  </rules>
+  <initialload>
+    <item ID="DisableMinReqFields" sfwMode="All" sfwStatus="Active" sfwPublic="True" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+</entity>

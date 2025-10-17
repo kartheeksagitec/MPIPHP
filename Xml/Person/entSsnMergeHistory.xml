@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entSsnMergeHistory" sfwMainCDO="icdoSsnMergeHistory" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busSsnMergeHistory" sfwTableName="sgt_ssn_merge_history" sfwView="False" sfwDataObjectID="doSsnMergeHistory">
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_SSN_MERGE_HISTORY">
+      <parameters />
+    </query>
+    <query ID="CheckOldPersonIDExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_SSN_MERGE_HISTORY WITH(NOLOCK) where OLD_PERSON_ID=@OLD_PERSON_ID and YEAR(MODIFIED_DATE)=@MODIFIED_DATE_YEAR">
+      <parameters>
+        <parameter ID="@OLD_PERSON_ID" sfwDataType="int" />
+        <parameter ID="@MODIFIED_DATE_YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOldPersonBySSN" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;select * from sgt_ssn_merge_history where dbo.fn_GET_DECRYPTED_TEXT(OLD_SSN) = @OLD_SSN">
+      <parameters>
+        <parameter ID="@OLD_SSN" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="CheckIsPersonAlreadyMerged" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGT_SSN_MERGE_HISTORY WHERE NEW_PERSON_ID=@PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetOldPersonByMPID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_SSN_MERGE_HISTORY where OLD_MPI_PERSON_ID=@old_mpi_person_id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@old_mpi_person_id" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="ssn_merge_history_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="SsnMergeHistoryId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="old_person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="OldPersonId" sfwIsSequence="False" sfwCaption="Old Person Id" />
+    <attribute sfwValue="new_person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="NewPersonId" sfwIsSequence="False" sfwCaption="New Person Id" />
+    <attribute sfwValue="new_ssn" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="256" sfwIsNull="False" ID="NewSsn" sfwIsSequence="False" sfwCaption="New Ssn" />
+    <attribute sfwValue="merge_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="MergeDate" sfwIsSequence="False" sfwCaption="Merge Date" />
+    <attribute sfwValue="merged_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="MergedBy" sfwIsSequence="False" sfwCaption="Merged By" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="old_mpi_person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="OldMpiPersonId" sfwIsSequence="False" sfwCaption="Old Mpi Person Id" />
+    <attribute sfwValue="new_mpi_person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="NewMpiPersonId" sfwIsSequence="False" sfwCaption="New Mpi Person Id" />
+    <attribute sfwValue="old_ssn" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="256" sfwIsNull="True" ID="OldSsn" sfwIsSequence="False" sfwCaption="Old Ssn" />
+  </attributes>
+</entity>

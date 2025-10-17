@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[SGS_USER_DEFAULTS] (
+    [USER_DEFAULT_ID]  [dbo].[UDT_IDENTITY] IDENTITY (1, 1) NOT NULL,
+    [USER_SERIAL_ID]   [dbo].[UDT_ID]       NOT NULL,
+    [FORM_NAME]        [dbo].[UDT_DBOBJ]    NOT NULL,
+    [GROUP_CONTROL_ID] [dbo].[UDT_DATA50]   NULL,
+    [DEFAULT_SET_ID]   [dbo].[UDT_DATA50]   NULL,
+    [DATA_FIELD]       [dbo].[UDT_LONGDESC] NULL,
+    [DEFAULT_VALUE]    [dbo].[UDT_DATA50]   NULL
+);
+

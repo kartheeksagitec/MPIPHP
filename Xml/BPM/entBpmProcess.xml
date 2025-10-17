@@ -1,0 +1,132 @@
+﻿<entity ID="entBpmProcess" sfwMainCDO="icdoBpmProcess" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmProcess" sfwTableName="sgw_bpm_process" sfwView="False">
+  <commonproperties />
+  <checklist />
+  <initialload>
+    <item ID="Visible Rule - Show Ristrict Notify Process List" sfwStatus="Active" sfwMode="All" />
+  </initialload>
+  <delete>
+    <property ID="lstBpmProcessEscalations" sfwMethodName="LoadBpmProcessEscalations" />
+    <property ID="lstBpmRequests" sfwMethodName="LoadBpmRequests" />
+    <property ID="lstBpmProcessEventXr" sfwMethodName="LoadBpmProcessEventXrs" />
+    <property ID="lstBpmActivity" sfwMethodName="LoadBpmActivitysByBaseType" />
+    <property ID="IobjMainCDO" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <Constraint />
+  <rules>
+    <rule ID="Visible Rule - Show Ristrict Notify Process List" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="this.icdoBpmProcess.restrict_notify_flag == &quot;Y&quot;" />
+    <rule ID="Process Event Validation" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="this.ValidateBpmProcessEventXrs() == false" sfwMessageId="20007034" />
+  </rules>
+  <constraint />
+  <queries>
+    <query ID="GetProcessesForOnlineInitialization" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;   SP.NAME,&#xA;&#x9;    SP.PROCESS_ID,&#xA;&#x9;   SP.BPM_PROCESS_ID    &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS SP WITH(NOLOCK)    &#xA;&#x9;INNER JOIN (  SELECT&#xA;&#x9; CASE_FILE,&#xA;&#x9; MAX(CASE_ID) AS CASE_ID   &#xA;FROM&#xA;&#x9; SGW_BPM_CASE WITH(NOLOCK)   &#xA;GROUP BY CASE_FILE  ) C&#xA;&#x9; ON SP.CASE_ID = C.CASE_ID  &#xA;&#x9;INNER JOIN SGW_BPM_ACTIVITY SA WITH(NOLOCK) &#xA;&#x9; ON SP.PROCESS_ID = SA.PROCESS_ID &#xA;WHERE&#xA;&#x9;&#xA;&#x9; ONLINE_IND = 'Y' &#xA;GROUP BY SP.NAME,&#xA;&#x9; SP.PROCESS_ID,&#xA;&#x9; SP.BPM_PROCESS_ID &#xA;ORDER BY NAME" sfwPostgre="SELECT&#xD;&#xA;&#x9;   SP.NAME,&#xD;&#xA;&#x9;    SP.PROCESS_ID,&#xD;&#xA;&#x9;   SP.BPM_PROCESS_ID    &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS SP   &#xD;&#xA;&#x9;INNER JOIN (  SELECT&#xD;&#xA;&#x9; CASE_FILE,&#xD;&#xA;&#x9; MAX(CASE_ID) AS CASE_ID   &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE    &#xD;&#xA;GROUP BY CASE_FILE  ) C&#xD;&#xA;&#x9; ON SP.CASE_ID = C.CASE_ID  &#xD;&#xA;&#x9;INNER JOIN SGW_BPM_ACTIVITY SA  &#xD;&#xA;&#x9; ON SP.PROCESS_ID = SA.PROCESS_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9;&#xD;&#xA;&#x9; ONLINE_IND = 'Y' &#xD;&#xA;GROUP BY SP.NAME,&#xD;&#xA;&#x9; SP.PROCESS_ID,&#xD;&#xA;&#x9; SP.BPM_PROCESS_ID &#xD;&#xA;ORDER BY NAME">
+      <parameters />
+    </query>
+    <query ID="GetProcessesForOnlineCaseInitiation" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;   SP.NAME,&#xA;&#x9;    SP.PROCESS_ID,&#xA;&#x9;   SP.BPM_PROCESS_ID    &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS SP WITH(NOLOCK)    &#xA;&#x9;INNER JOIN (  SELECT&#xA;&#x9; CASE_FILE,&#xA;&#x9; MAX(CASE_ID) AS CASE_ID   &#xA;FROM&#xA;&#x9; SGW_BPM_CASE WITH(NOLOCK)   &#xA;GROUP BY CASE_FILE  ) C&#xA;&#x9; ON SP.CASE_ID = C.CASE_ID  &#xA;&#x9;INNER JOIN SGW_BPM_ACTIVITY SA WITH(NOLOCK) &#xA;&#x9; ON SP.PROCESS_ID = SA.PROCESS_ID &#xA;WHERE&#xA;&#x9;&#xA;&#x9; ONLINE_IND = 'Y' AND C.CASE_FILE NOT IN ('sbpReturnToWork.bpmn', 'sbpendreturntowork.bpmn','sbpserviceretirementbpm.bpmn','sbpsbpcancelapplication.bpmn','sbplegaldocumentreview.bpmn','sbpapplicationmaintenance.bpmn')&#xA;GROUP BY SP.NAME,&#xA;&#x9; SP.PROCESS_ID,&#xA;&#x9; SP.BPM_PROCESS_ID &#xA;ORDER BY NAME" sfwPostgre="SELECT&#xD;&#xA;&#x9;   SP.NAME,&#xD;&#xA;&#x9;    SP.PROCESS_ID,&#xD;&#xA;&#x9;   SP.BPM_PROCESS_ID    &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS SP   &#xD;&#xA;&#x9;INNER JOIN (  SELECT&#xD;&#xA;&#x9; CASE_FILE,&#xD;&#xA;&#x9; MAX(CASE_ID) AS CASE_ID   &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE    &#xD;&#xA;GROUP BY CASE_FILE  ) C&#xD;&#xA;&#x9; ON SP.CASE_ID = C.CASE_ID  &#xD;&#xA;&#x9;INNER JOIN SGW_BPM_ACTIVITY SA  &#xD;&#xA;&#x9; ON SP.PROCESS_ID = SA.PROCESS_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9;&#xD;&#xA;&#x9; ONLINE_IND = 'Y' &#xD;&#xA;GROUP BY SP.NAME,&#xD;&#xA;&#x9; SP.PROCESS_ID,&#xD;&#xA;&#x9; SP.BPM_PROCESS_ID &#xD;&#xA;ORDER BY NAME">
+      <parameters />
+    </query>
+    <query ID="GetAccessibleProcessesByUserSerialId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SP.PROCESS_ID,&#xA;&#x9;SP.NAME,&#xA;&#x9;SP.DESCRIPTION   &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS SP WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; EXISTS (SELECT&#xA;&#x9; DISTINCT SA.PROCESS_ID &#xA;FROM&#xA;&#x9; SGW_BPM_ACTIVITY SA WITH(NOLOCK) INNER     &#xA;&#x9; JOIN SGS_USER_ROLES UR WITH(NOLOCK)&#xA;&#x9; ON  SA.PROCESS_ID = SP.PROCESS_ID    AND&#xA;&#x9; UR.USER_SERIAL_ID = @USER_SERIAL_ID) &#xA;ORDER BY  SP.NAME" sfwPostgre="SELECT&#xD;&#xA;&#x9; SP.PROCESS_ID,&#xD;&#xA;&#x9;SP.NAME,&#xD;&#xA;&#x9;SP.DESCRIPTION   &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS SP &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EXISTS (SELECT&#xD;&#xA;&#x9; DISTINCT SA.PROCESS_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_ACTIVITY SA INNER     &#xD;&#xA;&#x9; JOIN SGS_USER_ROLES UR &#xD;&#xA;&#x9; ON  SA.PROCESS_ID = SP.PROCESS_ID    AND&#xD;&#xA;&#x9; UR.USER_SERIAL_ID = @USER_SERIAL_ID) &#xD;&#xA;ORDER BY  SP.NAME">
+      <parameters>
+        <parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;&#x9; SBP.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS SBP WITH(NOLOCK) &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN (SELECT&#xD;&#xA;&#x9; sgw_bpm_case.CASE_ID,&#xD;&#xA;&#x9;sgw_bpm_case.RESOURCE_ID,&#xD;&#xA;&#x9;CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case WITH(NOLOCK) left &#xD;&#xA;&#x9; join (SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; (SELECT&#xD;&#xA;&#x9; case_id,&#xD;&#xA;&#x9;CASE WHEN (ROW_NUMBER() OVER(PARTITION BY name &#xD;&#xA;ORDER BY   case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case WITH(NOLOCK)  &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt; =  GETDATE() AND&#xD;&#xA;&#x9; STATUS_VALUE = 'ACTV') AS C &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ACTIVE_VERSION  = 'Y') AS ACTIVE_BPM_CASE&#xD;&#xA;&#x9; ON sgw_bpm_case.CASE_ID = ACTIVE_BPM_CASE.CASE_ID)AS BPM_CASE&#xD;&#xA;&#x9; ON SBP.CASE_ID = BPM_CASE.CASE_ID&#xD;&#xA;&#x9; LEFT OUTER JOIN  (SELECT&#xD;&#xA;&#x9; distinct d.resource_id,&#xD;&#xA;&#x9;a.USER_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgs_user a WITH(NOLOCK) ,&#xD;&#xA;&#x9;sgs_user_roles b WITH(NOLOCK) ,&#xD;&#xA;&#x9;sgs_resources d WITH(NOLOCK) ,&#xD;&#xA;&#x9;sgs_security e WITH(NOLOCK)   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; a.user_serial_id = b.user_serial_id    AND&#xD;&#xA;&#x9; b.role_id = e.role_id    AND&#xD;&#xA;&#x9; e.resource_id = d.resource_id    AND&#xD;&#xA;&#x9; ((b.effective_start_DATE is null) or (b.effective_start_date &lt; =  convert(dateTime,&#xD;&#xA;&#x9;convert(char,&#xD;&#xA;&#x9;getdate(),&#xD;&#xA;&#x9;103),&#xD;&#xA;&#x9;103)))   AND&#xD;&#xA;&#x9; ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =  convert(dateTime,&#xD;&#xA;&#x9;convert(char,&#xD;&#xA;&#x9;getdate(),&#xD;&#xA;&#x9;103),&#xD;&#xA;&#x9;103))) AND&#xD;&#xA;&#x9; d.RESOURCE_TYPE_VALUE = 'BPM') RES&#xD;&#xA;&#x9; ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID  &#xD;&#xA;where PROCESS_ID &gt;0 &#xD;&#xA;ORDER BY   DESCRIPTION desc" sfwOracle="SELECT&#xD;&#xA;&#x9; SBP.*, CURRENT_VERSION&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS SBP  INNER  &#xD;&#xA;&#x9; JOIN (SELECT&#xD;&#xA;&#x9;  sgw_bpm_case.CASE_ID,&#xD;&#xA;&#x9;sgw_bpm_case.RESOURCE_ID,&#xD;&#xA;&#x9;CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS  NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case  left   &#xD;&#xA;&#x9; join (SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; (SELECT&#xD;&#xA;&#x9; case_id,&#xD;&#xA;&#x9;CASE WHEN (ROW_NUMBER()  OVER(PARTITION BY name &#xD;&#xA;ORDER BY    case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9;  sgw_bpm_case   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt; =  sysdate AND&#xD;&#xA;&#x9; STATUS_VALUE  = 'ACTV')  C &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ACTIVE_VERSION  = 'Y')  ACTIVE_BPM_CASE&#xD;&#xA;&#x9; ON sgw_bpm_case.CASE_ID  = ACTIVE_BPM_CASE.CASE_ID) BPM_CASE&#xD;&#xA;&#x9; ON SBP.CASE_ID = BPM_CASE.CASE_ID  LEFT OUTER  &#xD;&#xA;&#x9; JOIN  (SELECT&#xD;&#xA;&#x9; distinct d.resource_id,&#xD;&#xA;&#x9;a.USER_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgs_user a   ,&#xD;&#xA;&#x9;sgs_user_roles b  ,&#xD;&#xA;&#x9;sgs_resources d  ,&#xD;&#xA;&#x9;sgs_security  e    &#xD;&#xA;WHERE&#xD;&#xA;&#x9; a.user_serial_id = b.user_serial_id    AND&#xD;&#xA;&#x9; b.role_id  = e.role_id    AND&#xD;&#xA;&#x9; e.resource_id = d.resource_id    AND&#xD;&#xA;&#x9; ((b.effective_start_DATE  is null) or (b.effective_start_date &lt; =  sysdate))    AND&#xD;&#xA;&#x9; ((b.effective_end_DATE is null) or (b.effective_end_date &gt; =  sysdate))  AND&#xD;&#xA;&#x9; d.RESOURCE_TYPE_VALUE = 'BPM') RES&#xD;&#xA;&#x9; ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID   &#xD;&#xA;   where Process_id &gt; 0&#xD;&#xA;ORDER BY    DESCRIPTION desc" sfwPostgre="SELECT&#xD;&#xA;&#x9; SBP.*, CURRENT_VERSION&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS SBP  INNER  &#xD;&#xA;&#x9; JOIN (SELECT&#xD;&#xA;&#x9;  sgw_bpm_case.CASE_ID,&#xD;&#xA;&#x9;sgw_bpm_case.RESOURCE_ID,&#xD;&#xA;&#x9;CASE WHEN ACTIVE_BPM_CASE.CASE_ID IS  NULL THEN 'N' ELSE 'Y' END AS CURRENT_VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgw_bpm_case  left   &#xD;&#xA;&#x9; join (SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; (SELECT&#xD;&#xA;&#x9; case_id,&#xD;&#xA;&#x9;CASE WHEN (ROW_NUMBER()  OVER(PARTITION BY name &#xD;&#xA;ORDER BY    case_id desc )) = 1 THEN 'Y' ELSE 'N' END AS ACTIVE_VERSION &#xD;&#xA;FROM&#xD;&#xA;&#x9;  sgw_bpm_case   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; EFFECTIVE_DATE &lt;=  now() AND&#xD;&#xA;&#x9; STATUS_VALUE  = 'ACTV')  C &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ACTIVE_VERSION  = 'Y')  ACTIVE_BPM_CASE&#xD;&#xA;&#x9; ON sgw_bpm_case.CASE_ID  = ACTIVE_BPM_CASE.CASE_ID) BPM_CASE&#xD;&#xA;&#x9; ON SBP.CASE_ID = BPM_CASE.CASE_ID  LEFT OUTER  &#xD;&#xA;&#x9; JOIN  (SELECT&#xD;&#xA;&#x9; distinct d.resource_id,&#xD;&#xA;&#x9;a.USER_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; sgs_user a   ,&#xD;&#xA;&#x9;sgs_user_roles b  ,&#xD;&#xA;&#x9;sgs_resources d  ,&#xD;&#xA;&#x9;sgs_security  e    &#xD;&#xA;WHERE&#xD;&#xA;&#x9; a.user_serial_id = b.user_serial_id    AND&#xD;&#xA;&#x9; b.role_id  = e.role_id    AND&#xD;&#xA;&#x9; e.resource_id = d.resource_id    AND&#xD;&#xA;&#x9; ((b.effective_start_DATE  is null) or (b.effective_start_date &lt;=  now()))    AND&#xD;&#xA;&#x9; ((b.effective_end_DATE is null) or (b.effective_end_date &gt;=  now()))  AND&#xD;&#xA;&#x9; d.RESOURCE_TYPE_VALUE = 'BPM') RES&#xD;&#xA;&#x9; ON RES.RESOURCE_ID = BPM_CASE.RESOURCE_ID   &#xD;&#xA;where process_id &gt;0&#xD;&#xA;ORDER BY    DESCRIPTION desc">
+      <parameters />
+    </query>
+    <query ID="GetAllProcess" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgw_bpm_process where process_id in(select MAX(process_id) from sgw_bpm_process group by BPM_process_id ) and PROCESS_ID &gt;0" sfwPostgre="select * from sgw_bpm_process where process_id in(select MAX(process_id) from sgw_bpm_process group by BPM_process_id ) and PROCESS_ID &gt;0" sfwOracle="select * from sgw_bpm_process where process_id in(select MAX(process_id) from sgw_bpm_process group by BPM_process_id ) and PROCESS_ID &gt;0">
+      <parameters />
+    </query>
+    <query ID="GetCaseIdForProcess" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; CASE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; PROCESS_ID = @PROCESS_ID" sfwPostgre="SELECT&#xA;&#x9; CASE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS &#xA;WHERE&#xA;&#x9; PROCESS_ID = @PROCESS_ID">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetProcessesWithVersionNumber" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT &#xA;&#x9; BP.PROCESS_ID, &#xA;&#x9; BP.DESCRIPTION + '(Ver.' + CONVERT(VARCHAR,BC.VERSION) + ')'AS PROCESS_NAME &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS BP WITH(NOLOCK) &#xA;&#x9;INNER &#xA;&#x9; JOIN SGW_BPM_CASE BC WITH(NOLOCK)&#xA;&#x9; ON BP.CASE_ID = BC.CASE_ID" sfwPostgre="SELECT &#xD;&#xA;&#x9; BP.PROCESS_ID, &#xD;&#xA;&#x9; bp.process_id, bp.description || '(Ver.' || CAST (bc.version AS VARCHAR(30)) || ')' AS PROCESS_NAME &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS BP  &#xD;&#xA;&#x9;INNER &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE BC&#xD;&#xA;&#x9; ON BP.CASE_ID = BC.CASE_ID">
+      <parameters />
+    </query>
+    <query ID="GetProcessByCaseId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; CASE_ID = @CASE_ID" sfwPostgre="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS &#xA;WHERE&#xA;&#x9; CASE_ID = @CASE_ID">
+      <parameters>
+        <parameter ID="@CASE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetInProgressProcessInstancesByPersonIdAndProcessId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; BPI.* &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE BPI WITH(NOLOCK) INNER   &#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE BCI WITH(NOLOCK)&#xA;&#x9; ON BPI.CASE_INSTANCE_ID = BCI.CASE_INSTANCE_ID &#xA;WHERE&#xA;&#x9; BPI.PROCESS_ID = @PROCESS_ID AND&#xA;&#x9; BPI.STATUS_VALUE IN ('INPC',&#xA;&#x9;'UNPC') AND&#xA;&#x9;   BCI.STATUS_VALUE = 'INPC' AND&#xA;&#x9;  BCI.PERSON_ID &gt; 0 AND&#xA;&#x9; BCI.PERSON_ID = @PERSON_ID" sfwPostgre="SELECT&#xD;&#xA;&#x9; BPI.* &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS_INSTANCE BPI  INNER   &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE_INSTANCE BCI &#xD;&#xA;&#x9; ON BPI.CASE_INSTANCE_ID = BCI.CASE_INSTANCE_ID &#xD;&#xA;WHERE&#xD;&#xA;&#x9; BPI.PROCESS_ID = @PROCESS_ID AND&#xD;&#xA;&#x9; BPI.STATUS_VALUE IN ('INPC',&#xD;&#xA;&#x9;'UNPC') AND&#xD;&#xA;&#x9;   BCI.STATUS_VALUE = 'INPC' AND&#xD;&#xA;&#x9;  BCI.PERSON_ID &gt; 0 AND&#xD;&#xA;&#x9; BCI.PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAllProcessForProcessLookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; SGW_BPM_PROCESS.NAME,&#xA;&#x9;SGW_BPM_PROCESS.STATUS_VALUE,&#xA;&#x9;case SGW_BPM_PROCESS.TYPE_VALUE when 'PERS' then 'PERSON' when 'ORGN' then 'Organization' when 'NONE' then 'None' end AS TYPE_VALUE,&#xA;&#x9;SGW_BPM_PROCESS.CASE_ID,&#xA;&#x9;SGW_BPM_CASE.NAME AS Case_Name &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS WITH(NOLOCK)  INNER     &#xA;&#x9; JOIN SGW_BPM_CASE WITH(NOLOCK)&#xA;&#x9; ON SGW_BPM_PROCESS.CASE_ID = SGW_BPM_CASE.CASE_ID" sfwPostgre="SELECT&#xD;&#xA;&#x9; SGW_BPM_PROCESS.NAME,&#xD;&#xA;&#x9;SGW_BPM_PROCESS.STATUS_VALUE,&#xD;&#xA;&#x9;case SGW_BPM_PROCESS.TYPE_VALUE when 'PERS' then 'PERSON' when 'ORGN' then 'Organization' when 'NONE' then 'None' end AS TYPE_VALUE,&#xD;&#xA;&#x9;SGW_BPM_PROCESS.CASE_ID,&#xD;&#xA;&#x9;SGW_BPM_CASE.NAME AS Case_Name &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS   INNER     &#xD;&#xA;&#x9; JOIN SGW_BPM_CASE &#xD;&#xA;&#x9; ON SGW_BPM_PROCESS.CASE_ID = SGW_BPM_CASE.CASE_ID">
+      <parameters />
+    </query>
+    <query ID="GetCaseNamesForProcess" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; CASE_ID,&#xA;&#x9;NAME + '(Ver.' + CONVERT(VARCHAR,&#xA;&#x9;VERSION) + ')' &#x9;AS NameWithVersion&#xA;FROM&#xA;&#x9; SGW_BPM_CASE WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; CASE_ID in (SELECT&#xA;&#x9; CASE_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; PROCESS_ID = @PROCESS_ID)" sfwPostgre="SELECT&#xD;&#xA;&#x9; CASE_ID,&#xD;&#xA;&#x9;name || '(Ver.' || CAST (version AS VARCHAR(30)) || ')' AS NameWithVersion&#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE &#xD;&#xA;WHERE&#xD;&#xA;&#x9; CASE_ID in (SELECT&#xD;&#xA;&#x9; CASE_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PROCESS &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PROCESS_ID = @PROCESS_ID)">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetProcessID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; PROCESS_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; STATUS_VALUE = 'ACTV'" sfwPostgre="SELECT&#xA;&#x9; PROCESS_ID &#xA;FROM&#xA;&#x9; SGW_BPM_PROCESS &#xA;WHERE&#xA;&#x9; STATUS_VALUE = 'ACTV'">
+      <parameters />
+    </query>
+    <query ID="GetProcessesForBpmMyBasket" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;          SP.NAME,&#xD;&#xA;           SP.PROCESS_ID,&#xD;&#xA;          SP.BPM_PROCESS_ID    &#xD;&#xA;FROM&#xD;&#xA;       SGW_BPM_PROCESS SP WITH(NOLOCK)    &#xD;&#xA;       INNER JOIN (  SELECT&#xD;&#xA;       CASE_FILE,&#xD;&#xA;       MAX(CASE_ID) AS CASE_ID   &#xD;&#xA;FROM&#xD;&#xA;       SGW_BPM_CASE WITH(NOLOCK)  &#xD;&#xA;where &#xD;&#xA;&#xD;&#xA;SGW_BPM_CASE.CASE_ID &gt; 0 &#xD;&#xA;&#xD;&#xA;GROUP BY CASE_FILE  ) C&#xD;&#xA;       ON SP.CASE_ID = C.CASE_ID  &#xD;&#xA;       INNER JOIN SGW_BPM_ACTIVITY SA WITH(NOLOCK) &#xD;&#xA;        ON SP.PROCESS_ID = SA.PROCESS_ID &#xD;&#xA;&#xD;&#xA;GROUP BY SP.NAME,&#xD;&#xA;       SP.PROCESS_ID,&#xD;&#xA;       SP.BPM_PROCESS_ID &#xD;&#xA;ORDER BY NAME" sfwPostgre="SELECT&#xD;&#xA;          SP.NAME,&#xD;&#xA;           SP.PROCESS_ID,&#xD;&#xA;          SP.BPM_PROCESS_ID    &#xD;&#xA;FROM&#xD;&#xA;       SGW_BPM_PROCESS SP    &#xD;&#xA;       INNER JOIN (  SELECT&#xD;&#xA;       CASE_FILE,&#xD;&#xA;       MAX(CASE_ID) AS CASE_ID   &#xD;&#xA;FROM&#xD;&#xA;       SGW_BPM_CASE&#xD;&#xA;where &#x9;SGW_BPM_CASE.case_id&gt;0&#x9;&#x9;&#x9;   &#xD;&#xA;GROUP BY CASE_FILE  ) C&#xD;&#xA;       ON SP.CASE_ID = C.CASE_ID  &#xD;&#xA;       INNER JOIN SGW_BPM_ACTIVITY SA &#xD;&#xA;        ON SP.PROCESS_ID = SA.PROCESS_ID &#xD;&#xA;&#xD;&#xA;GROUP BY SP.NAME,&#xD;&#xA;       SP.PROCESS_ID,&#xD;&#xA;       SP.BPM_PROCESS_ID &#xD;&#xA;ORDER BY NAME" sfwOracle="SELECT&#xD;&#xA;          SP.NAME,&#xD;&#xA;           SP.PROCESS_ID,&#xD;&#xA;          SP.BPM_PROCESS_ID    &#xD;&#xA;FROM&#xD;&#xA;       SGW_BPM_PROCESS SP    &#xD;&#xA;       INNER JOIN (  SELECT&#xD;&#xA;       CASE_FILE,&#xD;&#xA;       MAX(CASE_ID) AS CASE_ID   &#xD;&#xA;FROM&#xD;&#xA;       SGW_BPM_CASE&#xD;&#xA;where &#x9;SGW_BPM_CASE.case_id&gt;0&#x9;&#x9;&#x9;   &#xD;&#xA;GROUP BY CASE_FILE  ) C&#xD;&#xA;       ON SP.CASE_ID = C.CASE_ID  &#xD;&#xA;       INNER JOIN SGW_BPM_ACTIVITY SA &#xD;&#xA;        ON SP.PROCESS_ID = SA.PROCESS_ID &#xD;&#xA;&#xD;&#xA;GROUP BY SP.NAME,&#xD;&#xA;       SP.PROCESS_ID,&#xD;&#xA;       SP.BPM_PROCESS_ID &#xD;&#xA;ORDER BY NAME">
+      <parameters />
+    </query>
+    <query ID="GetDistinctProcessName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select distinct name,description from SGW_BPM_PROCESS">
+      <parameters />
+    </query>
+    <query ID="GetAllUniqueActiveProcessIDAndName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; PROCESS_ID,&#xA;&#x9;NAME &#xA;FROM&#xA;&#x9; sgw_bpm_process &#xA;WHERE&#xA;&#x9; process_id in(SELECT&#xA;&#x9; MAX(process_id) &#xA;FROM&#xA;&#x9; sgw_bpm_process &#xA;GROUP BY  BPM_process_id)AND&#xA;&#x9; PROCESS_ID &gt;0 AND&#xA;&#x9; STATUS_VALUE = 'ACTV'">
+      <parameters />
+    </query>
+  </queries>
+  <methods />
+  <lifecycle />
+  <attributes>
+    <attribute sfwType="Collection" sfwEntity="entBpmActivity" ID="lstBpmActivity" sfwValue="iclbBpmActivity" />
+    <attribute sfwType="Collection" sfwEntity="entBpmProcessEventXr" ID="lstBpmProcessEventXr" sfwValue="iclbBpmProcessEventXr" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintDependentProcessId" sfwValue="iintDependentProcessId" />
+    <attribute sfwType="Collection" sfwEntity="entBpmProcessRestrictNotifyXr" ID="lstParentProcessRestrictNotify" sfwValue="iclbParentProcessRestrictNotify" />
+    <attribute ID="CaseName" sfwDataType="string" sfwPrivate="False" sfwValue="ibusBpmCase.icdoBpmCase.name" sfwType="Property" />
+    <attribute sfwValue="process_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwIsNull="False" ID="ProcessId" sfwCaption="ID" />
+    <attribute sfwValue="bpm_process_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="True" ID="BpmProcessId" sfwCaption="Bpm Process Id" />
+    <attribute sfwValue="case_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="CaseId" sfwCaption="Case Id" />
+    <attribute sfwValue="description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="-1" sfwIsNull="True" ID="Description" sfwCaption="Description" />
+    <attribute sfwValue="name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="-1" sfwIsNull="True" ID="Name" sfwCaption="Name" />
+    <attribute sfwValue="priority" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="Priority" sfwCaption="Priority" />
+    <attribute sfwValue="process_code" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="True" ID="ProcessCode" sfwCaption="Process Code" />
+    <attribute sfwValue="type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="TypeId" sfwCodeID="3003" sfwCaption="Type" />
+    <attribute sfwValue="type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" sfwIsNull="True" ID="TypeValue" sfwCaption="Type" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="3002" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="sla_minutes" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="SlaMinutes" sfwCaption="Sla Minutes" />
+    <attribute sfwValue="sla_hours" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="SlaHours" sfwCaption="Sla Hours" />
+    <attribute sfwValue="sla_days" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="SlaDays" sfwCaption="Sla Days" />
+    <attribute sfwValue="restrict_notify_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="True" ID="RestrictNotifyFlag" sfwCaption="Restrict Notify Flag" />
+    <attribute sfwValue="online_ind" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="True" ID="OnlineInd" sfwCaption="Online Ind" />
+    <attribute sfwValue="short_desc" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="20" sfwIsNull="True" ID="ShortDesc" sfwCaption="Short Desc" />
+    <attribute sfwType="Description" ID="TypeDescription" sfwCaption="Type" sfwValue="type_description" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwType="Collection" sfwEntity="entBpmProcessEscalation" ID="lstBpmProcessEscalations" sfwValue="iclbBpmProcessEscalations" />
+    <attribute sfwType="Collection" sfwEntity="entBpmRequest" ID="lstBpmRequests" sfwValue="iclbBpmRequests" />
+    <attribute sfwType="Property" ID="IobjMainCDO" sfwValue="iobjMainCDO" />
+    <attribute ID="objBpmCase" sfwType="Object" sfwEntity="entBpmCase" sfwPrivate="False" sfwValue="ibusBpmCase" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadNothing" sfwReturnType="Void" />
+    <method ID="AddDependentProcess" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintDependentProcessId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="LoadBpmProcessEscalations" sfwReturnType="Void" />
+    <method ID="LoadBpmRequests" sfwReturnType="Void" />
+    <method ID="LoadBpmProcessEventXrs" sfwReturnType="Void" />
+    <method ID="LoadBpmActivitysByBaseType" sfwReturnType="Void" />
+  </objectmethods>
+  <ExtraFields />
+</entity>

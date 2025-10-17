@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_PPS_FACTOR]
+    FROM NUMERIC (6, 6) NULL;
+

@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_CITY]
+    FROM VARCHAR (50) NULL;
+

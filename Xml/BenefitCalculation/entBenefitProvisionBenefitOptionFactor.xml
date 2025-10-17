@@ -1,0 +1,83 @@
+﻿<entity ID="entBenefitProvisionBenefitOptionFactor" sfwTableName="sgt_benefit_provision_benefit_option_factor" sfwView="False" sfwDataObjectID="doBenefitProvisionBenefitOptionFactor">
+  <queries>
+    <query ID="GetBenefitOptionFactor" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT BENEFIT_OPTION_FACTOR &#xD;&#xA;FROM SGT_BENEFIT_PROVISION_BENEFIT_OPTION_FACTOR WITH(NOLOCK)&#xD;&#xA;WHERE BENEFIT_ACCOUNT_TYPE_VALUE = @BENEFIT_ACCOUNT_TYPE_VALUE AND&#xD;&#xA;PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID AND &#xD;&#xA;PARTICIPANT_AGE = @PARTICIPANT_AGE AND SPOUSE_AGE = @SPOUSE_AGE&#xD;&#xA;AND @PLAN_BENEFIT_ID NOT IN (10,11,12,13,14)&#xD;&#xA;UNION&#xD;&#xA;SELECT BENEFIT_OPTION_FACTOR &#xD;&#xA;FROM SGT_IAP_ANNUITY_BENEFIT_OPTION_FACTOR WITH(NOLOCK)&#xD;&#xA;WHERE PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID AND &#xD;&#xA;PARTICIPANT_AGE = @PARTICIPANT_AGE AND SPOUSE_AGE = @SPOUSE_AGE&#xD;&#xA;AND @PLAN_BENEFIT_ID IN (10,11,12,13,14) AND END_DATE IS NULL">
+      <parameters>
+        <parameter ID="@BENEFIT_ACCOUNT_TYPE_VALUE" sfwDataType="string" />
+        <parameter ID="@PLAN_BENEFIT_ID" sfwDataType="int" />
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+        <parameter ID="@SPOUSE_AGE" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitOptionFactorForParticipantOnly" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT BENEFIT_OPTION_FACTOR &#xD;&#xA;FROM SGT_BENEFIT_PROVISION_BENEFIT_OPTION_FACTOR WITH(NOLOCK)&#xD;&#xA;WHERE BENEFIT_ACCOUNT_TYPE_VALUE = @BENEFIT_ACCOUNT_TYPE_VALUE AND&#xD;&#xA;PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID AND &#xD;&#xA;PARTICIPANT_AGE = @PARTICIPANT_AGE&#xD;&#xA;AND @PLAN_BENEFIT_ID NOT IN (10,11,12,13,14)&#xD;&#xA;UNION&#xD;&#xA;SELECT BENEFIT_OPTION_FACTOR &#xD;&#xA;FROM SGT_IAP_ANNUITY_BENEFIT_OPTION_FACTOR WITH(NOLOCK)&#xD;&#xA;WHERE PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID AND &#xD;&#xA;PARTICIPANT_AGE = @PARTICIPANT_AGE &#xD;&#xA;AND @PLAN_BENEFIT_ID IN (10,11,12,13,14) AND END_DATE IS NULL">
+      <parameters>
+        <parameter ID="@BENEFIT_ACCOUNT_TYPE_VALUE" sfwDataType="string" />
+        <parameter ID="@PLAN_BENEFIT_ID" sfwDataType="int" />
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetRelativeValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT RELATIVE_VALUE&#xD;&#xA;FROM SGT_BENEFIT_PROVISION_BENEFIT_OPTION_RELATIVE_VALUE WITH(NOLOCK)&#xD;&#xA;WHERE BENEFIT_OPTION_VALUE = @BENEFIT_OPTION_VALUE&#xD;&#xA;AND PARTICIPANT_AGE = @PARTICIPANT_AGE AND SPOUSE_AGE = @SPOUSE_AGE">
+      <parameters>
+        <parameter ID="@BENEFIT_OPTION_VALUE" sfwDataType="string" />
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+        <parameter ID="@SPOUSE_AGE" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitOptionFactorOnAgeCombination" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT PARTICIPANT_AGE,SPOUSE_AGE, BENEFIT_OPTION_FACTOR &#xD;&#xA;FROM SGT_BENEFIT_PROVISION_BENEFIT_OPTION_FACTOR  WITH(NOLOCK)&#xD;&#xA;WHERE BENEFIT_PROVISION_ID = @BENEFIT_PROVISION_ID AND&#xD;&#xA;BENEFIT_ACCOUNT_TYPE_VALUE = @BENEFIT_ACCOUNT_TYPE_VALUE AND&#xD;&#xA;PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID AND &#xD;&#xA;PARTICIPANT_AGE IN ( @lLowerBoundParticipant, @lUpperBoundParticipant) AND &#xD;&#xA;SPOUSE_AGE IN ( @lLowerBoundBenefeciary,  @lUpperBoundBenefeciary)&#xD;&#xA;&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@BENEFIT_PROVISION_ID" sfwDataType="int" />
+        <parameter ID="@BENEFIT_ACCOUNT_TYPE_VALUE" sfwDataType="string" />
+        <parameter ID="@PLAN_BENEFIT_ID" sfwDataType="int" />
+        <parameter ID="@lLowerBoundParticipant" sfwDataType="int" />
+        <parameter ID="@lUpperBoundParticipant" sfwDataType="int" />
+        <parameter ID="@lLowerBoundBenefeciary" sfwDataType="int" />
+        <parameter ID="@lUpperBoundBenefeciary" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitOptionFactorFor10Yr" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; BENEFIT_OPTION_FACTOR &#xA;FROM&#xA;&#x9; SGT_BENEFIT_PROVISION_BENEFIT_OPTION_FACTOR_FOR_10_YEAR WITH(NOLOCK)  &#xA;WHERE&#xA;&#x9; BENEFIT_ACCOUNT_TYPE_VALUE = @BENEFIT_ACCOUNT_TYPE_VALUE AND&#xA;&#x9; PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID AND&#xA;&#x9; PARTICIPANT_AGE = @PARTICIPANT_AGE AND&#xA;&#x9; SPOUSE_AGE = @SPOUSE_AGE AND&#xA;&#x9; REFERENCE_NUMBER = @REFERENCE_NUMBER">
+      <parameters>
+        <parameter ID="@BENEFIT_ACCOUNT_TYPE_VALUE" sfwDataType="string" />
+        <parameter ID="@PLAN_BENEFIT_ID" sfwDataType="int" />
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+        <parameter ID="@SPOUSE_AGE" sfwDataType="int" />
+        <parameter ID="@REFERENCE_NUMBER" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitOptionFactorFor10YrParticipantOnly" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT BENEFIT_OPTION_FACTOR&#xD;&#xA;FROM SGT_BENEFIT_PROVISION_BENEFIT_OPTION_FACTOR_FOR_10_YEAR F WITH(NOLOCK)&#xD;&#xA;WHERE BENEFIT_ACCOUNT_TYPE_VALUE = @BENEFIT_ACCOUNT_TYPE_VALUE AND&#xD;&#xA;PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID AND &#xD;&#xA;PARTICIPANT_AGE = @PARTICIPANT_AGE AND &#xD;&#xA;--PIR 973&#xD;&#xA;REFERENCE_NUMBER = CASE WHEN @PARTICIPANT_AGE &lt; 65 AND EXISTS(SELECT * FROM SGT_BENEFIT_PROVISION_BENEFIT_OPTION_FACTOR_FOR_10_YEAR P WITH(NOLOCK)&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; WHERE P.BENEFIT_ACCOUNT_TYPE_VALUE = @BENEFIT_ACCOUNT_TYPE_VALUE AND&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; P.PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID AND &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; P.PARTICIPANT_AGE = @PARTICIPANT_AGE AND P.REFERENCE_NUMBER = @REFERENCE_NUMBER AND ISNULL(P.BENEFIT_OPTION_FACTOR,0) = 0)&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;THEN 10&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;ELSE&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; @REFERENCE_NUMBER END">
+      <parameters>
+        <parameter ID="@BENEFIT_ACCOUNT_TYPE_VALUE" sfwDataType="string" />
+        <parameter ID="@PLAN_BENEFIT_ID" sfwDataType="int" />
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+        <parameter ID="@REFERENCE_NUMBER" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="benefit_provision_benefit_option_factor_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitProvisionBenefitOptionFactorId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="benefit_provision_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitProvisionId" sfwIsSequence="False" sfwCaption="Benefit Provision Id" />
+    <attribute sfwType="Description" ID="BenefitAccountTypeDescription" sfwCaption="Benefit Account Type" sfwValue="benefit_account_type_description" />
+    <attribute sfwValue="benefit_account_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitAccountTypeId" sfwCodeID="1502" sfwIsSequence="False" sfwCaption="Benefit Account Type" />
+    <attribute sfwValue="benefit_account_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="BenefitAccountTypeValue" sfwIsSequence="False" sfwCaption="Benefit Account Type" />
+    <attribute sfwValue="plan_benefit_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PlanBenefitId" sfwIsSequence="False" sfwCaption="Plan Benefit Id" />
+    <attribute sfwValue="participant_age" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="ParticipantAge" sfwIsSequence="False" sfwCaption="Participant Age" />
+    <attribute sfwValue="spouse_age" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="SpouseAge" sfwIsSequence="False" sfwCaption="Spouse Age" />
+    <attribute sfwValue="benefit_option_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="15,13" sfwIsNull="True" ID="BenefitOptionFactor" sfwIsSequence="False" sfwCaption="Benefit Option Factor" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields />
+</entity>

@@ -1,0 +1,78 @@
+﻿<form asp="ASPControl" swc="SagitecWebControls" ID="wfmUserDashboardMaintenance" sfwResource="-1" sfwFormObject="busBpmUserBAM" sfwType="Maintenance" sfwTitle="User Dashboard Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmDashboardLookup" sfwFormObjectType="FormObject" sfwEntity="entBpmUserBAM">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewObject" />
+    <callmethods sfwMode="Update" sfwMethodName="Group1" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="UserDashboard" sfwGroupCaption="User Dashboard Details" sfwCaption="User Dashboard">
+          <sfwTable ID="tblNewPage3" sfwCaption="New Page" CssClass="userdashboard Table">
+            <sfwRow>
+              <sfwColumn CssClass="captionTd">
+                <sfwLabel ID="lblDateFrom" Text="Date From: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="width-160">
+                <sfwTextBox ID="txtDateFrom" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwEntityField="IdtDateFrom" />
+                <CompareValidator ID="cmvCompareValidator" Operator="LessThanEqual" Type="Date" ControlToValidate="txtDateFrom" ControlToCompare="txtDateTo" ErrorMessage="Date From should be Less Than or Equal to Date To." />
+              </sfwColumn>
+              <sfwColumn CssClass="captionTd">
+                <sfwLabel ID="lblDateTo" Text="Date To: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="width-160">
+                <sfwTextBox ID="txtDateTo" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwEntityField="IdtDateTo" />
+                <CompareValidator ID="cmvCompareValidator1" Operator="GreaterThanEqual" Type="Date" ControlToValidate="txtDateTo" ControlToCompare="txtDateFrom" ErrorMessage="Date To should be Greater Than or Equal to Date From" />
+              </sfwColumn>
+              <sfwColumn CssClass="full-width">
+                <sfwButton ID="btnExecuteRefreshFromObject" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Load Charts" sfwObjectID="busBpmUserBAM" sfwObjectMethod="LoadDashboardData" sfwMessageId="10026" sfwValidateClientJavascript="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="5" Height="550px">
+                <sfwChart ShowLegend="true" ID="chrUserWorkStatistics" ChartType="StackedColumn" Width="1000px" Height="500px" CategoryAxisRotation="45" sfwLegendColCount="2" sfwEntityField="lstChartUserWorkStatistics" sfwGridEntity="entBpmUserWorkStatistics" ChartName="User Assigned Work Statistics">
+                  <Series>
+                    <sfwSeries YValueMembers="IintOnOfActivityInstancesAssigned" XValueMember="IstrShortActivityName" Name="Assigned" ChartType="StackedColumn" YMemberColor="#08a073" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Activity Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrActivityName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Assigned Activities :&lt;/td&gt;&lt;td&gt;{IintOnOfActivityInstancesAssigned}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Workpool Activities :&lt;/td&gt;&lt;td&gt;{IintOnOfActivityInstancesInWorkpool}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" swfAddtionalChartColumns="IstrActivityName" />
+                    <sfwSeries XValueMember="IstrShortActivityName" Name="Workpool" YValueMembers="IintOnOfActivityInstancesInWorkpool" ChartType="StackedColumn" YMemberColor="#006096" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Activity Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrActivityName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Assigned Activities :&lt;/td&gt;&lt;td&gt;{IintOnOfActivityInstancesAssigned}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Workpool Activities :&lt;/td&gt;&lt;td&gt;{IintOnOfActivityInstancesInWorkpool}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" swfAddtionalChartColumns="IstrActivityName" />
+                  </Series>
+                  <ChartAreas>
+                    <sfwChartArea ChartAreaName="User Work Statistics">
+                      <Area3DStyle Enable3D="false" />
+                    </sfwChartArea>
+                  </ChartAreas>
+                </sfwChart>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="5" CssClass="Table">
+                <sfwGridView ID="grvBusBpmUserWorkStatistics" AllowPaging="True" AllowSorting="True" sfwEntityField="lstViewUserWorkStatistics" sfwGridEntity="entBpmUserWorkStatistics">
+                  <Columns>
+                    <TemplateField HeaderText="Activity Name" SortExpression="IstrProcessName" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrActivityName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Assigned">
+                      <ItemTemplate>
+                        <sfwLabel sfwShowZero="True" sfwEntityField="IintOnOfActivityInstancesAssigned" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Workpool">
+                      <ItemTemplate>
+                        <sfwLabel sfwShowZero="True" sfwEntityField="IintOnOfActivityInstancesInWorkpool" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstChartUserWorkStatistics" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstViewUserWorkStatistics" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

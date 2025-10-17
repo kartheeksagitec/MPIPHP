@@ -1,0 +1,36 @@
+07:05:29.415 PM	*******************Error start*******************
+07:05:29.418 PM	(Exception Reference Id: 616fa2f1-c288-4a7d-93ac-98d274ca8fa7)
+Exception Message: Could not connect to net.tcp://localhost:9070/srvDBCache. The connection attempt lasted for a time span of 00:00:04.1114280. TCP error code 10061: No connection could be made because the target machine actively refused it 127.0.0.1:9070. 
+Exception Information Source: mscorlib
+Exception Information StackTrace: 
+Server stack trace: 
+   at System.ServiceModel.Channels.SocketConnectionInitiator.Connect(Uri uri, TimeSpan timeout)
+   at System.ServiceModel.Channels.BufferedConnectionInitiator.Connect(Uri uri, TimeSpan timeout)
+   at System.ServiceModel.Channels.ConnectionPoolHelper.EstablishConnection(TimeSpan timeout)
+   at System.ServiceModel.Channels.ClientFramingDuplexSessionChannel.OnOpen(TimeSpan timeout)
+   at System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.OnOpen(TimeSpan timeout)
+   at System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.CallOpenOnce.System.ServiceModel.Channels.ServiceChannel.ICallOnce.Call(ServiceChannel channel, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.CallOnceManager.CallOnce(TimeSpan timeout, CallOnceManager cascade)
+   at System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Sagitec.Interface.IDBCache.GetDBSystemManagement(IDbConnection aconFramework, String astrApplicationName)
+   at Sagitec.MVVMClient.AccountControllerBase.GetSystemManagementInfoFromThread()
+Exception Information Target: HandleReturnMessage
+----------********** Inner Exception **********---------- 
+InnerException Message: No connection could be made because the target machine actively refused it 127.0.0.1:9070
+InnerException Information Source: System
+InnerException Information StackTrace:    at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.ServiceModel.Channels.SocketConnectionInitiator.Connect(Uri uri, TimeSpan timeout)
+Exception Information Target: DoConnect
+****************************************************************************************************
+
+07:05:29.419 PM	*******************Error End*******************

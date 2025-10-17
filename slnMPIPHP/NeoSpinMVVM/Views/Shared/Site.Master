@@ -1,0 +1,549 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<dynamic>" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head id="Head1" runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    </title>
+    <link rel="stylesheet" href="<%=System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/FMStyle")%>" type="text/css" />
+    <link rel="stylesheet"  linkUserCssTheme="true" href="<%=System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/AppSideCSS")%>" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="format-detection" content="telephone=no"/>
+    <style>
+	   #custom-loader {
+	       position: absolute;
+	       top: 0;
+	       bottom: 0;
+	       left: 0;
+	       right: 0;
+	       z-index: 99999999999999999999;
+	       display: none;
+	       width: 100%;
+	       height: 100%;
+	       padding-top: 25px;
+	       background: rgba(0,0,0,.3);
+	   }
+    </style>
+</head>
+<body>
+    <%= Html.AntiForgeryToken() %>
+<% 
+        if (Model.iobjSessionData["SetWindowNameInMaster"] != null && (bool)Model.iobjSessionData["SetWindowNameInMaster"] == true && Model.iobjSessionData["WindowName"] != null)
+        {
+    %>
+    <input id="LoginWindowName" title="Login Window Name" name="LoginWindowName" type="text" value="<%=Convert.ToString(Model.iobjSessionData["WindowName"]) %>" style="display: none" />
+    <script type="text/javascript">
+        //sessionStorage.clear();
+        if (document.getElementById("LoginWindowName") != undefined && document.getElementById("LoginWindowName").value != "") {
+            window.name = document.getElementById("LoginWindowName").value;
+            // nsCommon.sessionSet(nsConstants.LOGIN_WINDOW_NAME, window.name);
+            sessionStorage.setItem("LoginWindowName", JSON.stringify(window.name));
+        }
+        //$("#LoginWindowName").remove();
+    </script>
+    <% 
+            Model.iobjSessionData["SetWindowNameInMaster"] = null;
+        }
+    %>
+
+     <div id="datePickerADA" style="display: none;" >			
+			<div>
+				<button id="closeDatePicker" type="button" aria-label="close date picker" class="svg">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" focusable="false" role="presentation" class="svg-close">
+						<circle cx="35" cy="35" r="35"/>
+						<path fill="#FFFFFF" d="M43.7,54.9L39,47.7c-1.9-2.8-3.1-4.8-4.5-7.2h-0.2c-1.1,2.3-2.3,4.4-3.9,7.2l-4.1,7.2H13l14.7-20.2 L13.5,15.1h13.2l4.5,7.3c1.6,2.5,2.6,4.4,3.9,6.7h0.2c1.2-2.5,2.2-4.4,3.4-6.7l4.4-7.3h13.2L41.8,34.5L57,54.9H43.7z"/>
+					</svg>
+				</button>
+			</div>
+			<div>
+				<button id="backOneMonth" type="button" aria-label="previous month" class="svg">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" role="presentation" focusable="false" class="svg-single-left">
+						<circle cx="35" cy="35" r="35"/>
+						<path fill="#FFFFFF" d="M18.2,35l23.1-21c1.7-1.5,4.3-1.4,5.9,0.3c1.5,1.7,1.4,4.3-0.3,5.9L30.8,35 l16.1,14c1.7,1.5,2,4.2,0.4,5.9s-4.2,2-5.9,0.4L18.2,35z"/>
+					</svg>
+				</button>
+				<button id="backOneYear" type="button" aria-label="previous year" class="svg">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" role="presentation" focusable="false" class="svg-double-left">
+					<circle cx="35" cy="35" r="35"/>
+					<path fill="#FFFFFF" d="M25.9,35L49,14c1.7-1.5,4.3-1.4,5.9,0.3c1.5,1.7,1.4,4.3-0.3,5.9L38.5,35l16.1,14 c1.7,1.5,2,4.2,0.4,5.9s-4.2,2-5.9,0.4L25.9,35z"/>
+					<path fill="#FFFFFF" d="M6,35l23.1-21c1.7-1.5,4.3-1.4,5.9,0.3c1.5,1.7,1.4,4.3-0.3,5.9L18.6,35l16.1,14 c1.7,1.5,2,4.2,0.4,5.9s-4.2,2-5.9,0.4L6,35z"/>
+					</svg>
+				</button>
+				<button id="forwardOneMonth" type="button" aria-label="next month" class="svg">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" role="presentation" focusable="false" class="svg-single-right">
+						<circle cx="35" cy="35" r="35"/>
+						<path fill="#FFFFFF" d="M51.8,35L28.7,56c-1.7,1.5-4.3,1.4-5.9-0.3c-1.5-1.7-1.4-4.3,0.3-5.9 L39.2,35L23.1,21c-1.7-1.5-2-4.2-0.4-5.9c1.5-1.7,4.2-2,5.9-0.4L51.8,35z"/>
+					</svg>
+				</button>
+				<button id="forwardOneYear" type="button" aria-label="next year" class="svg">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70" role="presentation" focusable="false" class="svg-double-right">
+						<circle cx="35" cy="35" r="35"/>
+						<path fill="#FFFFFF" d="M44.1,35L21,56c-1.7,1.5-4.3,1.4-5.9-0.3c-1.5-1.7-1.4-4.3,0.3-5.9 L31.5,35L15.4,21c-1.7-1.5-2-4.2-0.4-5.9c1.5-1.7,4.2-2,5.9-0.4L44.1,35z"/>
+						<path fill="#FFFFFF" d="M64,35L40.9,56c-1.7,1.5-4.3,1.4-5.9-0.3c-1.5-1.7-1.4-4.3,0.3-5.9 L51.4,35L35.3,21c-1.7-1.5-2-4.2-0.4-5.9c1.5-1.7,4.2-2,5.9-0.4L64,35z"/>
+					</svg>
+				</button>
+			</div>
+			<div role="application">
+				<table id="datePickerCalendar" role="presentation">
+					<caption>
+						<h2 id="monthAndYear"></h2>
+					</caption>
+					<colgroup>
+						<col />
+						<col />
+						<col />
+						<col />
+						<col />
+						<col />
+						<col />
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col"><abbr title="Sunday">Sun</abbr></th>
+							<th scope="col"><abbr title="Monday">Mon</abbr></th>
+							<th scope="col"><abbr title="Tuesday">Tue</abbr></th>
+							<th scope="col"><abbr title="Wednesday">Wed</abbr></th>
+							<th scope="col"><abbr title="Thursday">Thr</abbr></th>
+							<th scope="col"><abbr title="Friday">Fri</abbr></th>
+							<th scope="col"><abbr title="Saturday">Sat</abbr></th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>			
+			<div style="display: none;">
+				<button id="goToToday" type="button">today</button>
+			</div>
+			
+		</div>
+
+    <div id="dropDiv">
+        <table style="height: 100%; width: 100%; z-index: 300">
+            <tr>
+                <td id="dropLeft" class="dropTd">
+                    <h2>Open on left</h2>
+                </td>
+                <td id="dropRight" class="dropTd">
+                    <h2>Open on right</h2>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="pnlLoading" style="z-index: 9999; height: 100%; width: 100%">
+        <table width="100%" height="100%">
+            <tr>
+                 <td style="vertical-align: middle; text-align: center; font-size: x-large; color: green">
+                    <span>Please wait, initial page is loading...
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="MainSplitter" style="height: 100%; border: 0; opacity: 0;">
+        <div id="NorthSplitter" style="z-index: 99; overflow: visible">
+            <div id="header">
+                <div class="centerWrap">
+                    <span id="btnHeaderToggleMenuDivCollapseExpand" class="menu-toggle"></span>
+                    <a id="logo" onclick="nsDash.LoadDashBoard();"></a>
+                    <span id="LookupFormTitle" class="page-title"></span>
+                    <div class="header-text">
+                        <% 
+                            if (Model.iobjSessionData == null || Model.iobjSessionData[UIConstants.USER_NAME] == null)
+                            {
+                                Response.Redirect("~/Account/Login");
+                            }
+                            Dictionary<string, object> idictMasterParams = null;
+                            if (Model.iobjSessionData[UIConstants.DICT_MASTER_PARAMS] != null)
+                            {
+                                idictMasterParams = Model.iobjSessionData[UIConstants.DICT_MASTER_PARAMS] as Dictionary<string, object>;
+
+                                Response.Write(Convert.ToString(idictMasterParams[UIConstants.PRODUCT_REGION]) + " Region");
+                            }
+                        %>
+                     &nbsp;&nbsp;&nbsp;&nbsp;Welcome! <%=Convert.ToString(Model.iobjSessionData[UIConstants.USER_NAME]) %> 
+                    </div>                   
+                    <div class="header-controls">
+                         <ul class="global-nav">
+                            <%-- Framework Version - 6.0.1.0 changes> --%>
+                            <%--  <li><a id="lnkResetFormsCache" title="Refresh forms cache" onclick="ns.SenderForm=''; nsEvents.raiseEvent(nsEvents.btnResetWebServerCache_Click,this);" class="nav-cache">Cache </a></li>  --%>
+
+                            <li><a id="lnkPrevious" title="Previous" onclick="nsEvents.btn_GoPreviousPage();" class="nav-prev">Previous</a></li>
+                            <li><a id="actCollapseExpandAllColumns" onclick="javascript:nsEvents.btnCollapseExpandAllPanels_Click(this);" sfwMethodName="btnCollapseExpandAllPanels_Click" class="icon-collapse">Collapse</a></li>
+                            <%-- <li><a id="lnkReset" title="Press this link to reset the page" onclick="location.reload();" class="nav-reset">Reset</a></li>
+                            <li><a id="lnkHelp" title="Help" onclick="" class="nav-help">Help</a></li>                      
+                            <li><a id="lnkPrint" title="Print" onclick="nsEvents.btnPrintPage_Click(this)" class="nav-print">Print</a></li>     --%>
+                            <%--  <li><a id="lnkLogoff" href="#" title="Logoff" onclick="return ns.logoutSesssion();" class="nav-logoff">Logoff</a></li>--%>
+                            <%-- Framework Version - 6.0.0.25 changes> --%>
+                            <%--<li id="liUserPreferencesStoreState"><a id="lnkUserPreferencesStoreState" onclick="nsEvents.btnStorePageStateUserDefaults_Click()" title="Store Form State" class="nav-store-state"></a></li>--%>
+
+                        </ul>
+                        <input type="button" value="My Task" id="btnMyTaskBasketDivCollapseExpand" class="my-task-btn" />
+                        <div class="user-account" id="btnWelComeDivCollapseExpand">
+                            Welcome  <%=Convert.ToString(Model.iobjSessionData[UIConstants.USER_NAME]) %>
+                        </div>
+                    </div>                   
+                </div>
+
+                <div class="header-line"></div>
+
+              <%--  <div id="cssmenu" class="cssmenu"></div>--%>
+                <div id="NotificationBar" data-bind="visible: DirtyFormListVisibile">
+                    <span class="cssmenu">
+                        <ul style="z-index: 999">
+                            <li>
+                                <a title="Unsaved forms" id="notify">
+                                    <img src='<%=ResolveUrl("~")%>Images/save.png'><span class="badge red" id="DirtyFormCount" data-bind="text: DirtyFormCount"></span>
+                                </a>
+                                <ul id="DirtyFormList" data-bind="html: DirtyFormList">
+                                </ul>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+                <input id="antiForgeryToken" type="hidden" value="<%: Model.AntiForgeryToken %>" />
+            </div>
+
+            <div class="Chartconfiguration" id="Chartconfiguration" style="display: none">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="configpanel" style="width: 170px;">
+                                <span class="confighead">Change Chart Type</span>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input id="typeBar" name="seriesType" class="ChartConfigRadio"
+                                                type="radio" value="bar" checked="checked" autocomplete="off" />
+                                            <label for="typeBar">Bars</label>
+                                        </td>
+                                        <td>
+                                            <input id="typeColumn" name="seriesType" class="ChartConfigRadio"
+                                                type="radio" value="column" autocomplete="off" />
+                                            <label for="typeColumn">Columns</label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input id="typeLine" name="seriesType" class="ChartConfigRadio"
+                                                type="radio" value="line" autocomplete="off" />
+                                            <label for="typeLine">Lines</label>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                                <input type="button" class="popbutton" value="Back" onclick="ns.MoveBackChart();" />
+                                <input type="button" class="popbutton" value="Clear All Filters" onclick="ns.ClearAllFilters();" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="configpanel" id="ChartInfo" style="width: 170px;">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div id="GridGroupChart">.</div>
+            </div>
+        </div>
+        <div id="MiddleSplitter" style="left: -1px;">
+            <div id="CenterMiddle">
+                <div id="CenterLeftTabs" class="SlideoutSplitter">
+                    <div id="SlideOuts">
+                        <div id="SearchTriger" title="Lookup Forms" class="trigger left LeftPanel_IconSearch lookups"></div>
+                            <div id="SlideOutLookup" class="panel left">
+                                <div id="LookupParent">
+                                    <div id="drpLookupNamesParent">
+                                    </div>
+                                    <div style="padding: 10px;" role="group" id="LookupHolder">
+                                    </div>
+                                    <div class="lookups-image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="navTreeTriger" class="trigger left navigation LeftPanel_IconNavigator navigator"></div>
+                            <div id="SlideOutTree" class="panel left">
+                                <div class="navDiv">
+                                    <div style="padding: 10px;" id="TabsTree"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="CenterSplitter">
+                        <div class="s-freezed-crumtoolbar-Container"> 
+                            <div class="s-freezed-crum-toolbar-wrapper"> 
+                                <div class="s-crumDivContainer"> 
+                                    <div id="crumDiv" class="crumDiv"></div> 
+                                </div> 
+                                <div class="s-freezed-button-toolbar" id="divFreezedButtonToolbar"> 
+                                </div> 
+                            </div> 
+                        </div>  
+                        <div id="GlobalMessageDiv"></div>
+                        <div id="ContentSplitter">
+                            <div id="RptHolder" role="group" style="display: none">
+                                <div id="wfmReportClientMVVM_RptDiv">
+                                </div>
+                                <iframe id="ReportFrame" height="500px" width="100%"></iframe>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+            <div id="SouthSplitter" style="top: 522px; width: 1580px; height: 25px; position: relative;">
+            <%--<span id="pendingChanges" style="float: right; color: red" data-bind="visible: isDirty">Pending Changes</span>
+            <input type="button" id="btnCancelChanges" style="float: right;" value="Cancel" data-bind="visible: isDirty" onclick="    ns.cancelChanges();" />--%>
+            <%-- <span id="respTime" data-bind="text: time" style="float: left" />--%>
+
+            <% if (Model.iobjSessionData != null && Model.iobjSessionData["Logged_In_User_is_VIP"] != null)
+                { %>
+            <input id="lblLoggedInUserIsVIP" type="hidden" value="<%: Model.iobjSessionData["Logged_In_User_is_VIP"]%>" />
+            <%} %>
+
+            <% if (idictMasterParams != null)
+                {
+                    { %>
+            <div class="footerLeft" style="float: left">
+                <label id="lblReleaseTime"><%=Convert.ToString(idictMasterParams[UIConstants.RELEASE_DATE]) %></label>
+                <%--</div>
+            <div class="footerRight" style="float: right">--%>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><label id="lblForm"></label><span>&nbsp;&nbsp;&nbsp;</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;IP : </span>
+                <label id="lblClientIp"><%=Convert.ToString(idictMasterParams[UIConstants.REQUEST_IP_ADDRESS]) %></label>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;WebSrv : </span>
+                <label id="lblWebServer"><%=Convert.ToString(idictMasterParams[UIConstants.REQUEST_MACHINE_NAME]) %></label>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;AppSrv : </span>
+                <label id="lblAppServer"><%=Convert.ToString(idictMasterParams[UIConstants.REQUEST_APP_SERVER]) %></label>  
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;Region : </span>
+                <label id="lblRegion"><%=Convert.ToString(idictMasterParams[UIConstants.PRODUCT_REGION]) %></label>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;Time : </span>
+                <label id="lblCurrTime"><%=Convert.ToString(idictMasterParams[UIConstants.BATCH_DATE]) %></label>
+
+            </div>
+            <% }
+                } %>
+        </div>
+    </div>
+    <div id="page-loader" style="display: none;" class="preloader">
+        <table width="100%" height="100%">
+            <tr>
+                <td style="vertical-align: middle; text-align: center">
+                    <!--<img alt="loader" src='<%= Convert.ToString(ConfigurationManager.AppSettings[UIConstants.APPLICATION_NAME])%>/images/301.gif'>-->
+                    <div class="loader-bg">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+     <div id="custom-loader" style="display: none;" class="preloader">
+    <table width="100%" height="100%">
+        <tr>
+            <td style="vertical-align: middle; text-align: center">
+                <div class="page-loader-wrapper">
+                    <%--<img alt="loader" src='<%: Url.Content("~/images/loader.gif") %>'>--%>
+                    <div class="loader-bg">
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+    <%-- jQyery modal dialog related DIV starts here --%>
+    <div id="overlay" class="web_dialog_overlay">
+    </div>
+    <div id="dialog" class="web_dialog">
+        <div class="WebDailogContent">
+            <div class="WebDailogContentWrapper">
+                <div class="web_dialog_title">Security Warning</div>
+                <div class="web_dialog_content">
+                    <div class="Desc">
+                        <span>ACCESS DENIED :</span>You are trying to access a VIP account.You
+                        do not have the privileges to access a VIP record.
+                    </div>
+                    <div class="WebDailogBtn">
+                        <input id="btnjQueryCancel" class="button" type="button" value="OK" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <%-- jQyery modal dialog related DIV ends here --%>
+
+    <div style="display: none;" id='DivExportWindow'>
+        <div id="ExptColumnsMessage">Select the columns to be exported from the following list:</div>
+        <div id="DivExportCols"></div>
+        <button id="clickExcel">Download As Excel</button>
+    </div>
+    <div id="ToolTipDiv" class="tooltip configpanel"></div>
+
+    <div id="EditCorrDiv" style="display: none">
+        <div>
+            <input type="button" value="Save" onclick="javascript: SaveCorrespondence(); return false;">
+            <input type="button" value="Close" onclick="javascript: CloseCorrespondence(); return false;">
+            <input type="button" value="Print" onclick="javascript: PrintCorrespondence(); return false;">
+            <input id="btnSendCorrespondence" type="button" value="Send" onclick="nsUserFunctions.SendCorrespondence(); return false;">
+        </div>
+        <div class="popup-btn-wrapper" id="divSaveGeneratedCorrespondence">
+            <input id="btnSaveGeneratedCorrespondence" title="Save Generated Correspondence" type="button" value="Save" onclick="javascript: nsUserFunctions.SaveCorrespondence(); return false;" class="html-btn button" />
+            <input type="checkbox" id="chkSaveForLater" title="Save For Later" />
+            <span>Save For Later</span>
+            <input type="checkbox" id="chkDoNotSendToCommEngine" title="Do Not Send To Communication Engine" />
+            <span>Do Not Send To Communication Engine</span>
+        </div>
+
+        <div class="popup-btn-wrapper">
+            <input id="btnClose" type="button" title="Close" value="Close" onclick="javascript: nsUserFunctions.CloseCorrWindow(); return false;" class="html-btn button" />
+        </div>
+        <div>
+            <object height="700" width="1200" id="ControlWordExcelObj" classid="clsid:98BAE912-0171-4c9c-A4EC-FD5969E92D08">
+            </object>
+        </div>
+    </div>
+
+    <div id="SessionExpired" style="display: none">
+        <div id="ExpiredMessage">
+            <table style="width: 100%; height: 100%;">
+                <tr>
+                    <td>Your session will timeout in <span id="spnRemainTimeSec"></span>second, please click a "Continue Session" button or navigate to another page to refresh your session before it expires.                       
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;               
+                    </td>
+                </tr>
+                <tr>
+                    <td>Do you want to Continue Session?                       
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;             
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button id="btnContinue" class="k-button" onclick="ns.refreshSession();">Continue Session</button>
+                        <button id="btnLogout" class="k-button" onclick="ns.logoutSesssion();">Logout</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="display: none" id="WidgetTemplate" class="widget">
+            <div class="div-header">
+                <div class="div-header-text">
+                </div>
+                <div class="div-header-icon">
+                    <div class="icon-close"></div>
+                    <div class="icon-minimize">
+                        <input type="hidden" value="0" />
+                    </div>
+                    <div class="icon-refresh"></div>
+                    <div class="icon-settings"></div>
+                </div>
+            </div>
+            <div style="display: none" class="settings">
+                <table cellpadding="2" cellspacing="0" width="90%">
+                    <tbody>
+                        <tr>
+                            <td>Title</td>
+                            <td>
+                            <input type="text" class="k-textbox widgettitle" /></td>
+                        </tr>
+                        <tr>
+                            <td>Title bar color</td>
+                            <td>
+                            <ul style="margin: 0px; padding: 0px;">
+
+                                <li class="barstyle1 barcoli" onclick="nsDash.SetHeaderColor(this)" style="margin: 2px; display: block; width: 20px; height: 20px; list-style: none; float: left; font-size: 2px;" id="barcol3_1-1">&nbsp;</li>
+                                <li class="barstyle2 barcoli" onclick="nsDash.SetHeaderColor(this)" style="margin: 2px; display: block; width: 20px; height: 20px; list-style: none; float: left; font-size: 2px;" id="barcol3_1-2">&nbsp;</li>
+                                <li class="barstyle3 barcoli" onclick="nsDash.SetHeaderColor(this)" style="margin: 2px; display: block; width: 20px; height: 20px; list-style: none; float: left; font-size: 2px;" id="barcol3_1-3">&nbsp;</li>
+                                <li class="barstyle4 barcoli" onclick="nsDash.SetHeaderColor(this)" style="margin: 2px; display: block; width: 20px; height: 20px; list-style: none; float: left; font-size: 2px;" id="barcol3_1-4">&nbsp;</li>
+                                <li class="barstyle5 barcoli" onclick="nsDash.SetHeaderColor(this)" style="margin: 2px; display: block; width: 20px; height: 20px; list-style: none; float: left; font-size: 2px;" id="barcol3_1-5">&nbsp;</li>
+                                <li class="barstyle6 barcoli" onclick="nsDash.SetHeaderColor(this)" style="margin: 2px; display: block; width: 20px; height: 20px; list-style: none; float: left; font-size: 2px;" id="barcol3_1-6">&nbsp;</li>
+                                <li class="barstyle7 barcoli" onclick="nsDash.SetHeaderColor(this)" style="margin: 2px; display: block; width: 20px; height: 20px; list-style: none; float: left; font-size: 2px;" id="barcol3_1-7">&nbsp;</li>
+                            </ul>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input class="button" type="button" value="Ok" onclick="nsDash.SettingsOk(this)" />
+                                <input class="button" type="button" value="Cancel" onclick="nsDash.Settingscancle(this)" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="divWelcomeUserContainer" class="welcome-user-container">
+        <div class="welcome-user-inner-content">
+            <div class="welcome-user-wrapper">
+                <ul class="welcome-user-list">
+                    <li><a id="lnkResetFormsCache" title="Refresh forms cache" onclick="ns.SenderForm=''; nsEvents.raiseEvent(nsEvents.btnResetWebServerCache_Click,this);" class="nav-cache">Cache</a></li>
+                    <li><a id="lnkReset" title="Press this link to reset the page" onclick="location.reload();" class="nav-reset">Reset</a></li>
+                    <li><a id="lnkPrint" title="Print" onclick="nsEvents.btnPrintPage_Click(this)" class="nav-print">Print</a></li>
+                    <!-- Added for Framework 6.0.0.28.0 changes these changes are not requried for MVVM Portals-->
+                    <li id="liUserPreferencesStoreState"><a id="lnkUserPreferencesStoreState" onclick="nsEvents.btnStorePageStateUserDefaults_Click()" title="Store Form State" class="nav-store-state">Store State</a></li>
+
+                    <li><a id="lnkLogoff" href="#" title="Logoff" onclick="return ns.logoutSesssion();" class="nav-logoff">Logoff</a></li>
+                    <%-- Framework Version - 6.0.0.25 changes> --%>
+                </ul>
+            </div>
+        </div>
+    </div>
+     <div id="divHeaderSliderMenuContainer" class="toggle-menu-container">
+        <%-- <div id="cssmenutest" class="cssmenu CssSliderLeftMenu" CssCenterLeftMenu></div>--%>
+        <div class="toggle-menu-inner-content">
+            <div id="cssmenu" class="cssmenu CssSliderLeftMenu parent-menu"></div>
+        </div>
+    </div>
+
+    <div id="divMyTaskBasketContainer" class="task-panel" style="display: none;" role="group">
+        <div class="inner-content">
+            <a class="taskpanel-close my-task-panel-close"></a>
+            <div id="Div2" runat="server" class="ui-layout-content">
+                <ul class="task-panel-tabs">
+                    <li class="my-taks-panel-tab-item" relatedpanel="uppAccordianMyBasket"><a class="tab-anq-my-task tab-mybasket selected">My Basket</a></li>
+                 </ul>   
+                <div class="task-panel-wrapper">
+                    <ul id="uppAccordianMyBasket" expandpanelmode="multiple" controltype='panelbar' data-sfwcontroltype="sfwPanelBar" class="my-task-panel">
+                        <li>
+                            <span>My Basket</span>
+                            <div id="MyBasket">
+                        </li>
+                    </ul>                    
+                </div>
+                
+                <!-- Table to hold the left side content ENDS -->
+            </div>
+        </div>
+    </div>
+    
+
+    <input type="hidden" id="SiteName" value="<%=new Uri(Convert.ToString(Request.Url)).GetLeftPart(UriPartial.Authority)%>" />
+    <!-- <input type="hidden" id="ReportPagePath" value="<%=Request.Url%>" />-->
+    <input type="hidden" id="LandingPage" value="<%=Convert.ToString(Model.iobjSessionData["Landing_Page"] ?? "") %>" />
+    <script id="treeview-template" type="text/kendo-ui-template"><span class="FormNode" LinkedTo="#:item.divID#">#:item.title#</span><a onclick='javascript: if(nsEvents != undefined && nsEvents.OnDeleteNodeClick != undefined) { nsEvents.OnDeleteNodeClick(this); }  else { OnDeleteNodeClick(this); }' class='delete-link'></a></script>
+
+
+    <script src="<%=System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/FMLibScript")%>" type="text/javascript"></script>
+    <script src="<%=System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/FMScript")%>" type="text/javascript"></script>
+    <script src="<%=System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/bundles/AppSideJS")%>" type="text/javascript"></script>
+    <script src="<%=Url.Content("~/Scripts/App/easytimer.js")%>"></script>
+    <script src="<%=Url.Content("~/signalr/hubs")%>"></script>
+     <% if (Model.iobjSessionData["ENABLE_CHAT_SERVICE"] != null && (Model.iobjSessionData["ENABLE_CHAT_SERVICE"]).ToString().ToLower() == "true")
+        { %>
+    <input id="ChatRSAToken" type="hidden" value="<%: Model.iobjSessionData["CHAT_RSA_TOKEN"]%>" />
+    <script src="<%: Model.iobjSessionData["STAFF_CHAT_CDN_URL"]%>"></script>
+    <script src="<%=Url.Content("~/Scripts/App/PrintThis.js")%>"></script>
+    <%} %>
+</body>
+</html>

@@ -1,0 +1,44 @@
+﻿<entity ID="entDatabaseConnections" sfwView="False" sfwActive="True" sfwMainCDO="icdoDatabaseConnections" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_database_connections" sfwObjectID="busDatabaseConnections" sfwDataObjectID="doDatabaseConnections">
+  <queries>
+    <query ID="LookUp" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgs_database_connections WITH(NOLOCK)" sfwDataType="EntityTable" sfwQueryType="SelectQuery">
+      <parameters />
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindDatabaseConnections" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item ID="icdoDatabaseConnections" sfwParameter="aintPrimaryKey" sfwItemType="MainCDO" sfwMethodName="Other" />
+    </method>
+  </methods>
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror>
+    <item ID="Rule - Connection Name Is Required" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Connection Type Is Required" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule - Connection String Is Required" sfwStatus="Active" sfwMode="All" />
+    <item ID="Rule -  DB Factory Provider Is Required" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <constraint />
+  <rules>
+    <rule ID="Rule - Connection Name Is Required" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="string.IsNullOrEmpty(this.icdoDatabaseConnections.connection_name)" sfwMessage="Connection Name Is Required." />
+    <rule ID="Rule - Connection Type Is Required" sfwRuleType="Validation" sfwExpression="string.IsNullOrEmpty(this.icdoDatabaseConnections.connection_type)" sfwObjectBased="True" sfwMessage="Connection Type is Required." />
+    <rule ID="Rule - Connection String Is Required" sfwRuleType="Validation" sfwExpression="string.IsNullOrEmpty(this.icdoDatabaseConnections.connection_string)" sfwObjectBased="True" sfwMessage="Connection String Is Required." />
+    <rule ID="Rule -  DB Factory Provider Is Required" sfwRuleType="Validation" sfwExpression="string.IsNullOrEmpty(this.icdoDatabaseConnections.dbfactoty_provider)" sfwObjectBased="True" sfwMessage="DB Factory Provider Is Required." />
+  </rules>
+  <ExtraFields />
+  <lifecycle />
+  <attributes>
+    <attribute sfwValue="database_connection_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="DatabaseConnectionId" sfwCaption="ID" />
+    <attribute sfwValue="connection_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ConnectionName" sfwCaption="Connection Name" />
+    <attribute sfwValue="connection_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ConnectionType" sfwCaption="Connection Type" />
+    <attribute sfwValue="connection_string" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="200" sfwIsNull="False" ID="ConnectionString" sfwCaption="Connection String" />
+    <attribute sfwValue="dbfactoty_provider" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="DbfactotyProvider" sfwCaption="Dbfactoty Provider" />
+    <attribute sfwValue="password_encrypted_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="char" sfwLength="1" sfwIsNull="True" ID="PasswordEncryptedFlag" sfwCaption="Password Encrypted Flag" />
+  </attributes>
+  <objectmethods />
+</entity>

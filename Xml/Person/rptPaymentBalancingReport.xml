@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptPaymentBalancingReport" sfwActive="True" sfwDescription="Payment Balancing Report" sfwStatus="Review" sfwResource="111 " sfwType="Report" sfwReportName="rpt16_PaymentBalancingReport.rdlc" sfwReportCategory="Reports" version="4.0">
+  <initialload>
+    <custommethod sfwMethodName="PaymentBalanceingReport" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="From : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="FromDate" sfwDataType="DateTime" />
+        <RequiredFieldValidator ControlToValidate="FromDate" ErrorMessage="From Date is Required" ID="rfvFromDate" Text="*" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="To : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="ToDate" sfwDataType="DateTime" />
+        <CompareValidator ControlToValidate="ToDate" ErrorMessage="To Date must be in mm/dd/yyyy format." ID="valToDate" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <CompareValidator ControlToCompare="FromDate" ControlToValidate="ToDate" ErrorMessage="To Date cannot be less than From Date." ID="valDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="ToDate" ErrorMessage="To Date is Required" ID="rfvToDate" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="Plan : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn ColumnSpan="3">
+        <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="PLAN_ID" sfwLoadType="CodeGroup" sfwLoadSource="7077" />
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

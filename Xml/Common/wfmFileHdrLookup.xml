@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmFileHdrLookup" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="401" sfwType="Lookup" sfwTitle="File Header Lookup" sfwMaxCount="100" version="3.5" sfwHelpFile="Batch Overview=Batch Overview.htm;Lookup Update Processed Files=Lookup Update Processed Files.htm" sfwEntity="entFileHdr" sfwGridCollection="busFileHdrLookup.iclbLookupResult">
+  <initialload>
+    <query ID="cdoFileHdr" sfwQueryRef="entFileHdr.Lookup" sfwMethodName="LoadFileHdrs" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFileType" Text="File Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="file_id" ID="ddlFileId" sfwDataField="file_id" sfwQueryID="cdoFileHdr" sfwLoadType="Query" sfwLoadSource="entFile.Lookup" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCycleNumber" Text="Cycle Number :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCycleNo" sfwDataField="cycle_no" sfwQueryID="cdoFileHdr." />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFileName" Text="File Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbDescription" sfwDataField="mailbox_file_name" sfwQueryID="cdoFileHdr" Width="270px" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatus" Text="Status :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" sfwDataField="status_value" sfwQueryID="entFileHdr.Lookup" sfwLoadType="CodeGroup" sfwLoadSource="27" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capProcessedDateFrom" Text="Processed Date From :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbProcessedDateFrom" sfwDataField="processed_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoFileHdr" sfwRelatedControl="txbProcessedDateTo" />
+                <CompareValidator ControlToValidate="txbProcessedDateFrom" ErrorMessage="Processed Date From must be in mm/dd/yyyy format" ID="id" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capProcessedDateTo" Text="Processed Date To :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txbProcessedDateTo" sfwDataFormat="{0:d}" sfwDataField="processed_date" sfwQueryID="cdoFileHdr" />
+                <CompareValidator ControlToValidate="txbProcessedDateTo" ErrorMessage="Processed Date To must be in mm/dd/yyyy format" ID="id1" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txbProcessedDateFrom" ControlToValidate="txbProcessedDateTo" ErrorMessage="Processed Date To cannot be less than Processed Date From" ID="id2" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFileID" Text="File ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFileHdrId" sfwDataField="file_hdr_id" sfwQueryID="cdoFileHdr" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Result">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmFileHdrMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintFileHdrId=FileHdrId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="File ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="FileHdrId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="File Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objFile.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MailboxFileName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Processed Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="ProcessedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="No Of Rows">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NoOfRows" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Cycle No">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CycleNo" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

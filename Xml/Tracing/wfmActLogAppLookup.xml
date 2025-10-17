@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmActLogAppLookup" sfwType="Lookup" sfwEntity="entActLogApp" sfwTitle="Application Tracing" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmActLogAppLookup">
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActLogAppId" Text="Application ID : " AssociatedControlID="txtActLogAppId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtActLogAppId" sfwDataField="act_log_app_id" sfwDataType="Numeric" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capAppName" Text="App Name : " AssociatedControlID="txtAppName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAppName" sfwDataField="app_name" Width="300px" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" ImageUrl="~/Image/gNew.gif" sfwMethodName="btnNew_Click" sfwOperateOn="tblCriteria" Text="New" />
+                <sfwButton ID="btnOpen" ImageUrl="~/Image/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" ImageUrl="~/Image/gDelete.gif" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Application ID" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActLogAppId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="App Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AppName" sfwLinkable="True" sfwRelatedControl="btnOpen" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Action " ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblCheckBox" sfwEntityField="ActionFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Action Step" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblCheckBox1" sfwEntityField="ActionStepFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Select Query" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblCheckBox2" sfwEntityField="SelectFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Update Query" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblCheckBox3" sfwEntityField="UpdateFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Insert Query" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblCheckBox4" sfwEntityField="InsertFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Delete Query" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblCheckBox5" sfwEntityField="DeleteFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Trace Rules" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblCheckBox6" sfwEntityField="RulesFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Query Threshold" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="QueryThreshold" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Transaction Threshold" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TransactionThreshold" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails />
+</form>

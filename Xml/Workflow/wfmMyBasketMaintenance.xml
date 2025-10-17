@@ -1,0 +1,513 @@
+﻿<form ID="wfmMyBasketMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvWorkflow" sfwResource="206" sfwType="Maintenance" sfwTitle="Activity Instance Maintenance" version="3.5" sfwDefaultButtonID="btnSearchActivities1" sfwEntity="entMyBasket">
+  <initialload>
+    <callmethods sfwMethodName="SearchAndLoadMyBasket" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Search Criteria">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIstrProcessName" Text="Process Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwDropDownList DataTextField="description" DataValueField="process_id" ID="ddlIintProcessID" sfwLoadType="Query" sfwLoadSource="entProcess.LoadActiveProcesses" sfwEntityField="IintProcessID" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capPersonID" Text="Participant MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIstrMpiPersonID" sfwEntityField="IstrMpiPersonID" />
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" Enabled="False" ID="txtPersonId" sfwParameters="PERSON_ID=txtPersonId" sfwRetrievalControls="txtIstrMpiPersonID=mpi_person_id" sfwRetrievalQuery="entPerson.GetPersonMPID" SkinID="textBoxDisplayStyleNone" sfwEntityField="IintPersonID" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtPersonId" sfwSelectedIndex="PersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgCodeID" Text="Org Code ID : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOrgID" Visible="False" sfwEntityField="IstrOrgCode" />
+                <sfwImageButton ID="btnRetrieve1" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmOrganizationLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtOrgID" Visible="False" sfwSelectedIndex="OrgId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIintReferenceId" Text="Reference ID : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtReferenceId" sfwDataType="Numeric" Visible="False" sfwEntityField="IintReferenceID" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIdteRequestDateFrom" Text="Initiated Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRequestDateFrom" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtRequestDateFrom" />
+                <CompareValidator ControlToValidate="txtRequestDateFrom" ErrorMessage="Request date from must be in mm/dd/yyyy format" ID="cmv" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIdteRequestDateTo" Text="Initiated Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRequestDateTo" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtRequestDateTo" />
+                <CompareValidator ControlToValidate="txtRequestDateTo" ErrorMessage="Request date to must be in mm/dd/yyyy format" ID="cmv1" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtRequestDateFrom" ControlToValidate="txtRequestDateTo" ErrorMessage="Request date to cannot be less than Request date from" ID="cmv2" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIstrRoleDiscription" Text="Role ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="role_description" DataValueField="role_id" ID="txtIstrRoleDiscription" sfwLoadType="Query" sfwLoadSource="entRoles.ListOfRoles" sfwEntityField="IintRoleID" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIstrSource" Text="Source : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlIstrSource" sfwLoadType="CodeGroup" sfwLoadSource="1602" sfwEntityField="IstrSource" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capLast4ofSSN" Text="Last 4 of SSN : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIstrLast4SSN" Visible="False" sfwEntityField="IstrLastFourDigitsOfSSN" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capIstrMyBasketFilter" Text="My Basket Filter : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlIstrMyBasketFilter" sfwLoadType="CodeGroup" sfwLoadSource="1604" sfwEntityField="IstrMyBasketFilter" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearchActivities" sfwMessageId="54" sfwMethodName="btnMyBasketSearch_Click" sfwObjectMethod="SearchAndLoadMyBasket" sfwRefreshFromObject="True" Text="Apply Filter" Visible="False" />
+                <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Apply Filter" ID="btnSearchActivities1" sfwObjectMethod="SearchAndLoadMyBasket" sfwExecuteMethodType="ObjectMethod" sfwMessageId="54" sfwRefreshFromObject="True" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlWorkPoolTab" sfwCaption="Work Pool" sfwVisibleRule="VisibleWorkPoolTab">
+          <sfwTable CssClass="Table" ID="tblWorkPoolTab">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton CssClass="hideControl" ID="btnCheckout" sfwCheckOut="True" sfwMethodName="btnWorkflowExecuteMethod_Click" sfwSecurityLevel="2" SkinID="textBoxDisplayStyleNone" Text="Checkout" sfwRelatedControl="grvRoleAssginedActivities" sfwNavigationParameter="aintActivityInstanceId=ActivityInstanceId" OnClientClick="GetLaunchImageViewer" />
+                <sfwButton ID="btnViewDetails" sfwActiveForm="wfmWorkflowMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintactivityinstanceid=ActivityInstanceId" sfwRelatedControl="grvRoleAssginedActivities" Text="Open" Visible="False" />
+                <sfwButton ID="btnView" sfwMethodName="btnWorkflowExecuteMethod_Click" Text="View" Visible="False" sfwNavigationParameter="aintActivityInstanceId=ActivityInstanceId" OnClientClick="GetLaunchImageViewer" sfwRelatedControl="grvRoleAssginedActivities" />
+                <sfwButton ID="btnExportToExcel2" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvRoleAssginedActivities" Text="Export to Excel" />
+                <sfwLinkButton ID="btnContactTicketIdW" sfwMethodName="btnOpen_Click" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvRoleAssginedActivities" PageSize="50" sfwSortExpression="ActivityInstanceId desc" sfwEntityField="lstRoleAssignedActivities" sfwGridEntity="entActivityInstance" SortExpressionUpdated="true">
+                  <Columns>
+                    <TemplateField HeaderText="ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objProcess.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Name">
+                      <ItemTemplate>
+                        <sfwLabel ToolTip="Checkout" sfwEntityField="objActivity.DisplayName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="CheckOut">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnCheckout" Text="Checkout" sfwIsCaption="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Initiated">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="View Details">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnViewDetails" Text="View Details" sfwEntityField="IstrViewDetails" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPI Person ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objPerson.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objPerson.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.PersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Role ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objActivity.objRoles.RoleDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Reference Id" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReferenceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CheckedOutUser" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status Value" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="View">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnView" Text="View" ToolTip="View Activity Without Checkout" sfwEntityField="IstrView" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Source">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objWorkflowRequest.SourceDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="SSN" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:000-##-####}" sfwEntityField="objProcessInstance.objPerson.Ssn" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAssignedTab" sfwCaption="Assigned Work" sfwVisibleRule="VisibleAssignedTab">
+          <sfwTable CssClass="Table" ID="tblAssignedTab">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnInProcess" sfwMethodName="btnWorkflowExecuteMethod_Click" sfwSecurityLevel="2" Text="InProcess" Visible="False" sfwNavigationParameter="aintActivityInstanceId=ActivityInstanceId" OnClientClick="GetLaunchImageViewer" sfwRelatedControl="grvUserAssginedActivities" />
+                <sfwButton ID="btnViewDetailsA" sfwActiveForm="wfmWorkflowMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintactivityinstanceid=ActivityInstanceId" sfwRelatedControl="grvUserAssginedActivities" Text="Open" Visible="False"/>
+                <sfwButton ID="btnExportToExcel1" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvUserAssginedActivities" Text="Export to Excel" />
+                <sfwLinkButton ID="btnContactTicketId" sfwMethodName="btnOpen_Click" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvUserAssginedActivities" PageSize="50" sfwSortExpression="ActivityInstanceId desc" sfwEntityField="lstUserAssignedActivities" sfwGridEntity="entActivityInstance" SortExpressionUpdated="true">
+                  <Columns>
+                    <TemplateField HeaderText="ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objProcess.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objActivity.Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Launch">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnInProcess" Text="Launch" sfwIsCaption="True" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPI Person ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objPerson.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objPerson.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Reference ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReferenceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Initiated">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="View Details">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnViewDetailsA" sfwEntityField="IstrViewDetails" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Role ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objActivity.objRoles.RoleDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CheckedOutUser" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlSuspendedTab" sfwCaption="Suspended Work" sfwVisibleRule="VisibleSuspendedTab">
+          <sfwTable CssClass="Table" ID="tblSuspendedTab">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnViewDetailsS" sfwActiveForm="wfmWorkflowMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintactivityinstanceid=ActivityInstanceId" sfwRelatedControl="grvUserSuspendedActivities" Text="Open" Visible="False" />
+                <sfwButton ID="btnExportToExcel3" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvUserSuspendedActivities" Text="Export to Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvUserSuspendedActivities" PageSize="50" sfwSortExpression="ActivityInstanceId desc" sfwEntityField="lstUserSuspendedActivities" sfwGridEntity="entActivityInstance" SortExpressionUpdated="true">
+                  <Columns>
+                    <TemplateField HeaderText="ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objProcess.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objActivity.DisplayName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPI Person ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objPerson.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objPerson.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Reference ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReferenceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Initiated">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="View Details">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnViewDetailsS" sfwEntityField="IstrViewDetails" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Role ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objActivity.objRoles.RoleDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CheckedOutUser" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Source">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objWorkflowRequest.SourceDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCompletedTab" sfwCaption="Completed Work" sfwVisibleRule="VisibleCompletedTab">
+          <sfwTable CssClass="Table" ID="tblCompletedTab">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnViewDetailC" sfwActiveForm="wfmWorkflowMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintactivityinstanceid=ActivityInstanceId" sfwRelatedControl="grvUserCompletedActivities" Text="Open" Visible="False" />
+                <sfwButton ID="btnExportToExcel4" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvUserCompletedActivities" Text="Export to Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvUserCompletedActivities" PageSize="50" sfwSortExpression="ActivityInstanceId desc,ModifiedDate desc" sfwEntityField="lstUserCompletedActivities" sfwGridEntity="entActivityInstance" SortExpressionUpdated="true">
+                  <Columns>
+                    <TemplateField HeaderText="ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objProcess.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objActivity.DisplayName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="MPI Person ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objPerson.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objPerson.IstrFullName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Reference ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReferenceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Initiated" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Completed">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="ModifiedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="View Details">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnViewDetailC" sfwEntityField="IstrViewDetails" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Role ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objActivity.objRoles.RoleDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CheckedOutUser" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Source">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcessInstance.objWorkflowRequest.SourceDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="RelativeVipFlag" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRelativeVipFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstRoleAssignedActivities" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstUserAssignedActivities" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstUserSuspendedActivities" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstUserCompletedActivities" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

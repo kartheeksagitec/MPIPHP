@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_ORGNAME]
+    FROM VARCHAR (75) NULL;
+

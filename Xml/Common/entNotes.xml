@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entNotes" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoNotes" sfwObjectID="busNotes" sfwTableName="sgt_notes" sfwView="False" sfwDataObjectID="doNotes">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <constraint />
+  <queries>
+    <query ID="FindNotesForPerson" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_NOTES WITH(NOLOCK) where PERSON_ID=@PERSON_ID ">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="FindNotesForOrganisation" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_NOTES WITH(NOLOCK) where ORG_ID=@ORG_ID ">
+      <parameters>
+        <parameter ID="@ORG_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="FindProcessInstanceNotes" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT NOTE_ID,NOTES FROM SGT_NOTES WITH(NOLOCK) WHERE PROCESS_INSTANCE_ID=@PROCESS_INSTANCE_ID ORDER BY CREATED_DATE DESC">
+      <parameters>
+        <parameter ID="@PROCESS_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetNotesforPersonOverview" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select distinct scv.DESCRIPTION as istrsource, sn.* from SGT_NOTES sn&#xD;&#xA;join SGS_CODE_VALUE scv on scv.CODE_VALUE = sn.FORM_VALUE and scv.CODE_ID = 6028&#xD;&#xA;where sn.PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetNotesForWithdrawalCaclulation" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select distinct scv.DESCRIPTION as istrsource, sn.* from SGT_NOTES sn&#xD;&#xA;join SGS_CODE_VALUE scv on scv.CODE_ID = 6028 and scv.CODE_VALUE = sn.FORM_VALUE&#xD;&#xA;where sn.PERSON_ID = @PERSON_ID and sn.FORM_VALUE = @FORM_VALUE">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@FORM_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="FindNotesForReturnToWorkRequest" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_NOTES WITH(NOLOCK)&#xD;&#xA;WHERE PERSON_ID=@PERSON_ID AND FORM_VALUE=@FORM_VALUE AND REFERENCE_ID = @REFERENCE_ID">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@FORM_VALUE" sfwDataType="string" />
+        <parameter ID="@REFERENCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="note_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="NoteId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonId" sfwIsSequence="False" sfwCaption="Person Id" />
+    <attribute sfwValue="org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="OrgId" sfwIsSequence="False" sfwCaption="Org Id" />
+    <attribute sfwType="Description" ID="FormDescription" sfwCaption="Form" sfwValue="form_description" />
+    <attribute sfwValue="form_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="FormId" sfwCodeID="6028" sfwIsSequence="False" sfwCaption="Form" />
+    <attribute sfwValue="form_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="FormValue" sfwIsSequence="False" sfwCaption="Form" />
+    <attribute sfwValue="notes" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4096" sfwIsNull="True" ID="Notes" sfwIsSequence="False" sfwCaption="Notes" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="process_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ProcessInstanceId" sfwIsSequence="False" sfwCaption="Process Instance Id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSource" sfwValue="icdoNotes.istrSource" />
+    <attribute sfwValue="reference_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="long" sfwDBDataType="bigint" sfwIsNull="True" ID="ReferenceId" sfwCaption="Reference Id" />
+  </attributes>
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields />
+</entity>

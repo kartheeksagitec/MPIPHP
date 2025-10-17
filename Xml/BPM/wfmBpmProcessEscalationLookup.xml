@@ -1,0 +1,141 @@
+﻿<form ID="wfmBpmProcessEscalationLookup" WebSite="ASPENMember" sfwType="Lookup" sfwTitle="BPM Process Escalation Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBpmProcessEscalationLookup" sfwEntity="entSolBpmProcessEscalation" sfwResource="20007016">
+  <initialload>
+    <query ID="cdoBpmProcessEscalation" sfwQueryRef="entBpmProcessEscalation.LookUp" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Search Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCaseId" Text="Case : " AssociatedControlID="ddlCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList ID="ddlCaseId" sfwDataField="sbc.case_id" sfwQueryID="cdoBpmProcessEscalation" sfwDataType="Numeric" DataValueField="case_id" DataTextField="namewithversion" sfwLoadType="Query" sfwLoadSource="entBpmCase.CaseLookupWithVersionAppendedToName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capProcessId" Text="Process : " AssociatedControlID="ddlProcessId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList ID="ddlProcessId" sfwDataField="sbp.process_id" sfwQueryID="cdoBpmProcessEscalation" sfwDataType="Numeric" DataValueField="process_id" DataTextField="name" sfwParameters="CASE_ID=ddlCaseId" sfwParentControl="ddlCaseId" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetProcessByCaseId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capProcessEscalationName" Text="Process Escalation Name : " AssociatedControlID="txtProcessEscalationName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtProcessEscalationName" sfwQueryID="cdoBpmProcessEscalation" sfwDataField="process_escalation_name" sfwOperator="like" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatusValue" Text="Status : " AssociatedControlID="ddlStatusValue" sfwIsCaption="True" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwMultiSelectDropDownList ID="ddlStatusValue" sfwDataField="sbpe.status_value" sfwQueryID="cdoBpmProcessEscalation" sfwLoadType="CodeGroup" sfwLoadSource="6414" sfwOperator="in" DataTextField="description" DataValueField="code_value" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capRecurTypeValue" Text="Recur Type : " AssociatedControlID="ddlRecurTypeValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlRecurTypeValue" sfwDataField="recur_type_value" sfwQueryID="cdoBpmProcessEscalation" sfwLoadType="CodeGroup" sfwOperator="=" DataValueField="code_value" sfwLoadSource="6413" DataTextField="description" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capLapseTypeValue" Text="Lapse Type : " AssociatedControlID="ddlLapseTypeValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlLapseTypeValue" sfwDataField="lapse_type_value" sfwQueryID="cdoBpmProcessEscalation" sfwLoadType="CodeGroup" sfwOperator="=" sfwLoadSource="3006" DataTextField="description" DataValueField="code_value" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel sfwIsCaption="True" ID="capCreatedDateFrom" Text="Created Date From : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedDateFrom" sfwQueryID="cdoBpmProcessEscalation" sfwDataField="SBPE.created_date" sfwOperator="between" sfwRelatedControl="txtCreatedDateTo" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                <CompareValidator ID="valCreatedDateFrom" Text="*" sfwOperator="DataTypeCheck" ControlToValidate="txtCreatedDateFrom" Type="Date" ErrorMessage="Created DateFrom must be in mm/dd/yyyy format." />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel sfwIsCaption="True" ID="capCreatedDateTo" Text="Created Date To : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCreatedDateTo" sfwQueryID="cdoBpmProcessEscalation" sfwDataField="SBPE.created_date" sfwOperator="between" sfwDataType="DateTime" sfwDataFormat="{0:d}" />
+                <CompareValidator ID="valCreatedDateTo" Text="*" Operator="DataTypeCheck" ControlToValidate="txtCreatedDateTo" Type="Date" ErrorMessage="Created DateFrom must be in mm/dd/yyyy format." />
+                <CompareValidator ID="valCreatedDateRange" Text="*" Operator="GreaterThanEqual" ControlToValidate="txtCreatedDateTo" ControlToCompare="txtCreatedDateFrom" ErrorMessage="Created Date To cannot be less than Created Date From." Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" ImageUrl="~/Images/gNew.gif" sfwMethodName="btnNew_Click" sfwOperateOn="tblCriteria" sfwActiveForm="wfmBpmProcessEscalationMaintenance" Text="New" ToolTip="Create a new BPM Process Escalation record" />
+                <sfwButton ID="btnOpen" ImageUrl="~/Images/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" sfwActiveForm="wfmBpmProcessEscalationMaintenance" Text="Open" sfwNavigationParameter="aintPrimaryKey=ProcessEscalationId" ToolTip="Open selected BPM Process Escalation record(s)" />
+                <sfwButton ID="btnDelete" ImageUrl="~/Images/gDelete.gif" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Images/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Case">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblCaseName" sfwEntityField="objBpmCase.Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblProcessName" sfwEntityField="objBpmProcess.Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Escalation Name">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblEscalationName" sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="ProcessEscalationName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Escalation ID" ItemStyle.HorizontalAlign="Left">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblEscalationId" sfwEntityField="ProcessEscalationId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

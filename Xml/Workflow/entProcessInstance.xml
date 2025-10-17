@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entProcessInstance" sfwMainCDO="icdoProcessInstance" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busProcessInstance" sfwTableName="sgw_process_instance" sfwView="False" sfwDataObjectID="doProcessInstance">
+  <queries>
+    <query ID="GetActiveProcessInstanceForPersonId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGW_PROCESS_INSTANCE SPI WITH(NOLOCK) &#xD;&#xA;INNER JOIN SGW_REQUEST SR WITH(NOLOCK) ON SR.REQUEST_ID = SPI.REQUEST_ID&#xD;&#xA;WHERE SR.PROCESS_ID = @PROCESS_ID &#xD;&#xA;AND SR.PERSON_ID = @PERSON_ID&#xD;&#xA;AND SPI.STATUS_VALUE IN ('INPC', 'UNPC')">
+      <parameters>
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountActiveProcessForPerson" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_PROCESS_INSTANCE &#xD;&#xA; WITH(NOLOCK) WHERE PERSON_ID = @PERSON_ID AND PROCESS_ID = @PROCESS_ID&#xD;&#xA;AND STATUS_VALUE IN ('INPC', 'UNPC')&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountActiveProcessForPersonWithRefId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGW_PROCESS_INSTANCE SPI&#xD;&#xA;INNER JOIN SGW_ACTIVITY_INSTANCE SAI&#xD;&#xA;ON SPI.PROCESS_INSTANCE_ID = SAI.PROCESS_INSTANCE_ID&#xD;&#xA;AND SAI.ACTIVITY_INSTANCE_ID &#xD;&#xA;= (SELECT TOP(1)Q.ACTIVITY_INSTANCE_ID FROM SGW_ACTIVITY_INSTANCE Q &#xD;&#xA;WHERE Q.PROCESS_INSTANCE_ID = SAI.PROCESS_INSTANCE_ID ORDER BY CREATED_DATE)&#xD;&#xA;WHERE PERSON_ID = @PERSON_ID AND PROCESS_ID = @PROCESS_ID&#xD;&#xA;AND SAI.REFERENCE_ID = @REFERENCE_ID&#xD;&#xA;AND SPI.STATUS_VALUE IN ('INPC', 'UNPC')">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PROCESS_ID" sfwDataType="int" />
+        <parameter ID="@REFERENCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="process_instance_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessInstanceId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="process_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessId" sfwIsSequence="False" sfwCaption="Process Id" />
+    <attribute sfwValue="request_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RequestId" sfwIsSequence="False" sfwCaption="Request Id" />
+    <attribute sfwValue="workflow_instance_guid" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="guid" sfwDBDataType="uniqueidentifier" sfwIsNull="False" ID="WorkflowInstanceGuid" sfwIsSequence="False" sfwCaption="Workflow Instance Guid" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonId" sfwIsSequence="False" sfwCaption="Person Id" />
+    <attribute sfwValue="org_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="OrgId" sfwIsSequence="False" sfwCaption="Org Id" />
+    <attribute sfwValue="priority" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="Priority" sfwIsSequence="False" sfwCaption="Priority" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="5005" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="contact_ticket_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ContactTicketId" sfwIsSequence="False" sfwCaption="Contact Ticket Id" />
+    <attribute sfwValue="additional_parameter1" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="256" sfwIsNull="True" ID="AdditionalParameter1" sfwIsSequence="False" sfwCaption="Additional Parameter1" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute ID="objProcess" sfwType="Object" sfwEntity="entProcess" sfwValue="ibusProcess" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+    <attribute ID="objWorkflowRequest" sfwType="Object" sfwEntity="entWorkflowRequest" sfwValue="ibusWorkflowRequest" />
+  </attributes>
+</entity>

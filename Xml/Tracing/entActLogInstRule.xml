@@ -1,0 +1,39 @@
+﻿<entity ID="entActLogInstRule" sfwView="False" sfwActive="True" sfwMainCDO="icdoActLogInstRule" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_act_log_inst_rule" sfwObjectID="busActLogInstRule" sfwDataObjectID="doActLogInstRule">
+  <attributes>
+    <attribute sfwValue="act_log_inst_rule_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogInstRuleId" sfwCaption="ID" />
+    <attribute sfwValue="rule_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="500" sfwIsNull="True" ID="RuleName" sfwCaption="Rule Name" />
+    <attribute sfwValue="result" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="500" sfwIsNull="True" ID="Result" sfwCaption="Result" />
+    <attribute sfwValue="start_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="StartTime" sfwCaption="Start Time" />
+    <attribute sfwValue="end_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="EndTime" sfwCaption="End Time" />
+    <attribute sfwValue="step_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="StepName" sfwCaption="Step Name" />
+    <attribute sfwValue="parameter_details" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ParameterDetails" sfwCaption="Parameter Details" />
+    <attribute sfwValue="transaction_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="guid" sfwDBDataType="uniqueidentifier" sfwIsNull="True" ID="TransactionId" sfwCaption="Transaction Id" />
+    <attribute sfwValue="sub_transaction_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="10" sfwIsNull="True" ID="SubTransactionId" sfwCaption="Sub Transaction Id" />
+    <attribute sfwValue="time_in_ms" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TimeInMs" sfwCaption="Time In Ms" />
+    <attribute sfwValue="is_validation_rule" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsValidationRule" sfwCaption="Is Validation Rule" />
+  </attributes>
+  <methods>
+    <method ID="FindActLogInstRule" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+    </method>
+  </methods>
+  <ExtraFields />
+  <queries>
+    <query ID="GetRuleInfo" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGS_ACT_LOG_INST_RULE with(nolock)&#xA;where transaction_id = @transaction_id">
+      <parameters>
+        <parameter ID="@transaction_id" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <lifecycle />
+  <objectmethods />
+</entity>

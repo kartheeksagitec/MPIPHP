@@ -1,0 +1,220 @@
+﻿<form ID="wfmIAPAllocationYearlyDetailMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvIAPAllocation" sfwResource="210" sfwType="Maintenance" sfwTitle="IAPAllocation Yearly Detail Maintenance" version="3.5" sfwEntity="entIAPAllocationYearlyDetail">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="FindbusIAPAllocationYearlyDetails" />
+    <callmethods sfwMode="Update" sfwMethodName="FindbusIAPAllocationYearlyDetails" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Other Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="btnMpiPersonId" ID="capMpiPersonId" Text="MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnMpiPersonId" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=PersonId" sfwEntityField="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrFullName" ID="capIstrFullName" Text="Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrFullName" sfwEntityField="IstrFullName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIstrLast4DigitsofSSN" ID="capIstrLast4DigitsofSSN" Text="Last4 Digits ofSSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrLast4DigitsofSSN" sfwEntityField="IstrLast4DigitsofSSN" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIdtDateofBirth" ID="capIdtDateofBirth" Text="Date of Birth : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdtDateofBirth" sfwDataFormat="{0:d}" sfwEntityField="IdtDateofBirth" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblAffiliate" sfwVisibleRule="VisibleRule-AffiliateFlag" Text="Affiliate :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIstrAffiliate" sfwVisibleRule="VisibleRule-AffiliateFlag" sfwEntityField="IstrAffiliate" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblPersonId" Visible="False" sfwEntityField="PersonId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage1" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblNewPage1">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlIstrTransactionType" ID="capIstrTransactionType" Text="Transaction Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlIstrTransactionType" sfwLoadType="CodeGroup" sfwLoadSource="1003" sfwEntityField="IstrTransactionType" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlIstrContributionType" ID="capIstrContributionType" Text="Contribution Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlIstrContributionType" sfwLoadType="CodeGroup" sfwLoadSource="1000" sfwEntityField="IstrContributionType" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlIstrContributionSubType" ID="capIstrContributionSubType" Text="Contribution SubType : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlIstrContributionSubType" sfwLoadType="CodeGroup" sfwLoadSource="1004" sfwEntityField="IstrContributionSubType" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnApplyFilter" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btn_ApplyFilter" Text="Apply Filter" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="IAP Allocation Yearly Details">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnExportToExcelClick" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvPersonAccountRetirementContributio" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPersonAccountRetirementContributio" PageSize="50" sfwObjectID="busIAPAllocationYearlyDetail.iclbPersonAccountRetirementContribution" sfwEntityField="lstPersonAccountRetirementContribution">
+                  <Columns>
+                    <TemplateField HeaderText="Transaction Date" SortExpression="transaction_date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="transaction_date" sfwDataFormat="{0:d}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Effective Date" SortExpression="effective_date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="effective_date" sfwDataFormat="{0:d}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan Year" SortExpression="computational_year">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="computational_year" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Transaction Type" SortExpression="transaction_type_description">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="transaction_type_description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Contribution Type" SortExpression="contribution_type_description">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="contribution_type_description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Contribution Subtype" SortExpression="contribution_subtype_description">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="contribution_subtype_description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Iap Balance Amount" SortExpression="iap_balance_amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="iap_balance_amount" sfwDataFormat="{0:C}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created By" SortExpression="created_by">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="created_by" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date" SortExpression="created_date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="created_date" sfwDataFormat="{0:G}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField SortExpression="person_account_retirement_contribution_id">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="person_account_retirement_contribution_id" Visible="False" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstPersonAccountRetirementContribution" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

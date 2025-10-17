@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPersonSuspendibleMonth" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoPersonSuspendibleMonth" sfwObjectID="busPersonSuspendibleMonth" sfwTableName="sgt_person_suspendible_month" sfwView="False" sfwDataObjectID="doPersonSuspendibleMonth">
+  <rules>
+    <rule ID="CheckStaus" sfwMessageId="6185" sfwExpression="(this.icdoPersonSuspendibleMonth.status_value == &quot;PRCD&quot;)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="CheckStaus" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="CheckIfSuspendibleMonth" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xD;&#xA;  COUNT(*) &#xD;&#xA;FROM&#xD;&#xA;  SGT_PERSON_SUSPENDIBLE_MONTH spsm WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;  PERSON_ID = @PERSON_ID AND&#xD;&#xA;  PLAN_YEAR = @PLAN_YEAR AND&#xD;&#xA;  SUSPENDIBLE_MONTH_VALUE = @SUSPENDIBLE_MONTH_VALUE">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@PLAN_YEAR" sfwDataType="int" />
+        <parameter ID="@SUSPENDIBLE_MONTH_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetCountSuspendibleMonth" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(*) FROM SGT_PERSON_SUSPENDIBLE_MONTH &#xD;&#xA; WHERE SUSPENDIBLE_MONTH_VALUE  = @SUSPENDIBLE_MONTH_VALUE&#xD;&#xA; AND PLAN_YEAR = @PLAN_YEAR&#xD;&#xA; and PERSON_ID = @PERSON_ID">
+      <parameters>
+        <parameter ID="@SUSPENDIBLE_MONTH_VALUE" sfwDataType="string" />
+        <parameter ID="@PLAN_YEAR" sfwDataType="int" />
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetSuspendibleHoursValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="DECLARE @FIRSTDATE DATETIME, @YEAR INT, @MONTH INT&#xD;&#xA;SET @YEAR = CASE WHEN (@MONTH_VALUE - 1) = 0 THEN @PLAN_YEAR - 1 ELSE @PLAN_YEAR END&#xD;&#xA;SET @MONTH = CASE WHEN (@MONTH_VALUE - 1) = 0 THEN 12 ELSE @MONTH_VALUE - 1 END&#xD;&#xA;SET @FIRSTDATE = DATEADD(d, -1, DATEADD(m, DATEDIFF(m, 0, CONVERT(DATETIME,(CAST(@YEAR AS char(4))+'/'+CAST(@MONTH AS char(2))+'/01'))) + 1, 0))&#xD;&#xA;&#xD;&#xA;WHILE (DATENAME(DW,@FIRSTDATE) != 'Thursday')&#xD;&#xA;BEGIN&#xD;&#xA;&#x9;SET @FIRSTDATE = DATEADD(D,-1,@FIRSTDATE)&#xD;&#xA;END&#xD;&#xA;&#x9;SET @FIRSTDATE = DATEADD(D,-4,@FIRSTDATE)&#xD;&#xA;&#xD;&#xA;SELECT [HOURS] &#xD;&#xA;FROM SGT_SUSPENDIBLE_HOURS_VALUE WITH(NOLOCK) &#xD;&#xA;WHERE @FIRSTDATE &gt;= ISNULL(EFFECTIVE_DATE,'01/01/1900') AND (END_DATE IS NULL OR @FIRSTDATE &lt;= END_DATE )&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PLAN_YEAR" />
+        <parameter ID="@MONTH_VALUE" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="person_suspendible_month_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PersonSuspendibleMonthId" sfwCaption="ID" />
+    <attribute sfwValue="person_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PersonId" sfwCaption="Person Id" />
+    <attribute sfwValue="plan_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="4,0" sfwIsNull="True" ID="PlanYear" sfwCaption="Plan Year" />
+    <attribute sfwType="Description" ID="SuspendibleMonthDescription" sfwCaption="Suspendible Month" sfwValue="suspendible_month_description" />
+    <attribute sfwValue="suspendible_month_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="SuspendibleMonthId" sfwCodeID="801" sfwCaption="Suspendible Month" />
+    <attribute sfwValue="suspendible_month_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="SuspendibleMonthValue" sfwCaption="Suspendible Month" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="7042" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute ID="objPerson" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPerson" />
+  </attributes>
+</entity>

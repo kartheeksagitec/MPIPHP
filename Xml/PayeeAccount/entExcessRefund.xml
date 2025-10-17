@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entExcessRefund" sfwMainCDO="icdoExcessRefund" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busExcessRefund" sfwTableName="sgt_excess_refund" sfwView="False" sfwDataObjectID="doExcessRefund">
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT &#xD;&#xA;SER.PAYEE_ACCOUNT_ID&#xD;&#xA;, SER.EXCESS_REFUND_ID&#xD;&#xA;, SER.TAX_YEAR&#xD;&#xA;, SP.MPI_PERSON_ID &#xD;&#xA;, (SP.FIRST_NAME + ' ' + SP.LAST_NAME) AS PayeeName&#xD;&#xA;, SER.REFUND_AMOUNT,&#xD;&#xA; istrRelativeVipFlag =(&#xD;&#xA;       SELECT CASE WHEN (COUNT(*) &gt; 0 OR SP.VIP_FLAG='Y') THEN 'Y' ELSE 'N' END FROM SGT_RELATIONSHIP SR&#xD;&#xA;       INNER JOIN SGT_PERSON SPP ON SPP.PERSON_ID = SR.PERSON_ID WHERE (SR.BENEFICIARY_PERSON_ID = SP.PERSON_ID OR SR.DEPENDENT_PERSON_ID = SP.PERSON_ID) &#xD;&#xA;       AND SPP.VIP_FLAG = 'Y'&#xD;&#xA;        )&#xD;&#xA;FROM SGT_EXCESS_REFUND SER WITH (NOLOCK)&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT SPA WITH (NOLOCK) ON SPA.PAYEE_ACCOUNT_ID = SER.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PERSON SP WITH (NOLOCK) ON SP.PERSON_ID = SPA.PERSON_ID&#xD;&#xA;">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="excess_refund_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ExcessRefundId" sfwCaption="ID" />
+    <attribute sfwValue="payee_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PayeeAccountId" sfwIsSequence="False" sfwCaption="Payee Account Id" />
+    <attribute sfwValue="tax_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TaxYear" sfwIsSequence="False" sfwCaption="Tax Year" />
+    <attribute sfwValue="refund_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="RefundAmount" sfwIsSequence="False" sfwCaption="Refund Amount" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute ID="objPayee" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusPayee" />
+    <attribute ID="IstrRelativeVipFlag" sfwDataType="string" sfwPrivate="False" sfwValue="icdoExcessRefund.istrRelativeVipFlag" sfwType="Property" />
+  </attributes>
+</entity>

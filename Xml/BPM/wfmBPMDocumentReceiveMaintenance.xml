@@ -1,0 +1,152 @@
+﻿<form ID="wfmBPMDocumentReceiveMaintenance" sfwActive="True" sfwStatus="Valid" sfwType="Maintenance" sfwTitle="Document Received " version="3.5" sfwEntity="entSolBpmRequest" sfwResource="20007005">
+  <initialload>
+    <callmethods sfwMethodName="NewBpmRequest" sfwMode="New" />
+    <query />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMessageId="1556" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InitializeScanDocumentReceivedProcess" Text="Document Received" sfwSecurityLevel="2" sfwRefreshFromObject="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Document Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblProcName" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capProcessId" SkinID="LeftAlignedLabel" Text="Process Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="name" DataValueField="process_id" ID="ddlProcessId" AutoPostBack="True" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetProcessesForOnlineInitialization" sfwEntityField="ProcessId" sfwRequiredCaption="True" Width="auto" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capPersonId" SkinID="LeftAlignedLabel" Text="Person ID :" sfwIsCaption="True" sfwRequired="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPersonId" sfwEntityField="PersonId" />
+                <sfwImageButton ID="btnRetrievePayee" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtPersonId" sfwSelectedIndex="PersonId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capPersonName" SkinID="LeftAlignedLabel" Text="Person Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblPersonName" sfwEntityField="objPerson.IstrPersonName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capOrgId" SkinID="LeftAlignedLabel" Text="Organization ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOrgId" sfwParameters="ORG_ID=txtOrgId" sfwRetrievalControls="lblOrgName=org_name" sfwRetrievalQuery="entOrganization.GetOrgNameByOrgId" sfwEntityField="OrgId" />
+                <sfwImageButton ID="btnRetrieveOrganization" ImageAlign="AbsMiddle" ImageUrl="~/Images/Lookup.jpg" sfwActiveForm="wfmOrganizationLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtOrgId" sfwSelectedIndex="OrgId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capOrgName" SkinID="LeftAlignedLabel" Text="Organization Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgName" sfwEntityField="objOrganization.OrgName" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capReferenceId" SkinID="LeftAlignedLabel" Text="Reference ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtReferenceId" sfwEntityField="ReferenceId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capTrackingId" Text="Tracking ID : " AssociatedControlID="txtTrackingId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTrackingId" sfwEntityField="TrackingId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capReasonValue" Text="Reason : " AssociatedControlID="ddlReasonValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlReasonValue" sfwEntityField="ReasonValue" sfwLoadType="CodeGroup" sfwLoadSource="3013" DataTextField="description" DataValueField="code_value" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lbldocType" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel CssClass="LeftAlignedLabel" ID="lblDocType" SkinID="LeftAlignedLabel" Text="Document Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="event_desc" DataValueField="doc_type" ID="ddlDocType" AutoPostBack="True" sfwLoadType="Query" sfwLoadSource="entBpmEvent.GetAllDocType" sfwEntityField="DocType" Width="auto" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtIstrNotes" CssClass="LeftAlignedLabel" ID="capIstrNotes" SkinID="LeftAlignedLabel" Text="Notes :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIstrNotes" Rows="2" TextMode="MultiLine" Width="500px" sfwEntityField="IstrNotes" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel" sfwCaption="New Page" Visible="False">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="grvbusSolBpmRequestParameter" sfwSelection="Many" sfwTwoWayBinding="True" AllowEditing="True" sfwEntityField="lstBpmRequestParameter" sfwGridEntity="entBpmRequestParameter">
+                  <Columns>
+                    <TemplateField HeaderText="Parameter Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ParameterName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Parameter">
+                      <ItemTemplate>
+                        <sfwTextBox sfwEntityField="ParameterValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Request Parameter ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RequestParameterId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPerson" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objOrganization" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmRequestParameter" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptDemographicAuditHistory" sfwReportName="rptDemographicAuditHistory.rdlc" sfwReportCategory="Reports" sfwResource="505 " sfwDescription="Demographic Audit History Report" sfwType="Report" sfwActive="True" sfwStatus="Review" version="4.0">
+  <initialload>
+    <query sfwQueryRef="entTempdata.rptDemographicAuditHistory" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="FROM : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="FROM" sfwDataFormat="{0:d}" />
+        <CompareValidator ID="valFromDate" ErrorMessage="From Date must be in mm/dd/yyyy format." Operator="DataTypeCheck" ControlToValidate="FROM" Text="*" Type="Date" />
+        <RequiredFieldValidator ID="rfvFromDate" Text="*" ControlToValidate="FROM" ErrorMessage="From Date is Required" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="TO : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="TO" sfwDataFormat="{0:d}" />
+        <CompareValidator ID="valDateRange" Text="*" ControlToValidate="TO" ErrorMessage="TO date cannot be less than FROM date." Operator="GreaterThanEqual" Type="Date" ControlToCompare="FROM" />
+        <CompareValidator ID="valToDate" ErrorMessage="From Date must be in mm/dd/yyyy format." Text="*" ControlToValidate="TO" Operator="DataTypeCheck" Type="Date" />
+        <RequiredFieldValidator ID="rfvToDate" ErrorMessage="To Date is Required" Text="*" ControlToValidate="TO" />
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

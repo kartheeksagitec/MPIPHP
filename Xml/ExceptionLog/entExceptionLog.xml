@@ -1,0 +1,112 @@
+﻿<entity ID="entExceptionLog" sfwView="False" sfwActive="True" sfwMainCDO="icdoExceptionLog" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_exception_log" sfwObjectID="busExceptionLog" sfwObjectType="NeoSpin.busExceptionLog, NeoSpinBusinessObjects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" sfwDataObjectID="doExceptionLog">
+  <queries>
+    <query ID="LookUp" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgs_exception_log WITH(NOLOCK)" sfwDataType="EntityTable" sfwQueryType="SelectQuery">
+      <parameters />
+    </query>
+    <query ID="GetAllExceptionLogs" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgs_exception_log WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; exception_log_id &lt;&gt; @exception_log_id">
+      <parameters>
+        <parameter ID="@exception_log_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetErrorsByAppDomain" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; APPDOMAIN_NAME,&#xA;&#x9;COUNT(APPDOMAIN_NAME) AS ERROR_COUNT &#xA;FROM&#xA;&#x9; SGS_EXCEPTION_LOG WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; (@FROMDATE IS NULL OR @FROMDATE = cast('1753-1-1' AS datetime) OR @FROMDATE &lt; =  EXCEPTION_TIMESTAMP) AND&#xA;&#x9; (@TODATE IS NULL OR @TODATE = cast('1753-1-1' AS datetime) OR @TODATE &gt; =  EXCEPTION_TIMESTAMP) &#xA;GROUP BY  APPDOMAIN_NAME &#xA;ORDER BY  ERROR_COUNT DESC">
+      <parameters>
+        <parameter ID="@FROMDATE" sfwDataType="DateTime" />
+        <parameter ID="@TODATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetErrorCountLastFiveDays" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF @FROMDATE IS NULL AND @TODATE IS NULL&#xA;BEGIN&#xA;&#x9;SELECT&#xA;&#x9;&#x9; TOP 5 CAST(EXCEPTION_TIMESTAMP AS DATE) AS [TIMESTAMP],&#xA;&#x9;&#x9;COUNT(1) AS [ERROR_COUNT] &#xA;&#x9;FROM&#xA;&#x9;&#x9; SGS_EXCEPTION_LOG WITH(NOLOCK) &#x9;&#xA;&#x9;GROUP BY CAST(EXCEPTION_TIMESTAMP AS DATE) &#xA;&#x9;ORDER BY [TIMESTAMP] DESC&#xA;END&#xA;ELSE&#xA;BEGIN&#xA;&#x9;SELECT&#xA;&#x9;&#x9; TOP 5 CAST(EXCEPTION_TIMESTAMP AS DATE) AS [TIMESTAMP],&#xA;&#x9;&#x9;COUNT(1) AS [ERROR_COUNT] &#xA;&#x9;FROM&#xA;&#x9;&#x9; SGS_EXCEPTION_LOG WITH(NOLOCK) &#xA;&#x9;WHERE&#xA;&#x9;&#x9; (@FROMDATE IS NULL OR @FROMDATE = cast('1753-1-1' AS datetime) OR @FROMDATE &lt;=  EXCEPTION_TIMESTAMP) AND&#xA;&#x9;&#x9; (@TODATE IS NULL OR @TODATE = cast('1753-1-1' AS datetime) OR @TODATE &gt; =  EXCEPTION_TIMESTAMP) &#xA;&#x9;GROUP BY CAST(EXCEPTION_TIMESTAMP AS DATE) &#xA;&#x9;ORDER BY [TIMESTAMP]&#xA;END">
+      <parameters>
+        <parameter ID="@FROMDATE" sfwDataType="DateTime" />
+        <parameter ID="@TODATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetErrorCountByExceptionSource" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; TOP 5 EXCEPTION_SOURCE,&#xA;&#x9;COUNT(EXCEPTION_SOURCE) AS ERROR_COUNT &#xA;FROM&#xA;&#x9; SGS_EXCEPTION_LOG WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; (@FROMDATE IS NULL OR @FROMDATE = cast('1753-1-1' AS datetime) OR @FROMDATE &lt; =  EXCEPTION_TIMESTAMP) AND&#xA;&#x9; (@TODATE IS NULL OR @TODATE = cast('1753-1-1' AS datetime) OR @TODATE &gt; =  EXCEPTION_TIMESTAMP) &#xA;GROUP BY  EXCEPTION_SOURCE &#xA;ORDER BY  ERROR_COUNT DESC">
+      <parameters>
+        <parameter ID="@FROMDATE" sfwDataType="DateTime" />
+        <parameter ID="@TODATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetErrorCountByMachine" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;  TOP 5 MACHINE_NAME,&#xA;&#x9;WINDOWS_IDENTITY,&#xA;&#x9;COUNT(1) AS ERROR_COUNT &#xA;FROM&#xA;&#x9; SGS_EXCEPTION_LOG WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; (@FROMDATE IS NULL OR @FROMDATE = cast('1753-1-1' AS datetime) OR @FROMDATE &lt; =  EXCEPTION_TIMESTAMP) AND&#xA;&#x9; (@TODATE IS NULL OR @TODATE = cast('1753-1-1' AS datetime) OR @TODATE &gt; =  EXCEPTION_TIMESTAMP) &#xA;GROUP BY  MACHINE_NAME,&#xA;&#x9;WINDOWS_IDENTITY &#xA;ORDER BY  ERROR_COUNT DESC">
+      <parameters>
+        <parameter ID="@FROMDATE" sfwDataType="DateTime" />
+        <parameter ID="@TODATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindExceptionLog" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item ID="icdoExceptionLog" sfwParameter="aintPrimaryKey" sfwItemType="MainCDO" sfwMethodName="Other" />
+      <item ID="iclbExceptionLogDetail" sfwItemType="Collection" sfwLoadType="ForeignKey" />
+    </method>
+    <method sfwMethodType="Load" ID="FindAllExceptionLog" sfwDescription="Find All Exception Log" sfwMode="All" sfwLoadMainObject="False">
+      <item ID="LoadChartDetails" sfwDataType="Void" sfwItemType="Method" />
+    </method>
+    <method sfwMethodType="Load" ID="FindExceptionLogByMachine" sfwDescription="Find Exception Log By Machine" sfwMode="Update">
+      <item ID="LoadErrorsByMachine" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+    <method sfwMethodType="Load" ID="FindExceptionLogByAppDomain" sfwDescription="Find Exception Log By App Domain" sfwMode="Update">
+      <item ID="LoadErrorsByAppDomain" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+    <method sfwMethodType="Load" ID="FindExceptionLogByExceptionSource" sfwDescription="Find Exception Log By Exception Source" sfwMode="Update">
+      <item ID="LoadErrorsByExceptionSource" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+    <method sfwMethodType="Load" ID="FindExceptionLogLastFiveDays" sfwDescription="Find Exception Log Last Five Days" sfwMode="Update">
+      <item ID="LoadErrorsLastFiveDays" sfwItemType="Method" sfwDataType="Void" />
+    </method>
+  </methods>
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror>
+    <item ID="Rule - Date Validation" sfwStatus="Active" sfwMode="All" />
+  </harderror>
+  <constraint>
+    <item sfwFieldName="IdtFromDate" sfwDataType="datetime" sfwRelatedField="IdtToDate" sfwDisplayName="From Date" sfwOperator="LessThan" sfwRelDisplayName="To Date" />
+  </constraint>
+  <rules>
+    <rule ID="Rule - Date Validation" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="this.idtFromDate != DateTime.MinValue &amp;&amp; this.idtToDate != DateTime.MinValue &amp;&amp; this.idtFromDate &gt; this.idtToDate" sfwMessage="The From date must be less than To Date" />
+  </rules>
+  <ExtraFields />
+  <lifecycle />
+  <attributes>
+    <attribute ID="lstExceptionLogDetail" sfwPrivate="False" sfwEntity="entExceptionLogDetail" sfwValue="iclbExceptionLogDetail" sfwType="Collection" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtFromDate" sfwValue="idtFromDate" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtToDate" sfwValue="idtToDate" />
+    <attribute sfwType="Collection" sfwEntity="entChartKeyValue" ID="lstErrorsByMachine" sfwValue="iclbErrorsByMachine" />
+    <attribute sfwType="Collection" sfwEntity="entChartKeyValue" ID="lstErrorsByAppDomain" sfwValue="iclbErrorsByAppDomain" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoExceptionLog.created_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoExceptionLog.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoExceptionLog.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoExceptionLog.modified_date" />
+    <attribute sfwType="Collection" sfwEntity="entChartKeyValue" ID="lstErrorsByExceptionSource" sfwValue="iclbErrorsByExceptionSource" />
+    <attribute sfwType="Collection" sfwEntity="entChartKeyValue" ID="lstErrorsInLastFiveDays" sfwValue="iclbErrorsInLastFiveDays" />
+    <attribute sfwValue="exception_log_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ExceptionLogId" sfwCaption="ID" />
+    <attribute sfwValue="exception_timestamp" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ExceptionTimestamp" sfwCaption="Exception Timestamp" />
+    <attribute sfwValue="exception_info" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ExceptionInfo" sfwCaption="Exception Info" />
+    <attribute sfwValue="exception_process_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ExceptionProcessName" sfwCaption="Exception Process Name" />
+    <attribute sfwValue="exception_message" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ExceptionMessage" sfwCaption="Exception Message" />
+    <attribute sfwValue="stack_trace" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="StackTrace" sfwCaption="Stack Trace" />
+    <attribute sfwValue="transaction_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="guid" sfwDBDataType="uniqueidentifier" sfwIsNull="True" ID="TransactionId" sfwCaption="Transaction Id" />
+    <attribute sfwValue="user_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="UserId" sfwCaption="User Id" />
+    <attribute sfwValue="application_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ApplicationName" sfwCaption="Application Name" />
+    <attribute sfwValue="form_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="FormName" sfwCaption="Form Name" />
+    <attribute sfwValue="machine_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="MachineName" sfwCaption="Machine Name" />
+    <attribute sfwValue="appdomain_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="AppdomainName" sfwCaption="Appdomain Name" />
+    <attribute sfwValue="windows_identity" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="WindowsIdentity" sfwCaption="Windows Identity" />
+    <attribute sfwValue="inner_exception" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="InnerException" sfwCaption="Inner Exception" />
+    <attribute sfwValue="exception_source" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ExceptionSource" sfwCaption="Exception Source" />
+    <attribute sfwValue="parameter_details" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ParameterDetails" sfwCaption="Parameter Details" />
+    <attribute sfwValue="exception_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="guid" sfwDBDataType="uniqueidentifier" sfwIsNull="True" ID="FrameworkInstanceId" sfwCaption="Framework Instance Id" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadErrorsByMachine" sfwReturnType="ArrayList" />
+    <method ID="LoadErrorsByAppDomain" sfwReturnType="ArrayList" />
+    <method ID="LoadErrorsByExceptionSource" sfwReturnType="ArrayList" />
+    <method ID="LoadChartDetails" />
+  </objectmethods>
+</entity>

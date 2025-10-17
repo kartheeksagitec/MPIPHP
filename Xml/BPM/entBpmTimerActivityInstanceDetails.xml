@@ -1,0 +1,46 @@
+﻿<entity asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" sbpmn="SagitecBPMNExtensionElements" ID="entBpmTimerActivityInstanceDetails" sfwMainCDO="icdoBpmTimerActivityInstanceDetails" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmTimerActivityInstanceDetails" sfwTableName="SGW_BPM_TMER_ACTY_INST_DETAILS" sfwView="False" sfwDataObjectID="doBpmTmerActyInstDetails">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <rules />
+  <queries>
+    <query ID="GetElapsedTimers" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_TMER_ACTY_INST_DETAILS WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; END_DATE_TIME &lt; @NOW" sfwPostgre="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_TMER_ACTY_INST_DETAILS &#xD;&#xA;WHERE&#xD;&#xA;&#x9; END_DATE_TIME &lt; @NOW">
+      <parameters>
+        <parameter ID="@NOW" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetTimerDetailsForActivityInstanceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; SGW_BPM_TMER_ACTY_INST_DETAILS WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; ACTIVITY_INSTANCE_ID  = @ACTIVITY_INSTANCE_ID" sfwPostgre="SELECT&#xD;&#xA;&#x9; * &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_TMER_ACTY_INST_DETAILS &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ACTIVITY_INSTANCE_ID  = @ACTIVITY_INSTANCE_ID">
+      <parameters>
+        <parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetTimerByActivityInstanceId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9;END_DATE_TIME&#xA;FROM&#xA;&#x9; SGW_BPM_TMER_ACTY_INST_DETAILS WITH(NOLOCK) &#xA;WHERE&#xA;&#x9; ACTIVITY_INSTANCE_ID  = @ACTIVITY_INSTANCE_ID">
+      <parameters>
+        <parameter ID="@ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="timer_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="TimerId" sfwCaption="ID" />
+    <attribute sfwValue="activity_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActivityInstanceId" sfwCaption="Activity Instance Id" />
+    <attribute sfwValue="start_date_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="StartDateTime" sfwCaption="Start Date Time" />
+    <attribute sfwValue="end_date_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="EndDateTime" sfwCaption="End Date Time" />
+    <attribute sfwValue="machine_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="nvarchar" sfwDBDataType="nvarchar" sfwIsNull="True" ID="MachineName" sfwCaption="Machine Name" />
+    <attribute sfwValue="processing_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="ProcessingFlag" sfwCaption="Processing Flag" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields />
+</entity>

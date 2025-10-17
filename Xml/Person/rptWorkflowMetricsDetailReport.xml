@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptWorkflowMetricsDetailReport" sfwActive="False" sfwDescription="Workflow Metrics Detail Report" sfwStatus="Review" sfwResource="506 " sfwType="Report" sfwReportName="rptWorkflowMetricsDetailReport.rdlc" sfwReportCategory="Reports" version="4.0">
+  <initialload>
+    <query />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="From Date : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="startTime" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+        <CompareValidator ControlToValidate="startTime" ErrorMessage="From Date must be in mm/dd/yyyy format." ID="valFromDate" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="startTime" ErrorMessage="From Date is Required" ID="rfvFromDate" Text="*" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="To Date : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="endTime" sfwDataFormat="{0:d}" sfwDataType="DateTime" />
+        <CompareValidator ControlToValidate="endTime" ErrorMessage="To Date must be in mm/dd/yyyy format." ID="valToDate" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <CompareValidator ControlToCompare="startTime" ControlToValidate="endTime" ErrorMessage="To Date cannot be less than From Date." ID="valDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="endTime" ErrorMessage="To Date is Required" ID="rfvToDate" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="Process Name : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList DataTextField="description" DataValueField="process_id" ID="ddlTypeId" sfwLoadType="Query" sfwLoadSource="entTempdata.LoadProcessNames" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="Activity List : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList DataTextField="display_name" DataValueField="activity_id" ID="ddlQualifiedName" sfwLoadType="Query" sfwLoadSource="entTempdata.LoadActivityList" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="User ID : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="userID" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="Status : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlStatus" sfwLoadType="CodeGroup" sfwLoadSource="20" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="MPI Person ID : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="personID" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="MPI Org ID : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="orgID" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn />
+      <sfwColumn />
+      <sfwColumn />
+      <sfwColumn />
+    </sfwRow>
+  </sfwTable>
+</form>

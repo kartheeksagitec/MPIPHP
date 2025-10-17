@@ -1,0 +1,50 @@
+﻿<entity ID="entEmergencyPaymentSetupValue" sfwTableName="sgt_emergency_payment_setup_value" sfwView="False" sfwDataObjectID="doEmergencyPaymentSetupValue">
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgt_emergency_payment_setup_value ">
+      <parameters />
+    </query>
+    <query ID="GetEmergencyPaymentSetupValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" select TOP 1 * from SGT_EMERGENCY_PAYMENT_SETUP_VALUE WHERE CONVERT(DATE,@CURRENTDATE) BETWEEN CONVERT(DATE,EFFECTIVE_DATE) AND CONVERT(DATE,END_DATE)">
+      <parameters>
+        <parameter ID="@CURRENTDATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetEmergencyPaymentSetupValueById" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT TOP 1 * FROM SGT_EMERGENCY_PAYMENT_SETUP_VALUE WHERE EMERGENCY_PAYMENT_SETUP_ID = @ID">
+      <parameters>
+        <parameter ID="@ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetEmergencyPaymentSetupValueByDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select Top 1 *  FROM [OPUS].[dbo].[SGT_EMERGENCY_PAYMENT_SETUP_VALUE]&#xD;&#xA;where @withdrawalDate between  EFFECTIVE_DATE and END_DATE">
+      <parameters>
+        <parameter ID="@withdrawalDate" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="emergency_payment_setup_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="EmergencyPaymentSetupId" sfwCaption="ID" />
+    <attribute sfwValue="effective_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="EffectiveDate" sfwCaption="Effective Date" />
+    <attribute sfwValue="end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndDate" sfwCaption="End Date" />
+    <attribute sfwValue="percentage" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="5,1" sfwIsNull="True" ID="Percentage" sfwCaption="Percentage" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="minlimit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Minlimit" sfwCaption="Minlimit" />
+    <attribute sfwValue="maxlimit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Maxlimit" sfwCaption="Maxlimit" />
+    <attribute sfwValue="iap_balance_as_of_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="IapBalanceAsOfYear" sfwCaption="Iap Balance As Of Year" />
+    <attribute sfwValue="payback_begin_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="PaybackBeginDate" sfwCaption="Payback Begin Date" />
+  </attributes>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+  <ExtraFields />
+</entity>

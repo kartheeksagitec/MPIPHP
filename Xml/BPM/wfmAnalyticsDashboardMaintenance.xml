@@ -1,0 +1,74 @@
+﻿<form ID="wfmAnalyticsDashboardMaintenance" sfwResource="-1" sfwFormObject="busBpmAnalytics" sfwActive="True" sfwTitle="Analytics Dashboard Maintenance" sfwType="Maintenance" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmDashboardLookup" sfwFormObjectType="FormObject" sfwEntity="entBpmAnalytics">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewObject" />
+    <callmethods sfwMode="Update" sfwMethodName="Group1" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar_1" sfwGroupCaption="Analytics Dashboard Details" sfwCaption="Analytics Dashboard">
+          <sfwTable ID="tblNewPage3" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn Width="70px">
+                <sfwLabel ID="lblProcessName" Text="Process Name" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="width-160">
+                <sfwDropDownList ID="ddlDropDownList" DataValueField="process_id" DataTextField="process_name" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetProcessesWithVersionNumber" sfwEntityField="IintProcessId" />
+              </sfwColumn>
+              <sfwColumn Width="70px">
+                <sfwLabel ID="lblDateFrom" Text="Date From: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="width-160">
+                <sfwTextBox ID="txtDateFrom" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwEntityField="IdtDateFrom" />
+              </sfwColumn>
+              <sfwColumn Width="70px">
+                <sfwLabel ID="lblDateTo" Text="Date To: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn CssClass="width-160">
+                <sfwTextBox ID="txtDateTo" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwEntityField="IdtDateTo" />
+              </sfwColumn>
+              <sfwColumn CssClass="full-width">
+                <sfwButton ID="btnExecuteRefreshFromObject" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Load Charts" sfwObjectID="busBpmAnalytics" sfwObjectMethod="LoadAnalyticsChart" sfwNavigationParameter="aintProcessId=IintProcessId" sfwMessageId="10026" sfwValidateClientJavascript="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="7">
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Process Ranking Analysis">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ShowLegend="true" ID="chrProcessRankingAnalytics" ChartType="Bar" Width="500" Height="400" CategoryAxisRotation="45" sfwLegendColCount="3" sfwEntityField="lstProcessRankingAnalytics" sfwGridEntity="entBpmProcessRankingAnalytics">
+                              <Series>
+                                <sfwSeries Name="Processed" XValueMember="IstrProcessName" YValueMembers="IintProcCount" ChartType="Bar" YMemberColor="#932ce8" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Process Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrProcessName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Processed :&lt;/td&gt;&lt;td&gt;{IintProcCount}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Active :&lt;/td&gt;&lt;td&gt;{IintActvCount}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Terminated :&lt;/td&gt;&lt;td&gt;{IintTermSuspCount}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                                <sfwSeries Name="Active" XValueMember="IstrProcessName" YValueMembers="IintActvCount" ChartType="Bar" YMemberColor="#333CFF" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Process Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrProcessName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Processed :&lt;/td&gt;&lt;td&gt;{IintProcCount}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Active :&lt;/td&gt;&lt;td&gt;{IintActvCount}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Terminated :&lt;/td&gt;&lt;td&gt;{IintTermSuspCount}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                                <sfwSeries Name="Terminated" YValueMembers="IintTermSuspCount" XValueMember="IstrProcessName" ChartType="Bar" YMemberColor="#E84D2C" sfwTooltipTableParams="&lt;table class='leftchart' &gt;&lt;tr&gt;&lt;th&gt;&lt;strong&gt; Process Name &lt;/strong&gt;&lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;{IstrProcessName}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Processed :&lt;/td&gt;&lt;td&gt;{IintProcCount}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Active :&lt;/td&gt;&lt;td&gt;{IintActvCount}&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; Terminated :&lt;/td&gt;&lt;td&gt;{IintTermSuspCount}&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea ChartAreaName="Process Ranking Analytics">
+                                  <Area3DStyle Enable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                            </sfwChart>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstProcessRankingAnalytics" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

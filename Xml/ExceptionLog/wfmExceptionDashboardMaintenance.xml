@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmExceptionDashboardMaintenance" sfwResource="207" sfwFormObjectType="FormObject" sfwFormObject="busExceptionLog" sfwType="Maintenance" sfwTitle="Dashboard Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmDashboardLookup" sfwEntity="entExceptionLog">
+  <initialload>
+    <callmethods sfwMethodName="FindAllExceptionLog" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlExceptionDashboard" sfwCaption="Exception Dashboard">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwPanel ID="pnlNewPanel" sfwCollapsible="False">
+                  <sfwTable ID="tblNewPage1">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capIdtFromDate" Text="From Date : " AssociatedControlID="txtIdtFromDate" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtIdtFromDate" sfwEntityField="IdtFromDate" sfwDataFormat="{0:d}" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="capIdtToDate" Text="To Date : " AssociatedControlID="txtIdtToDate" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtIdtToDate" sfwEntityField="IdtToDate" sfwDataFormat="{0:d}" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn />
+                      <sfwColumn>
+                        <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Refresh" ID="btnExecuteRefreshFromObject" sfwObjectMethod="LoadChartDetails" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshNewPage3" HeaderText="Last Few Days Error Count">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ID="chrErrorsInLastFiveDays" sfwEntityField="lstErrorsInLastFiveDays" ChartType="Line" Width="600px" Height="600px" ShowLegend="True" sfwXaxisFormat="{0:d}" sfwXaxisNumberTicks="5">
+                              <Series>
+                                <sfwSeries Name="Series" XValueMember="Key" YValueMembers="Value" IsValueShownAsLabel="False" ChartType="Line" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea>
+                                  <Area3DStyle IsEnable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                            </sfwChart>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Errors By Machine">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ID="chrErrorsByMachine" sfwEntityField="lstErrorsByMachine" ChartType="Pie" Width="600px" Height="600px" ShowLegend="True" CategoryAxisRotation="25">
+                              <Series>
+                                <sfwSeries Name="Series" XValueMember="Key" YValueMembers="Value" IsValueShownAsLabel="False" ChartType="Line" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea>
+                                  <Area3DStyle IsEnable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                            </sfwChart>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage1" HeaderText="Errors By Exception Source">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwChart ID="chrErrorsByExceptionSource" sfwEntityField="lstErrorsByExceptionSource" ChartType="Column" Width="600px" Height="600px" ShowLegend="True" CategoryAxisRotation="25">
+                              <Series>
+                                <sfwSeries Name="Series" XValueMember="Key" YValueMembers="Value" IsValueShownAsLabel="True" ChartType="Column" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea>
+                                  <Area3DStyle IsEnable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                            </sfwChart>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage2" HeaderText="Errors By AppDomain">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn Width="800px">
+                            <sfwChart ID="chrErrorsByAppDomain" sfwEntityField="lstErrorsByAppDomain" ChartType="Donut" Width="600px" Height="600px" ShowLegend="True" CategoryAxisRotation="25">
+                              <Series>
+                                <sfwSeries Name="Series" XValueMember="Key" YValueMembers="Value" IsValueShownAsLabel="False" ChartType="Donut" />
+                              </Series>
+                              <ChartAreas>
+                                <sfwChartArea>
+                                  <Area3DStyle IsEnable3D="false" />
+                                </sfwChartArea>
+                              </ChartAreas>
+                            </sfwChart>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstErrorsInLastFiveDays" sfwUpdateAutoLoad="True" sfwNewAutoLoad="True" />
+    <entityfield ID="lstErrorsByMachine" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstErrorsByExceptionSource" sfwUpdateAutoLoad="True" sfwNewAutoLoad="True" />
+    <entityfield ID="lstErrorsByAppDomain" sfwUpdateAutoLoad="True" sfwNewAutoLoad="True" />
+  </loaddetails>
+</form>

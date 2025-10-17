@@ -1,0 +1,1 @@
+cRUC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPBatchService\MPIPHPJobService.csprojò	CSharp7_3

@@ -1,0 +1,292 @@
+﻿<form ID="wfmRepaymentScheduleMaintenance" sfwActive="True" sfwStatus="Review" sfwUseSessionStoreObjForCor="True" sfwRemoteObject="srvPayeeAccount" sfwResource="214" sfwType="Maintenance" sfwTitle="Repayment Schedule Maintenance" version="3.5" sfwEntity="entRepaymentSchedule">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewRepaymentSchedule" />
+    <callmethods sfwMode="Update" sfwMethodName="FindRepaymentSchedule" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnNoChangesSave_Click" sfwNavigationParameter="aintRepaymentScheduleId=RepaymentScheduleId" sfwVisibleRule="VisibleRule-SaveButton" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" sfwVisibleRule="VisibleRule-SaveButton" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" sfwResource="335" sfwVisibleRule="VisibleRule-SaveButton" Text="Correspondence" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlReimbursementDetails" sfwCaption="Reimbursement Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblReimbursementAmount" ID="capReimbursementAmount" Text="Reimbursement Amount : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblReimbursementAmount" sfwDataFormat="{0:C}" sfwEntityField="ReimbursementAmount" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblReimbursementStatusDescription" ID="capReimbursementStatusDescription" Text="Reimbursement Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblReimbursementStatusDescription" sfwEntityField="ReimbursementStatusDescription" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblRepaymentType" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlRepaymentTypeValue" ID="capRepaymentTypeValue" Text="Repayment Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlRepaymentTypeValue" OnClientChange="SetDefaultDisableNextDueAmount" sfwClientVisibility="controllist:capFlatPercentage,txtFlatPercentage#PERC:capFlatPercentage,txtFlatPercentage;FAMT:;default:capFlatPercentage,txtFlatPercentage;" sfwLoadType="CodeGroup" sfwLoadSource="7045" sfwEntityField="RepaymentTypeValue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="ddlPaymentOptionValue" ID="capPaymentOptionValue" Text="Payment Option : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlPaymentOptionValue" sfwLoadType="CodeGroup" sfwLoadSource="7046" sfwEntityField="PaymentOptionValue" OnClientChange="OnPaymentOptionChange" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtNextAmountDue" ID="capNextAmountDue" Text="Next Amount Due : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtNextAmountDue" sfwDataFormat="{0:C}" sfwDataType="Numeric" sfwEntityField="NextAmountDue" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtFlatPercentage" ID="capFlatPercentage" Text="Flat Percentage : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFlatPercentage" sfwDefaultValue="0" MaxLength="7" sfwParameters="FLAT_PERC=txtFlatPercentage;PAYEE_ACCOUNT_ID=txtPayeeAccountId;PAYMENTDATE=lblIdtNextBenefitPaymentDate" sfwRetrievalControls="txtNextAmountDue=benefit_amount" sfwRetrievalQuery="entRepaymentSchedule.GetGrossBenefitFromPercentage" sfwEntityField="FlatPercentage" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblReimbursementAmountPaid" ID="capReimbursementAmountPaid" Text="Reimbursement Amount Paid : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblReimbursementAmountPaid" sfwDataFormat="{0:C}" sfwEntityField="ReimbursementAmountPaid" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblIdecRemainingOverPaymentAmount" ID="capIdecRemainingOverPaymentAmount" Text="Remaining Overpayment Amount : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblIdecRemainingOverPaymentAmount" sfwDataFormat="{0:C}" sfwEntityField="IdecRemainingOverPaymentAmount" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" SkinID="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel AssociatedControlID="txtEffectiveDate" ID="capEffectiveDate" Text="Effective Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEffectiveDate" sfwDataFormat="{0:d}" sfwEntityField="EffectiveDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblEstimatedEndDate" ID="capEstimatedEndDate" Text="Estimated End Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEstimatedEndDate" sfwDataFormat="{0:d}" sfwEntityField="EstimatedEndDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPayeeAccountId" ID="capPayeeAccountId" Text="Payee Account ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPayeeAccountId" sfwRetrievalQuery="entRepaymentSchedule.GetGrossBenefitFromPercentage" sfwParameters="FLAT_PERC=txtFlatPercentage;PAYEE_ACCOUNT_ID=txtPayeeAccountId;PAYMENTDATE=lblIdtNextBenefitPaymentDate" sfwRetrievalControls="txtNextAmountDue=Benefit_Amount" sfwEntityField="PayeeAccountId" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPayeeAccountLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtPayeeAccountId" sfwSelectedIndex="PayeeAccountId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtRepaymentScheduleId" SkinID="textBoxDisplayStyleNone" sfwEntityField="RepaymentScheduleId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn SkinID="ReqInformation" />
+              <sfwColumn>
+                <sfwLabel ID="lblIdtNextBenefitPaymentDate" sfwDataFormat="{0:d}" SkinID="textBoxDisplayStyleNone" sfwEntityField="objPayeeAccountRetroPayment.objPayeeAccount.IdtNextBenefitPaymentDate" CssClass="textBoxDisplayStyleNone" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlReimbursementPaymentHistory" sfwCaption="Reimbursement Payment History">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtPostedDate" ID="capPostedDate" Text="Posted Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPostedDate" sfwDataFormat="{0:d}" sfwRelatedGrid="grvReimbursementDetails" sfwEntityField="PostedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtCheckNumber" ID="capCheckNumber" Text="Check Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCheckNumber" sfwRelatedGrid="grvReimbursementDetails" sfwEntityField="CheckNumber" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtAmountPaid" ID="capAmountPaid" Text="Amount Paid : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAmountPaid" sfwRelatedGrid="grvReimbursementDetails" sfwEntityField="AmountPaid" MaxLength="11" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnAdd" sfwMethodName="btnGridViewAdd_Click" sfwNavigationParameter="RepaymentScheduleId;AmountPaid;StateTax;FedTax" sfwRelatedControl="grvReimbursementDetails" sfwVisibleRule="VisibleRule-AddButton" Text="Add" sfwToolBarGrid="grvReimbursementDetails" sfwToolBarGridImage="StaticResources/neoGrid-images/btnNew_Click.png" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="textBoxDisplayStyleNone" ID="txtReimbursementDetailsId" sfwObjectField="icdoReimbursementDetails.reimbursement_details_id" SkinID="textBoxDisplayStyleNone" ViewStateMode="Disabled" sfwEntityField="ReimbursementDetailsId" sfwRelatedGrid="grvReimbursementDetails" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="5">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvReimbursementDetails" sfwAllowNew="True" sfwEntityField="lstReimbursementDetails" sfwGridEntity="entReimbursementDetails">
+                  <Columns>
+                    <TemplateField HeaderText="Posted Date" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="PostedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Check Number" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CheckNumber" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Amount Paid" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="AmountPaid" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Repayment Schedule ID" Visible="False" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="RepaymentScheduleId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Option" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PaymentOptionDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payment Option" Visible="False" ItemStyle.HorizontalAlign="Right" HeaderStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PaymentOptionValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Reimbursement Details ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReimbursementDetailsId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="State Tax">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="StateTax" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Fed Tax">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="FedTax" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Gross Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="GrossAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField sfwVisibleRule="VisibleRule-SaveButton">
+                      <ItemTemplate>
+                        <sfwImageButton ID="btnDeleteReimbursementDetails" ImageUrl="delete_button.gif" OnClientClick="return confirm('Are you sure you want to delete this record?')" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwNavigationParameter="aintReimbursementDetailID=ReimbursementDetailsId" sfwObjectMethod="btn_DeleteReimbursementDetailClick" sfwRelatedControl="grvReimbursementDetails" sfwResource="310" sfwVisibleRule="VisibleRule-DeleteButton" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objPayeeAccountRetroPayment.objPayeeAccount" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstReimbursementDetails" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_AMT]
+    FROM NUMERIC (11, 2) NOT NULL;
+

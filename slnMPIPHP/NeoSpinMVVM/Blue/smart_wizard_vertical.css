@@ -1,0 +1,613 @@
+/*   
+  SmartWizard 2.0 plugin 
+  jQuery Wizard control Plugin
+  by Dipu
+  
+  http://www.techlaboratory.net
+  http://tech-laboratory.blogspot.com
+*/
+.swMain {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0px solid #CCC;
+    overflow: visible;
+    float: left;
+    width: 980px; /* */
+}
+
+    .swMain .stepContainer {
+        display: block;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        border: 0px solid #CCC;
+        overflow: hidden;
+        clear: right;
+    }
+
+        .swMain .stepContainer div.content {
+            display: block;
+            position: absolute;
+            float: left;
+            margin: 0;
+            padding: 5px;
+            font: normal 12px Verdana, Arial, Helvetica, sans-serif;
+            color: #5A5655;
+            background-color: #F8F8F8;
+            text-align: left;
+            overflow: auto;
+            z-index: 88;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            clear: both;
+            height: 500px;
+            width:99%;
+        }
+
+    .swMain div.actionBar {
+        display: block;
+        position: relative;
+        clear: right;
+        border: 1px solid #CCC;
+        padding: 0;
+        color: #5A5655;
+        background-color: #F8F8F8;
+        height: 40px;
+        /*  width:730px; 
+  float:right; */
+        text-align: left;
+        overflow: auto;
+        z-index: 88;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        margin:5px 0px 0px 10px;
+    }
+
+    .swMain .stepContainer .StepTitle {
+        display: block;
+        position: relative;
+        margin: 0;
+        border-bottom: 3px solid #3695e5;
+        padding: 5px;
+        font: bold 16px Verdana, Arial, Helvetica, sans-serif;
+        color: #5A5655;
+        clear: both;
+        text-align: left;
+        z-index: 88;
+    }
+
+    .swMain ul.anchor {
+        position: relative;
+        display: block;
+        float: left;
+        list-style: none;
+        padding: 0px;
+        margin: 5px 10px 0 0;
+        border: 0px solid #CCCCCC;
+        background: transparent; /*#EEEEEE */
+    }
+
+        .swMain ul.anchor li {
+            position: relative;
+            display: block;
+            margin: 0;
+            padding: 0;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            border: 0px solid #E0E0E0;
+            float: left;
+            clear: both;
+        }
+            /* Anchor Element Style */
+            .swMain ul.anchor li a {
+                display: block;
+                position: relative;
+                float: left;
+                margin: 0;
+                width: 230px;
+                text-decoration: none;
+                outline-style: none;
+                -moz-border-radius: 5px;
+                -webkit-border-radius: 5px;
+                border-radius: 5px;
+                z-index: 99;
+            }
+
+                .swMain ul.anchor li a .stepNumber {
+                    position: relative;
+                    float: left;
+                    width: 30px;
+                    text-align: center;
+                    padding: 5px;
+                    padding-top: 0;
+                    font: bold 45px Verdana, Arial, Helvetica, sans-serif;
+                }
+
+.stepDescProgress {
+    position: relative;
+    display: block;
+    float: left;
+    text-align: left;
+    padding: 5px;
+    font: bold 18px Verdana, Arial, Helvetica, sans-serif;
+}
+
+.swMain ul.anchor li a .stepDesc {
+    position: relative;
+    display: block;
+    float: left;
+    text-align: left;
+    padding: 5px;
+    font: bold 12px Verdana, Arial, Helvetica, sans-serif;
+}
+
+    .swMain ul.anchor li a .stepDesc small {
+        font: normal 12px Verdana, Arial, Helvetica, sans-serif;
+    }
+
+.swMain ul.anchor li a.selected {
+    color: #F8F8F8;
+    background: #3695e5; /* EA8511 */
+    border: 1px solid #3695e5;
+    cursor: text;
+}
+
+    .swMain ul.anchor li a.selected:hover {
+        color: #F8F8F8;
+        background: #0c68b5;
+    }
+
+.swMain ul.anchor li a.done {
+    position: relative;
+    color: #FFF;
+    background: #8abfed;
+    border: 1px solid #8abfed;
+    z-index: 99;
+    cursor:text !important;
+    
+}
+
+    .swMain ul.anchor li a.donehover:hover {
+        color: #fff;
+        background: #0c68b5;
+        border: 1px solid #5A5655;
+        cursor:pointer !important;
+    
+    }
+
+.swMain ul.anchor li a.disabled {
+    color: #CCCCCC;
+    background: #F8F8F8;
+    border: 1px solid #CCC;
+    cursor: text;
+    
+}
+
+    .swMain ul.anchor li a.disabled:hover {
+        color: #CCCCCC;
+        background: #F8F8F8;
+    
+    }
+
+.swMain ul.anchor li a.error {
+    color: #6c6c6c !important;
+    background: #f08f75 !important;
+    border: 1px solid #fb3500 !important;
+}
+
+    .swMain ul.anchor li a.error:hover {
+        color: #000 !important;
+    }
+
+.swMain .buttonNext {
+    display: block;
+    float: right;
+    margin: 5px 3px 0 3px;
+    padding: 5px;
+    text-decoration: none;
+    text-align: center;
+    font: bold 13px Verdana, Arial, Helvetica, sans-serif;
+    width: 100px;
+    color: #FFF;
+    outline-style: none;
+    background-color: #5A5655;
+    border: 1px solid #5A5655;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.swMain .buttonDisabled {
+    color: #F8F8F8 !important;
+    background-color: #CCCCCC !important;
+    border: 1px solid #CCCCCC !important;
+    cursor: text;
+}
+
+.swMain .buttonPrevious {
+    display: block;
+    float: right;
+    margin: 5px 3px 0 3px;
+    padding: 5px;
+    text-decoration: none;
+    text-align: center;
+    font: bold 13px Verdana, Arial, Helvetica, sans-serif;
+    width: 100px;
+    color: #FFF;
+    outline-style: none;
+    background-color: #5A5655;
+    border: 1px solid #5A5655;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.swMain .buttonFinish {
+    display: block;
+    float: right;
+    margin: 5px 10px 0 3px;
+    padding: 5px;
+    text-decoration: none;
+    text-align: center;
+    font: bold 13px Verdana, Arial, Helvetica, sans-serif;
+    width: 100px;
+    color: #FFF;
+    outline-style: none;
+    background-color: #5A5655;
+    border: 1px solid #5A5655;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+/* Form Styles */
+
+.txtBox {
+    border: 1px solid #CCCCCC;
+    color: #5A5655;
+    font: 13px Verdana,Arial,Helvetica,sans-serif;
+    padding: 2px;
+    width: 430px;
+}
+
+    .txtBox:focus {
+        border: 1px solid #EA8511;
+    }
+
+.swMain .loader {
+    position: relative;
+    display: none;
+    float: left;
+    margin: 2px 0 0 2px;
+    padding: 8px 10px 8px 40px;
+    border: 1px solid #FFD700;
+    font: bold 13px Verdana, Arial, Helvetica, sans-serif;
+    color: #5A5655;
+    background: #FFF url(../images/loader.gif) no-repeat 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    z-index: 998;
+}
+
+.swMain .msgBox {
+    position: relative;
+    display: none;
+    float: left;
+    margin: 4px 0 0 5px;
+    padding: 5px;
+    border: 1px solid #FFD700;
+    background-color: #FFFFDD;
+    font: normal 12px Verdana, Arial, Helvetica, sans-serif;
+    color: #5A5655;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    z-index: 999;
+    width:100%;
+}
+
+    .swMain .msgBox .content {
+        font: normal 12px Verdana,Arial,Helvetica,sans-serif;
+        padding: 0px;
+        float: left;
+    }
+
+    .swMain .msgBox .close {
+        border: 1px solid #CCC;
+        border-radius: 3px;
+        color: #CCC;
+        display: block;
+        float: right;
+        margin: 0 0 0 5px;
+        outline-style: none;
+        padding: 0 2px 0 2px;
+        position: relative;
+        text-align: center;
+        text-decoration: none;
+    }
+
+        .swMain .msgBox .close:hover {
+            color: #EA8511;
+            border: 1px solid #EA8511;
+        }
+
+.WizardDiv {
+    width: 80%;
+    margin: 0px auto;
+}
+
+.ProgressBarDivParent
+{
+   float:left;
+   width:100%;
+   overflow:hidden;
+   position:relative;
+}
+
+.ProgressBarDiv {
+    clear:left;
+   float:left;
+   list-style:none;
+   margin:0;
+   padding:0;
+   position:relative;
+   left:50%;
+   left:75%\9;
+   text-align:center;
+}
+
+.ProgressBarDiv li
+{
+
+ float:left;
+   list-style:none;
+   margin:0;
+   padding:0;
+   position:relative;
+   right:50%;
+}
+
+.ProgressBarCircle {
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.ProgressBar {
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+    .ProgressBar span {
+        float: left;
+        line-height: 30px;
+        text-align: center;
+        color: #FFFFFF;
+        font-weight: bold;
+        font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif;
+    }
+
+
+
+.ProgressBarCircle span {
+    float: left;
+    padding: 5px;
+    background: #989898;
+    width: 25px;
+    height: 25px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    color: #333;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.ProgressBarCircle .ProgressSaperator {
+    background-position: center center;
+    width: 80px;
+    height: 15px;
+    padding: 0px;
+    margin-top: 10px;
+    border-radius: 0px !important;
+    background-image: url('../../Images/arrow.png');
+    background-repeat: no-repeat;
+    background-color: transparent !important;
+}
+
+.ProgressBarCircle .ProgressDone .stepSpan {
+    color: #fff;
+    background-color: #1476a1;
+    font-size: 20px;
+}
+
+.ProgressBarCircle .ProgressHighlight .stepSpan {
+    color: #fff;
+    font-size: 20px;
+    background-color: #063549 !important;
+}
+
+
+
+.ProgressBarCircle .selectable :hover {
+    background-color: #2dbfff !important;
+    cursor: pointer;
+}
+
+.ProgressBarCaptionDiv {
+    width: 100%;
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 10px;
+	position:relative;
+	left:-37px;
+}
+
+
+
+    .ProgressBarCaptionDiv ul {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .ProgressBarCaptionDiv li {
+        float: left;
+        width: 115px;
+        text-align: center;
+        display: block;
+        white-space: normal;
+        font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif;
+        font-size: 14px;
+        color: #0b4c82;
+    }
+
+
+.ProgressBar {
+    /*centering*/
+    display: inline-block;
+    border-radius: 5px;
+    /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+    counter-reset: flag;
+}
+
+    .ProgressBar .ProgressDone {
+        color: #fff;
+        background-color: #1476a1;
+    }
+      .ProgressBar .ProgressDone .stepSpan{
+        color: #fff;
+    }
+
+
+        .ProgressBar .ProgressDone:after {
+            color: #fff;
+            background-color: #1476a1;
+        }
+
+    .ProgressBar .ProgressHighlight {
+        color: #fff;
+        background: #063549;
+    }
+
+        .ProgressBar .ProgressHighlight:after {
+            color: #fff;
+            background: #063549;
+        }
+
+    .ProgressBar .stepSpan {
+        color: #333;
+    }
+
+       .ProgressBar .ProgressHighlight .stepSpan {
+        color: #fff;
+    }
+
+    .ProgressBar .selectable:hover {
+        background-color: #2dbfff !important;
+        cursor: pointer;
+    }
+
+        .ProgressBar .selectable:hover:after {
+            background-color: #2dbfff !important;
+            cursor: pointer;
+        }
+
+    .ProgressBar li {
+        text-decoration: none;
+        outline: none;
+        display: block;
+        float: left;
+        font-size: 12px;
+        line-height: 36px;
+        height: 36px;
+        color: white;
+        /*need more margin on the left of links to accomodate the numbers*/
+        padding: 0 10px 0 60px;
+        background: #59cfcf;
+        position: relative;
+    }
+        /*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+        .ProgressBar li:first-child {
+            padding-left: 46px;
+            border-radius: 5px 0 0 5px; /*to match with the parent's radius*/
+        }
+
+            .ProgressBar li:first-child:before {
+                left: 14px;
+            }
+
+        .ProgressBar li:last-child {
+            border-radius: 0 5px 5px 0; /*this was to prevent glitches on hover*/
+            padding-right: 20px;
+        }
+
+
+        /*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+        .ProgressBar li:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -18px;
+            width: 36px;
+            height: 36px;
+            -webkit-transform: scale(0.707) rotate(45deg);
+            transform: scale(0.707) rotate(45deg);
+            z-index: 1;
+            background: #59cfcf;
+            box-shadow: 2px -2px 0 2px rgba(0, 0, 0, 0.4), 3px -3px 0 2px rgba(255, 255, 255, 0.1);
+            border-radius: 0 5px 0 50px;
+        }
+        /*we dont need an arrow after the last link*/
+        .ProgressBar li:last-child:after {
+            content: none;
+        }
+        /*we will use the :before element to show numbers*/
+        .ProgressBar li:before {
+            content: counter(flag);
+            counter-increment: flag;
+            /*some styles now*/
+            border-radius: 100%;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            margin: 8px 0;
+            position: absolute;
+            top: 0;
+            left: 30px;
+            background: #444;
+            font-weight: bold;
+        }
+
+.Bold {
+    font-weight:bold ;
+}
+        
+
+
+.flat a, .flat a:after {
+    background: white;
+    color: black;
+    transition: all 0.5s;
+}
+
+    .flat a:before {
+        background: white;
+        box-shadow: 0 0 0 1px #ccc;
+    }
+
+    .flat a:hover, .flat a.active,
+    .flat a:hover:after, .flat a.active:after {
+        background: #9EEB62;
+    }
+

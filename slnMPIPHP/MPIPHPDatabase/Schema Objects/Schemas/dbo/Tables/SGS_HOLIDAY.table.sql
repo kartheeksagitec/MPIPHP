@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[SGS_HOLIDAY] (
+    [HOLIDAY_ID]    [dbo].[UDT_IDENTITY]   IDENTITY (1, 1) NOT NULL,
+    [DESCRIPTION]   [dbo].[UDT_LONGDESC]   NOT NULL,
+    [HOLIDAY_DATE]  [dbo].[UDT_DATE]       NOT NULL,
+    [CREATED_BY]    [dbo].[UDT_CREATEDBY]  NOT NULL,
+    [CREATED_DATE]  [dbo].[UDT_DATE]       NOT NULL,
+    [MODIFIED_BY]   [dbo].[UDT_MODIFIEDBY] NOT NULL,
+    [MODIFIED_DATE] [dbo].[UDT_DATE]       NOT NULL,
+    [UPDATE_SEQ]    [dbo].[UDT_UPDSEQ]     NOT NULL
+);
+

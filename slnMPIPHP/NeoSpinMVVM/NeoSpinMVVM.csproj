@@ -1,0 +1,1048 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B3F85827-55C6-4C45-B8B0-FAB197361B24}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NeoSpinMVVM</RootNamespace>
+    <AssemblyName>NeoSpinMVVM</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>..\..\..\External_Libraries\Tools\StyleCopAnalyzers\StyleCop.Analyzers.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BaseConnector">
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\BaseConnector.dll</HintPath>
+    </Reference>
+    <Reference Include="EncryptionDecryptionClassLibrary">
+      <HintPath>..\..\..\External_Libraries\NEOSPIN_ENCRYPTION\EncryptionDecryptionClassLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\HtmlSanitizationLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Client">
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="microsoft.identitymodel, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\microsoft.identitymodel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens">
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging">
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols">
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\Microsoft.IdentityModel.Protocols.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect">
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens">
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.SharePoint.Tools, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\Microsoft.Office.SharePoint.Tools.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Online.SharePoint.Client.Tenant, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\Microsoft.Online.SharePoint.Client.Tenant.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.OpenApi">
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\Microsoft.OpenApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Cors">
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\Microsoft.Owin.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\FPPAUpgrade\FPPA25_EXISTING\WebPublish\AspenMVVM\bin\Microsoft.ReportViewer.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\Microsoft.SharePoint.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Runtime, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Taxonomy, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\Microsoft.SharePoint.Client.Taxonomy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.UserProfiles, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\Microsoft.SharePoint.Client.UserProfiles.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.WorkflowServices, Version=16.1.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\Microsoft.SharePoint.Client.WorkflowServices.dll</HintPath>
+    </Reference>
+    <Reference Include="MPIPHPBusinessObjects">
+      <HintPath>..\..\Bin\MPIPHPBusinessObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="MPIPHPCommon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Bin\MPIPHPCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="MPIPHPInterface">
+      <HintPath>..\..\Bin\MPIPHPInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="NeoBaseCommon, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\NeoBase_DLL\NeoBaseCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="NeoBaseReports">
+      <HintPath>..\..\..\External_Libraries\NeoBase_DLL\NeoBaseReports.dll</HintPath>
+    </Reference>
+    <Reference Include="NeoBaseSystemManagement, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\NeoBase_DLL\NeoBaseSystemManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="NeoSpinConstants, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Bin\NeoSpinConstants.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="OfficeDevPnP.Core, Version=3.28.2012.0, Culture=neutral, PublicKeyToken=5e633289e95c321a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\OfficeDevPnP.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="OnDemandAVScan, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\OnDemandAVScan\OnDemandAVScan.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PKICommLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=175df9dfac229448, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\PKICommLib.dll</HintPath>
+    </Reference>
+    <Reference Include="SagitecBpm, Version=6.0.0.0, Culture=neutral, PublicKeyToken=df17fdb7b963e064, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Framework\SagitecBpm.dll</HintPath>
+    </Reference>
+    <Reference Include="SagitecBusinessObjects, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9670b75419327b3c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Framework\SagitecBusinessObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="SagitecCommon, Version=6.0.0.0, Culture=neutral, PublicKeyToken=130d1a64d9ca2157, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Framework\SagitecCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="SagitecInterface, Version=6.0.0.0, Culture=neutral, PublicKeyToken=319652840b3d7d17, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Framework\SagitecInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="SagitecMVVMClient, Version=6.0.0.0, Culture=neutral, PublicKeyToken=17dcd5518e4461a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Framework\SagitecMVVMClient.dll</HintPath>
+    </Reference>
+    <Reference Include="SagitecPlatformAPI, Version=6.0.0.0, Culture=neutral, PublicKeyToken=922ea52199f2569e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\SagitecPlatformAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="SagitecPlatformAPICommon, Version=6.0.0.0, Culture=neutral, PublicKeyToken=c303ba815c921500, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\SagitecPlatformAPICommon.dll</HintPath>
+    </Reference>
+    <Reference Include="SagitecWebClient, Version=6.0.0.0, Culture=neutral, PublicKeyToken=de5d1fbc6b66d2f0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Framework\SagitecWebClient.dll</HintPath>
+    </Reference>
+    <Reference Include="SharePointPnP.IdentityModel.Extensions, Version=1.2.4.0, Culture=neutral, PublicKeyToken=5e633289e95c321a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\SHAREPOINT\SharePointPnP.IdentityModel.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.Core, Version=1.8.6290.36566, Culture=neutral, PublicKeyToken=fcc41393b80066eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\System.Data.HashFunction.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.Interfaces, Version=1.8.6290.36566, Culture=neutral, PublicKeyToken=d14d8db138f3acf6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\System.Data.HashFunction.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.HashFunction.xxHash, Version=1.8.6290.36566, Culture=neutral, PublicKeyToken=4e764b1d9f452d98, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\System.Data.HashFunction.xxHash.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.16.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Cors">
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Entity">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <HintPath>..\..\..\External_Libraries\FRAMEWORK_DEPENDENCY\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="XelenceConnector, Version=6.0.0.0, Culture=neutral, PublicKeyToken=d2c178b4718df4da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FRAMEWORK_DEPENDENCY\XelenceConnector.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\CheckSessionOutAttribute.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="App_Start\WebapiSessionHandler.cs" />
+    <Compile Include="AspxPages\wfmDownload.aspx.cs">
+      <DependentUpon>wfmDownload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AspxPages\wfmReportClient.aspx.cs">
+      <DependentUpon>wfmReportClient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AspxPages\wfmReportClient.aspx.designer.cs">
+      <DependentUpon>wfmReportClient.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BPMExecution\Controller\CallActivityPostBackData.cs" />
+    <Compile Include="BPMExecution\Controller\clsExecutedStep.cs" />
+    <Compile Include="BPMExecution\Controller\MapController.cs" />
+    <Compile Include="BPMExecution\Controller\MapExecutionDetails.cs" />
+    <Compile Include="BPMExecution\Controller\ShapeDetails.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HelperFunction.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NeoController.cs" />
+    <Compile Include="Controllers\StorageController.cs" />
+    <Compile Include="Controllers\UIConstants.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="IOPUSWebService.cs" />
+    <Compile Include="OPUSWebService.svc.cs">
+      <DependentUpon>OPUSWebService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\XSD Definition\SampleRepodt.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SampleRepodt.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AspxPages\wfmDownload.aspx" />
+    <Content Include="AspxPages\wfmReportClient.aspx" />
+    <Content Include="Blue\App.css" />
+    <Content Include="Blue\Common.css" />
+    <Content Include="Blue\common.min.css" />
+    <Content Include="Blue\Custom-Kendo.css" />
+    <Content Include="Blue\Custom-Kendo.min.css" />
+    <Content Include="Blue\fileUpload.css" />
+    <Content Include="Blue\jquery-ui-1.8.16.custom.css" />
+    <Content Include="Blue\jquery-ui-timepicker-addon.min.css" />
+    <Content Include="Blue\jquery-ui.min.css" />
+    <Content Include="Blue\jquery.jqplot.css" />
+    <Content Include="Blue\jsTree.min.css" />
+    <Content Include="Blue\kendo.black.min.css" />
+    <Content Include="Blue\kendo.blueopal.min.css" />
+    <Content Include="Blue\kendo.blueopal.min_old.css" />
+    <Content Include="Blue\kendo.bootstrap.min.css" />
+    <Content Include="Blue\kendo.common.min.css" />
+    <Content Include="Blue\kendo.dataviz.black.min.css" />
+    <Content Include="Blue\kendo.dataviz.blueopal.min.css" />
+    <Content Include="Blue\kendo.dataviz.bootstrap.min.css" />
+    <Content Include="Blue\kendo.dataviz.default.min.css" />
+    <Content Include="Blue\kendo.dataviz.highcontrast.min.css" />
+    <Content Include="Blue\kendo.dataviz.metro.min.css" />
+    <Content Include="Blue\kendo.dataviz.metroblack.min.css" />
+    <Content Include="Blue\kendo.dataviz.min.css" />
+    <Content Include="Blue\kendo.dataviz.moonlight.min.css" />
+    <Content Include="Blue\kendo.dataviz.silver.min.css" />
+    <Content Include="Blue\kendo.dataviz.uniform.min.css" />
+    <Content Include="Blue\kendo.default.min.css" />
+    <Content Include="Blue\kendo.highcontrast.min.css" />
+    <Content Include="Blue\kendo.icenium.min.css" />
+    <Content Include="Blue\kendo.metro.min.css" />
+    <Content Include="Blue\kendo.metroblack.min.css" />
+    <Content Include="Blue\kendo.mobile.all.min.css" />
+    <Content Include="Blue\kendo.mobile.android4.min.css" />
+    <Content Include="Blue\kendo.mobile.blackberry.min.css" />
+    <Content Include="Blue\kendo.mobile.common.min.css" />
+    <Content Include="Blue\kendo.mobile.ios.min.css" />
+    <Content Include="Blue\kendo.mobile.meego.min.css" />
+    <Content Include="Blue\kendo.mobile.wp8.min.css" />
+    <Content Include="Blue\kendo.moonlight.min.css" />
+    <Content Include="Blue\kendo.rtl.min.css" />
+    <Content Include="Blue\kendo.silver.min.css" />
+    <Content Include="Blue\kendo.uniform.min.css" />
+    <Content Include="Blue\Login.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
+    <Content Include="Blue\login.min.css">
+      <DependentUpon>Login.css</DependentUpon>
+    </Content>
+    <Content Include="Blue\neoGrid.css" />
+    <Content Include="Blue\neoGrid.min.css" />
+    <Content Include="Blue\pageprintstyle.css" />
+    <Content Include="Blue\panel-tab.css" />
+    <Content Include="Blue\panel-tab.min.css" />
+    <Content Include="Blue\SASDisplayRule.css" />
+    <Content Include="Blue\SASRuleExecution.css" />
+    <Content Include="Blue\smart_wizard_vertical.css" />
+    <Content Include="Blue\summernote.css" />
+    <Content Include="Blue\switch-styles.css" />
+    <Content Include="Blue\tabs-styles.css">
+      <DependentUpon>tabs-styles.scss</DependentUpon>
+    </Content>
+    <Content Include="Blue\tabs-styles.min.css">
+      <DependentUpon>tabs-styles.css</DependentUpon>
+    </Content>
+    <Content Include="Blue\toastr-responsive.css" />
+    <Content Include="Blue\toastr.css" />
+    <Content Include="Blue\tooltip.css" />
+    <Content Include="BPMExecution\BPMNMap.html" />
+    <Content Include="BPMExecution\Images\business-rule-task.svg" />
+    <Content Include="BPMExecution\Images\calling-process.svg" />
+    <Content Include="BPMExecution\Images\manual-task.svg" />
+    <Content Include="BPMExecution\Images\receive-task.svg" />
+    <Content Include="BPMExecution\Images\script-task.svg" />
+    <Content Include="BPMExecution\Images\send-task.svg" />
+    <Content Include="BPMExecution\Images\service-task.svg" />
+    <Content Include="BPMExecution\Images\user-task.svg" />
+    <Content Include="BPMExecution\Scripts\DataContext.js" />
+    <Content Include="BPMExecution\Scripts\DataServ.js" />
+    <Content Include="BPMExecution\Scripts\jquery.contextMenu.js" />
+    <Content Include="BPMExecution\Scripts\jquery.min.js" />
+    <Content Include="BPMExecution\Scripts\jquery.ui.position.js" />
+    <Content Include="BPMExecution\Scripts\kendo.ui.core.min.js" />
+    <Content Include="BPMExecution\Scripts\Plane.js" />
+    <Content Include="BPMExecution\Styles\App.css" />
+    <Content Include="BPMExecution\Styles\Default\editor.png" />
+    <Content Include="BPMExecution\Styles\Default\imagebrowser.png" />
+    <Content Include="BPMExecution\Styles\Default\loading-image.gif" />
+    <Content Include="BPMExecution\Styles\Default\loading.gif" />
+    <Content Include="BPMExecution\Styles\Default\slider-h.gif" />
+    <Content Include="BPMExecution\Styles\Default\slider-v.gif" />
+    <Content Include="BPMExecution\Styles\Default\sprite.png" />
+    <Content Include="BPMExecution\Styles\jquery.contextMenu.css" />
+    <Content Include="BPMExecution\Styles\kendo.common.min.css" />
+    <Content Include="BPMExecution\Styles\kendo.default.min.css" />
+    <Content Include="Content\themes\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="empty.html" />
+    <Content Include="GenericError.html" />
+    <Content Include="Images\301.gif" />
+    <Content Include="Images\32px.png" />
+    <Content Include="Images\arrow-next.png" />
+    <Content Include="Images\arrow-prev.png" />
+    <Content Include="Images\ascending-icon.svg" />
+    <Content Include="Images\autocomplete-arrow.png" />
+    <Content Include="Images\bg.png" />
+    <Content Include="Images\btn-cache.svg" />
+    <Content Include="Images\btn-help.svg" />
+    <Content Include="Images\btn-logoff.svg" />
+    <Content Include="Images\btn-my_task.svg" />
+    <Content Include="Images\btn-my_task_hover.svg" />
+    <Content Include="Images\btn-previous.svg" />
+    <Content Include="Images\btn-previous_hover.svg" />
+    <Content Include="Images\btn-print.svg" />
+    <Content Include="Images\btn-reset.svg" />
+    <Content Include="Images\burger-icon.png" />
+    <Content Include="Images\calendar-next.svg" />
+    <Content Include="Images\calendar-prev.svg" />
+    <Content Include="Images\Calendar_scheduleHS.PNG" />
+    <Content Include="Images\calender-new.png" />
+    <Content Include="Images\calender.png" />
+    <Content Include="Images\CheckedBox.gif" />
+    <Content Include="Images\close-form.png" />
+    <Content Include="Images\close-white.svg" />
+    <Content Include="Images\collapse-green-down-new.svg" />
+    <Content Include="Images\collapse-green.svg" />
+    <Content Include="Images\collapse-white-down-new-icon.svg" />
+    <Content Include="Images\collapse-white-down-new.svg" />
+    <Content Include="Images\collapse-white-up-new.svg" />
+    <Content Include="Images\collapse-white.svg" />
+    <Content Include="Images\default.png" />
+    <Content Include="Images\descending-icon.svg" />
+    <Content Include="Images\corner-symbol.png" />
+    <Content Include="Images\disabled-next.png" />
+    <Content Include="Images\disabled-prev.png" />
+    <Content Include="Images\downarrow .png" />
+    <Content Include="Images\downarrow.png" />
+    <Content Include="Images\favicon.png" />
+    <Content Include="Images\file-upload-error.svg" />
+    <Content Include="Images\file-upload-success.svg" />
+    <Content Include="Images\filter-icon.svg" />
+    <Content Include="Images\filterdownarrow.svg" />
+    <Content Include="Images\filteruparrow.svg" />
+    <Content Include="Images\group-collapse-icon.svg" />
+    <Content Include="Images\group-expand-icon.svg" />
+    <Content Include="Images\icon-collapse.png" />
+    <Content Include="Images\icon-expand.png" />
+    <Content Include="Images\icon-info.png" />
+    <Content Include="Images\icon-password.png" />
+    <Content Include="Images\icon-username.png" />
+    <Content Include="Images\Icon_captcharefresh.jfif" />
+    <Content Include="Images\info.png" />
+    <Content Include="Images\internet-icon_3.png" />
+    <Content Include="Images\left-menu-icon.svg" />
+    <Content Include="Images\LeftPanel_Icons.png" />
+    <Content Include="Images\Left_Icon_Navigator.png" />
+    <Content Include="Images\loader.gif" />
+    <Content Include="Images\lockups.png" />
+    <Content Include="Images\Lookup.jpg" />
+    <Content Include="Images\mail-icon_2.png" />
+    <Content Include="Images\main-dropdown-b-arrow.svg" />
+    <Content Include="Images\menu-arrow-w-icon.svg" />
+    <Content Include="Images\menu-burger-icon.svg" />
+    <Content Include="Images\menu-rarrow-b-icon.svg" />
+    <Content Include="Images\menu-rarrow-w-icon.svg" />
+    <Content Include="Images\navigator.png" />
+    <Content Include="Images\panel-down-green.svg" />
+    <Content Include="Images\panel-down-white.svg" />
+    <Content Include="Images\panel-down.png" />
+    <Content Include="Images\panel-down.svg" />
+    <Content Include="Images\panel-up.png" />
+    <Content Include="Images\panel-up.svg" />
+    <Content Include="Images\password.svg" />
+    <Content Include="Images\preloader.gif" />
+    <Content Include="Images\preloaderbg.png" />
+    <Content Include="Images\refresh.jfif" />
+    <Content Include="Images\refresh.png" />
+    <Content Include="Images\save.png" />
+    <Content Include="Images\setting.png" />
+    <Content Include="Images\store-state.svg" />
+    <Content Include="Images\submenu-arrow.svg" />
+    <Content Include="Images\tab_grad.png" />
+    <Content Include="Images\taglist-close.png" />
+    <Content Include="Images\task-btn-close.svg" />
+    <Content Include="Images\task-btn-my_basket.svg" />
+    <Content Include="Images\task-btn-my_basket_hover.svg" />
+    <Content Include="Images\task-btn-Person_Quick-Search.svg" />
+    <Content Include="Images\time.png" />
+    <Content Include="Images\TopInnerHeaderLogo.png" />
+    <Content Include="Images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Images\UnCheckedBox.gif" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\throbber.gif" />
+    <Content Include="Images\tooltip-close.png" />
+    <Content Include="Images\user.svg" />
+    <Content Include="image\btnProcessCalc.png" />
+    <Content Include="image\btn_Cancel.png" />
+    <Content Include="image\delete_button.gif" />
+    <Content Include="image\Icon_Audit_return_N.png" />
+    <Content Include="image\Icon_Audit_return_R.png" />
+    <Content Include="image\Icon_Back.png" />
+    <Content Include="image\Icon_Basket_N.png" />
+    <Content Include="image\Icon_Basket_R.png" />
+    <Content Include="image\Icon_Cancel_N.png" />
+    <Content Include="image\Icon_Cancel_R.png" />
+    <Content Include="image\Icon_Complete_N.png" />
+    <Content Include="image\Icon_Complete_R.png" />
+    <Content Include="image\ICON_ECM_Refresh.png" />
+    <Content Include="image\Icon_LaunchApplicationOpen_N.png" />
+    <Content Include="image\Icon_LaunchApplicationOpen_R.png" />
+    <Content Include="image\Icon_LaunchImageDoc_N.png" />
+    <Content Include="image\Icon_LaunchImageDoc_R.png" />
+    <Content Include="image\Icon_Next_N.png" />
+    <Content Include="image\Icon_Next_R.png" />
+    <Content Include="image\Icon_Notes_N.png" />
+    <Content Include="image\Icon_Notes_R.png" />
+    <Content Include="image\Icon_Previous_N.png" />
+    <Content Include="image\Icon_Regenerate.jpg" />
+    <Content Include="image\Icon_Release_N.png" />
+    <Content Include="image\Icon_Release_R.png" />
+    <Content Include="image\Icon_Resend.png" />
+    <Content Include="image\Icon_Resume_N.png" />
+    <Content Include="image\Icon_Resume_R.png" />
+    <Content Include="image\Icon_Return_N.png" />
+    <Content Include="image\Icon_Return_R.png" />
+    <Content Include="image\Icon_Search.png" />
+    <Content Include="image\Icon_Suspend_N.png" />
+    <Content Include="image\Icon_Suspend_R.png" />
+    <Content Include="image\Icon_TaskDetail_N.png" />
+    <Content Include="image\Icon_TaskDetail_R.png" />
+    <Content Include="image\Lookup.jpg" />
+    <Content Include="image\save.png" />
+    <Content Include="image\tab-btnbg.png" />
+    <Content Include="js\jquery-ui.min.js" />
+    <Content Include="Blue\Common.scss" />
+    <Content Include="Blue\Custom-Kendo.scss" />
+    <Content Include="Blue\login.scss" />
+    <Content Include="Blue\neogrid.scss" />
+    <Content Include="Blue\panel-tab.scss" />
+    <Content Include="Blue\tabs-styles.scss" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\LocalQAProfile.pubxml" />
+    <Content Include="js\jquery.min.js" />
+    <Content Include="BPMExecution\MapRender.html" />
+    <Content Include="OPUSWebService.svc" />
+    <Content Include="ProjectInfo.txt" />
+    <Content Include="Scripts\App\Dashboard.js" />
+    <Content Include="Scripts\App\easytimer.js" />
+    <Content Include="Scripts\App\ExternalLoginInitializer.js" />
+    <Content Include="Scripts\App\FWRefreshOverridenMethods.js" />
+    <Content Include="Scripts\App\Initializer.js" />
+    <Content Include="Scripts\App\Neobase\BpmFunctions.js" />
+    <Content Include="Scripts\App\Neobase\CorrespondenceFunctions.js" />
+    <Content Include="Scripts\App\Neobase\EcmFunctions.js" />
+    <Content Include="Scripts\App\Neobase\JobServiceFunctions.js" />
+    <Content Include="Scripts\App\Neobase\WpsFunctions.js" />
+    <Content Include="Scripts\App\Notification.js" />
+    <Content Include="Scripts\App\PrintThis.js" />
+    <Content Include="Scripts\App\UserDefinedFunctions.js" />
+    <Content Include="Scripts\NsSignalr\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts\NsSignalr\json2.js" />
+    <Content Include="Scripts\SASDisplayRule.js" />
+    <Content Include="StaticResources\Kendo-BlueOpal\editor.png" />
+    <Content Include="StaticResources\Kendo-BlueOpal\imagebrowser.png" />
+    <Content Include="StaticResources\Kendo-BlueOpal\loading-image.gif" />
+    <Content Include="StaticResources\Kendo-BlueOpal\loading.gif" />
+    <Content Include="StaticResources\Kendo-BlueOpal\loading_2x.gif" />
+    <Content Include="StaticResources\Kendo-BlueOpal\slider-h.gif" />
+    <Content Include="StaticResources\Kendo-BlueOpal\slider-v.gif" />
+    <Content Include="StaticResources\Kendo-BlueOpal\sprite.png" />
+    <Content Include="StaticResources\Kendo-BlueOpal\sprite_2x.png" />
+    <Content Include="StaticResources\neoGrid-images\ascending-icon.svg" />
+    <Content Include="StaticResources\neoGrid-images\btnAddNewChild_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnAuditHistory_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnColumnsToExport_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnDelete_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnDisplaychart_click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnDownloadFile_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnDown_click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnEdit_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnExecuteBusinessMethodSelectRows_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnExecuteBusinessMethod_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnExecuteServerMethodFromLookup_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnExportAllToExcel_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnGridViewAdd_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnGridViewDelete_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnGridViewSelect_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnNewPopupDialog_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnNew_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnOpenDoc_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnOpenLookup_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnOpenPopupDialog_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnOpenPrototype_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnOpen_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnRefresh_click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnUpdate_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnUp_click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnValidateExecuteBusinessMethod_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnViewOpen_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\btnWorkflowExecuteMethod_Click.png" />
+    <Content Include="StaticResources\neoGrid-images\calender.png" />
+    <Content Include="StaticResources\neoGrid-images\descending-icon.svg" />
+    <Content Include="StaticResources\neoGrid-images\filter-icon.svg" />
+    <Content Include="StaticResources\neoGrid-images\grid-filter.svg" />
+    <Content Include="StaticResources\neoGrid-images\grid-first.png" />
+    <Content Include="StaticResources\neoGrid-images\grid-first.svg" />
+    <Content Include="StaticResources\neoGrid-images\grid-last.png" />
+    <Content Include="StaticResources\neoGrid-images\grid-last.svg" />
+    <Content Include="StaticResources\neoGrid-images\grid-link-edit.png" />
+    <Content Include="StaticResources\neoGrid-images\grid-link-view.png" />
+    <Content Include="StaticResources\neoGrid-images\grid-next.png" />
+    <Content Include="StaticResources\neoGrid-images\grid-next.svg" />
+    <Content Include="StaticResources\neoGrid-images\grid-prev.png" />
+    <Content Include="StaticResources\neoGrid-images\grid-prev.svg" />
+    <Content Include="StaticResources\neoGrid-images\grid-settings.png" />
+    <Content Include="StaticResources\neoGrid-images\grid-settings.svg" />
+    <Content Include="StaticResources\neoGrid-images\grid_common_filter.png" />
+    <Content Include="StaticResources\neoGrid-images\group-collapse-icon.svg" />
+    <Content Include="StaticResources\neoGrid-images\group-expand-icon.svg" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_ACHInfo.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_addChange.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_addChangeDeduction.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_addChangerollhover.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_delete.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_export_to_excel.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_new.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_open.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_payeeAccount.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_popup_close.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_settings.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_view_chart.png" />
+    <Content Include="StaticResources\neoGrid-images\neogrid_withholding.png" />
+    <Content Include="Styles\App.css" />
+    <Content Include="Styles\Common.css" />
+    <Content Include="Styles\common.min.css" />
+    <Content Include="Styles\Custom-Kendo.css" />
+    <Content Include="Styles\Custom-Kendo.min.css" />
+    <Content Include="Styles\fileUpload.css" />
+    <Content Include="Styles\jquery-ui-1.8.16.custom.css" />
+    <Content Include="Styles\jquery-ui-timepicker-addon.min.css" />
+    <Content Include="Styles\jquery-ui.min.css" />
+    <Content Include="Styles\jquery.jqplot.css" />
+    <Content Include="Styles\jsTree.min.css" />
+    <Content Include="Styles\kendo.black.min.css" />
+    <Content Include="Styles\kendo.blueopal.min.css" />
+    <Content Include="Styles\kendo.blueopal.min_old.css" />
+    <Content Include="Styles\kendo.bootstrap.min.css" />
+    <Content Include="Styles\kendo.common.min.css" />
+    <Content Include="Styles\kendo.dataviz.black.min.css" />
+    <Content Include="Styles\kendo.dataviz.blueopal.min.css" />
+    <Content Include="Styles\kendo.dataviz.bootstrap.min.css" />
+    <Content Include="Styles\kendo.dataviz.default.min.css" />
+    <Content Include="Styles\kendo.dataviz.highcontrast.min.css" />
+    <Content Include="Styles\kendo.dataviz.metro.min.css" />
+    <Content Include="Styles\kendo.dataviz.metroblack.min.css" />
+    <Content Include="Styles\kendo.dataviz.min.css" />
+    <Content Include="Styles\kendo.dataviz.moonlight.min.css" />
+    <Content Include="Styles\kendo.dataviz.silver.min.css" />
+    <Content Include="Styles\kendo.dataviz.uniform.min.css" />
+    <Content Include="Styles\kendo.default.min.css" />
+    <Content Include="Styles\kendo.highcontrast.min.css" />
+    <Content Include="Styles\kendo.icenium.min.css" />
+    <Content Include="Styles\kendo.metro.min.css" />
+    <Content Include="Styles\kendo.metroblack.min.css" />
+    <Content Include="Styles\kendo.mobile.all.min.css" />
+    <Content Include="Styles\kendo.mobile.android4.min.css" />
+    <Content Include="Styles\kendo.mobile.blackberry.min.css" />
+    <Content Include="Styles\kendo.mobile.common.min.css" />
+    <Content Include="Styles\kendo.mobile.ios.min.css" />
+    <Content Include="Styles\kendo.mobile.meego.min.css" />
+    <Content Include="Styles\kendo.mobile.wp8.min.css" />
+    <Content Include="Styles\kendo.moonlight.min.css" />
+    <Content Include="Styles\kendo.rtl.min.css" />
+    <Content Include="Styles\kendo.silver.min.css" />
+    <Content Include="Styles\kendo.uniform.min.css" />
+    <Content Include="Styles\login.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
+    <Content Include="Styles\login.min.css">
+      <DependentUpon>login.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\monitoring.css" />
+    <Content Include="Styles\neoGrid.css" />
+    <Content Include="Styles\neoGrid.min.css" />
+    <Content Include="Styles\pageprintstyle.css" />
+    <Content Include="Styles\panel-tab.css" />
+    <Content Include="Styles\panel-tab.min.css" />
+    <Content Include="Styles\SASDisplayRule.css" />
+    <Content Include="Styles\SASRuleExecution.css" />
+    <Content Include="Styles\smart_wizard_vertical.css" />
+    <Content Include="Styles\summernote.css" />
+    <Content Include="Styles\switch-styles.css" />
+    <Content Include="Styles\tabs-styles.css">
+      <DependentUpon>tabs-styles.scss</DependentUpon>
+    </Content>
+    <Content Include="Styles\tabs-styles.min.css">
+      <DependentUpon>tabs-styles.css</DependentUpon>
+    </Content>
+    <Content Include="Styles\toastr-responsive.css" />
+    <Content Include="Styles\toastr.css" />
+    <Content Include="Styles\tooltip.css" />
+    <Content Include="Views\Account\Login.aspx" />
+    <Content Include="Views\Account\Logout.aspx" />
+    <Content Include="Views\Account\SessionTimeout.aspx" />
+    <Content Include="Views\Home\BPMNReadOnlyMap.aspx" />
+    <Content Include="Views\Home\BPMNMap.aspx" />
+    <Content Include="Views\Home\ExternalLogin.aspx" />
+    <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Home\LinkExpired.aspx" />
+    <Content Include="Views\Home\MapRender.aspx" />
+    <Content Include="Views\Shared\Error.aspx" />
+    <Content Include="Views\Shared\_LoginPartial.aspx" />
+    <Content Include="WordEditorControl.cab" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Shared\Site.Master" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Styles\tabs-styles.scss" />
+    <Content Include="StaticResources\SummerNoteEditor-font\summernote.eot" />
+    <Content Include="StaticResources\SummerNoteEditor-font\summernote.ttf" />
+    <Content Include="StaticResources\SummerNoteEditor-font\summernote.woff" />
+    <Content Include="Styles\neogrid.scss" />
+    <Content Include="Styles\Common.scss" />
+    <Content Include="Styles\Custom-Kendo.scss" />
+    <Content Include="Styles\login.scss" />
+    <Content Include="Styles\panel-tab.scss" />
+    <None Include="Properties\PublishProfiles\Publish-Debug-x64.pubxml" />
+    <None Include="Properties\PublishProfiles\Publish-release-x64.pubxml" />
+    <None Include="Properties\PublishProfiles\Publish_MVVM.pubxml" />
+    <Content Include="Reports\AchReversalRequestReport.rdlc" />
+    <Content Include="Reports\RecalculateIAPAllocationDetail.rdlc" />
+    <Content Include="Reports\rpt1099RExceptionReport.rdlc" />
+    <Content Include="Reports\rpt10_ClosedOrSuspendedPayeeAccountReport.rdlc" />
+    <Content Include="Reports\rpt11_RetirementOptionSummaryReport.rdlc" />
+    <Content Include="Reports\rpt12_NonMonthlyPaymentDetailReport.rdlc" />
+    <Content Include="Reports\rpt13_BenefitPaymentChangeReport.rdlc" />
+    <Content Include="Reports\rpt14_MonthlyBenefitPaymentReconciliationReport.rdlc" />
+    <Content Include="Reports\rpt15_MonthlyRecipientCountReport.rdlc" />
+    <Content Include="Reports\rpt16_PaymentBalancingReport.rdlc" />
+    <Content Include="Reports\rpt16_TrialPayeeListReport.rdlc" />
+    <Content Include="Reports\rpt17_PayeeErrorReport.rdlc" />
+    <Content Include="Reports\rpt18_AnnualReport.rdlc" />
+    <Content Include="Reports\rpt19_AnnualReportGenerated.rdlc" />
+    <Content Include="Reports\rpt19_AnnualReportGenerated_InPay.rdlc" />
+    <Content Include="Reports\rpt19_AnnualReportGenerated_PensionOnly.rdlc" />
+    <Content Include="Reports\rpt1_FinalMonthlyBenefitPaymentSummaryReport.rdlc" />
+    <Content Include="Reports\rpt20_VendorPaymentSummary.rdlc" />
+    <Content Include="Reports\rpt21_IAPSummaryReport.rdlc" />
+    <Content Include="Reports\rpt22_MDBatchReport.rdlc" />
+    <Content Include="Reports\rpt23_MDParticipantReport.rdlc" />
+    <Content Include="Reports\rpt24_AffidavitReport.rdlc" />
+    <Content Include="Reports\rpt25_VestingForfeitureChanges.rdlc" />
+    <Content Include="Reports\rpt26_LateIAPAllocationBatch.rdlc" />
+    <Content Include="Reports\rpt2_LocalRetireeListReport.rdlc" />
+    <Content Include="Reports\rpt2_RetireeListReport.rdlc" />
+    <Content Include="Reports\rpt3_MasterPaymentReport.rdlc" />
+    <Content Include="Reports\rpt4_VendorPaymentSummary.rdlc" />
+    <Content Include="Reports\rpt5500Report.rdlc" />
+    <Content Include="Reports\rpt5_ACHRegisterReport.rdlc" />
+    <Content Include="Reports\rpt5_WIRERegisterReport.rdlc" />
+    <Content Include="Reports\rpt6_CheckRegisterReport.rdlc" />
+    <Content Include="Reports\rpt7_TrialMonthlyBenefitPaymentSummaryReport.rdlc" />
+    <Content Include="Reports\rpt8_NewPayeeDetailReport.rdlc" />
+    <Content Include="Reports\rpt9_ReinstatedPayeeDetailReport.rdlc" />
+    <Content Include="Reports\rptAgingReport.rdlc" />
+    <Content Include="Reports\rptAnnualRecalculateTaxes.rdlc" />
+    <Content Include="Reports\rptApprove10PercentIncrease.rdlc" />
+    <Content Include="Reports\rptBenefitProcessCountsReport.rdlc" />
+    <Content Include="Reports\rptContinuingSurvivorBenefitsbyMonthReport.rdlc" />
+    <Content Include="Reports\rptCovidIAPHardshipReport.rdlc" />
+    <Content Include="Reports\rptDeathReport.rdlc" />
+    <Content Include="Reports\rptDeathReportwithSSN.rdlc" />
+    <Content Include="Reports\rptDeceasedRetireeCountsandAmountsbyMonthReport.rdlc" />
+    <Content Include="Reports\rptDeceasedRetireesOverpaymentReport.rdlc" />
+    <Content Include="Reports\rptDemographicAuditHistory.rdlc" />
+    <Content Include="Reports\rptDisabilityCountsandAmountsbyMonthReport.rdlc" />
+    <Content Include="Reports\rptDistributionStatusTransitionReport.rdlc" />
+    <Content Include="Reports\rptEDDExceptionReport.rdlc" />
+    <Content Include="Reports\rptEddFileReport.rdlc" />
+    <Content Include="Reports\rptForm1099RReport.rdlc" />
+    <Content Include="Reports\rptIAPAdjustmentPaymentReport.rdlc" />
+    <Content Include="Reports\rptIAPAnnualAllocationSummary.rdlc" />
+    <Content Include="Reports\rptIAPAnnualDetailVsSummary.rdlc" />
+    <Content Include="Reports\rptIAPAnnualFinancial.rdlc" />
+    <Content Include="Reports\rptIAPAnnualOverlimit.rdlc" />
+    <Content Include="Reports\rptIAPAnnualPresentation.rdlc" />
+    <Content Include="Reports\rptIAPCheckRegisterReport.rdlc" />
+    <Content Include="Reports\rptIAPCountsandAmountsbyMonthReport.rdlc" />
+    <Content Include="Reports\rptIAPHardshipWithdrawalReport.rdlc" />
+    <Content Include="Reports\rptIAPMasterPaymentReport.rdlc" />
+    <Content Include="Reports\rptIAPMDWorked400.rdlc" />
+    <Content Include="Reports\rptIAPOverpaymentReport.rdlc" />
+    <Content Include="Reports\rptIAPPaymentDirectives.rdlc" />
+    <Content Include="Reports\rptIAPReemployedWorked870.rdlc" />
+    <Content Include="Reports\rptIAP_ACHRegisterReport.rdlc" />
+    <Content Include="Reports\rptLocalDeathReport.rdlc" />
+    <Content Include="Reports\rptMonthlyPreCheck.rdlc" />
+    <Content Include="Reports\rptOnDemandRetireeIAPBalance.rdlc" />
+    <Content Include="Reports\rptOneTimePaymentDirectives.rdlc" />
+    <Content Include="Reports\rptOutstandingChequeReport.rdlc" />
+    <Content Include="Reports\rptOverPaymentReport.rdlc" />
+    <Content Include="Reports\rptPayeeOverpaymentReport.rdlc" />
+    <Content Include="Reports\rptPaymentDirectiveReconReport.rdlc" />
+    <Content Include="Reports\rptPensionActuary.xlsx" />
+    <Content Include="Reports\rptPensionActuaryChangeReport.rdlc" />
+    <Content Include="Reports\rptPensionBenefitAdjustmentBatch.rdlc" />
+    <Content Include="Reports\rptPensionEligibilityBatchReport.rdlc" />
+    <Content Include="Reports\rptPensionReportsofDeath.rdlc" />
+    <Content Include="Reports\rptQPSABenefitElection.rdlc" />
+    <Content Include="Reports\rptRAPStatusHistory.rdlc" />
+    <Content Include="Reports\rptRecalculateRetirementBenefit.rdlc" />
+    <Content Include="Reports\rptRecurringPaymentDirectives.rdlc" />
+    <Content Include="Reports\rptReemploymentBatch.rdlc" />
+    <Content Include="Reports\rptReemploymentCountsbyMonthReport.rdlc" />
+    <Content Include="Reports\rptReemploymentResumeBenefitBatch.rdlc" />
+    <Content Include="Reports\rptReEvaluationofMDBatchReport.rdlc" />
+    <Content Include="Reports\rptReevaluationOfReemploymentBatch.rdlc" />
+    <Content Include="Reports\rptRetireeHealthEligibilityList.rdlc" />
+    <Content Include="Reports\rptRetireeIAPBalance.rdlc" />
+    <Content Include="Reports\rptRetireeIncreaseReport.rdlc" />
+    <Content Include="Reports\rptReturnedMailReport.rdlc" />
+    <Content Include="Reports\rptSSADisabilityBatchReport.rdlc" />
+    <Content Include="Reports\rptStaleDatedReport.rdlc" />
+    <Content Include="Reports\rptVerificationofHoursReport.rdlc" />
+    <Content Include="Reports\rptWorkflowBackLogReport.rdlc" />
+    <Content Include="Reports\rptWorkflowMetricSummaryReport.rdlc" />
+    <Content Include="Reports\rpt_1099RReconReport.rdlc" />
+    <Content Include="Reports\rpt_MonthOfSuspendibleServiceReport.rdlc" />
+    <Content Include="Reports\rpt_NotificationBISBatchReport.rdlc" />
+    <Content Include="Reports\rpt_PreNotificationBISBatchReport.rdlc" />
+    <Content Include="Reports\rpt_SmallWorldInbound.rdlc" />
+    <Content Include="Reports\UserReport.rdlc" />
+    <Content Include="Reports\WorkflowMetricsDetailReport.rdlc" />
+    <None Include="Reports\XSD Definition\rpIAnnualRecalculateTaxes.rdlc.xsd" />
+    <Content Include="Reports\XSD Definition\rpIAnnualRecalculateTaxes.rdlc.xss" />
+    <None Include="Reports\XSD Definition\rptIAPAnnualAllocationSummary.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reports\XSD Definition\rptIAPAnnualDetalVsSummary.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reports\XSD Definition\rptIAPAnnualFinancial.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Reports\XSD Definition\rptIAPAnnualOverlimit.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Reports\XSD Definition\SampleRepodt.xsc">
+      <DependentUpon>SampleRepodt.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\XSD Definition\SampleRepodt.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SampleRepodt.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Reports\XSD Definition\SampleRepodt.xss">
+      <DependentUpon>SampleRepodt.xsd</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="TempFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">13.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>..\..\..\External_Libraries\Tools\StyleCopAnalyzers\StyleCop.Analyzers.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55701</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/NeoSpinMVVM</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

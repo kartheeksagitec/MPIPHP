@@ -1,0 +1,161 @@
+﻿<form ID="wfmActLogInstanceLookup" sfwType="Lookup" sfwEntity="entActLogInst" sfwTitle="Trace User Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmActivityLogInstanceLookup" sfwResource="207">
+  <initialload>
+    <query sfwQueryRef="entActLogInst.Lookup" ID="entActLogInst" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActLogAppId" Text="Application : " AssociatedControlID="ddlActLogAppId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlActLogAppId" sfwDataField="a.act_log_app_id" sfwLoadType="Query" DataTextField="app_name" DataValueField="act_log_app_id" sfwLoadSource="entActLogApp.LookUp" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActorName" Text="User Name : " AssociatedControlID="txtActorName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtActorName" sfwDataField="actor_name" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capIpAddress" Text="Ip Address : " AssociatedControlID="txtIpAddress" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtIpAddress" sfwDataField="ip_address" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Invalid Login :" sfwIsCaption="True" ID="lblLabel" AssociatedControlID="chkInvalidLoginFlag" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkInvalidLoginFlag" sfwDataField="invalid_login_flag" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStartTimeFrom" sfwIsCaption="True" Text="Start Time  From : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStartTimeFrom" sfwDataField="start_time" sfwOperator="between" sfwRelatedControl="txtStartTimeTo" sfwDataType="datetime" sfwDataFormat="{0:d}" />
+                <CompareValidator ID="valStartTimeFrom" Text="*" Operator="DataTypeCheck" ControlToValidate="txtStartTimeFrom" Type="Date" ErrorMessage="Start Time : From must be in mm/dd/yyyy format. " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStartTimeTo" sfwIsCaption="True" Text="Start Time  To : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStartTimeTo" sfwDataField="start_time" sfwOperator="between" sfwDataType="datetime" sfwDataFormat="{0:d}" />
+                <CompareValidator ID="valStartTimeTo" Text="*" Operator="DataTypeCheck" ControlToValidate="txtStartTimeTo" Type="Date" ErrorMessage="Start Time : To must be in mm/dd/yyyy format." />
+                <CompareValidator ID="valStartTimeRange" Text="*" Operator="GreaterThanEqual" ControlToValidate="txtStartTimeTo" ControlToCompare="txtStartTimeFrom" ErrorMessage="Start Time : To cannot be less than Start Time : From." Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActLogInitialUid" Text="Old Session ID : " AssociatedControlID="txtActLogInitialUid" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtActLogInitialUid" sfwDataField="act_log_initial_uid" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActLogUid" Text="Session ID : " AssociatedControlID="txtActLogUid" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtActLogUid" sfwDataField="act_log_uid" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" ImageUrl="~/Image/gNew.gif" sfwMethodName="btnNew_Click" sfwOperateOn="tblCriteria" Text="New" CssClass="hideControl" Visible="False" />
+                <sfwButton ID="btnOpen" ImageUrl="~/Image/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" Text="Open" sfwNavigationParameter="aintPrimaryKey=ActLogInstId;iintActionCount=ActionCount" sfwActiveForm="wfmActLogInstanceMaintenance" sfwActiveFormKey="ActLogInstId" Visible="False" />
+                <sfwButton ID="btnDelete" ImageUrl="~/Image/gDelete.gif" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" Visible="False" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Image/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True">
+                  <Columns>
+                    <TemplateField HeaderText="ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActLogInstId" sfwRenderType="RichText" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Application">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objActLogApp.AppName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActorName" sfwLinkable="True" sfwRelatedControl="btnOpen" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Invalid Login" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblCheckBox" sfwEntityField="InvalidLoginFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Session ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActLogUid" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Ip Address">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IpAddress" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Mac Address">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MacAddress" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Start Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StartTime" sfwDataFormat="{0:G}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="End Time">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="EndTime" sfwDataFormat="{0:G}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Action Count">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActionCount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails />
+</form>

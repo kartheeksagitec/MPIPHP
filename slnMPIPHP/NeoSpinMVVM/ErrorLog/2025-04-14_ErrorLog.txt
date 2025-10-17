@@ -1,0 +1,62 @@
+06:13:30.251 PM	*******************Error start*******************
+06:13:30.253 PM	(Exception Reference Id: 4d422252-acf2-4bd6-ac76-81cc95b4a452)
+Exception Message: Could not connect to net.tcp://localhost:9070/srvDBCache. The connection attempt lasted for a time span of 00:00:04.1100071. TCP error code 10061: No connection could be made because the target machine actively refused it 127.0.0.1:9070. 
+Exception Information Source: mscorlib
+Exception Information StackTrace: 
+Server stack trace: 
+   at System.ServiceModel.Channels.SocketConnectionInitiator.Connect(Uri uri, TimeSpan timeout)
+   at System.ServiceModel.Channels.BufferedConnectionInitiator.Connect(Uri uri, TimeSpan timeout)
+   at System.ServiceModel.Channels.ConnectionPoolHelper.EstablishConnection(TimeSpan timeout)
+   at System.ServiceModel.Channels.ClientFramingDuplexSessionChannel.OnOpen(TimeSpan timeout)
+   at System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.OnOpen(TimeSpan timeout)
+   at System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.CallOpenOnce.System.ServiceModel.Channels.ServiceChannel.ICallOnce.Call(ServiceChannel channel, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.CallOnceManager.CallOnce(TimeSpan timeout, CallOnceManager cascade)
+   at System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Sagitec.Interface.IDBCache.GetDBSystemManagement(IDbConnection aconFramework, String astrApplicationName)
+   at Sagitec.MVVMClient.AccountControllerBase.GetSystemManagementInfoFromThread()
+Exception Information Target: HandleReturnMessage
+----------********** Inner Exception **********---------- 
+InnerException Message: No connection could be made because the target machine actively refused it 127.0.0.1:9070
+InnerException Information Source: System
+InnerException Information StackTrace:    at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.ServiceModel.Channels.SocketConnectionInitiator.Connect(Uri uri, TimeSpan timeout)
+Exception Information Target: DoConnect
+****************************************************************************************************
+
+06:13:30.255 PM	*******************Error End*******************
+06:23:36.428 PM	*******************Error start*******************
+06:23:36.429 PM	(Exception Reference Id: 72a050fd-dbba-4f36-ae2d-173d6e1bb23d)
+Exception Message: Thread was being aborted.
+Exception Information Source: System
+Exception Information StackTrace:    at System.Net.UnsafeNclNativeMethods.OSSOCK.WSAConnect(IntPtr socketHandle, Byte[] socketAddress, Int32 socketAddressSize, IntPtr inBuffer, IntPtr outBuffer, IntPtr sQOS, IntPtr gQOS)
+   at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   at System.ServiceModel.Channels.SocketConnectionInitiator.Connect(Uri uri, TimeSpan timeout)
+   at System.ServiceModel.Channels.BufferedConnectionInitiator.Connect(Uri uri, TimeSpan timeout)
+   at System.ServiceModel.Channels.ConnectionPoolHelper.EstablishConnection(TimeSpan timeout)
+   at System.ServiceModel.Channels.ClientFramingDuplexSessionChannel.OnOpen(TimeSpan timeout)
+   at System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.OnOpen(TimeSpan timeout)
+   at System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.CallOpenOnce.System.ServiceModel.Channels.ServiceChannel.ICallOnce.Call(ServiceChannel channel, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.CallOnceManager.CallOnce(TimeSpan timeout, CallOnceManager cascade)
+   at System.ServiceModel.Channels.ServiceChannel.EnsureOpened(TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   at System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   at System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at Sagitec.Interface.IDBCache.GetDBSystemManagement(IDbConnection aconFramework, String astrApplicationName)
+   at Sagitec.MVVMClient.AccountControllerBase.GetSystemManagementInfoFromThread()
+Exception Information Target: WSAConnect
+
+06:23:36.431 PM	*******************Error End*******************

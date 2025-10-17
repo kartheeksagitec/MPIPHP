@@ -1,0 +1,3 @@
+﻿CREATE DEFAULT [dbo].[DF_SERVICE]
+    AS '0.0000';
+

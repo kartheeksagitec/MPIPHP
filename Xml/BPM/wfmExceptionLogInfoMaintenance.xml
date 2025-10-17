@@ -1,0 +1,77 @@
+﻿<form ID="wfmExceptionLogInfoMaintenance" sfwType="Maintenance" sfwEntity="entExceptionLog" sfwTitle="Exception Log Info Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmExceptionLogInfoLookup">
+  <initialload>
+    <callmethods sfwMethodName="FindExceptionLogByExceptionInstanceId" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" CssClass="hideControl" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblExceptionLogId" sfwEntityField="ExceptionLogId" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capApplicationName" Text="Application Name : " AssociatedControlID="txtApplicationName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtApplicationName" sfwEntityField="ApplicationName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capExceptionTimestamp" Text="Exception Timestamp : " AssociatedControlID="txtExceptionTimestamp" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtExceptionTimestamp" sfwEntityField="ExceptionTimestamp" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capExceptionInfo" Text="Exception Info : " AssociatedControlID="txtExceptionInfo" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtExceptionInfo" sfwEntityField="ExceptionInfo" Rows="5" TextMode="MultiLine" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capExceptionMessage" Text="Exception Message : " AssociatedControlID="txtExceptionMessage" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtExceptionMessage" sfwEntityField="ExceptionMessage" Rows="5" TextMode="MultiLine" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStackTrace" Text="Stack Trace : " AssociatedControlID="txtStackTrace" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwTextBox ID="txtStackTrace" sfwEntityField="StackTrace" Rows="20" TextMode="MultiLine" Width="100%" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+  <loaddetails />
+</form>

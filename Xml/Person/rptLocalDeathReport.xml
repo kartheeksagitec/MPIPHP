@@ -1,0 +1,37 @@
+﻿<form ID="rptLocalDeathReport" sfwStatus="Review" sfwResource="505" sfwDescription="Local Death Report" sfwReportName="rptLocalDeathReport.rdlc" sfwType="Report" sfwActive="True" version="4.0" sfwReportCategory="Reports">
+  <initialload>
+    <custommethod sfwMethodName="GetLocalDeathReport" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="DOD FROM : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="FROM" sfwDataFormat="{0:d}" />
+        <CompareValidator ID="valFromDate" ErrorMessage="From Date must be in mm/dd/yyyy format." Operator="DataTypeCheck" ControlToValidate="FROM" Text="*" Type="Date" />
+        <RequiredFieldValidator ID="rfvFromDate" Text="*" ControlToValidate="FROM" ErrorMessage="From Date is Required" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="TO : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="TO" sfwDataFormat="{0:d}" />
+        <CompareValidator ID="valDateRange" Text="*" ControlToValidate="TO" ErrorMessage="TO date cannot be less than FROM date." Operator="GreaterThanEqual" Type="Date" ControlToCompare="FROM" />
+        <CompareValidator ID="valToDate" ErrorMessage="From Date must be in mm/dd/yyyy format." Text="*" ControlToValidate="TO" Operator="DataTypeCheck" Type="Date" />
+        <RequiredFieldValidator ID="rfvToDate" ErrorMessage="To Date is Required" Text="*" ControlToValidate="TO" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel ID="lblPlan" Text="Local Number" sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList DataTextField="LocalNumber" DataValueField="LocalId" ID="Lcl_ID" sfwLoadType="Query" sfwLoadSource="entPerson.LoadLocalNumbers" sfwAddEmptyItem="False" />
+      </sfwColumn>
+      <sfwColumn />
+      <sfwColumn />
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+</form>

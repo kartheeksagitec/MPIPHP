@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entMessages" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvAdmin" sfwType="BusinessRule" sfwMainCDO="icdoMessages" sfwObjectID="busMessages" sfwTableName="sgs_messages" sfwView="False" sfwDataObjectID="doMessages">
+  <rules>
+    <rule ID="RULE CHECK MESSAGE ID IS NOT NULL" sfwMessageId="52" sfwExpression="(this.icdoMessages.message_id == 0)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK MESSAGE ID ALREADY EXISTS IN NEW MODE" sfwMessageId="53" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entMessages.MessageIdExists&quot;, this.icdoMessages.message_id) &gt; 0)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="RULE CHECK MESSAGE ID IS NOT NULL" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE CHECK MESSAGE ID ALREADY EXISTS IN NEW MODE" sfwMode="New" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <updateablecdo />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select *&#xD;&#xA;  from sgs_messages&#xD;&#xA; order by message_id&#xD;&#xA;">
+      <parameters />
+    </query>
+    <query ID="MessageIdExists" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) from sgs_messages &#xD;&#xA;where&#xD;&#xA;message_id = @message_id">
+      <parameters>
+        <parameter ID="@message_id" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="message_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="MessageId" sfwIsSequence="False" sfwCaption="Message Id" />
+    <attribute sfwValue="display_message" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="False" ID="DisplayMessage" sfwIsSequence="False" sfwCaption="Display Message" />
+    <attribute sfwType="Description" ID="SeverityDescription" sfwCaption="Severity" sfwValue="severity_description" />
+    <attribute sfwValue="severity_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="SeverityId" sfwCodeID="16" sfwIsSequence="False" sfwCaption="Severity" />
+    <attribute sfwValue="severity_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="SeverityValue" sfwIsSequence="False" sfwCaption="Severity" />
+    <attribute sfwValue="internal_instructions" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4096" sfwIsNull="True" ID="InternalInstructions" sfwIsSequence="False" sfwCaption="Internal Instructions" />
+    <attribute sfwValue="employer_instructions" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4096" sfwIsNull="True" ID="EmployerInstructions" sfwIsSequence="False" sfwCaption="Employer Instructions" />
+    <attribute sfwType="Description" ID="ResponsibilityDescription" sfwCaption="Responsibility" sfwValue="responsibility_description" />
+    <attribute sfwValue="responsibility_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ResponsibilityId" sfwCodeID="16" sfwIsSequence="False" sfwCaption="Responsibility" />
+    <attribute sfwValue="responsibility_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ResponsibilityValue" sfwIsSequence="False" sfwCaption="Responsibility" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

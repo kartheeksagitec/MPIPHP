@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entPlanBenefitXr" sfwMainCDO="icdoPlanBenefitXr" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busPlanBenefitXr" sfwTableName="sgt_plan_benefit_xr" sfwView="False" sfwDataObjectID="doPlanBenefitXr">
+  <queries>
+    <query ID="GetAllBenOptions4L52" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select PBR.* from SGT_PLAN_BENEFIT_XR PBR&#xD;&#xA;INNER JOIN SGT_PLAN P ON P.PLAN_ID=PBR.PLAN_ID &#xD;&#xA;WHERE P.PLAN_CODE LIKE 'Local52'">
+      <parameters />
+    </query>
+    <query ID="GetPlanBenefitId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA;select PLAN_BENEFIT_ID from SGT_PLAN_BENEFIT_XR  where PLAN_ID=@PLAN_ID and BENEFIT_OPTION_VALUE=@BENEFIT_OPTION_VALUE">
+      <parameters>
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+        <parameter ID="@BENEFIT_OPTION_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="LoadBenefitOptionforQdro" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF(@aintPlanId = 4)&#xD;&#xA;SELECT CODE_VALUE, DESCRIPTION FROM SGS_CODE_VALUE WHERE CODE_VALUE IN ('3YLA') AND CODE_ID = 1504&#xD;&#xA;ELSE&#xD;&#xA;SELECT CODE_VALUE, DESCRIPTION FROM SGS_CODE_VALUE WHERE CODE_VALUE IN ('LUMP','LIFE','10LA') AND CODE_ID = 1504">
+      <parameters>
+        <parameter ID="@aintPlanId" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitsForSubPlanInRetr" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF @SUB_PLAN='EE'&#xD;&#xA;BEGIN &#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.EE_FLAG='Y' and SPBX.RETIREMENT_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END &#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='UVHP'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.UVHP_FLAG='Y' and SPBX.RETIREMENT_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END&#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='L52_SPL_ACC'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.L52_SPL_ACC_FLAG='Y' and SPBX.RETIREMENT_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END&#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='L161_SPL_ACC'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.L161_SPL_ACC_FLAG='Y' and SPBX.RETIREMENT_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END">
+      <parameters>
+        <parameter ID="@SUB_PLAN" sfwDataType="string" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitsForSubPlanInWdrl" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF @SUB_PLAN='EE'&#xD;&#xA;BEGIN &#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.EE_FLAG='Y' and SPBX.WITHDRAWAL_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END &#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='UVHP'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.UVHP_FLAG='Y' and SPBX.WITHDRAWAL_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END&#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='L52_SPL_ACC'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.L52_SPL_ACC_FLAG='Y' and SPBX.WITHDRAWAL_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END&#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='L161_SPL_ACC'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.L161_SPL_ACC_FLAG='Y' and SPBX.WITHDRAWAL_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END">
+      <parameters>
+        <parameter ID="@SUB_PLAN" sfwDataType="string" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitsForSubPlanInPreDeath" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF @SUB_PLAN='EE &amp; UVHP'&#xD;&#xA;BEGIN &#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.EE_FLAG='Y' and SPBX.UVHP_FLAG='Y' and SPBX.DEATH_PRE_RETIREMENT_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END &#xD;&#xA;&#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='L52_SPL_ACC'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.L52_SPL_ACC_FLAG='Y' and SPBX.DEATH_PRE_RETIREMENT_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END&#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='L161_SPL_ACC'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.L161_SPL_ACC_FLAG='Y' and SPBX.DEATH_PRE_RETIREMENT_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END">
+      <parameters>
+        <parameter ID="@SUB_PLAN" sfwDataType="string" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitsForSubPlanInDisability" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="IF @SUB_PLAN='EE'&#xD;&#xA;BEGIN &#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.EE_FLAG='Y' and SPBX.DISABILITY_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END &#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='UVHP'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.UVHP_FLAG='Y' and SPBX.DISABILITY_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END&#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='L52_SPL_ACC'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.L52_SPL_ACC_FLAG='Y' and SPBX.DISABILITY_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END&#xD;&#xA;&#xD;&#xA;ELSE IF @SUB_PLAN='L161_SPL_ACC'&#xD;&#xA;BEGIN&#xD;&#xA;SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.L161_SPL_ACC_FLAG='Y' and SPBX.DISABILITY_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID&#xD;&#xA;END">
+      <parameters>
+        <parameter ID="@SUB_PLAN" sfwDataType="string" />
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPlanAndBenefitOptionValue" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT PLAN_ID,BENEFIT_OPTION_VALUE From SGT_PLAN_BENEFIT_XR WHERE PLAN_BENEFIT_ID=@PLAN_BENEFIT_ID&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PLAN_BENEFIT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetPlanBenefitXRDeatilsFromPlanBenefitId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGT_PLAN_BENEFIT_XR WHERE PLAN_BENEFIT_ID = @PLAN_BENEFIT_ID">
+      <parameters>
+        <parameter ID="@PLAN_BENEFIT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetBenefitsForSubPlanInWdrlForChildSupport" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT SPBX.*, SCV.DESCRIPTION &#xD;&#xA;FROM SGT_PLAN_BENEFIT_XR SPBX WITH(NOLOCK) &#xD;&#xA;JOIN SGS_CODE_VALUE SCV WITH(NOLOCK) ON SCV.CODE_ID = SPBX.BENEFIT_OPTION_ID AND SCV.CODE_VALUE = SPBX.BENEFIT_OPTION_VALUE&#xD;&#xA;WHERE SPBX.WITHDRAWAL_FLAG='Y' AND SPBX.PLAN_ID=@PLAN_ID AND SPBX.BENEFIT_OPTION_VALUE = 'LUMP'">
+      <parameters>
+        <parameter ID="@PLAN_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="plan_benefit_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PlanBenefitId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="plan_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="PlanId" sfwIsSequence="False" sfwCaption="Plan Id" />
+    <attribute sfwType="Description" ID="BenefitOptionDescription" sfwCaption="Benefit Option" sfwValue="benefit_option_description" />
+    <attribute sfwValue="benefit_option_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitOptionId" sfwCodeID="1504" sfwIsSequence="False" sfwCaption="Benefit Option" />
+    <attribute sfwValue="benefit_option_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="BenefitOptionValue" sfwIsSequence="False" sfwCaption="Benefit Option" />
+    <attribute sfwValue="retirement_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="RetirementFlag" sfwIsSequence="False" sfwCaption="Retirement Flag" />
+    <attribute sfwValue="withdrawal_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="WithdrawalFlag" sfwIsSequence="False" sfwCaption="Withdrawal Flag" />
+    <attribute sfwValue="disability_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="DisabilityFlag" sfwIsSequence="False" sfwCaption="Disability Flag" />
+    <attribute sfwValue="death_pre_retirement_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="DeathPreRetirementFlag" sfwIsSequence="False" sfwCaption="Death Pre Retirement Flag" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="qdro_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="QdroFlag" sfwIsSequence="False" sfwCaption="Qdro Flag" />
+    <attribute sfwValue="ee_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="EeFlag" sfwIsSequence="False" sfwCaption="Ee Flag" />
+    <attribute sfwValue="uvhp_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="UvhpFlag" sfwIsSequence="False" sfwCaption="Uvhp Flag" />
+    <attribute sfwValue="l52_spl_acc_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="L52SplAccFlag" sfwIsSequence="False" sfwCaption="L52 Spl Acc Flag" />
+    <attribute sfwValue="l161_spl_acc_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="L161SplAccFlag" sfwIsSequence="False" sfwCaption="L161 Spl Acc Flag" />
+    <attribute sfwValue="death_pre_retirement_post_election_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="DeathPreRetirementPostElectionFlag" sfwIsSequence="False" sfwCaption="Death Pre Retirement Post Election Flag" />
+  </attributes>
+</entity>

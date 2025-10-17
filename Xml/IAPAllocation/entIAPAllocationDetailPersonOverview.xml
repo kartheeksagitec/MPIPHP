@@ -1,0 +1,103 @@
+﻿<entity ID="entIAPAllocationDetailPersonOverview" sfwMainCDO="icdoPerson" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busIAPAllocationDetailPersonOverview" sfwTableName="sgt_iapallocation_detail_personoverview" sfwView="False" sfwParentEntity="entPerson" sfwDataObjectID="doIapallocationDetailPersonoverview">
+  <commonproperties />
+  <checklist />
+  <initialload>
+    <item ID="Enable-T79Textbox" sfwStatus="Active" sfwMode="All" />
+    <item ID="Visibility-T79ApproveButton" sfwStatus="Active" sfwMode="All" />
+    <item ID="Visibility-OverpaymentAdjustmentButton" sfwStatus="Active" sfwMode="All" />
+  </initialload>
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint />
+  <rules>
+    <rule ID="Visibility-T79ApproveButton" sfwRuleType="Validation" sfwExpression="this.CheckIfManager()==True" sfwObjectBased="True" />
+    <rule ID="Enable-T79Textbox" sfwRuleType="Validation" sfwExpression="this.CheckIfManager()==False" sfwObjectBased="True" />
+    <rule ID="Visibility-OverpaymentAdjustmentButton" sfwRuleType="Validation" sfwExpression="this.isblnOverpaid==True" sfwObjectBased="True" />
+  </rules>
+  <queries>
+    <query ID="GetFirstPaymentDate" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="--PIR 869&#xD;&#xA;SELECT TOP(1) CASE WHEN SPBX.BENEFIT_OPTION_VALUE &lt;&gt; 'LIFE' THEN PHH.PAYMENT_DATE ELSE SBA.RETIREMENT_DATE END PAYMENT_DATE&#xD;&#xA;FROM SGT_BENEFIT_APPLICATION SBA INNER JOIN SGT_BENEFIT_APPLICATION_DETAIL SBAD&#xD;&#xA;ON SBA.BENEFIT_APPLICATION_ID = SBAD.BENEFIT_APPLICATION_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT SPA ON SPA.BENEFIT_APPLICATION_DETAIL_ID = SBAD.BENEFIT_APPLICATION_DETAIL_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHH ON PHH.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PLAN_BENEFIT_XR SPBX ON SPA.PLAN_BENEFIT_ID = SPBX.PLAN_BENEFIT_ID&#xD;&#xA;WHERE SBA.PERSON_ID = @PERSON_ID AND SPBX.PLAN_ID = 1 AND &#xD;&#xA;BENEFIT_TYPE_VALUE IN ('DDPR')&#xD;&#xA;ORDER BY PHH.PAYMENT_DATE">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetQDROChildSupportPayments" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT YEAR(PHH.PAYMENT_DATE) AS [YEAR],&#xD;&#xA;SUM(CASE WHEN PIT.ITEM_TYPE_DIRECTION = 1 AND ((PAYMENT_1099R_FLAG = 'Y' AND VENDOR_FLAG= 'N') OR ITEM_TYPE_CODE IN ('ITEM46','ITEM47','ITEM45','ITEM56')) &#xD;&#xA;&#x9;&#x9;&#x9;THEN ISNULL(PHDE.AMOUNT,0.0)&#xD;&#xA;         WHEN (ALLOW_ROLLOVER_CODE_VALUE = 'RRED' OR ITEM_TYPE_CODE IN ('ITEM53','ITEM41','ITEM42','ITEM43')) &#xD;&#xA;            THEN ISNULL(PHDE.AMOUNT,0.0) *  PIT.ITEM_TYPE_DIRECTION&#xD;&#xA;         ELSE 0 END)  AS AMOUNT,SPA.BENEFIT_ACCOUNT_TYPE_VALUE&#xD;&#xA;FROM SGT_PAYMENT_HISTORY_HEADER PHH &#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DETAIL PHDE ON PHH.PAYMENT_HISTORY_HEADER_ID = PHDE.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION PHD ON PHH.PAYMENT_HISTORY_HEADER_ID = PHD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT ON PIT.PAYMENT_ITEM_TYPE_ID = PHDE.PAYMENT_ITEM_TYPE_ID AND PIT.ITEM_TYPE_CODE &lt;&gt; 'ITEM54'&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT SPA ON SPA.PAYEE_ACCOUNT_ID = PHH.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_BENEFIT_ACCOUNT SPBA ON SPBA.PAYEE_BENEFIT_ACCOUNT_ID = SPA.PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PLAN_BENEFIT_XR X ON X.PLAN_BENEFIT_ID = SPA.PLAN_BENEFIT_ID AND X.PLAN_ID = 1&#xD;&#xA;INNER JOIN SGT_PERSON_ACCOUNT P ON P.PERSON_ID = SPBA.PERSON_ID AND P.PLAN_ID = 1&#xD;&#xA;LEFT OUTER JOIN&#xD;&#xA;(&#xD;&#xA;&#x9;SELECT d.BENEFIT_APPLICATION_DETAIL_ID,CHILD_SUPPORT_FLAG,EMERGENCY_ONETIME_PAYMENT_FLAG, WITHDRAWAL_TYPE_VALUE FROM SGT_BENEFIT_APPLICATION_DETAIL D &#xD;&#xA;&#x9;INNER JOIN SGT_BENEFIT_APPLICATION B ON D.BENEFIT_APPLICATION_ID = B.BENEFIT_APPLICATION_ID&#xD;&#xA;)ABA ON SPA.BENEFIT_APPLICATION_DETAIL_ID = ABA.BENEFIT_APPLICATION_DETAIL_ID&#xD;&#xA;WHERE P.PERSON_ACCOUNT_ID = @PERSON_ACCOUNT_ID AND PHD.DISTRIBUTION_STATUS_VALUE NOT IN ('CDRE' ,'CNLD','RCMD') AND&#xD;&#xA;(SPA.BENEFIT_ACCOUNT_TYPE_VALUE = 'QDRO' OR (ABA.CHILD_SUPPORT_FLAG = 'Y' AND SPA.BENEFIT_ACCOUNT_TYPE_VALUE = 'WDRL') &#xD;&#xA; OR (ABA.EMERGENCY_ONETIME_PAYMENT_FLAG = 'Y' AND SPA.BENEFIT_ACCOUNT_TYPE_VALUE = 'WDRL')&#xD;&#xA; OR (ABA.WITHDRAWAL_TYPE_VALUE LIKE 'HS%' AND SPA.BENEFIT_ACCOUNT_TYPE_VALUE = 'WDRL')&#xD;&#xA;)&#xD;&#xA;GROUP BY YEAR(PHH.PAYMENT_DATE),SPA.BENEFIT_ACCOUNT_TYPE_VALUE">
+      <parameters>
+        <parameter ID="@PERSON_ACCOUNT_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetFinalCalcualtionFromBenefitDetailId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT DISTINCT H.* FROM SGT_BENEFIT_APPLICATION SBA &#xD;&#xA;INNER JOIN SGT_BENEFIT_APPLICATION_DETAIL SBAD&#xD;&#xA;ON SBA.BENEFIT_APPLICATION_ID = SBAD.BENEFIT_APPLICATION_ID&#xD;&#xA;INNER JOIN SGT_BENEFIT_CALCULATION_HEADER H&#xD;&#xA;ON H.BENEFIT_APPLICATION_ID = SBA.BENEFIT_APPLICATION_ID&#xD;&#xA;WHERE H.CALCULATION_TYPE_VALUE = 'FINL' AND H.STATUS_VALUE = 'APPR'&#xD;&#xA;AND SBAD.BENEFIT_APPLICATION_DETAIL_ID = @BENEFIT_APPLICATION_DETAIL_ID&#xD;&#xA;AND (SBA.DRO_APPLICATION_ID IS NULL OR SBA.DRO_APPLICATION_ID = 0) --PIR 19">
+      <parameters>
+        <parameter ID="@BENEFIT_APPLICATION_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetFirstPaymentDateForSpAccnts" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="--PIR 19&#xD;&#xA;SELECT TOP(1) CASE WHEN SPBX.BENEFIT_OPTION_VALUE &lt;&gt; 'LIFE' THEN PHH.PAYMENT_DATE ELSE SBA.RETIREMENT_DATE END PAYMENT_DATE&#xD;&#xA;FROM SGT_BENEFIT_APPLICATION SBA INNER JOIN SGT_BENEFIT_APPLICATION_DETAIL SBAD&#xD;&#xA;ON SBA.BENEFIT_APPLICATION_ID = SBAD.BENEFIT_APPLICATION_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT SPA ON SPA.BENEFIT_APPLICATION_DETAIL_ID = SBAD.BENEFIT_APPLICATION_DETAIL_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_BENEFIT_ACCOUNT SPBA ON SPA.PAYEE_BENEFIT_ACCOUNT_ID = SPBA.PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHH ON PHH.PAYEE_ACCOUNT_ID = SPA.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PLAN_BENEFIT_XR SPBX ON SPA.PLAN_BENEFIT_ID = SPBX.PLAN_BENEFIT_ID&#xD;&#xA;WHERE SBA.PERSON_ID = @PERSON_ID AND SPBX.PLAN_ID = 1 AND FUNDS_TYPE_VALUE = @FUNDS_TYPE_VALUE AND&#xD;&#xA;BENEFIT_TYPE_VALUE IN ('DDPR')&#xD;&#xA;ORDER BY PHH.PAYMENT_DATE">
+      <parameters>
+        <parameter ID="@PERSON_ID" sfwDataType="int" />
+        <parameter ID="@FUNDS_TYPE_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetQDROPaymentsForSpAccnt" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT YEAR(PHH.PAYMENT_DATE) AS [YEAR],&#xD;&#xA;SUM(CASE WHEN PIT.ITEM_TYPE_DIRECTION = 1 AND ((PAYMENT_1099R_FLAG = 'Y' AND VENDOR_FLAG= 'N') OR ITEM_TYPE_CODE IN ('ITEM46','ITEM47','ITEM45','ITEM56')) &#xD;&#xA;   THEN ISNULL(PHDE.AMOUNT,0.0)&#xD;&#xA;         WHEN (ALLOW_ROLLOVER_CODE_VALUE = 'RRED' OR ITEM_TYPE_CODE IN ('ITEM53','ITEM41','ITEM42','ITEM43')) &#xD;&#xA;            THEN ISNULL(PHDE.AMOUNT,0.0) *  PIT.ITEM_TYPE_DIRECTION&#xD;&#xA;         ELSE 0 END)  AS AMOUNT,SPA.BENEFIT_ACCOUNT_TYPE_VALUE&#xD;&#xA;FROM SGT_PAYMENT_HISTORY_HEADER PHH &#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DETAIL PHDE ON PHH.PAYMENT_HISTORY_HEADER_ID = PHDE.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DISTRIBUTION PHD ON PHH.PAYMENT_HISTORY_HEADER_ID = PHD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT ON PIT.PAYMENT_ITEM_TYPE_ID = PHDE.PAYMENT_ITEM_TYPE_ID AND PIT.ITEM_TYPE_CODE &lt;&gt; 'ITEM54'&#xD;&#xA;INNER JOIN SGT_PAYEE_ACCOUNT SPA ON SPA.PAYEE_ACCOUNT_ID = PHH.PAYEE_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PAYEE_BENEFIT_ACCOUNT SPBA ON SPBA.PAYEE_BENEFIT_ACCOUNT_ID = SPA.PAYEE_BENEFIT_ACCOUNT_ID&#xD;&#xA;INNER JOIN SGT_PLAN_BENEFIT_XR X ON X.PLAN_BENEFIT_ID = SPA.PLAN_BENEFIT_ID AND X.PLAN_ID = 1&#xD;&#xA;INNER JOIN SGT_PERSON_ACCOUNT P ON P.PERSON_ID = SPBA.PERSON_ID AND P.PLAN_ID = 1&#xD;&#xA;INNER JOIN&#xD;&#xA;(&#xD;&#xA; SELECT d.BENEFIT_APPLICATION_DETAIL_ID,CHILD_SUPPORT_FLAG FROM SGT_BENEFIT_APPLICATION_DETAIL D &#xD;&#xA; INNER JOIN SGT_BENEFIT_APPLICATION B ON D.BENEFIT_APPLICATION_ID = B.BENEFIT_APPLICATION_ID AND B.DRO_APPLICATION_ID IS NOT NULL&#xD;&#xA;)ABA ON SPA.BENEFIT_APPLICATION_DETAIL_ID = ABA.BENEFIT_APPLICATION_DETAIL_ID&#xD;&#xA;WHERE P.PERSON_ACCOUNT_ID = @PERSON_ACCOUNT_ID AND PHD.DISTRIBUTION_STATUS_VALUE NOT IN ('CDRE' ,'CNLD','RCMD') AND&#xD;&#xA;SPA.BENEFIT_ACCOUNT_TYPE_VALUE = 'WDRL' AND  SPBA.FUNDS_TYPE_VALUE = @FUNDS_TYPE_VALUE&#xD;&#xA;GROUP BY YEAR(PHH.PAYMENT_DATE),SPA.BENEFIT_ACCOUNT_TYPE_VALUE">
+      <parameters>
+        <parameter ID="@PERSON_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@FUNDS_TYPE_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="computational_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="4,0" sfwIsNull="True" ID="ComputationalYear" sfwIsSequence="False" sfwCaption="Computational Year" />
+    <attribute sfwValue="quarter" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="Quarter" sfwIsSequence="False" sfwCaption="Quarter" />
+    <attribute sfwValue="alloc1" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc1" sfwIsSequence="False" sfwCaption="Alloc1" />
+    <attribute sfwValue="alloc2" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc2" sfwIsSequence="False" sfwCaption="Alloc2" />
+    <attribute sfwValue="alloc2_invt" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc2Invt" sfwIsSequence="False" sfwCaption="Alloc2 Invt" />
+    <attribute sfwValue="alloc2_frft" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc2Frft" sfwIsSequence="False" sfwCaption="Alloc2 Frft" />
+    <attribute sfwValue="alloc3" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc3" sfwIsSequence="False" sfwCaption="Alloc3" />
+    <attribute sfwValue="alloc4" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc4" sfwIsSequence="False" sfwCaption="Alloc4" />
+    <attribute sfwValue="alloc4_invt" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc4Invt" sfwIsSequence="False" sfwCaption="Alloc4 Invt" />
+    <attribute sfwValue="alloc4_frft" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc4Frft" sfwIsSequence="False" sfwCaption="Alloc4 Frft" />
+    <attribute sfwValue="alloc5_affl" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc5Affl" sfwIsSequence="False" sfwCaption="Alloc5 Affl" />
+    <attribute sfwValue="alloc5_nonaffl" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc5Nonaffl" sfwIsSequence="False" sfwCaption="Alloc5 Nonaffl" />
+    <attribute sfwValue="alloc5_both" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Alloc5Both" sfwIsSequence="False" sfwCaption="Alloc5 Both" />
+    <attribute sfwValue="total" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="Total" sfwIsSequence="False" sfwCaption="Total" />
+    <attribute sfwValue="iap_account_balance" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="IapAccountBalance" sfwIsSequence="False" sfwCaption="Iap Account Balance" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwDataType="int" sfwType="Property" ID="PersonId" sfwValue="icdoPerson.person_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="MpiPersonId" sfwValue="icdoPerson.mpi_person_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrFullName" sfwValue="icdoPerson.istrFullName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrLast4DigitsofSSN" sfwValue="icdoPerson.istrLast4DigitsofSSN" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtDateofBirth" sfwValue="icdoPerson.idtDateofBirth" />
+    <attribute sfwDataType="int" sfwType="Property" ID="LintPersonAccountId" sfwValue="lintPersonAccountId" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecThru79Hours" sfwValue="idecThru79Hours" />
+    <attribute sfwType="Collection" sfwEntity="entIapAllocationDetailCalculation" ID="lstIAPAllocationDetailPersonOverview" sfwValue="iclbIAPAllocationDetailPersonOverview" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtIAPLatestAllocationDate" sfwValue="idtIAPLatestAllocationDate" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecIAPAccountBalance" sfwValue="idecIAPAccountBalance" />
+    <attribute sfwType="Collection" sfwEntity="entIapAllocationDetailCalculation" ID="lstL52SpecialAccountDetailPersonOverview" sfwValue="iclbL52SpecialAccountDetailPersonOverview" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtL52SplLatestAllocationDate" sfwValue="idtL52SplLatestAllocationDate" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecL52SplAccountBalance" sfwValue="idecL52SplAccountBalance" />
+    <attribute sfwType="Collection" sfwEntity="entIapAllocationDetailCalculation" ID="lstL161SpecialAccountDetailPersonOverview" sfwValue="iclbL161SpecialAccountDetailPersonOverview" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtL161SplLatestAllocationDate" sfwValue="idtL161SplLatestAllocationDate" />
+    <attribute sfwDataType="decimal" sfwType="Property" ID="IdecL161SplAccountBalance" sfwValue="idecL161SplAccountBalance" />
+    <attribute sfwType="Collection" sfwEntity="entIapRecalculationCopy" ID="lstIAPRecalculationCopy" sfwValue="iclbIAPRecalculationCopy" />
+    <attribute ID="objPersonAccount" sfwType="Object" sfwEntity="entPersonAccount" sfwValue="ibusPersonAccount" />
+    <attribute sfwType="Collection" sfwEntity="entIapAllocationDetailCalculation" ID="lstTotalIAPAllocationDetailPersonOverview" sfwValue="iclbTotalIAPAllocationDetailPersonOverview" />
+    <attribute sfwType="Collection" sfwEntity="entIapAllocationDetailCalculation" ID="lstSpAccntAllocDetailPersonOverview" sfwValue="iclbSpAccntAllocDetailPersonOverview" />
+    <attribute sfwType="Collection" sfwEntity="entIapAllocationDetailCalculation" ID="lstTotalSpAccntAllocDetailPersonOverview" sfwValue="iclbTotalSpAccntAllocDetailPersonOverview" />
+  </attributes>
+  <objectmethods>
+    <method ID="btn_AdjustOverPayment" sfwReturnType="ArrayList" />
+    <method ID="btn_PostAllocations" sfwReturnType="ArrayList" />
+    <method ID="btn_RefreshAllocations" sfwReturnType="ArrayList" />
+    <method ID="btn_ApproveThru79Hours" sfwReturnType="ArrayList" />
+    <method ID="btn_SpAccntPostAllocations" sfwReturnType="ArrayList" />
+    <method ID="btn_SpAccntRefreshAllocations" sfwReturnType="ArrayList" />
+  </objectmethods>
+  <methods />
+  <lifecycle />
+  <ExtraFields />
+</entity>

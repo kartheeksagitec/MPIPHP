@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entProcess" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvWorkflow" sfwType="BusinessRule" sfwMainCDO="icdoProcess" sfwObjectID="busProcess" sfwTableName="sgw_process" sfwView="False" sfwDataObjectID="doProcess">
+  <rules />
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <queries>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGW_PROCESS ORDER BY DESCRIPTION">
+      <parameters />
+    </query>
+    <query ID="LoadActiveProcesses" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGW_PROCESS where STATUS_VALUE = 'ACT' ORDER BY DESCRIPTION">
+      <parameters />
+    </query>
+    <query ID="GetProcessIdByName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT PROCESS_ID FROM SGW_PROCESS WITH(NOLOCK) WHERE NAME = @NAME">
+      <parameters>
+        <parameter ID="@NAME" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="process_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ProcessId" sfwIsSequence="False" sfwCaption="Process Id" />
+    <attribute sfwValue="description" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1000" sfwIsNull="False" ID="Description" sfwIsSequence="False" sfwCaption="Description" />
+    <attribute sfwValue="name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="False" ID="Name" sfwIsSequence="False" sfwCaption="Name" />
+    <attribute sfwValue="priority" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="Priority" sfwIsSequence="False" sfwCaption="Priority" />
+    <attribute sfwType="Description" ID="TypeDescription" sfwCaption="Type" sfwValue="type_description" />
+    <attribute sfwValue="type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TypeId" sfwCodeID="1603" sfwIsSequence="False" sfwCaption="Type" />
+    <attribute sfwValue="type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="TypeValue" sfwIsSequence="False" sfwCaption="Type" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="StatusId" sfwCodeID="5003" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="use_new_map_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="UseNewMapFlag" sfwIsSequence="False" sfwCaption="Use New Map Flag" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwType="Collection" sfwEntity="entActivity" ID="lstActivity" sfwValue="iclbActivity" />
+    <attribute sfwType="Collection" sfwEntity="entDocumentProcessCrossref" ID="lstDocumentProcessCrossref" sfwValue="iclbDocumentProcessCrossref" />
+  </attributes>
+</entity>

@@ -1,0 +1,299 @@
+﻿<form ID="wfmJobDetailTraceMaintenance" sfwActive="True" sfwStatus="Review" sfwType="Maintenance" sfwTitle="Job Instance Detail Trace" version="3.5" sfwEntity="entJobServiceMonitoring" sfwPureEntity="True">
+  <initialload>
+    <callmethods sfwMode="Update" sfwMethodName="FindJobInstanceDetailTrace" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlJobHeader" sfwCaption="Job Schedule Instance">
+          <sfwTable CssClass="Table" ID="tblJobHeader">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capJobName" Text="Job Name: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblJobName" sfwEntityField="objJobDetail.objJobHeader.JobName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatusDescription1" Text="Job Status: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusDescription1" sfwEntityField="objJobDetail.objJobHeader.StatusDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capJobHeaderId" Text="Job Header ID: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblJobHeaderId" sfwEntityField="objJobDetail.objJobHeader.JobHeaderId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStartTime1" Text="Job Start Time: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStartTime1" sfwDataFormat="{0:g}" sfwEntityField="objJobDetail.objJobHeader.StartTime" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capEndTime1" Text="Job End Time: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEndTime1" sfwDataFormat="{0:g}" sfwEntityField="objJobDetail.objJobHeader.EndTime" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="lblStepName" ID="capStepName" Text="Step Name: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStepName" sfwEntityField="objJobDetail.StepName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatusDescription" Text="Step Status: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusDescription" sfwEntityField="objJobDetail.StatusDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capJobDetailId" Text="Job Detail ID: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblJobDetailId" sfwEntityField="objJobDetail.JobDetailId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStartTime" Text="Step Start Time: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStartTime" sfwDataFormat="{0:g}" sfwEntityField="objJobDetail.StartTime" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capEndTime" Text="Step End Time: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEndTime" sfwDataFormat="{0:g}" sfwEntityField="objJobDetail.EndTime" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel Text="Total Time (min) :" sfwIsCaption="True" ID="capLabel" AssociatedControlID="lblTotalStepTime" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblTotalStepTime" sfwEntityField="objJobDetailStats.total_step_time" sfwTwoWayBinding="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capQueriesExecuted" Text="Queries Executed : " AssociatedControlID="lblQueriesExecuted" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblQueriesExecuted" sfwEntityField="objJobDetailStats.QueriesExecuted" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capQueriesTimeInMs" Text="Queries Time (min) : " AssociatedControlID="lblQueriesTimeInMs" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblQueriesTimeInMs" sfwEntityField="objJobDetailStats.QueriesTimeInMs" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capRulesExecuted" Text="Rules Executed : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblRulesExecuted" sfwEntityField="objJobDetailStats.RulesExecuted" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capRulesTimeInMs" Text="Rules Time (min) : " AssociatedControlID="lblRulesTimeInMs" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblRulesTimeInMs" sfwEntityField="objJobDetailStats.RulesTimeInMs" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPanel" sfwCaption="Trace Details">
+          <sfwTable ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Paramters">
+                      <sfwTable ID="tblTable">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvEditableJobParameters" sfwTwoWayBinding="True" sfwGridEntity="entJobParameters" sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobParameters.GetJobParametersForDetailId" AllowEditing="True">
+                              <Columns>
+                                <TemplateField HeaderText="Job Parameters ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="JobParametersId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Parameter Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ParamName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Parameter Value">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ParamValue" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@Job_Detail_Id" sfwDataType="int" sfwEntityField="JobDetailId" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage1" HeaderText="Queries">
+                      <sfwTable ID="tblTable1">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.GetQueryByJobDetail" ID="grvJobDetailQueries" AllowPaging="True" AllowSorting="True" sfwLoadWhenRequired="True" AllowEditing="True" sfwTwoWayBinding="True">
+                              <Columns>
+                                <TemplateField HeaderText="Query">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="query" sfwDisplayLength="150" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="calls" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Response Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="response_time" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField SortExpression="max_time" HeaderText="Max Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="max_time" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Total Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="total_time" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@JOB_DETAIL_ID" sfwEntityField="JobDetailId" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage2" HeaderText="Rules">
+                      <sfwTable ID="tblTable2">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView sfwBoundToQuery="True" sfwQueryLoadType="Update" sfwBaseQuery="entJobServiceMonitoring.GetRuleByJobDetail" ID="grvJobDetailRules" AllowPaging="True" AllowSorting="True" sfwLoadWhenRequired="True" AllowEditing="True" sfwTwoWayBinding="True">
+                              <Columns>
+                                <TemplateField HeaderText="Rule ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="rule_id" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Calls">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="calls" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Response Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="response_time" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Max Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="max_time" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Total Time (ms)">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="total_time" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@JOB_DETAIL_ID" sfwDataType="int" sfwEntityField="JobDetailId" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn />
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objJobDetail.objJobHeader" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objJobDetail" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objJobDetailStats" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

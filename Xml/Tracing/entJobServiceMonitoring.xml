@@ -1,0 +1,260 @@
+﻿<entity ID="entJobServiceMonitoring" sfwView="False" sfwActive="True" sfwType="EntityRule" sfwStatus="Review" CreateWithClass="False" sfwDatabase="tracing">
+  <ExtraFields />
+  <queries>
+    <query ID="GetSystemLogInfo" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select  query_limit, rule_limit, alert_email_address, validation_rule_flag, query_high_limit, query_high_limit_alert, rule_high_limit, rule_high_limit_alert&#xD;&#xA;  from sgs_act_log_job">
+      <parameters />
+    </query>
+    <query ID="GetJobDetailLogInfo" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select ajs.job_schedule_detail_id, step_limit, query_limit, rule_limit, alert_email_address, job_monitoring_flag, validation_rule_flag, query_high_limit, query_high_limit_alert, rule_high_limit, rule_high_limit_alert&#xD;&#xA;  from sgs_job_header jh, sgs_job_schedule_detail jsd, sgs_act_log_job_step ajs&#xD;&#xA; where jh.job_schedule_id = jsd.job_schedule_id&#xD;&#xA;   and jh.job_header_id = @job_header_id&#xD;&#xA;   and (jsd.step_code = @job_step_code)&#xD;&#xA;   and jsd.job_schedule_detail_id = ajs.job_schedule_detail_id">
+      <parameters>
+        <parameter ID="@job_header_id" sfwDataType="int" />
+        <parameter ID="@job_step_code" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetActLogJob" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_act_log_job">
+      <parameters />
+    </query>
+    <query ID="MonitoredJobDetail" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select jsd.job_schedule_detail_id 'job_schedule_detail_id', jsc.schedule_name 'schedule_name', jsd.step_name 'step_name', count(*) 'number_of_runs',  &#xA;&#x9;   cast(round(sum(datediff(ms, jdt.start_time, jdt.end_time) * 1.00 / 60000) / count(*), 2) as float) 'response_time', &#xA;&#x9;   cast(round(max(datediff(ms, jdt.start_time, jdt.end_time) * 1.00 / 60000), 2) as float) 'max_time',&#xA;       sum(case when datediff(mi, jdt.start_time, jdt.end_time) &gt;= aljs.step_limit then 1 else 0 end) 'slow_count'&#xA;  from sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd, sgs_act_log_job_step aljs &#xA; where jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xA;   and jsd.job_schedule_detail_id = aljs.job_schedule_detail_id&#xA;   and jdt.start_time between @start_time and @end_time&#xA;group by jsd.job_schedule_detail_id, jsc.schedule_name, jsd.step_name&#xA;order by sum(case when datediff(s, jdt.start_time, jdt.end_time) &gt; aljs.step_limit then 1 else 0 end) desc;">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetAllJobDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select jsd.job_schedule_detail_id 'job_schedule_detail_id', jsc.schedule_name, jsd.step_name, count(*) 'number_of_runs',  &#xA;&#x9;   cast(round(sum(datediff(ms, jdt.start_time, jdt.end_time) * 1.00 / 60000 )  / count(*), 2) as float)  'response_time', &#xA;&#x9;   cast(round(max(datediff(ms, jdt.start_time, jdt.end_time) * 1.00 / 60000 ), 2) as float) 'max_time',&#xA;&#x9;   cast(round(sum(jds.queries_time_in_ms) * 1.00 / 60000 / count(*), 2) as float) 'database_time', &#xA;&#x9;   cast(round(sum(jds.rules_time_in_ms) * 1.00 / 60000 / count(*), 2) as float) 'rule_time'&#xA;  from sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd, sgs_job_detail_stats jds&#xA; where jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xA;   and jdt.job_detail_id = jds.job_detail_id&#xA;   and jdt.start_time between @start_time and @end_time&#xA;group by jsd.job_schedule_detail_id, jsc.schedule_name, jsd.step_name&#xA;order by  cast(round(sum(datediff(s, jdt.start_time, jdt.end_time)) * 1.00 / 60/count(*), 2) as float) desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="JobDetailSlowQuery" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select jsd.job_schedule_detail_id 'job_schedule_detail_id', jsc.schedule_name 'schedule_name', jsd.step_name 'step_name', &#xA;       query, query_hash, count(*) 'calls',  &#xA;&#x9;   cast(round(sum(time_in_ms) *1.0/ count(*),2) as float) 'response_time', &#xA;&#x9;   max(time_in_ms) 'max_time',&#xA;&#x9;   sum(time_in_ms) 'total_time'&#xA;  from sgv_job_detail_th_query jdtq, sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd&#xA; where jdt.job_detail_id = jdtq.job_detail_id&#xA;   and jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xA;   and jdtq.start_time between @start_time and @end_time&#xA; group by jsd.job_schedule_detail_id, jsc.schedule_name, jsd.step_name, query, query_hash&#xA; order by sum(time_in_ms) desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="JobDetailMonitoredQuery" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select jsd.job_schedule_detail_id 'job_schedule_detail_id', jsc.schedule_name 'schedule_name', jsd.step_name 'step_name', query, query_hash, &#xD;&#xA;       count(*) 'calls',  &#xD;&#xA;&#x9;   cast(round(sum(time_in_ms) *1.0/ count(*),2) as float) 'response_time', &#xD;&#xA;&#x9;   max(time_in_ms) 'max_time',&#xD;&#xA;&#x9;   sum(time_in_ms) 'total_time'&#xD;&#xA;  from sgv_job_detail_query jdq, sgs_job_detail jdt, sgs_job_header jhd,&#xD;&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd&#xD;&#xA; where jdt.job_detail_id = jdq.job_detail_id&#xD;&#xA;   and jdt.job_header_id = jhd.job_header_id&#xD;&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xD;&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xD;&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xD;&#xA;   and jdq.start_time between @start_time and @end_time&#xD;&#xA; group by jsd.job_schedule_detail_id, jsc.schedule_name, jsd.step_name, query, query_hash&#xD;&#xA; order by sum(time_in_ms) desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="JobDetailMonitoredRule" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select jsd.job_schedule_detail_id 'job_schedule_detail_id', jsc.schedule_name 'schedule_name', jsd.step_name 'step_name',rule_id, &#xD;&#xA;       count(*) 'calls',  &#xD;&#xA;&#x9;   cast(round(sum(time_in_ms) *1.0/ count(*),2) as float) 'response_time', &#xD;&#xA;&#x9;   max(time_in_ms) 'max_time',&#xD;&#xA;&#x9;   sum(time_in_ms) 'total_time'&#xD;&#xA;  from sgs_job_detail_rule jdr, sgs_job_detail jdt, sgs_job_header jhd,&#xD;&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd&#xD;&#xA; where jdt.job_detail_id = jdr.job_detail_id&#xD;&#xA;   and jdt.job_header_id = jhd.job_header_id&#xD;&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xD;&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xD;&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xD;&#xA;   and jdr.start_time between @start_time and @end_time&#xD;&#xA; group by jsd.job_schedule_detail_id, jsc.schedule_name, jsd.step_name, rule_id&#xD;&#xA; order by sum(time_in_ms) desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="JobDetailSlowRule" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select jsd.job_schedule_detail_id 'job_schedule_detail_id', jsc.schedule_name 'schedule_name', jsd.step_name 'step_name', &#xA;       rule_id, &#xA;       count(*) 'calls',  &#xA;&#x9;   cast(round(sum(time_in_ms) *1.0/ count(*),2) as float) 'response_time', &#xA;&#x9;   max(time_in_ms) 'max_time',&#xA;&#x9;   sum(time_in_ms) 'total_time'&#xA;  from sgs_job_detail_th_rule jdtr, sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd&#xA; where jdt.job_detail_id = jdtr.job_detail_id&#xA;   and jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xA;   and jdtr.start_time between @start_time and @end_time&#xA; group by jsd.job_schedule_detail_id , jsc.schedule_name, jsd.step_name, rule_id&#xA; order by sum(time_in_ms) desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetJobInstanceDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select jsc.schedule_name 'schedule_name', jsd.step_name 'step_name', jsd.job_schedule_detail_id 'job_schedule_detail_id', &#xA;       jdt.job_detail_id 'job_detail_id', jdt.job_header_id 'job_header_id', jdt.step_code 'step_code', jdt.status_id 'status_id', &#xA;       jdt.status_value 'status_value', jdt.start_time 'start_time', jdt.end_time 'end_time', jdt.start_time 'to_start_time',&#xA;&#x9;   rules_time_in_ms,&#xA;&#x9;   jds.queries_executed 'queries_executed', cast(round(jds.queries_time_in_ms *1.0/60000,2) as float) 'query_time_in_min', jds.rules_executed 'rules_executed', &#xA;&#x9;   cast(round(jds.rules_time_in_ms*1.0/60000,5) as float) 'rule_time_in_min',&#xA;       cast(round(DateDiff(MS, jdt.start_time, jdt.end_time) * 1.0 / 60000, 5) as float) total_time&#xA;  from sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd, sgs_job_detail_stats jds &#xA; where jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xA;   and jdt.job_detail_id = jds.job_detail_id&#xA;   and jsd.job_schedule_detail_id = @job_schedule_detail_id&#xA;   and jdt.start_time between @start_time and @end_time&#xA;order by jdt.job_detail_id desc">
+      <parameters>
+        <parameter ID="@job_schedule_detail_id" sfwDataType="int" />
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetQueryByJobDetail" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select query, &#xA;       count(*) 'calls',  &#xA;&#x9;   cast(round(sum(time_in_ms) *1.0/ count(*),2) as float) 'response_time', &#xA;&#x9;   sum(time_in_ms) 'total_time',&#xA;&#x9;   max(time_in_ms) 'max_time'&#xA;  from sgs_job_detail_query &#xA; where job_detail_id = @job_detail_id&#xA; group by query&#xA; order by total_time desc">
+      <parameters>
+        <parameter ID="@JOB_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetRuleByJobDetail" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select rule_id, &#xA;       count(*) 'calls',  &#xA;&#x9;   cast(round(sum(time_in_ms) *1.0/ count(*),2) as float) 'response_time', &#xA;&#x9;   sum(time_in_ms) 'total_time',&#xA;&#x9;   max(time_in_ms) 'max_time'&#xA;  from sgs_job_detail_rule &#xA; where job_detail_id = @job_detail_id&#xA; group by rule_id&#xA; order by total_time desc">
+      <parameters>
+        <parameter ID="@JOB_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="JobDetailSlow" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select jsd.job_schedule_detail_id 'job_schedule_detail_id', jsc.schedule_name 'schedule_name', jsd.step_name 'step_name', &#xA;       count(*) 'calls',  &#xA;&#x9;   cast(round(sum(time_in_ms) * 1.0 / 60000 / count(*),2) as float) 'response_time', &#xA;&#x9;   cast(round(max(time_in_ms) * 1.0 / 60000,2) as float) 'max_time',&#xA;&#x9;   cast(round(sum(jds.queries_time_in_ms) * 1.00 / 60000 / count(*), 2) as float) 'database_time', &#xA;&#x9;   cast(round(sum(jds.rules_time_in_ms) * 1.00 / 60000 / count(*), 2) as float) 'rule_time'&#xA;  from sgs_job_detail_th jdth, sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd, sgs_job_detail_stats jds&#xA; where jdt.job_detail_id = jdth.job_detail_id&#xA;   and jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is  null)&#xA;   and jdt.job_detail_id = jds.job_detail_id&#xA;   and jdth.start_time between @start_time and @end_time&#xA; group by jsd.job_schedule_detail_id, jsc.schedule_name, jsd.step_name&#xA; order by max(time_in_ms) desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="JobServiceSummary" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select &#xD;&#xA;&#x9;(select count(*) from sgs_job_detail where START_TIME between @start_time and @end_time) 'AllCount', &#xD;&#xA;&#x9;(select count(*) from sgs_job_detail jdt, sgs_job_header jhd,&#xD;&#xA;&#x9;&#x9;sgs_job_schedule jsc, sgs_job_schedule_detail jsd, sgs_act_log_job_step aljs &#xD;&#xA;&#x9;&#x9; where jdt.job_header_id = jhd.job_header_id&#xD;&#xA;&#x9;&#x9;   and jhd.job_schedule_id = jsc.job_schedule_id&#xD;&#xA;&#x9;&#x9;   and jsd.job_schedule_id = jhd.job_schedule_id&#xD;&#xA;&#x9;&#x9;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xD;&#xA;&#x9;&#x9;   and jsd.job_schedule_detail_id = aljs.job_schedule_detail_id&#xD;&#xA;&#x9;&#x9;   and jdt.start_time between @start_time and @end_time) 'MonitoredCount', &#xD;&#xA;&#x9;(select count(*) from sgs_job_detail_th where START_TIME between @start_time and @end_time) 'SlowCount', &#xD;&#xA;&#x9;(select count(*) from sgs_job_detail_query where START_TIME between @start_time and @end_time) 'MonitoredQueryCount', &#xD;&#xA;&#x9;(select count(*) from sgs_job_detail_th_query where START_TIME between @start_time and @end_time) 'SlowQueryCount', &#xD;&#xA;&#x9;(select count(*) from sgs_job_detail_rule where START_TIME between @start_time and @end_time) 'MonitoredRuleCount', &#xD;&#xA;&#x9;(select count(*) from sgs_job_detail_th_rule where START_TIME between @start_time and @end_time) 'SlowRuleCount'">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="JobServiceStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select status_id, status_value, count(*) 'count'&#xD;&#xA;  from sgs_job_detail &#xD;&#xA; where START_TIME between @start_time and @end_time&#xD;&#xA; group by status_id, status_value">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="JobServiceError" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select jsc.schedule_name 'schedule_name', jsd.step_name 'step_name', jsd.job_schedule_detail_id 'job_schedule_detail_id', &#xD;&#xA;       jdt.job_detail_id 'job_detail_id', jdt.job_header_id 'job_header_id', jdt.step_code 'step_code', jdt.status_id 'status_id', &#xD;&#xA;       jdt.status_value 'status_value', jdt.start_time 'start_time', jdt.end_time 'end_time', jdt.start_time 'to_start_time',&#xD;&#xA;&#x9;   rules_time_in_ms,&#xD;&#xA;&#x9;   jds.queries_executed 'queries_executed', cast(round(jds.queries_time_in_ms *1.0/60000,2) as float) 'query_time_in_min', jds.rules_executed 'rules_executed', &#xD;&#xA;&#x9;   cast(round(jds.rules_time_in_ms*1.0/60000,5) as float) 'rule_time_in_min',&#xD;&#xA;       cast(round(DateDiff(MS, jdt.start_time, jdt.end_time) * 1.0 / 60000, 5) as float) total_time&#xD;&#xA;  from sgs_job_detail jdt, sgs_job_header jhd,&#xD;&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd, sgs_job_detail_stats jds &#xD;&#xA; where jdt.job_header_id = jhd.job_header_id&#xD;&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xD;&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xD;&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xD;&#xA;   and jdt.job_detail_id = jds.job_detail_id&#xD;&#xA;   and jdt.status_value = 'PRER'&#xD;&#xA;   and jdt.start_time between @start_time and @end_time&#xD;&#xA;order by jdt.job_detail_id desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetFirstSlowQuery" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select top 1 jdtq.query, jdtq.query_id&#xA;  from sgv_job_detail_th_query jdtq, sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd&#xA; where jdt.job_detail_id = jdtq.job_detail_id&#xA;   and jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xA;   and jdtq.start_time between @start_time and @end_time&#xA;   and jsd.job_schedule_detail_id = @job_schedule_detail_id&#xA;   and query_hash = @query_hash&#xA;order by time_in_ms desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+        <parameter ID="@job_schedule_detail_id" sfwDataType="int" />
+        <parameter ID="@query_hash" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetFirstTracedQuery" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select top 1 jdtq.query, jdtq.query_id&#xA;  from sgv_job_detail_query jdtq, sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd&#xA; where jdt.job_detail_id = jdtq.job_detail_id&#xA;   and jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xA;   and jdtq.start_time between @start_time and @end_time&#xA;   and jsd.job_schedule_detail_id = @job_schedule_detail_id&#xA;   and query_hash = @query_hash&#xA;order by time_in_ms desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+        <parameter ID="@job_schedule_detail_id" sfwDataType="int" />
+        <parameter ID="@query_hash" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetSlowRuleDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select top 100 jdtr.job_detail_id, jdtr.parameter_details, jdtr.start_time, jdtr.end_time, jdtr.time_in_ms&#xA;  from sgs_job_detail_th_rule jdtr, sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd&#xA; where jdt.job_detail_id = jdtr.job_detail_id&#xA;   and jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xA;   and jdtr.start_time between @start_time and @end_time&#xA;   and jsd.job_schedule_detail_id = @job_schedule_detail_id&#xA;   and rule_id = @rule_id&#xA;order by time_in_ms desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+        <parameter ID="@job_schedule_detail_id" sfwDataType="int" />
+        <parameter ID="@rule_id" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetTracedRuleDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select top 100 jdtr.job_detail_id, jdtr.parameter_details, jdtr.start_time, jdtr.end_time, jdtr.time_in_ms&#xA;  from sgs_job_detail_rule jdtr, sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd&#xA; where jdt.job_detail_id = jdtr.job_detail_id&#xA;   and jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and (jsd.step_code = jdt.step_code or jdt.step_code is null)&#xA;   and jdtr.start_time between @start_time and @end_time&#xA;   and jsd.job_schedule_detail_id = @job_schedule_detail_id&#xA;   and rule_id = @rule_id&#xA;order by time_in_ms desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+        <parameter ID="@job_schedule_detail_id" sfwDataType="int" />
+        <parameter ID="@rule_id" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="GetJobDetailWithStats" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select a.*, cast(round(queries_time_in_ms *1.0/ 60000,2) as float) 'query_time', queries_executed,&#xA;       cast(round(rules_time_in_ms *1.0/ 60000,5) as float) 'rule_time', rules_executed,&#xA;       cast(round(DateDiff(MS, a.start_time, a.end_time) * 1.0 / 60000, 5) as float) total_step_time&#xA;  from sgs_job_detail a left outer join sgs_job_detail_stats b on a.job_detail_id = b.job_detail_id&#xA;where a.job_detail_id = @job_detail_id">
+      <parameters>
+        <parameter ID="@job_detail_id" sfwDataType="int" />
+      </parameters>
+      <mappedcolumns>
+        <column ID="job_detail_id" sfwEntityField="objJobDetail.JobDetailId" />
+        <column ID="job_header_id" sfwEntityField="objJobDetail.JobHeaderId" />
+        <column ID="step_code" sfwEntityField="objJobDetail.StepCode" />
+        <column ID="order_number" sfwEntityField="objJobDetail.OrderNumber" />
+        <column ID="status_id" sfwEntityField="objJobDetail.StatusId" />
+        <column ID="status_value" sfwEntityField="objJobDetail.StatusValue" />
+        <column ID="start_time" sfwEntityField="objJobDetail.StartTime" />
+        <column ID="end_time" sfwEntityField="objJobDetail.EndTime" />
+        <column ID="return_code" sfwEntityField="objJobDetail.ReturnCode" />
+        <column ID="dependent_step_code" sfwEntityField="objJobDetail.DependentStepCode" />
+        <column ID="dependent_step_return_value" sfwEntityField="objJobDetail.DependentStepReturnValue" />
+        <column ID="operator_id" sfwEntityField="objJobDetail.OperatorId" />
+        <column ID="operator_value" sfwEntityField="objJobDetail.OperatorValue" />
+        <column ID="created_by" sfwEntityField="objJobDetail.CreatedBy" />
+        <column ID="created_date" sfwEntityField="objJobDetail.CreatedDate" />
+        <column ID="modified_by" sfwEntityField="objJobDetail.ModifiedBy" />
+        <column ID="modified_date" sfwEntityField="objJobDetail.ModifiedDate" />
+        <column ID="update_seq" sfwEntityField="objJobDetail.UpdateSeq" />
+        <column ID="progress_percentage" sfwEntityField="objJobDetail.ProgressPercentage" />
+        <column ID="step_name" sfwEntityField="objJobDetail.StepName" />
+        <column ID="query_time" sfwEntityField="objJobDetailStats.QueriesTimeInMs" />
+        <column ID="queries_executed" sfwEntityField="objJobDetailStats.QueriesExecuted" />
+        <column ID="rule_time" sfwEntityField="objJobDetailStats.RulesTimeInMs" />
+        <column ID="rules_executed" sfwEntityField="objJobDetailStats.RulesExecuted" />
+        <column ID="total_step_time" sfwEntityField="objJobDetailStats.total_step_time" />
+      </mappedcolumns>
+    </query>
+    <query ID="GetByJobScheduleID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select job_schedule_detail_id, step_name&#xA;  from sgs_job_schedule_detail&#xA; where job_schedule_id = @job_schedule_id&#xA; order by step_code">
+      <parameters>
+        <parameter ID="@job_schedule_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAllJobs" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select job_schedule_id, schedule_name &#xA;  from sgs_job_schedule&#xA; order by schedule_name">
+      <parameters />
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <attributes>
+    <attribute ID="FromDate" sfwDataType="datetime" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="ToDate" sfwDataType="datetime" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="LastMinutes" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="LastDays" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="JobScheduleDetailID" sfwDataType="int" sfwPrivate="False" sfwType="Property" sfwCaption="Job Schedule Detail ID" />
+    <attribute ID="AllCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="MonitoredCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="SlowCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="MonitoredQueryCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="SlowQueryCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="MonitoredRuleCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="SlowRuleCount" sfwDataType="int" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="JobDetailId" sfwType="Property" sfwDataType="int" />
+    <attribute ID="JobHeaderId" sfwType="Property" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="StepCode" sfwType="Property" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="OrderNumber" sfwType="Property" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="StatusDescription" sfwType="Description" />
+    <attribute ID="StatusId" sfwType="Property" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="StatusValue" sfwType="Property" sfwDataType="string" sfwRequired="False" sfwLength="4" />
+    <attribute ID="StartTime" sfwType="Property" sfwDataType="DateTime" sfwRequired="False" />
+    <attribute ID="EndTime" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="True" sfwIsIdentity="False" sfwDataType="DateTime" sfwRequired="False" />
+    <attribute ID="ReturnCode" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="True" sfwIsIdentity="False" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="DependentStepCode" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="True" sfwIsIdentity="False" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="DependentStepReturnValue" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="True" sfwIsIdentity="False" sfwDataType="string" sfwRequired="False" sfwLength="10" />
+    <attribute ID="OperatorDescription" sfwType="Description" />
+    <attribute ID="OperatorId" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwCodeID="7005" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="OperatorValue" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="True" sfwIsIdentity="False" sfwDataType="string" sfwRequired="False" sfwLength="4" />
+    <attribute ID="CreatedBy" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwDataType="string" sfwRequired="False" sfwLength="50" />
+    <attribute ID="CreatedDate" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwDataType="DateTime" sfwRequired="False" />
+    <attribute ID="ModifiedBy" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwDataType="string" sfwRequired="False" sfwLength="50" />
+    <attribute ID="ModifiedDate" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwDataType="DateTime" sfwRequired="False" />
+    <attribute ID="UpdateSeq" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="False" sfwIsIdentity="False" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="ProgressPercentage" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="True" sfwIsIdentity="False" sfwDataType="int" sfwRequired="False" />
+    <attribute ID="StepName" sfwType="Property" sfwKeyNo="0" sfwIsSequence="False" sfwIsNull="True" sfwIsIdentity="False" sfwDataType="string" sfwRequired="False" sfwLength="256" />
+    <attribute ID="QueryHash" sfwDataType="string" sfwPrivate="False" sfwType="Property" sfwCaption="Query Hash" />
+    <attribute ID="FirstQuery" sfwDataType="string" sfwPrivate="False" sfwType="Property" />
+    <attribute ID="RuleID" sfwDataType="string" sfwPrivate="False" sfwType="Property" sfwCaption="Rule ID" />
+    <attribute ID="objJobDetail" sfwType="Object" sfwEntity="entJobDetail" sfwPrivate="False" />
+    <attribute ID="objJobDetailStats" sfwType="Object" sfwEntity="entJobDetailStats" sfwPrivate="False" />
+  </attributes>
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods>
+    <method ID="LoadJobService" sfwMethodType="Load" sfwLoadMainObject="False">
+      <item ID="rulInitializeJobServiceMonitoring" sfwItemType="Rule" />
+    </method>
+    <method ID="LoadJobScheduleInstances" sfwMethodType="Load" sfwMode="Update" sfwLoadMainObject="False">
+      <item ID="JobScheduleDetailID" sfwParameter="JobScheduleDetailID" sfwItemType="Property" sfwDataType="int" />
+      <parameter ID="JobScheduleDetailID" sfwDataType="int" />
+      <item ID="FromDate" sfwParameter="FromDate" sfwItemType="Property" sfwDataType="datetime" />
+      <parameter ID="FromDate" sfwDataType="datetime" />
+      <item ID="ToDate" sfwParameter="ToDate" sfwItemType="Property" sfwDataType="datetime" />
+      <parameter ID="ToDate" sfwDataType="datetime" />
+      <item ID="RuleID" sfwParameter="RuleID" sfwItemType="Property" sfwDataType="string" />
+      <parameter ID="RuleID" sfwDataType="string" />
+    </method>
+    <method ID="LoadSlowQueries" sfwMethodType="Load" sfwMode="Update" sfwLoadMainObject="False">
+      <item ID="JobScheduleDetailID" sfwParameter="JobScheduleDetailID" sfwItemType="Property" sfwDataType="int" />
+      <parameter ID="JobScheduleDetailID" sfwDataType="int" />
+      <item ID="FromDate" sfwParameter="FromDate" sfwItemType="Property" sfwDataType="datetime" />
+      <parameter ID="FromDate" sfwDataType="datetime" />
+      <item ID="ToDate" sfwParameter="ToDate" sfwItemType="Property" sfwDataType="datetime" />
+      <parameter ID="ToDate" sfwDataType="datetime" />
+      <item ID="QueryHash" sfwParameter="QueryHash" sfwItemType="Property" sfwDataType="string" />
+      <parameter ID="QueryHash" sfwDataType="string" />
+      <item ID="rulGetFirstSlowQuery" sfwItemType="Rule" />
+    </method>
+    <method ID="LoadTracedQueries" sfwMethodType="Load" sfwMode="Update" sfwLoadMainObject="False">
+      <item ID="JobScheduleDetailID" sfwParameter="JobScheduleDetailID" sfwItemType="Property" sfwDataType="int" />
+      <parameter ID="JobScheduleDetailID" sfwDataType="int" />
+      <item ID="FromDate" sfwParameter="FromDate" sfwItemType="Property" sfwDataType="datetime" />
+      <parameter ID="FromDate" sfwDataType="datetime" />
+      <item ID="ToDate" sfwParameter="ToDate" sfwItemType="Property" sfwDataType="datetime" />
+      <parameter ID="ToDate" sfwDataType="datetime" />
+      <item ID="QueryHash" sfwParameter="QueryHash" sfwItemType="Property" sfwDataType="string" />
+      <parameter ID="QueryHash" sfwDataType="string" />
+      <item ID="rulGetFirstTracedQuery" sfwItemType="Rule" />
+    </method>
+    <method ID="FindJobInstanceDetailTrace" sfwMethodType="Load" sfwMode="Update" sfwLoadMainObject="True" sfwLoadQuery="entJobServiceMonitoring.GetJobDetailWithStats" sfwParameter="@job_detail_id">
+      <item ID="JobHeaderId" sfwParameter="JobHeaderId" sfwItemType="Property" sfwDataType="int" />
+      <item ID="objJobDetail.objJobHeader" sfwItemType="Object" sfwLoadType="ForeignKey" sfwLoadSource="JobHeaderId" />
+      <parameter ID="JobHeaderId" sfwDataType="int" Value="objJobDetail.JobHeaderId" />
+      <parameter ID="job_detail_id" sfwDataType="int" />
+    </method>
+  </methods>
+  <lifecycle />
+</entity>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entYearEndProcessRequest" sfwActive="True" sfwStatus="Review" sfwType="BusinessRule" sfwMainCDO="icdoYearEndProcessRequest" sfwObjectID="busYearEndProcessRequest" sfwTableName="sgt_year_end_process_request" sfwView="False" sfwDataObjectID="doYearEndProcessRequest">
+  <rules>
+    <rule ID="VisibleRule-RegenerateFlag" sfwExpression="(this.icdoYearEndProcessRequest.istrRerunDate &gt; RFunc.CurrentDate()) &amp;&amp; &#xA;(this.icdoYearEndProcessRequest.status_value == &quot;CMPL&quot;) &amp;&amp; &#xA;(this.icdoYearEndProcessRequest.year_end_process_value == &quot;C99R&quot;)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="VisibleRule-RegenerateFlag" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="YearEndProcessRequestLookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGT_YEAR_END_PROCESS_REQUEST">
+      <parameters />
+    </query>
+    <query ID="GetYearEndProcessStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT STATUS_VALUE&#xD;&#xA;FROM SGT_YEAR_END_PROCESS_REQUEST &#xD;&#xA;WHERE YEAR_END_PROCESS_VALUE = @YEAR_END_PROCESS_VALUE &#xD;&#xA;AND YEAR = @YEAR&#xD;&#xA;AND YEAR_END_PROCESS_REQUEST_ID!=@YEAR_END_PROCESS_REQUEST_ID&#xD;&#xA;AND STATUS_VALUE!='FALD'&#xD;&#xA;order by STATUS_DATE desc">
+      <parameters>
+        <parameter ID="@YEAR_END_PROCESS_VALUE" sfwDataType="string" />
+        <parameter ID="@YEAR" sfwDataType="int" />
+        <parameter ID="@YEAR_END_PROCESS_REQUEST_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetAnnual1099RCount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT COUNT(YEAR_END_PROCESS_ID) &#xD;&#xA;FROM SGT_YEAR_END_PROCESS_REQUEST &#xD;&#xA;WHERE YEAR_END_PROCESS_VALUE = @YEAR_END_PROCESS_VALUE&#xD;&#xA;AND STATUS_VALUE != @STATUS_VALUE&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@YEAR_END_PROCESS_VALUE" sfwDataType="string" />
+        <parameter ID="@STATUS_VALUE" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="year_end_process_request_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="YearEndProcessRequestId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="Year" sfwIsSequence="False" sfwCaption="Year" />
+    <attribute sfwType="Description" ID="YearEndProcessDescription" sfwCaption="Year End Process" sfwValue="year_end_process_description" />
+    <attribute sfwValue="year_end_process_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="YearEndProcessId" sfwCodeID="7055" sfwIsSequence="False" sfwCaption="Year End Process" />
+    <attribute sfwValue="year_end_process_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="YearEndProcessValue" sfwIsSequence="False" sfwCaption="Year End Process" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="7054" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="StatusValue" sfwIsSequence="False" sfwCaption="Status" />
+    <attribute sfwValue="status_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="StatusDate" sfwIsSequence="False" sfwCaption="Status Date" />
+    <attribute sfwValue="regenerate_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="RegenerateFlag" sfwIsSequence="False" sfwCaption="Regenerate Flag" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="processed_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="ProcessedDate" sfwIsSequence="False" sfwCaption="Processed Date" />
+  </attributes>
+</entity>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptPensionReportForDeath" sfwActive="True" sfwDescription="Pension Report For Death" sfwStatus="Review" sfwResource="505 " sfwType="Report" sfwReportName="rptPensionReportsofDeath.rdlc" sfwReportCategory="Reports" version="4.0">
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="Report Month : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="MONTH" sfwLoadType="CodeGroup" sfwLoadSource="801" />
+        <RequiredFieldValidator ControlToValidate="MONTH" ErrorMessage="Month is Required" ID="rfvMONTH" Text="*" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwLabel Text="Report Year : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList ID="YEAR" />
+        <RequiredFieldValidator ControlToValidate="YEAR" ErrorMessage="Year is Required" ID="rfvYEAR" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <initialload>
+    <custommethod sfwMethodName="PensionReportOfDeath" />
+  </initialload>
+</form>

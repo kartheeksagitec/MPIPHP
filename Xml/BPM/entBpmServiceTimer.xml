@@ -1,0 +1,47 @@
+﻿<entity ID="entBpmServiceTimer" sfwView="False" sfwActive="True" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgw_bpm_service_timer" CreateWithClass="False">
+  <attributes>
+    <attribute ID="lstServiceTimers" sfwType="Collection" sfwEntity="entBpmServiceTimer" sfwPrivate="False" />
+    <attribute ID="lstDefaultServiceTimers" sfwType="Collection" sfwEntity="entBpmServiceTimer" sfwPrivate="False" />
+    <attribute ID="lstSeverSettings" sfwType="Collection" sfwEntity="entBpmServerSettings" sfwPrivate="False" />
+    <attribute sfwValue="service_timer_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ServiceTimerId" sfwCaption="ID" />
+    <attribute sfwValue="action_method" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="200" sfwIsNull="False" ID="ActionMethod" sfwCaption="Action Method" />
+    <attribute sfwValue="interval" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="Interval" sfwCaption="Interval" />
+    <attribute sfwValue="enabled" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="Enabled" sfwCaption="Enabled" />
+    <attribute sfwValue="bpm_tracing_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="BpmTracingFlag" sfwCaption="Bpm Tracing Flag" />
+    <attribute sfwValue="bpm_query_tracing_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="BpmQueryTracingFlag" sfwCaption="Bpm Query Tracing Flag" />
+    <attribute sfwValue="bpm_query_limit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BpmQueryLimit" sfwCaption="Bpm Query Limit" />
+    <attribute sfwValue="bpm_query_limit_alert" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="BpmQueryLimitAlert" sfwCaption="Bpm Query Limit Alert" />
+    <attribute sfwValue="bpm_query_high_limit" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="BpmQueryHighLimit" sfwCaption="Bpm Query High Limit" />
+    <attribute sfwValue="bpm_query_high_limit_alert" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="BpmQueryHighLimitAlert" sfwCaption="Bpm Query High Limit Alert" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="DefaultSettings" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgw_bpm_service_timer with(nolock)" sfwOracle="select * from sgw_bpm_service_timer" sfwPostgre="select * from sgw_bpm_service_timer">
+      <parameters />
+    </query>
+    <query ID="GetActionMethod" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select distinct Action_Method, SERVICE_TIMER_ID from sgw_bpm_service_timer" sfwOracle="select distinct Action_Method, SERVICE_TIMER_ID from sgw_bpm_service_timer" sfwPostgre="select distinct Action_Method, SERVICE_TIMER_ID from sgw_bpm_service_timer">
+      <parameters />
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods>
+    <method ID="FindServiceTimers" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="False">
+      <item ID="lstSeverSettings" sfwItemType="Collection" sfwLoadType="Query" sfwLoadSource="entBpmServerSettings.GetBpmServerTimerFlags" />
+      <item ID="lstDefaultServiceTimers" sfwItemType="Collection" sfwLoadType="Query" sfwLoadSource="entBpmServiceTimer.DefaultSettings" />
+    </method>
+  </methods>
+  <lifecycle />
+</entity>

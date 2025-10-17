@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_PERC]
+    FROM NUMERIC (7, 4) NULL;
+

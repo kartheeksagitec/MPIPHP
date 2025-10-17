@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmRetireeIncreaseLookupLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="200 " sfwType="Lookup" sfwTitle="Retiree Increase Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entPayeeAccount" sfwGridCollection="busRetireeIncreaseLookup.iclbPayeeAccount">
+  <initialload>
+    <query ID="cdoPayeeAccount" sfwQueryRef="entPayeeAccount.RetireeIncreaseLookup" sfwMethodName="LoadRetireeIncreases" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSpMpiPersonId" ID="capSpMpiPersonId" Text="Payee MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSpMpiPersonId" sfwDataField="mpi_person_id" sfwOperator="like" sfwQueryID="cdoPayeeAccount" sfwTwoWayBinding="False" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtSpMpiPersonId" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtParticipantMpiId" ID="capParticipantMpiId" Text="Participant MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtParticipantMpiId" sfwDataField="participant_mpi_id" sfwOperator="like" sfwQueryID="cdoPayeeAccount" sfwTwoWayBinding="False" />
+                <sfwImageButton ID="btnRetrieve2" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtParticipantMpiId" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtSpaPayeeAccountId" ID="capSpaPayeeAccountId" Text="Retiree Increase Payee Account ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSpaPayeeAccountId" sfwDataField="payee_account_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoPayeeAccount" />
+                <sfwImageButton ID="btnRetrieve1" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPayeeAccountLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtSpaPayeeAccountId" sfwSelectedIndex="PayeeAccountId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtReferenceId" ID="capReferenceId" Text="Monthly Payee Account ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtReferenceId" sfwDataField="reference_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoPayeeAccount" sfwTwoWayBinding="False" />
+                <sfwImageButton ID="btnRetrieve3" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPayeeAccountLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtReferenceId" sfwSelectedIndex="PayeeAccountId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlPlnPlanId" ID="capPlnPlanId" Text="Plan ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="plan_name" DataValueField="plan_id" ID="ddlPlnPlanId" sfwDataField="plan_id" sfwOperator="=" sfwQueryID="cdoPayeeAccount" sfwLoadType="Query" sfwLoadSource="entPlan.Lookup" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtRetrIncrYear" ID="capRetrIncrYear" Text="Retiree Increase Year : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRetrIncrYear" sfwDataField="TEMP.year" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoPayeeAccount" sfwTwoWayBinding="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlSpasStatusValue" ID="capSpasStatusValue" Text="Retiree Increase Payee Account Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlSpasStatusValue" sfwDataField="status_value" sfwOperator="like" sfwQueryID="cdoPayeeAccount" sfwLoadType="CodeGroup" sfwLoadSource="7027" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlStatusValue1" ID="capStatusValue1" Text="Monthly Payee Account Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlStatusValue1" sfwDataField="pstatus_value" sfwOperator="like" sfwQueryID="cdoPayeeAccount" sfwTwoWayBinding="False" sfwLoadType="CodeGroup" sfwLoadSource="7027" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capSphdshTransactionDate" Text="Rollover Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtspsPaymentDateFrom" sfwDataField="created_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoPayeeAccount" sfwRelatedControl="txtspsPaymentDateTo" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtspsPaymentDateFrom" ErrorMessage="Rollover Date From must be in mm/dd/yyyy format." ID="valpaymentDateFrom" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSphdshTransactionDate1" Text="Rollover Date To : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtspsPaymentDateTo" sfwDataField="created_date1" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoPayeeAccount" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtspsPaymentDateTo" ErrorMessage="Rollover Date To must be in mm/dd/yyyy format." ID="valtTransactionDate1" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtspsPaymentDateFrom" ControlToValidate="txtspsPaymentDateTo" ErrorMessage="Rollover Date To cannot be less than Rollover Date From." ID="valtTransactionDate1Range" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmPayeeAccountMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPayeeAccountId=PayeeAccountId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many" SkinID="WrapGrid">
+                  <Columns>
+                    <TemplateField HeaderText="Retiree Increase Payee Account ID">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmPayeeAccountMaintenance" sfwDataField="icdoPayeeAccount.payee_account_id" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPayeeAccountId=PayeeAccountId" sfwRelatedControl="dgrResult" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Payee MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objPayee.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Participant MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objParticipant.MpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Gross Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IdecGrossAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Federal Tax">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IdecFederalTax" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="State Tax">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IdecStateTax" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Deduction Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IdecDeductionAmt" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Net Amount">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:C}" sfwEntityField="IdecNetAmount" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Plan">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPlanDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Rollover">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrRolloverEligible" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Rollover Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="IdtRolloverCraetedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Retiree Increase Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrPayeeAccountCurrentStatus" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Monthly Payee Account  ID">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmPayeeAccountMaintenance" sfwDataField="icdoPayeeAccount.reference_id" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPayeeAccountId=ReferenceId" sfwRelatedControl="dgrResult" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Monthly Payee Account Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrMonthlyPayeeAccountCurrentStatus" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

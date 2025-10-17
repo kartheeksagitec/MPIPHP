@@ -1,0 +1,146 @@
+﻿<form ID="wfmAuditLogLookup" sfwType="Lookup" sfwEntity="entAuditLog" sfwTitle="Audit Log Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmAuditLogLookup">
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capChangeType" Text="Change Type : " AssociatedControlID="ddlChangeType" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlChangeType" sfwDataField="change_type">
+                  <ListItem Text="Insert" Value="I" />
+                  <ListItem Text="Update" Value="U" />
+                  <ListItem Text="Delete" Value="D" />
+                  <ListItem Text="View" Value="V" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capBoPrimaryKey" Text="Business Object Primary Key : " AssociatedControlID="txtBoPrimaryKey" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtBoPrimaryKey" sfwDataField="bo_primary_key" sfwDataType="Numeric" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFormName" Text="Form Name : " AssociatedControlID="txtFormName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFormName" sfwDataField="form_name" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capTableName" Text="Table Name : " AssociatedControlID="txtTableName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTableName" sfwDataField="table_name" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capModifiedDateFrom" sfwIsCaption="True" Text="Modified Date  From : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtModifiedDateFrom" sfwDataField="modified_date" sfwOperator="between" sfwRelatedControl="txtModifiedDateTo" sfwDataType="datetime" sfwDataFormat="{0:d}" />
+                <CompareValidator ID="valModifiedDateFrom" Text="*" Operator="DataTypeCheck" ControlToValidate="txtModifiedDateFrom" Type="Date" ErrorMessage="Modified Date : From must be in mm/dd/yyyy format. " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModifiedDateTo" sfwIsCaption="True" Text="Modified Date  To : " />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtModifiedDateTo" sfwDataField="modified_date" sfwOperator="between" sfwDataType="datetime" sfwDataFormat="{0:d}" />
+                <CompareValidator ID="valModifiedDateTo" Text="*" Operator="DataTypeCheck" ControlToValidate="txtModifiedDateTo" Type="Date" ErrorMessage="Modified Date : To must be in mm/dd/yyyy format." />
+                <CompareValidator ID="valModifiedDateRange" Text="*" Operator="GreaterThanEqual" ControlToValidate="txtModifiedDateTo" ControlToCompare="txtModifiedDateFrom" ErrorMessage="Modified Date : To cannot be less than Modified Date : From." Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capGuidTransactionId" Text="Transaction Id : " AssociatedControlID="txtGuidTransactionId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtGuidTransactionId" sfwDataField="guid_transaction_id" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" ImageUrl="~/Image/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" Text="Open" Visible="False" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Image/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="AuditLogId" sfwLinkable="True" sfwRelatedControl="btnOpen" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Form Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FormName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Table Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="TableName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Change Type">
+                      <ItemTemplate>
+                        <sfwDropDownList ID="ddlDropDownList" sfwEntityField="ChangeType" sfwTwoWayBinding="False" sfwReadOnlyRule="MakeReadOnly">
+                          <ListItem Text="Insert" Value="I" />
+                          <ListItem Text="Update" Value="U" />
+                          <ListItem Text="Delete" Value="D" />
+                          <ListItem Text="View" Value="V" />
+                        </sfwDropDownList>
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Transaction Id">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="GuidTransactionId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Modified Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ModifiedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+</form>

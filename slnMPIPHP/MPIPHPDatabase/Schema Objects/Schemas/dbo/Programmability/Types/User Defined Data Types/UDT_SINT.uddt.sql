@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_SINT]
+    FROM SMALLINT NULL;
+

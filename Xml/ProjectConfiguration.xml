@@ -1,0 +1,649 @@
+﻿<root>
+  <commonproperties>
+    <properties />
+  </commonproperties>
+  <servermethods>
+    <methodgroup ID="srvAdmin">
+      <method ID="ChangeUserPassword" sfwReturnType="MPIPHP.BusinessObjects.busUser" sfwMode="All" />
+      <method ID="LoadFiles" />
+      <method ID="FindFile" sfwReturnType="Sagitec.BusinessObjects.busFile" sfwMode="All">
+        <parameter ID="aintFileId" OldID="file_id" />
+      </method>
+      <method ID="NewUserRoles" sfwReturnType="MPIPHP.BusinessObjects.busUserRoles" sfwMode="New">
+        <parameter ID="aintUserSerialId" OldID="user_serial_id" />
+      </method>
+      <method ID="FindUserRoles" sfwReturnType="MPIPHP.BusinessObjects.busUserRoles" sfwMode="Update">
+        <parameter ID="aintUserSerialId" OldID="user_serial_id" />
+        <parameter ID="aintRoleId" OldID="role_id" />
+      </method>
+      <method ID="LoadUser" />
+      <method ID="NewUser" sfwReturnType="MPIPHP.BusinessObjects.busUser" sfwMode="New">
+        <parameter ID="aintUserSerialId" OldID="user_serial_id" />
+      </method>
+      <method ID="FindUser" sfwReturnType="MPIPHP.BusinessObjects.busUser" sfwMode="Update">
+        <parameter ID="aintUserSerialId" OldID="user_serial_id" />
+      </method>
+      <method ID="NewJobDetail" sfwReturnType="MPIPHP.BusinessObjects.busJobDetail" sfwMode="New">
+        <parameter ID="aintJobHeaderId" OldID="job_header_id" />
+      </method>
+      <method ID="FindJobDetail" sfwReturnType="MPIPHP.BusinessObjects.busJobDetail" sfwMode="Update">
+        <parameter ID="Aintjobdetailid" OldID="aintjobdetailid" />
+      </method>
+      <method ID="LoadJobHeaders" />
+      <method ID="NewJobHeader" sfwReturnType="MPIPHP.BusinessObjects.busJobHeader" sfwMode="New" />
+      <method ID="FindJobHeader" sfwReturnType="MPIPHP.BusinessObjects.busJobHeader" sfwMode="Update">
+        <parameter ID="Aintjobheaderid" OldID="aintjobheaderid" />
+      </method>
+      <method ID="NewJobScheduleDetail" sfwReturnType="MPIPHP.BusinessObjects.busJobScheduleDetail" sfwMode="New">
+        <parameter ID="aintJobScheduleId" OldID="job_schedule_id" />
+      </method>
+      <method ID="FindJobScheduleDetail" sfwReturnType="MPIPHP.BusinessObjects.busJobScheduleDetail" sfwMode="Update">
+        <parameter ID="Aintjobscheduledetailid" OldID="aintjobscheduledetailid" />
+      </method>
+      <method ID="LoadJobSchedules" />
+      <method ID="NewJobSchedule" sfwReturnType="MPIPHP.BusinessObjects.busJobSchedule" sfwMode="New">
+        <parameter ID="astrFreqTypeValue" OldID="freq_type_value" />
+      </method>
+      <method ID="FindJobSchedule" sfwReturnType="MPIPHP.BusinessObjects.busJobSchedule" sfwMode="Update">
+        <parameter ID="Aintjobscheduleid" OldID="aintjobscheduleid" />
+      </method>
+      <method ID="LoadBatchSchedules" />
+      <method ID="FindBatchSchedule" sfwReturnType="MPIPHP.BusinessObjects.busBatchSchedule" sfwMode="All">
+        <parameter ID="aintBatchScheduleId" OldID="batch_schedule_id" />
+      </method>
+      <method ID="LoadCodes" />
+      <method ID="NewCode" sfwReturnType="MPIPHP.BusinessObjects.busCode" sfwMode="New" />
+      <method ID="FindCode" sfwReturnType="MPIPHP.BusinessObjects.busCode" sfwMode="Update">
+        <parameter ID="aintCodeId" OldID="code_id" />
+      </method>
+      <method ID="NewCodeValue" sfwReturnType="MPIPHP.BusinessObjects.busCodeValue" sfwMode="New">
+        <parameter ID="aintCodeId" OldID="code_id" />
+      </method>
+      <method ID="FindCodeValue" sfwReturnType="MPIPHP.BusinessObjects.busCodeValue" sfwMode="Update">
+        <parameter ID="aintCodeValueId" OldID="code_serial_id" />
+      </method>
+      <method ID="LoadFileDtls" />
+      <method ID="FindFileDtl" sfwReturnType="Sagitec.BusinessObjects.busFileDtl" sfwMode="All">
+        <parameter ID="aintFileDtlId" OldID="aint_file_dtl_id" />
+      </method>
+      <method ID="LoadFileHdrs" />
+      <method ID="FindFileHdr" sfwReturnType="Sagitec.BusinessObjects.busFileHdr" sfwMode="All">
+        <parameter ID="aintFileHdrId" OldID="file_hdr_id" />
+      </method>
+      <method ID="FinFileLayout" sfwReturnType="Sagitec.BusinessObjects.busFileLayout" sfwMode="All">
+        <parameter ID="aintFileId" OldID="file_id" />
+        <parameter ID="astrTransactionCode" OldID="transaction_code" />
+      </method>
+      <method ID="LoadMessages" />
+      <method ID="NewMessage" sfwReturnType="MPIPHP.BusinessObjects.busMessages" sfwMode="New" />
+      <method ID="FindMessage" sfwReturnType="MPIPHP.BusinessObjects.busMessages" sfwMode="Update">
+        <parameter ID="aintMessageId" OldID="message_id" />
+      </method>
+      <method ID="LoadResources" />
+      <method ID="FindResource" sfwReturnType="MPIPHP.BusinessObjects.busResources" sfwMode="All">
+        <parameter ID="aintResourceId" OldID="resource_id" />
+      </method>
+      <method ID="LoadRoles" />
+      <method ID="FindRole" sfwReturnType="MPIPHP.BusinessObjects.busPERSLinkRoles" sfwMode="All">
+        <parameter ID="aintRoleId" OldID="role_id" />
+      </method>
+      <method ID="FindSystemManagement" sfwReturnType="MPIPHP.BusinessObjects.busSystemManagement" sfwMode="All" />
+      <method ID="LoadPaths" />
+      <method ID="FindPath" sfwReturnType="MPIPHP.BusinessObjects.busSystemPaths" sfwMode="All">
+        <parameter ID="aintPathId" OldID="path_id" />
+      </method>
+    </methodgroup>
+    <methodgroup ID="srvCalculation">
+      <method ID="LoadBenefitCalculationHeaders" />
+      <method ID="FindBenefitCalculationPostRetirementDeath" sfwReturnType="MPIPHP.BusinessObjects.busBenefitCalculationPostRetirementDeath" sfwMode="All">
+        <parameter ID="aintBenefitCalculationId" OldID="aintBenefitCalculationId" />
+      </method>
+      <method ID="NewBenefitCalculationPreRetirementDeath" sfwReturnType="MPIPHP.BusinessObjects.busBenefitCalculationPreRetirementDeath" sfwMode="New">
+        <parameter ID="astr_person_mpi_id" OldID="astr_person_mpi_id" />
+        <parameter ID="astr_benefit_type" OldID="astr_benefit_type" />
+        <parameter ID="aint_plan_id" OldID="aint_plan_id" />
+      </method>
+      <method ID="FindBenefitCalculationPreRetirementDeath" sfwReturnType="MPIPHP.BusinessObjects.busBenefitCalculationPreRetirementDeath" sfwMode="Update">
+        <parameter ID="aintBenefitCalculationId" OldID="aintBenefitCalculationId" />
+      </method>
+      <method ID="NewBenefitCalculationRetirement" sfwReturnType="MPIPHP.BusinessObjects.busBenefitCalculationRetirement" sfwMode="New">
+        <parameter ID="astr_person_mpi_id" OldID="astr_person_mpi_id" />
+        <parameter ID="astr_benefit_type" OldID="astr_benefit_type" />
+        <parameter ID="aint_plan_id" OldID="aint_plan_id" />
+      </method>
+      <method ID="FindBenefitCalculationRetirement" sfwReturnType="MPIPHP.BusinessObjects.busBenefitCalculationRetirement" sfwMode="Update">
+        <parameter ID="aintBenefitCalculationId" OldID="aintBenefitCalculationId" />
+      </method>
+      <method ID="NewBenefitCalculationWithdrawal" sfwReturnType="MPIPHP.BusinessObjects.busBenefitCalculationWithdrawal" sfwMode="New">
+        <parameter ID="astr_person_mpi_id" OldID="astr_person_mpi_id" />
+        <parameter ID="astr_benefit_type" OldID="astr_benefit_type" />
+        <parameter ID="aint_plan_id" OldID="aint_plan_id" />
+      </method>
+      <method ID="FindBenefitCalculationWithdrawal" sfwReturnType="MPIPHP.BusinessObjects.busBenefitCalculationWithdrawal" sfwMode="Update">
+        <parameter ID="aintBenefitCalculationId" OldID="aintBenefitCalculationId" />
+      </method>
+      <method ID="LoadBenefitInterestRates" />
+      <method ID="NewDisabiltyBenefitCalculation" sfwReturnType="MPIPHP.BusinessObjects.busDisabiltyBenefitCalculation" sfwMode="New">
+        <parameter ID="astr_person_mpi_id" OldID="astr_person_mpi_id" />
+        <parameter ID="astr_benefit_type" OldID="astr_benefit_type" />
+        <parameter ID="aint_plan_id" OldID="aint_plan_id" />
+        <parameter ID="aint_benefit_application_id" OldID="aint_benefit_application_id" />
+      </method>
+      <method ID="FindDisabiltyBenefitCalculation" sfwReturnType="MPIPHP.BusinessObjects.busDisabiltyBenefitCalculation" sfwMode="Update">
+        <parameter ID="aintBenefitCalculationId" OldID="aintBenefitCalculationId" />
+      </method>
+      <method ID="LoadIAPBenefitAmountDetails" sfwReturnType="MPIPHP.BusinessObjects.busBenefitCalculationDetail" sfwMode="All">
+        <parameter ID="aintBenefitCalculationHeaderID" OldID="aint_benefit_calculation_header_id" />
+      </method>
+      <method ID="FindBenefitCalculationYearlyDetail" sfwReturnType="MPIPHP.BusinessObjects.busBenefitCalculationYearlyDetail" sfwMode="All">
+        <parameter ID="aintbenefitcalculationyearlydetailid" OldID="aintbenefitcalculationyearlydetailid" />
+      </method>
+      <method ID="LoadQDROOffsetDetails" sfwReturnType="MPIPHP.BusinessObjects.busBenefitCalculationDetail" sfwMode="All">
+        <parameter ID="aintParticiapantID" OldID="aint_particiapant_id" />
+        <parameter ID="aintPlanId" OldID="aint_plan_id" />
+        <parameter ID="astrCalculationType" OldID="astr_calculation_type" />
+        <parameter ID="astrBenefitTypeValue" OldID="astr_benefit_type_value" />
+        <parameter ID="astrEEFlag" OldID="astr_e_e_flag" />
+        <parameter ID="astrUVHPFlag" OldID="astr_u_v_h_p_flag" />
+        <parameter ID="astrL52SplAccFlag" OldID="astr_l52_spl_acc_flag" />
+        <parameter ID="astrL161SplAccFlag" OldID="astr_l161_spl_acc_flag" />
+      </method>
+      <method ID="LoadQdroCalculations" />
+      <method ID="NewPersonAccountRetirementContribution" sfwReturnType="MPIPHP.BusinessObjects.busPersonAccountRetirementContribution" sfwMode="New">
+        <parameter ID="aintPersonId" OldID="aint_person_id" />
+      </method>
+      <method ID="FindPersonAccountRetirementContributionByPersonID" sfwReturnType="MPIPHP.BusinessObjects.busPersonAccountRetirementContribution" sfwMode="Update">
+        <parameter ID="aintpersonaccountretirementcontributionid" OldID="aintpersonaccountretirementcontributionid" />
+        <parameter ID="aintPersonID" OldID="aint_person_id" />
+      </method>
+      <method ID="NewQdroCalculationHeader" sfwReturnType="MPIPHP.BusinessObjects.busQdroCalculationHeader" sfwMode="New">
+        <parameter ID="aintQdroApplicationId" OldID="aint_qdro_application_id" sfwDataType="System.Int32" />
+        <parameter ID="aintPlanId" OldID="aint_plan_id" sfwDataType="System.Int32" />
+        <parameter ID="astr_person_mpi_id" OldID="astr_person_mpi_id" sfwDataType="System.String" />
+        <parameter ID="astr_alt_payee_id" OldID="astr_alt_payee_id" sfwDataType="System.String" />
+        <parameter ID="astrqdro_model_value" OldID="astrqdro_model_value" sfwDataType="System.String" />
+      </method>
+      <method ID="FindQdroCalculationHeader" sfwReturnType="MPIPHP.BusinessObjects.busQdroCalculationHeader" sfwMode="Update">
+        <parameter ID="aintQdroFileDetails" OldID="aint_Qdro_File_Details" />
+        <parameter ID="aintQdroCalculationHeaderId" OldID="aint_qdro_calculation_header_id" />
+      </method>
+    </methodgroup>
+    <methodgroup ID="srvAudit">
+      <method ID="GetFullAuditLog" sfwReturnType="MPIPHP.BusinessObjects.busMPIFullAudit" sfwMode="All">
+        <parameter ID="aintPrimarKey" OldID="aint_primar_key" />
+        <parameter ID="astrFormName" OldID="astr_form_name" />
+      </method>
+      <method ID="LoadbusMPIAudits" />
+      <method ID="FindAuditLog" sfwReturnType="Sagitec.BusinessObjects.busAudit" sfwMode="All">
+        <parameter ID="aintAuditLogID" OldID="audit_log_id" />
+      </method>
+      <method ID="GetAuditDetails" sfwReturnType="Sagitec.BusinessObjects.busAuditLookup" sfwMode="All">
+        <parameter ID="aintPrimaryKey" OldID="primary_key" />
+        <parameter ID="astrFormName" OldID="form_name" />
+      </method>
+    </methodgroup>
+    <methodgroup ID="srvCorrespondence">
+      <method ID="LoadCorrTemplates" />
+      <method ID="FindCorrTemplate" sfwReturnType="MPIPHP.BusinessObjects.busCorTemplates" sfwMode="All">
+        <parameter ID="ainttemplateid" OldID="template_id" />
+      </method>
+      <method ID="LoadCorTracking" />
+      <method ID="FindCorrTracking" sfwReturnType="MPIPHP.BusinessObjects.busCorTracking" sfwMode="Update">
+        <parameter ID="aintTrackingId" OldID="aint_tracking_id" sfwDataType="System.Int32" />
+      </method>
+      <method ID="LoadPendingPaymentCycleStatus" />
+      <method ID="LoadPendingRetirementPacketStatus" />
+    </methodgroup>
+    <methodgroup ID="srvIAPAllocation">
+      <method ID="LoadIAPAnnunityAdjustmentMultiplier" sfwReturnType="MPIPHP.BusinessObjects.busIapAnnunityAdjustmentMultiplier" sfwMode="Update" />
+      <method ID="FindIAPAllocationDetailPersonOverview" sfwReturnType="MPIPHP.BusinessObjects.busIAPAllocationDetailPersonOverview" sfwMode="Update">
+        <parameter ID="aintPersonId" OldID="aint_person_id" />
+      </method>
+      <method ID="RenderPDF" sfwReturnType="Byte[]">
+        <parameter ID="astr_filename" sfwDataType="Byte[]" />
+      </method>
+      <method ID="LoadIAPAllocationFactors" />
+      <method ID="NewIAPAllocationFactor" sfwReturnType="MPIPHP.BusinessObjects.busIapAllocationFactor" sfwMode="New" />
+      <method ID="FindIapAllocationFactor" sfwReturnType="MPIPHP.BusinessObjects.busIapAllocationFactor" sfwMode="Update">
+        <parameter ID="aintIapAllocationFactorId" OldID="aint_iap_allocation_factor_id" />
+      </method>
+      <method ID="FindbusIAPAllocationYearlyDetails" sfwReturnType="MPIPHP.BusinessObjects.busIAPAllocationYearlyDetail" sfwMode="Update">
+        <parameter ID="aintPersonId" OldID="aint_person_id" sfwDataType="System.Int32" />
+        <parameter ID="aintPersonAccountId" OldID="aint_person_account_id" sfwDataType="System.Int32" />
+        <parameter ID="adecComputationYear" OldID="adec_computation_year" sfwDataType="System.Decimal" />
+        <parameter ID="astrSpecialAccount" OldID="astr_special_account" sfwDataType="System.String" />
+        <parameter ID="astrIsPayment" OldID="astr_is_payment" sfwDataType="System.String" />
+      </method>
+      <method ID="LoadAndRecalculateIAPAllocationDetail" sfwReturnType="MPIPHP.BusinessObjects.busIAPAllocationDetailPersonOverview" sfwMode="All">
+        <parameter ID="aintPersonId" OldID="aint_person_id" />
+      </method>
+      <method ID="LoadAndRecalculateL161AllocationDetail" sfwReturnType="MPIPHP.BusinessObjects.busIAPAllocationDetailPersonOverview" sfwMode="All">
+        <parameter ID="aintPersonId" OldID="aint_person_id" />
+      </method>
+      <method ID="LoadAndRecalculateL52AllocationDetail" sfwReturnType="MPIPHP.BusinessObjects.busIAPAllocationDetailPersonOverview" sfwMode="All">
+        <parameter ID="aintPersonId" OldID="aint_person_id" />
+      </method>
+    </methodgroup>
+    <methodgroup ID="srvMPIPHPMSS">
+      <method ID="FindPerson" sfwReturnType="MPIPHP.BusinessObjects.busPerson" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="FindMSSHome" sfwReturnType="MPIPHP.BusinessObjects.busMSSHome" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="FindMssAnnualBenefitSummary" sfwReturnType="MPIPHP.BusinessObjects.busMssAnnualBenefitSummary" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="FindAnnualStatements" sfwReturnType="MPIPHP.BusinessObjects.busMSSHome" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="CreateMSSMemberAnnualStatement" sfwReturnType="Byte[]">
+        <parameter ID="aintpersonid" sfwDataType="Byte[]" />
+        <parameter ID="lintCompYear" sfwDataType="Byte[]" />
+      </method>
+      <method ID="FindActivitiesForProcess" sfwReturnType="MPIPHP.BusinessObjects.busMSSHome" sfwMode="All">
+        <parameter ID="aintprocessinstanceid" OldID="aintprocessinstanceid" />
+        <parameter ID="aintprocessid" OldID="aintprocessid" />
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="FindPersonProcess" sfwReturnType="MPIPHP.BusinessObjects.busMSSHome" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="FindPersonBeneficiariesandDependents" sfwReturnType="MPIPHP.BusinessObjects.busPerson" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="NewQdroCalculationHeader" sfwReturnType="MPIPHP.BusinessObjects.busMssQdroCalculationHeader" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="LoadHistoryHeaders" />
+      <method ID="FindPersonPlan" sfwReturnType="MPIPHP.BusinessObjects.busPersonOverview" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="FindPersonContact" sfwReturnType="MPIPHP.BusinessObjects.busPersonContact" sfwMode="All">
+        <parameter ID="aintpersoncontactid" OldID="aintpersoncontactid" />
+      </method>
+      <method ID="FindPersonAccount" sfwReturnType="MPIPHP.BusinessObjects.busMSSPlan" sfwMode="All">
+        <parameter ID="aintpersonaccountid" OldID="aintpersonaccountid" />
+        <parameter ID="istrretiree" OldID="istrretiree" />
+      </method>
+      <method ID="NewBenefitCalculationRetirementWizard" sfwReturnType="MPIPHP.BusinessObjects.busMssBenefitCalculationRetirement" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="FindMssQdroCalculationHeader" sfwReturnType="MPIPHP.BusinessObjects.busMssQdroCalculationHeader" sfwMode="All">
+        <parameter ID="aintqdroheaderid" OldID="aintqdroheaderid" />
+      </method>
+      <method ID="FindBenefitCalculationRetirement" sfwReturnType="MPIPHP.BusinessObjects.busMssBenefitCalculationRetirement" sfwMode="All">
+        <parameter ID="aintBenefitCalculationId" OldID="aint_benefit_calculation_id" />
+      </method>
+    </methodgroup>
+    <methodgroup ID="srvOrganization">
+      <method ID="NewOrgAddress" sfwReturnType="MPIPHP.BusinessObjects.busOrgAddress" sfwMode="New">
+        <parameter ID="aintOrgAddressId" OldID="aint_org_address_id" />
+      </method>
+      <method ID="FindOrgAddress" sfwReturnType="MPIPHP.BusinessObjects.busOrgAddress" sfwMode="Update">
+        <parameter ID="aintorgaddressid" OldID="aintorgaddressid" />
+      </method>
+      <method ID="LoadOrganizationBanks" />
+      <method ID="FindOrgBank" sfwReturnType="MPIPHP.BusinessObjects.busOrganization" sfwMode="All">
+        <parameter ID="aintOrgId" OldID="aint_org_id" />
+      </method>
+      <method ID="LoadOrganizationsReturnedMail" />
+      <method ID="LoadOrganizations" />
+      <method ID="NewOrganization" sfwReturnType="MPIPHP.BusinessObjects.busOrganization" sfwMode="New">
+        <parameter ID="astrOrgType" OldID="astr_org_type" />
+      </method>
+      <method ID="FindOrganization" sfwReturnType="MPIPHP.BusinessObjects.busOrganization" sfwMode="Update">
+        <parameter ID="aintorgid" OldID="aintorgid" />
+      </method>
+      <method ID="FindOrgReturnMail" sfwReturnType="MPIPHP.BusinessObjects.busOrganization" sfwMode="All">
+        <parameter ID="aintOrgid" OldID="aint_orgid" sfwDataType="System.Int32" />
+      </method>
+      <method ID="NewReturnedMail" sfwReturnType="MPIPHP.BusinessObjects.busReturnedMail" sfwMode="All" />
+    </methodgroup>
+    <methodgroup ID="srvPayeeAccount">
+      <method ID="LoadExcessRefunds" />
+      <method ID="FindPayeeAccountAchDetails" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="Update">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="FindPayeeAccountAchWizardDetails" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="Update">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="FindPayeeAccountBenefitOverpayment" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccountBenefitOverpayment" sfwMode="Update">
+        <parameter ID="aintPayeeAccountRetroPaymentId" OldID="aint_payee_account_retro_payment_id" />
+      </method>
+      <method ID="FindPayeeAccountDeduction" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="All">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="LoadPayeeAccounts" />
+      <method ID="NewPayeeAccount" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="New">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="FindPayeeAccount" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="Update">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" sfwDataType="System.Int32" />
+        <parameter ID="ablnPaymentDirective" OldID="abln_payment_directive" sfwDataType="System.Boolean" />
+      </method>
+      <method ID="RetrievePaymentDirective" sfwReturnType="Byte[]">
+        <parameter ID="aintPayeeAccountId" sfwDataType="Byte[]" />
+        <parameter ID="astrSpecialInstructions" sfwDataType="Byte[]" />
+        <parameter ID="adtAdhocPaymentDate" sfwDataType="Byte[]" />
+        <parameter ID="astrModifiedBy" sfwDataType="Byte[]" />
+        <parameter ID="adtPaymentCycleDate" sfwDataType="Byte[]" />
+        <parameter ID="aintDeletedPaymentDirectiveId" sfwDataType="Byte[]" />
+      </method>
+      <method ID="FindPayeeAccountRetroPayment" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccountRetroPayment" sfwMode="Update">
+        <parameter ID="aintPayeeAccountRetroPaymentId" OldID="aint_payee_account_retro_payment_id" />
+      </method>
+      <method ID="FindPayeeAccountRolloverDetails" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="Update">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="FindPayeeAccountStatusDetails" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="Update">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="FindPayeeAccountTaxWithholdingDetails" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="Update">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="FindPayeeAccountFedTaxWithholdingDetails" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="Update">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="FindPayeeAccountStateTaxWithholdingDetails" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="Update">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="LoadPaymentCheckBooks" />
+      <method ID="NewPaymentCheckBook" sfwReturnType="MPIPHP.BusinessObjects.busPaymentCheckBook" sfwMode="New" />
+      <method ID="FindPaymentCheckBook" sfwReturnType="MPIPHP.BusinessObjects.busPaymentCheckBook" sfwMode="Update">
+        <parameter ID="aintCheckBookId" OldID="aint_check_book_id" />
+      </method>
+      <method ID="FindPaymentHistoryDistribution" sfwReturnType="MPIPHP.BusinessObjects.busPaymentHistoryDistribution" sfwMode="All">
+        <parameter ID="aintPaymentHistoryDistributionId" OldID="aint_payment_history_distribution_id" />
+      </method>
+      <method ID="LoadPaymentHistoryHeaders" />
+      <method ID="FindPaymentHistoryHeader" sfwReturnType="MPIPHP.BusinessObjects.busPaymentHistoryHeader" sfwMode="All">
+        <parameter ID="aintPaymentHistoryHeaderId" OldID="aint_payment_history_header_id" />
+      </method>
+      <method ID="FindPaymentReissueDetail" sfwReturnType="MPIPHP.BusinessObjects.busPaymentHistoryDistribution" sfwMode="Update">
+        <parameter ID="aintPaymentHistoryDistributionId" OldID="aint_payment_history_distribution_id" />
+        <parameter ID="astrBenefitOptionValue" OldID="astr_benefit_option_value" />
+      </method>
+      <method ID="LoadPaymentSchedules" />
+      <method ID="NewPaymentSchedule" sfwReturnType="MPIPHP.BusinessObjects.busPaymentSchedule" sfwMode="New">
+        <parameter ID="astrPaymentSchedule" OldID="astr_payment_schedule" />
+      </method>
+      <method ID="FindPaymentSchedule" sfwReturnType="MPIPHP.BusinessObjects.busPaymentSchedule" sfwMode="Update">
+        <parameter ID="aintPaymentScheduleId" OldID="aint_payment_schedule_id" />
+      </method>
+      <method ID="LoadRecipientRolloverOrganisations" />
+      <method ID="NewPayeeAccountRolloverDetail" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccountRolloverDetail" sfwMode="New">
+        <parameter ID="aintPayeeAccountID" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="FindPayeeAccountRolloverDetail" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccountRolloverDetail" sfwMode="Update">
+        <parameter ID="aintPayeeAccountRolloverDetailId" OldID="aint_payee_account_rollover_detail_id" />
+      </method>
+      <method ID="NewRepaymentSchedule" sfwReturnType="MPIPHP.BusinessObjects.busRepaymentSchedule" sfwMode="New">
+        <parameter ID="aintPayeeAccountRetroPaymentId" OldID="aint_payee_account_retro_payment_id" />
+      </method>
+      <method ID="FindRepaymentSchedule" sfwReturnType="MPIPHP.BusinessObjects.busRepaymentSchedule" sfwMode="Update">
+        <parameter ID="aintRepaymentScheduleId" OldID="aint_repayment_schedule_id" />
+      </method>
+      <method ID="LoadActiveRetireeIncreaseContracts" />
+      <method ID="FindActiveRetireeIncreaseContract" sfwReturnType="MPIPHP.BusinessObjects.busActiveRetireeIncreaseContract" sfwMode="All">
+        <parameter ID="aintActiveRetireeIncreaseContractId" OldID="aint_active_retiree_increase_contract_id" />
+      </method>
+      <method ID="LoadOnetimeRetireePaymentContracts" />
+      <method ID="FindOneTimeRetireePaymentContract" sfwReturnType="MPIPHP.BusinessObjects.busOnetimeRetireePaymentContract" sfwMode="All">
+        <parameter ID="aintOneTimeRetireePaymentContractId" OldID="aint_One_Time_Retiree_Payment_Contract_Id" />
+      </method>
+      <method ID="LoadRetireeIncreases" />
+      <method ID="LoadPayAccountTaxWithholdingCalculator" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccountTaxWithholding" sfwMode="All" />
+      <method ID="FindWithholdingInformation" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="All">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="FindPayeeAccountWireDetails" sfwReturnType="MPIPHP.BusinessObjects.busPayeeAccount" sfwMode="All">
+        <parameter ID="aintPayeeAccountId" OldID="aint_payee_account_id" />
+      </method>
+      <method ID="LoadReturnToToWorkRequest" sfwMode="All">
+        <parameter ID="adtbSearchResult" sfwDataType="System.Data.DataTable" />
+      </method>
+      <method ID="NewReturnToWorkRequest" sfwMode="All">
+        <parameter ID="aintMPIPersonId" sfwDataType="System.String" />
+        <parameter ID="aintRequestTypeValue" sfwDataType="System.String" />
+        <parameter ID="aintSourceValue" sfwDataType="System.String" />
+      </method>
+      <method ID="FindReturnToWorkRequest" sfwMode="All">
+        <parameter ID="aintReEmploymentNotificationId" sfwDataType="System.Int32" />
+      </method>
+    </methodgroup>
+    <methodgroup ID="srvPerson">
+      <method ID="LoadBenefitApplications" />
+      <method ID="LoadDeathNotifications" />
+      <method ID="NewDeathNotification" sfwReturnType="MPIPHP.BusinessObjects.busDeathNotification" sfwMode="New">
+        <parameter ID="MPI_PERSON_ID" OldID="m_p_i__p_e_r_s_o_n__id" />
+      </method>
+      <method ID="FindDeathNotification" sfwReturnType="MPIPHP.BusinessObjects.busDeathNotification" sfwMode="Update">
+        <parameter ID="aintdeathnotificationid" OldID="aintdeathnotificationid" />
+      </method>
+      <method ID="NewDeathPreRetirement" sfwReturnType="MPIPHP.BusinessObjects.busDeathPreRetirement" sfwMode="New">
+        <parameter ID="MPI_PERSON_ID" OldID="MPI_PERSON_ID" sfwDataType="System.String" />
+        <parameter ID="benefit_type_value" OldID="benefit_type_value" sfwDataType="System.String" />
+      </method>
+      <method ID="FindDeathPreRetirement" sfwReturnType="MPIPHP.BusinessObjects.busDeathPreRetirement" sfwMode="Update">
+        <parameter ID="aintbenefitapplicationid" OldID="aintbenefitapplicationid" sfwDataType="System.Int32" />
+      </method>
+      <method ID="UpdateBenefitOptionValue" sfwReturnType="ArrayList">
+        <parameter ID="intPlan_Id" sfwDataType="ArrayList" />
+        <parameter ID="istrBenefitOptionValue" sfwDataType="ArrayList" />
+        <parameter ID="benefit_application_detail_id" sfwDataType="ArrayList" />
+        <parameter ID="spousal_consent_flag" sfwDataType="ArrayList" />
+        <parameter ID="iintJointAnnuaintID" sfwDataType="ArrayList" />
+      </method>
+      <method ID="NewDisabilityApplication" sfwReturnType="MPIPHP.BusinessObjects.busDisabilityApplication" sfwMode="New">
+        <parameter ID="MPI_PERSON_ID" OldID="MPI_PERSON_ID" sfwDataType="System.String" />
+        <parameter ID="benefit_type_value" OldID="benefit_type_value" sfwDataType="System.String" />
+      </method>
+      <method ID="FindDisabilityApplication" sfwReturnType="MPIPHP.BusinessObjects.busDisabilityApplication" sfwMode="Update">
+        <parameter ID="aintbenefitapplicationid" OldID="aintbenefitapplicationid" sfwDataType="System.Int32" />
+      </method>
+      <method ID="NewRetirementApplication" sfwReturnType="MPIPHP.BusinessObjects.busRetirementApplication" sfwMode="New">
+        <parameter ID="Ben_Application_ID" OldID="Ben_Application_ID" />
+        <parameter ID="MPI_PERSON_ID" OldID="MPI_PERSON_ID" />
+        <parameter ID="benefit_type_value" OldID="benefit_type_value" />
+        <parameter ID="Estimate_Calculation_ID" OldID="estimate_calculation_id" sfwDataType="System.Int32" />
+      </method>
+      <method ID="FindRetirementApplication" sfwReturnType="MPIPHP.BusinessObjects.busRetirementApplication" sfwMode="Update">
+        <parameter ID="aintbenefitapplicationid" OldID="aintbenefitapplicationid" />
+      </method>
+      <method ID="NewWithdrawalApplication" sfwReturnType="MPIPHP.BusinessObjects.busWithdrawalApplication" sfwMode="New">
+        <parameter ID="MPI_PERSON_ID" OldID="MPI_PERSON_ID" sfwDataType="System.String" />
+        <parameter ID="benefit_type_value" OldID="benefit_type_value" sfwDataType="System.String" />
+        <parameter ID="dro_application_id" OldID="dro_application_id" sfwDataType="System.Int32" />
+        <parameter ID="ALTERNATE_PAYEE_MPID" OldID="alternate_payee_mpid" sfwDataType="System.String" />
+      </method>
+      <method ID="FindWithdrawalApplication" sfwReturnType="MPIPHP.BusinessObjects.busWithdrawalApplication" sfwMode="Update">
+        <parameter ID="aintbenefitapplicationid" OldID="aintbenefitapplicationid" sfwDataType="System.Int32" />
+      </method>
+      <method ID="FindAnnualBenefitSummaryOverview" sfwReturnType="MPIPHP.BusinessObjects.busAnnualBenefitSummaryOverview" sfwMode="Update">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="LoadPersons" />
+      <method ID="NewPerson" sfwReturnType="MPIPHP.BusinessObjects.busPerson" sfwMode="New" />
+      <method ID="FindPerson" sfwReturnType="MPIPHP.BusinessObjects.busPerson" sfwMode="Update">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="LoadPersonBases" />
+      <method ID="FindPersonBase" sfwReturnType="MPIPHP.BusinessObjects.busPersonBase" sfwMode="All">
+        <parameter ID="aintPersonId" OldID="aint_person_id" />
+      </method>
+      <method ID="FindPersonAccountRetirementContributionForEE" sfwReturnType="MPIPHP.BusinessObjects.busPerson" sfwMode="Update">
+        <parameter ID="aintPersonID" OldID="aint_person_id" />
+      </method>
+      <method ID="NewPersonBeneficiary" sfwReturnType="MPIPHP.BusinessObjects.busPersonBeneficiary" sfwMode="New">
+        <parameter ID="aintParticipantId" OldID="aint_participant_id" />
+        <parameter ID="astrCheckIfParticipant" OldID="astr_check_if_participant" />
+        <parameter ID="astrCheckIfBen" OldID="astr_check_if_ben" />
+        <parameter ID="astrCheckIfAltPayee" OldID="astr_check_if_alt_payee" />
+      </method>
+      <method ID="FindPersonBeneficiary" sfwReturnType="MPIPHP.BusinessObjects.busPersonBeneficiary" sfwMode="Update">
+        <parameter ID="aintPrimaryKey" OldID="aintPrimaryKey" />
+        <parameter ID="aintbeneficiaryid" OldID="aintbeneficiaryid" />
+        <parameter ID="astrCheckIfParticipant" OldID="astr_check_if_participant" />
+        <parameter ID="astrCheckIfBen" OldID="astr_check_if_ben" />
+        <parameter ID="astrCheckIfAltPayee" OldID="astr_check_if_alt_payee" />
+      </method>
+      <method ID="LoadPensionActuarys" />
+      <method ID="NewPersonAddress" sfwReturnType="MPIPHP.BusinessObjects.busPersonAddress" sfwMode="New">
+        <parameter ID="aintPersonId" OldID="aint_person_id" sfwDataType="System.Int32" />
+        <parameter ID="astrAddressFlag" OldID="astr_address_flag" sfwDataType="System.String" />
+      </method>
+      <method ID="FindPersonAddress" sfwReturnType="MPIPHP.BusinessObjects.busPersonAddress" sfwMode="Update">
+        <parameter ID="aintaddressid" OldID="aintaddressid" />
+        <parameter ID="aintMainParticipantAddressId" OldID="aint_main_participant_address_id" />
+        <parameter ID="aintPersonid" OldID="aint_personid" />
+      </method>
+      <method ID="FindPersonBridgeHours" sfwReturnType="MPIPHP.BusinessObjects.busPersonBridgeHours" sfwMode="Update">
+        <parameter ID="aintpersonbridgeid" OldID="aintpersonbridgeid" />
+      </method>
+      <method ID="NewPersonContact" sfwReturnType="MPIPHP.BusinessObjects.busPersonContact" sfwMode="New">
+        <parameter ID="aintPersonId" OldID="aint_person_id" />
+      </method>
+      <method ID="FindPersonContact" sfwReturnType="MPIPHP.BusinessObjects.busPersonContact" sfwMode="Update">
+        <parameter ID="aintpersoncontactid" OldID="aintpersoncontactid" />
+      </method>
+      <method ID="NewPersonDependent" sfwReturnType="MPIPHP.BusinessObjects.busPersonDependent" sfwMode="New">
+        <parameter ID="aintPersonId" OldID="aint_person_id" />
+      </method>
+      <method ID="FindPersonDependent" sfwReturnType="MPIPHP.BusinessObjects.busPersonDependent" sfwMode="Update">
+        <parameter ID="aintdependentid" OldID="aintdependentid" />
+      </method>
+      <method ID="LoadPersonsReturnMail" />
+      <method ID="CreateMemberAnnualStatement" sfwReturnType="Byte[]">
+        <parameter ID="aintPersonID" sfwDataType="Byte[]" />
+      </method>
+      <method ID="FindPersonOverview" sfwReturnType="MPIPHP.BusinessObjects.busPersonOverview" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="FindPersonOverviewWorkFlow" sfwReturnType="MPIPHP.BusinessObjects.busPersonOverviewWorkFlows" sfwMode="Update">
+        <parameter ID="aintpersonid" OldID="aintpersonid" />
+      </method>
+      <method ID="NewPersonSuspendibleMonth" sfwReturnType="MPIPHP.BusinessObjects.busPersonSuspendibleMonth" sfwMode="New">
+        <parameter ID="aintPersonId" OldID="aint_person_id" />
+      </method>
+      <method ID="FindPersonSuspendibleMonth" sfwReturnType="MPIPHP.BusinessObjects.busPersonSuspendibleMonth" sfwMode="Update">
+        <parameter ID="aintPersonSuspendibleMonthID" OldID="aint_person_suspendible_month_id" />
+      </method>
+      <method ID="LoadAndRecalculateEEInterestDetail" sfwReturnType="MPIPHP.BusinessObjects.busAnnualBenefitSummaryOverview" sfwMode="All">
+        <parameter ID="aintPersonId" OldID="aint_person_id" />
+      </method>
+      <method ID="FindPersonReturnMail" sfwReturnType="MPIPHP.BusinessObjects.busPerson" sfwMode="All">
+        <parameter ID="aintpersonid" OldID="aintpersonid" sfwDataType="System.Int32" />
+      </method>
+      <method ID="FindReturnedMail" sfwReturnType="MPIPHP.BusinessObjects.busReturnedMail" sfwMode="All">
+        <parameter ID="aintReturnedMailId" OldID="aint_returned_mail_id" sfwDataType="System.Int32" />
+      </method>
+      <method ID="NewReturnedMail" sfwReturnType="MPIPHP.BusinessObjects.busReturnedMail" sfwMode="All" />
+      <method ID="FindSSNMergeDemoGraphicInfo" sfwReturnType="MPIPHP.BusinessObjects.busSSNMerge" sfwMode="All">
+        <parameter ID="astrOldMpiId" OldID="astr_old_mpi_id" />
+        <parameter ID="astrNewMpiId" OldID="astr_new_mpi_id" />
+      </method>
+      <method ID="LoadSSNMergeHistorys" />
+      <method ID="FindSSNMergeData" sfwReturnType="MPIPHP.BusinessObjects.busSSNMerge" sfwMode="All">
+        <parameter ID="astrMPIID" OldID="astr_m_p_i_id" />
+      </method>
+      <method ID="LoadYearEndProcessRequests" />
+      <method ID="NewbusYearEndProcessRequest" sfwReturnType="MPIPHP.BusinessObjects.busYearEndProcessRequest" sfwMode="New">
+        <parameter ID="astrYearEndProcessValue" OldID="astr_year_end_process_value" sfwDataType="System.String" />
+      </method>
+      <method ID="FindYearEndProcessRequest" sfwReturnType="MPIPHP.BusinessObjects.busYearEndProcessRequest" sfwMode="Update">
+        <parameter ID="aintyearendprocessrequestid" OldID="aintyearendprocessrequestid" sfwDataType="System.Int32" />
+      </method>
+      <method ID="LoadQDROApplications" />
+      <method ID="NewQdroApplication" sfwReturnType="MPIPHP.BusinessObjects.busQdroApplication" sfwMode="New">
+        <parameter ID="astrPersonMPId" OldID="astrPersonMPId" />
+        <parameter ID="astrPayeeMPId" OldID="astrPayeeMPId" />
+      </method>
+      <method ID="FindQdroApplication" sfwReturnType="MPIPHP.BusinessObjects.busQdroApplication" sfwMode="Update">
+        <parameter ID="aintdroapplicationid" OldID="aintdroapplicationid" />
+      </method>
+      <method ID="FindPersonAccountDetail" sfwMode="All">
+        <parameter ID="aintPersonAccountId" sfwDataType="System.Int32" />
+        <parameter ID="astrPlanDescription" sfwDataType="System.String" />
+        <parameter ID="astrPersonScreen" sfwDataType="System.String" />
+      </method>
+    </methodgroup>
+    <methodgroup ID="srvEligibilityRules">
+      <method ID="NewBenefitProvisionEligibility" sfwReturnType="MPIPHP.BusinessObjects.busBenefitProvisionEligibility" sfwMode="New" />
+      <method ID="FindBenefitProvisionEligibility" sfwReturnType="MPIPHP.BusinessObjects.busBenefitProvisionEligibility" sfwMode="Update">
+        <parameter ID="aintbenefitprovisioneligibilityid" OldID="aintbenefitprovisioneligibilityid" />
+      </method>
+      <method ID="LoadBenefitProvisionEligibilitys" />
+    </methodgroup>
+    <methodgroup ID="srvScout">
+      <method ID="LoadPirs" />
+      <method ID="NewPir" sfwReturnType="MPIPHP.BusinessObjects.busPir" sfwMode="New" />
+      <method ID="FindPir" sfwReturnType="MPIPHP.BusinessObjects.busPir" sfwMode="Update">
+        <parameter ID="aintPirId" OldID="aint_pir_id" />
+      </method>
+      <method ID="DownloadPirAttachment" sfwReturnType="FileDownloadContainer">
+        <parameter ID="aintpirattachmentid" sfwDataType="FileDownloadContainer" />
+      </method>
+    </methodgroup>
+    <methodgroup ID="srvUserActivity">
+      <method ID="FindUserActivityLogDetails" sfwReturnType="NeoSpin.BusinessObjects.busUserActivityLogDetail" sfwMode="All">
+        <parameter ID="aintUserActivityLogDetailId" OldID="aintUserActivityLogDetailId" />
+        <parameter ID="aintAuditLogCount" OldID="aintAuditLogCount" />
+      </method>
+      <method ID="LoadUserActivityLogs" />
+      <method ID="FindUserActivityLog" sfwReturnType="NeoSpin.BusinessObjects.busUserActivityLog" sfwMode="All">
+        <parameter ID="aintUserActivityLogId" OldID="aint_user_activity_log_id" />
+        <parameter ID="aintUserActivityLogDetailId" OldID="aint_user_activity_log_detail_id" />
+      </method>
+    </methodgroup>
+    <methodgroup ID="srvWorkflow">
+      <method ID="FindActivity" sfwReturnType="MPIPHP.BusinessObjects.busActivity" sfwMode="Update">
+        <parameter ID="aintactivityid" OldID="aintactivityid" />
+      </method>
+      <method ID="LoadDocuments" />
+      <method ID="NewDocument" sfwReturnType="MPIPHP.BusinessObjects.busDocument" sfwMode="New" />
+      <method ID="FindDocument" sfwReturnType="MPIPHP.BusinessObjects.busDocument" sfwMode="Update">
+        <parameter ID="Aintdocumentid" OldID="aintdocumentid" />
+      </method>
+      <method ID="LoadDocumentProcessCrossRefs" />
+      <method ID="NewDocumentProcessCrossref" sfwReturnType="MPIPHP.BusinessObjects.busDocumentProcessCrossref" sfwMode="New">
+        <parameter ID="aintProcessID" OldID="aint_process_id" />
+      </method>
+      <method ID="FindDocumentProcessCrossref" sfwReturnType="MPIPHP.BusinessObjects.busDocumentProcessCrossref" sfwMode="Update">
+        <parameter ID="Aintdocumentprocesscrossrefid" OldID="aintdocumentprocesscrossrefid" />
+      </method>
+      <method ID="SearchAndLoadMyBasket" sfwReturnType="MPIPHP.BusinessObjects.busMyBasket" sfwMode="All" />
+      <method ID="InitiateOnlineProcessInitiation" sfwReturnType="MPIPHP.BusinessObjects.busProcessInitiation" sfwMode="All" />
+      <method ID="LoadProcess" />
+      <method ID="FindProcess" sfwReturnType="MPIPHP.BusinessObjects.busProcess" sfwMode="All">
+        <parameter ID="aintprocessid" OldID="aintprocessid" />
+      </method>
+      <method ID="LoadReassignmentWorkDetail" sfwReturnType="MPIPHP.BusinessObjects.busReassignWorkDetail" sfwMode="All">
+        <parameter ID="aintActivityInstanceID" OldID="aint_activity_instance_id" />
+      </method>
+      <method ID="SearchAndLoadReassignmentBasket" sfwReturnType="MPIPHP.BusinessObjects.busReassignWork" sfwMode="All" />
+      <method ID="GetUserActivities" sfwReturnType="MPIPHP.BusinessObjects.busActivityInstance" sfwMode="All">
+        <parameter ID="aintActivityInstanceID" OldID="aintActivityInstanceID" />
+      </method>
+      <method ID="FindActivityInstance" sfwReturnType="MPIPHP.BusinessObjects.busActivityInstance" sfwMode="All">
+        <parameter ID="aintactivityinstanceid" OldID="aintactivityinstanceid" />
+      </method>
+    </methodgroup>
+    <methodgroup ID="srvBPMN">
+      <method ID="FindBpmCase" sfwMode="All">
+        <parameter ID="aintCaseId" sfwDataType="System.Int32" />
+      </method>
+      <method ID="FindBpmProcess" sfwMode="All">
+        <parameter ID="aintProcessId" sfwDataType="System.Int32" />
+      </method>
+      <method ID="BPMGetUserActivities" sfwMode="All">
+        <parameter ID="aintActivityInstanceID" sfwDataType="System.Int32" />
+      </method>
+    </methodgroup>
+  </servermethods>
+  <correspondence>
+    <stdbookmarks />
+  </correspondence>
+  <globalparameters />
+  <applicationportals />
+</root>

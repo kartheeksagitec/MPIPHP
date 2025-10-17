@@ -1,0 +1,72 @@
+﻿<entity ID="entSolBpmCaseInstance" sfwMainCDO="icdoBpmCaseInstance" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busSolBpmCaseInstance" sfwParentEntity="entBpmCaseInstance">
+  <commonproperties />
+  <checklist />
+  <initialload>
+    <item ID="Visible Rule - Is Case Instance In Progress" sfwStatus="Active" sfwMode="All" />
+    <item ID="Visible Rule - Is Case Instance Status Not In Progess" sfwStatus="Active" sfwMode="All" />
+    <item ID="Visible Rule - Show Continue Case Instance Button" sfwStatus="Active" sfwMode="All" />
+    <item ID="Visible Rule - Is Resume Button Visible" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <delete>
+    <property ID="lstBpmProcessInstance" sfwMethodName="LoadBpmProcessInstances" />
+    <property ID="lstBpmCaseInstanceParameter" sfwMethodName="LoadBpmCaseInstanceParameters" />
+    <property ID="lstBpmCaseInstanceExecutionPath" sfwMethodName="LoadBpmBpmCaseInstanceExecutionPath" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <Constraint />
+  <rules>
+    <rule ID="Visible Rule - Is Case Instance In Progress" sfwExpression="this.icdoBpmCaseInstance.status_value == &quot;INPC&quot;" sfwObjectBased="True" />
+    <rule ID="Visible Rule - Is Case Instance Status Not In Progess" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="this.icdoBpmCaseInstance.status_value != &quot;INPC&quot;" />
+    <rule ID="Visible Rule - Show Continue Case Instance Button" sfwRuleType="Validation" sfwExpression="icdoBpmCaseInstance.status_value == &quot;INPC&quot; &amp;&amp; RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entBpmProcessInstanceRestrictNotifyXr.GetCountOfInProgressParentProcessInstancesByCaseInstanceId&quot;, this.icdoBpmCaseInstance.case_instance_id) == 0" sfwObjectBased="True" />
+    <rule ID="Visible Rule - Is Resume Button Visible" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="IsResumeActivityInstanceVisible()==True" />
+  </rules>
+  <constraint />
+  <queries />
+  <ExtraFields />
+  <methods>
+    <method ID="FindBpmCaseInstance" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <item ID="LoadBpmCaseInstance" sfwParameter="aintCaseInstanceId" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmCaseInstanceParameters" sfwDataType="Void" sfwItemType="Method" />
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item ID="LoadBpmProcessInstances" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmRequest" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadPerson" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadOrganization" sfwDataType="Void" sfwItemType="Method" />
+      <item ID="LoadBpmBpmCaseInstanceExecutionPath" sfwDataType="Void" sfwItemType="Method" />
+      <parameter ID="aintCaseInstanceId" sfwDataType="int" />
+    </method>
+  </methods>
+  <lifecycle />
+  <attributes>
+    <attribute ID="objBpmCase" sfwValue="ibusBpmCase" sfwType="Object" sfwEntity="entBpmCase" />
+    <attribute ID="IstrDisplayStatus" sfwDataType="string" sfwPrivate="False" sfwValue="DisplayStatus" sfwType="Property" />
+  </attributes>
+  <objectmethods>
+    <method ID="ContinueRestrictedCaseInstance" sfwReturnType="ArrayList" />
+    <method ID="LoadBpmProcessInstances" sfwReturnType="Void" />
+    <method ID="LoadBpmCaseInstanceParameters" sfwReturnType="Void" />
+    <method ID="LoadBpmBpmCaseInstanceExecutionPath" sfwReturnType="Void" />
+    <method ID="LoadBpmCaseInstance" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintCaseInstanceId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="LoadBpmRequest" sfwReturnType="Void" />
+    <method ID="LoadPerson" sfwReturnType="Void" />
+    <method ID="LoadOrganization" sfwReturnType="Void" />
+    <method ID="LoadBpmCaseInstances" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="adtbSearchResult" sfwDataType="datatable" />
+      </parameters>
+    </method>
+    <method ID="SolResumeActivityInstance" sfwReturnType="Void">
+      <parameters />
+    </method>
+    <method ID="IsResumeActivityInstanceVisible" sfwReturnType="Boolean">
+      <parameters />
+    </method>
+  </objectmethods>
+</entity>

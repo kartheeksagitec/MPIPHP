@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfpPayeeAccountStatusMaintenance" sfwActive="True" sfwStatus="Review" sfwType="Maintenance" sfwTitle="Payee Account Status" version="3.5" sfwEntity="entPrototype">
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Cancel" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCorrespondence" sfwMethodName="btnCorrespondence_Click" Text="Correspondence" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlSection0" sfwCaption="Payee Information">
+          <sfwTable ID="Section0">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="Payee Account ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwHyperLink ID="hypHyperLink" Text="5001" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Payee Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwHyperLink ID="hypHyperLink1" Text="ELIZABETH ALVAREZ" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="Benefit Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" SkinID="WhiteText" Text="Retirement" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="Retirement Type :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel5" SkinID="WhiteText" Text="Un-reduced Early Retirement" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Payee Account Status">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel8" Text="Payee Account Status :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList1" sfwLoadType="Items">
+                  <ListItem Value="BLNK" Selected="True" />
+                  <ListItem Text="Review" Value="REVW" />
+                  <ListItem Text="Approved" Value="APRD" />
+                  <ListItem Text="Receiving" Value="RECV" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel9" Text="Status Effective Date :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel6" SkinID="WhiteText" Text="06/18/2012" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel10" Text="Termination Reason :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList" sfwLoadType="Items">
+                  <ListItem Value="BLNK" Selected="True" />
+                  <ListItem Text="Death" Value="DETH" />
+                  <ListItem Text="Disability to Normal Retirement" Value="DTNR" />
+                  <ListItem Text="Early Retirement to Disability" Value="ERDI" />
+                  <ListItem Text="Payment Completed" Value="PMCP" />
+                </sfwDropDownList>
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel12" Text="Suspension Reason :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList2" sfwLoadType="Items">
+                  <ListItem Value="BLNK" Selected="True" />
+                  <ListItem Text="Death" Value="DETH" />
+                  <ListItem Text="Disability non-compliance to requested information / forms" Value="DNRI" />
+                  <ListItem Text="Other" Value="OTHR" />
+                  <ListItem Text="Re-employed" Value="RTNW" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnGridViewAddEmptyClick" sfwMethodName="btnGridViewAddEmpty_Click" Text="Add" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="4">
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="gvPayeeAccountStatus" sfwEntityField="Collection0">
+                  <Columns>
+                    <TemplateField HeaderText="Payee Account Status">
+                      <ItemTemplate>
+                        <sfwHyperLink sfwEntityField="Property0" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status Effective Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Termination Reason">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property2" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Suspension Reason">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property3" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property4" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Data>
+                    <DataRow>
+                      <DataColumn Value="Approved" sfwEntityField="Property0" />
+                      <DataColumn Value="06/18/2012" sfwEntityField="Property1" />
+                      <DataColumn sfwEntityField="Property2" />
+                      <DataColumn sfwEntityField="Property3" />
+                      <DataColumn Value="sjain" sfwEntityField="Property4" />
+                    </DataRow>
+                    <DataRow>
+                      <DataColumn Value="Review" sfwEntityField="Property0" />
+                      <DataColumn Value="06/17/2012" sfwEntityField="Property1" />
+                      <DataColumn sfwEntityField="Property2" />
+                      <DataColumn sfwEntityField="Property3" />
+                      <DataColumn Value="vthomas" sfwEntityField="Property4" />
+                    </DataRow>
+                  </Data>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" Text="Created By" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" Text="Created Date" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" Text="Modified By" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" Text="Modified Date" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

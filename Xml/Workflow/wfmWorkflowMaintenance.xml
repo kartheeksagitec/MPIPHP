@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmWorkflowMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvWorkflow" sfwResource="200" sfwType="Maintenance" sfwTitle="Workflow Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entActivityInstance">
+  <initialload>
+    <callmethods sfwMethodName="FindActivityInstance" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSuspend" sfwMessageId="4066" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshFromObject="True" sfwSecurityLevel="2" sfwVisibleRule="VisibleSuspendButton" Text="Suspend" />
+                <sfwButton ID="btnResume" sfwMessageId="4067" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshFromObject="True" sfwSecurityLevel="2" sfwVisibleRule="VisibleResumeButton" Text="Resume" />
+                <sfwButton ID="btnCancel" sfwMessageId="4068" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshFromObject="True" sfwSecurityLevel="2" sfwVisibleRule="VisibleCancelButton" Text="Cancel" />
+                <sfwButton ID="btnRelease" sfwMessageId="4069" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshFromObject="True" sfwSecurityLevel="2" sfwVisibleRule="VisibleReleaseButton" Text="Release" />
+                <sfwButton ID="btnComplete" sfwMessageId="4070" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshFromObject="True" sfwSecurityLevel="2" sfwVisibleRule="VisibleCompleteButton" Text="Complete" />
+                <sfwButton ID="btnReturntoAudit" sfwMessageId="4071" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshFromObject="True" sfwSecurityLevel="2" sfwVisibleRule="VisibleReturnToAuditButton" Text="Return to Audit" />
+                <sfwButton ID="btnReturn" sfwMessageId="4072" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="InvokeWorkflowAction" sfwRefreshFromObject="True" sfwSecurityLevel="2" sfwVisibleRule="VisibleReturnButton" Text="Return" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+                <sfwButton ID="btnCheckout" sfwCheckOut="True" sfwMessageId="4073" sfwMethodName="btnWorkflowExecuteMethod_Click" sfwSecurityLevel="2" sfwVisibleRule="VisibleCheckoutButton" Text="Checkout" sfwNavigationParameter="aintActivityInstanceId=ActivityInstanceId" OnClientClick="GetLaunchImageViewer" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewPage" sfwCaption="Workflow Process Information">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capProcessname" Text="Process Code : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessName" sfwEntityField="objProcessInstance.objProcess.Name" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capProcessDescription" Text="Process Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblProcessDescription" sfwEntityField="objProcessInstance.objProcess.Description" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capActivityname" Text="Activity Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblActivityname" sfwEntityField="objActivity.DisplayName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capContactTicketId" Text="Contact Ticket # : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnContactTicketId" sfwMethodName="btnOpen_Click" Visible="False" sfwEntityField="objProcessInstance.ContactTicketId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStatus" Text="Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatus" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDateInitiated" Text="Date Initiated : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDateInitiated" sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblPERSLinkId" Text="PERSLink ID :" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="capFullName" Text="Person Name : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgCodeId" Text="Org Code ID :" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="capOrgName" Text="Org Name : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblssn" sfwEntityField="objProcessInstance.objPerson.PersonId" CssClass="hideControl" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capRoleDescription" Text="Role ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblRoleDescription" sfwEntityField="objActivity.objRoles.RoleDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblOrgId" Visible="False" sfwEntityField="objProcessInstance.OrgId" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Suspension Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblActivityInstanceId" Visible="False" sfwEntityField="ActivityInstanceId" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capSuspensionDate" Text="Suspension End Date : " Width="200px" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtSuspensionDate" sfwDataFormat="{0:d}" sfwEntityField="SuspensionEndDate" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capResumeActionValue" Text="Resume Action : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlResumeActionValue" sfwLoadType="CodeGroup" sfwLoadSource="25" sfwEntityField="ResumeActionValue" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlNewTabControl" sfwCaption="Other Details">
+          <sfwTable ID="tblNewTabControl">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer CssClass="ajax__tab_xp" ID="tctNewTabControl">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Image" ID="tshImage">
+                      <sfwTable ID="tblImage">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnViewImage" sfwLaunchInNewWindow="True" sfwMethodName="btnOpen_Click" Text="Open" Visible="False" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvWorkflowImageData" sfwEntityField="lstProcessInstanceImageData" sfwGridEntity="entProcessInstanceImageData">
+                              <Columns>
+                                <TemplateField HeaderText="Document Title">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DocumentTitle" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="View">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnViewImage" sfwEntityField="IstrViewLinks" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Object Store" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ObjectStore" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Version Series ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="VersionSeriesId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Document ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DocumentId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="InitiatedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Document Code">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ShortName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Template Description">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SubjectTitle" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Process History" ID="tshProcessHistory">
+                      <sfwTable ID="tblProcessHistory">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvProcessHistory" sfwEntityField="lstProcessInstanceHistory" sfwGridEntity="entActivityInstanceHistory">
+                              <Columns>
+                                <TemplateField HeaderText="Activity Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objSolutionActivityInstance.objActivity.DisplayName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Activity Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Start Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StartTime" sfwDataFormat="{0:G}" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Date" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EndTime" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="EndTimeNullAsEmpty" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="User ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ActionUserId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Checklist" ID="tshChecklist">
+                      <sfwTable ID="tblChecklist">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton ID="btnApply" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="btnApplyCheckList_Click" Text="Apply" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvProcessInstanceChecklist" sfwTwoWayBinding="True" sfwEntityField="lstProcessInstanceChecklist" sfwGridEntity="entProcessInstanceChecklist" AllowEditing="True">
+                              <Columns>
+                                <TemplateField HeaderText="Document Code">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objDocument.DocType" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Document Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objDocument.DocumentName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Required Flag">
+                                  <ItemTemplate>
+                                    <sfwCheckBox sfwEntityField="RequiredFlag" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Received Date">
+                                  <ItemTemplate>
+                                    <sfwTextBox sfwDataFormat="{0:d}" sfwEntityField="ReceivedDate" ID="txtReceivedDate_grvProcessInstanceChecklist" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Approved Flag" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwCheckBox sfwEntityField="ApprovedFlag" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Document ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="DocumentId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Process Instance Checklist ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ProcessInstanceChecklistId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Workflow Instance ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ProcessInstanceId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="Notes" ID="tshNewPage">
+                      <sfwTable ID="tblNotes">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwImageButton ID="btnAddWorkFlowNotes" ImageUrl="Icon_Notes_N.png" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="AddWFNotes" />
+                          </sfwColumn>
+                          <sfwColumn>
+                            <sfwButton ID="btnNewNotes" sfwMethodName="btnNew_Click" Text="New" Visible="False" />
+                            <sfwButton ID="btnOpenNotes" sfwMethodName="btnOpen_Click" sfwRelatedControl="grvNotes" Text="Open" Visible="False" />
+                            <sfwButton ID="btnDeleteNotes" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvNotes" Text="Delete" Visible="False" />
+                          </sfwColumn>
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwTextBox ID="txtIstrNewNotes1" Rows="3" TextMode="MultiLine" Width="300px" sfwEntityField="IstrNewNotes" />
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvProcessInstanceNotes" sfwEntityField="lstProcessInstanceNotes" sfwGridEntity="entNotes">
+                              <Columns>
+                                <TemplateField HeaderText="Note ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="NoteId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Notes">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Notes" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created By">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="CreatedBy" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Created Date">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="CreatedDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn />
+                          <sfwColumn />
+                          <sfwColumn />
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objProcessInstance.objProcess" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objActivity" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objProcessInstance" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="objActivity.objRoles" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstProcessInstanceImageData" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstProcessInstanceHistory" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstProcessInstanceChecklist" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstProcessInstanceNotes" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

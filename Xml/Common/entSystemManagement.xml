@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entSystemManagement" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvSystemManagement" sfwType="BusinessRule" sfwMainCDO="icdoSystemManagement" sfwObjectID="busSystemManagement" sfwTableName="sgs_system_management" sfwDataObjectID="doSystemManagement">
+  <rules>
+    <rule ID="Base Directory is Blank" sfwMessageId="5071" sfwExpression="(string.IsNullOrEmpty(this.icdoSystemManagement.base_directory))" sfwObjectBased="True" />
+    <rule ID="Batch Date is Blank" sfwMessageId="5072" sfwExpression="(this.icdoSystemManagement.batch_date == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="Region Blank" sfwMessageId="5073" sfwExpression="(string.IsNullOrEmpty(this.icdoSystemManagement.region_value))" sfwObjectBased="True" />
+    <rule ID="System Availability Blank" sfwMessageId="5074" sfwExpression="(string.IsNullOrEmpty(this.icdoSystemManagement.system_availability_value))" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="Region Blank" sfwMode="All" sfwStatus="Active" />
+    <item ID="System Availability Blank" sfwMode="All" sfwStatus="Active" />
+    <item ID="Base Directory is Blank" sfwMode="All" sfwStatus="Active" />
+    <item ID="Batch Date is Blank" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="GetSystemManagementDetail" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT &#x9;&#xD;&#xA;&#x9;SSM.*,  &#xD;&#xA;&#x9;'' AS REGION_DESCRIPTION,&#xD;&#xA;&#x9;'' AS SYSTEM_AVL_DESCRIPTION &#xD;&#xA;FROM SGS_SYSTEM_MANAGEMENT SSM">
+      <parameters />
+    </query>
+    <query ID="GetSystemManagmentDetailByApplicationName" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT  &#xD;&#xA;&#x9;SSAC.JSON_CHANNEL_CONFIG, SSAC.APP_NAME,&#xD;&#xA;&#x9;SSM.*,  &#xD;&#xA;&#x9;'' AS REGION_DESCRIPTION,&#xD;&#xA;&#x9;'' AS SYSTEM_AVL_DESCRIPTION &#xD;&#xA;FROM SGS_SYSTEM_MANAGEMENT SSM&#xD;&#xA;LEFT OUTER JOIN SGS_SYSTEM_APP_CHANNELS SSAC&#xD;&#xA;ON SSM.SYSTEM_MANAGEMENT_ID = SSAC.SYSTEM_MANAGEMENT_ID&#xD;&#xA;AND SSAC.APP_NAME = @APP_NAME">
+      <parameters>
+        <parameter ID="@APP_NAME" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>  
+  <attributes>
+    <attribute sfwValue="system_management_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="SystemManagementId" sfwCaption="System Management Id" />
+    <attribute sfwValue="current_cycle_no" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="CurrentCycleNo" sfwCaption="Current Cycle No" />
+    <attribute sfwType="Description" ID="RegionDescription" sfwCaption="Region" sfwValue="region_description" />
+    <attribute sfwValue="region_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="RegionId" sfwCodeID="17" sfwCaption="Region" />
+    <attribute sfwValue="region_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="RegionValue" sfwCaption="Region" />
+    <attribute sfwType="Description" ID="SystemAvailabilityDescription" sfwCaption="System Availability" sfwValue="system_availability_description" />
+    <attribute sfwValue="system_availability_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="SystemAvailabilityId" sfwCodeID="18" sfwCaption="System Availability" />
+    <attribute sfwValue="system_availability_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="SystemAvailabilityValue" sfwCaption="System Availability" />
+    <attribute sfwValue="batch_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="BatchDate" sfwCaption="Batch Date" />
+    <attribute sfwValue="base_directory" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="200" sfwIsNull="True" ID="BaseDirectory" sfwCaption="Base Directory" />
+    <attribute sfwValue="system_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="SystemFlag" sfwCaption="System Flag" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="email_notification" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="2000" sfwIsNull="True" ID="EmailNotification" sfwIsSequence="False" sfwCaption="Email Notification" />
+    <attribute sfwValue="data1" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="Data1" sfwCaption="Data1" />
+    <attribute sfwValue="data2" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="Data2" sfwCaption="Data2" />
+    <attribute sfwValue="use_application_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="UseApplicationDate" sfwCaption="Use Application Date" />
+    <attribute sfwValue="application_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="date" sfwDBDataType="date" sfwIsNull="True" ID="ApplicationDate" sfwCaption="Application Date" />
+  </attributes>
+</entity>

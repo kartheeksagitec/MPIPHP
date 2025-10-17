@@ -1,0 +1,347 @@
+﻿<form ID="wfmBPMCaseMaintenance" sfwRemoteObject="srvBPMN" sfwType="Maintenance" sfwTitle="BPM Case Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBPMCaseLookup" sfwEntity="entBpmCase">
+  <initialload>
+    <callmethods sfwMethodName="FindBpmCase" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="BPMCase Details" sfwCaption="Case">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCaseId" Text="Case ID : " AssociatedControlID="hypCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCaseId" sfwEntityField="CaseId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capCaseFile" Text="Case File : " AssociatedControlID="lblCaseFile" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" sfwEntityField="CaseFile" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCaseVersion" Text="Version : " AssociatedControlID="lblCaseVersion" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCaseVersion" sfwEntityField="Version" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatusValue" Text="Status : " AssociatedControlID="ddlStatusValue" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlStatusValue" DataTextField="description" DataValueField="code_value" sfwAddEmptyItem="False" sfwLoadType="CodeGroup" sfwLoadSource="3002" sfwEntityField="StatusValue" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capName" Text="Name : " AssociatedControlID="lblName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLinkButton ID="btnCaseName" sfwMethodName="btnMap_Click" Text="Case Name" sfwNavigationParameter="aint_case_id=CaseId" sfwObjectID="busBpmCase" sfwEntityField="Name" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDescription" Text="Description : " AssociatedControlID="lblDescription" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblDescription" sfwEntityField="Description" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capEffectiveDate" Text="Effective Date : " AssociatedControlID="lblEffectiveDate" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEffectiveDate" sfwEntityField="EffectiveDate" sfwDataFormat="{0:d}" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCaseParameter" sfwCaption="Case Details">
+          <sfwTable ID="tblNewPage" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer ID="tctSfwTabContainer">
+                  <Tabs>
+                    <sfwTabSheet ID="tshProcess" HeaderText="Process">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwButton asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" ID="btnOpenProcessMaintenance" sfwMethodName="btnOpen_Click" sfwActiveForm="wfmBPMProcessMaintenance" sfwRelatedControl="grvBusBpmProcess" Text="Open" Visible="False" sfwNavigationParameter="aintProcessId=ProcessId" />
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusBpmProcess" AllowPaging="True" AllowSorting="True" sfwEntityField="lstDisplayBpmProcesses" sfwGridEntity="entBpmProcess">
+                              <Columns>
+                                <TemplateField HeaderText="Process ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenProcessMaintenance" sfwEntityField="ProcessId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Description">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Description" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="SLA Days">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SlaDays" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="SLA Hours">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SlaHours" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="SLA Minutes">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="SlaMinutes" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Priority" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Priority" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="StatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="TypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshCaseMessageFlow" HeaderText="Case Message Flow">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvCaseMessageFlow" AllowPaging="True" AllowSorting="True" sfwEntityField="lstBpmCaseMessageFlow" sfwGridEntity="entBpmCaseMessageFlow">
+                              <Columns>
+                                <TemplateField HeaderText="Message Flow ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel Visible="False" sfwEntityField="BpmCaseMessageFlowId1" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="Name1" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Source Activity">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objSourceBpmActivity.Name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Source Process">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objSourceBpmProcess.Name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Target Activity">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objTargetBpmActivity.Name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Target Process">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objTargetBpmProcess.Name" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshCaseParameters" HeaderText="Case Parameters">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvCaseParameters" AllowPaging="True" AllowSorting="True" sfwEntityField="lstBpmCaseParameter" sfwGridEntity="entBpmCaseParameter">
+                              <Columns>
+                                <TemplateField HeaderText="Case Parameter ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel Visible="False" sfwEntityField="CaseParameterId1" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Parameter Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ParameterName1" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Parameter Data Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ParameterDataType1" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet ID="tshNewPage" HeaderText="Case Instances">
+                      <sfwTable>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView ID="grvBusCaseInstanceCountByStatus" AllowPaging="True" AllowSorting="True" sfwEntityField="lstCaseInstancesByStatus" sfwGridEntity="entCaseInstanceCountByStatus">
+                              <Columns>
+                                <TemplateField HeaderText="Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IstrStatus" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Count">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="IintCount" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlProcessDetails" sfwCaption="Process Details" Visible="False">
+          <sfwTable ID="tblNewPage1" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn VerticalAlign="Top">
+                <sfwGridView ID="grvBusBpmActivity" sfwParentGrid="grvBusBpmProcess" sfwEntityField="lstBpmActivity" sfwGridEntity="entBpmActivity">
+                  <Columns>
+                    <TemplateField HeaderText="Activity ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Role" SortExpression="RoleId" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLabel Visible="False" sfwEntityField="objRoles.RoleDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityTypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+              <sfwColumn VerticalAlign="Top">
+                <sfwGridView ID="grvGridView" sfwParentGrid="grvBusBpmProcess" sfwEntityField="lstBpmProcessEventXr" sfwGridEntity="entBpmProcessEventXr">
+                  <Columns>
+                    <TemplateField HeaderText="Event Desc">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmEvent.EventDesc" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Action">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActionDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField Visible="False" HeaderText="Id">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="BpmProcessEventXrId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwDataFormat="{0:G}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwDataFormat="{0:G}" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="lstDisplayBpmProcesses" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmCaseMessageFlow" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmCaseParameter" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstCaseInstancesByStatus" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmActivity" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmProcessEventXr" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entWithholdingInformation" sfwMainCDO="icdoWithholdingInformation" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busWithholdingInformation" sfwTableName="sgt_withholding_information" sfwView="False" sfwDataObjectID="doWithholdingInformation">
+  <queries>
+    <query ID="GetTotalWithheldAmount" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT Q.PAYMENT_DATE,sum(Q.TAXABLE_WITHHOLD_FLAT_AMOUNT) TAXABLE_WITHHOLD_FLAT_AMOUNT,SUM(Q.NON_TAXABLE_WITHHOLD_FLAT_AMOUNT) NON_TAXABLE_WITHHOLD_FLAT_AMOUNT FROM &#xD;&#xA;(&#xD;&#xA;SELECT PHH.PAYMENT_DATE,sum(WIHD.WITHHOLD_FLAT_AMOUNT) TAXABLE_WITHHOLD_FLAT_AMOUNT,0 NON_TAXABLE_WITHHOLD_FLAT_AMOUNT FROM SGT_WITHHOLDING_INFORMATION_HISTORY_DETAIL WIHD&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DETAIL  PHD &#xD;&#xA;ON WIHD.PAYMENT_HISTORY_DETAIL_ID = PHD.PAYMENT_HISTORY_DETAIL_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT &#xD;&#xA;ON PIT.PAYMENT_ITEM_TYPE_ID = PHD.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHH&#xD;&#xA;ON PHH.PAYMENT_HISTORY_HEADER_ID = PHD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_WITHHOLDING_INFORMATION SWI on WIHD.WITHHOLDING_INFORMATION_ID = SWI.WITHHOLDING_INFORMATION_ID&#xD;&#xA;WHERE WIHD.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID AND &#xD;&#xA;PIT.ITEM_TYPE_DIRECTION = 1 AND PIT.TAXABLE_ITEM_FLAG = 'Y'&#xD;&#xA;AND PHH.PAYMENT_DATE &gt;= @FROM_DATE AND PHH.PAYMENT_DATE &lt; @TODATE AND SWI.WITHHOLDING_DATE_TO IS NULL&#xD;&#xA;group by PHH.PAYMENT_DATE&#xD;&#xA;union&#xD;&#xA;SELECT PHH.PAYMENT_DATE,0 TAXABLE_WITHHOLD_FLAT_AMOUNT,sum(WIHD.WITHHOLD_FLAT_AMOUNT) NON_TAXABLE_WITHHOLD_FLAT_AMOUNT FROM SGT_WITHHOLDING_INFORMATION_HISTORY_DETAIL WIHD&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_DETAIL  PHD &#xD;&#xA;ON WIHD.PAYMENT_HISTORY_DETAIL_ID = PHD.PAYMENT_HISTORY_DETAIL_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_ITEM_TYPE PIT &#xD;&#xA;ON PIT.PAYMENT_ITEM_TYPE_ID = PHD.PAYMENT_ITEM_TYPE_ID&#xD;&#xA;INNER JOIN SGT_PAYMENT_HISTORY_HEADER PHH&#xD;&#xA;ON PHH.PAYMENT_HISTORY_HEADER_ID = PHD.PAYMENT_HISTORY_HEADER_ID&#xD;&#xA;INNER JOIN SGT_WITHHOLDING_INFORMATION SWI on WIHD.WITHHOLDING_INFORMATION_ID = SWI.WITHHOLDING_INFORMATION_ID&#xD;&#xA;WHERE WIHD.PAYEE_ACCOUNT_ID = @PAYEE_ACCOUNT_ID AND &#xD;&#xA;PIT.ITEM_TYPE_DIRECTION = 1 AND PIT.TAXABLE_ITEM_FLAG &lt;&gt; 'Y'&#xD;&#xA;AND  PHH.PAYMENT_DATE &gt;= @FROM_DATE AND PHH.PAYMENT_DATE &lt; @TODATE AND SWI.WITHHOLDING_DATE_TO IS NULL&#xD;&#xA;group by PHH.PAYMENT_DATE&#xD;&#xA;) AS Q&#xD;&#xA;group by Q.PAYMENT_DATE">
+      <parameters>
+        <parameter ID="@PAYEE_ACCOUNT_ID" sfwDataType="int" />
+        <parameter ID="@FROM_DATE" sfwDataType="DateTime" />
+        <parameter ID="@TODATE" sfwDataType="DateTime" />
+      </parameters>
+    </query>
+    <query ID="GetTaxYear" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT YEAR(MAX(EFFECTIVE_DATE)) AS TaxYear FROM SGT_FED_STATE_TAX_RATE">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="withholding_information_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="WithholdingInformationId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="withholding_percentage" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="WithholdingPercentage" sfwIsSequence="False" sfwCaption="Withholding Percentage" />
+    <attribute sfwValue="withhold_flat_amount" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,2" sfwIsNull="True" ID="WithholdFlatAmount" sfwIsSequence="False" sfwCaption="Withhold Flat Amount" />
+    <attribute sfwValue="withholding_date_from" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="WithholdingDateFrom" sfwIsSequence="False" sfwCaption="Withholding Date From" />
+    <attribute sfwValue="withholding_date_to" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="WithholdingDateTo" sfwIsSequence="False" sfwCaption="Withholding Date To" />
+    <attribute sfwValue="payee_account_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="PayeeAccountId" sfwIsSequence="False" sfwCaption="Payee Account Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwType="Collection" sfwEntity="entWithholdingInformationHistoryDetail" ID="lstWithholdingInformationHistoryDetail" sfwValue="iclbWithholdingInformationHistoryDetail" />
+  </attributes>
+  <constraint />
+  <rules>
+    <rule ID="Rule-CheckWitholdFlatAmtNULL" sfwMessageId="6039" sfwExpression="(this.icdoWithholdingInformation.withholding_percentage == 0) || &#xA;(this.icdoWithholdingInformation.withholding_percentage &lt;= 0.00)" />
+    <rule ID="Rule-CheckWitholdingPercentageGrtrThan100" sfwMessageId="1121" sfwExpression="(this.icdoWithholdingInformation.withholding_percentage &gt; 100)" />
+  </rules>
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="Rule-CheckWitholdFlatAmtNULL" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-CheckWitholdingPercentageGrtrThan100" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+  <objectmethods>
+    <method ID="LoadWithholdingInformationHistoryDetail" />
+  </objectmethods>
+  <ExtraFields />
+</entity>

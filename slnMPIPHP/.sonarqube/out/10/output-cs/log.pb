@@ -1,0 +1,1 @@
+Roslyn version: 4.13.0.0Language version: CSharp7_3!Concurrent execution: enabledùòFile 'C:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPInterface\obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs' was recognized as generated

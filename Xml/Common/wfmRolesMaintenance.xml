@@ -1,0 +1,252 @@
+﻿<form ID="wfmRolesMaintenance" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="207" sfwType="Maintenance" sfwTitle="Roles Maintenance" sfwMaxCount="100" version="3.5" WebSite="MPIPHPWebClient" sfwHelpFile="Assign Roles=Assign Roles.htm;Create New Roles=Create New Roles.htm;Delete Role=Delete Role.htm;Modify Roles=Modify Roles.htm;Create New User=Create New User.htm;Modify User=Modify User.htm;Delete User=Delete User.htm;Security Overview=Security Overview.htm" sfwEntity="entPERSLinkRoles">
+  <initialload>
+    <callmethods sfwMethodName="FindRole" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnSave_Click" sfwNavigationParameter="aintRoleId=RoleId" Text="Save" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Other Details">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capRoleID" Text="Role ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="txtrole_id" sfwEntityField="RoleId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capRoleDescription" Text="Role Description :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtrole_description" Width="700px !important" sfwEntityField="RoleDescription" />
+                <RequiredFieldValidator ControlToValidate="txtrole_description" ErrorMessage="Role Description is Mandatory" Text="*" ID="rfvRequiredFieldValidator" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlRoleDetails" CssClass="fullWidth" sfwCaption="Other Details">
+          <sfwTable ID="tblRoleDetails">
+            <sfwRow>
+              <sfwColumn>
+                <sfwTabContainer CssClass="ajax__tab_xp" ID="tctRoleDetails">
+                  <Tabs>
+                    <sfwTabSheet HeaderText="Security" ID="tshSecurity">
+                      <sfwTable ID="tblSecurity">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlAddResource" sfwCollapsible="False">
+                              <sfwTable CssClass="Table" ID="tblNewPage">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLiteral ID="ltrLabel" Text="Resource : " />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwCascadingDropDownList DataTextField="resource_description" DataValueField="resource_id" ID="ddlIstrResourceDescription" sfwTwoWayBinding="False" sfwLoadType="Method" sfwLoadSource="LoadUnassignedRolesByUser" sfwEntityField="IstrResourceId" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwButton ID="btnAddResource" sfwMethodName="btnExecuteBusinessMethod_Click" sfwNavigationParameter="astrResourceId=IstrResourceId" sfwObjectMethod="AddResource" Text="Add Resource" />
+                                  </sfwColumn>
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlFilter" sfwCollapsible="False">
+                              <sfwTable CssClass="Table" ID="tblNewPage1">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwLiteral ID="ltrCapIstrSecurityValue" Text="Security Value : " />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlIstrSecurityValue" sfwDataField="security_value" sfwLoadType="CodeGroup" sfwLoadSource="11" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLiteral ID="ltrCapIstrResourceTypeValue" Text="Resource Type : " />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlIstrResourceTypeValue" sfwDataField="resource_type_value" sfwLoadType="CodeGroup" sfwLoadSource="12" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwButton CssClass="None" ID="btnSearch" sfwMethodName="btnGridSearch_Click" sfwNavigationParameter="ddlIstrSecurityValue;ddlIstrResourceTypeValue" sfwObjectID="busPERSLinkRoles" sfwObjectMethod="SearchAndLoadResource" sfwRelatedControl="grvSecurityByRoles" Text="Search" />
+                                  </sfwColumn>
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvSecurityByRoles" PageSize="20" sfwBaseQuery="entSecurity.ByRole" sfwTwoWayBinding="True" sfwEntityField="lstSecurityByRoles" sfwGridEntity="entSecurity">
+                              <Columns>
+                                <TemplateField HeaderText="Resource">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objResources.ResourceDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Resource Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="objResources.ResourceTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Security Level" SortExpression="SecurityDescription" SortExpressionUpdated="true">
+                                  <ItemTemplate>
+                                    <sfwDropDownList sfwLoadType="CodeGroup" sfwLoadSource="11" sfwEntityField="SecurityValue" ID="ddlSecurityValue_grvSecurityByRoles" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Resource ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="ResourceId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Role ID" Visible="False">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="RoleId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                              <Parameters>
+                                <parameter ID="@role_id" sfwDataType="int" sfwEntityField="RoleId" />
+                              </Parameters>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                    <sfwTabSheet HeaderText="User" ID="tshUsers">
+                      <sfwTable ID="tblUsers">
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwPanel ID="pnlNewPage" sfwCollapsible="False">
+                              <sfwTable CssClass="Table" ID="tblNewPage2">
+                                <sfwRow>
+                                  <sfwColumn>
+                                    <sfwButton ID="btnOpen" sfwActiveForm="wfmUsersMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintUserSerialId=UserSerialId" sfwObjectID="busPERSLinkRoles" sfwRelatedControl="dgrUsers" sfwSelection="Many" Text="Open" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwLiteral ID="ltrCapUserSerialID1" Text="User Serial ID : " />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwTextBox ID="txtUserSerialId" sfwEntityField="IstrUserSerialId" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmUsersLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtUserSerialId" sfwSelectedIndex="UserSerialId" />
+                                  </sfwColumn>
+                                  <sfwColumn>
+                                    <sfwButton ID="btnAddUser" sfwMethodName="btnExecuteBusinessMethod_Click" sfwNavigationParameter="astrUserSerialId=IstrUserSerialId" sfwObjectMethod="AddUser" Text="Add User" />
+                                  </sfwColumn>
+                                </sfwRow>
+                              </sfwTable>
+                            </sfwPanel>
+                          </sfwColumn>
+                        </sfwRow>
+                        <sfwRow>
+                          <sfwColumn>
+                            <sfwGridView AllowSorting="True" ID="dgrUsers" sfwSelection="Many" sfwEntityField="lstUsers" sfwGridEntity="entUser">
+                              <Columns>
+                                <TemplateField HeaderText="User Serial ID" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="UserSerialId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="User ID">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="UserId" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="User Name">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="UserFullName" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="Begin Date" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="BeginDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="End Date" ItemStyle.HorizontalAlign="Right">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="User Type">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="UserTypeDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                                <TemplateField HeaderText="User Status">
+                                  <ItemTemplate>
+                                    <sfwLabel sfwEntityField="UserStatusDescription" />
+                                  </ItemTemplate>
+                                </TemplateField>
+                              </Columns>
+                            </sfwGridView>
+                          </sfwColumn>
+                        </sfwRow>
+                      </sfwTable>
+                    </sfwTabSheet>
+                  </Tabs>
+                </sfwTabContainer>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstSecurityByRoles" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstUsers" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

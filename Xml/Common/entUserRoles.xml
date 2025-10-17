@@ -1,0 +1,92 @@
+﻿<entity ID="entUserRoles" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwType="BusinessRule" sfwMainCDO="icdoUserRoles" sfwObjectID="busUserRoles" sfwTableName="sgs_user_roles" sfwDataObjectID="doUserRoles">
+  <rules>
+    <rule ID="Rule Check  Role" sfwMessageId="5110" sfwExpression="(this.icdoUserRoles.role_id == 0)" sfwObjectBased="True" />
+    <rule ID="Rule check if Start Date is greater than end date" sfwMessageId="5111" sfwExpression="(this.icdoUserRoles.effective_start_date != DateTime.MinValue) &amp;&amp; &#xA;(this.icdoUserRoles.effective_end_date != DateTime.MinValue) &amp;&amp; &#xA;(this.icdoUserRoles.effective_end_date &lt;= this.icdoUserRoles.effective_start_date)" sfwObjectBased="True" />
+    <rule ID="RULE CHECK LOGGED USER ID IS CURRENT USER ID" sfwMessageId="5114" sfwExpression="(RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusUser.icdoUser.user_serial_id&quot;) == RFunc.GetValue&lt;Int32&gt;(this, &quot;ibusUser.icdoUser.Loggedin_user_id&quot;))" sfwObjectBased="True" />
+    <rule ID="Rule Duplicate Role" sfwMessageId="5115" sfwExpression="(RFunc.ExecuteQuery&lt;Int32&gt;(&quot;entUserRoles.ByUserRole&quot;, this.icdoUserRoles.user_serial_id, this.icdoUserRoles.role_id) &gt; 0)" sfwObjectBased="True" />
+    <rule ID="Rule if entered start date less than old value in update" sfwMessageId="5117" sfwExpression="(this.icdoUserRoles.effective_start_date != DateTime.MinValue) &amp;&amp; &#xA;(this.icdoUserRoles.effective_start_date &lt; Convert.ToDateTime(this.icdoUserRoles.ihstOldValues[&quot;effective_start_date&quot;]))" sfwObjectBased="True" />
+    <rule ID="Rule if Start date is not null and past date" sfwMessageId="5112" sfwExpression="(this.icdoUserRoles.effective_start_date != DateTime.MinValue) &amp;&amp; &#xA;(this.icdoUserRoles.effective_start_date &lt; RFunc.CurrentDate())" sfwObjectBased="True" />
+    <rule ID="Rule if Start Date is null" sfwMessageId="5113" sfwExpression="(this.icdoUserRoles.effective_start_date == DateTime.MinValue)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload />
+  <softerror />
+  <harderror>
+    <item ID="Rule Duplicate Role" sfwMode="New" sfwStatus="Active" />
+    <item ID="Rule Check  Role" sfwMode="All" sfwStatus="Active" />
+    <item ID="RULE CHECK LOGGED USER ID IS CURRENT USER ID" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule if Start date is not null and past date" sfwMode="New" sfwStatus="Active" />
+    <item ID="Rule if Start Date is null" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule check if Start Date is greater than end date" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <queries>
+    <query ID="ByUser" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select a.*,&#xD;&#xA;       role_description&#xD;&#xA;  from sgs_user_roles a, sgs_roles b&#xD;&#xA; where user_serial_id = @user_serial_id&#xD;&#xA;   and a.role_id = b.role_id">
+      <parameters>
+        <parameter ID="@user_serial_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="CountByRole" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) &#xD;&#xA;  from sgs_user_roles&#xD;&#xA; where role_id = @role_id&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@role_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="ByUserRole" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select count(*) &#xD;&#xA;  from sgs_user_roles&#xD;&#xA;where user_serial_id = @user_serial_id&#xD;&#xA;  and role_id = @role_id">
+      <parameters>
+        <parameter ID="@user_serial_id" sfwDataType="string" />
+        <parameter ID="@role_id" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUserWithActiveStatus" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from sgs_user us,sgs_user_roles usr where &#xD;&#xA;           us.user_serial_id = usr.user_serial_id and us.user_status_value = 'A'&#xD;&#xA;         and usr.user_serial_id = @user_serial_id">
+      <parameters>
+        <parameter ID="@user_serial_id" />
+      </parameters>
+    </query>
+    <query ID="GetRolesByUserSerialId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM SGS_USER_ROLES SUR WITH(NOLOCK) INNER JOIN SGS_ROLES SR WITH(NOLOCK) ON SUR.ROLE_ID = SR.ROLE_ID&#xD;&#xA;WHERE USER_SERIAL_ID = @USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetActiveUsersByRoleId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT SU.* FROM SGS_USER SU WITH(NOLOCK) INNER JOIN SGS_USER_ROLES SUR WITH(NOLOCK)&#xD;&#xA;ON SU.USER_SERIAL_ID = SUR.USER_SERIAL_ID INNER JOIN &#xD;&#xA;SGS_ROLES SR WITH(NOLOCK) ON SUR.ROLE_ID = SR.ROLE_ID &#xD;&#xA;WHERE SU.USER_STATUS_VALUE = 'A' AND SR.ROLE_ID = @ROLE_ID">
+      <parameters>
+        <parameter ID="@ROLE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="PopulateAllRoles" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" Select Role_ID ,Role_Description from SGS_ROLES">
+      <parameters />
+    </query>
+    <query ID="LoadRoles" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT ROLE_ID from SGS_USER_ROLES where USER_SERIAL_ID = @USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetUserRoleForBPMAdminstrator" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; COUNT(*) &#xA;FROM&#xA;&#x9; SGS_USER_ROLES UR WITH(NOLOCK) &#xA;&#x9; INNER JOIN SGS_ROLES R WITH(NOLOCK) &#xA;&#x9; ON UR.ROLE_ID = R.ROLE_ID&#xA;WHERE&#xA;&#x9; UR.USER_SERIAL_ID  = @USER_SERIAL_ID AND&#xA;&#x9; R.ROLE_DESCRIPTION = 'BPM Administrator'">
+      <parameters>
+        <parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="user_serial_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UserSerialId" sfwIsSequence="False" sfwCaption="User Serial Id" />
+    <attribute sfwValue="role_id" sfwType="Column" sfwKeyNo="2" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="RoleId" sfwIsSequence="False" sfwCaption="Role Id" />
+    <attribute sfwValue="effective_start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveStartDate" sfwIsSequence="False" sfwCaption="Effective Start Date" />
+    <attribute sfwValue="effective_end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EffectiveEndDate" sfwIsSequence="False" sfwCaption="Effective End Date" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwDataType="string" sfwType="Property" ID="RoleDescription" sfwValue="icdoRoles.role_description" />
+    <attribute ID="objUser" sfwType="Object" sfwEntity="entUser" sfwValue="ibusUser" />
+  </attributes>
+  <constraint />
+  <methods />
+  <lifecycle />
+  <objectmethods />
+</entity>

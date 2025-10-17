@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entQDROApplication" sfwActive="True" sfwStatus="Valid" sfwType="BusinessRule" sfwMainCDO="icdoDroApplication" sfwReadOnlyRule="Record is read-only when DRO Status  is Qualified" sfwObjectID="busQdroApplication">
+  <rules>
+    <rule ID="Record is read-only when DRO Status  is Qualified" sfwExpression="(this.icdoDroApplication.dro_status_value == &quot;QLFD&quot;) || &#xA;(this.icdoDroApplication.dro_status_value == &quot;CNLD&quot;) || &#xA;(this.icdoDroApplication.dro_status_value == &quot;AMND&quot;) || &#xA;(this.icdoDroApplication.dro_status_value == &quot;AMQL&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule - CommencementDateIsValid" sfwMessageId="6180" sfwExpression="(this.CheckValidDROCommencementDate() == False)" sfwObjectBased="True" />
+    <rule ID="Rule - ParticiantEligibleForDisabilityBenefit" sfwMessageId="5434" sfwExpression="(this.IsParticipantEligibleForDisabilityBenefit() == False)" sfwObjectBased="True" />
+    <rule ID="Rule:AddUpdateDeleteButtonVisible" sfwExpression="(string.IsNullOrEmpty(this.icdoDroApplication.dro_status_value)) || &#xA;(this.icdoDroApplication.dro_status_value == &quot;RCVD&quot;) || &#xA;(this.icdoDroApplication.dro_status_value == &quot;APRD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule:AmendedButtonVisible" sfwExpression="(this.icdoDroApplication.dro_status_value == &quot;APRD&quot;) || &#xA;(this.icdoDroApplication.dro_status_value == &quot;QLFD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule:ApprovedButtonIsVisible" sfwExpression="(this.icdoDroApplication.dro_status_value == &quot;RCVD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule:ButtonVisible_Qualified Status" sfwExpression="(this.icdoDroApplication.dro_status_value == &quot;QLFD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule:CancelledButtonVisible" sfwExpression="!(this.icdoDroApplication.dro_status_value == &quot;CNLD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule:CaseNumberIsNull" sfwMessageId="1104" sfwExpression="(string.IsNullOrEmpty(this.icdoDroApplication.case_number)) &amp;&amp; &#xA;(this.icdoDroApplication.dro_status_value == &quot;APRD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule:DateOfSeparationValidation" sfwMessageId="1119" sfwExpression="(this.IsDateOfSeparationValid() == False)" sfwObjectBased="True" />
+    <rule ID="Rule:DROReceivedDateIsNull" sfwMessageId="1107" sfwExpression="(this.icdoDroApplication.received_date == DateTime.MinValue) &amp;&amp; &#xA;(this.icdoDroApplication.dro_status_value == &quot;APRD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule:EmailValidation" sfwMessageId="1118" sfwExpression="(this.IsEmailValid() == False)" sfwObjectBased="True" />
+    <rule ID="Rule:EntryOfOrderDateNotLessThanSeparationDate" sfwMessageId="5176" sfwExpression="(this.icdoDroApplication.order_date &lt; this.icdoDroApplication.date_of_divorce) &amp;&amp; &#xA;!(this.IsOrderDateNull() == True)" sfwObjectBased="True" />
+    <rule ID="Rule:EntryOfOrderDateNotMoreThanCurrentDate" sfwMessageId="5175" sfwExpression="(this.IsEntryOfOrderDateMoreThanCurrentDate() == True)" sfwObjectBased="True" />
+    <rule ID="Rule:QualifiedButtonVisible" sfwExpression="(this.icdoDroApplication.dro_status_value == &quot;APRD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule:QualifiedDateNotLessThanMarriageDate" sfwMessageId="2010" sfwExpression="(this.icdoDroApplication.qualified_date &lt; this.icdoDroApplication.date_of_marriage) &amp;&amp; &#xA;(this.icdoDroApplication.dro_status_value == &quot;APRD&quot;) &amp;&amp; &#xA;!(this.IsQualifiedDateNull() == True)" sfwObjectBased="True" />
+    <rule ID="Rule:QualifiedDateNotLessThanReceivedDate" sfwMessageId="2012" sfwExpression="(this.icdoDroApplication.qualified_date &lt; this.icdoDroApplication.received_date) &amp;&amp; &#xA;(this.icdoDroApplication.dro_status_value == &quot;APRD&quot;) &amp;&amp; &#xA;!(this.IsQualifiedDateNull() == True)" sfwObjectBased="True" />
+    <rule ID="Rule:QualifiedDateNotLessThanSeparationDate" sfwMessageId="2011" sfwExpression="(this.icdoDroApplication.qualified_date &lt; this.icdoDroApplication.date_of_divorce) &amp;&amp; &#xA;(this.icdoDroApplication.dro_status_value == &quot;APRD&quot;) &amp;&amp; &#xA;!(this.IsQualifiedDateNull() == True)" sfwObjectBased="True" />
+    <rule ID="Rule:QualifiedDateNotMoreThanCurrentDate" sfwMessageId="2014" sfwExpression="(this.IsQualifiedDateMoreThanCurrentDate() == True) &amp;&amp; &#xA;(this.icdoDroApplication.dro_status_value == &quot;APRD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule-DateofMarriageLessThanDateofBirth" sfwMessageId="5091" sfwExpression="(RFunc.GetValue&lt;DateTime&gt;(this, &quot;ibusParticipant.icdoPerson.idtDateofBirth&quot;) &gt; this.icdoDroApplication.date_of_marriage) &amp;&amp; &#xA;!(this.icdoDroApplication.date_of_marriage == DateTime.MinValue)" sfwObjectBased="True" />
+    <rule ID="Rule-DateOfSeparationLaterthanJoinderRcvDate" sfwMessageId="2016" sfwExpression="(this.icdoDroApplication.date_of_divorce &gt; this.icdoDroApplication.joinder_recv_date) &amp;&amp; &#xA;!(this.IsDateOfSeparationNull() == True) &amp;&amp; &#xA;!(this.IsJoinderRcvDateNull() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-DateOfSeparationLaterthanReceivedDate" sfwMessageId="2015" sfwExpression="(this.icdoDroApplication.date_of_divorce &gt; this.icdoDroApplication.received_date) &amp;&amp; &#xA;!(this.IsDateOfSeparationNull() == True) &amp;&amp; &#xA;!(this.IsReceivedDateNull() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-DROReceivedDateNotMoreThanCurrentDate" sfwMessageId="2019" sfwExpression="(this.IsDROReceivedDateMoreThanCurrentDate() == True) &amp;&amp; &#xA;(this.icdoDroApplication.dro_status_value == &quot;APRD&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule-JoinderOnfileShouldBeChecked" sfwMessageId="5168" sfwExpression="(this.IsJoinderOnFileCheckBoxNotChecked() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-JoinderRcvdDateShouldNotBeNull" sfwMessageId="5169" sfwExpression="(this.IsjoinderRecvNullWhnJoinderOnFileChecked() == True)" sfwObjectBased="True" />
+    <rule ID="Rule-JoinderRequiredForCalifornia" sfwMessageId="5169" sfwExpression="(this.IsJoinderRcvDateNull() == True) &amp;&amp; &#xA;(this.icdoDroApplication.addr_state_value == &quot;CA&quot;)" sfwObjectBased="True" />
+    <rule ID="Rule-OrderDateIsNull" sfwObjectBased="True" />
+    <rule ID="Rule-ShowConvertToDisabilityButton" sfwExpression="(this.ShowConvertToDisabilityButton() == True)" sfwObjectBased="True" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="Rule:ApprovedButtonIsVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:ButtonVisible_Qualified Status" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:QualifiedButtonVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:AmendedButtonVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:CancelledButtonVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:AddUpdateDeleteButtonVisible" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-ShowConvertToDisabilityButton" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror>
+    <item ID="Rule:CaseNumberIsNull" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:DROReceivedDateIsNull" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:EmailValidation" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:DateOfSeparationValidation" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:QualifiedDateNotLessThanMarriageDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:QualifiedDateNotLessThanReceivedDate" sfwMode="All" sfwStatus="Inactive" />
+    <item ID="Rule:QualifiedDateNotLessThanSeparationDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:QualifiedDateNotMoreThanCurrentDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-DateOfSeparationLaterthanReceivedDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-DateOfSeparationLaterthanJoinderRcvDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-DateofMarriageLessThanDateofBirth" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-DROReceivedDateNotMoreThanCurrentDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-JoinderOnfileShouldBeChecked" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-JoinderRcvdDateShouldNotBeNull" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule-JoinderRequiredForCalifornia" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:EntryOfOrderDateNotLessThanSeparationDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule:EntryOfOrderDateNotMoreThanCurrentDate" sfwMode="All" sfwStatus="Active" />
+    <item ID="Rule - CommencementDateIsValid" sfwMode="All" sfwStatus="Active" />
+  </harderror>
+  <validatedelete />
+  <groupslist />
+  <aliaslist />
+  <updateablecdo />
+  <commonproperties />
+  <expressionfields />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="DroApplicationId" sfwValue="icdoDroApplication.dro_application_id" />
+    <attribute ID="objParticipant" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusParticipant" />
+    <attribute ID="objAlternatePayee" sfwType="Object" sfwEntity="entPerson" sfwValue="ibusAlternatePayee" />
+    <attribute sfwDataType="string" sfwType="Property" ID="DroStatusDescription" sfwValue="icdoDroApplication.dro_status_description" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMemeberMpid" sfwValue="icdoDroApplication.istrMemeber_Mpid" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMemeberFullname" sfwValue="icdoDroApplication.istrMemeber_Fullname" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrAlternatePayeeMpid" sfwValue="icdoDroApplication.istrAlternate_Payee_Mpid" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrAlternatePayeeFullname" sfwValue="icdoDroApplication.istrAlternate_Payee_Fullname" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrDROModel" sfwValue="icdoDroApplication.istrDROModel" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ReceivedDate" sfwValue="icdoDroApplication.received_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DateOfMarriage" sfwValue="icdoDroApplication.date_of_marriage" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DateOfDivorce" sfwValue="icdoDroApplication.date_of_divorce" />
+    <attribute sfwDataType="int" sfwType="Property" ID="PersonId" sfwValue="icdoDroApplication.person_id" />
+    <attribute sfwDataType="int" sfwType="Property" ID="AlternatePayeeId" sfwValue="icdoDroApplication.alternate_payee_id" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CaseNumber" sfwValue="icdoDroApplication.case_number" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrPlan" sfwValue="icdoDroApplication.istrPlan" />
+    <attribute sfwDataType="string" sfwType="Property" ID="AddrStateValue" sfwValue="icdoDroApplication.addr_state_value" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="JoinderRecvDate" sfwValue="icdoDroApplication.joinder_recv_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="OrderDate" sfwValue="icdoDroApplication.order_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ApprovedByUser" sfwValue="icdoDroApplication.approved_by_user" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ApprovedDate" sfwValue="icdoDroApplication.approved_date" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="QualifiedDate" sfwValue="icdoDroApplication.qualified_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="JoinderOnFile" sfwValue="icdoDroApplication.joinder_on_file" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IsAmmendedFlag" sfwValue="icdoDroApplication.is_ammended_flag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CancellationReason" sfwValue="icdoDroApplication.cancellation_reason" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="DroCommencementDate" sfwValue="icdoDroApplication.dro_commencement_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IsParticipantDisabledFlag" sfwValue="icdoDroApplication.is_participant_disabled_flag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="LifeConversionFactorFlag" sfwValue="icdoDroApplication.life_conversion_factor_flag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="WaivedDisabilityEntitlementFlag" sfwValue="icdoDroApplication.waived_disability_entitlement_flag" />
+    <attribute sfwDataType="string" sfwType="Property" ID="EligibleForContinuanceFlag" sfwValue="icdoDroApplication.eligible_for_continuance_flag" />
+    <attribute sfwType="Collection" sfwEntity="entDroBenefitDetails" ID="lstDroBenefitDetails" sfwValue="iclbDroBenefitDetails" />
+    <attribute sfwType="Collection" sfwEntity="entAttorney" ID="lstAttorney" sfwValue="iclbAttorney" />
+    <attribute sfwType="Collection" sfwEntity="entDroApplicationStatusHistory" ID="lstDroStatusHistory" sfwValue="iclbDroStatusHistory" />
+    <attribute sfwDataType="string" sfwType="Property" ID="CreatedBy" sfwValue="icdoDroApplication.created_by" />
+    <attribute sfwDataType="int" sfwType="Property" ID="UpdateSeq" sfwValue="icdoDroApplication.update_seq" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="CreatedDate" sfwValue="icdoDroApplication.created_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="ModifiedBy" sfwValue="icdoDroApplication.modified_by" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="ModifiedDate" sfwValue="icdoDroApplication.modified_date" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrParticipantName" sfwValue="istrParticipantName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrExSpouseName" sfwValue="istrExSpouseName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrDateOfMarrige" sfwValue="istrDateOfMarrige" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrDateOfSeparation" sfwValue="istrDateOfSeparation" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrAttorneyName" sfwValue="istrAttorneyName" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrCurrentDate" sfwValue="istrCurrentDate" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrEmailAddr" sfwValue="istrEmailAddr" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrIsUSA" sfwValue="istrIsUSA" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrTrue" sfwValue="istrTrue" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrRespondent" sfwValue="istrRespondent" />
+    <attribute ID="IstrRelativeVipFlag" sfwDataType="string" sfwPrivate="False" sfwValue="icdoDroApplication.istrRelativeVipFlag" sfwType="Property" />
+  </attributes>
+  <objectmethods>
+    <method ID="btnApproved_Clicked" sfwReturnType="ArrayList" />
+    <method ID="btnQualified_Clicked" sfwReturnType="ArrayList" />
+    <method ID="btnCancelled_Clicked" sfwReturnType="ArrayList" />
+    <method ID="btnConvertToDisabilityBenefits_Clicked" sfwReturnType="ArrayList" />
+    <method ID="GetPlansBasedonDroModel" sfwReturnType="Collection" sfwObjectID="cdoPlan" sfwEntity="entPlan">
+      <parameters>
+        <parameter ID="astrDroModelValue" sfwDataType="String" />
+      </parameters>
+    </method>
+    <method ID="GetSubPlan" sfwReturnType="Collection" sfwObjectID="cdoPlan" sfwEntity="entPlan">
+      <parameters>
+        <parameter ID="aintPlan_Id" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="btn_CalculateBenefitClick" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintDroBenefitId" sfwDataType="int" />
+      </parameters>
+    </method>
+  </objectmethods>
+</entity>

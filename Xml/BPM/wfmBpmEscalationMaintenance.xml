@@ -1,0 +1,304 @@
+﻿<form ID="wfmBpmEscalationMaintenance" WebSite="NeoSpinWebClient" sfwType="Maintenance" sfwTitle="BPM Escalation Maintenance" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmBpmEscalationLookup" sfwFormObjectType="RemoteObject" sfwEntity="entSolBpmEscalation">
+  <initialload>
+    <query />
+    <callmethods sfwMode="Update" sfwMethodName="FindBpmEscalaltion" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar" CellPadding="3">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSave" sfwMethodName="btnNoChangesSave_Click" Text="Save" sfwNavigationParameter="aintPrimaryKey=EscalationId" />
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Reset" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwGroupCaption="BpmEscalation Details" sfwCaption="Escalation Details">
+          <sfwTable ID="tblMain" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capCaseId" Text="Case : " AssociatedControlID="ddlCaseId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblName" sfwMode="Update" sfwEntityField="objBpmCase.Name" />
+                <sfwCascadingDropDownList ID="ddlCaseId2" DataValueField="case_id" DataTextField="namewithversion" sfwIgnoreReadOnly="True" sfwMode="New" sfwLoadType="Query" sfwLoadSource="entBpmCase.CaseLookupWithVersionAppendedToName" sfwEntityField="CaseId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capProcessId" Text="Process : " AssociatedControlID="ddlProcessId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblName1" sfwMode="Update" sfwEntityField="objBpmProcess.Name" />
+                <sfwCascadingDropDownList ID="ddlProcessId2" DataValueField="process_id" DataTextField="name" sfwParameters="CASE_ID=ddlCaseId2" sfwParentControl="ddlCaseId2" sfwIgnoreReadOnly="True" sfwMode="New" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetProcessByCaseId" sfwEntityField="ProcessId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capActivityId" Text="Activity : " AssociatedControlID="ddlActivityId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblName2" sfwMode="Update" sfwEntityField="objBpmActivity.Name" />
+                <sfwCascadingDropDownList ID="ddlActivityId2" sfwParameters="PROCESS_ID=ddlProcessId2" sfwParentControl="ddlProcessId2" DataTextField="name" DataValueField="activity_id" sfwIgnoreReadOnly="True" sfwMode="New" sfwLoadType="Query" sfwLoadSource="entBpmActivity.GetUserActivitiesByProcessId" sfwEntityField="ActivityId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                <sfwLabel ID="capEscalationName" Text="Escalation Name : " AssociatedControlID="txtEscalationName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEscalationName" sfwEntityField="EscalationName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capSendToCurrentAssignee" Text="Send to current assignee : " AssociatedControlID="chkSendToCurrentAssignee" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkSendToCurrentAssignee" sfwDefaultValue="N" sfwEntityField="SendToCurrentAssignee" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capEscalationId" Text="Escalation ID : " AssociatedControlID="lblEscalationId" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEscalationId" Visible="False" sfwEntityField="EscalationId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capNotifyProcessOwner" Text="Notify Process Owner : " AssociatedControlID="chkNotifyProcessOwner" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox ID="chkNotifyProcessOwner" sfwEntityField="NotifyProcessOwner" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="6">
+                <sfwPanel ID="pnlNewPanel" sfwCaption="Lapse Details" sfwCollapsible="False" GroupingText="Lapse Details">
+                  <sfwTable ID="tblNewPage1">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capLapseTypeValue" Text="Lapse : " AssociatedControlID="rblLapseTypeValue" CssClass="LeftAlignedLabel" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwRadioButtonList ID="rblLapseTypeValue" DataTextField="description" DataValueField="code_value" sfwClientVisibility="controllist:capLapseTimeInMinutes,txtLapseTimeInMinutes,capSendToCurrentAssignee,chkSendToCurrentAssignee,pnlRecurDetails,pnlOtherRecipients,pnlAdditionalRecipients,lblReqLapseTime#LTAE:capLapseTimeInMinutes,txtLapseTimeInMinutes,capSendToCurrentAssignee,chkSendToCurrentAssignee,pnlRecurDetails,pnlOtherRecipients,pnlAdditionalRecipients,lblReqLapseTime;LTBE:capLapseTimeInMinutes,txtLapseTimeInMinutes,capSendToCurrentAssignee,chkSendToCurrentAssignee,pnlRecurDetails,pnlOtherRecipients,pnlAdditionalRecipients,lblReqLapseTime;LTOE:capSendToCurrentAssignee,chkSendToCurrentAssignee,pnlOtherRecipients,pnlAdditionalRecipients;default:;LTNA:capLapseTimeInMinutes,txtLapseTimeInMinutes,pnlAdditionalRecipients,lblReqLapseTime;LTSA:capLapseTimeInMinutes,txtLapseTimeInMinutes,capSendToCurrentAssignee,chkSendToCurrentAssignee,pnlOtherRecipients,pnlAdditionalRecipients;" sfwLoadType="CodeGroup" sfwLoadSource="6412" sfwEntityField="LapseTypeValue" sfwDefaultType="TextValue" sfwDefaultValue="LTBE" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwLabel ID="lblReqLapseTime" CssClass="ReqInformation" Text="*" sfwIsCaption="True" />
+                        <sfwLabel ID="capLapseTimeInMinutes" Text="Lapse Time In Minutes : " AssociatedControlID="txtLapseTimeInMinutes" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtLapseTimeInMinutes" sfwEntityField="LapseTimeInMinutes" />
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="4">
+                <sfwPanel ID="pnlRecurDetails" sfwCaption="Recur Details" sfwCollapsible="False" GroupingText="Recur Details">
+                  <sfwTable ID="tblNewPage2">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capRecurTypeValue" Text="Recur Type : " AssociatedControlID="rblRecurTypeValue" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwRadioButtonList ID="rblRecurTypeValue" DataTextField="description" DataValueField="code_value" sfwClientVisibility="controllist:capRecurTimeInDays,txtRecurTimeInDays,capRecurTimeInHours,txtRecurTimeInHours,capRecurTimeInMinutes,txtRecurTimeInMinutes#RTET:capRecurTimeInDays,txtRecurTimeInDays,capRecurTimeInHours,txtRecurTimeInHours,capRecurTimeInMinutes,txtRecurTimeInMinutes;RTNO:;" sfwLoadType="CodeGroup" sfwLoadSource="6413" sfwEntityField="RecurTypeValue" sfwDefaultType="TextValue" sfwDefaultValue="RTNO" />
+                      </sfwColumn>
+                      <sfwColumn />
+                      <sfwColumn />
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn>
+                        <sfwLabel ID="capRecurTimeInDays" Text="Days : " AssociatedControlID="txtRecurTimeInDays" CssClass="LeftAlignedLabel" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtRecurTimeInDays" sfwEntityField="RecurTimeInDays" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn>
+                        <sfwLabel ID="capRecurTimeInHours" Text="Hours : " AssociatedControlID="txtRecurTimeInHours" CssClass="LeftAlignedLabel" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtRecurTimeInHours" sfwEntityField="RecurTimeInHours" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn />
+                      <sfwColumn />
+                      <sfwColumn>
+                        <sfwLabel ID="capRecurTimeInMinutes" Text="Minutes : " AssociatedControlID="txtRecurTimeInMinutes" CssClass="LeftAlignedLabel" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtRecurTimeInMinutes" sfwEntityField="RecurTimeInMinutes" />
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="6">
+                <sfwPanel ID="pnlOtherRecipients" sfwCaption="Supervisors" sfwCollapsible="False" GroupingText="Supervisors">
+                  <sfwTable ID="tblNewPage3">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwCheckBoxList ID="cblCheckBoxList" DataValueField="code_value" RepeatDirection="Horizontal" RepeatColumns="3" DataTextField="description" sfwEntityField="lstcdoBpmEscalationRecipient" sfwCheckBoxField="EscaltionRecpntTypeValue" sfwLoadType="Query" sfwLoadSource="entCodeValue.GetCodeValuesForBpmEscalationSupervisorLevel" />
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="6">
+                <sfwPanel ID="pnlAdditionalRecipients" sfwCaption="Additional Recipients" sfwCollapsible="False" GroupingText="Additional Recipients">
+                  <sfwTable ID="tblNewPage4">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="lblLabel" Text="User :" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtUserSerialId" sfwEntityField="IintAdditionalRecipientId" />
+                        <sfwImageButton ID="btnRetrieve" sfwMethodName="btnRetrieve_Click" ImageUrl="~/Images/Lookup.jpg" ImageAlign="AbsMiddle" sfwActiveForm="wfmUsersLookup" sfwRelatedControl="txtUserSerialId" sfwSelectedIndex="UserSerialId" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwButton ID="btnExecuteRefreshData" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Add" sfwObjectMethod="AddAdditionalRecipient" sfwNavigationParameter="aintUserSerialId=IintAdditionalRecipientId" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwButton ID="btnDelete" sfwMethodName="btnGridViewDelete_Click" Text="Delete" sfwRelatedControl="grvBusBpmEscalationAdditionalRecipient" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn ColumnSpan="6">
+                        <sfwGridView ID="grvBusBpmEscalationAdditionalRecipient" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwAllowNew="True" sfwEntityField="lstBpmEscalationAdditionalRecipient" sfwGridEntity="entBpmEscalationAdditionalRecipient">
+                          <Columns>
+                            <TemplateField Visible="False" HeaderText="Escalation Additional Recipient ID">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="EscAddtlRecipientId" />
+                              </ItemTemplate>
+                            </TemplateField>
+                            <TemplateField HeaderText="User Serial ID" ItemStyle.HorizontalAlign="Left">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="UserSerialId" />
+                              </ItemTemplate>
+                            </TemplateField>
+                            <TemplateField HeaderText="User ID" ItemStyle.HorizontalAlign="Left">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="IstrUserId" />
+                              </ItemTemplate>
+                            </TemplateField>
+                          </Columns>
+                        </sfwGridView>
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn ColumnSpan="4">
+                <sfwPanel ID="pnlPanel" sfwCaption="Roles" sfwCollapsible="False" GroupingText="Additional Recipients">
+                  <sfwTable ID="tblTable">
+                    <sfwRow>
+                      <sfwColumn>
+                        <sfwLabel ID="capLabel1" Text="Role:" sfwIsCaption="True" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwTextBox ID="txtRoleId" sfwEntityField="IintRoleId" />
+                        <sfwImageButton ID="btnRetrieveRole" sfwMethodName="btnRetrieve_Click" ImageUrl="~/Images/Lookup.jpg" ImageAlign="AbsMiddle" sfwActiveForm="wfmRolesLookup" sfwRelatedControl="txtRoleId" sfwSelectedIndex="RoleId" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwButton sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Add" ID="btnButton" sfwObjectMethod="AddRole" sfwExecuteMethodType="ObjectMethod" sfwNavigationParameter="aintRoleId=IintRoleId" />
+                      </sfwColumn>
+                      <sfwColumn>
+                        <sfwButton ID="btnButton1" sfwMethodName="btnGridViewDelete_Click" Text="Delete" sfwRelatedControl="grvGridView" />
+                      </sfwColumn>
+                    </sfwRow>
+                    <sfwRow>
+                      <sfwColumn ColumnSpan="6">
+                        <sfwGridView ID="grvGridView" AllowPaging="True" AllowSorting="True" sfwSelection="Many" sfwEntityField="lstBpmEscalationRecipientRoles">
+                          <Columns>
+                            <TemplateField Visible="False" HeaderText="ID">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="EscalationRecipientRoleId" />
+                              </ItemTemplate>
+                            </TemplateField>
+                            <TemplateField HeaderText="IstrRoleDescription">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="IstrRoleDescription" />
+                              </ItemTemplate>
+                            </TemplateField>
+                            <TemplateField HeaderText="Role Id">
+                              <ItemTemplate>
+                                <sfwLabel sfwEntityField="RoleId" />
+                              </ItemTemplate>
+                            </TemplateField>
+                          </Columns>
+                        </sfwGridView>
+                      </sfwColumn>
+                    </sfwRow>
+                  </sfwTable>
+                </sfwPanel>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable ID="tblAuditInfo" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Created : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwDataFormat="{0:G}" sfwEntityField="CreatedDate" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modified : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwDataFormat="{0:G}" sfwEntityField="ModifiedDate" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails>
+    <entityfield ID="objBpmCase" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objBpmProcess" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="objBpmActivity" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstcdoBpmEscalationRecipient" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmEscalationAdditionalRecipient" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+    <entityfield ID="lstBpmEscalationRecipientRoles" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

@@ -1,0 +1,630 @@
+/*   
+  SmartWizard 2.0 plugin 
+  jQuery Wizard control Plugin
+  by Dipu
+  
+  http://www.techlaboratory.net
+  http://tech-laboratory.blogspot.com
+*/
+.swMain {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0px solid #CCC;
+    overflow: visible;
+    float: left;
+    width: 980px; 
+}
+
+.swMain .stepContainer {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: 0px solid #CCC;
+    overflow: hidden;
+    clear: right;
+    width: 100%;
+    height: calc( 100% - 5px ) !important;
+    margin-top:58px;
+}
+
+.swMain .stepContainer div.content {
+    display: block;
+    position: relative;
+    float: left;
+    margin: 0;
+    padding: 5px;
+    font-family: "Inter",sans-serif;
+    color: #333333;
+    background-color: #FFFFFF;
+    text-align: left;
+    overflow: auto;
+    z-index: 2;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    clear: both;
+    height: 100%;
+    width: 100%;
+    box-shadow: rgba(99,99,99,.2) 0 2px 8px 0;
+}
+
+.swMain div.actionBar {
+    display: flex;
+    position: absolute;
+    clear: right;
+    border: 0px;
+    padding: 8px;
+    color: #333333;
+    background-color: #FFFFFF;
+    height: 48px;
+    /*  width:730px; 
+    float:right; */
+    text-align: left;
+    overflow: auto;
+    z-index: 2;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin:0px 0px 0px 0px;
+    box-shadow: rgba(99,99,99,.2) 0 2px 8px 0;
+    align-items: center;
+    justify-content: left;
+    top: 0px;
+    width: 100%;
+}
+
+.swMain .stepContainer .StepTitle {
+    display: block;
+    position: relative;
+    margin: 0;
+    border-bottom: 0px solid #333333;
+    padding: 5px;
+    font-family: "Inter",sans-serif;
+    color: #333333;
+    clear: both;
+    text-align: left;
+    z-index: 8;
+    font-size: 1.125em;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.swMain ul.anchor {
+    position: relative;
+    display: block;
+    float: left;
+    list-style: none;
+    padding: 0px;
+    margin:0px;
+    border: 0px solid #CCCCCC;
+    background: transparent; /*#EEEEEE */
+}
+
+.swMain ul.anchor li {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border: 0px solid #E0E0E0;
+    float: left;
+    clear: both;
+}
+/* Anchor Element Style */
+.swMain ul.anchor li a {
+    display: block;
+    position: relative;
+    float: left;
+    margin: 0;
+    width: 230px;
+    text-decoration: none;
+    outline-style: none;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    z-index: 99;
+}
+
+.swMain ul.anchor li a .stepNumber {
+    position: relative;
+    float: left;
+    width: 30px;
+    text-align: center;
+    padding: 5px;
+    padding-top: 0;
+    font-family: "Inter",sans-serif;
+}
+
+.stepDescProgress {
+    position: relative;
+    display: block;
+    float: left;
+    text-align: left;
+    padding: 5px;
+    font-family: "Inter",sans-serif;
+}
+
+.swMain ul.anchor li a .stepDesc {
+    position: relative;
+    display: block;
+    float: left;
+    text-align: left;
+    padding: 5px;
+    font-family: "Inter",sans-serif;
+}
+
+.swMain ul.anchor li a .stepDesc small {
+    font-family: "Inter",sans-serif;
+}
+
+.swMain ul.anchor li a.selected {
+    color: #F8F8F8;
+    background: #295C6A; /* EA8511 */
+    border: 1px solid #203240;
+    cursor: text;
+}
+
+.swMain ul.anchor li a.selected:hover {
+    color: #F8F8F8;
+    background: #0c68b5;
+}
+
+.swMain ul.anchor li a.done {
+    position: relative;
+    color: #FFFFFF;
+    background: #8abfed;
+    border: 1px solid #8abfed;
+    z-index: 99;
+    cursor: text !important;
+}
+
+.swMain ul.anchor li a.donehover:hover {
+    color: #FFFFFF;
+    background: #0c68b5;
+    border: 1px solid #333333;
+    cursor: pointer !important;
+}
+
+.swMain ul.anchor li a.disabled {
+    color: #CCCCCC;
+    background: #F8F8F8;
+    border: 1px solid #CCC;
+    cursor: text;
+    
+}
+
+.swMain ul.anchor li a.disabled:hover {
+    color: #CCCCCC;
+    background: #F8F8F8;
+    
+}
+
+.swMain ul.anchor li a.error {
+    color: #333333 !important;
+    background: #f08f75 !important;
+    border: 1px solid #fb3500 !important;
+}
+
+.swMain ul.anchor li a.error:hover {
+    color: #333333 !important;
+}
+
+.swMain .buttonNext {
+    display: block;
+    float: right;
+    margin: 0px 3px 0 3px;
+    padding: 0px;
+    text-decoration: none;
+    text-align: center;
+    font-family: "Inter",sans-serif;
+    width: 100px;
+    color: #FFFFFF;
+    outline-style: none;
+    background-color: #295C6A;
+    border: 1px solid #203240;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 0.8125em;
+    height: 32px;
+    line-height: 30px;
+}
+
+.swMain .buttonDisabled {
+    color: #F8F8F8 !important;
+    background-color: #CCCCCC !important;
+    border: 1px solid #CCCCCC !important;
+    cursor: text;
+}
+
+.swMain .buttonPrevious {
+    display: block;
+    float: right;
+    margin: 0px 3px 0 3px;
+    padding: 0px;
+    text-decoration: none;
+    text-align: center;
+    font-family: "Inter",sans-serif;
+    width: 100px;
+    color: #FFFFFF;
+    outline-style: none;
+    background-color: #295C6A;
+    border: 1px solid #203240;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 0.8125em;
+    height: 32px;
+    line-height: 30px;
+}
+
+.swMain .buttonFinish {
+    display: block;
+    float: right;
+    margin: 0px 10px 0 3px;
+    padding: 0px;
+    text-decoration: none;
+    text-align: center;
+    font-family: "Inter",sans-serif;
+    width: 100px;
+    color: #FFFFFF;
+    outline-style: none;
+    background-color: #295C6A;
+    border: 1px solid #203240;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 0.8125em;
+    height: 32px;
+    line-height: 30px;
+}
+
+/* Form Styles */
+
+.txtBox {
+    border: 1px solid #CCCCCC;
+    color: #333333;
+    font-family: "Inter",sans-serif;
+    padding: 2px;
+    width: 430px;
+}
+
+.txtBox:focus {
+    border: 1px solid #EA8511;
+}
+
+.swMain .loader {
+    position: relative;
+    display: none;
+    float: left;
+    margin: 2px 0 0 2px;
+    padding: 8px 10px 8px 40px;
+    border: 1px solid #FFD700;
+    font-family: "Inter",sans-serif;
+    color: #333333;
+    background: #FFF url(../images/loader.gif) no-repeat 5px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    z-index: 998;
+}
+
+.swMain .msgBox {
+    position: relative;
+    display: none;
+    float: left;
+    margin: 4px 0 0 5px;
+    padding: 5px;
+    border: 1px solid #FFD700;
+    background-color: #FFFFDD;
+    font-family: "Inter",sans-serif;
+    color: #333333;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    z-index: 999;
+    width: 100%;
+}
+
+.swMain .msgBox .content {
+    font-family: "Inter",sans-serif;
+    padding: 0px;
+    float: left;
+}
+
+.swMain .msgBox .close {
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    color: #333333;
+    display: block;
+    float: right;
+    margin: 0 0 0 5px;
+    outline-style: none;
+    padding: 0 2px 0 2px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+
+.swMain .msgBox .close:hover {
+    color: #EA8511;
+    border: 1px solid #EA8511;
+}
+
+.WizardDiv {
+    width: 100%;
+    margin: 0px auto;
+}
+
+.ProgressBarDivParent {
+   float:left;
+   width:100%;
+   overflow:hidden;
+   position:relative;
+}
+
+.ProgressBarDiv {
+    clear:left;
+   float:left;
+   list-style:none;
+   margin:0;
+   padding:0;
+   position:relative;
+   left:50%;
+   left:75%\9;
+   text-align:center;
+}
+
+.ProgressBarDiv li {
+
+ float:left;
+   list-style:none;
+   margin:0;
+   padding:0;
+   position:relative;
+   right:50%;
+}
+
+.ProgressBarCircle {
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.ProgressBar {
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.ProgressBar span {
+    float: left;
+    line-height: 35px;
+    text-align: center;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-family: "Inter",sans-serif;
+}
+
+.ProgressBarCircle span {
+    float: left;
+    padding: 5px;
+    background: #989898;
+    width: 25px;
+    height: 25px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    color: #333333;
+    font-weight: bold;
+    font-size: 0.9375em;
+}
+
+.ProgressBarCircle .ProgressSaperator {
+    background-position: center center;
+    width: 80px;
+    height: 15px;
+    padding: 0px;
+    margin-top: 10px;
+    border-radius: 0px !important;
+    background-image: url('../../Images/arrow.png');
+    background-repeat: no-repeat;
+    background-color: transparent !important;
+}
+
+.ProgressBarCircle .ProgressDone .stepSpan {
+    color: #FFFFFF;
+    background-color: #1476a1;
+    font-size: 1.2500em;
+}
+
+.ProgressBarCircle .ProgressHighlight .stepSpan {
+    color: #FFFFFF;
+    font-size: 1.2500em;
+    background-color: #063549 !important;
+}
+
+.ProgressBarCircle .selectable :hover {
+    background-color: #2dbfff !important;
+    cursor: pointer;
+}
+
+.ProgressBarCaptionDiv {
+    width: 100%;
+    float: left;
+    /*margin-top: 5px;
+    margin-bottom: 10px;*/
+	position:relative;
+	left:-37px;
+}
+
+.ProgressBarCaptionDiv ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+.ProgressBarCaptionDiv li {
+    float: left;
+    width: 115px;
+    text-align: center;
+    display: block;
+    white-space: normal;
+    font-family: "Inter",sans-serif;
+    font-size: 0.875em;
+    color: #0b4c82;
+}
+
+.ProgressBar {
+    /*centering*/
+    display: inline-block;
+    border-radius: 3px;
+    /*Lets add the numbers for each link using CSS counters. flag is the name of the counter. to be defined using counter-reset in the parent element of the links*/
+    counter-reset: flag;
+}
+
+.ProgressBar .ProgressDone {
+    color: #FFFFFF;
+    background-color: #1476a1;
+}
+
+.ProgressBar .ProgressDone .stepSpan{
+    color: #FFFFFF;
+}
+
+.ProgressBar .ProgressDone:after {
+    color: #FFFFFF;
+    background-color: #1476a1;
+}
+
+.ProgressBar .ProgressHighlight {
+    color: #FFFFFF;
+    background: #063549;
+}
+
+.ProgressBar .ProgressHighlight:after {
+    color: #FFFFFF;
+    background: #063549;
+}
+
+.ProgressBar .stepSpan {
+    color: #333333;
+}
+
+.ProgressBar .ProgressHighlight .stepSpan {
+    color: #FFFFFF;
+}
+
+.ProgressBar .selectable:hover {
+    background-color: #2dbfff !important;
+    cursor: pointer;
+}
+
+.ProgressBar .selectable:hover:after {
+    background-color: #2dbfff !important;
+    cursor: pointer;
+}
+
+.ProgressBar li {
+    text-decoration: none;
+    outline: none;
+    display: block;
+    float: left;
+    font-size: 0.75em;
+    line-height: 36px;
+    height: 36px;
+    color: #FFFFFF;
+    /*need more margin on the left of links to accomodate the numbers*/
+    padding: 0 10px 0 60px;
+    background: #FFFFFF;
+    position: relative;
+}
+
+/*since the first link does not have a triangle before it we can reduce the left padding to make it look consistent with other links*/
+.ProgressBar li:first-child {
+    padding-left: 46px;
+    border-radius: 3px 0 0 3px; /*to match with the parent's radius*/
+}
+
+.ProgressBar li:first-child:before {
+    left: 14px;
+}
+
+.ProgressBar li:last-child {
+    border-radius: 0 3px 3px 0; /*this was to prevent glitches on hover*/
+    padding-right: 20px;
+}
+
+/*adding the arrows for the breadcrumbs using rotated pseudo elements*/
+.ProgressBar li:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -16px;
+    width: 36px;
+    height: 33px;
+    -webkit-transform: scale(0.707) rotate(45deg);
+    transform: scale(0.707) rotate(45deg);
+    z-index: 1;
+    background: #59cfcf;
+    box-shadow: 2px -2px 0 2px rgba(0, 0, 0, 0.4), 3px -3px 0 2px rgba(255, 255, 255, 0.1);
+    border-radius: 0 3px 0 50px;
+}
+
+/*we dont need an arrow after the last link*/
+.ProgressBar li:last-child:after {
+    content: none;
+}
+
+/*we will use the :before element to show numbers*/
+.ProgressBar li:before {
+    content: counter(flag);
+    counter-increment: flag;
+    /*some styles now*/
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    margin: 8px 0;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    background: #444;
+    font-weight: bold;
+}
+
+.Bold {
+    font-weight:bold ;
+}    
+
+.flat a, .flat a:after {
+    background: #FFFFFF;
+    color: #333333;
+    transition: all 0.5s;
+}
+
+.flat a:before {
+    background: #FFFFFF;
+    box-shadow: 0 0 0 1px #ccc;
+}
+
+.flat a:hover, .flat a.active,
+.flat a:hover:after, .flat a.active:after {
+    background: #9EEB62;
+}
+
+.WizardDiv .Table{
+    width: 100%;
+}
+
+#tblHeaderTemplate tr td{
+    display:none;
+}

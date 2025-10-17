@@ -1,0 +1,39 @@
+﻿<entity asp="ASPControl" swc="SagitecWebControls" xsi="http://www.w3.org/2001/XMLSchema-instance" di="http://www.omg.org/spec/DD/20100524/DI" bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" dc="http://www.omg.org/spec/DD/20100524/DC" sbpmn="SagitecBPMNExtensionElements" ID="entBpmProcessInstanceAttachments" sfwMainCDO="icdoBpmProcessInstanceAttachments" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmProcessInstanceAttachments" sfwTableName="SGW_BPM_PRCS_INST_ATTACHMENTS" sfwView="False">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete>
+    <property ID="IobjMainCDO" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <rules />
+  <constraint />
+  <queries>
+    <query ID="GetProcessInstanceAttachmentByGuid" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; PI.PROCESS_INSTANCE_ID,&#xA;&#x9;P.NAME AS PROCESS_NAME,&#xA;&#x9;A.NAME AS ACTIVITY_NAME,&#xA;&#x9;CV.DESCRIPTION AS ACTION_DESCRIPTION,&#xA;&#x9;PCV.DESCRIPTION PROCESS_INSTANCE_STATUS             &#xA;FROM&#xA;&#x9; SGW_BPM_PRCS_INST_ATTACHMENTS PIA             &#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE PI&#xA;&#x9; ON PIA.BPM_PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID &#xA;&#x9; JOIN SGS_CODE_VALUE PCV&#xA;&#x9; ON PI.STATUS_VALUE = PCV.CODE_VALUE AND&#xA;&#x9; PI.STATUS_ID = PCV.CODE_ID             &#xA;&#x9; JOIN SGW_BPM_PROCESS P&#xA;&#x9; ON P.PROCESS_ID = PI.PROCESS_ID &#xA;&#x9; JOIN SGW_BPM_PROCESS_EVENT_XR XR&#xA;&#x9; ON P.PROCESS_ID = XR.PROCESS_ID             &#xA;&#x9; JOIN SGW_BPM_EVENT E&#xA;&#x9; ON E.BPM_EVENT_ID = XR.EVENT_ID             &#xA;&#x9; JOIN SGS_CODE_VALUE CV&#xA;&#x9; ON XR.ACTION_VALUE = CV.CODE_VALUE AND CV.CODE_ID = 2005             &#xA;&#x9; LEFT JOIN SGW_BPM_ACTIVITY A&#xA;&#x9; ON XR.ACTIVITY_ID = A.ACTIVITY_ID             &#xA;WHERE&#xA;&#x9; PIA.ECM_GUID = @ECM_GUID" sfwPostgre="SELECT&#xD;&#xA;&#x9; PI.PROCESS_INSTANCE_ID,&#xD;&#xA;&#x9;P.NAME AS PROCESS_NAME,&#xD;&#xA;&#x9;A.NAME AS ACTIVITY_NAME,&#xD;&#xA;&#x9;CV.DESCRIPTION AS ACTION_DESCRIPTION,&#xD;&#xA;&#x9;PCV.DESCRIPTION PROCESS_INSTANCE_STATUS             &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_PRCS_INST_ATTACHMENTS PIA             &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS_INSTANCE PI&#xD;&#xA;&#x9; ON PIA.BPM_PROCESS_INSTANCE_ID = PI.PROCESS_INSTANCE_ID &#xD;&#xA;&#x9; JOIN SGS_CODE_VALUE PCV&#xD;&#xA;&#x9; ON PI.STATUS_VALUE = PCV.CODE_VALUE AND&#xD;&#xA;&#x9; PI.STATUS_ID = PCV.CODE_ID             &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS P&#xD;&#xA;&#x9; ON P.PROCESS_ID = PI.PROCESS_ID &#xD;&#xA;&#x9; JOIN SGW_BPM_PROCESS_EVENT_XR XR&#xD;&#xA;&#x9; ON P.PROCESS_ID = XR.PROCESS_ID             &#xD;&#xA;&#x9; JOIN SGW_BPM_EVENT E&#xD;&#xA;&#x9; ON E.BPM_EVENT_ID = XR.EVENT_ID             &#xD;&#xA;&#x9; JOIN SGS_CODE_VALUE CV&#xD;&#xA;&#x9; ON XR.ACTION_VALUE = CV.CODE_VALUE AND CV.CODE_ID = 2005             &#xD;&#xA;&#x9; LEFT JOIN SGW_BPM_ACTIVITY A&#xD;&#xA;&#x9; ON XR.ACTIVITY_ID = A.ACTIVITY_ID             &#xD;&#xA;WHERE&#xD;&#xA;&#x9; PIA.ECM_GUID = @ECM_GUID">
+      <parameters>
+        <parameter ID="@ECM_GUID" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <ExtraFields />
+  <methods />
+  <lifecycle />
+  <attributes>
+    <attribute ID="objBpmEvent" sfwType="Object" sfwEntity="entBpmEvent" sfwValue="ibusBpmEvent" />
+    <attribute sfwValue="process_inst_attchmnt_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwIsNull="False" ID="ProcessInstAttchmntId" sfwCaption="ID" />
+    <attribute sfwValue="bpm_process_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="BpmProcessInstanceId" sfwCaption="Bpm Process Instance Id" />
+    <attribute sfwValue="ecm_guid" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="-1" sfwIsNull="True" ID="EcmGuid" sfwCaption="Ecm Guid" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="DateTime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwValue="doc_type" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="50" sfwIsNull="True" ID="DocType" sfwCaption="Doc Type" />
+    <attribute sfwValue="doc_class" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="100" sfwIsNull="True" ID="DocClass" sfwCaption="Doc Class" />
+    <attribute sfwType="Property" ID="IobjMainCDO" sfwValue="iobjMainCDO" />
+  </attributes>
+  <objectmethods />
+</entity>

@@ -1,0 +1,1 @@
+YRKC:\Sonarqube Codebase\MPIBPM_DEV\slnMPIPHP\MPIPHPCommon\MPIPHPCommon.csprojò	CSharp7_3

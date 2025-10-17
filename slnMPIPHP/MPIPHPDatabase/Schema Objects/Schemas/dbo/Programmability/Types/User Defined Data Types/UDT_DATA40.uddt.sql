@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_DATA40]
+    FROM VARCHAR (40) NULL;
+

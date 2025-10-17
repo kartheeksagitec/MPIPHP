@@ -1,0 +1,27 @@
+﻿<form ID="rptOnDemandRetireeIAPBalance" sfwActive="True" sfwDescription="Retirees with IAP Balance and no payments" sfwStatus="Review" sfwResource="200 " sfwType="Report" sfwReportName="rptOnDemandRetireeIAPBalance.rdlc" sfwReportCategory="Reports" version="4.0">
+	<initialload>
+		<custommethod sfwMethodName="GetRetireeIAPBalance" />
+	</initialload>
+	<sfwTable ID="Main">
+		<sfwRow>
+			<sfwColumn>
+				<sfwLabel Text="RETIREMENT DATE FROM : " sfwIsCaption="True" />
+			</sfwColumn>
+			<sfwColumn>
+				<sfwTextBox ID="FROM" sfwDataFormat="{0:d}" />
+				<CompareValidator ID="valFromDate" ErrorMessage="From Date must be in mm/dd/yyyy format." Operator="DataTypeCheck" ControlToValidate="FROM" Text="*" Type="Date" />
+				<RequiredFieldValidator ID="rfvFromDate" Text="*" ControlToValidate="FROM" ErrorMessage="From Date is Required" />
+			</sfwColumn>
+			<sfwColumn>
+				<sfwLabel Text="TO : " sfwIsCaption="True" />
+			</sfwColumn>
+			<sfwColumn>
+				<sfwTextBox ID="TO" sfwDataFormat="{0:d}" />
+				<CompareValidator ID="valDateRange" Text="*" ControlToValidate="TO" ErrorMessage="TO date cannot be less than FROM date." Operator="GreaterThanEqual" Type="Date" ControlToCompare="FROM" />
+				<CompareValidator ID="valToDate" ErrorMessage="From Date must be in mm/dd/yyyy format." Text="*" ControlToValidate="TO" Operator="DataTypeCheck" Type="Date" />
+				<RequiredFieldValidator ID="rfvToDate" ErrorMessage="To Date is Required" Text="*" ControlToValidate="TO" />
+			</sfwColumn>
+		</sfwRow>
+		</sfwTable>
+	<ExtraFields />
+</form>

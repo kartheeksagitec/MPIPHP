@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entUserPreferences" sfwView="False" sfwActive="True" sfwMainCDO="icdoUserPreferences" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_user_preferences" sfwObjectID="busUserPreferences" sfwDataObjectID="doUserPreferences">
+  <queries>
+    <query ID="LookUp" sfwSql="SELECT&#xA;&#x9; * &#xA;FROM&#xA;&#x9; sgs_user_preferences WITH(NOLOCK)" sfwDataType="EntityTable" sfwQueryType="SelectQuery">
+      <parameters />
+    </query>
+    <query ID="GetUserPreferencesForSystem" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT * FROM sgs_user_preferences WITH(NOLOCK) WHERE User_Name = @User_Name AND Application_Name = @Application_Name">
+      <parameters>
+        <parameter ID="@Application_Name" sfwDataType="string" />
+        <parameter ID="@User_Name" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <methods>
+    <method ID="FindUserPreferences" sfwMethodType="Load" sfwMode="All">
+      <item ID="FindUserPreferences" sfwDataType="Boolean" sfwParameter="aintPrimaryKey" sfwItemType="Method" />
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      <item ID="lstUserPrefPageState" sfwItemType="Collection" sfwLoadType="Query" sfwLoadSource="entUserPrefPageState.GetPageStateDetails" />
+      <parameter ID="User_Name" sfwDataType="string" Value="UserName" />
+      <parameter ID="Application_Name" sfwDataType="string" Value="ApplicationName" />
+    </method>
+  </methods>
+  <commonproperties />
+  <checklist />
+  <initialload>
+    <item ID="Visible Rule - System Settings" sfwStatus="Active" sfwMode="All" />
+    <item ID="Visible Rule - IsSystemSettings" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint />
+  <rules>
+    <rule ID="Visible Rule - System Settings" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(this.icdoUserPreferences != null &#xD;&#xA;&amp;&amp; this.icdoUserPreferences.user_name.ToLower() != &quot;system&quot; &amp;&amp; this.iintSystemUserPreferenceId &gt; 0&#xD;&#xA;&amp;&amp; this.icdoUserPreferences.user_preferences_id &gt;0)" />
+    <rule ID="Visible Rule - IsSystemSettings" sfwRuleType="Validation" sfwExpression="(this.icdoUserPreferences != null &#xA;&amp;&amp; this.icdoUserPreferences.user_name.ToLower() == &quot;system&quot; &amp;&amp; this.icdoUserPreferences.user_preferences_id &gt;0)" sfwObjectBased="True" />
+  </rules>
+  <ExtraFields />
+  <lifecycle />
+  <attributes>
+    <attribute sfwValue="user_preferences_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UserPreferencesId" sfwCaption="ID" />
+    <attribute sfwValue="user_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="UserName" sfwCaption="User Name" />
+    <attribute sfwValue="application_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ApplicationName" sfwCaption="Application Name" />
+    <attribute ID="UseTagList" sfwType="Property" sfwValue="icdoUserPreferences.use_tag_list" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" />
+    <attribute ID="UseGridToolbar" sfwType="Property" sfwValue="icdoUserPreferences.use_grid_toolbar" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" />
+    <attribute ID="UseGridCommonFilterbox" sfwType="Property" sfwValue="icdoUserPreferences.use_grid_common_filterbox" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" />
+    <attribute ID="UseGridSettings" sfwType="Property" sfwValue="icdoUserPreferences.use_grid_settings" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" />
+    <attribute ID="UseStoreStateButtons" sfwType="Property" sfwValue="icdoUserPreferences.use_store_state_buttons" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" />
+    <attribute ID="UseViewEditForOpenButton" sfwType="Property" sfwValue="icdoUserPreferences.use_view_edit_for_open_button" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" />
+    <attribute ID="UseNeogrid" sfwType="Property" sfwValue="icdoUserPreferences.use_neogrid" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" />
+    <attribute ID="OnHoverToolTipForm" sfwType="Property" sfwValue="icdoUserPreferences.on_hover_tooltip_form" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" />
+    <attribute ID="AuditInformationOnTop" sfwType="Property" sfwValue="icdoUserPreferences.audit_information_on_top" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" />
+    <attribute ID="FilterButton" sfwType="Property" sfwValue="icdoUserPreferences.filter_button" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwLength="1" sfwIsNull="False" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute ID="PageSize" sfwType="Property" sfwValue="icdoUserPreferences.page_size" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwIsNull="False" />
+    <attribute sfwValue="use_system_preferences" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="False" ID="UseSystemPreferences" sfwCaption="Use System Preferences" />
+    <attribute sfwValue="user_pref_values" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="UserPrefValues" sfwCaption="User Pref Values" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintSystemUserPreferenceId" sfwValue="iintSystemUserPreferenceId" />
+    <attribute sfwValue="initial_page" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="InitialPage" sfwCaption="Initial Page" />
+    <attribute ID="lstUserPrefPageState" sfwType="Collection" sfwEntity="entUserPrefPageState" sfwValue="iclbUserPrefPageState" sfwPrivate="False" />
+    <attribute ID="lstrUsers" sfwDataType="string" sfwPrivate="False" sfwValue="istrUsers" sfwType="Property" />
+  </attributes>
+  <objectmethods>
+    <method ID="UseSystemPreferences" sfwReturnType="ArrayList" />
+    <method ID="DeleteUserPageStateByUser" sfwReturnType="ArrayList" />
+    <method sfwReturnType="ArrayList" ID="DeleteUserPageState">
+      <parameters>
+        <parameter ID="aarrSelectedObjects" sfwDataType="ArrayList" />
+      </parameters>
+    </method>
+    <method ID="FindUserPreferences" sfwReturnType="Boolean">
+      <parameters>
+        <parameter ID="aintPrimaryKey" sfwDataType="int" />
+      </parameters>
+    </method>
+  </objectmethods>
+</entity>

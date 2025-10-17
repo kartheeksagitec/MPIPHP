@@ -1,0 +1,40 @@
+﻿<entity ID="entBpmEscalationAdditionalRecipient" sfwMainCDO="icdoBpmEscalationAdditionalRecipient" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmEscalationAdditionalRecipient" sfwObjectType="Sagitec.Bpm.busBpmEscalationAdditionalRecipient, SagitecBpm, Version=6.0.0.0, Culture=neutral, PublicKeyToken=df17fdb7b963e064" sfwTableName="SGW_BPM_ESC_ADDTL_RECIPIENT" sfwView="False" sfwDataObjectID="doBpmEscAddtlRecipient">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete>
+    <property ID="IobjMainCDO" />
+  </delete>
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <constraint />
+  <rules />
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGW_BPM_ESC_ADDTL_RECIPIENT " sfwPostgre="select * from SGW_BPM_ESC_ADDTL_RECIPIENT">
+      <parameters />
+    </query>
+    <query ID="GetUserNameFromUserSerialId" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" select USER_ID, EMAIL_ADDRESS from SGS_USER WHERE USER_SERIAL_ID = @USER_SERIAL_ID" sfwPostgre="select USER_ID, EMAIL_ADDRESS from SGS_USER WHERE USER_SERIAL_ID = @USER_SERIAL_ID">
+      <parameters>
+        <parameter ID="@USER_SERIAL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <ExtraFields />
+  <methods />
+  <lifecycle />
+  <attributes>
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrUserId" sfwValue="istrUserId" />
+    <attribute sfwType="Property" ID="IobjMainCDO" sfwValue="iobjMainCDO" />
+    <attribute sfwValue="esc_addtl_recipient_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="EscAddtlRecipientId" sfwCaption="ID" />
+    <attribute sfwValue="escalation_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="EscalationId" sfwCaption="Escalation Id" />
+    <attribute sfwValue="user_serial_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UserSerialId" sfwCaption="User Serial Id" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwCaption="Update Seq" />
+  </attributes>
+  <objectmethods />
+</entity>

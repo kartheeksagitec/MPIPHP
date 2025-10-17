@@ -1,0 +1,3 @@
+﻿CREATE DEFAULT [dbo].[DF_USER]
+    AS USER;
+

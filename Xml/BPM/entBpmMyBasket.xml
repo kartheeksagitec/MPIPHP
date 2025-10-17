@@ -1,0 +1,88 @@
+﻿<entity ID="entBpmMyBasket" sfwNodeID="e51e3f1b-9543-4d65-b2f9-b23bce8fcb21" sfwType="BusinessRule" sfwObjectID="busBpmMyBasket" sfwParentEntity="entNeoSpinBase">
+  <rules>
+    <rule ID="Visible Rule - Assigned Tab" sfwExpression="(this.istrMyBasketFilter == &quot;ASWO&quot;)" sfwNodeID="2f5198a8-263e-45b9-90a0-e287067b1827" sfwObjectBased="True" />
+    <rule ID="Visible Rule - Completed Tab" sfwExpression="(this.istrMyBasketFilter == &quot;COWO&quot;)" sfwNodeID="10e39e4d-bf89-4f79-96db-deec7ddc7b3a" sfwObjectBased="True" />
+    <rule ID="Visible Rule - Suspended Tab" sfwExpression="(this.istrMyBasketFilter == &quot;SUWO&quot;)" sfwNodeID="c2fb878f-7d1a-46d9-a4ce-32c4a01fb9dd" sfwObjectBased="True" />
+    <rule ID="Visible Rule - Workpool Tab" sfwExpression="(this.istrMyBasketFilter == &quot;WKPO&quot;)" sfwNodeID="48ec5613-5e08-4b7c-bd9b-df4288475b7f" sfwObjectBased="True" />
+    <rule ID="Visible Rule - Overdue Tab" sfwRuleType="Validation" sfwObjectBased="True" sfwExpression="(this.istrMyBasketFilter == &quot;OVED&quot;)" />
+  </rules>
+  <delete />
+  <checklist />
+  <initialload>
+    <item ID="Visible Rule - Workpool Tab" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible Rule - Assigned Tab" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible Rule - Completed Tab" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible Rule - Suspended Tab" sfwMode="All" sfwStatus="Active" />
+    <item ID="Visible Rule - Overdue Tab" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <groupslist />
+  <commonproperties />
+  <attributes>
+    <attribute sfwDataType="int" sfwType="Property" ID="IintProcessID" sfwValue="iintProcessID" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtRequestDateFrom" sfwValue="idtRequestDateFrom" />
+    <attribute sfwDataType="datetime" sfwType="Property" ID="IdtRequestDateTo" sfwValue="idtRequestDateTo" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintSearchOrgID" sfwValue="iintSearchOrgID" />
+    <attribute sfwType="Collection" sfwEntity="entSolBpmActivityInstance" ID="lstFailedActivities" sfwValue="iclbFailedActivities" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrMyBasketFilter" sfwValue="istrMyBasketFilter" />
+    <attribute sfwDataType="string" sfwType="Property" ID="IstrSource" sfwValue="istrSource" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintReferenceID" sfwValue="iintReferenceID" />
+    <attribute sfwDataType="int" sfwType="Property" ID="IintRoleId" sfwValue="iintRoleId" />
+    <attribute sfwType="Collection" sfwEntity="entSolBpmActivityInstance" ID="lstRoleAssignedActivities" sfwValue="iclbRoleAssignedActivities" />
+    <attribute ID="lstUserSuspendedActivities" sfwType="Collection" sfwValue="iclbUserSuspendedActivities" sfwEntity="entSolBpmActivityInstance" sfwPrivate="False" />
+    <attribute ID="lstUserCompletedActivities" sfwType="Collection" sfwValue="iclbUserCompletedActivities" sfwEntity="entSolBpmActivityInstance" sfwPrivate="False" />
+    <attribute ID="lstUserAssignedActivities" sfwType="Collection" sfwValue="iclbUserAssignedActivities" sfwEntity="entSolBpmActivityInstance" sfwPrivate="False" />
+    <attribute ID="lstUserOverDueActivities" sfwType="Collection" sfwValue="iclbUserOverDueActivities" sfwEntity="entSolBpmActivityInstance" sfwPrivate="False" />
+    <attribute ID="ldtDueDateFrom" sfwDataType="datetime" sfwPrivate="False" sfwValue="idtDueDateFrom" sfwType="Property" />
+    <attribute ID="ldtDueDateTo" sfwDataType="datetime" sfwPrivate="False" sfwValue="idtDueDateTo" sfwType="Property" />
+    <attribute ID="lstrActivityInstanceStatus" sfwDataType="string" sfwPrivate="False" sfwValue="istrActivityInstanceStatus" sfwType="Property" />
+    <attribute ID="lstrProcessPriority" sfwDataType="int" sfwPrivate="False" sfwValue="istrProcessPriority" sfwType="Property" />
+    <attribute ID="IstrUserId" sfwDataType="string" sfwPrivate="False" sfwValue="istrUserId" sfwType="Property" />
+    <attribute ID="IstrSearchSuspensionReason" sfwDataType="string" sfwPrivate="False" sfwValue="istrSearchSuspensionReason" sfwType="Property" />
+    <attribute ID="IstrMpiPersonId" sfwDataType="string" sfwPrivate="False" sfwValue="istrMpiPersonId" sfwType="Property" />
+    <attribute ID="IstrFirstName" sfwDataType="string" sfwPrivate="False" sfwValue="istrFirstName" sfwType="Property" />
+    <attribute ID="IstrLastName" sfwDataType="string" sfwPrivate="False" sfwValue="istrLastName" sfwType="Property" />
+  </attributes>
+  <objectmethods>
+    <method ID="GetAccessibleUserProcesses" sfwReturnType="Collection" sfwObjectID="cdoBpmProcess" sfwEntity="entBpmProcess" />
+    <method ID="LoadFailedActivityInstances" sfwReturnType="ArrayList" />
+    <method ID="ResumeFailedActivityInstance" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aintActivityInstanceId" sfwDataType="int" />
+      </parameters>
+    </method>
+    <method ID="SearchAndLoadMyBasket" sfwReturnType="ArrayList" />
+    <method ID="GetListOfRoles" sfwReturnType="Collection" sfwObjectID="cdoRoles" sfwEntity="entRoles" />
+    <method ID="ResumeActivityInstance" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aarrSelectedObjects" sfwDataType="ArrayList" />
+      </parameters>
+    </method>
+    <method ID="UnassignActivityInstances" sfwReturnType="ArrayList">
+      <parameters>
+        <parameter ID="aarrSelectedObjects" sfwDataType="ArrayList" />
+      </parameters>
+    </method>
+    <method ID="BPMSearchAndLoadMyBasket" sfwReturnType="Void">
+      <parameters>
+        <parameter ID="aintMaxSearchCount" sfwDataType="int" />
+        <parameter ID="aintPersonId" sfwDataType="int" />
+        <parameter ID="astrFilterType" sfwDataType="String" />
+      </parameters>
+    </method>
+  </objectmethods>
+  <queries />
+  <constraint />
+  <methods>
+    <method ID="FindBPMMyBasket" sfwMethodType="Load" sfwMode="All">
+      <item sfwParameter="aintMaxSearchCount,aintPersonId,astrFilterType" ID="BPMSearchAndLoadMyBasket" sfwDataType="Void" sfwItemType="Method" />
+      <parameter ID="aintMaxSearchCount" sfwDataType="int" />
+      <parameter ID="aintPersonId" sfwDataType="int" />
+      <parameter ID="astrFilterType" sfwDataType="String" />
+    </method>
+  </methods>
+  <lifecycle />
+  <ExtraFields />
+</entity>

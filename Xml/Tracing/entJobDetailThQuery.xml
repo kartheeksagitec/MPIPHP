@@ -1,0 +1,37 @@
+﻿<entity ID="entJobDetailThQuery" sfwView="False" sfwActive="True" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_job_detail_th_query" CreateWithClass="False">
+  <attributes>
+    <attribute sfwValue="job_detail_th_query_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="JobDetailThQueryId" sfwCaption="ID" />
+    <attribute sfwValue="job_detail_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="JobDetailId" sfwCaption="Job Detail Id" />
+    <attribute sfwValue="execution_order" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ExecutionOrder" sfwCaption="Execution Order" />
+    <attribute sfwValue="query_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="QueryId" sfwCaption="Query Id" />
+    <attribute sfwValue="query" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="False" ID="Query" sfwCaption="Query" />
+    <attribute sfwValue="result" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="500" sfwIsNull="True" ID="Result" sfwCaption="Result" />
+    <attribute sfwValue="start_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="StartTime" sfwCaption="Start Time" />
+    <attribute sfwValue="end_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="EndTime" sfwCaption="End Time" />
+    <attribute sfwValue="step_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="StepName" sfwCaption="Step Name" />
+    <attribute sfwValue="parameter_details" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ParameterDetails" sfwCaption="Parameter Details" />
+    <attribute sfwValue="time_in_ms" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TimeInMs" sfwCaption="Time In Ms" />
+  </attributes>
+  <ExtraFields />
+  <queries>
+    <query ID="GetSlowQueryDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select top 100 jdtq.job_detail_id, jdtq.parameter_details, jdtq.start_time, jdtq.end_time, jdtq.time_in_ms&#xA;  from sgv_job_detail_th_query jdtq, sgs_job_detail jdt, sgs_job_header jhd,&#xA;       sgs_job_schedule jsc, sgs_job_schedule_detail jsd&#xA; where jdt.job_detail_id = jdtq.job_detail_id&#xA;   and jdt.job_header_id = jhd.job_header_id&#xA;   and jhd.job_schedule_id = jsc.job_schedule_id&#xA;   and jsd.job_schedule_id = jhd.job_schedule_id&#xA;   and jsd.step_code = jdt.step_code&#xA;   and jdtq.start_time between @start_time and @end_time&#xA;   and jsd.job_schedule_detail_id = @job_schedule_detail_id&#xA;   and query_hash = @query_hash&#xA;order by time_in_ms desc">
+      <parameters>
+        <parameter ID="@start_time" sfwDataType="DateTime" />
+        <parameter ID="@end_time" sfwDataType="DateTime" />
+        <parameter ID="@job_schedule_detail_id" sfwDataType="int" />
+        <parameter ID="@query_hash" sfwDataType="string" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <rules />
+  <initialload />
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <methods />
+  <lifecycle />
+</entity>

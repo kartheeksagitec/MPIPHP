@@ -1,0 +1,506 @@
+﻿var lblnCallScript_Init = true;
+/// <reference path="/scripts/jquery-1.4.2.min.js" />
+
+function OnChanged(sender, args) {
+}
+
+var oControl;
+var iaccTabIndex = 0;
+
+//NEO_CERTIFY_CHANGES - BEGIN
+var blnLoading = false;
+
+function isPageLoading() {
+    return blnLoading;
+}
+//NEO_CERTIFY_CHANGES - END
+
+function ieAjaxBeginRequest(sender, args) {
+    //To Avoid DoubleClick on button
+    blnLoading = true; //NEO_CERTIFY_CHANGES
+    $("#pnlPopup").dialog('open');
+    lblnCallScript_Init = true;
+    oControl = args.get_postBackElement();
+    oControl.disabled = true;
+    var luppAccordian = $("#uppAccordian");
+    if (luppAccordian.length > 0) {
+        var laccChildren = luppAccordian[0].children;
+        for (i = 0; i < laccChildren.length; i++) {
+            if (laccChildren[i].clientHeight > 50) {
+                iaccTabIndex = i - 1;
+                iaccTabIndex = iaccTabIndex / 2;
+                break;
+            }
+        }
+    }
+    window.status = "Please wait...";
+    document.body.style.cursor = "wait";
+}
+
+function ieAjaxPageLoaded(sender, args) {
+    window.status = "Done";
+    document.body.style.cursor = "default";
+    if (lblnCallScript_Init) {
+        // BuildPanelsToUpdate(args);
+        Script_Init();
+    }
+    ProcessErrorMessagesPanel();
+}
+
+function ieAjaxEndRequest(sender, args) {
+    if (args.get_error()) {
+        document.getElementById("lblMessage").innerText = args.get_error().description;
+        args.set_errorHandled(true);
+    }
+    $("#pnlPopup").dialog('close');
+    window.status = "Done";
+    document.body.style.cursor = "default";
+    __defaultFired = false;
+    oControl.disabled = false;
+    myLayout.resizeAll();
+
+    Override_PositionCursor();
+    blnLoading = false; //NEO_CERTIFY_CHANGES
+}
+
+function NeoSpin_PageLoad(sender, args) {
+    if (oControl == undefined) {
+        Override_PositionCursor();
+    }
+}
+
+function Script_Init() {
+    lblnCallScript_Init = false;
+    iblnRoundedTabs = false;
+    try {
+        // InitializeWatermark();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js InitializeWatermark function, error : " + e.Message);
+    }
+
+    try {
+        InitializeMSSMenu();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js InitializeMSSMenu function, error : " + e.Message);
+    }
+
+    try {
+        Override_Extend_Date();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js Extend_Date function, error : " + e.Message);
+    }
+
+    try {
+        Extend_DateTime();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js Extend_DateTime function, error : " + e.Message);
+    }
+    try {
+        Extend_Time();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js Extend_Time function, error : " + e.Message);
+    }
+    try {
+        Extend_MonthYear();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js Extend_MonthYear function, error : " + e.Message);
+    }
+    try {
+        Extend_SSN();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js Extend_SSN function, error : " + e.Message);
+    }
+    try {
+        Extend_Phone();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js Extend_Phone function, error : " + e.Message);
+    }
+    try {
+        Override_Extend_Currency();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js Extend_Currency function, error : " + e.Message);
+    }
+    //pir 6993
+    try {
+        Override_Extend_Numeric();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js Extend_Numeric function, error : " + e.Message);
+    } //end
+    try {
+        Extend_Custom();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js Extend_Custom function, error : " + e.Message);
+    }
+
+    try {
+        InitializeComboBox();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js InitializeComboBox function, error : " + e.Message);
+    }
+    try {
+        InitializeCascadingDropDown();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js InitializeCascadingDropDown function, error : " + e.Message);
+    }
+
+    try {
+        SetClientVisibility();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js SetClientVisibility function, error : " + e.Message);
+    }
+    try {
+        //InitializeListControls();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js InitializeListControls function, error : " + e.Message);
+    }
+    try {
+        //InitializeRetrievalTextBox();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js InitializeRetrievalTextBox function, error : " + e.Message);
+    }
+    try {
+        OpenSmartLink();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js OpenSmartLink function, error : " + e.Message);
+    }
+
+    $("[sfwBalloonTooltip]").mouseover(function (e) {
+        var txt = e.currentTarget.sfwBalloonTooltip;
+        Tip(txt, BALLOON, true, ABOVE, true, STICKY, 1, CLOSEBTN, false, CLICKCLOSE, true, DURATION, 10000, OFFSETX, -12);
+    }).mouseout(function () {
+        UnTip();
+    });
+
+    var luppAccordian = $("#uppAccordian");
+    if (luppAccordian.length > 0) {
+        if (luppAccordian[0].children.length < (iaccTabIndex * 2 + 1)) {
+            iaccTabIndex = 0;
+        }
+        luppAccordian.accordion({
+            fillSpace: true, active: iaccTabIndex
+        });
+
+        luppAccordian.each(function () {
+            $.removeData(this);
+        });
+    }
+
+    try {
+        HideEmptyButtonCells();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js HideEmptyButtonCells function, error : " + e.Message);
+    }
+    try {
+        SelectAllRows();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js SelectAllRows function, error : " + e.Message);
+    }
+    try {
+        if($("#lblUserIdMSS") == null || $("#lblUserIdMSS").length == 0) //pir 8613
+            InitializeCollapsiblePanels();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js InitializeCollapsiblePanels function, error : " + e.Message);
+    }
+    try {
+        InitializePrintButton();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js InitializePrintButton function, error : " + e.Message);
+    }
+    try {
+        InitializePopupDialogs();
+    }
+    catch (e) {
+        alert("Error in NSHeader.js InitializePopupDialogs function, error : " + e.message);
+    }
+    $("[sfwReadOnlyCheckBox]").click(function (event) {
+        event.preventDefault();
+        return false;
+    });
+
+    try {
+        RememberFocusedControl();
+    }
+    catch (e) {
+        alert("Error in NSHEader.js RememberFocusedControl function, error :" + e.Message);
+    }
+
+
+try {
+    iblnRoundedTabs = false;
+    InitializeTabContainer();
+}
+catch (e) {
+    alert("Error in NSHeader.js InitializeTabContainer function, error : " + e.Message);
+}
+
+    InitializeTreeView();
+    SetCascadingDropDownValues();
+}
+
+var focusedControl = null;
+
+function RememberFocusedControl() {
+    $('input,select').focus(function () {
+        if (this.id != 'btnHelp') {
+            focusedControl = this;
+        }
+    });
+
+    $("li[sfwTabHeader='true']").each(function () {
+        $(this).find("a").click(function () {
+            focusedControl = this;
+        });
+    });
+
+    $("div[sfwPanelHeader='true']").click(function () {
+        focusedControl = this;
+    });
+}
+
+function InitializeTreeView() {
+    var uppUpdatePanelName = $$("uppCenterMiddle").attr("id");
+
+    $("#trvNavigation").find("A").click(function (event) {
+        if ($(this).attr("swfNavigateURL") == undefined) {
+            if (window.location.href.indexOf("wfmDefault.aspx") > -1) {
+                if (this.href.indexOf("wfmDefault.aspx") > -1) {
+                    $(this).attr("swfNavigateURL", this.href);
+                }
+            }
+        }
+        var navigationURl = $(this).attr("swfNavigateURL");
+        if (navigationURl != undefined) {
+            if (window.location.href.indexOf("wfmDefault.aspx") > -1) {
+                __doPostBack(uppUpdatePanelName, navigationURl);
+                event.preventDefault();
+            }
+        }
+    });
+}
+
+//jquery layout script
+
+$(document).ready(function () {
+    /* UL LI Menu Visited Background Color Script 
+    $('ul ul li a').click(function () {
+        $('ul ul li a').removeClass('menuVisited');
+        $(this).addClass('menuVisited');
+    });
+    */
+
+    $("#pnlPopup").dialog({ dialogClass: 'modalBackground', position: 'center', autoOpen: false, width: 130, height: 70, minHeight: 50, modal: true, resizable: false, closeText: '' });
+    $("#pnlPopup").siblings(".ui-dialog-titlebar").hide();
+    $("#pnlPopup").toggle(); /* added to show the panel */
+    InitializeMSSMenu();
+
+    if (window.location.toString().indexOf("ReturnValue=") > 0)
+        SetChildPageLayout();
+    else {
+        var lpnlCenterRight = $("#pnlCenterRight");
+        var lintEastWidth = 0;
+        if (lpnlCenterRight.length == 1) {
+            if (lpnlCenterRight[0].children.length > 0) {
+                lintEastWidth = 150;
+            }
+        }
+        SetPageLayout(285, 105, 6, lintEastWidth);
+    }
+})
+
+function Override_Extend_Currency() {
+    $("input[type='text'][sfwExtendCurrency='true']").autoNumeric()
+    .blur(function (e) {
+    });
+}
+
+
+function SetCascadingDropDownValues() {
+    var hidden = $$('hfldCascadingValues');
+    if (hidden.length == 1) {
+        var hiddenvalue = 'NULL';
+        $("[sfwCascading]").each(function () {
+            var ctrlvalue = $(this).attr('sfwSelectedValue');
+            if (ctrlvalue != undefined) {
+                if (hiddenvalue == 'NULL')
+                    hiddenvalue = $(this).attr('sfwCascading') + '=' + ctrlvalue;
+                else
+                    hiddenvalue += ';' + $(this).attr('sfwCascading') + '=' + ctrlvalue;
+            }
+        });
+        hidden.val(hiddenvalue);
+    }
+}
+
+//NEO_CERTIFY_CHANGES - BEGIN
+function GetClientID(ctrlid) {
+    var ctrl = $$(ctrlid);
+    if (ctrl.length == 1) {
+        return ctrl[0].id;
+    }
+    else if (ctrl.length > 1) {
+        for (i = 0; i < ctrl.length; i++) {
+            if ((ctrl[i].id.length > 3) && ctrl[i].id.substring(0, 3) == "img") {
+            }
+            else {
+                return ctrl[i].id;
+            }
+        }
+    }
+    return null;
+}
+
+
+function click_temp(astrExpression) {
+    $$("hfldRowIndex").value = "";
+    $$("btnPositionGrid")[0].value = astrExpression;
+    $$("btnPositionGrid").click();
+}
+
+function TriggerListItem(ctrlid) {
+    var ctrl = $$(ctrlid);
+    if (ctrl.length == 1) {
+        $(ctrl).trigger("change");
+    }
+
+}
+
+//NEO_CERTIFY_CHANGES - END
+function Override_Extend_Date() {
+    $("input[type='text'][sfwExtendDate='true']").mask('99/99/9999')
+    .datepick({ dateFormat: 'mm/dd/yy', yearRange: '1901:2100', showOn: 'button', buttonImageOnly: true, buttonImage: 'Images/Calendar_scheduleHS.png' })
+    .blur(function (e) {
+        var value = $.trim(e.currentTarget.value);
+        if (value.length > 0) {
+            if (!IsValidDate(value, 'mm/dd/yy')) {
+                alert("Invalid date");
+                return;
+            }
+            var year = value.split("/")[2];
+            if (year.length == 2) {
+                e.currentTarget.value = value.substr(0, 6) + "20" + year;
+            }
+        }
+    });
+}
+//Function added for pir 6993 : Allows only numeric data to be entered in a text box. No decimal points will be accepted
+function Override_Extend_Numeric() {
+
+    //Code added to force append of custom data format on the additional service credits textbox in grid since framework doesnt support custom data format on grids.
+    $("#cphCenterMiddle_wizMain_ctl08_grvConsolidatedPurchase_iintAdditionalServiceCredits_0").autoNumeric({ aSep: '', mNum: 99, mDec: 0, aPad: false })
+    .blur(function (e) {
+    });
+    //Code added to force append of custom data format on the txtIintNumberofPayments textbox
+    $("#cphCenterMiddle_wizMain_ctl08_txtIintNumberofPayments").autoNumeric({ aSep: '', mNum: 99, mDec: 0, aPad: false })
+    .blur(function (e) {
+    });
+    //Code added to force append of custom data format on the txtUnusedSickLeaveHours textbox
+    $("#cphCenterMiddle_wizMain_ctl08_txtUnusedSickLeaveHours").autoNumeric({ aSep: '', mNum: 99, mDec: 0, aPad: false })
+    .blur(function (e) {
+    });
+    $("input[type='text'][sfwExtendCustom='{0:numeric}']").autoNumeric({ aSep: '', mNum: 99, mDec: 0, aPad: false })
+    .blur(function (e) {
+    });
+
+}
+
+jQuery(document).ready(function () {
+    if ($("#lblUserIdMSS") != null && $("#lblUserIdMSS").length != 0) {
+        //For highliting the selected menu in the left panel in MSS
+        jQuery("a[href$='wfmDefault.aspx?FormID=" + $("#FormID").val() + "']").addClass("selected");
+        jQuery("a[href$='wfmDefault.aspx?FormID=" + $("#FormID").val() + "']").removeAttr("href");
+        //To invoke the confirm popup dialog on clicking LogOff button in MSS
+        $("#hlnkSignoff").easyconfirm({ locale: { title: 'Confirm', button: ['No', 'Yes']} });
+        $("#hlnkSignoff").click(function () {
+
+        });
+    }
+});
+
+function ProcessErrorMessagesPanel() {
+    if ($("#lblUserIdMSS") != null && $("#lblUserIdMSS").length != 0) {
+        if ($("#vlsErrors") != null) {
+            if ($("#vlsErrors").children().length != 0) {
+                $("#vlsErrors li").each(function (i) {
+                    var larrErrorMessages = this.innerHTML.split(' ');
+                    var lstrErrorMessage = "";
+                    var intRegex = /^\d+$/;
+                    if (larrErrorMessages.length > 0 && intRegex.test(larrErrorMessages[0]))
+                        larrErrorMessages[0] = "";
+                    $.each(larrErrorMessages, function (lintIndex, lobjValue) {
+                        lstrErrorMessage += lobjValue + ' ';
+                    });
+                    this.innerHTML = lstrErrorMessage;
+                });
+                $("#ErrorDiv").show();
+
+            }
+            else
+                $("#ErrorDiv").hide();
+        }
+    }
+}
+
+function Override_PositionCursor() {
+    var oFocusControl = $("#cphCenterMiddle_txtEligibleWagesFocusOnLoad:visible:enabled:first"); //PROD PIR ID 4409
+    if ((oFocusControl != undefined) && (oFocusControl.length > 0)) {
+        oFocusControl[0].focus();
+        oFocusControl[0].select(); 
+    }
+    else {
+        var oFirstControl = $("form:not(.filter) :input:text:visible:enabled:first");
+        if ((oFirstControl != undefined) && (oFirstControl.length > 0)) {
+            oFirstControl[0].focus();
+            oFirstControl[0].blur();
+            oFirstControl[0].select();
+        }
+    }
+}
+
+function fwkOpenStaticPopupWindow(astrURL) {
+    var lstrFeatures = 'left=600,top=100,width=500,height=500,resizable=yes,toolbar=yes,scrollbars=yes,alwaysRaised=yes';
+    window.open(astrURL, null, lstrFeatures);
+}
+
+function InitializeMSSMenu() {
+    var uppUpdatePanelName = $("#uppCenterMiddle").attr("id");
+    $("#pnlCenterLeft").find("A[href!='#']").each(function (event) {
+        if (this.href.indexOf("wfmDefault.aspx") > -1) {
+            if (this.href.indexOf("__doPostBack") == -1) {
+                $(this).attr("sfwNavigateURL", this.href);
+                if (this.href.indexOf("SkipPostBack=True") == -1) {
+                    this.href = "javascript:__doPostBack('" + uppUpdatePanelName + "','" + this.href + "')";
+                }
+            }
+        }
+    });
+
+    $("#pnlCenterLeft").find("A[href!='#']").click(function (event) {
+        if (window.location.href.indexOf("wfmDefault.aspx") == -1) {
+            if (this.href.indexOf("wfmDefault.aspx") > -1) {
+                this.href = $(this).attr("sfwNavigateURL");
+            }
+        }
+        $(this).parents("[className='level2 submenu dynamic']").hide();
+    });
+}

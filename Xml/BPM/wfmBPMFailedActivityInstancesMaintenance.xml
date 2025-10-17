@@ -1,0 +1,190 @@
+﻿<form ID="wfmBPMFailedActivityInstancesMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvCommon" sfwResource="20007002" sfwType="Maintenance" sfwTitle="Resume Failed Instances" version="3.5" sfwDefaultButtonID="btnSearchActivities" sfwEntity="entBpmMyBasket">
+  <initialload>
+    <callmethods sfwMethodName="BPMLoadFailedActivityInstances" sfwMode="New" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="Search Criteria">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capIstrProcessName" SkinID="LeftAlignedLabel" Text="Process Name" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwDropDownList DataTextField="name" DataValueField="process_id" ID="ddlIintProcessID" sfwLoadType="Method" sfwLoadSource="GetAccessibleUserProcesses" sfwEntityField="IintProcessID" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capIdteRequestDateFrom" SkinID="LeftAlignedLabel" Text="Initiated Date From" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRequestDateFrom" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtRequestDateFrom" />
+                <CompareValidator ControlToValidate="txtRequestDateFrom" ErrorMessage="Request date from must be in mm/dd/yyyy format" ID="cmv" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capIdteRequestDateTo" SkinID="LeftAlignedLabel" Text="Initiated Date To" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtRequestDateTo" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwEntityField="IdtRequestDateTo" />
+                <CompareValidator ControlToValidate="txtRequestDateTo" ErrorMessage="Request date to must be in mm/dd/yyyy format" ID="cmv1" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtRequestDateFrom" ControlToValidate="txtRequestDateTo" ErrorMessage="Initiated Date To cannot be less than Initiated Date From." ID="cmv2" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearchActivities" sfwMethodName="btnValidateExecuteBusinessMethod_Click" sfwObjectMethod="LoadFailedActivityInstances" sfwRefreshFromObject="True" Text="Apply Filter" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnRefreshData" sfwMethodName="btnCancel_Click" Text="Refresh Data" CssClass="hideControl" Visible="False" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capPersonID" SkinID="LeftAlignedLabel" Text="Person ID" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPersonId" sfwDataFormat="{0:999999999}" Visible="False" sfwEntityField="IintPersonID" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Images/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtPersonId" sfwSelectedIndex="PersonId" Visible="False" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel CssClass="LeftAlignedLabel" ID="capIintOrgID" SkinID="LeftAlignedLabel" Text="Org ID" Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOrgID" sfwDataFormat="{0:999999999}" Visible="False" sfwEntityField="IintSearchOrgID" />
+                <sfwImageButton ID="btnRetrieve1" ImageAlign="AbsMiddle" ImageUrl="~/Images/Lookup.jpg" sfwActiveForm="wfmOrganizationLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtOrgID" sfwSelectedIndex="OrgId" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlWorkPoolTab" sfwCaption="Failed Instances">
+          <sfwTable CssClass="Table" ID="tblWorkPoolTab">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnInProcess2" sfwMethodName="btnWorkflowExecuteMethod_Click" sfwSecurityLevel="2" Text="InProcess" Visible="False" sfwRefreshUpdatePanels="uppWorkflowNew" sfwRelatedControl="grvRoleAssginedActivities" />
+                <sfwButton ID="btnCheckout" sfwCheckOut="True" sfwMethodName="btnWorkflowExecuteMethod_Click" sfwSecurityLevel="2" Text="Checkout" Visible="False" sfwRefreshUpdatePanels="uppWorkflowNew" sfwRelatedControl="grvRoleAssginedActivities" />
+                <sfwButton ID="btnViewDetails" sfwActiveForm="wfmBpmActivityInstanceMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintActivityInstanceId=ActivityInstanceId" sfwRelatedControl="grvRoleAssginedActivities" Text="Open" Visible="False" />
+                <sfwButton ID="btnView" sfwMethodName="btnWorkflowExecuteMethod_Click" Text="View" Visible="False" />
+                <sfwButton ID="btnResumeButton" sfwCheckOut="True" sfwMethodName="btnExecuteBusinessMethodSelectRows_Click" sfwSecurityLevel="2" Text="Resume" Visible="False" sfwRefreshUpdatePanels="uppWorkflowNew" sfwRelatedControl="grvRoleAssginedActivities" sfwObjectMethod="ResumeFailedActivityInstance" sfwNavigationParameter="aintActivityInstanceId=ActivityInstanceId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvRoleAssginedActivities" PageSize="50" sfwSelection="Many" sfwEntityField="lstFailedActivities" sfwGridEntity="entSolBpmActivityInstance">
+                  <Columns>
+                    <TemplateField HeaderText="ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActivityInstanceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Process Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmProcessInstance.objBpmProcess.Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Activity Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmActivity.Name" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Version">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmProcessInstance.objBpmProcess.objBpmCase.Version" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Date Initiated" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CreatedDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Resume">
+                      <ItemTemplate>
+                        <sfwLabel ID="lblResumeActivityInstance" Text="Resume" sfwRelatedControl="btnResumeButton" sfwLinkable="True" sfwEntityField="IstrResume" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="View Details">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmBpmActivityInstanceMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintActivityInstanceID=ActivityInstanceId" Text="View Details" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmProcessInstance.objBpmCaseInstance.objPerson.PersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Person Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmProcessInstance.objBpmCaseInstance.objPerson.IstrPersonName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Org ID" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmProcessInstance.objBpmCaseInstance.objOrganization.OrgId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Org Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmProcessInstance.objBpmCaseInstance.objOrganization.OrgName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Role Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmActivity.objRoles.RoleDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Reference Id" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReferenceId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="User ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CheckedOutUser" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status Value" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="View" Visible="False">
+                      <ItemTemplate>
+                        <sfwLinkButton ID="btnWorkPoolOpen" sfwActiveForm="wfmBpmActivityInstanceMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintActivityInstanceId=ActivityInstanceId" Text="View" ToolTip="View Activity Without Checkout" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Source">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objBpmProcessInstance.objBpmCaseInstance.objBpmRequest.SourceDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Due Date" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="DueDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+                <sfwLabel ID="lblLabel" sfwIsCaption="True" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="lstFailedActivities" sfwNewAutoLoad="False" sfwUpdateAutoLoad="False" />
+  </loaddetails>
+</form>

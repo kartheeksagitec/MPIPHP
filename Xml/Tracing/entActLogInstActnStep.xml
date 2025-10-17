@@ -1,0 +1,55 @@
+﻿<entity ID="entActLogInstActnStep" sfwView="False" sfwActive="True" sfwMainCDO="icdoActLogInstActnStep" sfwType="EntityRule" sfwStatus="Review" sfwTableName="sgs_act_log_inst_actn_step" sfwObjectID="busActLogInstActnStep" >
+  <attributes>
+    <attribute ID="objActLogInstActn" sfwPrivate="False" sfwEntity="entActLogInstActn" sfwValue="ibusActLogInstActn" sfwType="Object" />
+    <attribute sfwValue="act_log_inst_actn_step_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogInstActnStepId" sfwCaption="ID" />
+    <attribute sfwValue="act_log_inst_actn_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ActLogInstActnId" sfwCaption="Act Log Inst Actn Id" />
+    <attribute sfwValue="step_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="StepName" sfwCaption="Step Name" />
+    <attribute sfwValue="start_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="StartTime" sfwCaption="Start Time" />
+    <attribute sfwValue="end_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="EndTime" sfwCaption="End Time" />
+    <attribute sfwValue="sub_transaction_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="20" sfwIsNull="True" ID="SubTransactionId" sfwCaption="Sub Transaction Id" />
+    <attribute sfwValue="parameter_details" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ParameterDetails" sfwCaption="Parameter Details" />
+    <attribute sfwValue="return_size" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ReturnSize" sfwCaption="Return Size" />
+    <attribute sfwValue="error_message" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ErrorMessage" sfwCaption="Error Message" />
+    <attribute sfwValue="time_in_ms" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TimeInMs" sfwCaption="Time In Ms" />
+    <attribute sfwValue="appserver_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="True" ID="APPSERVER_NAME" sfwCaption="APP Server Name" />
+    <attribute sfwValue="total_queries_executed" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TotalQueriesExecuted" sfwCaption="Total Queries Executed" />
+    <attribute sfwValue="total_queries_time_in_ms" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="TotalQueriesTimeInMs" sfwCaption="Total Queries Time In Ms" />
+  </attributes>
+  <methods>
+    <method ID="FindActLogInstActnStep" sfwMethodType="Load" sfwMode="All" sfwLoadMainObject="True" sfwParameter="aintPrimaryKey">
+      <parameter ID="aintPrimaryKey" sfwDataType="int" />
+    </method>
+  </methods>
+  <ExtraFields />
+  <queries>
+    <query ID="ByTransactionID" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from  sgs_act_log_inst_actn_step&#xA;where transaction_id = @transaction_id">
+      <parameters>
+        <parameter ID="@transaction_id" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="ByActivityLogInstanceActionAndSubtransaction" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * &#xA;  from sgs_act_log_inst_actn_step&#xA;where act_log_inst_actn_id = @act_log_inst_actn_id&#xA;     and sub_transaction_id = @sub_transaction_id">
+      <parameters>
+        <parameter ID="@act_log_inst_actn_id" sfwDataType="int" />
+        <parameter ID="@sub_transaction_id" sfwDataType="string" />
+      </parameters>
+    </query>
+    <query ID="Lookup" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select a.*&#xA;from sgv_act_log_inst_actn_step a&#xA;order by 1">
+      <parameters />
+    </query>
+  </queries>
+  <constraint />
+  <rules>
+    <rule ID="Visible Rule - Show Parameters" sfwRuleType="Validation" sfwObjectBased="False" sfwExpression="!string.IsNullOrEmpty(ParameterDetails)" />
+  </rules>
+  <initialload>
+    <item ID="Visible Rule - Show Parameters" sfwMode="All" sfwStatus="Active" />
+  </initialload>
+  <softerror />
+  <harderror />
+  <validatedelete />
+  <delete />
+  <groupslist />
+  <checklist />
+  <lifecycle />
+  <objectmethods />
+</entity>

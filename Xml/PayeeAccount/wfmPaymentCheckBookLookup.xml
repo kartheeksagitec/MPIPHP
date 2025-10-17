@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmPaymentCheckBookLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPayeeAccount" sfwResource="214 " sfwType="Lookup" sfwTitle="Payment Check Book Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entPaymentCheckBook" sfwGridCollection="busPaymentCheckBookLookup.iclbPaymentCheckBook">
+  <initialload>
+    <query ID="cdoPaymentCheckBook" sfwQueryRef="entPaymentCheckBook.Lookup" sfwMethodName="LoadPaymentCheckBooks" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtCheckBookId" ID="capCheckBookId" Text="Check Book ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtCheckBookId" sfwDataField="check_book_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoPaymentCheckBook" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="ddlCheckTypeValue" ID="capCheckTypeValue" Text="Check Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlCheckTypeValue" sfwDataField="check_type_value" sfwOperator="like" sfwQueryID="cdoPaymentCheckBook" sfwLoadType="CodeGroup" sfwLoadSource="7050" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtMaxCheckNumber" ID="capMaxCheckNumber" Text="Max Check Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMaxCheckNumber" sfwDataField="max_check_number" sfwOperator="like" sfwQueryID="cdoPaymentCheckBook" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtFirstCheckNumber" ID="capFirstCheckNumber" Text="First Check Number : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtFirstCheckNumber" sfwDataField="first_check_number" sfwOperator="like" sfwQueryID="cdoPaymentCheckBook" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtEffectiveDate" ID="capEffectiveDate" Text="Effective Date : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtEffectiveDate" sfwDataField="effective_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="=" sfwQueryID="cdoPaymentCheckBook" sfwTwoWayBinding="False" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmPaymentCheckBookMaintenance" sfwMethodName="btnNew_Click" Text="New" sfwToolBarGrid="grvPaymentCheckBook" sfwToolBarGridImage="StaticResources/neoGrid-images/btnNew_Click.png" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmPaymentCheckBookMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintCheckBookId=CheckBookId" sfwRelatedControl="grvPaymentCheckBook" Text="Open" Visible="False" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="grvPaymentCheckBook" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="grvPaymentCheckBook" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvPaymentCheckBook" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Check Book ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="CheckBookId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Check Type" SortExpression="CheckTypeDescription" SortExpressionUpdated="true">
+                      <ItemTemplate>
+                        <sfwLinkButton sfwActiveForm="wfmPaymentCheckBookMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintCheckBookId=CheckBookId" sfwRelatedControl="grvPaymentCheckBook" sfwEntityField="CheckTypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="First Check Number">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FirstCheckNumber" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last Check Number">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="LastCheckNumber" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Effective Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EffectiveDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Max Check Number">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MaxCheckNumber" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

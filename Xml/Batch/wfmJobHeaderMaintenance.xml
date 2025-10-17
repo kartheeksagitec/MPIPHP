@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmJobHeaderMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvAdmin" sfwResource="401" sfwType="Maintenance" sfwTitle="Batch Schedule Instance Maintenance" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entJobHeader">
+  <initialload>
+    <callmethods sfwMode="New" sfwMethodName="NewJobHeader" />
+    <callmethods sfwMode="Update" sfwMethodName="FindJobHeader" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnRefreshData" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnCancelJobHeaderButton" sfwMethodName="btnExecuteBusinessMethod_Click" sfwObjectMethod="btnCancelJob_Click" sfwVisibleRule="CancelJobHeaderVisibilityRule" Text="Cancel Job" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Previous" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlJobHeader" sfwCaption="Batch Schedule Instance">
+          <sfwTable CssClass="Table" ID="tblJobHeader">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capJobName" Text="Batch Schedule Instance Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblJobName" sfwMode="Update" sfwEntityField="JobName" />
+                <sfwTextBox ID="txtJobName" sfwMode="New" sfwEntityField="JobName" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capStatusDescription" Text="Batch Schedule Instance Status : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStatusDescription" sfwEntityField="StatusDescription" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capJobHeaderId" Text="Batch Schedule Instance ID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblJobHeaderId" sfwEntityField="JobHeaderId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreatedDate" Text="Queued Date Time: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate1" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStartTime" Text="Processing Start Time : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblStartTime" sfwDataFormat="{0:G}" sfwEntityField="StartTime" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capEndTime" Text="Processing End Time : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblEndTime" sfwDataFormat="{0:G}" sfwEntityField="EndTime" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="chkCancellableJobFlag" ID="capCancellableJobFlag" Text="Cancellable Job : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCheckBox Enabled="False" ID="chkCancellableJobFlag" sfwDefaultValue="N" sfwEntityField="objJobSchedule.CancellableJobFlag" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlJobDetail" sfwCaption="Batch Process Instance">
+          <sfwTable CssClass="Table" ID="tblJobDetail">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpenJobDetail" sfwActiveForm="wfmJobDetailMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="Aintjobdetailid=JobDetailId" sfwRelatedControl="grvJobDetail" Text="Open" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvJobDetail" sfwSelection="Many" sfwEntityField="lstJobDetail" sfwGridEntity="entJobDetail">
+                  <Columns>
+                    <TemplateField HeaderText="Batch Process Instance ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="JobDetailId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Step No" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StepNo" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Step Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpenJobDetail" sfwEntityField="objBatchSchedule.StepName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Status">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="StatusDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Return Code" ItemStyle.HorizontalAlign="Center">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ReturnCode" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Processing Start Time" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:G}" sfwEntityField="StartTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Processing End Time" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:G}" sfwDefaultValue="''" sfwEntityField="EndTime" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Progress Percentage" ItemStyle.HorizontalAlign="Right">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ProgressPercentage" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlProcessLogsPage" sfwCaption="Process Logs">
+          <sfwTable CssClass="Table" ID="tblNewPage">
+            <sfwRow>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" ID="grvIclcProcessLog" sfwObjectID="busJobHeader.iclcProcessLog" sfwSelection="Many" sfwSortExpression="CreatedDate desc" SortExpressionUpdated="true" sfwEntityField="lstProcessLog">
+                  <Columns>
+                    <TemplateField HeaderText="Process Log ID" SortExpression="process_log_id">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="process_log_id" sfwEntityField="ProcessLogId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Message" SortExpression="message">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="message" sfwEntityField="Message" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Message Type" SortExpression="message_type_description">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="message_type_description" sfwEntityField="MessageTypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Created Date Time" SortExpression="created_date" ItemStyle.HorizontalAlign="Right" ItemStyle.Wrap="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataField="created_date" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlAuditInfo" sfwCaption="Audit Information">
+          <sfwTable CssClass="Table" ID="tblAuditInfo">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capCreate" Text="Create : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedBy" sfwEntityField="CreatedBy" />
+                <sfwLabel ID="lblUpdateSeq" sfwTwoWayBinding="True" Visible="False" sfwEntityField="UpdateSeq" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblCreatedDate" sfwEntityField="CreatedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capModify" Text="Modify : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedBy" sfwEntityField="ModifiedBy" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblModifiedDate" sfwEntityField="ModifiedDate" sfwDataFormat="{0:G}" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objJobSchedule" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstJobDetail" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

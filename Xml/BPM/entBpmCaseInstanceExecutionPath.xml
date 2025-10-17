@@ -1,0 +1,60 @@
+﻿<entity ID="entBpmCaseInstanceExecutionPath" sfwMainCDO="icdoBpmCaseInstanceExecutionPath" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBpmCaseInstanceExecutionPath" sfwTableName="SGW_BPM_CASE_INST_EXEC_PATH" sfwView="False" sfwDataObjectID="doBpmCaseInstExecPath">
+  <commonproperties />
+  <checklist />
+  <initialload />
+  <delete />
+  <validatedelete />
+  <softerror />
+  <groupslist />
+  <harderror />
+  <Constraint />
+  <rules />
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select * from SGW_BPM_CASE_INST_EXEC_PATH " sfwPostgre="select * from SGW_BPM_CASE_INST_EXEC_PATH">
+      <parameters />
+    </query>
+    <query ID="GetOutgoingSequenceflowsForDivergingInclusiveGateway" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT&#xD;&#xA;&#x9; NAME &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INST_EXEC_PATH WITH(NOLOCK) &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ELEMENT_TYPE_VALUE = 'SEQF' AND&#xD;&#xA;&#x9; PARENT_ACTIVITY_INSTANCE_ID = @PARENT_ACTIVITY_INSTANCE_ID" sfwPostgre="SELECT&#xD;&#xA;&#x9; NAME &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INST_EXEC_PATH &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ELEMENT_TYPE_VALUE = 'SEQF' AND&#xD;&#xA;&#x9; PARENT_ACTIVITY_INSTANCE_ID = @PARENT_ACTIVITY_INSTANCE_ID">
+      <parameters>
+        <parameter ID="@PARENT_ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetIncomingSequenceflowsForConvergingInclusiveGateway" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT&#xA;&#x9; ELEMENT_ID &#xA;FROM&#xA;&#x9; SGW_BPM_CASE_INST_EXEC_PATH  with(NOLOCK) &#xA;WHERE&#xA;&#x9; ELEMENT_TYPE_VALUE = 'SEQF' AND STATUS_VALUE = 'UNUD' &#xA;&#x9; AND CASE_INSTANCE_ID = @CASE_INSTANCE_ID &#xA;&#x9; AND ELEMENT_ID IN (select * from Split(@IDS,',')) &#xA;&#x9; AND INITIATED_ACTIVITY_INSTANCE_ID = @INITIATED_ACTIVITY_INSTANCE_ID" sfwPostgre="SELECT&#xD;&#xA;&#x9; ELEMENT_ID &#xD;&#xA;FROM&#xD;&#xA;&#x9; SGW_BPM_CASE_INST_EXEC_PATH   &#xD;&#xA;WHERE&#xD;&#xA;&#x9; ELEMENT_TYPE_VALUE = 'SEQF' AND STATUS_VALUE = 'UNUD' &#xD;&#xA;&#x9; AND CASE_INSTANCE_ID = @CASE_INSTANCE_ID &#xD;&#xA;&#x9; AND ELEMENT_ID IN (select * from Split(@IDS,',')) &#xD;&#xA;&#x9; AND INITIATED_ACTIVITY_INSTANCE_ID = @INITIATED_ACTIVITY_INSTANCE_ID">
+      <parameters>
+        <parameter ID="@CASE_INSTANCE_ID" sfwDataType="int" />
+        <parameter ID="@IDS" sfwDataType="varchar" />
+        <parameter ID="@INITIATED_ACTIVITY_INSTANCE_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <constraint />
+  <ExtraFields />
+  <methods />
+  <lifecycle />
+  <attributes>
+    <attribute sfwType="Collection" sfwEntity="entBpmCaseInstanceExecutionPathParameterValueSnapshot" ID="lstExecutionPathParametersSnapShot" sfwValue="icolExecutionPathParametersSnapShot" />
+    <attribute sfwValue="execution_path_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="ExecutionPathId" sfwCaption="ID" />
+    <attribute sfwValue="case_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="CaseInstanceId" sfwCaption="Case Instance Id" />
+    <attribute sfwValue="element_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ElementId" sfwCaption="Element Id" />
+    <attribute sfwValue="status_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="StatusId" sfwCodeID="3000" sfwCaption="Status" />
+    <attribute sfwValue="status_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="StatusValue" sfwCaption="Status" />
+    <attribute sfwValue="activity_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ActivityInstanceId" sfwCaption="Activity Instance Id" />
+    <attribute sfwValue="parent_activity_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ParentActivityInstanceId" sfwCaption="Parent Activity Instance Id" />
+    <attribute sfwValue="initiated_activity_instance_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="InitiatedActivityInstanceId" sfwCaption="Initiated Activity Instance Id" />
+    <attribute sfwValue="name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="Name" sfwCaption="Name" />
+    <attribute sfwValue="start_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="StartDate" sfwCaption="Start Date" />
+    <attribute sfwValue="end_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="EndDate" sfwCaption="End Date" />
+    <attribute sfwValue="parameters_snapshot" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="image" sfwIsNull="True" ID="ParametersSnapshot" sfwCaption="Parameters Snapshot" />
+    <attribute sfwValue="element_type_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="ElementTypeId" sfwCodeID="2031" sfwCaption="Element Type" />
+    <attribute sfwValue="element_type_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="ElementTypeValue" sfwCaption="Element Type" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwCaption="Update Seq" />
+    <attribute sfwType="Description" ID="StatusDescription" sfwCaption="Status" sfwValue="status_description" />
+    <attribute sfwType="Description" ID="ElementTypeDescription" sfwCaption="Element Type" sfwValue="element_type_description" />
+  </attributes>
+  <objectmethods>
+    <method ID="LoadSnapshot" sfwReturnType="Void" />
+  </objectmethods>
+</entity>

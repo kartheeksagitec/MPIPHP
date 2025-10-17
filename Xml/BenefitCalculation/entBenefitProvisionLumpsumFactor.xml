@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entBenefitProvisionLumpsumFactor" sfwTableName="sgt_benefit_provision_lumpsum_factor" sfwView="False" sfwDataObjectID="doBenefitProvisionLumpsumFactor">
+  <queries>
+    <query ID="GetLumpSumFactor" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT LSF.LIFE_FACTOR FROM SGT_BENEFIT_PROVISION_LUMPSUM_FACTOR LSF WITH(NOLOCK)&#xD;&#xA;WHERE LSF.PARTICIPANT_AGE = @PARTICIPANT_AGE &#xD;&#xA;AND LSF.YEAR = CASE WHEN ( SELECT LIFE_FACTOR FROM SGT_BENEFIT_PROVISION_LUMPSUM_FACTOR WITH(NOLOCK) WHERE PARTICIPANT_AGE = @PARTICIPANT_AGE &#xD;&#xA;       AND YEAR= @YEAR ) IS NULL THEN (SELECT MAX(YEAR) FROM SGT_BENEFIT_PROVISION_LUMPSUM_FACTOR WITH(NOLOCK) &#xD;&#xA;               WHERE PARTICIPANT_AGE = @PARTICIPANT_AGE AND LIFE_FACTOR IS NOT NULL) &#xD;&#xA;       ELSE @YEAR END">
+      <parameters>
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+        <parameter ID="@YEAR" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetLumpSumFactorByAge" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT LSF.LIFE_FACTOR FROM SGT_BENEFIT_PROVISION_LUMPSUM_FACTOR LSF WITH(NOLOCK) &#xD;&#xA;WHERE LSF.PARTICIPANT_AGE = @PARTICIPANT_AGE AND &#xD;&#xA;LSF.YEAR = CASE WHEN (SELECT LIFE_FACTOR FROM SGT_BENEFIT_PROVISION_LUMPSUM_FACTOR WHERE PARTICIPANT_AGE = @PARTICIPANT_AGE &#xD;&#xA;AND YEAR= datepart(year,getdate())) IS NULL THEN datepart(year,getdate())-1 &#xD;&#xA;ELSE datepart(year,getdate()) END&#xD;&#xA;">
+      <parameters>
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="GetLumpSumYearByAge" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="&#xD;&#xA;SELECT MAX(LSF.YEAR) FROM SGT_BENEFIT_PROVISION_LUMPSUM_FACTOR LSF WITH(NOLOCK)&#xD;&#xA;WHERE LSF.PARTICIPANT_AGE =@PARTICIPANT_AGE&#xD;&#xA;AND LSF.LIFE_FACTOR IS NOT NULL ">
+      <parameters>
+        <parameter ID="@PARTICIPANT_AGE" sfwDataType="Decimal" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="benefit_factor_lumpsum_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitFactorLumpsumId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="participant_age" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="18,2" sfwIsNull="True" ID="ParticipantAge" sfwIsSequence="False" sfwCaption="Participant Age" />
+    <attribute sfwValue="year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="Year" sfwIsSequence="False" sfwCaption="Year" />
+    <attribute sfwValue="deferred_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="18,5" sfwIsNull="True" ID="DeferredFactor" sfwIsSequence="False" sfwCaption="Deferred Factor" />
+    <attribute sfwValue="life_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="18,9" sfwIsNull="True" ID="LifeFactor" sfwIsSequence="False" sfwCaption="Life Factor" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="True" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

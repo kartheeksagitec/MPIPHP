@@ -1,0 +1,3 @@
+﻿CREATE TYPE [dbo].[UDT_USERID]
+    FROM VARCHAR (20) NOT NULL;
+

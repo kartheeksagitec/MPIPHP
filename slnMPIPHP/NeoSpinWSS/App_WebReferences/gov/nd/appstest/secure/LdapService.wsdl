@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:intf="http://ldap.ws.services.itd.apps.itd.state.nd.us" xmlns:wsi="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:impl="http://ldap.ws.services.itd.apps.itd.state.nd.us" targetNamespace="http://ldap.ws.services.itd.apps.itd.state.nd.us" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://ldap.ws.services.itd.apps.itd.state.nd.us">
+      <xsd:element name="createGroupResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="createGroupReturn" nillable="true" type="impl:Response" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="removeUserFromGroup">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userID" nillable="true" type="xsd:string" />
+            <xsd:element name="group" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapID" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapPassword" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="removeUserFromGroupResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="removeUserFromGroupReturn" nillable="true" type="impl:Response" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getSubGroups">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="group" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapID" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapPassword" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getSubGroupsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="getSubGroupsReturn" nillable="true" type="impl:GetSubGroupsResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteGroup">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="group" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapID" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapPassword" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="deleteGroupResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="deleteGroupReturn" nillable="true" type="impl:Response" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="authenticate">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userID" nillable="true" type="xsd:string" />
+            <xsd:element name="password" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="authenticateResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="authenticateReturn" nillable="true" type="impl:AuthenticateResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getProfile">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userID" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapID" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapPassword" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getProfileByGuid">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="guid" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapID" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapPassword" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getProfileResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="getProfileReturn" nillable="true" type="impl:GetProfileResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getProfileByGuidResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="getProfileReturn" nillable="true" type="impl:GetProfileResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addUserToGroup">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userID" nillable="true" type="xsd:string" />
+            <xsd:element name="group" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapID" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapPassword" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="addUserToGroupResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="addUserToGroupReturn" nillable="true" type="impl:Response" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getGroupMembers">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="group" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapID" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapPassword" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getGroupMembersResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="getGroupMembersReturn" nillable="true" type="impl:GetGroupMembersResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchByName">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="firstName" nillable="true" type="xsd:string" />
+            <xsd:element name="middleName" nillable="true" type="xsd:string" />
+            <xsd:element name="lastName" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapID" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapPassword" nillable="true" type="xsd:string" />
+            <xsd:element name="perPage" nillable="true" type="xsd:string" />
+            <xsd:element name="page" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchByNameResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="searchByNameReturn" nillable="true" type="impl:SearchResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createGroup">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="group" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapID" nillable="true" type="xsd:string" />
+            <xsd:element name="ldapPassword" nillable="true" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="Response">
+        <xsd:sequence>
+          <xsd:element name="status" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GetSubGroupsResponse">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="impl:Response">
+            <xsd:sequence>
+              <xsd:element maxOccurs="unbounded" name="groups" nillable="true" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="AuthenticateResponse">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="impl:Response">
+            <xsd:sequence>
+              <xsd:element name="mustRedirect" type="xsd:boolean" />
+              <xsd:element name="redirectURL" nillable="true" type="xsd:string" />
+              <xsd:element name="authenticated" type="xsd:boolean" />
+              <xsd:element name="profile" nillable="true" type="impl:Profile" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Profile">
+        <xsd:sequence>
+          <xsd:element name="address" nillable="true" type="xsd:string" />
+          <xsd:element name="city" nillable="true" type="xsd:string" />
+          <xsd:element name="country" nillable="true" type="xsd:string" />
+          <xsd:element name="dn" nillable="true" type="xsd:string" />
+          <xsd:element name="email" nillable="true" type="xsd:string" />
+          <xsd:element name="firstName" nillable="true" type="xsd:string" />
+          <xsd:element name="guid" nillable="true" type="xsd:string" />
+          <xsd:element name="lastName" nillable="true" type="xsd:string" />
+          <xsd:element name="userID" nillable="true" type="xsd:string" />
+          <xsd:element name="middleInitial" nillable="true" type="xsd:string" />
+          <xsd:element name="organization" nillable="true" type="xsd:string" />
+          <xsd:element name="phone" nillable="true" type="xsd:string" />
+          <xsd:element name="pobox" nillable="true" type="xsd:string" />
+          <xsd:element name="postalCode" nillable="true" type="xsd:string" />
+          <xsd:element name="state" nillable="true" type="xsd:string" />
+          <xsd:element name="suffix" nillable="true" type="xsd:string" />
+          <xsd:element maxOccurs="unbounded" name="groups" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GetProfileResponse">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="impl:Response">
+            <xsd:sequence>
+              <xsd:element name="mustRedirect" type="xsd:boolean" />
+              <xsd:element name="redirectURL" nillable="true" type="xsd:string" />
+              <xsd:element name="profile" nillable="true" type="impl:Profile" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="GetGroupMembersResponse">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="impl:Response">
+            <xsd:sequence>
+              <xsd:element name="profiles" nillable="true" type="impl:ArrayOfProfile" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfProfile">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Profile" nillable="true" type="impl:Profile" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SearchResponse">
+        <xsd:complexContent mixed="false">
+          <xsd:extension base="impl:Response">
+            <xsd:sequence>
+              <xsd:element name="page" type="xsd:int" />
+              <xsd:element name="pages" type="xsd:int" />
+              <xsd:element name="profiles" nillable="true" type="impl:ArrayOfProfile" />
+              <xsd:element name="total" type="xsd:int" />
+            </xsd:sequence>
+          </xsd:extension>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="deleteGroupResponse">
+    <wsdl:part name="parameters" element="impl:deleteGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="deleteGroupRequest">
+    <wsdl:part name="parameters" element="impl:deleteGroup" />
+  </wsdl:message>
+  <wsdl:message name="getGroupMembersResponse">
+    <wsdl:part name="parameters" element="impl:getGroupMembersResponse" />
+  </wsdl:message>
+  <wsdl:message name="removeUserFromGroupResponse">
+    <wsdl:part name="parameters" element="impl:removeUserFromGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="getProfileByGuidResponse">
+    <wsdl:part name="parameters" element="impl:getProfileByGuidResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchByNameResponse">
+    <wsdl:part name="parameters" element="impl:searchByNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="authenticateResponse">
+    <wsdl:part name="parameters" element="impl:authenticateResponse" />
+  </wsdl:message>
+  <wsdl:message name="getSubGroupsRequest">
+    <wsdl:part name="parameters" element="impl:getSubGroups" />
+  </wsdl:message>
+  <wsdl:message name="getSubGroupsResponse">
+    <wsdl:part name="parameters" element="impl:getSubGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="createGroupRequest">
+    <wsdl:part name="parameters" element="impl:createGroup" />
+  </wsdl:message>
+  <wsdl:message name="getProfileRequest">
+    <wsdl:part name="parameters" element="impl:getProfile" />
+  </wsdl:message>
+  <wsdl:message name="authenticateRequest">
+    <wsdl:part name="parameters" element="impl:authenticate" />
+  </wsdl:message>
+  <wsdl:message name="removeUserFromGroupRequest">
+    <wsdl:part name="parameters" element="impl:removeUserFromGroup" />
+  </wsdl:message>
+  <wsdl:message name="createGroupResponse">
+    <wsdl:part name="parameters" element="impl:createGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchByNameRequest">
+    <wsdl:part name="parameters" element="impl:searchByName" />
+  </wsdl:message>
+  <wsdl:message name="addUserToGroupResponse">
+    <wsdl:part name="parameters" element="impl:addUserToGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="getProfileResponse">
+    <wsdl:part name="parameters" element="impl:getProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="getGroupMembersRequest">
+    <wsdl:part name="parameters" element="impl:getGroupMembers" />
+  </wsdl:message>
+  <wsdl:message name="getProfileByGuidRequest">
+    <wsdl:part name="parameters" element="impl:getProfileByGuid" />
+  </wsdl:message>
+  <wsdl:message name="addUserToGroupRequest">
+    <wsdl:part name="parameters" element="impl:addUserToGroup" />
+  </wsdl:message>
+  <wsdl:portType name="LdapService">
+    <wsdl:operation name="createGroup">
+      <wsdl:input name="createGroupRequest" message="impl:createGroupRequest" />
+      <wsdl:output name="createGroupResponse" message="impl:createGroupResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="removeUserFromGroup">
+      <wsdl:input name="removeUserFromGroupRequest" message="impl:removeUserFromGroupRequest" />
+      <wsdl:output name="removeUserFromGroupResponse" message="impl:removeUserFromGroupResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getSubGroups">
+      <wsdl:input name="getSubGroupsRequest" message="impl:getSubGroupsRequest" />
+      <wsdl:output name="getSubGroupsResponse" message="impl:getSubGroupsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteGroup">
+      <wsdl:input name="deleteGroupRequest" message="impl:deleteGroupRequest" />
+      <wsdl:output name="deleteGroupResponse" message="impl:deleteGroupResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="authenticate">
+      <wsdl:input name="authenticateRequest" message="impl:authenticateRequest" />
+      <wsdl:output name="authenticateResponse" message="impl:authenticateResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getProfile">
+      <wsdl:input name="getProfileRequest" message="impl:getProfileRequest" />
+      <wsdl:output name="getProfileResponse" message="impl:getProfileResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getProfileByGuid">
+      <wsdl:input name="getProfileByGuidRequest" message="impl:getProfileByGuidRequest" />
+      <wsdl:output name="getProfileByGuidResponse" message="impl:getProfileByGuidResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="addUserToGroup">
+      <wsdl:input name="addUserToGroupRequest" message="impl:addUserToGroupRequest" />
+      <wsdl:output name="addUserToGroupResponse" message="impl:addUserToGroupResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getGroupMembers">
+      <wsdl:input name="getGroupMembersRequest" message="impl:getGroupMembersRequest" />
+      <wsdl:output name="getGroupMembersResponse" message="impl:getGroupMembersResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="searchByName">
+      <wsdl:input name="searchByNameRequest" message="impl:searchByNameRequest" />
+      <wsdl:output name="searchByNameResponse" message="impl:searchByNameResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LdapServiceSoapBinding" type="impl:LdapService">
+    <wsaw:UsingAddressing wsdl:required="false" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" />
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="createGroup">
+      <wsdlsoap:operation soapAction="createGroup" />
+      <wsdl:input name="createGroupRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="createGroupResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeUserFromGroup">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="removeUserFromGroupRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="removeUserFromGroupResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSubGroups">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getSubGroupsRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getSubGroupsResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteGroup">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="deleteGroupRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteGroupResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="authenticate">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="authenticateRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="authenticateResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProfile">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getProfileRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getProfileResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getProfileByGuid">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getProfileByGuidRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getProfileByGuidResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addUserToGroup">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="addUserToGroupRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addUserToGroupResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGroupMembers">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getGroupMembersRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getGroupMembersResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="searchByName">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="searchByNameRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="searchByNameResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LdapService">
+    <wsdl:port name="LdapService" binding="impl:LdapServiceSoapBinding">
+      <wsdlsoap:address location="http://secure.appstest.nd.gov/itd/services/ldap/services/LdapService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

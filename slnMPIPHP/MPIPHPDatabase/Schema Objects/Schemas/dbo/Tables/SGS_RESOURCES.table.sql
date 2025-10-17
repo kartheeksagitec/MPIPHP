@@ -1,0 +1,12 @@
+﻿CREATE TABLE [dbo].[SGS_RESOURCES] (
+    [RESOURCE_ID]          [dbo].[UDT_IDENTITY]   NOT NULL,
+    [RESOURCE_TYPE_ID]     [dbo].[UDT_CODE_ID]    NOT NULL,
+    [RESOURCE_TYPE_VALUE]  [dbo].[UDT_CODE_VALUE] NULL,
+    [RESOURCE_DESCRIPTION] [dbo].[UDT_NOTES]      NULL,
+    [CREATED_BY]           [dbo].[UDT_CREATEDBY]  NOT NULL,
+    [CREATED_DATE]         [dbo].[UDT_DATETIME]   NOT NULL,
+    [MODIFIED_BY]          [dbo].[UDT_MODIFIEDBY] NOT NULL,
+    [MODIFIED_DATE]        [dbo].[UDT_DATETIME]   NOT NULL,
+    [UPDATE_SEQ]           [dbo].[UDT_UPDSEQ]     NOT NULL
+);
+

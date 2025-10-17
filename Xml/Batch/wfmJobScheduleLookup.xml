@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmJobScheduleLookup" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvAdmin" sfwResource="401 " sfwType="Lookup" sfwTitle="Batch Schedule Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entJobSchedule" sfwGridCollection="busJobScheduleLookup.iclbJobSchedule">
+  <initialload>
+    <query ID="cdoJobSchedule" sfwQueryRef="entJobSchedule.Lookup" sfwMethodName="LoadJobSchedules" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capScheduleName" Text="Schedule Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtScheduleName" sfwDataField="schedule_name" sfwOperator="like" sfwQueryID="cdoJobSchedule" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capActive" Text="Active : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlActiveFlag" sfwDataField="active_flag" sfwOperator="=" sfwQueryID="cdoJobSchedule" sfwLoadType="Items">
+                  <ListItem Selected="True" />
+                  <ListItem Text="Yes" Value="Y" />
+                  <ListItem Text="No" Value="N" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFrequencyTypeValue" Text="Frequency Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="code_value" ID="ddlFrequencyTypeValue" sfwDataField="frequency_type_value" sfwOperator="like" sfwQueryID="cdoJobSchedule" sfwLoadType="CodeGroup" sfwLoadSource="6017" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblPriorityLabel" Text="Priority : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPriorityValue" sfwDataField="priority_value" sfwOperator="like" sfwQueryID="cdoJobSchedule" sfwLoadType="CodeGroup" sfwLoadSource="6019" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="StoreSearch" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmJobScheduleMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="astrFreqTypeValue=ddlFrequencyTypeValue" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmJobScheduleMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="Aintjobscheduleid=JobScheduleId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" Visible="False" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Schedule ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="JobScheduleId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Schedule Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="ScheduleName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Frequency">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="FrequencyTypeDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Start Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="StartDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="End Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="EndDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Priority">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PriorityValue" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Active Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ActiveFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

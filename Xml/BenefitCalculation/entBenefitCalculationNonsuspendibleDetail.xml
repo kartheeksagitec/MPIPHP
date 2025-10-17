@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entBenefitCalculationNonsuspendibleDetail" sfwMainCDO="icdoBenefitCalculationNonsuspendibleDetail" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busBenefitCalculationNonsuspendibleDetail" sfwTableName="sgt_benefit_calculation_nonsuspendible_detail" sfwView="False" sfwDataObjectID="doBenefitCalculationNonsuspendibleDetail">
+  <queries>
+    <query ID="LoadBenefitNonSuspendibleDetails" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql=" SELECT ND.* FROM SGT_BENEFIT_CALCULATION_NONSUSPENDIBLE_DETAIL ND&#xD;&#xA;INNER JOIN SGS_CODE_VALUE CV ON ND.NONSUSPENDIBLE_MONTH_ID = CV.CODE_ID AND ND.NONSUSPENDIBLE_MONTH_VALUE = CV.CODE_VALUE&#xD;&#xA;WHERE BENEFIT_CALCULATION_YEARLY_DETAIL_ID = @BENEFIT_CALCULATION_YEARLY_DETAIL_ID&#xD;&#xA;ORDER BY CV.CODE_VALUE_ORDER">
+      <parameters>
+        <parameter ID="@BENEFIT_CALCULATION_YEARLY_DETAIL_ID" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="benefit_calculation_nonsuspendible_detail_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitCalculationNonsuspendibleDetailId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="benefit_calculation_yearly_detail_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitCalculationYearlyDetailId" sfwIsSequence="False" sfwCaption="Benefit Calculation Yearly Detail Id" />
+    <attribute sfwValue="benefit_calculation_detail_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitCalculationDetailId" sfwIsSequence="False" sfwCaption="Benefit Calculation Detail Id" />
+    <attribute sfwValue="calculation_plan_year" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="4,0" sfwIsNull="True" ID="CalculationPlanYear" sfwIsSequence="False" sfwCaption="Calculation Plan Year" />
+    <attribute sfwType="Description" ID="NonsuspendibleMonthDescription" sfwCaption="Nonsuspendible Month" sfwValue="nonsuspendible_month_description" />
+    <attribute sfwValue="nonsuspendible_month_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="NonsuspendibleMonthId" sfwIsSequence="False" sfwCaption="Nonsuspendible Month" />
+    <attribute sfwValue="nonsuspendible_month_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="True" ID="NonsuspendibleMonthValue" sfwIsSequence="False" sfwCaption="Nonsuspendible Month" />
+    <attribute sfwValue="pension_hours" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="14,4" sfwIsNull="True" ID="PensionHours" sfwIsSequence="False" sfwCaption="Pension Hours" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+  </attributes>
+</entity>

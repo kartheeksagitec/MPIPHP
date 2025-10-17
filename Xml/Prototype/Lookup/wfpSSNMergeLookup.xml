@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfpSSNMergeLookup" sfwActive="True" sfwStatus="Review" sfwType="Lookup" sfwTitle="SSN Merge Lookup" version="3.5" sfwAspNetCaching="False" sfwEntity="entPrototype">
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel" Text="MPID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtTextBox" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel3" Text="SSN :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox3" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel1" Text="Last Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox1" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel2" Text="First Name :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox2" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel4" Text="DOB :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox4" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnPrototypeSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblSearchResults">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnOpen" sfwActiveForm="wfpSSNMergeMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="prototype_id=#0" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwObjectID="busPrototypeLookup.iclbPrototype" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="Property0" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Prefix">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property1" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Last Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property2" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="First Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property3" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Suffix">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property4" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property5" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="DOB">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property6" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Gender">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property7" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Union Code">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property8" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Employer">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property9" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Address">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="Property10" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                  <Data>
+                    <DataRow>
+                      <DataColumn Value="M30034054" sfwEntityField="Property0" />
+                      <DataColumn sfwEntityField="Property1" />
+                      <DataColumn Value="JOHNSON" sfwEntityField="Property2" />
+                      <DataColumn Value="RON" sfwEntityField="Property3" />
+                      <DataColumn sfwEntityField="Property4" />
+                      <DataColumn Value="545-98-3670" sfwEntityField="Property5" />
+                      <DataColumn Value="04/15/1965" sfwEntityField="Property6" />
+                      <DataColumn Value="Male" sfwEntityField="Property7" />
+                      <DataColumn Value="25" sfwEntityField="Property8" />
+                      <DataColumn Value="Sony" sfwEntityField="Property9" />
+                      <DataColumn Value="2345 Vineland Ave, Studio City, CA - 91604" sfwEntityField="Property10" />
+                    </DataRow>
+                    <DataRow>
+                      <DataColumn Value="M30034589" sfwEntityField="Property0" />
+                      <DataColumn sfwEntityField="Property1" />
+                      <DataColumn Value="JOHNSON" sfwEntityField="Property2" />
+                      <DataColumn Value="RONN" sfwEntityField="Property3" />
+                      <DataColumn sfwEntityField="Property4" />
+                      <DataColumn Value="545-98-4670" sfwEntityField="Property5" />
+                      <DataColumn Value="04/15/1965" sfwEntityField="Property6" />
+                      <DataColumn Value="Male" sfwEntityField="Property7" />
+                      <DataColumn Value="25" sfwEntityField="Property8" />
+                      <DataColumn Value="Sony" sfwEntityField="Property9" />
+                      <DataColumn Value="2345 Vineland Ave, Studio City, CA - 91604" sfwEntityField="Property10" />
+                    </DataRow>
+                  </Data>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+</form>

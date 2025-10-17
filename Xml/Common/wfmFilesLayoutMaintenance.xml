@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmFilesLayoutMaintenance" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvAdmin" sfwResource="200 " sfwType="Maintenance" sfwTitle="Files Layout Maintenance" version="3.5" sfwEntity="entFileLayout">
+  <initialload>
+    <callmethods sfwMethodName="FinFileLayout" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnltoolbar">
+          <sfwTable CellPadding="3" ID="toolbar">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnCancel" sfwMethodName="btnCancel_Click" Text="Refresh" />
+                <sfwButton ID="btnPrev" sfwMethodName="btnPrev_Click" Text="Prev" />
+                <sfwButton ID="btnNext" sfwMethodName="btnNext_Click" Text="Next" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlMain" sfwCaption="File Information">
+          <sfwTable CssClass="Table" ID="tblMain">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capFileID" Text="File ID :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="lblField" sfwEntityField="objFile.FileId" />
+                <sfwLiteral ID="idNbspNbsp" CssClass="marg-left-10" />
+                <sfwLabel ID="txbDescription" sfwTwoWayBinding="True" Width="500px" sfwEntityField="objFile.Description" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capRecordLayout" Text="Record Layout :" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn ColumnSpan="3">
+                <sfwLabel ID="lblIstrDescription" sfwEntityField="IstrDescription" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="File Layout">
+          <sfwTable CellSpacing="5" CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="grvGridView" sfwEntityField="lstRecordField" sfwGridEntity="entutlRecordField">
+                  <Columns>
+                    <TemplateField HeaderText="Field">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IstrDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Length">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IintLength" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Start Position">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IintStartPos" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="End Position">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="IintEndPos" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails>
+    <entityfield ID="objFile" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+    <entityfield ID="lstRecordField" sfwUpdateAutoLoad="False" sfwNewAutoLoad="False" />
+  </loaddetails>
+</form>

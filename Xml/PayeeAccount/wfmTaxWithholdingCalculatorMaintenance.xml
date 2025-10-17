@@ -1,0 +1,214 @@
+﻿<form ID="wfmTaxWithholdingCalculatorMaintenance" WebSite="MPIPHPWebClient" sfwResource="205" sfwRemoteObject="srvPayeeAccount" sfwActive="True" sfwTitle="Tax Withholding Calculator Maintenance" sfwType="Maintenance" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmTaxWithholdingCalculatorLookup" sfwEntity="entPayeeAccountTaxWithholding">
+  <initialload>
+    <callmethods sfwMethodName="LoadPayAccountTaxWithholdingCalculator" />
+  </initialload>
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCalculate" sfwCaption="Tax Withholding Calculator">
+          <sfwTable ID="tblNewPage" sfwCaption="New Page">
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn HorizontalAlign="Right">
+                <sfwButton ID="btnSave" sfwMethodName="btnValidateExecuteBusinessMethod_Click" Text="Calculate" sfwObjectMethod="btn_CalculatingTaxWithHolding" sfwResource="205" OnClientClick="ValidateRequiredField" />
+                <sfwButton ID="btnRefreshData" sfwMethodName="btnCancel_Click" Text="Reset" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel16" Text="*" SkinID="ReqInformation" sfwIsCaption="True" />
+                <sfwLabel ID="lblLabel17" Text="Monthly Gross Amount:" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox9" sfwDataFormat="{0:C}" sfwEntityField="IdecMonthlyGrossAmount" />
+                <RequiredFieldValidator ID="rfvRequiredFieldValidator3" Text="*" ControlToValidate="txtTextBox9" ErrorMessage="Enter Monthly Gross Amount" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblLabel18" Text="Tax Year:" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox23" Enabled="false" sfwEntityField="IstrTaxYear" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel19" Text="Exclusion Amount(MEA):" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox24" sfwDataFormat="{0:C}" sfwEntityField="IdecExclusionAmount" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn CssClass="labelBoldUnderLine RightAlign">
+                <sfwLabel ID="lblLabel20" Text="Federal Tax Calculation" Font.Bold="True" Font.Underline="True" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn CssClass="labelBoldUnderLine RightAlign">
+                <sfwLabel ID="lblLabel21" Text="State Tax Calculation" Font.Bold="True" Font.Underline="True" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel22" Text="*" SkinID="ReqInformation" sfwIsCaption="True" />
+                <sfwLabel ID="lblLabel23" Text="Status" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDropDownList2" DataTextField="description" DataValueField="code_value" sfwLoadType="Method" sfwLoadSource="GetMaritalStatusforTaxCalculation" sfwEntityField="IstrFedStatus" />
+                <RequiredFieldValidator ID="rfvRequiredFieldValidator4" Text="*" ControlToValidate="ddlDropDownList2" ErrorMessage="Select Status" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblIdentifier" Text="State Tax Identifier" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList ID="ddlDropDownList12" DataTextField="description" DataValueField="code_value" sfwLoadType="Method" sfwLoadSource="GetStateTaxIdentifierForCalculation" sfwEntityField="IstrStateStatus" OnClientChange="SetVisibilityOnDdlDropDownList12" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblStep2b3" Text="Step 2 b(iii)" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStep2b3" sfwOperator="=" sfwDefaultValue="0" sfwShowZero="True" sfwEntityField="IdecStep2b3" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblLabel25" Text="Status" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwCascadingDropDownList DataTextField="description" DataValueField="code_value" ID="ddlMaritalStatusValue11" sfwParameters="astrCodeValue=ddlDropDownList12" sfwParentControl="ddlDropDownList12" sfwLoadType="Method" sfwLoadSource="GetMaritalStatusByTaxIdentifier" sfwEntityField="IstrMtlStatus" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStep4c" Text="Step 4(c) : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStep4c" sfwDataFormat="{0:C}" sfwEntityField="IdecStep4C" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblLabel27" Text="# of Allowances" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStateAllowanceNumber" sfwDefaultValue="0" sfwDefaultType="TextValue" sfwEntityField="IintStateAllowanceNumber" sfwShowZero="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStep3Amount" Text="Step 3 Amount : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStep3Amount" sfwDataFormat="{0:C}" sfwEntityField="IdecStep3" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblLabel29" Text="Additional Flat$ to be Withheld:" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox28" sfwDataFormat="{0:C}" sfwEntityField="IdecStateAdditionalTaxAmount" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capStep4a" Text="Step 4(a) : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStep4a" sfwDataFormat="{0:C}" sfwEntityField="IdecStep4A" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblPersonalExemption" Text="Personal Exemption:" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtPersonalExemption" sfwEntityField="Iintpersonal_exemptions" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtStep4b" ID="capStep4b" Text="Step 4(b) : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtStep4b" sfwDataFormat="{0:C}" sfwEntityField="IdecStep4B" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblAgeandBlindnessExemptions" Text="Age and Blindness Exemptions:" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtAgeandBlindnessExemptions" sfwEntityField="Iintage_and_blindness_exemptions" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="lblLabel43" Text="Federal Tax Withholding:" Font.Bold="True" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox42" sfwDataFormat="{0:C}" sfwEntityField="IdecFedFinalTaxAmount" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn>
+                <sfwLabel ID="lblLabel44" Text="State Tax Withholding:" Font.Bold="True" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtTextBox43" Enabled="False" sfwDataFormat="{0:C}" sfwEntityField="IdecStatePFinalTaxAmount" sfwCustomAttributes="disabled=&quot;disabled&quot;" />
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

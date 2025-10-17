@@ -1,0 +1,125 @@
+﻿<form ID="wfmDatabaseConnectionLookup" sfwFormObject="busDatabaseConnections" sfwType="Lookup" sfwTitle="Database Connection Lookup" sfwActive="True" sfwStatus="Review" sfwAspNetCaching="False" sfwMenuItemID="wfmDefaultLookup.aspx?FormID=wfmDatabaseConnectionLookup" sfwEntity="entDatabaseConnections" sfwGridCollection="busLookup.iclbLookupResult" sfwResource="207">
+  <sfwTable>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDatabaseConnectionId" Text="Database Connection ID : " AssociatedControlID="txtDatabaseConnectionId" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDatabaseConnectionId" sfwQueryID="entDatabaseConnections" sfwDataField="database_connection_id" sfwOperator="=" sfwDataType="Numeric" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capConnectionName" Text="Connection Name : " AssociatedControlID="txtConnectionName" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtConnectionName" sfwQueryID="entDatabaseConnections" sfwDataField="connection_name" sfwOperator="like" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capConnectionType" Text="Connection Type : " AssociatedControlID="txtConnectionType" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtConnectionType" sfwQueryID="entDatabaseConnections" sfwDataField="connection_type" sfwOperator="like" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capConnectionString" Text="Connection String : " AssociatedControlID="txtConnectionString" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtConnectionString" sfwQueryID="entDatabaseConnections" sfwDataField="connection_string" sfwOperator="like" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDbfactotyProvider" Text="DB Factory Provider : " AssociatedControlID="txtDbfactotyProvider" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDbfactotyProvider" sfwQueryID="entDatabaseConnections" sfwDataField="dbfactoty_provider" sfwOperator="like" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capPasswordEncryptedFlag" Text="Password Encrypted Flag : " AssociatedControlID="ddlPasswordEncryptedFlag" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlPasswordEncryptedFlag" sfwQueryID="entDatabaseConnections" sfwDataField="password_encrypted_flag">
+                  <ListItem Text="All" />
+                  <ListItem Text="Yes" Value="Y" />
+                  <ListItem Text="No" Value="N" />
+                </sfwDropDownList>
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" sfwOperateOn="tblCriteria" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" sfwOperateOn="tblCriteria" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" sfwOperateOn="tblCriteria" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable ID="tblResult" CssClass="Table">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" ImageUrl="~/Image/gNew.gif" sfwMethodName="btnNew_Click" sfwOperateOn="tblCriteria" sfwActiveForm="wfmDatabaseConnectionMaintenance" Text="New" />
+                <sfwButton ID="btnOpen" ImageUrl="~/Image/gOpen.gif" sfwMethodName="btnOpen_Click" sfwRelatedControl="dgrResult" Text="Open" sfwActiveForm="wfmDatabaseConnectionMaintenance" sfwNavigationParameter="aintPrimaryKey=DatabaseConnectionId" sfwDisableViewOnly="True" />
+                <sfwButton ID="btnDelete" ImageUrl="~/Image/gDelete.gif" sfwMethodName="btnDelete_Click" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" ImageUrl="~/Image/gExport.gif" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView ID="dgrResult" AllowPaging="True" AllowSorting="True" sfwSelection="Many" AllowFiltering="True" AllowGrouping="True">
+                  <Columns>
+                    <TemplateField HeaderText="Database Connection ID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="DatabaseConnectionId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Connection Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ConnectionName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Connection Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ConnectionType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Connection String">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="ConnectionString" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Dbfactory Provider">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DbfactotyProvider" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Password Encrypted Flag">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="PasswordEncryptedFlag" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <validatenew />
+  <loaddetails />
+</form>

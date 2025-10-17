@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmDocumentProcessCrossRefLookup" sfwActive="True" sfwStatus="Valid" sfwRemoteObject="srvWorkflow" sfwResource="200" sfwType="Lookup" sfwTitle="Document Process Cross Ref Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entDocumentProcessCrossref" sfwGridCollection="busDocumentProcessCrossRefLookup.iclbDocumentProcessCrossref">
+  <initialload>
+    <query ID="cdoDocumentProcessCrossref" sfwQueryRef="entDocumentProcessCrossref.Looukp" sfwMethodName="LoadDocumentProcessCrossRefs" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable CssClass="Table" ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDocumentCode" Text="Document Type : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDocumentCode" sfwDataField="doc_type" sfwOperator="like" sfwQueryID="cdoDocumentProcessCrossref" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDocumentName" Text="Document Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDocumentName" sfwDataField="document_name" sfwOperator="like" sfwQueryID="cdoDocumentProcessCrossref" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capProcessId" Text="Process Name : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList DataTextField="description" DataValueField="process_id" ID="ddlProcessId" sfwDataField="dpc.process_id" sfwOperator="=" sfwQueryID="cdoDocumentProcessCrossref" sfwLoadType="Query" sfwLoadSource="entBpmProcess.GetAllProcess" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capDocumentTypeActionValue" Text="Document Type Action : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwDropDownList ID="ddlDocumentTypeActionValue" sfwDataField="document_type_action_value" sfwOperator="like" sfwQueryID="cdoDocumentProcessCrossref" sfwLoadType="CodeGroup" sfwLoadSource="24" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capDocumentProcessCrossrefId" Text="Document Process Crossref ID : " Visible="False" sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtDocumentProcessCrossrefId" sfwDataField="document_process_crossref_id" sfwDataType="Numeric" sfwOperator="=" sfwQueryID="cdoDocumentProcessCrossref" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="StoreSearch" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnNew" sfwActiveForm="wfmDocumentProcessCrossRefMaintenance" sfwMethodName="btnNew_Click" sfwNavigationParameter="aintProcessID=ddlProcessId" Text="New" />
+                <sfwButton ID="btnOpen" sfwActiveForm="wfmDocumentProcessCrossRefMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="Aintdocumentprocesscrossrefid=DocumentProcessCrossrefId" sfwRelatedControl="dgrResult" Text="Open" />
+                <sfwButton ID="btnDelete" sfwMethodName="btnDelete_Click" sfwNavigationParameter="DocumentProcessCrossrefId" sfwRelatedControl="dgrResult" Text="Delete" />
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="ExportExcel" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult" sfwSelection="Many">
+                  <Columns>
+                    <TemplateField HeaderText="Document ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DocumentId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Document Process Crossref ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DocumentProcessCrossrefId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Document Type">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen" sfwEntityField="objDocument.DocType" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Document Name">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objDocument.DocumentName" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Document Type Action">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="DocumentTypeActionDescription" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="ProcessDescription">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="objProcess.Description" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

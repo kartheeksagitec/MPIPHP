@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<file ID="fleHealthEligibilityActuaryOut" sfwType="Outbound" sfwActive="True" sfwStatus="Valid" sfwTitle="busHealthEligibilityActuaryOutboundFile" sfwDescription="busHealthEligibilityActuaryOutboundFile" sfwProgressCounter="10" sfwFileName="HealthEligibilityActuaryOutboundFile.csv" sfwOutboundObject="MPIPHP.BusinessObjects.Person.busHealthEligibilityActuaryOutboundFile" sfwLoadMethod="LoadHealthEligibiltyActuaryData" sfwCollection="iclbHealthEligibiltyActuaryData">
+  <record ID="New Layout" sfwRecordType="Header">
+    <sfwField sfwDescription="SSN" sfwRemoveDecimal="False" sfwConstant="SSN" />
+    <sfwField sfwDescription="PLAN_YEAR" sfwRemoveDecimal="False" sfwConstant="PLAN_YEAR" />
+    <sfwField sfwDescription="FIRST_NAME" sfwRemoveDecimal="False" sfwConstant="FIRST_NAME" />
+    <sfwField sfwDescription="LAST_NAME" sfwRemoveDecimal="False" sfwConstant="LAST_NAME" />
+    <sfwField sfwDescription="DOB" sfwRemoveDecimal="False" sfwConstant="DOB" />
+    <sfwField sfwDescription="DOD" sfwRemoveDecimal="False" sfwConstant="DOD" />
+    <sfwField sfwDescription="RET_DT" sfwRemoveDecimal="False" sfwConstant="RET_DT" />
+    <sfwField sfwDescription="HLTHYRS" sfwRemoveDecimal="False" sfwConstant="HLTHYRS" />
+    <sfwField sfwDescription="HLTHHRS" sfwRemoveDecimal="False" sfwConstant="HLTHHRS" />
+    <sfwField sfwDescription="CURR_HOURS" sfwRemoveDecimal="False" sfwConstant="CURR_HOURS" />
+    <sfwField sfwDescription="PRIOR_HOURS" sfwRemoveDecimal="False" sfwConstant="PRIOR_HOURS" />
+    <sfwField sfwDescription="RETHLTH_ELIG" sfwRemoveDecimal="False" sfwConstant="RETHLTH_ELIG" />
+    <sfwField sfwDescription="ELIG_RULE" sfwRemoveDecimal="False" sfwConstant="ELIG_RULE" />
+    <sfwField sfwDescription="LOCALCD" sfwRemoveDecimal="False" sfwConstant="LOCALCD" />
+    <sfwField sfwDescription="RETIREMENT_TYPE" sfwRemoveDecimal="False" sfwConstant="RETIREMENT_TYPE" />
+  </record>
+  <record ID="None" sfwRecordType="CommaDelimited" sfwRecordObject="iclbHealthEligibiltyActuaryData">
+    <sfwField sfwDescription="SSN" sfwObjectField="icdoHealthEligibiltyActuaryData.person_ssn" sfwDataFormat="{0:000-00-0000}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="PLAN_YEAR" sfwObjectField="icdoHealthEligibiltyActuaryData.plan_year" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="FIRST_NAME" sfwObjectField="icdoHealthEligibiltyActuaryData.person_first_name" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="LAST_NAME" sfwObjectField="icdoHealthEligibiltyActuaryData.person_last_name" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="DOB" sfwObjectField="icdoHealthEligibiltyActuaryData.person_dob" sfwDataFormat="{0:MM/dd/yyyy}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="DOD" sfwObjectField="icdoHealthEligibiltyActuaryData.person_dod" sfwDataFormat="{0:MM/dd/yyyy}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="RET_DT" sfwObjectField="icdoHealthEligibiltyActuaryData.retirement_date" sfwDataFormat="{0:MM/dd/yyyy}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="HLTHYRS" sfwObjectField="icdoHealthEligibiltyActuaryData.qualified_years_till_batch_date" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="HLTHHRS" sfwObjectField="icdoHealthEligibiltyActuaryData.qualified_hours_till_batch_date" sfwDataFormat="{0:0.00}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="CURR_HOURS" sfwObjectField="icdoHealthEligibiltyActuaryData.current_hours" sfwDataFormat="{0:0.00}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="PRIOR_HOURS" sfwObjectField="icdoHealthEligibiltyActuaryData.prior_hours" sfwDataFormat="{0:0.00}" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="RETHLTH_ELIG" sfwObjectField="icdoHealthEligibiltyActuaryData.ret_health_elig_flag" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="ELIG_RULE" sfwObjectField="icdoHealthEligibiltyActuaryData.eligible_rule" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="LOCALCD" sfwObjectField="icdoHealthEligibiltyActuaryData.enrolled_in_local_plan_flag" sfwRemoveDecimal="False" />
+    <sfwField sfwDescription="RETIREMENT_TYPE" sfwObjectField="icdoHealthEligibiltyActuaryData.retirement_type" sfwRemoveDecimal="False" />
+  </record>
+</file>

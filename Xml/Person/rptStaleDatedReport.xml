@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="rptStaleDatedReport" sfwActive="True" sfwDescription="Stale Dated Report" sfwStatus="Review" sfwResource="200" sfwType="Report" sfwReportName="rptStaleDatedReport.rdlc" sfwReportCategory="Reports" version="4.0">
+  <initialload>
+    <query sfwQueryRef="entTempdata.rptStaleDatedReport" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="Plan : " sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList ID="PLAN_ID" DataTextField="plan_name" DataValueField="plan_id" sfwLoadType="Query" sfwLoadSource="entPlan.Lookup" sfwAddEmptyItem="False" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="From Pay Date :" sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="FromPayDate" sfwDataType="DateTime" />
+        <RequiredFieldValidator ControlToValidate="FromPayDate" ErrorMessage="From Date is Required" ID="rfvFromDate" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="To Pay Date :" sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwTextBox ID="ToPayDate" sfwDataType="DateTime" />
+        <CompareValidator ControlToValidate="ToPayDate" ErrorMessage="To Date must be in mm/dd/yyyy format." ID="valToDate" Operator="DataTypeCheck" Text="*" Type="Date" />
+        <CompareValidator ControlToCompare="FromPayDate" ControlToValidate="ToPayDate" ErrorMessage="To Pay Date cannot be less than From Date." ID="valDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+        <RequiredFieldValidator ControlToValidate="ToPayDate" ErrorMessage="To Pay Date is Required" ID="rfvToDate" Text="*" />
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwLabel Text="Status :" sfwIsCaption="True" />
+      </sfwColumn>
+      <sfwColumn>
+        <sfwDropDownList ID="codeid" DataTextField="status_description" DataValueField="codeid" sfwLoadType="Query" sfwLoadSource="entTempdata.StaleLookUp" />
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <ExtraFields />
+</form>

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entUserActivityLog" sfwMainCDO="icdoUserActivityLog" sfwType="BusinessRule" sfwActive="True" sfwStatus="Review" sfwObjectID="busUserActivityLog" sfwTableName="sgs_user_activity_log" sfwView="False" sfwDataObjectID="doUserActivityLog">
+  <queries>
+    <query ID="LookUp" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="SELECT UAL.*,( SELECT COUNT(*) &#xD;&#xA;      FROM SGS_USER_ACTIVITY_LOG_DETAIL UCLD &#xD;&#xA;      WHERE UCLD.USER_ACTIVITY_LOG_ID = UAL.USER_ACTIVITY_LOG_ID ) AS ACTIVITY_COUNT, U.USER_ID as USER_ID&#xD;&#xA;FROM  SGS_USER_ACTIVITY_LOG UAL WITH(NOLOCK)&#xD;&#xA;Inner Join SGS_USER U on U.USER_ID = ual.LOGGED_USER_ID &#xD;&#xA;ORDER BY USER_ACTIVITY_LOG_ID DESC&#xD;&#xA;">
+      <parameters />
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="user_activity_log_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UserActivityLogId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwValue="logged_user_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="LoggedUserId" sfwIsSequence="False" sfwCaption="Logged User Id" />
+    <attribute sfwValue="machine_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="100" sfwIsNull="False" ID="MachineName" sfwIsSequence="False" sfwCaption="Machine Name" />
+    <attribute sfwValue="ip_address" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="IpAddress" sfwIsSequence="False" sfwCaption="Ip Address" />
+    <attribute sfwValue="mac_address" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="MacAddress" sfwIsSequence="False" sfwCaption="Mac Address" />
+    <attribute sfwValue="session_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="SessionId" sfwIsSequence="False" sfwCaption="Session Id" />
+    <attribute sfwValue="login_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="LoginTime" sfwIsSequence="False" sfwCaption="Login Time" />
+    <attribute sfwValue="logoff_time" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="True" ID="LogoffTime" sfwIsSequence="False" sfwCaption="Logoff Time" />
+    <attribute sfwDataType="string" sfwType="Property" ID="UserId" sfwValue="icdoUserActivityLog.user_id" />
+    <attribute sfwDataType="int" sfwType="Property" ID="ActivityCount" sfwValue="icdoUserActivityLog.activity_count" />
+    <attribute sfwType="Collection" sfwEntity="entUserActivityLogDetail" ID="lstUserActivityLogDetail" sfwValue="iclbUserActivityLogDetail" />
+    <attribute sfwValue="window_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="WindowName" sfwCaption="Window Name" />
+    <attribute sfwValue="application_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="ApplicationName" sfwCaption="Application Name" />
+    <attribute sfwValue="invalid_login_flag" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="InvalidLoginFlag" sfwCaption="Invalid Login Flag" />
+    <attribute sfwValue="os_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="OsName" sfwCaption="Os Name" />
+    <attribute sfwValue="browser_name" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="True" ID="BrowserName" sfwCaption="Browser Name" />
+    <attribute sfwValue="is_mobile_device" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="1" sfwIsNull="True" ID="IsMobileDevice" sfwCaption="Is Mobile Device" />
+    <attribute sfwValue="extra_details" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="MAX" sfwIsNull="True" ID="ExtraDetails" sfwCaption="Extra Details" />
+  </attributes>
+</entity>

@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<form ID="wfmSSNMergeHistoryLookup" sfwActive="True" sfwStatus="Review" sfwRemoteObject="srvPerson" sfwResource="301 " sfwType="Lookup" sfwTitle="SSN Merge History Lookup" version="3.5" WebSite="MPIPHPWebClient" sfwEntity="entSsnMergeHistory" sfwGridCollection="busSsnMergeHistoryLookup.iclbSsnMergeHistory">
+  <initialload>
+    <query ID="cdoSsnMergeHistory" sfwQueryRef="entSsnMergeHistory.Lookup" sfwMethodName="LoadSSNMergeHistorys" />
+  </initialload>
+  <sfwTable ID="Main">
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlCriteria" sfwCaption="Criteria">
+          <sfwTable ID="tblCriteria">
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtOldMpiPersonId" ID="capOldMpiPersonId" Text="Old MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtOldMpiPersonId" sfwDataField="old_mpi_person_id" sfwOperator="like" sfwParameters="MPI_PERSON_ID=txtOldMpiPersonId" sfwQueryID="cdoSsnMergeHistory" sfwRetrievalQuery="cdoPersonBase.GetPersonDetails" />
+                <sfwImageButton ID="btnRetrieve" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmDuplicatePersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtOldMpiPersonId" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtNewMpiPersonId" ID="capNewMpiPersonId" Text="New MPID : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtNewMpiPersonId" sfwDataField="new_mpi_person_id" sfwOperator="like" sfwParameters="MPI_PERSON_ID=txtNewMpiPersonId" sfwQueryID="cdoSsnMergeHistory" sfwRetrievalQuery="entPerson.GetPersonMPID" />
+                <sfwImageButton ID="btnRetrieve1" ImageAlign="AbsMiddle" ImageUrl="~/Image/Lookup.jpg" sfwActiveForm="wfmPersonLookup" sfwMethodName="btnRetrieve_Click" sfwRelatedControl="txtNewMpiPersonId" sfwSelectedIndex="MpiPersonId" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtOldSsn" ID="capOldSsn" Text="Old SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="classFormatSSN" ID="txtOldSsn" sfwDataField="old_ssn" SkinID="classFormatSSN" sfwDataFormat="{0:000-##-####}" AllowPartialMask="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel AssociatedControlID="txtNewSsn" ID="capNewSsn" Text="New SSN : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox CssClass="classFormatSSN" ID="txtNewSsn" sfwDataField="new_ssn" SkinID="classFormatSSN" sfwDataFormat="{0:000-##-####}" AllowPartialMask="True" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwLabel ID="capMergeDate" Text="Merge Date From : " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMergeDateFrom" sfwDataField="merge_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoSsnMergeHistory" sfwRelatedControl="txtMergeDateTo" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtMergeDateFrom" ErrorMessage="Merged Date From must be in mm/dd/yyyy format." ID="valMergedDateFrom" Operator="DataTypeCheck" Text="*" Type="Date" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwLabel ID="capMergeDate1" Text="Merge Date To: " sfwIsCaption="True" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwTextBox ID="txtMergeDateTo" sfwDataField="merge_date" sfwDataFormat="{0:d}" sfwDataType="DateTime" sfwOperator="between" sfwQueryID="cdoSsnMergeHistory" sfwRelatedControl="txtMergeDateFrom" sfwTwoWayBinding="False" />
+                <CompareValidator ControlToValidate="txtMergeDateTo" ErrorMessage="Merged Date To must be in mm/dd/yyyy format." ID="valMergedDateTo" Operator="DataTypeCheck" Text="*" Type="Date" />
+                <CompareValidator ControlToCompare="txtMergeDateFrom" ControlToValidate="txtMergeDateTo" ErrorMessage="Merged Date To cannot be less than Merged Date From." ID="valMergedDateRange" Operator="GreaterThanEqual" Text="*" Type="Date" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnSearch" sfwMethodName="btnSearch_Click" Text="Search" />
+                <sfwButton ID="btnReset" sfwMethodName="btnReset_Click" Text="Reset" />
+              </sfwColumn>
+              <sfwColumn>
+                <sfwButton ID="btnStoreSearch" sfwMethodName="btnStoreUserDefaults_Click" Text="Store Search" />
+              </sfwColumn>
+              <sfwColumn />
+              <sfwColumn />
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+    <sfwRow>
+      <sfwColumn>
+        <sfwPanel ID="pnlResult" sfwCaption="Search Results">
+          <sfwTable CssClass="Table" ID="tblResult">
+            <sfwRow>
+              <sfwColumn>
+                <sfwButton ID="btnExportExcel" sfwMethodName="btnColumnsToExport_Click" sfwRelatedControl="dgrResult" Text="Export To Excel" />
+                <sfwButton ID="btnOpen1" sfwActiveForm="wfmDuplicatePersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintPersonId=OldPersonId" sfwRelatedControl="dgrResult" Text="Open" Visible="False" />
+                <sfwButton ID="btnOpen2" sfwActiveForm="wfmPersonMaintenance" sfwMethodName="btnOpen_Click" sfwNavigationParameter="aintpersonid=NewPersonId" sfwRelatedControl="dgrResult" Text="Open" Visible="False" />
+              </sfwColumn>
+            </sfwRow>
+            <sfwRow>
+              <sfwColumn>
+                <sfwGridView AllowPaging="True" AllowSorting="True" ID="dgrResult">
+                  <Columns>
+                    <TemplateField HeaderText="Old MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen1" sfwEntityField="OldMpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Old SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:000-##-####}" sfwEntityField="OldSsn" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText=" New MPID">
+                      <ItemTemplate>
+                        <sfwLabel sfwLinkable="True" sfwRelatedControl="btnOpen2" sfwEntityField="NewMpiPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="New SSN">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:000-##-####}" sfwEntityField="NewSsn" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Merge Date">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:d}" sfwEntityField="MergeDate" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Merged By">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="MergedBy" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="SSN Merge History ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwDataFormat="{0:000-##-####}" sfwEntityField="SsnMergeHistoryId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText=" New Person ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="NewPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                    <TemplateField HeaderText="Old Person ID" Visible="False">
+                      <ItemTemplate>
+                        <sfwLabel sfwEntityField="OldPersonId" />
+                      </ItemTemplate>
+                    </TemplateField>
+                  </Columns>
+                </sfwGridView>
+              </sfwColumn>
+            </sfwRow>
+          </sfwTable>
+        </sfwPanel>
+      </sfwColumn>
+    </sfwRow>
+  </sfwTable>
+  <loaddetails />
+</form>

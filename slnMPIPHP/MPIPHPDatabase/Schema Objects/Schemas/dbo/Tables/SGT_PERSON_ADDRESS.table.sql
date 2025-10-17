@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[SGT_PERSON_ADDRESS] (
+    [ADDRESS_ID]          [dbo].[UDT_IDENTITY]   IDENTITY (1, 1) NOT NULL,
+    [PERSON_ID]           [dbo].[UDT_ID]         NULL,
+    [ADDR_LINE_1]         [dbo].[UDT_ADDRESS]    NULL,
+    [ADDR_LINE_2]         [dbo].[UDT_ADDRESS]    NULL,
+    [ADDR_CITY]           [dbo].[UDT_CITY]       NULL,
+    [ADDR_STATE_ID]       [dbo].[UDT_ID]         NULL,
+    [ADDR_STATE_VALUE]    [dbo].[UDT_CODE_VALUE] NULL,
+    [ADDR_COUNTRY_ID]     [dbo].[UDT_ID]         NULL,
+    [ADDR_COUNTRY_VALUE]  [dbo].[UDT_CODE_VALUE] NULL,
+    [ADDR_ZIP_CODE]       [dbo].[UDT_ZIP5]       NULL,
+    [ADDR_ZIP_4_CODE]     [dbo].[UDT_ZIP4]       NULL,
+    [FOREIGN_ADDR_FLAG]   [dbo].[UDT_FLAG]       NULL,
+    [FOREIGN_PROVINCE]    [dbo].[UDT_TEXT]       NULL,
+    [FOREIGN_POSTAL_CODE] [dbo].[UDT_TEXT]       NULL,
+    [START_DATE]          [dbo].[UDT_DATETIME]   NULL,
+    [END_DATE]            [dbo].[UDT_DATETIME]   NULL,
+    [SECURED_FLAG]        [dbo].[UDT_FLAG]       NULL,
+    [ADDR_SOURCE_ID]      [dbo].[UDT_ID]         NULL,
+    [ADDR_SOURCE_VALUE]   [dbo].[UDT_CODE_VALUE] NULL,
+    [CREATED_BY]          [dbo].[UDT_CREATEDBY]  NOT NULL,
+    [CREATED_DATE]        [dbo].[UDT_DATETIME]   NOT NULL,
+    [MODIFIED_BY]         [dbo].[UDT_MODIFIEDBY] NOT NULL,
+    [MODIFIED_DATE]       [dbo].[UDT_DATETIME]   NOT NULL,
+    [UPDATE_SEQ]          [dbo].[UDT_UPDSEQ]     NOT NULL
+);
+

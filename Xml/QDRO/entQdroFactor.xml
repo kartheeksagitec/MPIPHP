@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entity ID="entQdroFactor" sfwTableName="sgt_qdro_factor" sfwView="False" sfwDataObjectID="doQdroFactor">
+  <queries>
+    <query ID="LoadQdroFactorByAgeandBenefitOption" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select Early_reduction_factor &#xD;&#xA;from sgt_qdro_factor &#xD;&#xA;where benefit_option_value = @benefit_option_value&#xD;&#xA; and Age = @age">
+      <parameters>
+        <parameter ID="@benefit_option_value" sfwDataType="string" />
+        <parameter ID="@age" sfwDataType="int" />
+      </parameters>
+    </query>
+    <query ID="LoadQDROFactorforDisablity" sfwQueryType="SelectQuery" sfwDataType="EntityTable" sfwSql="select EARLY_REDUCTION_FACTOR_DISABILITY &#xD;&#xA;from sgt_qdro_factor &#xD;&#xA;where benefit_option_value = @benefit_option_value&#xD;&#xA; and Age = @age">
+      <parameters>
+        <parameter ID="@benefit_option_value" sfwDataType="string" />
+        <parameter ID="@age" sfwDataType="int" />
+      </parameters>
+    </query>
+  </queries>
+  <attributes>
+    <attribute sfwValue="qdro_factor_id" sfwType="Column" sfwKeyNo="1" sfwIsIdentity="True" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="QdroFactorId" sfwIsSequence="False" sfwCaption="ID" />
+    <attribute sfwType="Description" ID="BenefitOptionDescription" sfwCaption="Benefit Option" sfwValue="benefit_option_description" />
+    <attribute sfwValue="benefit_option_id" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="BenefitOptionId" sfwCodeID="1504" sfwIsSequence="False" sfwCaption="Benefit Option" />
+    <attribute sfwValue="benefit_option_value" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="4" sfwIsNull="False" ID="BenefitOptionValue" sfwIsSequence="False" sfwCaption="Benefit Option" />
+    <attribute sfwValue="age" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="7,4" sfwIsNull="True" ID="Age" sfwIsSequence="False" sfwCaption="Age" />
+    <attribute sfwValue="early_reduction_factor" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,6" sfwIsNull="True" ID="EarlyReductionFactor" sfwIsSequence="False" sfwCaption="Early Reduction Factor" />
+    <attribute sfwValue="created_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="CreatedBy" sfwIsSequence="False" sfwCaption="Created By" />
+    <attribute sfwValue="created_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="CreatedDate" sfwIsSequence="False" sfwCaption="Created Date" />
+    <attribute sfwValue="modified_by" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="string" sfwDBDataType="varchar" sfwLength="50" sfwIsNull="False" ID="ModifiedBy" sfwIsSequence="False" sfwCaption="Modified By" />
+    <attribute sfwValue="modified_date" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="datetime" sfwDBDataType="datetime" sfwIsNull="False" ID="ModifiedDate" sfwIsSequence="False" sfwCaption="Modified Date" />
+    <attribute sfwValue="update_seq" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="int" sfwDBDataType="int" sfwIsNull="False" ID="UpdateSeq" sfwIsSequence="False" sfwCaption="Update Seq" />
+    <attribute sfwValue="early_reduction_factor_disability" sfwType="Column" sfwKeyNo="0" sfwIsIdentity="False" sfwDataType="decimal" sfwDBDataType="numeric" sfwLength="11,6" sfwIsNull="True" ID="EarlyReductionFactorDisability" sfwIsSequence="False" sfwCaption="Early Reduction Factor Disability" />
+  </attributes>
+</entity>
