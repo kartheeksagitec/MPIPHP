@@ -1,0 +1,49 @@
+name: .NET Build  
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    env:
+      Solution_Path: slnMPIPHP/slnMPIPHP.sln    
+      Build_Output_Folder: slnMPIPHP/bin        
+
+    steps:
+      # Checkout repository
+      - name: 🔹 Checkout Source Code
+        uses: actions/checkout@v4
+
+      # Setup .NET SDK
+      - name: 🔹 Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      # Setup MSBuild
+      - name: 🔹 Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      # Restore NuGet packages
+      - name: 🔹 Restore NuGet Packages
+        run: msbuild ${{ env.Solution_Path }} /t:Restore /p:Configuration=${{ matrix.configuration }}
+
+      # Build the solution
+      - name: 🔹 Build Solution
+        run: msbuild ${{ env.Solution_Path }} /p:Configuration=${{ matrix.configuration }} /m
+
+      # Upload artifacts in a clean structure
+      - name: 🔹 Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: BuildOutput-${{ matrix.configuration }}
+          path: ${{ env.Build_Output_Folder }}/${{ matrix.configuration }}/
